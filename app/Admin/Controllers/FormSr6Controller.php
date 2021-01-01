@@ -39,7 +39,6 @@ class FormSr6Controller extends AdminController
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
 
-
             if (!Utils::can_create_sr6()) {
                 $grid->disableCreateButton();
             }
@@ -53,7 +52,6 @@ class FormSr6Controller extends AdminController
                     $status == 6
                 ) {
                     $actions->disableDelete();
-
                 }
             });
         } else if (Admin::user()->isRole('inspector')) {
@@ -137,7 +135,7 @@ class FormSr6Controller extends AdminController
                 }
                 return Carbon::parse($item)->diffForHumans();
             });
-        $show->field('administrator_id', __('Administrator id'))
+        $show->field('administrator_id', __('Created by id'))
             ->as(function ($userId) {
                 $u = Administrator::find($userId);
                 if (!$u)
@@ -279,7 +277,8 @@ class FormSr6Controller extends AdminController
         } else {
             $form->hidden('administrator_id', __('Administrator id'));
         }
-
+ 
+        
 
         $form->hidden('dealers_in', __('dealers_in'));
 
@@ -359,6 +358,7 @@ class FormSr6Controller extends AdminController
                 ->required();
             $form->file('signature_of_applicant', __('Signature of applicant'));
         }
+
         if (Admin::user()->isRole('admin')) {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
