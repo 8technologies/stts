@@ -9,10 +9,10 @@
         &nbsp;&nbsp;&nbsp;&nbsp;
 
         @if(config('admin.show_version'))
-        <strong>Version</strong>&nbsp;&nbsp; {!! \Encore\Admin\Admin::VERSION !!}
+        <strong>Version</strong>&nbsp;&nbsp; 1.0.0
         @endif
 
     </div>
     <!-- Default to the left -->
-    <strong>Powered by <a href="https://github.com/z-song/laravel-admin" target="_blank">laravel-admin</a></strong>
+    <strong>Powered by <a href="javascript:;">Ministry Of Agriculture, Animal Industry and Fisheries</a></strong>
 </footer>

@@ -11,9 +11,59 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Zebra_Image;
+use Encore\Admin\Facades\Admin;
 
 class Utils
 {
+
+    public static function has_role($item,$role){
+        $roles = $item->roles()->get(); 
+        foreach($roles as $r){
+            if($r->slug == $role){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static function can_create_sr4()
+    {
+        $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+        foreach ($recs as $key => $value) {
+            if (!$value->valid_from) {
+                return false;
+            }
+            if (!$value->valid_until) {
+                return false;
+            }
+
+            $now = time();
+            $then = strtotime($value->valid_until);
+            if ($now < $then) {
+                return true;
+            }
+        }
+        return true;
+    }
+
+    public static function tell_status($status)
+    {
+        if (!$status)
+            return '<span class="badge badge-info">Pending</span>';
+        if ($status == 1)
+            return '<span class="badge badge-info">Pending</span>';
+        if ($status == 2)
+            return '<span class="badge badge-primary">Under inspection</span>';
+        if ($status == 3)
+            return '<span class="badge badge-warning">Halted</span>';
+        if ($status == 4)
+            return '<span class="badge badge-danger">Rejcted</span>';
+        if ($status == 5)
+            return '<span class="badge badge-success">Accpted</span>';
+        if ($status == 6)
+            return '<span class="badge badge-danger">expired</span>';
+        return "Pending";
+    }
 
     public static function show_response($status = 0, $code = 0, $body = "")
     {
@@ -27,21 +77,22 @@ class Utils
     {
 
         $threads = Chat::where(
-            "sender",$user_id
+            "sender",
+            $user_id
         )
-        ->orWhere('receiver', $user_id)
-        ->orderByDesc('id')
-        ->get(); 
-       
+            ->orWhere('receiver', $user_id)
+            ->orderByDesc('id')
+            ->get();
+
         $done_ids = array();
         $ready_threads = array();
         foreach ($threads as $key => $value) {
-            if(in_array($value->thread,$done_ids)){
+            if (in_array($value->thread, $done_ids)) {
                 continue;
             }
             $done_ids[] = $value->thread;
             $ready_threads[] = $value;
-        } 
+        }
         return $ready_threads;
     }
 
@@ -196,7 +247,7 @@ class Utils
         $image->auto_handle_exif_orientation = false;
         $image->source_path = $params['source'];
         $image->target_path = $params['target'];
-        
+
 
 
         $image->jpeg_quality = 75;

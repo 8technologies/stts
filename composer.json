@@ -9,6 +9,7 @@
         "encore/laravel-admin": "1.*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "laravel-admin-ext/media-manager": "2.x",
         "laravel/framework": "^8.54",
         "laravel/legacy-factories": "^1.1",
         "laravel/sanctum": "^2.11",
