@@ -100,12 +100,14 @@ class FormSr6Controller extends AdminController
     protected function form()
     {
         $form = new Form(new FormSr6());
-        
+
 
         // callback before save
-        $form->submitted(function (Form $form) {
-            //$form->dealers_in = json_encode($form->dealers_in);
-            //$form->ignore('dealers_in');
+        $form->saving(function (Form $form) {
+            if (isset($_POST['group-a'])) {
+                $form->dealers_in = json_encode($_POST['group-a']);
+                //echo($form->dealers_in);
+            }
         });
 
 
@@ -119,7 +121,7 @@ class FormSr6Controller extends AdminController
         }
 
 
-
+        $form->hidden('dealers_in', __('dealers_in'));
 
         if (Admin::user()->isRole('basic-user')) {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required()->required();
@@ -127,20 +129,69 @@ class FormSr6Controller extends AdminController
             $form->text('company_initials', __('Company initials'))->required();
             $form->text('premises_location', __('Premises location'))->required();
             $form->text('years_of_expirience', __('Years of expirience as seed grower'))
-            ->rules('min:1')
-            ->attribute('type', 'number')
-            ->required();
+                ->rules('min:1')
+                ->attribute('type', 'number')
+                ->required();
+
+            $repeat = "";
+            if($form->isEditing()){
+                $sec  = ((int)(request()->segment(3)));
+                if($sec > 0){
+                    $da = FormSr6::findOrFail($sec);
+                    if($da){
+                        if(isset($da->dealers_in)){
+                            if(strlen($da->dealers_in)>3){
+                                $_reapeat_data = json_decode($da->dealers_in);
+
+                                foreach ($_reapeat_data as $key => $val) {
+                                    $repeat .= '<tr data-repeater-item>
+                                    <td><input value="'.$val->crop.'" class="form-control" required name="crop" type="text"></td>
+                                    <td><input value="'.$val->variety.'" class="form-control" required name="variety" type="text"></td>
+                                    <td><input value="'.$val->ha.'" class="form-control" required name="ha" type="text"></td>
+                                    <td><input value="'.$val->origin.'" class="form-control" required name="origin" type="text"></td>
+                                    <td><button class="btn btn-danger btn-sm" data-repeater-delete type="button">
+                                    <span>Delete</span>
+                                  </button></td>
+                                    </tr>';
+                                } 
+                            }
+                        }
+                    }
+                } 
+            }
             
+          
             $form->html('<h3>I/We wish to apply for a license to produce seed as indicated below:</h3>');
- 
-            
- 
-            $form->table('dealers_in', function ($table) {
-                $table->text('key');
-                $table->text('value');
-                $table->text('desc');
-                $table->text('romina');
-            });
+            $form->html('<div class="repeater">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Crops(s)</th>
+                        <th>Vatiety</th>
+                        <th>Ha</th>
+                        <th>Origin/Source</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody data-repeater-list="group-a">
+                    '.$repeat.'
+                </tbody>
+            </table>
+            <input data-repeater-create class="btn btn-success btn-sm" type="button" value="Add" />
+        </div>');
+
+
+
+            // $form->table('dealers_in', function ($table) {
+            //     $table->text('key');
+            //     $table->text('value');
+            //     $table->text('desc');
+            //     $table->text('romina');
+            // });
+
+            //URL::asset('/assets/js/vendor/nice-select.min.js')
+            Admin::js('/assets/js/vendor/jquery.repeater.min.js');
+            Admin::js('/assets/js/vendor/form-repeater.min.js');
 
 
             //$form->textarea('dealers_in', __('Dealers in'));

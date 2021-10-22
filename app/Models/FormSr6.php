@@ -14,7 +14,7 @@ class FormSr6 extends Model
     }
 
     protected $casts = [
-        'dealers_in ' =>'json',
+        //'premises_location ' =>'json',
     ];
 
 
