@@ -23,4 +23,5 @@ Route::group([
     $router->resource('profiles', ProfileController::class);
 
     $router->resource('form-sr4s', FormSr4Controller::class);
+    $router->resource('form-sr6s', FormSr6Controller::class);
 });

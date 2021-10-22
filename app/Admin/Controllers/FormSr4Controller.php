@@ -110,7 +110,7 @@ class FormSr4Controller extends AdminController
      * Make a show builder.
      *
      * @param mixed $id
-     * @return Show
+     * @return Show 
      */
     protected function detail($id)
     {
