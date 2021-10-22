@@ -24,7 +24,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>Laravel</b> admin',
+    'logo' => '<img width="100%" src="assets/images/stts/logos/logo_top.png" alt="Admin logo">',
 
     /*
     |--------------------------------------------------------------------------
@@ -33,10 +33,10 @@ return [
     |
     | The logo of all admin pages when the sidebar menu is collapsed. You can
     | also set it as an image by using a `img` tag, eg
-    | '<img src="http://logo-url" alt="Admin logo">'.
+    | '<img src="assets/images/stts/bg/bg-1.jpg" alt="Admin logo">'.
     |
     */
-    'logo-mini' => '<b>La</b>',
+    'logo-mini' => '<b>STTS</b>',
 
     /*
     |--------------------------------------------------------------------------
@@ -87,7 +87,7 @@ return [
     | Html title for all pages.
     |
     */
-    'title' => 'Admin',
+    'title' => 'The National Seed Tracking & Tracing System Uganda',
 
     /*
     |--------------------------------------------------------------------------
@@ -291,7 +291,7 @@ return [
     | "sidebar-mini".
     |
     */
-    'layout' => ['sidebar-mini', 'sidebar-collapse'],
+    'layout' => ['fixed'],
 
     /*
     |--------------------------------------------------------------------------
@@ -362,7 +362,7 @@ return [
     | Enable/Disable sidebar menu search
     |--------------------------------------------------------------------------
     */
-    'enable_menu_search' => true,
+    'enable_menu_search' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -408,6 +408,10 @@ return [
     |
     */
     'extensions' => [
-
+        'media-manager' => [
+            // Select a local disk that you configured in `config/filesystem.php`
+            'disk' => 'local',
+            'allowed_ext' => 'jpg,jpeg,png,pdf,doc,docx,zip'
+        ],
     ],
 ];
