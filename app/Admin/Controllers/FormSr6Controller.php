@@ -99,16 +99,28 @@ class FormSr6Controller extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new FormSr6());
 
+        session_start();
+        if(!isset($_SESSION['sr6_refreshed'])){
+            $_SESSION['sr6_refreshed']="yes";
+            $my_uri = $_SERVER['REQUEST_URI'];
+            Admin::script('window.location.href="'.$my_uri.'";');
+        }else{
+            unset($_SESSION['sr6_refreshed']);
+        }
+        $form = new Form(new FormSr6());
 
         // callback before save
         $form->saving(function (Form $form) {
+
+            $form->dealers_in = '[]';
             if (isset($_POST['group-a'])) {
                 $form->dealers_in = json_encode($_POST['group-a']);
                 //echo($form->dealers_in);
             }
         });
+
+        
 
 
         $form->setWidth(8, 4);
@@ -159,6 +171,17 @@ class FormSr6Controller extends AdminController
                     }
                 } 
             }
+            if(strlen($repeat)<4){
+                $repeat .= '<tr data-repeater-item>
+                                    <td><input placeholder="Crop" value="" class="form-control" required name="crop" type="text"></td>
+                                    <td><input placeholder="Variety" value="" class="form-control" required name="variety" type="text"></td>
+                                    <td><input placeholder="Ha" value="" class="form-control" required name="ha" type="text"></td>
+                                    <td><input placeholder="Origin" value="" class="form-control" required name="origin" type="text"></td>
+                                    <td><button class="btn btn-danger btn-sm" data-repeater-delete type="button">
+                                    <span>Delete</span>
+                                  </button></td>
+                                    </tr>';
+            }
             
           
             $form->html('<h3>I/We wish to apply for a license to produce seed as indicated below:</h3>');
@@ -177,7 +200,7 @@ class FormSr6Controller extends AdminController
                     '.$repeat.'
                 </tbody>
             </table>
-            <input data-repeater-create class="btn btn-success btn-sm" type="button" value="Add" />
+            <input data-repeater-create class="btn btn-success btn-sm" type="button" value="Add record" />
         </div>');
 
 

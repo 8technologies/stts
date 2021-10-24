@@ -24,7 +24,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<img width="100%" src="assets/images/stts/logos/logo_top.png" alt="Admin logo">',
+    'logo' => '<img width="100%" src="stts/assets/images/stts/logos/logo_top.png" alt="Admin logo">',
 
     /*
     |--------------------------------------------------------------------------
@@ -251,7 +251,7 @@ return [
     | Set a default avatar for newly created users.
     |
     */
-    'default_avatar' => '/vendor/laravel-admin/AdminLTE/dist/img/user2-160x160.jpg',
+    'default_avatar' => 'vendor/laravel-admin/AdminLTE/dist/img/user2-160x160.jpg',
 
     /*
     |--------------------------------------------------------------------------
@@ -301,8 +301,8 @@ return [
     | This value is used to set the background image of login page.
     |
     */
-    'login_background_image' =>  '/assets/images/stts/bg/bg-1.jpg' ,
-    'login_background_image_2' =>  '/assets/images/stts/bg/bg-2.jpeg' ,
+    'login_background_image' =>  'assets/images/stts/bg/bg-1.jpg' ,
+    'login_background_image_2' =>  'assets/images/stts/bg/bg-2.jpeg' ,
 
     /*
     |--------------------------------------------------------------------------

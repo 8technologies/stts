@@ -6,8 +6,11 @@ use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\Profile;
 use App\Models\User;
+use Encore\Admin\Auth\Database\Administrator;
+use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class MainController extends Controller
@@ -22,32 +25,33 @@ class MainController extends Controller
         //echo "<pre>"; 
         //dd($request);
         //die();
-        if(
+        if (
             isset($_POST['reason']) &&
             isset($_POST['product_id']) &&
-            isset($_POST['comment']
-            )){
-                $review = new ProductReview();
-                $review->rating = $_POST['rating'];
-                $review->reason = $_POST['reason'];
-                $review->comment = $_POST['comment'];
-                $review->product_id = $_POST['product_id'];
-                $review->user_id =  Auth::id();
-                
-                $url = $_SERVER['REQUEST_URI'];
- 
-                if ($review->save()) {
-                    $errors['success'] = "Review was submitted successfully!";
-                    return redirect($url)
-                        ->withErrors($errors)
-                        ->withInput();
-                } else {
-                    $errors['password'] = "Failed to submit review, please try again.";
-                    return redirect($url)
-                        ->withErrors($errors)
-                        ->withInput();
-                }
+            isset(
+                $_POST['comment']
+            )
+        ) {
+            $review = new ProductReview();
+            $review->rating = $_POST['rating'];
+            $review->reason = $_POST['reason'];
+            $review->comment = $_POST['comment'];
+            $review->product_id = $_POST['product_id'];
+            $review->user_id =  Auth::id();
 
+            $url = $_SERVER['REQUEST_URI'];
+
+            if ($review->save()) {
+                $errors['success'] = "Review was submitted successfully!";
+                return redirect($url)
+                    ->withErrors($errors)
+                    ->withInput();
+            } else {
+                $errors['password'] = "Failed to submit review, please try again.";
+                return redirect($url)
+                    ->withErrors($errors)
+                    ->withInput();
+            }
         }
 
         $seg = request()->segment(1);
@@ -56,7 +60,7 @@ class MainController extends Controller
             return view('main.display-profile');
             return;
         }
-        
+
         $pro = Product::where('slug', $seg)->first();
         if ($pro) {
             return view('main.display-ad');
@@ -86,51 +90,66 @@ class MainController extends Controller
                     ->withInput();
             }
         }
-
+        return redirect()->intended('admin');
         return view('main.login');
     }
 
     public function register(Request  $request)
     {
-        if (isset($_POST['phone_number'])) {
+        if (isset($_POST['username'])) {
+
             $validated = $request->validate([
-                'phone_number' => 'required|max:14|min:5',
-                'password' => 'required|max:100|min:6',
+                'first_name' => 'required|max:24|min:2',
+                'last_name' => 'required|max:24|min:2',
+                'password' => 'required|max:100|min:3',
             ]);
 
-
-
-            if ($request->input('password') !=  $request->input('password1')) {
-                $errors['password1'] = "Password don't match";
+            $old_user = Administrator::where('username',  $request->input("username"))->first();
+            if ($old_user) {
+                $errors['username'] = "User with same email already exist.";
                 return redirect('register')
                     ->withErrors($errors)
                     ->withInput();
+                die();
             }
 
-            $u['name'] = "";
-            $u['email'] = $request->input("phone_number");
+            $admin = new Administrator();
+            $admin->first_name = $request->input("first_name");
+            $admin->name = $request->input("first_name") . " " . $request->input("last_name");
+            $admin->last_name = $request->input("last_name");
+            $admin->username = $request->input("username");
+            $admin->email = $request->input("username");
+            $admin->password = Hash::make($request->input("password"));
 
-            $old_user = User::where('email', $u['email'])->first(); 
-            if($old_user){
-                $errors['phone_number'] = "User with same email or phone number already exist.";
-                return redirect('register')
-                    ->withErrors($errors)
-                    ->withInput();
-                    die();
-            }
-
-            $u['password'] = Hash::make($request->input("password"));
-            $users = User::create($u);
-
-            $credentials['email'] = $u['email'];
-            $credentials['password'] = $request->input("password");
-
-            if (Auth::attempt($credentials)) {
-                $request->session()->regenerate();
-                return redirect()->intended('dashboard');
+            if ($admin->save()) {
+                DB::table('admin_role_users')->insert([
+                    'role_id' => 3,
+                    'user_id' => $admin->id
+                ]);
             } else {
-                return redirect()->intended('login');
+                $errors['username'] = "Failed to created your account. Please try again.";
+                return redirect('register')
+                    ->withErrors($errors)
+                    ->withInput();
+                die();
             }
+
+
+            $u['email'] = $request->input("username");
+            $u['password'] = $request->input("password");
+            //$u['password'] = Hash::make($request->input("password"));
+            $remember = $request->get('remember', true);
+
+            if (Admin::guard()->attempt($u, $remember)) {
+                admin_toastr(trans('admin.login_successful'));
+                $request->session()->regenerate();
+                return redirect()->intended('admin');
+                die();
+            }
+
+            return back()->withErrors([
+                'username' => 'The provided credentials do not match our records.',
+            ]);
         }
         return view('main.register');
     }

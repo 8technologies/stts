@@ -27,18 +27,18 @@
   <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition login-page" @if(config('admin.login_background_image'))style="background: url({{config('admin.login_background_image')}}) no-repeat;background-size: cover;"@endif>
+<body class="hold-transition login-page" @if(config('admin.login_background_image'))style="background: url({{ url(config('admin.login_background_image')) }}) no-repeat;background-size: cover;"@endif>
 <div class="login-box">
 
   <!-- /.login-logo -->
-  <div class="login-box-body">
+  <div class="login-box-body"> 
       <div class="login-logo h6 pt-4">
-    <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}}</b></a>
+    <a href="{{ admin_url('/') }}"><b>{{ config('admin.name') }}</b></a>
   </div>
 
 
     @if (config('admin.login_background_image_2'))
-        <img width="100%" class="mb-5" src="{{config('admin.login_background_image_2')}}" alt="">
+        <img width="100%" class="mb-5" src="{{ url (config('admin.login_background_image_2')) }}" alt="">
     @endif
     
     <p class="login-box-msg text-dark">Login To Your Account</p>
@@ -84,6 +84,7 @@
         </div>
         <!-- /.col -->
       </div>
+      <p class="border mt-3 pt-3" style="border-top: 1px gray solid">Don't have an account?  <a href="{{url("register")}}">Register</a></p>
     </form>
 
   </div>
