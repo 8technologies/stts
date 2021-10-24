@@ -16,20 +16,23 @@ use Encore\Admin\Facades\Admin;
 class Utils
 {
 
-    public static function has_role($item,$role){
-        $roles = $item->roles()->get(); 
-        foreach($roles as $r){
-            if($r->slug == $role){
+    public static function has_role($item, $role)
+    {
+        $roles = $item->roles()->get();
+        foreach ($roles as $r) {
+            if ($r->slug == $role) {
                 return true;
             }
         }
         return false;
     }
 
-    public static function can_create_sr4()
+    public static function can_create_sr6()
     {
-        $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+        $recs = FormSr6::where('administrator_id',  Admin::user()->id)->get();
         foreach ($recs as $key => $value) {
+
+          
             if (!$value->valid_from) {
                 return false;
             }
@@ -41,6 +44,31 @@ class Utils
             $then = strtotime($value->valid_until);
             if ($now < $then) {
                 return true;
+            }else{
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static function can_create_sr4()
+    {
+        $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+        foreach ($recs as $key => $value) {
+            
+            if (!$value->valid_from) {
+                return false;
+            }
+            if (!$value->valid_until) {
+                return false;
+            }
+
+            $now = time();
+            $then = strtotime($value->valid_until);
+            if ($now < $then) {
+                return true;
+            }else{
+                return false;
             }
         }
         return true;

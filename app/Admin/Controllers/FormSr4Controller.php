@@ -20,7 +20,7 @@ class FormSr4Controller extends AdminController
      *
      * @var string
      */
-    protected $title = 'FormSr4';
+    protected $title = 'Form SR4 - Seed Merchant';
 
     /**
      * Make a grid builder.
@@ -242,9 +242,17 @@ class FormSr4Controller extends AdminController
     protected function form()
     {
 
-
+        if (!Utils::can_create_sr4()) {
+            admin_warning("Warning", "You cannot create a new SR4 form with a while still having another active one.");
+            return redirect(admin_url('form-sr6s'));
+        }
 
         $form = new Form(new FormSr4());
+        $form->disableCreatingCheck();
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableDelete();
+            $tools->disableView();
+        });
 
         $form->setWidth(8, 4);
         Admin::style('.form-group  {margin-bottom: 25px;}');

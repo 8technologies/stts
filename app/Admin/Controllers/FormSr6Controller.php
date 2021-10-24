@@ -3,6 +3,9 @@
 namespace App\Admin\Controllers;
 
 use App\Models\FormSr6;
+use App\Models\Utils;
+use Carbon\Carbon;
+use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -17,7 +20,7 @@ class FormSr6Controller extends AdminController
      *
      * @var string
      */
-    protected $title = 'FormSr6';
+    protected $title = 'Form SR6 - Seed Grower';
 
     /**
      * Make a grid builder.
@@ -28,32 +31,81 @@ class FormSr6Controller extends AdminController
     {
         $grid = new Grid(new FormSr6());
 
-        $grid->column('id', __('Id'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('administrator_id', __('Administrator id'));
-        $grid->column('name_of_applicant', __('Name of applicant'));
-        $grid->column('address', __('Address'));
-        $grid->column('company_initials', __('Company initials'));
-        $grid->column('premises_location', __('Premises location'));
-        $grid->column('years_of_expirience', __('Years of expirience'));
-        $grid->column('dealers_in', __('Dealers in'));
-        $grid->column('previous_grower_number', __('Previous grower number'));
-        $grid->column('cropping_histroy', __('Cropping histroy'));
-        $grid->column('have_adequate_isolation', __('Have adequate isolation'));
-        $grid->column('have_adequate_labor', __('Have adequate labor'));
-        $grid->column('aware_of_minimum_standards', __('Aware of minimum standards'));
-        $grid->column('signature_of_applicant', __('Signature of applicant'));
-        $grid->column('grower_number', __('Grower number'));
-        $grid->column('registration_number', __('Registration number'));
-        $grid->column('valid_from', __('Valid from'));
-        $grid->column('valid_until', __('Valid until'));
-        $grid->column('status', __('Status'));
-        $grid->column('inspector', __('Inspector'));
-        $grid->column('status_comment', __('Status comment'));
+
+
+        if (Admin::user()->isRole('basic-user')) {
+            $grid->model()->where('administrator_id', '=', Admin::user()->id);
+
+
+            if (!Utils::can_create_sr6()) {
+                $grid->disableCreateButton();
+            }
+
+            $grid->actions(function ($actions) {
+                $status = ((int)(($actions->row['status'])));
+                if (
+                    $status == 2 ||
+                    $status == 5 ||
+                    $status == 6
+                ) {
+                    $actions->disableDelete();
+                    $actions->disableEdit();
+                }
+            });
+        } else if (Admin::user()->isRole('inspector')) {
+            $grid->model()->where('inspector', '=', Admin::user()->id);
+            $grid->disableCreateButton();
+
+            $grid->actions(function ($actions) {
+                $status = ((int)(($actions->row['status'])));
+                $actions->disableDelete();
+                if (
+                    $status == 1
+                ) {
+                    $actions->disableEdit();
+                }
+            });
+        } else {
+            $grid->disableCreateButton();
+        }
+
+        $grid->column('id', __('Id'))->sortable();
+
+        $grid->column('created_at', __('Created'))->display(function ($item) {
+            return Carbon::parse($item)->diffForHumans();
+        })->sortable();
+
+        $grid->column('status', __('Status'))->display(function ($status) {
+            return Utils::tell_status($status);
+        })->sortable();
+
+        $grid->column('valid_from', __('Starts'))->display(function ($item) {
+            return Carbon::parse($item)->diffForHumans();
+        })->sortable();
+        $grid->column('valid_until', __('Exipires'))->display(function ($item) {
+            return Carbon::parse($item)->diffForHumans();
+        })->sortable();
+
+        $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
+            $u = Administrator::find($userId);
+            if (!$u)
+                return "-";
+            return $u->name;
+        })->sortable();
+
+        $grid->column('address', __('Address'))->sortable();
+
+
+        $grid->column('inspector', __('Inspector'))->display(function ($userId) {
+            $u = Administrator::find($userId);
+            if (!$u)
+                return "Not assigned";
+            return $u->name;
+        })->sortable();
 
         return $grid;
     }
+
 
     /**
      * Make a show builder.
@@ -64,6 +116,11 @@ class FormSr6Controller extends AdminController
     protected function detail($id)
     {
         $show = new Show(FormSr6::findOrFail($id));
+        $show->panel()
+        ->tools(function ($tools) {
+            $tools->disableEdit();
+            $tools->disableDelete();
+        });;
 
         $show->field('id', __('Id'));
         $show->field('created_at', __('Created at'));
@@ -100,12 +157,17 @@ class FormSr6Controller extends AdminController
     protected function form()
     {
 
+        if (!Utils::can_create_sr6()) {
+            admin_warning("Warning", "You cannot create a new SR6 form with a while still having another active one.");
+            return redirect(admin_url('form-sr6s'));
+        }
+
         session_start();
-        if(!isset($_SESSION['sr6_refreshed'])){
-            $_SESSION['sr6_refreshed']="yes";
+        if (!isset($_SESSION['sr6_refreshed'])) {
+            $_SESSION['sr6_refreshed'] = "yes";
             $my_uri = $_SERVER['REQUEST_URI'];
-            Admin::script('window.location.href="'.$my_uri.'";');
-        }else{
+            Admin::script('window.location.href="' . $my_uri . '";');
+        } else {
             unset($_SESSION['sr6_refreshed']);
         }
         $form = new Form(new FormSr6());
@@ -120,8 +182,13 @@ class FormSr6Controller extends AdminController
             }
         });
 
-        
 
+
+        $form->disableCreatingCheck();
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableDelete();
+            $tools->disableView();
+        });
 
         $form->setWidth(8, 4);
         Admin::style('.form-group  {margin-bottom: 25px;}');
@@ -146,32 +213,32 @@ class FormSr6Controller extends AdminController
                 ->required();
 
             $repeat = "";
-            if($form->isEditing()){
+            if ($form->isEditing()) {
                 $sec  = ((int)(request()->segment(3)));
-                if($sec > 0){
+                if ($sec > 0) {
                     $da = FormSr6::findOrFail($sec);
-                    if($da){
-                        if(isset($da->dealers_in)){
-                            if(strlen($da->dealers_in)>3){
+                    if ($da) {
+                        if (isset($da->dealers_in)) {
+                            if (strlen($da->dealers_in) > 3) {
                                 $_reapeat_data = json_decode($da->dealers_in);
 
                                 foreach ($_reapeat_data as $key => $val) {
                                     $repeat .= '<tr data-repeater-item>
-                                    <td><input value="'.$val->crop.'" class="form-control" required name="crop" type="text"></td>
-                                    <td><input value="'.$val->variety.'" class="form-control" required name="variety" type="text"></td>
-                                    <td><input value="'.$val->ha.'" class="form-control" required name="ha" type="text"></td>
-                                    <td><input value="'.$val->origin.'" class="form-control" required name="origin" type="text"></td>
+                                    <td><input value="' . $val->crop . '" class="form-control" required name="crop" type="text"></td>
+                                    <td><input value="' . $val->variety . '" class="form-control" required name="variety" type="text"></td>
+                                    <td><input value="' . $val->ha . '" class="form-control" required name="ha" type="text"></td>
+                                    <td><input value="' . $val->origin . '" class="form-control" required name="origin" type="text"></td>
                                     <td><button class="btn btn-danger btn-sm" data-repeater-delete type="button">
                                     <span>Delete</span>
                                   </button></td>
                                     </tr>';
-                                } 
+                                }
                             }
                         }
                     }
-                } 
+                }
             }
-            if(strlen($repeat)<4){
+            if (strlen($repeat) < 4) {
                 $repeat .= '<tr data-repeater-item>
                                     <td><input placeholder="Crop" value="" class="form-control" required name="crop" type="text"></td>
                                     <td><input placeholder="Variety" value="" class="form-control" required name="variety" type="text"></td>
@@ -182,8 +249,8 @@ class FormSr6Controller extends AdminController
                                   </button></td>
                                     </tr>';
             }
-            
-          
+
+
             $form->html('<h3>I/We wish to apply for a license to produce seed as indicated below:</h3>');
             $form->html('<div class="repeater">
             <table class="table">
@@ -197,7 +264,7 @@ class FormSr6Controller extends AdminController
                     </tr>
                 </thead>
                 <tbody data-repeater-list="group-a">
-                    '.$repeat.'
+                    ' . $repeat . '
                 </tbody>
             </table>
             <input data-repeater-create class="btn btn-success btn-sm" type="button" value="Add record" />
@@ -219,18 +286,45 @@ class FormSr6Controller extends AdminController
 
             //$form->textarea('dealers_in', __('Dealers in'));
             $form->text('previous_grower_number', __('Previous grower number'));
-            $form->textarea('cropping_histroy', __('Cropping histroy'));
-            $form->switch('have_adequate_isolation', __('Have adequate isolation'));
-            $form->switch('have_adequate_labor', __('Have adequate labor'));
-            $form->switch('aware_of_minimum_standards', __('Aware of minimum standards'));
-            $form->textarea('signature_of_applicant', __('Signature of applicant'));
-            $form->text('grower_number', __('Grower number'));
-            $form->text('registration_number', __('Registration number'));
-            $form->datetime('valid_from', __('Valid from'))->default(date('Y-m-d H:i:s'));
-            $form->datetime('valid_until', __('Valid until'))->default(date('Y-m-d H:i:s'));
-            $form->text('status', __('Status'));
-            $form->number('inspector', __('Inspector'));
-            $form->textarea('status_comment', __('Status comment'));
+            $form->textarea('cropping_histroy', __('Cropping histroy'))->required();
+            $form->select(
+                'have_adequate_isolation',
+                __('Do you have adequate isolation?')
+            )
+                ->options([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                ])
+                ->required();
+            $form->select(
+                'have_adequate_labor',
+                __('Do you have adequate labor to carry out all farm operations in a timely manner?')
+            )
+                ->options([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                ])
+                ->required();
+            $form->select(
+                'aware_of_minimum_standards',
+                __('Are you aware that only seed that meets the minimum standards shall be accepted as certified seed?')
+            )
+                ->options([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                ])
+                ->required();
+            $form->file('signature_of_applicant', __('Signature of applicant'))->required();
+
+            if (Admin::user()->isRole('admin')) {
+                $form->text('grower_number', __('Grower number'));
+                $form->text('registration_number', __('Registration number'));
+                $form->datetime('valid_from', __('Valid from'))->default(date('Y-m-d H:i:s'));
+                $form->datetime('valid_until', __('Valid until'))->default(date('Y-m-d H:i:s'));
+                $form->text('status', __('Status'));
+                $form->number('inspector', __('Inspector'));
+                $form->textarea('status_comment', __('Status comment'));
+            }
         }
 
         return $form;
