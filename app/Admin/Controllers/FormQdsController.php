@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\FormSr6;
+use App\Models\FormQds;
 use App\Models\Utils;
 use Carbon\Carbon;
 use Encore\Admin\Auth\Database\Administrator;
@@ -14,14 +14,14 @@ use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Support\Facades\Auth;
 
-class FormSr6Controller extends AdminController
+class FormQdsController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = 'Form SR6 - Seed Grower';
+    protected $title = 'QDS R1 - Quality Declared Seed Producer';
 
     /**
      * Make a grid builder.
@@ -30,7 +30,7 @@ class FormSr6Controller extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new FormSr6());
+        $grid = new Grid(new FormQds());
 
 
 
@@ -110,7 +110,6 @@ class FormSr6Controller extends AdminController
         return $grid;
     }
 
-
     /**
      * Make a show builder.
      *
@@ -119,7 +118,7 @@ class FormSr6Controller extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(FormSr6::findOrFail($id));
+        $show = new Show(FormQds::findOrFail($id));
         $show->panel()
             ->tools(function ($tools) {
                 $tools->disableEdit();
@@ -128,59 +127,59 @@ class FormSr6Controller extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('created_at', __('Created at'))
-        ->as(function ($item) {
-            if (!$item) {
-                return "-";
-            }
-            return Carbon::parse($item)->diffForHumans();
-        });
+            ->as(function ($item) {
+                if (!$item) {
+                    return "-";
+                }
+                return Carbon::parse($item)->diffForHumans();
+            });
         $show->field('administrator_id', __('Administrator id'))
-        ->as(function ($userId) {
-            $u = Administrator::find($userId);
-            if (!$u)
-                return "-";
-            return $u->name;
-        });
+            ->as(function ($userId) {
+                $u = Administrator::find($userId);
+                if (!$u)
+                    return "-";
+                return $u->name;
+            });
         $show->field('name_of_applicant', __('Name of applicant'));
         $show->field('address', __('Address'));
         $show->field('company_initials', __('Company initials'));
         $show->field('premises_location', __('Premises location'));
         $show->field('years_of_expirience', __('Years of expirience'));
-        $show->field('dealers_in', __('Dealers in')) 
-        ->unescape()
-        ->as(function ($item) {
-            if(!$item){
-                return "None";
-            }
-            if(strlen($item)<10){
-                return "None";
-            }
-            $_data = json_decode($item);
+        $show->field('dealers_in', __('Dealers in'))
+            ->unescape()
+            ->as(function ($item) {
+                if (!$item) {
+                    return "None";
+                }
+                if (strlen($item) < 10) {
+                    return "None";
+                }
+                $_data = json_decode($item);
 
-            $headers = ['Crop', 'Variety', 'Ha', 'Origin'];
-            $rows = array();
-            foreach ($_data as $key => $val) {
-                $row['crop'] = $val->crop;
-                $row['variety'] = $val->variety;
-                $row['ha'] = $val->ha;
-                $row['origin'] = $val->origin;
-                $rows[]= $row;
-            }
+                $headers = ['Crop', 'Variety', 'Ha', 'Origin'];
+                $rows = array();
+                foreach ($_data as $key => $val) {
+                    $row['crop'] = $val->crop;
+                    $row['variety'] = $val->variety;
+                    $row['ha'] = $val->ha;
+                    $row['origin'] = $val->origin;
+                    $rows[] = $row;
+                }
 
-            $table = new Table($headers, $rows); 
-            return $table;
-        });
+                $table = new Table($headers, $rows);
+                return $table;
+            });
         $show->field('previous_grower_number', __('Previous grower number'));
         $show->field('cropping_histroy', __('Cropping histroy'));
         $show->field('have_adequate_isolation', __('Have adequate isolation'))
-        ->as(function ($item) {
-            if ($item) {
-                return "Yes";
-            } else {
-                return "No";
-            }
-            return $item;
-        });
+            ->as(function ($item) {
+                if ($item) {
+                    return "Yes";
+                } else {
+                    return "No";
+                }
+                return $item;
+            });
         $show->field('have_adequate_labor', __('Have adequate labor'))->as(function ($item) {
             if ($item) {
                 return "Yes";
@@ -190,14 +189,14 @@ class FormSr6Controller extends AdminController
             return $item;
         });
         $show->field('aware_of_minimum_standards', __('Aware of minimum standards'))
-        ->as(function ($item) {
-            if ($item) {
-                return "Yes";
-            } else {
-                return "No";
-            }
-            return $item;
-        });
+            ->as(function ($item) {
+                if ($item) {
+                    return "Yes";
+                } else {
+                    return "No";
+                }
+                return $item;
+            });
         $show->field('signature_of_applicant', __('Signature of applicant'))->file();
         $show->field('grower_number', __('Grower number'));
         $show->field('registration_number', __('Registration number'));
@@ -232,11 +231,11 @@ class FormSr6Controller extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new FormSr6());
+        $form = new Form(new FormQds());
         if ($form->isCreating()) {
-            if (!Utils::can_create_sr6()) {
-                admin_warning("Warning", "You cannot create a new SR6 form with a while still having another active one.");
-                return redirect(admin_url('form-sr6s'));
+            if (!Utils::can_create_qds()) {
+                admin_warning("Warning", "You cannot create a new QDS form with a while still having another active one.");
+                return redirect(admin_url('form-qds'));
             }
         }
 
@@ -285,7 +284,7 @@ class FormSr6Controller extends AdminController
             $form->text('address', __('Address'))->required();
             $form->text('company_initials', __('Company initials'))->required();
             $form->text('premises_location', __('Premises location'))->required();
-            $form->text('years_of_expirience', __('Years of expirience as seed grower'))
+            $form->text('years_of_expirience', __('Enter Applicant years of experience as a quality declared seed (QDS) grower'))
                 ->rules('min:1')
                 ->attribute('type', 'number')
                 ->required();
@@ -294,7 +293,7 @@ class FormSr6Controller extends AdminController
             if ($form->isEditing()) {
                 $sec  = ((int)(request()->segment(3)));
                 if ($sec > 0) {
-                    $da = FormSr6::findOrFail($sec);
+                    $da = FormQds::findOrFail($sec);
                     if ($da) {
                         if (isset($da->dealers_in)) {
                             if (strlen($da->dealers_in) > 3) {
@@ -329,7 +328,7 @@ class FormSr6Controller extends AdminController
             }
 
 
-            $form->html('<h3>I/We wish to apply for a license to produce seed as indicated below:</h3>');
+            $form->html('<h3>I/We wish to apply for a license to produce quality declared seed (QDS) as indicated below:</h3>');
             $form->html('<div class="repeater">
             <table class="table">
                 <thead>
@@ -363,8 +362,19 @@ class FormSr6Controller extends AdminController
 
 
             //$form->textarea('dealers_in', __('Dealers in'));
-            $form->text('previous_grower_number', __('Previous grower number'));
+            $form->text('previous_grower_number', __('Previous QDS grower in the past number:'))
+                ->help("Leave it blank if not applicatible");
             $form->textarea('cropping_histroy', __('Cropping histroy'))->required();
+            $form->select(
+                'have_adequate_isolation',
+                __('Do you have adequate storage facilities to handle the resultant seed?')
+            )
+                ->options([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                ])
+                ->required();
+
             $form->select(
                 'have_adequate_isolation',
                 __('Do you have adequate isolation?')
@@ -374,6 +384,7 @@ class FormSr6Controller extends AdminController
                     '0' => 'No',
                 ])
                 ->required();
+
             $form->select(
                 'have_adequate_labor',
                 __('Do you have adequate labor to carry out all farm operations in a timely manner?')

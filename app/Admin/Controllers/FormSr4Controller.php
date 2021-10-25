@@ -97,6 +97,9 @@ class FormSr4Controller extends AdminController
 
 
         $grid->column('inspector', __('Inspector'))->display(function ($userId) {
+            if (Admin::user()->isRole('basic-user')) {
+                return "-";
+            }
             $u = Administrator::find($userId);
             if (!$u)
                 return "Not assigned";
@@ -242,12 +245,16 @@ class FormSr4Controller extends AdminController
     protected function form()
     {
 
-        if (!Utils::can_create_sr4()) {
-            admin_warning("Warning", "You cannot create a new SR4 form with a while still having another active one.");
-            return redirect(admin_url('form-sr6s'));
+        $form = new Form(new FormSr4());
+        if ($form->isCreating()) {
+
+            if (!Utils::can_create_sr4()) {
+                admin_warning("Warning", "You cannot create a new SR4 form with a while still having another active one.");
+                return redirect(admin_url('form-sr6s'));
+            }
         }
 
-        $form = new Form(new FormSr4());
+
         $form->disableCreatingCheck();
         $form->tools(function (Form\Tools $tools) {
             $tools->disableDelete();
@@ -441,7 +448,7 @@ class FormSr4Controller extends AdminController
             $form->text('address', __('Address'))->readonly();
             $form->text('company_initials', __('Company initials'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
-
+ 
             $form->radio('status', __('Status'))
                 ->options([
                     '1' => 'Pending',
