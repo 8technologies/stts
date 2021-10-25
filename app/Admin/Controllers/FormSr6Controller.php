@@ -44,13 +44,14 @@ class FormSr6Controller extends AdminController
 
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
+                $actions->disableEdit();
                 if (
                     $status == 2 ||
                     $status == 5 ||
                     $status == 6
                 ) {
                     $actions->disableDelete();
-                    $actions->disableEdit();
+
                 }
             });
         } else if (Admin::user()->isRole('inspector')) {
@@ -128,59 +129,58 @@ class FormSr6Controller extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('created_at', __('Created at'))
-        ->as(function ($item) {
-            if (!$item) {
-                return "-";
-            }
-            return Carbon::parse($item)->diffForHumans();
-        });
+            ->as(function ($item) {
+                if (!$item) {
+                    return "-";
+                }
+                return Carbon::parse($item)->diffForHumans();
+            });
         $show->field('administrator_id', __('Administrator id'))
-        ->as(function ($userId) {
-            $u = Administrator::find($userId);
-            if (!$u)
-                return "-";
-            return $u->name;
-        });
+            ->as(function ($userId) {
+                $u = Administrator::find($userId);
+                if (!$u)
+                    return "-";
+                return $u->name;
+            });
         $show->field('name_of_applicant', __('Name of applicant'));
         $show->field('address', __('Address'));
-        $show->field('company_initials', __('Company initials'));
         $show->field('premises_location', __('Premises location'));
-        $show->field('years_of_expirience', __('Years of expirience'));
-        $show->field('dealers_in', __('Dealers in')) 
-        ->unescape()
-        ->as(function ($item) {
-            if(!$item){
-                return "None";
-            }
-            if(strlen($item)<10){
-                return "None";
-            }
-            $_data = json_decode($item);
+        $show->field('years_of_expirience', __('Years of experience'));
+        $show->field('dealers_in', __('Dealers in'))
+            ->unescape()
+            ->as(function ($item) {
+                if (!$item) {
+                    return "None";
+                }
+                if (strlen($item) < 10) {
+                    return "None";
+                }
+                $_data = json_decode($item);
 
-            $headers = ['Crop', 'Variety', 'Ha', 'Origin'];
-            $rows = array();
-            foreach ($_data as $key => $val) {
-                $row['crop'] = $val->crop;
-                $row['variety'] = $val->variety;
-                $row['ha'] = $val->ha;
-                $row['origin'] = $val->origin;
-                $rows[]= $row;
-            }
+                $headers = ['Crop', 'Variety', 'Ha', 'Origin'];
+                $rows = array();
+                foreach ($_data as $key => $val) {
+                    $row['crop'] = $val->crop;
+                    $row['variety'] = $val->variety;
+                    $row['ha'] = $val->ha;
+                    $row['origin'] = $val->origin;
+                    $rows[] = $row;
+                }
 
-            $table = new Table($headers, $rows); 
-            return $table;
-        });
+                $table = new Table($headers, $rows);
+                return $table;
+            });
         $show->field('previous_grower_number', __('Previous grower number'));
         $show->field('cropping_histroy', __('Cropping histroy'));
         $show->field('have_adequate_isolation', __('Have adequate isolation'))
-        ->as(function ($item) {
-            if ($item) {
-                return "Yes";
-            } else {
-                return "No";
-            }
-            return $item;
-        });
+            ->as(function ($item) {
+                if ($item) {
+                    return "Yes";
+                } else {
+                    return "No";
+                }
+                return $item;
+            });
         $show->field('have_adequate_labor', __('Have adequate labor'))->as(function ($item) {
             if ($item) {
                 return "Yes";
@@ -190,14 +190,14 @@ class FormSr6Controller extends AdminController
             return $item;
         });
         $show->field('aware_of_minimum_standards', __('Aware of minimum standards'))
-        ->as(function ($item) {
-            if ($item) {
-                return "Yes";
-            } else {
-                return "No";
-            }
-            return $item;
-        });
+            ->as(function ($item) {
+                if ($item) {
+                    return "Yes";
+                } else {
+                    return "No";
+                }
+                return $item;
+            });
         $show->field('signature_of_applicant', __('Signature of applicant'))->file();
         $show->field('grower_number', __('Grower number'));
         $show->field('registration_number', __('Registration number'));
@@ -283,9 +283,8 @@ class FormSr6Controller extends AdminController
         if (Admin::user()->isRole('basic-user')) {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required()->required();
             $form->text('address', __('Address'))->required();
-            $form->text('company_initials', __('Company initials'))->required();
             $form->text('premises_location', __('Premises location'))->required();
-            $form->text('years_of_expirience', __('Years of expirience as seed grower'))
+            $form->text('years_of_expirience', __('Years of experience as seed grower'))
                 ->rules('min:1')
                 ->attribute('type', 'number')
                 ->required();
@@ -362,9 +361,29 @@ class FormSr6Controller extends AdminController
             Admin::js('/assets/js/vendor/form-repeater.min.js');
 
 
-            //$form->textarea('dealers_in', __('Dealers in'));
-            $form->text('previous_grower_number', __('Previous grower number'));
-            $form->textarea('cropping_histroy', __('Cropping histroy'))->required();
+
+            $form->radio(
+                'as',
+                __('I/We have/has not been a seed grower in the past?')
+            )
+                ->options([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                ])
+                ->required()
+                ->when('1', function (Form $form) {
+                    $form->text('previous_grower_number', __('Enter Previous grower number'))
+                    ->help("Please specify Previous grower number");
+                });
+
+            $form->textarea('cropping_histroy', __('The field where i intend to grow the seed crop was previously under (Crop history for the last three season or years)'))->required();
+
+            $form->radio('have_adequate_storage', 'I/We have adequate storage facilities to handle the resultant seed:')
+            ->options([
+                '1' => 'Yes',
+                '0' => 'No',
+            ])->required(); 
+
             $form->select(
                 'have_adequate_isolation',
                 __('Do you have adequate isolation?')
@@ -392,12 +411,11 @@ class FormSr6Controller extends AdminController
                     '0' => 'No',
                 ])
                 ->required();
-            $form->file('signature_of_applicant', __('Signature of applicant'))->required();
+            $form->file('signature_of_applicant', __('Signature of applicant'));
         }
         if (Admin::user()->isRole('admin')) {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
-            $form->text('company_initials', __('Company initials'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
 
             $form->divider();
@@ -435,8 +453,7 @@ class FormSr6Controller extends AdminController
 
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
-            $form->text('company_initials', __('Company initials'))->readonly();
-            $form->text('premises_location', __('Premises location'))->readonly();
+            $form->text('premises_location', __('Location of Farm'))->readonly();
 
             $form->radio('status', __('Status'))
                 ->options([

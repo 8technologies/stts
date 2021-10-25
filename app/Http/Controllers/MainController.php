@@ -102,7 +102,19 @@ class MainController extends Controller
                 'first_name' => 'required|max:24|min:2',
                 'last_name' => 'required|max:24|min:2',
                 'password' => 'required|max:100|min:3',
+                'password1' => 'required|max:100|min:3',
             ]);
+
+            if(
+                $request->input("password") !=
+                $request->input("password1")
+            ){
+                $errors['password1'] = "Passwords did not match.";
+                return redirect('register')
+                    ->withErrors($errors)
+                    ->withInput();
+                die();
+            }
 
             $old_user = Administrator::where('username',  $request->input("username"))->first();
             if ($old_user) {

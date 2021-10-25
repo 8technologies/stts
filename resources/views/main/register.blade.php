@@ -88,10 +88,21 @@
             <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
           @endforeach
         @endif
-
         <input type="password" required class="form-control" placeholder="{{ trans('admin.password') }}" name="password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
+
+      <div class="form-group has-feedback {!! !$errors->has('password1') ?: 'has-error' !!}">
+
+        @if($errors->has('password1'))
+          @foreach($errors->get('password1') as $message)
+            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
+          @endforeach
+        @endif
+        <input type="password" required class="form-control" placeholder="Re-enter password" name="password1">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+
       <div class="row  mb-2">
         <div class="col-xs-8">
           @if(config('admin.auth.remember'))

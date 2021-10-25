@@ -42,6 +42,7 @@ class FormSr4Controller extends AdminController
             }
 
             $grid->actions(function ($actions) {
+                $actions->disableEdit();
                 $status = ((int)(($actions->row['status'])));
                 if (
                     $status == 2 ||
@@ -49,7 +50,7 @@ class FormSr4Controller extends AdminController
                     $status == 6
                 ) {
                     $actions->disableDelete();
-                    $actions->disableEdit();
+
                 }
             });
         } else if (Admin::user()->isRole('inspector')) {
@@ -136,8 +137,8 @@ class FormSr4Controller extends AdminController
         $show->field('address', __('Address'));
         $show->field('company_initials', __('Company initials'));
         $show->field('premises_location', __('Premises location'));
-        $show->field('years_of_expirience', __('Expirience in'));
-        $show->field('expirience_in', __('Years of expirience'))->as(function ($item) {
+        $show->field('years_of_expirience', __('Experience in'));
+        $show->field('expirience_in', __('Years of experience'))->as(function ($item) {
             return $item . " Years";
         });
         $show->field('dealers_in', __('Dealers in'));
@@ -277,18 +278,18 @@ class FormSr4Controller extends AdminController
             $form->text('company_initials', __('Company initials'))->required();
             $form->text('premises_location', __('Premises location'))->required();
 
-            $form->text('expirience_in', __('Years of expirience'))
+            $form->text('expirience_in', __('Years of experience'))
                 ->rules('min:1')
                 ->attribute('type', 'number')
                 ->required();
-            $form->select('years_of_expirience', __('Expirience in?'))
+            $form->select('years_of_expirience', __('Experience in?'))
                 ->options([
                     'Seed merchant',
                     'Seed grower',
                     'Seed seed producer',
                     'Other'
                 ])
-                ->help('What are you expirienced in?')
+                ->help('What are you experienced in?')
                 ->rules('required');
 
 
@@ -297,8 +298,8 @@ class FormSr4Controller extends AdminController
             $form->radio('dealers_in', __('Applicant is applying for production of?'))
                 ->options([
 
-                    'Agriculture crops' => 'Agriculture crops',
-                    'Horticulture crops' => 'Horticulture crops',
+                    'Agricultural crops' => 'Agricultural crops',
+                    'Horticultural crops' => 'Horticultural crops',
                     'Other' => 'Other'
                 ])
                 ->required()
@@ -310,10 +311,11 @@ class FormSr4Controller extends AdminController
 
             $form->radio('processing_of', __('Applicant is applying for processing of?'))
                 ->options([
-                    'Horticulture crops' => "Horticulture crops",
+                    'Agricultural crops' => 'Agricultural crops',
+                    'Horticultural crops' => 'Horticultural crops',
                     'Other' => 'Other'
                 ])
-                ->required()
+                ->required() 
                 ->when('Other', function (Form $form) {
                     $form->text('processing_of_other', __('Applicant is applying for Other processing of?'))
                         ->help('Specify if you selected "Other" processing.');
@@ -322,8 +324,8 @@ class FormSr4Controller extends AdminController
 
             $form->radio('marketing_of', __('Applicant is applying for marketing of?'))
                 ->options([
-                    'Agriculture crops' => 'Agriculture crops',
-                    'Horticulture crops' => 'Horticulture crops',
+                    'Agricultural crops' => 'Agricultural crops',
+                    'Horticultural crops' => 'Horticultural crops',
                     'Other' => 'Other'
                 ])
                 ->required()
@@ -335,7 +337,7 @@ class FormSr4Controller extends AdminController
 
 
 
-            $form->radio('have_adequate_land', 'Do you have adequate land to handel basic seed?')
+            $form->radio('have_adequate_land', 'Do you have adequate land to handle basic seed?')
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
@@ -345,9 +347,16 @@ class FormSr4Controller extends AdminController
                         ->attribute('type', 'number')
                         ->help("Please specify land (in Acres)")
                         ->attribute('min', 1);
-                });
+                }); 
 
-            $form->radio('have_adequate_equipment', 'Do you have adequate equipment to handel basic seed?')
+
+            $form->radio('have_adequate_storage', 'I/We have adequate storage facilities to handle the resultant seed:')
+                ->options([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                ])->required(); 
+
+            $form->radio('have_adequate_equipment', 'Do you have adequate equipment to handle basic seed?')
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
@@ -448,7 +457,7 @@ class FormSr4Controller extends AdminController
             $form->text('address', __('Address'))->readonly();
             $form->text('company_initials', __('Company initials'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
- 
+
             $form->radio('status', __('Status'))
                 ->options([
                     '1' => 'Pending',

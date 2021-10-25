@@ -22,7 +22,7 @@ class CreateFormSr6sTable extends Migration
             $table->string('address')->nullable();
             $table->string('company_initials')->nullable();
             $table->text('premises_location')->nullable();
-            $table->string('years_of_expirience')->nullable();
+            $table->string('years_of_experience')->nullable();
             $table->text('dealers_in')->nullable();
             $table->string('previous_grower_number')->nullable();
             $table->text('cropping_histroy')->nullable();

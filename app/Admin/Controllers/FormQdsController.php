@@ -43,6 +43,7 @@ class FormQdsController extends AdminController
             }
 
             $grid->actions(function ($actions) {
+                $actions->disableEdit();
                 $status = ((int)(($actions->row['status'])));
                 if (
                     $status == 2 ||
@@ -50,8 +51,7 @@ class FormQdsController extends AdminController
                     $status == 6
                 ) {
                     $actions->disableDelete();
-                    $actions->disableEdit();
-                }
+                 }
             });
         } else if (Admin::user()->isRole('inspector')) {
             $grid->model()->where('inspector', '=', Admin::user()->id);
@@ -144,7 +144,7 @@ class FormQdsController extends AdminController
         $show->field('address', __('Address'));
         $show->field('company_initials', __('Company initials'));
         $show->field('premises_location', __('Premises location'));
-        $show->field('years_of_expirience', __('Years of expirience'));
+        $show->field('years_of_expirience', __('Years of experience'));
         $show->field('dealers_in', __('Dealers in'))
             ->unescape()
             ->as(function ($item) {
@@ -403,7 +403,7 @@ class FormQdsController extends AdminController
                     '0' => 'No',
                 ])
                 ->required();
-            $form->file('signature_of_applicant', __('Signature of applicant'))->required();
+            $form->file('signature_of_applicant', __('Signature of applicant'));
         }
         if (Admin::user()->isRole('admin')) {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
