@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '6e9d1dc323559cce87a72b0e1cccd22e67f8aa22',
+        'reference' => 'da69bd47b0a6e6fa9fdd1f7c16feac496289bb5b',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -421,6 +421,15 @@
                 0 => '*',
             ),
         ),
+        'laravel-admin-ext/helpers' => array(
+            'pretty_version' => 'v2.0.2',
+            'version' => '2.0.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel-admin-ext/helpers',
+            'aliases' => array(),
+            'reference' => 'b5ee6173794797d665b5baf7cc2713b523c2dd33',
+            'dev_requirement' => false,
+        ),
         'laravel-admin-ext/media-manager' => array(
             'pretty_version' => 'v2.0.2',
             'version' => '2.0.2.0',
@@ -445,7 +454,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '6e9d1dc323559cce87a72b0e1cccd22e67f8aa22',
+            'reference' => 'da69bd47b0a6e6fa9fdd1f7c16feac496289bb5b',
             'dev_requirement' => false,
         ),
         'laravel/legacy-factories' => array(

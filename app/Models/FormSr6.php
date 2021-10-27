@@ -13,10 +13,11 @@ class FormSr6 extends Model
  
     }
 
-    protected $casts = [
-        //'premises_location ' =>'json',
-    ];
-
+  
+    public function form_sr6_has_crops()
+    {
+        return $this->hasMany(FormSr6HasCrop::class, 'form_sr6_id');
+    }
 
 
 }
