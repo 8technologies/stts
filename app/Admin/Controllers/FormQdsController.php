@@ -51,7 +51,7 @@ class FormQdsController extends AdminController
                     $status == 6
                 ) {
                     $actions->disableDelete();
-                 }
+                }
             });
         } else if (Admin::user()->isRole('inspector')) {
             $grid->model()->where('inspector', '=', Admin::user()->id);
@@ -237,7 +237,7 @@ class FormQdsController extends AdminController
                 admin_warning("Warning", "You cannot create a new QDS form with a while still having another active one.");
                 return redirect(admin_url('form-qds'));
             }
-        }
+        } 
 
 
         session_start();
@@ -279,10 +279,10 @@ class FormQdsController extends AdminController
 
         $form->hidden('dealers_in', __('dealers_in'));
 
+
         if (Admin::user()->isRole('basic-user')) {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required()->required();
             $form->text('address', __('Address'))->required();
-            $form->text('company_initials', __('Company initials'))->required();
             $form->text('premises_location', __('Premises location'))->required();
             $form->text('years_of_expirience', __('Enter Applicant years of experience as a quality declared seed (QDS) grower'))
                 ->rules('min:1')
@@ -362,11 +362,20 @@ class FormQdsController extends AdminController
 
 
             //$form->textarea('dealers_in', __('Dealers in'));
-            $form->text('previous_grower_number', __('Previous QDS grower in the past number:'))
-                ->help("Leave it blank if not applicatible");
-            $form->textarea('cropping_histroy', __('Cropping histroy'))->required();
-            $form->select(
-                'have_adequate_isolation',
+
+            $form->radio('have_been_qds', __('Have you been a QDS producer in the past?'))
+                ->options([
+                    '1' => 'Yes',
+                    '2' => 'No',
+                ])
+                ->required()
+                ->when('1', function (Form $form) {
+                    $form->text('previous_grower_number', __('Specify QDS grower number:'));
+                });
+
+
+            $form->radio(
+                'have_adequate_storage_facility',
                 __('Do you have adequate storage facilities to handle the resultant seed?')
             )
                 ->options([
@@ -375,7 +384,10 @@ class FormQdsController extends AdminController
                 ])
                 ->required();
 
-            $form->select(
+            $form->textarea('cropping_histroy', __('The field wehere I intend to grow the seeds was previous under? (Give it\'s cropping history)'))->required();
+
+
+            $form->radio(
                 'have_adequate_isolation',
                 __('Do you have adequate isolation?')
             )
@@ -383,9 +395,13 @@ class FormQdsController extends AdminController
                     '1' => 'Yes',
                     '0' => 'No',
                 ])
+                ->when('1', function (Form $form) {
+                    $form->text('isolation_distance', __('Specify isolation distance (in Meters)'))->attribute(['type' => 'number']);
+                })
                 ->required();
 
-            $form->select(
+
+            $form->radio(
                 'have_adequate_labor',
                 __('Do you have adequate labor to carry out all farm operations in a timely manner?')
             )
@@ -393,7 +409,15 @@ class FormQdsController extends AdminController
                     '1' => 'Yes',
                     '0' => 'No',
                 ])
+                ->when('1', function (Form $form) {
+                    $form->text('number_of_labors', __('Specify number of laborers'))->attribute(['type' => 'number']);
+                })
                 ->required();
+
+
+
+
+
             $form->select(
                 'aware_of_minimum_standards',
                 __('Are you aware that only seed that meets the minimum standards shall be accepted as certified seed?')
@@ -403,7 +427,7 @@ class FormQdsController extends AdminController
                     '0' => 'No',
                 ])
                 ->required();
-            $form->file('signature_of_applicant', __('Signature of applicant'));
+            $form->file('signature_of_applicant', __('Upload payment receipt'))->required();
         }
         if (Admin::user()->isRole('admin')) {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
@@ -452,9 +476,8 @@ class FormQdsController extends AdminController
             $form->radio('status', __('Status'))
                 ->options([
                     '3' => 'Halted',
-                    '4' => 'Rejcted',
-                    '5' => 'Accpted',
-                    '6' => 'Expired',
+                    '4' => 'Rejected',
+                    '5' => 'Accepted',
                 ])
                 ->required()
                 ->when('2', function (Form $form) {

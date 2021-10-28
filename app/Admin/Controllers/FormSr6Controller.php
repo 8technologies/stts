@@ -404,9 +404,8 @@ class FormSr6Controller extends AdminController
             $form->radio('status', __('Status'))
                 ->options([
                     '3' => 'Halted',
-                    '4' => 'Rejcted',
-                    '5' => 'Accpted',
-                    '6' => 'Expired',
+                    '4' => 'Rejected',
+                    '5' => 'Accepted', 
                 ])
                 ->required()
                 ->when('2', function (Form $form) {

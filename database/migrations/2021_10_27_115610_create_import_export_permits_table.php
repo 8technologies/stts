@@ -19,6 +19,7 @@ class CreateImportExportPermitsTable extends Migration
             $table->timestamps();
             $table->foreignIdFor(Administrator::class);
             $table->text("name")->nullable();
+            $table->tinyInteger("is_import")->nullable();
             $table->text("address")->nullable();
             $table->text("telephone")->nullable();
             $table->text("national_seed_board_reg_num")->nullable();
@@ -26,7 +27,16 @@ class CreateImportExportPermitsTable extends Migration
             $table->text("quantiry_of_seed")->nullable();
             $table->text("name_address_of_origin")->nullable();
             $table->text("details")->nullable();
-            $table->text("ista_certificate")->nullable();
+            $table->text("ista_certificate")->nullable(); 
+
+            $table->string('status')->nullable();
+            $table->integer('inspector')->nullable();
+            $table->text('status_comment')->nullable();
+            $table->text('dealers_in_other')->nullable();
+            $table->text('processing_of_other')->nullable();
+            $table->text('marketing_of_other')->nullable();
+            $table->text('souce_of_seed_other')->nullable();
+
         });
     }
 

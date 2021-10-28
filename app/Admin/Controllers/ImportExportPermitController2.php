@@ -17,14 +17,14 @@ use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Support\Facades\Auth;
 
-class ImportExportPermitController extends AdminController
+class ImportExportPermitController2 extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = 'Import Permit';
+    protected $title = 'Export Permit';
 
     /**
      * Make a grid builder.
@@ -35,16 +35,17 @@ class ImportExportPermitController extends AdminController
     {
         $grid = new Grid(new ImportExportPermit());
         $grid->disableFilter();
-        $grid->disableExport();
-        $grid->model()->where('is_import', '=', 1);
-
+        $grid->disableExport(); 
+        $grid->model()->where('is_import', '!=', 1);
         
 
 
         if (Admin::user()->isRole('basic-user')) {
-            $grid->model()->where('administrator_id', '=', Admin::user()->id);
+            $grid->model()->where(
+                'administrator_id', '=', Admin::user()->id
+            );
 
-            if (!Utils::can_create_import_form()) {
+            if (!Utils::can_create_export_form()) {
                 $grid->disableCreateButton();
             }
 
@@ -212,7 +213,7 @@ class ImportExportPermitController extends AdminController
 
 
         $user = Auth::user();
-        $form->hidden('is_import', __('is_import'))->value(1)->required();
+        $form->hidden('is_import', __('is_import'))->value(0)->required();
 
         if ($form->isCreating()) {
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
@@ -240,9 +241,11 @@ class ImportExportPermitController extends AdminController
                 ->required();
             $form->text(
                 'name_address_of_origin',
-                __('Name and address of origin')
+                __('Name and address of destination')
             )
                 ->required();
+            $form->file('ista_certificate', __('ISTA certificate'))->required();
+            $form->file('phytosanitary_certificate', __('Phytosanitary certificate'))->required();
 
 
             $form->html('<h3>I/We wish to apply for a license to import seed as indicated below:</h3>');

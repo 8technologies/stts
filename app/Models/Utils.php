@@ -16,6 +16,29 @@ use Encore\Admin\Facades\Admin;
 class Utils
 {
 
+
+
+    public static function has_valid_sr4()
+    {
+        $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+        foreach ($recs as $key => $value) {
+            if (!$value->valid_from) {
+                return null;
+            }
+            if (!$value->valid_until) {
+                return null;
+            }
+
+            $now = time();
+            $then = strtotime($value->valid_until);
+            if ($now < $then) {
+                return $value;
+            }
+        }
+        return null;
+    }
+
+
     public static function has_role($item, $role)
     {
         $roles = $item->roles()->get();
@@ -32,7 +55,7 @@ class Utils
         $recs = FormQds::where('administrator_id',  Admin::user()->id)->get();
         foreach ($recs as $key => $value) {
 
-            if($value->status == 4){
+            if ($value->status == 4) {
                 continue;
             }
 
@@ -47,10 +70,69 @@ class Utils
             $then = strtotime($value->valid_until);
             if ($now < $then) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
+        return true;
+    }
+
+    public static function can_create_export_form()
+    {
+        $recs = ImportExportPermit::where('administrator_id',  Admin::user()->id)->get();
+        foreach ($recs as $key => $value) {
+            if($value->is_import){
+                continue;
+            }
+
+            if ($value->status == 4) {
+                continue;
+            }
+
+            if (!$value->valid_from) {
+                return false;
+            }
+            if (!$value->valid_until) {
+                return false;
+            }
+
+            $now = time();
+            $then = strtotime($value->valid_until);
+            if ($now < $then) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    public static function can_create_import_form()
+    {
+        $recs = ImportExportPermit::where('administrator_id',  Admin::user()->id)->get();
+        foreach ($recs as $key => $value) {
+
+            if ($value->status == 4) {
+                continue;
+            }
+
+            if (!$value->valid_from) {
+                return false;
+            }
+            if (!$value->valid_until) {
+                return false;
+            }
+
+            $now = time();
+            $then = strtotime($value->valid_until);
+            if ($now < $then) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -59,7 +141,7 @@ class Utils
         $recs = FormSr6::where('administrator_id',  Admin::user()->id)->get();
         foreach ($recs as $key => $value) {
 
-            if($value->status == 4){
+            if ($value->status == 4) {
                 continue;
             }
 
@@ -74,7 +156,7 @@ class Utils
             $then = strtotime($value->valid_until);
             if ($now < $then) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
@@ -85,7 +167,7 @@ class Utils
     {
         $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
         foreach ($recs as $key => $value) {
-            
+
             if (!$value->valid_from) {
                 return false;
             }
@@ -97,7 +179,7 @@ class Utils
             $then = strtotime($value->valid_until);
             if ($now < $then) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
@@ -115,9 +197,9 @@ class Utils
         if ($status == 3)
             return '<span class="badge badge-warning">Halted</span>';
         if ($status == 4)
-            return '<span class="badge badge-danger">Rejcted</span>';
+            return '<span class="badge badge-danger">Rejected</span>';
         if ($status == 5)
-            return '<span class="badge badge-success">Accpted</span>';
+            return '<span class="badge badge-success">Accepted</span>';
         if ($status == 6)
             return '<span class="badge badge-danger">expired</span>';
         return "Pending";

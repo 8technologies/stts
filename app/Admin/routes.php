@@ -27,6 +27,7 @@ Route::group([
     $router->resource('form-qds', FormQdsController::class);
     $router->resource('crops', CropController::class);
     $router->resource('import-export-permits', ImportExportPermitController::class);
+    $router->resource('import-export-permits-2', ImportExportPermitController2::class);
     
     $router->resource('test1s', Test1Controller::class);
 });

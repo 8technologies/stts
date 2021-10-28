@@ -33,7 +33,7 @@ class FormSr6Controller extends AdminController
     {
         $grid = new Grid(new FormSr6());
 
-
+      
 
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
@@ -416,9 +416,8 @@ class FormSr6Controller extends AdminController
             $form->radio('status', __('Status'))
                 ->options([
                     '3' => 'Halted',
-                    '4' => 'Rejcted',
-                    '5' => 'Accpted',
-                    '6' => 'Expired',
+                    '4' => 'Rejected',
+                    '5' => 'Accepted', 
                 ])
                 ->required()
                 ->when('2', function (Form $form) {
@@ -432,6 +431,7 @@ class FormSr6Controller extends AdminController
                     }
                     $form->select('inspector', __('Inspector'))
                         ->options($_items)
+                        ->readonly()
                         ->help('Please select inspector')
                         ->rules('required');
                 })

@@ -12,6 +12,12 @@ class ImportExportPermitsHasCrops extends Model
     {
         return $this->belongsTo(ImportExportPermit::class, 'import_export_permit_id');
     }
+
+    public function variety()
+    { 
+        return $this->belongsTo(CropVariety::class, 'crop_variety_id');
+    }
+
     protected $fillable = [
         'crop_id',
         'varieties',

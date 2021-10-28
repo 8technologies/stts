@@ -61,7 +61,7 @@ class FormSr4Controller extends AdminController
                 $status = ((int)(($actions->row['status'])));
                 $actions->disableDelete();
                 if (
-                    $status == 1
+                    $status != 2
                 ) {
                     $actions->disableEdit();
                 }
@@ -228,12 +228,7 @@ class FormSr4Controller extends AdminController
             return Utils::tell_status($status);
         });
         $show->field('status_comment', __('Status comment'));
-        $show->field('inspector', __('Inspector'))->as(function ($userId) {
-            $u = Administrator::find($userId);
-            if (!$u)
-                return "Not assigned";
-            return $u->name;
-        });
+      
 
         return $show;
     }
@@ -455,9 +450,9 @@ class FormSr4Controller extends AdminController
         if (Admin::user()->isRole('admin')) {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
-            $form->text('company_initials', __('Company initials'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
 
+            $form->divider();
             $form->radio('status', __('Status'))
                 ->options([
                     '1' => 'Pending',
@@ -477,17 +472,10 @@ class FormSr4Controller extends AdminController
                         ->options($_items)
                         ->help('Please select inspector')
                         ->rules('required');
-                })
-                ->when('in', [3, 4], function (Form $form) {
-                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                        ->help("Please specify with a comment");
-                })
-                ->when('in', [5, 6], function (Form $form) {
-                    $form->date('valid_from', 'Valid from date?');
-                    $form->date('valid_until', 'Valid until date?');
                 });
         }
 
+        
         if (Admin::user()->isRole('inspector')) {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
@@ -497,9 +485,8 @@ class FormSr4Controller extends AdminController
             $form->radio('status', __('Status'))
                 ->options([
                     '3' => 'Halted',
-                    '4' => 'Rejcted',
-                    '5' => 'Accpted',
-                    '6' => 'Expired',
+                    '4' => 'Rejected',
+                    '5' => 'Accepted',
                 ])
                 ->required()
                 ->when('2', function (Form $form) {
@@ -513,14 +500,19 @@ class FormSr4Controller extends AdminController
                     }
                     $form->select('inspector', __('Inspector'))
                         ->options($_items)
+                        ->readonly()
                         ->help('Please select inspector')
                         ->rules('required');
+                        
                 })
                 ->when('in', [3, 4], function (Form $form) {
                     $form->textarea('status_comment', 'Enter status comment (Remarks)')
                         ->help("Please specify with a comment");
                 })
                 ->when('in', [5, 6], function (Form $form) {
+                    $form->text('seed_board_registration_number', __('Enter seed board registration number'))
+                    ->help("Please Enter seed board registration number")
+                    ->default(rand(10000,10000));
                     $form->date('valid_from', 'Valid from date?');
                     $form->date('valid_until', 'Valid until date?');
                 });
