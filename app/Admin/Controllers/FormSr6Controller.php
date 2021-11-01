@@ -62,7 +62,7 @@ class FormSr6Controller extends AdminController
                 $status = ((int)(($actions->row['status'])));
                 $actions->disableDelete();
                 if (
-                    $status == 1
+                    $status != 2
                 ) {
                     $actions->disableEdit();
                 }
@@ -135,7 +135,7 @@ class FormSr6Controller extends AdminController
                 }
                 return Carbon::parse($item)->diffForHumans();
             });
-        $show->field('administrator_id', __('Created by id'))
+        $show->field('administrator_id', __('Created by'))
             ->as(function ($userId) {
                 $u = Administrator::find($userId);
                 if (!$u)
@@ -200,7 +200,6 @@ class FormSr6Controller extends AdminController
             });
         $show->field('signature_of_applicant', __('Signature of applicant'))->file();
         $show->field('grower_number', __('Grower number'));
-        $show->field('registration_number', __('Registration number'));
         $show->field('valid_from', __('Valid from'))
             ->as(function ($item) {
                 if (!$item) {
@@ -430,8 +429,6 @@ class FormSr6Controller extends AdminController
 
                     $form->text('grower_number', __('Grower number'))
                         ->help("Please Enter grower number");
-                    $form->text('registration_number', __('Registration number'))
-                        ->help("Please Enter Registration number");
                     $form->date('valid_from', 'Valid from date?');
                     $form->date('valid_until', 'Valid until date?');
                 });

@@ -28,6 +28,8 @@ Route::group([
     $router->resource('crops', CropController::class);
     $router->resource('import-export-permits', ImportExportPermitController::class);
     $router->resource('import-export-permits-2', ImportExportPermitController2::class);
+    $router->resource('planting-returns', PlantingReturnController::class);
+
     
     $router->resource('test1s', Test1Controller::class);
 });

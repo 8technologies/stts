@@ -156,6 +156,7 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         'E' => 
         array (
             'Encore\\Admin\\Media\\' => 19,
+            'Encore\\Admin\\Latlong\\' => 21,
             'Encore\\Admin\\Helpers\\' => 21,
             'Encore\\Admin\\' => 13,
             'Egulias\\EmailValidator\\' => 23,
@@ -476,6 +477,10 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         array (
             0 => __DIR__ . '/..' . '/laravel-admin-ext/media-manager/src',
         ),
+        'Encore\\Admin\\Latlong\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel-admin-ext/latlong/src',
+        ),
         'Encore\\Admin\\Helpers\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel-admin-ext/helpers/src',
@@ -581,6 +586,8 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         'App\\Admin\\Controllers\\FormSr6Controller' => __DIR__ . '/../..' . '/app/Admin/Controllers/FormSr6Controller.php',
         'App\\Admin\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Admin/Controllers/HomeController.php',
         'App\\Admin\\Controllers\\ImportExportPermitController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ImportExportPermitController.php',
+        'App\\Admin\\Controllers\\ImportExportPermitController2' => __DIR__ . '/../..' . '/app/Admin/Controllers/ImportExportPermitController2.php',
+        'App\\Admin\\Controllers\\PlantingReturnController' => __DIR__ . '/../..' . '/app/Admin/Controllers/PlantingReturnController.php',
         'App\\Admin\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ProductController.php',
         'App\\Admin\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ProfileController.php',
         'App\\Admin\\Controllers\\Test1Controller' => __DIR__ . '/../..' . '/app/Admin/Controllers/Test1Controller.php',
@@ -604,6 +611,7 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         'App\\Models\\City' => __DIR__ . '/../..' . '/app/Models/City.php',
         'App\\Models\\Country' => __DIR__ . '/../..' . '/app/Models/Country.php',
         'App\\Models\\Crop' => __DIR__ . '/../..' . '/app/Models/Crop.php',
+        'App\\Models\\CropInspectionType' => __DIR__ . '/../..' . '/app/Models/CropInspectionType.php',
         'App\\Models\\CropVariety' => __DIR__ . '/../..' . '/app/Models/CropVariety.php',
         'App\\Models\\FormQds' => __DIR__ . '/../..' . '/app/Models/FormQds.php',
         'App\\Models\\FormSr4' => __DIR__ . '/../..' . '/app/Models/FormSr4.php',
@@ -611,6 +619,9 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         'App\\Models\\FormSr6HasCrop' => __DIR__ . '/../..' . '/app/Models/FormSr6HasCrop.php',
         'App\\Models\\Image' => __DIR__ . '/../..' . '/app/Models/Image.php',
         'App\\Models\\ImportExportPermit' => __DIR__ . '/../..' . '/app/Models/ImportExportPermit.php',
+        'App\\Models\\ImportExportPermitsHasCrops' => __DIR__ . '/../..' . '/app/Models/ImportExportPermitsHasCrops.php',
+        'App\\Models\\PlantingReturn' => __DIR__ . '/../..' . '/app/Models/PlantingReturn.php',
+        'App\\Models\\PlantingReturnCrop' => __DIR__ . '/../..' . '/app/Models/PlantingReturnCrop.php',
         'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/Product.php',
         'App\\Models\\ProductReview' => __DIR__ . '/../..' . '/app/Models/ProductReview.php',
         'App\\Models\\Profile' => __DIR__ . '/../..' . '/app/Models/Profile.php',
@@ -1512,6 +1523,15 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         'Encore\\Admin\\Helpers\\Scaffold\\ControllerCreator' => __DIR__ . '/..' . '/laravel-admin-ext/helpers/src/Scaffold/ControllerCreator.php',
         'Encore\\Admin\\Helpers\\Scaffold\\MigrationCreator' => __DIR__ . '/..' . '/laravel-admin-ext/helpers/src/Scaffold/MigrationCreator.php',
         'Encore\\Admin\\Helpers\\Scaffold\\ModelCreator' => __DIR__ . '/..' . '/laravel-admin-ext/helpers/src/Scaffold/ModelCreator.php',
+        'Encore\\Admin\\Latlong\\Extension' => __DIR__ . '/..' . '/laravel-admin-ext/latlong/src/Extension.php',
+        'Encore\\Admin\\Latlong\\Latlong' => __DIR__ . '/..' . '/laravel-admin-ext/latlong/src/Latlong.php',
+        'Encore\\Admin\\Latlong\\LatlongServiceProvider' => __DIR__ . '/..' . '/laravel-admin-ext/latlong/src/LatlongServiceProvider.php',
+        'Encore\\Admin\\Latlong\\Map\\AbstractMap' => __DIR__ . '/..' . '/laravel-admin-ext/latlong/src/Map/AbstractMap.php',
+        'Encore\\Admin\\Latlong\\Map\\Amap' => __DIR__ . '/..' . '/laravel-admin-ext/latlong/src/Map/Amap.php',
+        'Encore\\Admin\\Latlong\\Map\\Baidu' => __DIR__ . '/..' . '/laravel-admin-ext/latlong/src/Map/Baidu.php',
+        'Encore\\Admin\\Latlong\\Map\\Google' => __DIR__ . '/..' . '/laravel-admin-ext/latlong/src/Map/Google.php',
+        'Encore\\Admin\\Latlong\\Map\\Tencent' => __DIR__ . '/..' . '/laravel-admin-ext/latlong/src/Map/Tencent.php',
+        'Encore\\Admin\\Latlong\\Map\\Yandex' => __DIR__ . '/..' . '/laravel-admin-ext/latlong/src/Map/Yandex.php',
         'Encore\\Admin\\Layout\\Buildable' => __DIR__ . '/..' . '/encore/laravel-admin/src/Layout/Buildable.php',
         'Encore\\Admin\\Layout\\Column' => __DIR__ . '/..' . '/encore/laravel-admin/src/Layout/Column.php',
         'Encore\\Admin\\Layout\\Content' => __DIR__ . '/..' . '/encore/laravel-admin/src/Layout/Content.php',

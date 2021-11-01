@@ -12,6 +12,12 @@ class Crop extends Model
     {
         return $this->hasMany(CropVariety::class, 'crop_id');
     }
+
+    public function crop_inspection_types()
+    {
+        return $this->hasMany(CropInspectionType::class, 'crop_id');
+    }    
+
     protected $fillable = [
         'name',
     ];

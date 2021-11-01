@@ -18,6 +18,26 @@ class Utils
 
 
 
+    public static function has_valid_sr6()
+    {
+        $recs = FormSr6::where('administrator_id',  Admin::user()->id)->get();
+        foreach ($recs as $key => $value) {
+            if (!$value->valid_from) {
+                return null;
+            }
+            if (!$value->valid_until) {
+                return null;
+            }
+
+            $now = time();
+            $then = strtotime($value->valid_until);
+            if ($now < $then) {
+                return $value;
+            }
+        }
+        return null;
+    }
+
     public static function has_valid_sr4()
     {
         $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();

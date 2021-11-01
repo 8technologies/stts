@@ -53,7 +53,7 @@ class CropController extends AdminController
     {
         $show = new Show(Crop::findOrFail($id));
         $show->panel()
-            ->tools(function ($tools) { 
+            ->tools(function ($tools) {
                 $tools->disableDelete();
             });;
 
@@ -64,19 +64,15 @@ class CropController extends AdminController
         $show->field('number_of_days_before_submision', __('Number of days before submision'));
 
 
-
-
         $show->id(__('Crop varieties'))->unescape()->as(function ($id) {
-            $model =Crop::findOrFail($id); 
+            $model = Crop::findOrFail($id);
             $vars = "";
             foreach ($model->crop_varieties as $key => $value) {
-                $vars .= $value->name.", "; 
+                $vars .= $value->name . ", ";
             }
-            return '<p>'.$vars."</p>";
-       
-       });
+            return '<p>' . $vars . "</p>";
+        });
 
-       
         return $show;
     }
 
@@ -94,14 +90,22 @@ class CropController extends AdminController
             $tools->disableView();
         });
 
-        
+        $form->setWidth(8, 4);
         $form->text('name', __('Name'))->required();
-        $form->text('number_of_inspection', __('Number of inspection'))
-            ->attribute(['type' => 'number'])
-            ->required();
+
         $form->text('number_of_days_before_submision', __('Enter Number of days before submision'))
             ->attribute(['type' => 'number'])
             ->required();
+
+
+        $form->hasMany('crop_inspection_types', function (NestedForm $form) {
+            $form->setWidth(8, 4);
+            $form->text('inspection_stage', __('Inspection stage name'))->required();
+            $form->text('period_after_planting', __('Period after planting (in days)'))
+                ->attribute(['type' => 'number'])
+                ->required();
+        });
+
 
         $form->hasMany('crop_varieties', function (NestedForm $form) {
             $form->text('name', __('Crop Variety Name'))->required();
