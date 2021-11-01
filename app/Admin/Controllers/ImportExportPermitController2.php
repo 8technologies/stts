@@ -343,12 +343,7 @@ class ImportExportPermitController2 extends AdminController
                     $form->date('valid_until', 'Valid until date?');
                 });
 
-
-            // $form->datetime('valid_from', __('Valid from'))->default(date('Y-m-d H:i:s'));
-            // $form->datetime('valid_until', __('Valid until'))->default(date('Y-m-d H:i:s'));
-            // $form->text('status', __('Status'));
-            // $form->number('inspector', __('Inspector'));
-            // $form->textarea('status_comment', __('Status comment'));
+ 
         }
 
 
