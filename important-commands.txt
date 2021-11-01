@@ -23,6 +23,7 @@ php artisan admin:make FormSr4Controller --model=App\FormSr4
 
 php artisan admin:make PowerStationController --model=App\\Models\\PowerStation
 php artisan admin:make PlantingReturnController --model=App\\Models\\PlantingReturn
+php artisan admin:make FormSr10Controller --model=App\\Models\\FormSr10
 
 
 php artisan make:model PowerStation
