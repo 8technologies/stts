@@ -216,59 +216,66 @@ class PlantingReturnController extends AdminController
         if (Admin::user()->isRole('admin')) {
 
 
-            $form->hasMany('form_sr10s', function (NestedForm $form) {
-                $form->select('administrator_id', 'Inspector')->options(Administrator::all()->pluck('name', 'id'))->required();
-                $form->text('stage', __('State name'))->readonly();
-                $form->date('min_date', __('Min date'))->readonly();
- 
-                
-
-            }); 
-
+            $initzilized = false;
+            if ($form->isEditing()) {
+                $id = request()->route()->parameters['planting_return'];
+                $model = $form->model()->find($id);
+                if ($model != null) {
+                    if ($model->planting_return_crops != null) {
+                        if (count($model->planting_return_crops) > 0) {
+                            $initzilized = true;
+                        }
+                    }
+                }
+            }
 
             $form->display('name', __('Name'))->readonly();
             $form->display('address', __('Address'))->readonly();
             $form->select('crop_id', 'Crop')->options(Crop::all()->pluck('name', 'id'))
                 ->readonly();
 
-            if ($form->isEditing()) {
-                $id = request()->route()->parameters['planting_return'];
-                $model = $form->model()->find($id);
-                if ($model != null) {
-                    $form->display('crop_inspections', __('Inspections required'))->default($model->crop->number_of_inspection)->disable();
-                }
-            }
 
 
-            $form->divider();
-            $form->radio('status', __('Status'))
-                ->options([
-                    '1' => 'Pending',
-                    '2' => 'Under inspection',
-                ])
-                ->required()
-                ->when('2', function (Form $form) {
-                    $items = Administrator::all();
-                    $_items = [];
-                    foreach ($items as $key => $item) {
-                        if (!Utils::has_role($item, "inspector")) {
-                            continue;
-                        }
-                        $_items[$item->id] = $item->name . " - " . $item->id;
-                    }
-                    $form->select('inspector', __('Inspector'))
-                        ->options($_items)
-                        ->help('Please select inspector')
-                        ->rules('required');
-                })
-                ->when('in', [3, 4], function (Form $form) {
-                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                        ->help("Please specify with a comment");
-                })
-                ->when('in', [5, 6], function (Form $form) {
-                    $form->date('valid_from', 'Valid from date?');
-                    $form->date('valid_until', 'Valid until date?');
+            if ($initzilized) {
+                $form->hasMany('form_sr10s',__("SR 10 - Inspections schedules"), function (NestedForm $form) {
+                    $form->select('administrator_id', 'Inspector')->options(Administrator::all()->pluck('name', 'id'))->readonly();
+                    $form->text('stage', __('State name'))->readonly();
+                    $form->text('status', __('Status name'))->readonly();
+                    $form->text('status_comment', __('Status comment'))->readonly();
+                    $form->date('min_date', __('Min date'))->readonly();
                 });
+            } else {
+
+                $form->divider();
+                $form->radio('status', __('Status'))
+                    ->options([
+                        '1' => 'Pending',
+                        '2' => 'Under inspection',
+                    ])
+                    ->required()
+                    ->when('2', function (Form $form) {
+                        $items = Administrator::all();
+                        $_items = [];
+                        foreach ($items as $key => $item) {
+                            if (!Utils::has_role($item, "inspector")) {
+                                continue;
+                            }
+                            $_items[$item->id] = $item->name . " - " . $item->id;
+                        }
+                        $form->select('inspector', __('Inspector'))
+                            ->options($_items)
+                            ->help('Please select inspector')
+                            ->rules('required');
+                    })
+                    ->when('in', [3, 4], function (Form $form) {
+                        $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                            ->help("Please specify with a comment");
+                    })
+                    ->when('in', [5, 6], function (Form $form) {
+                        $form->date('valid_from', 'Valid from date?');
+                        $form->date('valid_until', 'Valid until date?');
+                    });
+            }
         }
 
 
