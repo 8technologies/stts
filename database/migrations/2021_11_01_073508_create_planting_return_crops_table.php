@@ -19,7 +19,7 @@ class CreatePlantingReturnCropsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignIdFor(PlantingReturn::class);
-            $table->foreignIdFor(CropVariety::class);
+            $table->foreignIdFor(CropVariety::class); 
             $table->text("lot_number")->nullable();
             $table->text("size_of_land")->nullable();
             $table->text("date_planted")->nullable();

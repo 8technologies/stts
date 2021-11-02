@@ -12,6 +12,7 @@ php artisan make:migration create_import_export_permits_table
 php artisan make:migration create_planting_return_crops_table
 php artisan make:migration create_crop_inspection_types_table
 php artisan make:migration create_form_sr10s_table
+php artisan make:migration create_form_sr10_has_crop_varieties_table
 php artisan make:migration create_form_sr10_has_variety_inspections_table
 
 
@@ -36,3 +37,4 @@ php artisan make:model PlantingReturn
 php artisan make:model PlantingReturnCrops
 php artisan make:model CropInspectionType
 php artisan make:model FormSr10
+php artisan make:model FormSr10HasVarietyInspection

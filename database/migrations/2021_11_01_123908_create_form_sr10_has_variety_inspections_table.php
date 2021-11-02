@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\FormSr10;
+use App\Models\PlantingReturnCrop;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,8 @@ class CreateFormSr10HasVarietyInspectionsTable extends Migration
             $table->timestamps();
 
             $table->foreignIdFor(FormSr10::class);
+            $table->foreignIdFor(PlantingReturnCrop::class);
+
             $table->text("seed_class")->nullable();            
             $table->text("size_of_field")->nullable();       
             $table->text("off_types")->nullable();
