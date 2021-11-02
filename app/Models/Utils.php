@@ -222,6 +222,8 @@ class Utils
             return '<span class="badge badge-success">Accepted</span>';
         if ($status == 6)
             return '<span class="badge badge-danger">expired</span>';
+        if ($status == 7)
+            return '<span class="badge badge-success">Provisional</span>';
         return "Pending";
     }
 

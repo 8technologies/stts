@@ -163,8 +163,9 @@ class PlantingReturnController extends AdminController
                                             $d['is_active'] = 0;
                                         }
                                         $d['is_done'] = 0;
-                                        $d['status_comment'] = ""; 
+                                        $d['status_comment'] = "";
                                         $d['planting_return_id'] = $model->id;
+                                        
                                         $d['administrator_id'] = $_POST['inspector'];
                                         $date_planted = Carbon::parse($model->date_planted);
                                         $date_planted->addDays($inspe->period_after_planting);
@@ -241,13 +242,14 @@ class PlantingReturnController extends AdminController
                 $id = request()->route()->parameters['planting_return'];
                 $model = $form->model()->find($id);
                 if ($model != null) {
-                    if ($model->planting_return_crops != null) {
-                        if (count($model->planting_return_crops) > 0) {
-                            $initialized = true;
-                            if ($model->status != null || $model->status != 1) {
+                    if ($model->administrator_id != null)
+                        if ($model->planting_return_crops != null) {
+                            if (count($model->planting_return_crops) > 0) {
+                                $initialized = true;
+                                if ($model->status != null || $model->status != 1) {
+                                }
                             }
                         }
-                    }
                 }
             }
 

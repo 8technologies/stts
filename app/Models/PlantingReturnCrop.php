@@ -9,6 +9,11 @@ class PlantingReturnCrop extends Model
 {
     use HasFactory; 
 
+    public function crop_variety()
+    { 
+        return $this->belongsTo(CropVariety::class);
+    }
+
     public function planting_return()
     { 
         return $this->belongsTo(PlantingReturn::class);
