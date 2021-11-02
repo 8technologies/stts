@@ -23,6 +23,8 @@ class FormSr10 extends Model
         'submited_date',
         'min_date',
         'max_date',
+        'is_active',
+        'is_done',
     ];
 
 }

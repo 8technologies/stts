@@ -42,6 +42,16 @@ class PlantingReturnController extends AdminController
 
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
+            $grid->actions(function ($actions) {
+
+                $status = ((int)(($actions->row['status'])));
+                if (
+                    $status != 1
+                ) {
+                    $actions->disableDelete();
+                    $actions->disableEdit();
+                }
+            });
         } else if (Admin::user()->isRole('inspector')) {
         } else {
         }
@@ -134,6 +144,7 @@ class PlantingReturnController extends AdminController
 
 
         $form->saving(function (Form $form) {
+            $is_active_made = false;
             if (Admin::user()->isRole('admin')) {
                 $id = request()->route()->parameters['planting_return'];
                 $model = $form->model()->find($id);
@@ -145,7 +156,14 @@ class PlantingReturnController extends AdminController
                                     foreach ($model->crop->crop_inspection_types as $key => $inspe) {
                                         $d['stage'] = $inspe->inspection_stage;
                                         $d['status'] = '1';
-                                        $d['status_comment'] = "";
+                                        if (!$is_active_made) {
+                                            $d['is_active'] = 1;
+                                            $is_active_made = true;
+                                        } else {
+                                            $d['is_active'] = 0;
+                                        }
+                                        $d['is_done'] = 0;
+                                        $d['status_comment'] = ""; 
                                         $d['planting_return_id'] = $model->id;
                                         $d['administrator_id'] = $_POST['inspector'];
                                         $date_planted = Carbon::parse($model->date_planted);
@@ -207,7 +225,9 @@ class PlantingReturnController extends AdminController
             });
             $form->divider();
 
-            $form->text('seed_rate', __('Seed rate per hectare'))->attribute('type', 'float')->required();
+            $form->text('seed_rate', __('Seed rate per hectare (in KGs)'))->attribute('type', 'float')->required();
+            $form->text('amount_enclosed', __('Amount enclosed for application'))->attribute('type', 'number')->required();
+            $form->file('payment_receipt', __('Payment receipt'))->required();
             $form->text('registerd_dealer', __('Registerd seed merchant/dealer to whome the entire seed stock will be sold'));
             $form->latlong('latitude', 'longitude', 'Location of the land')->default(['lat' => 0.3130291, 'lng' => 32.5290854])->required();
         }
@@ -216,14 +236,16 @@ class PlantingReturnController extends AdminController
         if (Admin::user()->isRole('admin')) {
 
 
-            $initzilized = false;
+            $initialized = false;
             if ($form->isEditing()) {
                 $id = request()->route()->parameters['planting_return'];
                 $model = $form->model()->find($id);
                 if ($model != null) {
                     if ($model->planting_return_crops != null) {
                         if (count($model->planting_return_crops) > 0) {
-                            $initzilized = true;
+                            $initialized = true;
+                            if ($model->status != null || $model->status != 1) {
+                            }
                         }
                     }
                 }
@@ -236,13 +258,13 @@ class PlantingReturnController extends AdminController
 
 
 
-            if ($initzilized) {
-                $form->hasMany('form_sr10s',__("SR 10 - Inspections schedules"), function (NestedForm $form) {
-                    $form->select('administrator_id', 'Inspector')->options(Administrator::all()->pluck('name', 'id'))->readonly();
+            if ($initialized) {
+                $form->hasMany('form_sr10s', __("SR 10 - Inspections schedules"), function (NestedForm $form) {
+                    $form->select('administrator_id', 'Inspector')->options(Administrator::all()->pluck('name', 'id'));
                     $form->text('stage', __('State name'))->readonly();
                     $form->text('status', __('Status name'))->readonly();
                     $form->text('status_comment', __('Status comment'))->readonly();
-                    $form->date('min_date', __('Min date'))->readonly();
+                    $form->date('min_date', __('Min date'));
                 });
             } else {
 
