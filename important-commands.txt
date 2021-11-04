@@ -14,6 +14,7 @@ php artisan make:migration create_crop_inspection_types_table
 php artisan make:migration create_form_sr10s_table
 php artisan make:migration create_form_sr10_has_crop_varieties_table
 php artisan make:migration create_form_sr10_has_variety_inspections_table
+php artisan make:migration create_form_crop_declarations_table
 
 
 Encore\Admin\Auth\Database\Administrator::class,
@@ -25,6 +26,7 @@ php artisan admin:make FormSr4Controller --model=App\FormSr4
 php artisan admin:make PowerStationController --model=App\\Models\\PowerStation
 php artisan admin:make PlantingReturnController --model=App\\Models\\PlantingReturn
 php artisan admin:make FormSr10Controller --model=App\\Models\\FormSr10
+php artisan admin:make FormCropDeclarationController --model=App\\Models\\FormCropDeclaration
 
 
 php artisan make:model PowerStation
@@ -38,3 +40,5 @@ php artisan make:model PlantingReturnCrops
 php artisan make:model CropInspectionType
 php artisan make:model FormSr10
 php artisan make:model FormSr10HasVarietyInspection
+php artisan make:model FormCropDeclaration
+
