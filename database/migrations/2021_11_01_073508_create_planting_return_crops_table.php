@@ -15,11 +15,20 @@ class CreatePlantingReturnCropsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('planting_return_crops');
         Schema::create('planting_return_crops', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignIdFor(PlantingReturn::class);
-            $table->foreignIdFor(CropVariety::class); 
+            $table->foreignIdFor(PlantingReturn::class)
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreignIdFor(CropVariety::class)
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->text("lot_number")->nullable();
             $table->text("size_of_land")->nullable();
             $table->text("date_planted")->nullable();

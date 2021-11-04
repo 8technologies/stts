@@ -1,11 +1,13 @@
 <?php
 
+use App\Models\Crop;
+use App\Models\PlantingReturn;
 use Encore\Admin\Auth\Database\Administrator;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlantingReturnsTable extends Migration
+class CreateFormCropDeclarationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,18 +16,22 @@ class CreatePlantingReturnsTable extends Migration
      */
     public function up()
     {
-        //Schema::dropIfExists('planting_returns');
-        Schema::create('planting_returns', function (Blueprint $table) {
+        Schema::create('form_crop_declarations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
             $table->foreignIdFor(Administrator::class);
-            $table->text("name")->nullable();
-            $table->text("address")->nullable();
-            $table->text("telephone")->nullable();
+
+            $table->foreignIdFor(PlantingReturn::class);
+
+            $table->foreignIdFor(Crop::class);
+
+            $table->text("source_of_seed")->nullable();
+            $table->text("field_size")->nullable();
             $table->text("seed_rate")->nullable();
-            $table->text("registerd_dealer")->nullable();
-            $table->text("longitude")->nullable();
-            $table->text("latitude")->nullable();
+            $table->text("amount")->nullable();
+            $table->text("payment_receipt")->nullable();
+
         });
     }
 
@@ -36,6 +42,6 @@ class CreatePlantingReturnsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('planting_returns');
+        Schema::dropIfExists('form_crop_declarations');
     }
 }

@@ -14,14 +14,18 @@ class CreateCropInspectionTypesTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('crop_inspection_types');
         Schema::create('crop_inspection_types', function (Blueprint $table) {
             $table->id();
-            $table->timestamps(); 
-            $table->foreignIdFor(Crop::class);
+            $table->timestamps();
+            $table->foreignIdFor(Crop::class)
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->text("inspection_stage")->nullable();
             $table->text("period_after_planting")->nullable();
-        }); 
-
+        });
     }
 
     /**

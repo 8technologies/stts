@@ -15,10 +15,15 @@ class CreateFormSr10sTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('form_sr10s');
         Schema::create('form_sr10s', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignIdFor(PlantingReturn::class);
+            $table->foreignIdFor(PlantingReturn::class)
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+
             $table->text("stage")->nullable();
             $table->text("status")->nullable();
             $table->text("status_comment")->nullable();

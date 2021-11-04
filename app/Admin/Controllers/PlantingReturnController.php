@@ -43,8 +43,11 @@ class PlantingReturnController extends AdminController
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
             $grid->actions(function ($actions) {
-
                 $status = ((int)(($actions->row['status'])));
+                if($status == 4){
+                    $actions->disableDelete();
+                    $actions->disableEdit();
+                }
                 if (
                     $status != 1
                 ) {
@@ -53,9 +56,36 @@ class PlantingReturnController extends AdminController
                 }
             });
         } else if (Admin::user()->isRole('inspector')) {
-        } else {
-        }
+            $grid->actions(function ($actions) {
 
+                $status = ((int)(($actions->row['status'])));
+                if($status == 4){
+                    $actions->disableDelete();
+                    $actions->disableEdit();
+                }
+                if (
+                    $status != 1
+                ) {
+                    $actions->disableDelete();
+                    $actions->disableEdit();
+                }
+            });
+        } else if (Admin::user()->isRole('basic-user'))  {
+            $grid->actions(function ($actions) {
+
+                $status = ((int)(($actions->row['status'])));
+                if($status == 4){
+                    $actions->disableDelete();
+                    $actions->disableEdit();
+                }
+                if (
+                    $status != 1
+                ) {
+                    $actions->disableDelete();
+                    $actions->disableEdit();
+                }
+            });
+        }
 
         $grid->column('id', __('Id'));
         $grid->column('created_at', __('Created'))
@@ -149,7 +179,7 @@ class PlantingReturnController extends AdminController
                 $id = request()->route()->parameters['planting_return'];
                 $model = $form->model()->find($id);
                 if ($model != null) {
-                    if (count($model->form_sr10s) == 0) {
+                    if (count($model->form_sr10s) < 1) {
                         if ($model->crop != null) {
                             if ($model->crop->crop_inspection_types != null) {
                                 if (count($model->crop->crop_inspection_types) > 0) {
@@ -165,7 +195,7 @@ class PlantingReturnController extends AdminController
                                         $d['is_done'] = 0;
                                         $d['status_comment'] = "";
                                         $d['planting_return_id'] = $model->id;
-                                        
+
                                         $d['administrator_id'] = $_POST['inspector'];
                                         $date_planted = Carbon::parse($model->date_planted);
                                         $date_planted->addDays($inspe->period_after_planting);
@@ -174,6 +204,8 @@ class PlantingReturnController extends AdminController
                                         $new_form_sr = new FormSr10($d);
                                         $new_form_sr->save();
                                     }
+                                } else {
+                                    dd("No stages found found for this crop type.");
                                 }
                             }
                         }
@@ -235,21 +267,27 @@ class PlantingReturnController extends AdminController
 
 
         if (Admin::user()->isRole('admin')) {
-
+            Admin::script("$('document').ready(function(){
+                $('.remove').hide();
+                $('.add').hide();
+            });");
 
             $initialized = false;
             if ($form->isEditing()) {
                 $id = request()->route()->parameters['planting_return'];
                 $model = $form->model()->find($id);
                 if ($model != null) {
-                    if ($model->administrator_id != null)
-                        if ($model->planting_return_crops != null) {
-                            if (count($model->planting_return_crops) > 0) {
-                                $initialized = true;
-                                if ($model->status != null || $model->status != 1) {
-                                }
-                            }
+                    if ($model->inspector != null) {
+                        $inspector = ((int)($model->inspector));
+                        if ($inspector > 1) {
+                            $initialized = true;
+
+                            // if (count($model->planting_return_crops) > 0) {
+                            //     if ($model->status != null || $model->status != 1) {
+                            //     }
+                            // }
                         }
+                    }
                 }
             }
 

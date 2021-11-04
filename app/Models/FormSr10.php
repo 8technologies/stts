@@ -9,15 +9,24 @@ class FormSr10 extends Model
 {
     use HasFactory;
 
+    // this is a recommended way to declare event handlers
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($model) {
+            dd("time to deleting");
+        });
+    }
+
     public function planting_return()
-    { 
+    {
         return $this->belongsTo(PlantingReturn::class);
     }
 
     public function form_sr10_has_variety_inspections()
-    { 
+    {
         return $this->hasMany(FormSr10HasVarietyInspection::class);
-    } 
+    }
 
     protected $fillable = [
         'administrator_id',
@@ -31,5 +40,4 @@ class FormSr10 extends Model
         'is_active',
         'is_done',
     ];
-
 }

@@ -2,6 +2,8 @@
 
 namespace Encore\Admin\Auth\Database;
 
+use App\Models\FormQds;
+use App\Models\PlantingReturn;
 use Encore\Admin\Traits\DefaultDatetimeFormat;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -21,6 +23,16 @@ class Administrator extends Model implements AuthenticatableContract
     use DefaultDatetimeFormat;
 
     protected $fillable = ['username', 'password', 'name', 'avatar'];
+
+    public function planting_returns()
+    {
+        return $this->hasMany(PlantingReturn::class);
+    }
+
+    public function qds()
+    {
+        return $this->hasMany(FormQds::class);
+    }
 
     /**
      * Create a new Eloquent model instance.
@@ -70,9 +82,7 @@ class Administrator extends Model implements AuthenticatableContract
     public function roles(): BelongsToMany
     {
         $pivotTable = config('admin.database.role_users_table');
-
         $relatedModel = config('admin.database.roles_model');
-
         return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'role_id');
     }
 

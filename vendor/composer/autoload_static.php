@@ -616,6 +616,7 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         'App\\Models\\CropVariety' => __DIR__ . '/../..' . '/app/Models/CropVariety.php',
         'App\\Models\\FormQds' => __DIR__ . '/../..' . '/app/Models/FormQds.php',
         'App\\Models\\FormSr10' => __DIR__ . '/../..' . '/app/Models/FormSr10.php',
+        'App\\Models\\FormSr10HasVarietyInspection' => __DIR__ . '/../..' . '/app/Models/FormSr10HasVarietyInspection.php',
         'App\\Models\\FormSr4' => __DIR__ . '/../..' . '/app/Models/FormSr4.php',
         'App\\Models\\FormSr6' => __DIR__ . '/../..' . '/app/Models/FormSr6.php',
         'App\\Models\\FormSr6HasCrop' => __DIR__ . '/../..' . '/app/Models/FormSr6HasCrop.php',

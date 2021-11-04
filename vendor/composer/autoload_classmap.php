@@ -48,6 +48,7 @@ return array(
     'App\\Models\\CropVariety' => $baseDir . '/app/Models/CropVariety.php',
     'App\\Models\\FormQds' => $baseDir . '/app/Models/FormQds.php',
     'App\\Models\\FormSr10' => $baseDir . '/app/Models/FormSr10.php',
+    'App\\Models\\FormSr10HasVarietyInspection' => $baseDir . '/app/Models/FormSr10HasVarietyInspection.php',
     'App\\Models\\FormSr4' => $baseDir . '/app/Models/FormSr4.php',
     'App\\Models\\FormSr6' => $baseDir . '/app/Models/FormSr6.php',
     'App\\Models\\FormSr6HasCrop' => $baseDir . '/app/Models/FormSr6HasCrop.php',
