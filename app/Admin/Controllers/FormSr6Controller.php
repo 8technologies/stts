@@ -289,9 +289,6 @@ class FormSr6Controller extends AdminController
                 ->rules('min:1')
                 ->attribute('type', 'number')
                 ->required();
-
-            
-
             $form->html('<h3>I/We wish to apply for a license to produce seed as indicated below:</h3>');
                         
             $form->hasMany('form_sr6_has_crops',__('Click on New to Add Crops
