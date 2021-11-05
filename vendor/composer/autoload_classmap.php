@@ -48,6 +48,7 @@ return array(
     'App\\Models\\CropInspectionType' => $baseDir . '/app/Models/CropInspectionType.php',
     'App\\Models\\CropVariety' => $baseDir . '/app/Models/CropVariety.php',
     'App\\Models\\FormCropDeclaration' => $baseDir . '/app/Models/FormCropDeclaration.php',
+    'App\\Models\\FormCropDeclarationsHasCropVariety' => $baseDir . '/app/Models/FormCropDeclarationsHasCropVariety.php',
     'App\\Models\\FormQds' => $baseDir . '/app/Models/FormQds.php',
     'App\\Models\\FormSr10' => $baseDir . '/app/Models/FormSr10.php',
     'App\\Models\\FormSr10HasVarietyInspection' => $baseDir . '/app/Models/FormSr10HasVarietyInspection.php',

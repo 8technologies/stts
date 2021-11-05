@@ -31,7 +31,7 @@ Route::group([
     $router->resource('planting-returns', PlantingReturnController::class);
     $router->resource('form-sr10s', FormSr10Controller::class);
     $router->resource('form-crop-declarations', FormCropDeclarationController::class);
-
+    $router->resource('form-stock-examination-requests', FormStockExaminationRequestController::class);
 
     $router->resource('test1s', Test1Controller::class);
 });
