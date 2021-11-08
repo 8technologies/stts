@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\CropVariety;
 use App\Models\FormQds;
 use App\Models\FormStockExaminationRequest;
 use App\Models\ImportExportPermit;
@@ -153,7 +154,16 @@ class FormStockExaminationRequestController extends AdminController
     protected function form()
     {
         $form = new Form(new FormStockExaminationRequest());
-
+        if (Admin::user()->isRole('inspector')) {
+            $form->saving(function ($form) {
+                $id = request()->route()->parameters['form_stock_examination_request'];
+                $model = $form->model()->find($id);
+                if($model->status == 5){
+                    dd("good");
+                }
+                $form->status = 1;
+            });
+        }
         $import_permits = [];
         $planting_returnings = [];
         $all_planting_returning = [];
@@ -290,6 +300,14 @@ class FormStockExaminationRequestController extends AdminController
                             ->options($my_qds);
                     }
                 })->required();
+
+            $_items = [];
+            foreach (CropVariety::all() as $key => $item) {
+                $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
+            }
+            $form->select('crop_variety_id', 'Add Crop Variety')->options($_items)
+                ->required();
+
             $form->textarea('remarks', __('Enter remarks'))->required();
 
             $user = Auth::user();
@@ -304,7 +322,8 @@ class FormStockExaminationRequestController extends AdminController
             $model = $form->model()->find($id);
             $u = Administrator::where('id', $model->administrator_id)->firstOrFail();
 
-            $cat = "jahs";
+
+            $cat = "";
             if ($model->examination_category == 1) {
                 $cat =  'Imported seed';
             } else if ($cat == 2) {
@@ -349,9 +368,46 @@ class FormStockExaminationRequestController extends AdminController
         }
 
         if (Admin::user()->isRole('inspector')) {
-            $form->text('field_size', __('Enter field size (in Acres)'))->required();
-            $form->text('yield', __('Enter Yield/Seed quantity (in Metric tonnes)'))->required();
-            $form->text('date', __('Selected date sample was collected'));
+
+            $form->setTitle("Updating examination");
+
+            $_items = [];
+            foreach (CropVariety::all() as $key => $item) {
+                $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
+            }
+
+            $id = request()->route()->parameters['form_stock_examination_request'];
+            $model = $form->model()->find($id);
+
+            foreach (CropVariety::all() as $key => $item) {
+                $variety = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
+            }
+
+            $form->display('display', 'Crop Variety')
+                ->default($variety)
+                ->required();
+
+            $u = Administrator::where('id', $model->administrator_id)->firstOrFail();
+
+            $cat = "";
+            if ($model->examination_category == 1) {
+                $cat =  'Imported seed';
+            } else if ($cat == 2) {
+                $cat =  'Grower seed';
+            } else if ($cat == 3) {
+                $cat =  'QDs';
+            }
+            $form->display('name', __('Name of applicant'))
+                ->default($u->name);
+            $form->display('cat', __('Examination category'))
+                ->default($cat);
+            $form->divider();
+
+            $form->text('yield', __('Enter Yield/Seed quantity (in Metric tonnes)'))
+                ->attribute('type', 'number')
+                ->required();
+            $form->text('field_size', __('Enter field size (in Acres)'));
+            $form->date('date', __('Selected date sample was collected'));
 
             $form->divider();
             $form->html('<h3>Analysis results</h3>');
@@ -360,19 +416,18 @@ class FormStockExaminationRequestController extends AdminController
             $form->text('moisture_content', __('Enter moisture content'));
             $form->text('insect_damage', __('Insect damage'));
             $form->text('moldiness', __('Moldiness'));
-            $form->text('noxious_weeds', __('Noxious weeds')); 
-            
-            $form->radio('status', __('Examination decision'))
-            ->options([
-                '4' => 'Rejected',
-                '5' => 'Accepted',
-            ])
-            ->required()
-            ->when('in', [3, 4], function (Form $form) {
-                $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                    ->help("Please specify with a comment");
-            });
+            $form->text('noxious_weeds', __('Noxious weeds'));
 
+            $form->radio('status', __('Examination decision'))
+                ->options([
+                    '4' => 'Rejected',
+                    '5' => 'Accepted',
+                ])
+                ->required()
+                ->when('in', [3, 4], function (Form $form) {
+                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                        ->help("Please specify with a comment");
+                });
         }
 
         $form->tools(function (Form\Tools $tools) {
