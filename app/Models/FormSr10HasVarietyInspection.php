@@ -19,6 +19,5 @@ class FormSr10HasVarietyInspection extends Model
         'form_sr10_id',
         'planting_return_crop_id',
         'planting_return_crop_name',
- 
     ];
 }
