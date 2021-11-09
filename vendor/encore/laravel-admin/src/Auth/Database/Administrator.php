@@ -4,6 +4,7 @@ namespace Encore\Admin\Auth\Database;
 
 use App\Models\FormQds;
 use App\Models\PlantingReturn;
+use App\Models\StockRecord;
 use Encore\Admin\Traits\DefaultDatetimeFormat;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -23,6 +24,11 @@ class Administrator extends Model implements AuthenticatableContract
     use DefaultDatetimeFormat;
 
     protected $fillable = ['username', 'password', 'name', 'avatar'];
+
+    public function stock_records()
+    {
+        return $this->hasMany(StockRecord::class);
+    }
 
     public function planting_returns()
     {

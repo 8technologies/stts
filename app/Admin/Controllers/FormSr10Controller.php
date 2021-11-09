@@ -347,6 +347,10 @@ class FormSr10Controller extends AdminController
                         ->when('in', [3, 4], function (Form $form) {
                             $form->textarea('status_comment', 'Enter status comment (Remarks)')
                                 ->help("Please specify with a comment");
+                        })
+                        ->when('in', [5], function (Form $form) {
+                            $form->date('valid_from', 'Valid from date?');
+                            $form->date('valid_until', 'Valid until date?');
                         });
                 } else {
                     $form->radio('status', __('Inspection decision'))

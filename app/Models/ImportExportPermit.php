@@ -12,7 +12,7 @@ class ImportExportPermit extends Model
 
     public function import_export_permits_has_crops()
     {
-        return $this->hasMany(ImportExportPermitsHasCrops::class, 'import_export_permit_id');
+        return $this->hasMany(ImportExportPermitsHasCrops::class);
     }
 
 }

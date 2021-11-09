@@ -62,7 +62,7 @@ class FormCropDeclarationController extends AdminController
             });
         } else {
             $grid->disableCreateButton();
-        } 
+        }
 
         $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
             $u = Administrator::find($userId);
@@ -169,7 +169,7 @@ class FormCropDeclarationController extends AdminController
 
         $form->setWidth(8, 4);
         if (Admin::user()->isRole('basic-user')) {
-            $form->saving(function ($form){
+            $form->saving(function ($form) {
                 $form->status = 1;
             });
             $form->hidden('form_qd_id', __('form_qd_id'))->value($qds_id)->default($qds_id);
@@ -194,7 +194,7 @@ class FormCropDeclarationController extends AdminController
                 $footer->disableReset();
                 $footer->disableCreatingCheck();
             });
-            $form->text('status', __('Status'))->value(1)->attribute('value',1);
+            $form->hidden('status', __('Status'))->value(1)->attribute('value', 1);
         }
 
         $form->disableCreatingCheck();
@@ -241,7 +241,7 @@ class FormCropDeclarationController extends AdminController
         }
 
 
-        
+
         if (Admin::user()->isRole('inspector')) {
             $form->display('id', __('Crop Declaration Form ID:'))->disable();
             $form->display('field_size', __('Field (in Acres)'))->disable();
@@ -251,7 +251,7 @@ class FormCropDeclarationController extends AdminController
                 ->options([
                     '3' => 'Halted',
                     '4' => 'Rejected',
-                    '5' => 'Accepted', 
+                    '5' => 'Accepted',
                 ])
                 ->required()
                 ->when('2', function (Form $form) {
@@ -260,19 +260,18 @@ class FormCropDeclarationController extends AdminController
                     foreach ($items as $key => $item) {
                         if (!Utils::has_role($item, "inspector")) {
                             continue;
-                        }
+                        } 
                         $_items[$item->id] = $item->name . " - " . $item->id;
                     }
-                    $form->select('inspector', __('Inspector'))
-                        ->options($_items)
-                        ->help('Please select inspector')
-                        ->rules('required');
+                })
+                ->when('in', [5], function (Form $form) {
+                    $form->date('valid_from', 'Valid from date?');
+                    $form->date('valid_until', 'Valid until date?');
                 })
                 ->when('in', [3, 4], function (Form $form) {
                     $form->textarea('status_comment', 'Enter status comment (Remarks)')
                         ->help("Please specify with a comment");
                 });
- 
         }
 
 

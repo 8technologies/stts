@@ -11,6 +11,6 @@ class FormCropDeclaration extends Model
 
     public function form_crop_declarations_has_crop_varieties()
     {
-        return $this->hasMany(FormCropDeclarationsHasCropVariety::class);
+        return $this->hasMany(FormCropDeclarationsHasCropVariety::class); 
     }
 }

@@ -20,10 +20,10 @@ class CreateStockRecordsTable extends Migration
             $table->timestamps();
             $table->foreignIdFor(Administrator::class)->default(1);
             $table->foreignIdFor(CropVariety::class)->default(1);
-            $table->text("seed_class")->default(1);
-            $table->text("source")->default(1);
-            $table->text("detail")->default(1);
-            $table->bigInteger("quantity")->default(0);
+            $table->integer("seed_class")->nullable();
+            $table->text("source")->nullable();
+            $table->text("detail")->nullable();
+            $table->bigInteger("quantity")->nullable();
             $table->tinyInteger("is_deposit")->nullable();
         });
     }

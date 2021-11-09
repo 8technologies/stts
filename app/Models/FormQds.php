@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class FormQds extends Model
 {
-    use HasFactory;
+    use HasFactory; 
 }
