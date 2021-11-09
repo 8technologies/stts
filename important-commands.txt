@@ -31,6 +31,7 @@ php artisan admin:make PlantingReturnController --model=App\\Models\\PlantingRet
 php artisan admin:make FormSr10Controller --model=App\\Models\\FormSr10
 php artisan admin:make FormCropDeclarationController --model=App\\Models\\FormCropDeclaration
 php artisan admin:make FormStockExaminationRequestController --model=App\\Models\\FormStockExaminationRequest
+php artisan admin:make FormStockRecordController --model=App\\Models\\StockRecord
 
 
 php artisan make:model PowerStation
@@ -47,4 +48,5 @@ php artisan make:model FormSr10HasVarietyInspection
 php artisan make:model FormCropDeclaration
 php artisan make:model FormCropDeclarationsHasCropVariety
 php artisan make:model FormStockExaminationRequest
+php artisan make:model StockRecord
 
