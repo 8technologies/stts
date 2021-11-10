@@ -33,6 +33,7 @@ Route::group([
     $router->resource('form-crop-declarations', FormCropDeclarationController::class);
     $router->resource('form-stock-examination-requests', FormStockExaminationRequestController::class);
     $router->resource('stock-records', FormStockRecordController::class);
-
+    $router->resource('seed-labs', SeedLabController::class);
+    
     $router->resource('test1s', Test1Controller::class);
 });

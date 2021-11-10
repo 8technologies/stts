@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Crop;
 use App\Models\CropVariety;
 use App\Models\StockRecord;
 use Carbon\Carbon;
@@ -31,7 +32,25 @@ class FormStockRecordController extends AdminController
     {
         $grid = new Grid(new StockRecord());
 
-        $grid->column('id', __('Id'));
+        $grid->filter(function ($filter) {
+
+            if (Admin::user()->isRole('admin')) {
+                $filter->equal('administrator_id', "Filter by user")->select(Administrator::all()->pluck('name', 'id'));
+            }
+            $filter->equal('crop_variety_id', "Filter by crop variety")->select(CropVariety::all()->pluck('name', 'id'));
+            $filter->equal('is_deposit', "Filter by stock record type")->select([
+                '1' => "Stock in",
+                '0' => "Stock out",
+            ]);
+        });
+
+
+        if (!Admin::user()->isRole('admin')) {
+            $grid->model()->where('administrator_id', '=', Admin::user()->id);
+        }
+
+
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('created_at', __('Created'))
             ->display(function ($item) {
                 return Carbon::parse($item)->diffForHumans();
@@ -42,7 +61,7 @@ class FormStockRecordController extends AdminController
                 return $var->crop->name . ", " . $var->name;
             })->sortable();
 
-        $grid->column('seed_class', __('Seed class'));
+        $grid->column('detail', __('Reason'));
         $grid->column('is_deposit', __('Type'))
             ->display(function ($item) {
                 if ($item) {
@@ -51,8 +70,25 @@ class FormStockRecordController extends AdminController
                     return '<span class="badge">Stock out</span>';
                 }
             })->sortable();
+        $grid->column('quantity', __('Quantity (M. Tonnes)'))->display(function ($q) {
+            return number_format($q);
+        })->sortable()
+            ->totalRow(function ($amount) {
+                return number_format($amount);
+            });
 
-        $grid->column('quantity', __('Quantity'));
+
+
+        $grid->disableActions();
+        $grid->disableRowSelector();
+        $grid->disableColumnSelector();
+        $grid->actions(function (Grid\Displayers\Actions $actions) {
+            $actions->disableView();
+            $actions->disableEdit();
+            $actions->disableDelete();
+        });
+
+
         return $grid;
     }
 
@@ -88,6 +124,70 @@ class FormStockRecordController extends AdminController
     protected function form()
     {
         $form = new Form(new StockRecord());
+
+        $form->saving(function ($form) {
+            $receiver_id = 0;
+            $varity_id = ((int)($form->crop_variety_id));
+            $quantity = ((int)($form->quantity));
+            if ($quantity < 0) {
+                $quantity = (-1) * $quantity;
+            }
+            $varity = CropVariety::find($varity_id);
+            $detail_2 = $form->detail;
+
+            if ($form->is_transfer) {
+                $receiver_id = ((int)($form->seed_class));
+
+                if ($receiver_id < 0) {
+                    admin_error("Warning", "You did not select Receiver.");
+                    return redirect(admin_url('stock-records/create'));
+                }
+                $records = StockRecord::where([
+                    'administrator_id' => Admin::user()->id,
+                    'crop_variety_id' => $varity_id
+                ])->get();
+                $tot = 0;
+                foreach ($records as $key => $value) {
+                    $tot += ((int)($value->quantity));
+                }
+
+                if ($quantity > $tot) {
+                    admin_error("Warning", "You have insufitient quantity stock of crop vareity {$varity->crop->name} - {$varity->name}. You tried to 
+                    transfer " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
+                    return redirect(admin_url('stock-records/create'));
+                }
+
+                $receiver_record = new StockRecord();
+                $receiver_record->administrator_id = $receiver_id;
+                $receiver_record->crop_variety_id = $varity_id;
+                $receiver_record->detail = "Stock transfer from " . Admin::user()->name . ", ID: " . Admin::user()->id;
+                $receiver_record->source = "Stock transfer from " . Admin::user()->name . ", ID: " . Admin::user()->id;
+                $detail_2 = "Stock transfer to " . Administrator::find($receiver_id)->name . ", ID: " . Administrator::find($receiver_id)->id;
+                $receiver_record->is_deposit = 1;
+                $receiver_record->is_transfer = 1;
+                $receiver_record->seed_class = "-";
+                $receiver_record->quantity = $quantity;
+                if (!$receiver_record->save()) {
+                    dd("failed to transfer.");
+                }
+            }
+
+            $receiver_record_2 = new StockRecord();
+            $receiver_record_2->administrator_id = Admin::user()->id;
+            $receiver_record_2->crop_variety_id = $varity_id;
+            $receiver_record_2->detail = $detail_2;
+            $receiver_record_2->source = $detail_2;
+            $receiver_record_2->is_deposit = 0;
+            $receiver_record_2->is_transfer = 1;
+            $receiver_record_2->seed_class = "-";
+            $receiver_record_2->quantity = (-1) * ($quantity);
+            if (!$receiver_record_2->save()) {
+                dd("Failed to save transfer record.");
+            }
+            admin_success("Success!", "Stock record was created successfully!");
+            return redirect(admin_url('stock-records'));
+        });
+
         $user = Admin::user();
         $stock = [];
         $stock_ids = [];
@@ -141,8 +241,7 @@ class FormStockRecordController extends AdminController
         $recs = StockRecord::where('administrator_id', Admin::user()->id)->get();
         $form->select('crop_variety_id', __('Select crop variety'))
             ->options($vars)
-            ->required()
-            ->default(1);
+            ->required();
         //$form->textarea('seed_class', __('Seed class'));
         //$form->textarea('source', __('Source'));
         $form->hidden('is_deposit', __('Is deposit'));
@@ -157,6 +256,9 @@ class FormStockRecordController extends AdminController
                 $users = [];
                 foreach (Administrator::all() as $key => $value) {
                     if ($value->isRole('basic-user')) {
+                        if ($value->id == Admin::user()->id) {
+                            continue;
+                        }
                         $users[$value->id] = $value->name . ", ID: " . $value->id;
                     }
                 }
@@ -165,7 +267,6 @@ class FormStockRecordController extends AdminController
                     ->options($users)
                     ->help("Please specify with a comment");
             })
-            ->default(-1)
             ->when(0, function (Form $form) {
                 $form->textarea('detail', 'Enter details')
                     ->help("Please specify with a comment");

@@ -93,7 +93,8 @@ class FormSr6Controller extends AdminController
             if (!$u)
                 return "-";
             return $u->name;
-        })->sortable();
+        })->sortable(); 
+        
 
         $grid->column('address', __('Address'))->sortable();
 

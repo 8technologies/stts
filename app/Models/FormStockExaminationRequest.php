@@ -12,4 +12,10 @@ class FormStockExaminationRequest extends Model
     public function user(){
        return $this->belongsTo(Administrator::class);
     }
+
+    public function variety()
+    { 
+        return $this->belongsTo(CropVariety::class,'crop_variety_id');
+    }
+
 }

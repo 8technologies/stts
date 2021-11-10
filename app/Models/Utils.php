@@ -101,7 +101,7 @@ class Utils
     {
         $recs = ImportExportPermit::where('administrator_id',  Admin::user()->id)->get();
         foreach ($recs as $key => $value) {
-            if($value->is_import){
+            if ($value->is_import) {
                 continue;
             }
 
@@ -124,7 +124,7 @@ class Utils
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -213,7 +213,7 @@ class Utils
         if ($status == 1)
             return '<span class="badge badge-info">Pending</span>';
         if ($status == 2)
-            return '<span class="badge badge-primary">Under inspection</span>';
+            return '<span class="badge badge-primary">Inspection assigned</span>';
         if ($status == 3)
             return '<span class="badge badge-warning">Halted</span>';
         if ($status == 4)
@@ -226,6 +226,8 @@ class Utils
             return '<span class="badge badge-warning">Provisional</span>';
         if ($status == 8)
             return '<span class="badge badge-dark">Used</span>';
+        if ($status == 9)
+            return '<span class="badge badge-dark">Lab inspection</span>';
         return "Pending";
     }
 
