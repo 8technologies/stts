@@ -228,6 +228,12 @@ class Utils
             return '<span class="badge badge-dark">Used</span>';
         if ($status == 9)
             return '<span class="badge badge-dark">Lab inspection</span>';
+        if ($status == 10)
+            return '<span class="badge badge-warning">Lab test pending</span>';
+        if ($status == 11)
+            return '<span class="badge badge-success">Marketable</span>';
+        if ($status == 12)
+            return '<span class="badge badge-danger">Not Marketable</span>';
         return "Pending";
     }
 
