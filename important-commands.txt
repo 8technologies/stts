@@ -19,6 +19,8 @@ php artisan make:migration create_form_crop_declarations_has_crop_varieties_tabl
 php artisan make:migration create_form_stock_examination_requests_table
 php artisan make:migration create_stock_records_table
 php artisan make:migration create_seed_labs_table
+php artisan make:migration create_seed_labels_table
+php artisan make:migration create_seed_label_packages_table
 
 
 Encore\Admin\Auth\Database\Administrator::class,
@@ -33,6 +35,8 @@ php artisan admin:make FormSr10Controller --model=App\\Models\\FormSr10
 php artisan admin:make FormCropDeclarationController --model=App\\Models\\FormCropDeclaration
 php artisan admin:make FormStockExaminationRequestController --model=App\\Models\\FormStockExaminationRequest
 php artisan admin:make SeedLabController --model=App\\Models\\SeedLab
+php artisan admin:make SeedLabelPackageController --model=App\\Models\\SeedLabelPackage
+php artisan admin:make SeedLabelController --model=App\\Models\\SeedLabel
 
 
 php artisan make:model PowerStation
@@ -50,5 +54,7 @@ php artisan make:model FormCropDeclaration
 php artisan make:model FormCropDeclarationsHasCropVariety
 php artisan make:model FormStockExaminationRequest
 php artisan make:model StockRecord
-php artisan make:model SeedLab
+php artisan make:model SeedLabelPackage
+php artisan make:model SeedLabel
+php artisan make:model seed_labels
 
