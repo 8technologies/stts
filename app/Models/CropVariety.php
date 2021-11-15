@@ -13,6 +13,12 @@ class CropVariety extends Model
     {
         return $this->belongsTo(Crop::class, 'crop_id');
     }
+ 
+    public function seed_label_packages()
+    {
+        return $this->hasMany(SeedLabelPackage::class);
+    }
+
     protected $fillable = [
         'name',
     ];
