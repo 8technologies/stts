@@ -21,6 +21,7 @@ php artisan make:migration create_stock_records_table
 php artisan make:migration create_seed_labs_table
 php artisan make:migration create_seed_labels_table
 php artisan make:migration create_seed_label_packages_table
+php artisan make:migration create_marketable_seeds_table
 
 
 Encore\Admin\Auth\Database\Administrator::class,
@@ -37,6 +38,7 @@ php artisan admin:make FormStockExaminationRequestController --model=App\\Models
 php artisan admin:make SeedLabController --model=App\\Models\\SeedLab
 php artisan admin:make SeedLabelPackageController --model=App\\Models\\SeedLabelPackage
 php artisan admin:make SeedLabelController --model=App\\Models\\SeedLabel
+php artisan admin:make MarketableSeedController --model=App\\Models\\MarketableSeed
 
 
 php artisan make:model PowerStation
@@ -57,4 +59,5 @@ php artisan make:model StockRecord
 php artisan make:model SeedLabelPackage
 php artisan make:model SeedLabel
 php artisan make:model seed_labels
+php artisan make:model MarketableSeed
 

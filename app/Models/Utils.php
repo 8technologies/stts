@@ -234,6 +234,10 @@ class Utils
             return '<span class="badge badge-success">Marketable</span>';
         if ($status == 12)
             return '<span class="badge badge-danger">Not Marketable</span>';
+        if ($status == 13)
+            return '<span class="badge badge-info">Pending for labeling</span>';
+        if ($status == 14)
+            return '<span class="badge badge-success">Lables Printed</span>';
         return "Pending";
     }
 
