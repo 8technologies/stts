@@ -241,10 +241,10 @@ class MarketableSeedController extends AdminController
 
         $form->select('lab_test_number', __('Select crop variety'))
             ->options($vars)
-            ->default('A0001200B')
             ->required();
-        $form->text('quantity', __('Stock Out - Quantity'))->attribute('type', 'number')->required()->default(1000);
-        $form->textarea('detail', __('Detail'))->required()->default(1000);
+        $form->text('quantity', __('Stock Out - Quantity'))->attribute('type', 'number')->required();
+
+        $form->textarea('detail', __('Detail'))->required();
 
         $form->tools(function (Form\Tools $tools) {
 

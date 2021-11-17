@@ -64,7 +64,7 @@ class SeedLabelController extends AdminController
                     $status != 1 &&
                     $status != 3
                 ) {
-                    $actions->disableEdit();
+                    //$actions->disableEdit();
                     $actions->disableDelete();
                 }
             });
@@ -251,6 +251,9 @@ class SeedLabelController extends AdminController
             $form->hidden('crop_variety_id')->default(1);
             $form->hidden('status')->default(1)->attribute('value', '1');
             $form->text('quantity', __('Quantity'))->attribute('type', 'number')->required();
+            $form->text('price', __('Enter your selling unit price (Price per KG)'))->attribute('type', 'number')->required();
+            $form->image('image', __('Thumbnail Image'));
+            $form->multipleImage('images', __('Crop gallary'));
             $form->textarea('applicant_remarks', __('Remarks'));
             $form->file('receipt', __('Attach receipt'))->required();
         }
