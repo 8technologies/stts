@@ -204,7 +204,7 @@ class FormStockRecordController extends AdminController
 
         $headers = ['#', 'Variety', 'Quantity (in Metric tonnes)',];
         $rows = [];
-        $i = 0;
+        $i = 0; 
         foreach ($stock_ids as $key => $value) {
 
             if ($value['quantity'] > 0) {

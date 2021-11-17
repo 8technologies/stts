@@ -3,6 +3,7 @@
 namespace Encore\Admin\Auth\Database;
 
 use App\Models\FormQds;
+use App\Models\MarketableSeed;
 use App\Models\PlantingReturn;
 use App\Models\StockRecord;
 use Encore\Admin\Traits\DefaultDatetimeFormat;
@@ -28,6 +29,11 @@ class Administrator extends Model implements AuthenticatableContract
     public function stock_records()
     {
         return $this->hasMany(StockRecord::class);
+    }
+
+    public function marketable_seeds()
+    {
+        return $this->hasMany(MarketableSeed::class);
     }
 
     public function planting_returns()
