@@ -67,4 +67,5 @@ php artisan make:model seed_labels
 php artisan make:model MarketableSeed
 php artisan make:model Product
 php artisan make:model Order
+php artisan make:model AdminRoleUser
 
