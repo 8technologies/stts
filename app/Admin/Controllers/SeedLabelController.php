@@ -70,7 +70,7 @@ class SeedLabelController extends AdminController
             });
         } else if (Admin::user()->isRole('inspector')) {
             $grid->disableCreateButton();
-            $grid->model()->where('inspector', '=', Admin::user()->id);
+            $grid->model()->where('administrator_id', '=', Admin::user()->id);
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
                 $status = ((int)(($actions->row['status'])));
@@ -112,9 +112,10 @@ class SeedLabelController extends AdminController
             }
             return $_user->name;
         })->sortable();
-        $grid->column('seed_lab_id', __('Lab Test Number'))->display(function ($user) {
-            return $this->seed_lab->lot_number;
-        })->sortable();
+        // $grid->column('seed_lab_id', __('Lab Test Number'))->display(function ($user) {
+
+        //     return $this->seed_lab->lot_number;
+        // })->sortable();
 
         $grid->column('crop_variety_id', __('Crop variety'))->display(function ($user) {
             return $this->crop_variety->crop->name . " - " . $this->crop_variety->name;
@@ -192,18 +193,22 @@ class SeedLabelController extends AdminController
             $form->hidden('administrator_id', __('Administrator id'))
                 ->default($user->id);
 
-            foreach (SeedLab::where([
+            $res = SeedLab::where([
                 'administrator_id' => $user->id,
                 'status' => 5
-            ])->get() as $key => $sl) {
+            ])->get();
+            foreach ($res as $key => $sl) { 
                 if ($sl->quantity < 1) {
                     continue;
                 }
                 $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->crop->name . " - " . $sl->crop_variety->name . ", QTY: " . $sl->quantity . " KGs";
             }
 
+ 
+
+
             if (count($seed_labs) < 1) {
-                admin_error("Warning", "You don't have any  valid LOT NUMBER, apply for seed lap to aquire a lot number.");
+                admin_error("Warning", "You don't have any  valid LAB TEST NUMBER, apply for seed lap to aquire a lot number.");
                 return redirect(admin_url('seed-labels'));
             }
             $form->hidden('administrator_id')->default($user->id);

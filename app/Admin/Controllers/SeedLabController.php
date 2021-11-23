@@ -58,6 +58,10 @@ class SeedLabController extends AdminController
         $grid->column('collection_date', __('Collection date'));
 
 
+        $grid->column('quantity', __('Quantity'))->display(function ($quantity) {
+            return number_format($quantity);
+        })->sortable();
+
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
         })->sortable();
@@ -115,7 +119,8 @@ class SeedLabController extends AdminController
                 $status = ((int)(($actions->row['status'])));
             });
         } else if (Admin::user()->isRole('lab-technician')) {
-            $grid->model()->where('status', 10);
+            $grid->model()->where('status', 10)
+                ->orWhere('status', 5);
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
                 $status = ((int)(($actions->row['status'])));
@@ -340,7 +345,9 @@ class SeedLabController extends AdminController
                     if ($quantity < 1) {
                         $quantity = (-1) * $quantity;
                     }
+
                     $form->quantity = $quantity;
+
 
                     $records = StockRecord::where([
                         'administrator_id' => $model->user->id,
@@ -351,11 +358,13 @@ class SeedLabController extends AdminController
                         $tot += ((int)($value->quantity));
                     }
 
+                    
                     if ($quantity > $tot) {
                         admin_error("Warning", "There is insufitient quantity stock of crop vareity {$model->crop_variety->crop->name} - {$model->crop_variety->name}. You tried to 
                         enter quantity " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
                         return redirect(admin_url('seed-labs'));
                     }
+                    
                     $form->inspector_is_done = 1;
                 });
 
