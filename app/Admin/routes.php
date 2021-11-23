@@ -37,6 +37,8 @@ Route::group([
     $router->resource('seed-label-packages', SeedLabelPackageController::class);
     $router->resource('seed-labels', SeedLabelController::class);
     $router->resource('marketable-seeds', MarketableSeedController::class);
+    $router->resource('products', ProductController::class);
+    $router->resource('orders', OrderController::class);
     
     $router->resource('test1s', Test1Controller::class);
 });

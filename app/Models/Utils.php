@@ -17,6 +17,13 @@ class Utils
 {
 
 
+    public static function start_session()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
 
     public static function has_valid_sr6()
     {
@@ -206,6 +213,24 @@ class Utils
         return true;
     }
 
+
+
+    public static function tell_order_status($status)
+    {
+        if (!$status)
+            return '<span class="badge badge-info">Pending</span>';
+        if ($status == 1)
+            return '<span class="badge badge-info">Pending</span>';
+        if ($status == 2)
+            return '<span class="badge badge-warning">Shipping</span>';
+        if ($status == 3)
+            return '<span class="badge badge-success">Completed</span>';
+        if ($status == 4)
+            return '<span class="badge badge-danger">Canceled</span>';
+        if ($status == 5)
+            return '<span class="badge badge-warning">Processing</span>';
+    }
+
     public static function tell_status($status)
     {
         if (!$status)
@@ -309,12 +334,18 @@ class Utils
         return $thread;
     }
 
-    public static function get_file_url($link)
+    public static function get_file_url($name)
     {
-        $link = str_replace("public/", "", $link);
-        $link = str_replace("public", "", $link);
-        $link = "storage/" . $link;
-        return $link;
+
+        $url = url("/storage");
+        if ($name == null || (strlen($name) < 2)) {
+            $url .= '/default.png';
+        } else if (file_exists(public_path('storage/' . $name))) {
+            $url .= "/" . $name;
+        } else {
+            $url .= '/default.png';
+        }
+        return $url;
     }
 
     public static function make_slug($str)

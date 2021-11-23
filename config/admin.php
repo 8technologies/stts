@@ -160,7 +160,7 @@ return [
         // Image and file upload path under the disk above.
         'directory' => [
             'image' => '/',
-            'file'  => 'files',
+            'file'  => '/',
         ],
     ],
 
@@ -211,7 +211,7 @@ return [
     */
     'operation_log' => [
 
-        'enable' => true,
+        'enable' => false,
 
         /*
          * Only logging allowed methods in the list
@@ -225,7 +225,7 @@ return [
          * or specific method to path like: get:admin/auth/logs.
          */
         'except' => [
-            env('ADMIN_ROUTE_PREFIX', 'admin').'/auth/logs*',
+            env('ADMIN_ROUTE_PREFIX', 'admin') . '/auth/logs*',
         ],
     ],
 
@@ -301,8 +301,8 @@ return [
     | This value is used to set the background image of login page.
     |
     */
-    'login_background_image' =>  'assets/images/stts/bg/bg-1.jpg' ,
-    'login_background_image_2' =>  'assets/images/stts/bg/bg-2.jpeg' ,
+    'login_background_image' =>  'assets/images/stts/bg/bg-1.jpg',
+    'login_background_image_2' =>  'assets/images/stts/bg/bg-2.jpeg',
 
     /*
     |--------------------------------------------------------------------------
@@ -351,9 +351,7 @@ return [
     'minify_assets' => [
 
         // Assets will not be minified.
-        'excepts' => [
-
-        ],
+        'excepts' => [],
 
     ],
 

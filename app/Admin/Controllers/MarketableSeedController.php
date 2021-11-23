@@ -82,6 +82,9 @@ class MarketableSeedController extends AdminController
         $grid->column('crop_variety_id', __('Crop variety'))
             ->display(function ($item) {
                 $var = CropVariety::find($item);
+                if(!$var){
+                    return "-";
+                }
                 return $var->crop->name . ", " . $var->name;
             })->sortable();
         $grid->column('lab_test_number', __('Lab test no.'))->sortable();
