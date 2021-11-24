@@ -263,6 +263,8 @@ class Utils
             return '<span class="badge badge-info">Pending for labeling</span>';
         if ($status == 14)
             return '<span class="badge badge-success">Lables Printed</span>';
+        if ($status == 15)
+            return '<span class="badge badge-danger">Declined</span>';
         return "Pending";
     }
 

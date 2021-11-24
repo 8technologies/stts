@@ -4,6 +4,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\CropVariety;
 use App\Models\MarketableSeed;
 use App\Models\Utils;
 
@@ -18,6 +19,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends AdminController
 {
@@ -209,15 +211,21 @@ class OrderController extends AdminController
                 ->readonly()
                 ->default(Admin::user()->id);
             $product = Product::find($pro->product_id);
-            $form->select('crop_variety_id', __('Crop'))
-                ->options([
-                    $pro->crop_variety_id => $product->name
-                ])
-                ->value($pro->crop_variety_id)
-                ->readonly()
-                ->default($pro->crop_variety_id);
 
-            $form->hidden('product_id', __('Product id'))->default($pro->id);
+            if ($product) {
+
+
+                $form->select('crop_variety_id', __('Crop'))
+                    ->options([
+                        $pro->crop_variety_id => $product->name
+                    ])
+                    ->value($pro->crop_variety_id)
+                    ->readonly()
+                    ->default($pro->crop_variety_id);
+                $form->hidden('product_id', __('Product id'))->default($pro->id);
+            }
+
+
             $form->display('quantity', __('Available quantity'))->default(
                 number_format($pro->quantity) . " KGs"
             );
@@ -227,6 +235,38 @@ class OrderController extends AdminController
             $form->display('quantity', __('Enter Quantity (in KGs)'));
 
             $form->divider();
+
+            if (!$product) {
+                $id = request()->route()->parameters['order'];
+                $order = $form->model()->find($id);
+                if (!$order) {
+                    dd("Order not found");
+                }
+                $pros = Product::where([
+                    'crop_variety_id' => $order->crop_variety_id,
+                    'administrator_id' => Auth::user()->id,
+                ])->get();
+
+                $items = array();
+                foreach ($pros as $key => $pro) {
+                    $items[$pro->id] = $pro->name . ", QTY: " . $pro->quantity;
+                }
+                if (count($items) < 1) {
+                    $var  = CropVariety::find($order->crop_variety_id);
+                    admin_warning("Warning", "You have insufitient amount of {$var->name} to supply.");
+
+                    $form->disableEditingCheck();
+                    $form->disableCreatingCheck();
+                    $form->disableViewCheck();
+                    $form->disableSubmit();
+                    $form->disableReset();
+                    $form->disableEditingCheck();
+                    return $form;
+                }
+                $form->select('product_id', "Select for your products")
+                    ->options($items)
+                    ->required();
+            }
 
             if ($pro->status == 3) {
                 admin_warning("Warning", "This order completed, 
@@ -332,6 +372,8 @@ class OrderController extends AdminController
             );
 
             $form->divider();
+
+
             $form->text('quantity', __('Enter Quantity (in KGs)'))->required()
                 ->value($pro->quantity)
                 ->default($pro->quantity)

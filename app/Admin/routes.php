@@ -39,6 +39,11 @@ Route::group([
     $router->resource('marketable-seeds', MarketableSeedController::class);
     $router->resource('products', ProductController::class);
     $router->resource('orders', OrderController::class);
-    
+    $router->resource('pre-orders', PreOrderController::class);
+    $router->resource('quotations', QuotationController::class);
+    $router->resource('track-and-trace', TrackAndTraceController::class);
+
+    $router->resource('test-trees', TestTreeController::class);
+        
     $router->resource('test1s', Test1Controller::class);
 });
