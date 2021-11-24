@@ -24,6 +24,9 @@ php artisan make:migration create_seed_label_packages_table
 php artisan make:migration create_marketable_seeds_table
 php artisan make:migration create_product_table
 php artisan make:migration create_orders_table
+php artisan make:migration create_pre_orders_table
+php artisan make:migration create_quotations_table
+php artisan make:migration create_test_trees_table
 
 
 
@@ -43,9 +46,12 @@ php artisan admin:make SeedLabelPackageController --model=App\\Models\\SeedLabel
 php artisan admin:make SeedLabelController --model=App\\Models\\SeedLabel
 php artisan admin:make MarketableSeedController --model=App\\Models\\MarketableSeed
 php artisan admin:make OrderController --model=App\\Models\\Order
+php artisan admin:make PreOrderController --model=App\\Models\\PreOrder
+php artisan admin:make TestTreeController --model=App\\Models\\TestTree
 
 
 
+php artisan make:model PreOrder
 php artisan make:model PowerStation
 php artisan make:model FormSr6
 php artisan make:model FormQds
@@ -68,4 +74,6 @@ php artisan make:model MarketableSeed
 php artisan make:model Product
 php artisan make:model Order
 php artisan make:model AdminRoleUser
-
+php artisan make:model PreOrder
+php artisan make:model Quotation
+php artisan make:model TestTree

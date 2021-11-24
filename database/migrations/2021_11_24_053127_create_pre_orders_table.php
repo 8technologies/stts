@@ -1,13 +1,12 @@
 <?php
 
 use App\Models\CropVariety;
-use App\Models\Product;
 use Encore\Admin\Auth\Database\Administrator;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrdersTable extends Migration
+class CreatePreOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,20 +15,20 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('pre_orders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
 
             $table->foreignIdFor(Administrator::class)->default(1);
-            $table->foreignIdFor(Administrator::class, 'order_by')->default(1);
             $table->foreignIdFor(CropVariety::class)->default(1);
-            $table->bigInteger("quantity")->nullable()->default(0);
+            $table->bigInteger("quantity")->nullable();
+            $table->text("seed_class")->nullable();
+            $table->text("invetory_status")->nullable(); 
+            $table->text("collection_date")->nullable(); 
+            $table->text("pickup_location")->nullable();  
             $table->text("detail")->nullable(); 
-            $table->text("status")->nullable(); 
-            $table->foreignIdFor(Product::class)->default(1);
-            $table->text("payment_type")->nullable(); 
-            $table->text("receipt")->nullable(); 
-            
+            $table->text("status")->nullable();
+
         });
     }
 
@@ -40,6 +39,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('pre_orders');
     }
 }
