@@ -22,3 +22,10 @@ use Encore\Admin\Facades\Admin;
 
 Encore\Admin\Form::forget(['map', 'editor']);
 Admin::css('./assets/css/custom/admin.css');
+Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
+
+
+    $navbar->left(view('search-bar'));
+});
+
+

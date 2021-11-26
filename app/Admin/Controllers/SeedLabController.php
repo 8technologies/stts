@@ -124,6 +124,15 @@ class SeedLabController extends AdminController
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
                 $status = ((int)(($actions->row['status'])));
+                if ($status == 0) {
+                    $status = 1;
+                }
+                if (
+                    $status == 5
+                ) {
+                    $actions->disableEdit();
+                    $actions->disableDelete();
+                }
             });
         }
 
@@ -316,6 +325,12 @@ class SeedLabController extends AdminController
 
         if (Admin::user()->isRole('inspector')) {
 
+
+            $form->hidden('parent_id');
+            $form->hidden('order');
+            $form->hidden('title');
+            $form->hidden('temp_parent');
+
             if ($form->isEditing()) {
 
                 $id = request()->route()->parameters['seed_lab'];
@@ -340,13 +355,13 @@ class SeedLabController extends AdminController
                 $form->saving(function ($form) {
                     $id = request()->route()->parameters['seed_lab'];
                     $model = $form->model()->find($id);
-
                     $quantity = (int)($form->quantity);
                     if ($quantity < 1) {
                         $quantity = (-1) * $quantity;
                     }
 
                     $form->quantity = $quantity;
+
 
 
                     $records = StockRecord::where([
@@ -358,13 +373,28 @@ class SeedLabController extends AdminController
                         $tot += ((int)($value->quantity));
                     }
 
-                    
+
                     if ($quantity > $tot) {
                         admin_error("Warning", "There is insufitient quantity stock of crop vareity {$model->crop_variety->crop->name} - {$model->crop_variety->name}. You tried to 
                         enter quantity " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
                         return redirect(admin_url('seed-labs'));
                     }
-                    
+
+
+                    $mother = SeedLab::where('lot_number', $form->mother_lot)->first();
+                    $form->parent_id = 0;
+                    if ($mother != null) {
+                        if ($mother->crop_variety_id != $model->crop_variety_id) {
+                            admin_error('Invalid lot number', 'Crop varity of Mother lot number 
+                            doesn\' match with current crop variety.');
+                            return redirect(admin_url('seed-labs/' . $model->id . "/edit"))->withInput();
+                        }
+                        $form->parent_id = $mother->id;
+                        $form->title = $form->lot_number;
+                        $form->order = $model->id;
+                        $form->temp_parent = 0;
+                    }
+                    //dd($form->quantity);
                     $form->inspector_is_done = 1;
                 });
 
@@ -390,17 +420,20 @@ class SeedLabController extends AdminController
                 $form->divider();
 
                 $form->hidden('inspector_is_done', __('inspector_is_done'))->attribute('value', 1)->value(1)->default(1);
-                $form->date('sampling_date', __('Sampling date'));
+                $form->date('sampling_date', __('Sampling date'))->default(date('y-m-d'));
 
-                $form->text('sample_weight', __('Enter weight of Sample (in KGs)'))->attribute('type', 'number');
-                $form->text('quantity', __('Enter the quantity represented (in Metric Tonnes)'))->attribute([
-                    'type' => 'number',
-                    'value' => $tot,
-                ]);
+                $form->text('sample_weight', __('Enter weight of Sample (in KGs)'))
+                    ->attribute('type', 'number');
+                $form->text('quantity', __('Enter the quantity represented (in Metric Tonnes)'))
+                    ->default(1000)
+                    ->attribute([
+                        'type' => 'number',
+                        'value' => $tot,
+                    ]);
                 $form->text('packaging', __('Packaging'));
-                $form->text('number_of_units', __('Number of units'));
+                $form->text('number_of_units', __('Number of units'))->default(15);
                 $form->text('mother_lot', __('Mother lot'))->attribute('type', 'number');
-                $form->hidden('lot_number', __('lot_number'))->default(rand(10000000, 100000000));
+                $form->text('lot_number', __('lot_number'))->default(rand(10000000, 100000000));
                 $form->select('sample_condition', __('Sample condition'))
                     ->options([
                         'Raw seed' => 'Raw seed',
@@ -443,11 +476,6 @@ class SeedLabController extends AdminController
                     $id = request()->route()->parameters['seed_lab'];
                     $model = $form->model()->find($id);
 
-                    $quantity = (int)($form->quantity);
-                    if ($quantity < 1) {
-                        $quantity = (-1) * $quantity;
-                    }
-                    $form->quantity = $quantity;
 
                     $records = StockRecord::where([
                         'administrator_id' => $model->user->id,
@@ -458,11 +486,6 @@ class SeedLabController extends AdminController
                         $tot += ((int)($value->quantity));
                     }
 
-                    if ($quantity > $tot) {
-                        admin_error("Warning", "There is insufitient quantity stock of crop vareity {$model->crop_variety->crop->name} - {$model->crop_variety->name}. You tried to 
-                        enter quantity " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
-                        return redirect(admin_url('seed-labs'));
-                    }
                     $form->inspector_is_done = 1;
                     $form->receptionist_is_done = 1;
                 });
@@ -533,6 +556,7 @@ class SeedLabController extends AdminController
                     ->options(['Moisture content', 'Purity', 'Germination', 'Seed health']);
                 $form->divider();
                 $form->radio('status', __('Decision'))
+                    ->required()
                     ->options([
                         '10' => 'Accept',
                         '3' => 'Halt'
@@ -592,7 +616,7 @@ class SeedLabController extends AdminController
                     if ($quantity > $tot) {
                         admin_error("Warning", "There is insufitient quantity stock of crop vareity {$model->crop_variety->crop->name} - {$model->crop_variety->name}. You tried to 
                         enter quantity " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
-                        return redirect(admin_url('seed-labs'));
+                        return redirect(admin_url('seed-labs/' . $model->id . "/edit"))->withInput();
                     }
                     $purity = (int)($form->purity);
                     $germination_capacity = (int)($form->germination_capacity);
@@ -602,6 +626,21 @@ class SeedLabController extends AdminController
                     $form->inspector_is_done = 1;
                     $form->receptionist_is_done = 1;
                     $form->status = 5;
+
+
+                    $StockRecord = new StockRecord();
+                    $StockRecord->administrator_id = $model->administrator_id;
+                    $StockRecord->crop_variety_id = $model->crop_variety_id;
+                    $StockRecord->is_deposit = 0;
+                    $StockRecord->is_transfer = 0;
+                    $StockRecord->seed_class = null;
+                    $StockRecord->source = null;
+                    $StockRecord->quantity = $model->quantity;
+                    if ($StockRecord->quantity > 0) {
+                        $StockRecord->quantity = ((-1) * $StockRecord->quantity);
+                    }
+                    $StockRecord->detail = "To seed lab. ID " . $model->id;
+                    $StockRecord->save();
                 });
 
                 $records = StockRecord::where([

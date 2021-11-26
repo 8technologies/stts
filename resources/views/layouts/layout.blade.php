@@ -22,15 +22,15 @@
 </head>
 
 @php
-$key_word = "";
-if(isset($_GET['search'])){
-if(strlen(isset($_GET['search']))>0){
-$key_word = trim($_GET['search']);
-}
+    $key_word = "";
+    if(isset($_GET['search'])){
+    if(strlen(isset($_GET['search']))>0){
+    $key_word = trim($_GET['search']);
+    }
 }
 
-use App\Models\category;
-$cats = category::all();
+use App\Models\Category;
+$cats = Category::all();
 
 @endphp
 

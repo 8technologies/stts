@@ -24,9 +24,9 @@ class SeedLab extends Model
     {
         parent::__construct($attributes);
 
-        $this->setParentColumn('mother_lot');
+//        $this->setParentColumn('mother_lot');
 //        $this->setOrderColumn('id');
-        $this->setTitleColumn('id');
+        $this->setTitleColumn('mother_lot');
     }
 
 
