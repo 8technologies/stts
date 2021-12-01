@@ -75,6 +75,7 @@ return array(
     'Facade\\Ignition\\' => array($vendorDir . '/facade/ignition/src'),
     'Facade\\IgnitionContracts\\' => array($vendorDir . '/facade/ignition-contracts/src'),
     'Facade\\FlareClient\\' => array($vendorDir . '/facade/flare-client-php/src'),
+    'Encore\\Chartjs\\' => array($vendorDir . '/laravel-admin-ext/chartjs/src'),
     'Encore\\Admin\\Media\\' => array($vendorDir . '/laravel-admin-ext/media-manager/src'),
     'Encore\\Admin\\Latlong\\' => array($vendorDir . '/laravel-admin-ext/latlong/src'),
     'Encore\\Admin\\Helpers\\' => array($vendorDir . '/laravel-admin-ext/helpers/src'),

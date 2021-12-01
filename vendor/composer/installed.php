@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'cafac13286867c1bd8976168c231bb724c7b9d5a',
+        'reference' => 'a4a9feb9c8d3102a1dc786881a6afb968babd1f6',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -421,6 +421,15 @@
                 0 => '*',
             ),
         ),
+        'laravel-admin-ext/chartjs' => array(
+            'pretty_version' => 'v1.0.0',
+            'version' => '1.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel-admin-ext/chartjs',
+            'aliases' => array(),
+            'reference' => '3a12f9907c9d4ba59cdd1c9033e67325a337469f',
+            'dev_requirement' => false,
+        ),
         'laravel-admin-ext/helpers' => array(
             'pretty_version' => 'v2.0.2',
             'version' => '2.0.2.0',
@@ -463,7 +472,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'cafac13286867c1bd8976168c231bb724c7b9d5a',
+            'reference' => 'a4a9feb9c8d3102a1dc786881a6afb968babd1f6',
             'dev_requirement' => false,
         ),
         'laravel/legacy-factories' => array(

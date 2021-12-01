@@ -155,6 +155,7 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         ),
         'E' => 
         array (
+            'Encore\\Chartjs\\' => 15,
             'Encore\\Admin\\Media\\' => 19,
             'Encore\\Admin\\Latlong\\' => 21,
             'Encore\\Admin\\Helpers\\' => 21,
@@ -473,6 +474,10 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         array (
             0 => __DIR__ . '/..' . '/facade/flare-client-php/src',
         ),
+        'Encore\\Chartjs\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel-admin-ext/chartjs/src',
+        ),
         'Encore\\Admin\\Media\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel-admin-ext/media-manager/src',
@@ -603,6 +608,7 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         'App\\Admin\\Controllers\\SeedLabelController' => __DIR__ . '/../..' . '/app/Admin/Controllers/SeedLabelController.php',
         'App\\Admin\\Controllers\\SeedLabelPackageController' => __DIR__ . '/../..' . '/app/Admin/Controllers/SeedLabelPackageController.php',
         'App\\Admin\\Controllers\\Test1Controller' => __DIR__ . '/../..' . '/app/Admin/Controllers/Test1Controller.php',
+        'App\\Admin\\Controllers\\TestTreeController' => __DIR__ . '/../..' . '/app/Admin/Controllers/TestTreeController.php',
         'App\\Admin\\Controllers\\TrackAndTraceController' => __DIR__ . '/../..' . '/app/Admin/Controllers/TrackAndTraceController.php',
         'App\\Admin\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Admin/Controllers/UserController.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
@@ -654,6 +660,7 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         'App\\Models\\StockRecord' => __DIR__ . '/../..' . '/app/Models/StockRecord.php',
         'App\\Models\\Test1' => __DIR__ . '/../..' . '/app/Models/Test1.php',
         'App\\Models\\Test2' => __DIR__ . '/../..' . '/app/Models/Test2.php',
+        'App\\Models\\TestTree' => __DIR__ . '/../..' . '/app/Models/TestTree.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\Utils' => __DIR__ . '/../..' . '/app/Models/Utils.php',
         'App\\Models\\category' => __DIR__ . '/../..' . '/app/Models/category.php',
@@ -1604,6 +1611,8 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         'Encore\\Admin\\Widgets\\Tab' => __DIR__ . '/..' . '/encore/laravel-admin/src/Widgets/Tab.php',
         'Encore\\Admin\\Widgets\\Table' => __DIR__ . '/..' . '/encore/laravel-admin/src/Widgets/Table.php',
         'Encore\\Admin\\Widgets\\Widget' => __DIR__ . '/..' . '/encore/laravel-admin/src/Widgets/Widget.php',
+        'Encore\\Chartjs\\Chartjs' => __DIR__ . '/..' . '/laravel-admin-ext/chartjs/src/Chartjs.php',
+        'Encore\\Chartjs\\ChartjsServiceProvider' => __DIR__ . '/..' . '/laravel-admin-ext/chartjs/src/ChartjsServiceProvider.php',
         'Facade\\FlareClient\\Api' => __DIR__ . '/..' . '/facade/flare-client-php/src/Api.php',
         'Facade\\FlareClient\\Concerns\\HasContext' => __DIR__ . '/..' . '/facade/flare-client-php/src/Concerns/HasContext.php',
         'Facade\\FlareClient\\Concerns\\UsesTime' => __DIR__ . '/..' . '/facade/flare-client-php/src/Concerns/UsesTime.php',
