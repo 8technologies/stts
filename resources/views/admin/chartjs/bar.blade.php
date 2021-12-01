@@ -32,7 +32,7 @@ $(function () {
                 randomScalingFactor()
             ]
         }, {
-            label: 'Dataset 2',
+            label: 'Dataset 2', 
             borderColor: window.chartColors.blue,
             borderWidth: 1,
             data: [

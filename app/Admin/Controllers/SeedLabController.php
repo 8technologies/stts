@@ -267,7 +267,7 @@ class SeedLabController extends AdminController
             $form->textarea('applicant_remarks', __('Enter remarks'));
         }
 
-        if (Admin::user()->isRole('admin')) {
+        if (Admin::user()->isRole('admin') ) {
             if ($form->isEditing()) {
                 $id = request()->route()->parameters['seed_lab'];
                 $model = $form->model()->find($id);
