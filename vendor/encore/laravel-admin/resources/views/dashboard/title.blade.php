@@ -26,10 +26,10 @@
 </style>
 
 <div class="title">
-    The National Seed Tracking & Tracing System Uganda 
+    Laravel-admin
 </div>
 <div class="links">
-    <a href="javascript:;" >About Us</a>
-    <a href="javascript:;"  >8Tech</a>
-    <a href="javascript:;">Contact Us</a>
+    <a href="https://github.com/z-song/laravel-admin" target="_blank">Github</a>
+    <a href="http://laravel-admin.org/docs"  target="_blank">Documentation</a>
+    <a href="http://laravel-admin.org/demo"  target="_blank">Demo</a>
 </div>

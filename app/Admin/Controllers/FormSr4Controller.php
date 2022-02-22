@@ -32,6 +32,9 @@ class FormSr4Controller extends AdminController
         $grid = new Grid(new FormSr4());
 
 
+        /*s = FormSr4::all()->first();
+        $s->status_comment .= rand(100,1000000);
+        $s->save();*/
 
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
@@ -42,15 +45,15 @@ class FormSr4Controller extends AdminController
             }
 
             $grid->actions(function ($actions) {
-                $actions->disableEdit();
+
                 $status = ((int)(($actions->row['status'])));
                 if (
                     $status == 2 ||
                     $status == 5 ||
                     $status == 6
                 ) {
+                    $actions->disableEdit();
                     $actions->disableDelete();
-
                 }
             });
         } else if (Admin::user()->isRole('inspector')) {
@@ -60,11 +63,11 @@ class FormSr4Controller extends AdminController
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
                 $actions->disableDelete();
-                if (
-                    $status != 2
-                ) {
-                    $actions->disableEdit();
-                }
+                // if (
+                //     $status != 2
+                // ) {
+                //     $actions->disableEdit();
+                // }
             });
         } else {
             $grid->disableCreateButton();
@@ -228,7 +231,7 @@ class FormSr4Controller extends AdminController
             return Utils::tell_status($status);
         });
         $show->field('status_comment', __('Status comment'));
-      
+
 
         return $show;
     }
@@ -267,7 +270,22 @@ class FormSr4Controller extends AdminController
             $form->hidden('administrator_id', __('Administrator id'));
         }
 
+
+
         if (Admin::user()->isRole('basic-user')) {
+
+            $form->select('type', __('Application category?'))
+            ->options([
+                'Seed Merchant' => 'Seed Merchant',
+                'Seed Producer' => 'Seed Producer',
+                'Seed Stockist' => 'Seed Stockist',
+                'Seed Importer' => 'Seed Importer',
+                'Seed Exporter' => 'Seed Exporter',
+                'Seed Processor' => 'Seed Processor',
+            ])
+            ->help('Which SR4 type are tou applying for?')
+            ->rules('required');
+
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required();
             $form->text('address', __('Address'))->required();
             $form->text('company_initials', __('Company initials'))->required();
@@ -279,10 +297,12 @@ class FormSr4Controller extends AdminController
                 ->required();
             $form->select('years_of_expirience', __('Experience in?'))
                 ->options([
-                    'Seed merchant',
-                    'Seed grower',
-                    'Seed seed producer',
-                    'Other'
+                    'Seed Merchant' => 'Seed Merchant',
+                    'Seed Producer' => 'Seed Producer',
+                    'Seed Stockist' => 'Seed Stockist',
+                    'Seed Importer' => 'Seed Importer',
+                    'Seed Exporter' => 'Seed Exporter',
+                    'Seed Processor' => 'Seed Processor',
                 ])
                 ->help('What are you experienced in?')
                 ->rules('required');
@@ -310,7 +330,7 @@ class FormSr4Controller extends AdminController
                     'Horticultural crops' => 'Horticultural crops',
                     'Other' => 'Other'
                 ])
-                ->required() 
+                ->required()
                 ->when('Other', function (Form $form) {
                     $form->text('processing_of_other', __('Applicant is applying for Other processing of?'))
                         ->help('Specify if you selected "Other" processing.');
@@ -342,14 +362,14 @@ class FormSr4Controller extends AdminController
                         ->attribute('type', 'number')
                         ->help("Please specify land (in Acres)")
                         ->attribute('min', 1);
-                }); 
+                });
 
 
             $form->radio('have_adequate_storage', 'I/We have adequate storage facilities to handle the resultant seed:')
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
-                ])->required(); 
+                ])->required();
 
             $form->radio('have_adequate_equipment', 'Do you have adequate equipment to handle basic seed?')
                 ->options([
@@ -431,6 +451,7 @@ class FormSr4Controller extends AdminController
 
 
             $form->file('receipt', __('Receipt'));
+            $form->textarea('status_comment', __('Inspector\'s remarks.'))->readonly();
 
             $form->divider();
             $form->html('<h4>Declaration:</h4>
@@ -451,6 +472,8 @@ class FormSr4Controller extends AdminController
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
+
+            $form->text('type', __('Applicant type'))->readonly();
 
             $form->divider();
             $form->radio('status', __('Status'))
@@ -475,8 +498,9 @@ class FormSr4Controller extends AdminController
                 });
         }
 
-        
+
         if (Admin::user()->isRole('inspector')) {
+            $form->text('type', __('Applicant type'))->readonly();
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
             $form->text('company_initials', __('Company initials'))->readonly();
@@ -503,18 +527,26 @@ class FormSr4Controller extends AdminController
                         ->readonly()
                         ->help('Please select inspector')
                         ->rules('required');
-                        
                 })
                 ->when('in', [3, 4], function (Form $form) {
-                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                    $form->textarea('status_comment', 'Inspector\'s comment (Remarks)')
                         ->help("Please specify with a comment");
                 })
                 ->when('in', [5, 6], function (Form $form) {
+
+                    $today = Carbon::now();
+                    $_today = Carbon::now();
+                   /*  echo ($today);
+                    echo "<br>";
+                    $_today = $today->addYear();*/
+
+ 
+
                     $form->text('seed_board_registration_number', __('Enter seed board registration number'))
-                    ->help("Please Enter seed board registration number")
-                    ->default(rand(10000,10000));
-                    $form->date('valid_from', 'Valid from date?');
-                    $form->date('valid_until', 'Valid until date?');
+                        ->help("Please Enter seed board registration number")
+                        ->default(rand(10000, 10000));
+                    $form->date('valid_from', 'Valid from date?')->readonly();
+                    $form->date('valid_until', 'Valid until date?')->readonly();
                 });
         }
 

@@ -15,7 +15,6 @@ return [
 
     'default' => env('FILESYSTEM_DRIVER', 'local'),
 
-
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -33,15 +32,13 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => $_SERVER['DOCUMENT_ROOT'].'/storage',
-            'url' => env('APP_URL') . '/storage',
-            'visibility' => 'public',
+            'root' => storage_path('app'),
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => $_SERVER['DOCUMENT_ROOT'].'public/storage',
-            'url' => env('APP_URL') . 'public/storage',
+            'root' => storage_path('public/images'),
+            'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
 
@@ -55,12 +52,15 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
+        
         'admin' => [
             'driver' => 'local',
-            'root' => $_SERVER['DOCUMENT_ROOT'].'public/storage',
-            'url' => env('APP_URL') . 'public/storage',
+            'root' => $_SERVER['DOCUMENT_ROOT'].'',
+            'url' => env('APP_URL') . '',
             'visibility' => 'public',
         ],
+        
+
     ],
 
     /*
