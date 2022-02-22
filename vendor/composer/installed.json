@@ -1854,17 +1854,17 @@
         },
         {
             "name": "laravel-admin-ext/latlong",
-            "version": "v1.2.4",
-            "version_normalized": "1.2.4.0",
+            "version": "v2.0.2",
+            "version_normalized": "2.0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-admin-extensions/latlong.git",
-                "reference": "5d9b6c0b7af07cd51542c62d902f2402be98b3f8"
+                "reference": "01eeb930eea478dbfb4aeca274f238ee2d9dd477"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-admin-extensions/latlong/zipball/5d9b6c0b7af07cd51542c62d902f2402be98b3f8",
-                "reference": "5d9b6c0b7af07cd51542c62d902f2402be98b3f8",
+                "url": "https://api.github.com/repos/laravel-admin-extensions/latlong/zipball/01eeb930eea478dbfb4aeca274f238ee2d9dd477",
+                "reference": "01eeb930eea478dbfb4aeca274f238ee2d9dd477",
                 "shasum": ""
             },
             "require": {
@@ -1874,7 +1874,7 @@
             "require-dev": {
                 "phpunit/phpunit": "~6.0"
             },
-            "time": "2020-09-28T07:18:29+00:00",
+            "time": "2021-12-07T02:02:37+00:00",
             "type": "library",
             "extra": {
                 "laravel": {
@@ -1907,7 +1907,7 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel-admin-extensions/latlong/issues",
-                "source": "https://github.com/laravel-admin-extensions/latlong/tree/v1.2.4"
+                "source": "https://github.com/laravel-admin-extensions/latlong/tree/v2.0.2"
             },
             "install-path": "../laravel-admin-ext/latlong"
         },

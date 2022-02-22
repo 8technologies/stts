@@ -26,7 +26,15 @@ php artisan make:migration create_product_table
 php artisan make:migration create_orders_table
 php artisan make:migration create_pre_orders_table
 php artisan make:migration create_quotations_table
-php artisan make:migration create_test_trees_table
+php artisan make:migration create_district_table
+php artisan make:migration create_sub_counties_table
+php artisan make:migration create_parishes_table
+php artisan make:migration create_farms_table
+php artisan make:migration create_animals_table
+php artisan make:migration create_event_table
+php artisan make:migration create_movements_table
+php artisan make:migration create_movement_animals_table
+php artisan make:migration create_movement_has_movement_animals_table
 
 
 
@@ -48,6 +56,17 @@ php artisan admin:make MarketableSeedController --model=App\\Models\\MarketableS
 php artisan admin:make OrderController --model=App\\Models\\Order
 php artisan admin:make PreOrderController --model=App\\Models\\PreOrder
 php artisan admin:make TestTreeController --model=App\\Models\\TestTree
+php artisan admin:make DistrictController --model=App\\Models\\District
+php artisan admin:make SubCountyController --model=App\\Models\\SubCounty
+php artisan admin:make FarmController --model=App\\Models\\Farm
+php artisan admin:make AnimalController --model=App\\Models\\Animal
+php artisan admin:make EventController --model=App\\Models\\Event
+php artisan admin:make MovementController --model=App\\Models\\Movement
+
+
+php artisan make:seeder DistrictsTableSeeder
+php artisan db:seed --class=DistrictsTableSeeder
+php artisan make:controller DistrictController
 
 
 
@@ -77,3 +96,12 @@ php artisan make:model AdminRoleUser
 php artisan make:model PreOrder
 php artisan make:model Quotation
 php artisan make:model TestTree
+php artisan make:model District
+php artisan make:model SubCounty
+php artisan make:model Parish
+php artisan make:model Farm
+php artisan make:model Animal
+php artisan make:model Event
+php artisan make:model Movement
+php artisan make:model MovementAnimal
+php artisan make:model MovementHasMovementAnimal
