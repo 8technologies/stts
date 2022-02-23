@@ -39,7 +39,12 @@ class PlantingReturnController extends AdminController
     {
         $grid = new Grid(new PlantingReturn());
 
-        /*$sr = PlantingReturn::all()->first();
+        /*
+        $sr = PlantingReturn::all()->first();
+        $sr->name = "Joan Doe";
+        $sr->status_comment .= rand(10000,1000000);
+        $sr->save();
+        die();
         
         $file = null;
         if(file_exists('./public/storage/'.$sr->sub_growers_file)){

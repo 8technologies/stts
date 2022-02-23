@@ -42,6 +42,11 @@ Route::group([
     $router->resource('pre-orders', PreOrderController::class);
     $router->resource('quotations', QuotationController::class);
     $router->resource('track-and-trace', TrackAndTraceController::class);
+    $router->resource('sub-growers', SubGrowerController::class);
+
+
+
+    
 
     $router->resource('test-trees', TestTreeController::class);
         

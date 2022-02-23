@@ -4,22 +4,177 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Excel;
 
 class PlantingReturn extends Model
 {
     use HasFactory;
+
+
+    public static function import_sub_growers($m)
+    {
+        $file = null;
+        if ($m != null) {
+            if(strlen($m->sub_growers_file)>3){
+                if (file_exists('./public/storage/' . $m->sub_growers_file)) {
+                    $file = './public/storage/' . $m->sub_growers_file;
+                }
+            }
+        }  
+        if($file!=null){ 
+            $array = Excel::toArray([], $file);
+            if (isset($array[0]))
+                $i = 0;
+            foreach ($array[0] as $key => $value) {
+                $i++;
+                if ($i <= 1) {
+                    continue;
+                }
+                if (count($value) > 11) {
+                    $sub = new SubGrower();
+    
+                    if (isset($value[0]))
+                        if ($value[0] != null) {
+                            if (strlen($value[0]) > 2) {
+                                $sub->name = $value[0];
+                            }
+                        }
+    
+                    if (isset($value[1]))
+                        if ($value[1] != null) {
+                            if (strlen($value[1]) > 0) {
+                                $sub->size = $value[1];
+                            }
+                        }
+    
+                    if (isset($value[2]))
+                        if ($value[2] != null) {
+                            if (strlen($value[2]) > 2) {
+                                $sub->crop = $value[2];
+                            }
+                        }
+    
+                    if (isset($value[3]))
+                        if ($value[3] != null) {
+                            if (strlen($value[3]) > 2) {
+                                $sub->variety = $value[3];
+                            }
+                        }
+    
+                    if (isset($value[4]))
+                        if ($value[4] != null) {
+                            if (strlen($value[4]) > 2) {
+                                $sub->district = $value[4];
+                            }
+                        }
+    
+                    if (isset($value[5]))
+                        if ($value[5] != null) {
+                            if (strlen($value[5]) > 2) {
+                                $sub->subcourty = $value[5];
+                            }
+                        }
+    
+                    if (isset($value[6]))
+                        if ($value[6] != null) {
+                            if (strlen($value[6]) > 2) {
+                                $sub->planting_date = $value[6];
+                            }
+                        }
+    
+                    if (isset($value[7]))
+                        if ($value[7] != null) {
+                            if (strlen($value[7]) > 2) {
+                                $sub->quantity_planted = $value[7];
+                            }
+                        }
+     
+    
+                    if (isset($value[8]))
+                        if ($value[8] != null) {
+                            if (strlen($value[8]) > 0) {
+                                $sub->expected_yield = $value[8];
+                            }
+                        }
+    
+
+                    if (isset($value[9]))
+                        if ($value[9] != null) {
+                            if (strlen($value[9]) > 5) {
+                                $sub->phone_number = $value[9];
+                            }
+                        }
+    
+                    if (isset($value[10])) {
+                        if ($value[10] != null) {
+                            if (strlen($value[10]) > 2) {
+                                $sub->gps_latitude = $value[10];
+                            }
+                        }
+                    }
+    
+                    if (isset($value[11])) {
+                        if ($value[11] != null) {
+                            if (strlen($value[11]) > 2) {
+                                $sub->gps_longitude = $value[11];
+                            }
+                        }
+                    }
+                    $sub->administrator_id = $m->administrator_id;
+                    $sub->save();
+                }
+            }
+            $m->sub_growers_file = null;
+            $m->save();
+            unlink($file);
+        } 
+    }
+    public static function boot()
+    {
+        parent::boot();
+
+
+        self::creating(function ($m) {
+        });
+
+        self::created(function ($m) {
+            self::import_sub_growers($m);
+            return $m;
+            //created
+        });
+
+        self::updating(function ($model) {
+            // ... code here
+
+        });
+
+        self::updated(function ($m) {
+            self::import_sub_growers($m);
+            return $m;
+            // ... code here
+        });
+
+        self::deleting(function ($model) {
+            // ... code here
+        });
+
+        self::deleted(function ($model) {
+            // ... code here
+        });
+    }
+
     public function form_sr10s()
-    { 
+    {
         return $this->hasMany(FormSr10::class);
     }
-   
+
     public function planting_return_crops()
-    { 
+    {
         return $this->hasMany(PlantingReturnCrop::class);
     }
 
     public function crop()
-    { 
+    {
         return $this->belongsTo(Crop::class);
     }
 }
