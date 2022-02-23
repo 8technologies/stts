@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 use App\Imports\UsersImport;
+use App\Models\SubGrower;
 use Excel;
 
 
@@ -23,16 +24,113 @@ class MainController extends Controller
     public function import()
     {
 
-        $file = './public/storage/sub-growsers-template.xlsx';
+ 
         $array = Excel::toArray([], $file);
-        echo "<pre>";
-        foreach ($array as $key => $value) {
-            print_r($value);
+        if (isset($array[0]))
+            $i = 0;
+        foreach ($array[0] as $key => $value) {
+            $i++;
+            if ($i <= 1) {
+                continue;
+            }
+            if (count($value) > 11) {
+                $sub = new SubGrower();
+
+                if (isset($value[0]))
+                    if ($value[0] != null) {
+                        if (strlen($value[0]) > 2) {
+                            $sub->name = $value[0];
+                        }
+                    }
+
+                if (isset($value[1]))
+                    if ($value[1] != null) {
+                        if (strlen($value[1]) > 0) {
+                            $sub->size = $value[1];
+                        }
+                    }
+
+                if (isset($value[2]))
+                    if ($value[2] != null) {
+                        if (strlen($value[2]) > 2) {
+                            $sub->crop = $value[2];
+                        }
+                    }
+
+                if (isset($value[3]))
+                    if ($value[3] != null) {
+                        if (strlen($value[3]) > 2) {
+                            $sub->variety = $value[3];
+                        }
+                    }
+
+                if (isset($value[4]))
+                    if ($value[4] != null) {
+                        if (strlen($value[4]) > 2) {
+                            $sub->district = $value[4];
+                        }
+                    }
+
+                if (isset($value[5]))
+                    if ($value[5] != null) {
+                        if (strlen($value[5]) > 2) {
+                            $sub->subcourty = $value[5];
+                        }
+                    }
+
+                if (isset($value[6]))
+                    if ($value[6] != null) {
+                        if (strlen($value[6]) > 2) {
+                            $sub->planting_date = $value[6];
+                        }
+                    }
+
+                if (isset($value[7]))
+                    if ($value[7] != null) {
+                        if (strlen($value[7]) > 2) {
+                            $sub->quantity_planted = $value[7];
+                        }
+                    }
+
+                if (isset($value[8]))
+                    if ($value[8] != null) {
+                        if (strlen($value[8]) > 0) {
+                            $sub->expected_yield = $value[8];
+                        }
+                    }
+
+                if (isset($value[9]))
+                    if ($value[9] != null) {
+                        if (strlen($value[9]) > 0) {
+                            $sub->expected_yield = $value[9];
+                        }
+                    }
+
+                if (isset($value[10]))
+                    if ($value[10] != null) {
+                        if (strlen($value[10]) > 5) {
+                            $sub->phone_number = $value[10];
+                        }
+                    }
+
+                if (isset($value[11])) {
+                    if ($value[11] != null) {
+                        if (strlen($value[11]) > 2) {
+                            $sub->gps_latitude = $value[11];
+                        }
+                    }
+                }
+
+                if (isset($value[12])) {
+                    if ($value[12] != null) {
+                        if (strlen($value[12]) > 2) {
+                            $sub->gps_longitude = $value[12];
+                        }
+                    }
+                }
+                $sub->save();
+            }
         }
-
-
-
-        return "Good to iumport";
     }
 
 
@@ -126,10 +224,10 @@ class MainController extends Controller
                 'password1' => 'required|max:100|min:3',
             ]);
 
-            if(
+            if (
                 $request->input("password") !=
                 $request->input("password1")
-            ){
+            ) {
                 $errors['password1'] = "Passwords did not match.";
                 return redirect('register')
                     ->withErrors($errors)

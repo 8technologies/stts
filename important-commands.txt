@@ -63,6 +63,7 @@ php artisan admin:make FarmController --model=App\\Models\\Farm
 php artisan admin:make AnimalController --model=App\\Models\\Animal
 php artisan admin:make EventController --model=App\\Models\\Event
 php artisan admin:make MovementController --model=App\\Models\\Movement
+php artisan admin:make SubGrowerController --model=App\\Models\\SubGrower
 
 
 php artisan make:seeder DistrictsTableSeeder
