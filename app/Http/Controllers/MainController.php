@@ -13,8 +13,29 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+use App\Imports\UsersImport;
+use Excel;
+
+
+
 class MainController extends Controller
 {
+    public function import()
+    {
+
+        $file = './public/storage/sub-growsers-template.xlsx';
+        $array = Excel::toArray([], $file);
+        echo "<pre>";
+        foreach ($array as $key => $value) {
+            print_r($value);
+        }
+
+
+
+        return "Good to iumport";
+    }
+
+
     public function index()
     {
         return redirect()->intended('login');

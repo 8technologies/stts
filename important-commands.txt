@@ -35,6 +35,7 @@ php artisan make:migration create_event_table
 php artisan make:migration create_movements_table
 php artisan make:migration create_movement_animals_table
 php artisan make:migration create_movement_has_movement_animals_table
+php artisan make:migration create_sub_growers_table
 
 
 
@@ -105,3 +106,4 @@ php artisan make:model Event
 php artisan make:model Movement
 php artisan make:model MovementAnimal
 php artisan make:model MovementHasMovementAnimal
+php artisan make:model SubGrower

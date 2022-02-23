@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Imports\UsersImport;
 use App\Models\Crop;
 use App\Models\CropVariety;
 use App\Models\FormSr10;
@@ -17,9 +18,8 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Hamcrest\Util;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Concerns\ToModel;
 
-use function PHPUnit\Framework\fileExists;
 
 class PlantingReturnController extends AdminController
 {
@@ -39,7 +39,7 @@ class PlantingReturnController extends AdminController
     {
         $grid = new Grid(new PlantingReturn());
 
-        $sr = PlantingReturn::all()->first();
+        /*$sr = PlantingReturn::all()->first();
         
         $file = null;
         if(file_exists('./public/storage/'.$sr->sub_growers_file)){
@@ -50,6 +50,8 @@ class PlantingReturnController extends AdminController
         
 
         if($file!=null){
+  
+
             $row = 1;
             if (($handle = fopen($file, "r")) !== FALSE) {
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -66,7 +68,7 @@ class PlantingReturnController extends AdminController
             }
         }
 
-        die($file);
+        die($file);*/
 
 
         $grid->disableExport();
