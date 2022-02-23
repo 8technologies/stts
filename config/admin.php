@@ -155,7 +155,7 @@ return [
     'upload' => [
 
         // Disk in `config/filesystem.php`.
-        'disk' => 'local',
+        'disk' => 'admin',
 
         // Image and file upload path under the disk above.
         'directory' => [
@@ -445,7 +445,7 @@ return [
         ],
         'media-manager' => [
             // Select a local disk that you configured in `config/filesystem.php`
-            'disk' => 'local',
+            'disk' => 'admin',
             'allowed_ext' => 'jpg,jpeg,png,pdf,doc,docx,zip'
         ],
     ],

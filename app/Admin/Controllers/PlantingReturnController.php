@@ -17,6 +17,9 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Hamcrest\Util;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
+use function PHPUnit\Framework\fileExists;
 
 class PlantingReturnController extends AdminController
 {
@@ -24,7 +27,7 @@ class PlantingReturnController extends AdminController
      * Title for current resource.
      *
      * @var string
-     */
+     */ 
     protected $title = 'Planting Return';
 
     /**
@@ -35,6 +38,37 @@ class PlantingReturnController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new PlantingReturn());
+
+        $sr = PlantingReturn::all()->first();
+        
+        $file = null;
+        if(file_exists('./public/storage/'.$sr->sub_growers_file)){
+            $file = './public/storage/'.$sr->sub_growers_file;
+        }
+
+
+        
+
+        if($file!=null){
+            $row = 1;
+            if (($handle = fopen($file, "r")) !== FALSE) {
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    $num = count($data);
+                    echo "<p> $num fields in line $row: <br /></p>\n";
+                    $row++;
+                    for ($c=0; $c < $num; $c++) {
+                        echo $data[$c] . "<br />\n";
+                    }
+                }
+                fclose($handle);
+            }else{
+                die("failed to open");
+            }
+        }
+
+        die($file);
+
+
         $grid->disableExport();
         $grid->disableFilter();
         $grid->disableRowSelector();
@@ -235,7 +269,12 @@ class PlantingReturnController extends AdminController
 
         if (Admin::user()->isRole('basic-user')) {
 
+            $form->file('sub_growers_file','Sub-growers excel file');
+
+
             $form->text('name', __('Name'))->default($user->name)->required();
+            $form->text('name', __('Name'))->default($user->name)->required();
+
             $form->text('address', __('Address'))->required();
             $form->text('telephone', __('Telephone'))->required();
             $form->select('crop_id', 'Crop')->options(Crop::all()->pluck('name', 'id'))
