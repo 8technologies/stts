@@ -32,25 +32,30 @@ class FormSr6Controller extends AdminController
      */
     protected function grid()
     {
+        /*
+        $d = FormSr6::all()->first();
+        $d->company_initials = rand(10000,10000000000);
+        die($d);*/
+        
         $grid = new Grid(new FormSr6());
 
+        if (!Admin::user()->isRole('basic-user')) {
+            $grid->disableCreateButton();
+        }
 
 
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
-
-            if (!Utils::can_create_sr6()) {
-                $grid->disableCreateButton();
-            }
-
+ 
+           
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
-                $actions->disableEdit();
                 if (
                     $status == 2 ||
                     $status == 5 ||
                     $status == 6
                 ) {
+                    $actions->disableEdit();
                     $actions->disableDelete();
                 }
             });
@@ -61,14 +66,10 @@ class FormSr6Controller extends AdminController
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
                 $actions->disableDelete();
-                if (
-                    $status != 2
-                ) {
-                    $actions->disableEdit();
-                }
+                //$actions->disableEdit();
             });
         } else {
-            $grid->disableCreateButton();
+           // $grid->disableCreateButton();
         }
 
         $grid->column('id', __('Id'))->sortable();
@@ -82,8 +83,12 @@ class FormSr6Controller extends AdminController
         })->sortable();
 
         $grid->column('valid_from', __('Starts'))->display(function ($item) {
+            if($item ==null){
+                return "-";
+            }
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
+        
         $grid->column('valid_until', __('Exipires'))->display(function ($item) {
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
@@ -97,6 +102,7 @@ class FormSr6Controller extends AdminController
         
 
         $grid->column('address', __('Address'))->sortable();
+        $grid->column('type', __('Category'))->sortable();
 
 
         $grid->column('inspector', __('Inspector'))->display(function ($userId) {
@@ -283,6 +289,14 @@ class FormSr6Controller extends AdminController
         $form->hidden('dealers_in', __('dealers_in'));
 
         if (Admin::user()->isRole('basic-user')) {
+
+            $form->select('type', __('Cateogry'))
+            ->options([
+                'Individual' => 'Individual',
+                'Company' => 'Company',
+            ])
+            ->rules('required');
+
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required()->required();
             $form->text('address', __('Address'))->required();
             $form->text('premises_location', __('Premises location'))->required();
@@ -357,7 +371,7 @@ class FormSr6Controller extends AdminController
         }
 
         if (Admin::user()->isRole('admin')) {
-            $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
+            $form->text('name_of_applicant', __('Name of applicant/Company'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
 
@@ -394,7 +408,9 @@ class FormSr6Controller extends AdminController
 
         if (Admin::user()->isRole('inspector')) {
 
-            $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
+            $form->text('type', __('Cateogry'));
+
+            $form->text('name_of_applicant', __('Name of applicant/Company'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
             $form->text('premises_location', __('Location of Farm'))->readonly();
 

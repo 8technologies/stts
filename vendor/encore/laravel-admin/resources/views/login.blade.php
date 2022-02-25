@@ -27,21 +27,14 @@
   <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition login-page" @if(config('admin.login_background_image'))style="background: url({{ url(config('admin.login_background_image')) }}) no-repeat;background-size: cover;"@endif>
+<body class="hold-transition login-page" @if(config('admin.login_background_image'))style="background: url({{config('admin.login_background_image')}}) no-repeat;background-size: cover;"@endif>
 <div class="login-box">
-
-  <!-- /.login-logo -->
-  <div class="login-box-body"> 
-      <div class="login-logo h6 pt-4">
-    <a href="{{ admin_url('/') }}"><b>{{ config('admin.name') }}</b></a>
+  <div class="login-logo">
+    <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}}</b></a>
   </div>
-
-
-    @if (config('admin.login_background_image_2'))
-        <img width="100%" class="mb-5" src="{{ url (config('admin.login_background_image_2')) }}" alt="">
-    @endif
-    
-    <p class="login-box-msg text-dark">Login To Your Account</p>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">{{ trans('admin.login') }}</p>
 
     <form action="{{ admin_url('auth/login') }}" method="post">
       <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
@@ -66,7 +59,7 @@
         <input type="password" class="form-control" placeholder="{{ trans('admin.password') }}" name="password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-      <div class="row  mb-2">
+      <div class="row">
         <div class="col-xs-8">
           @if(config('admin.auth.remember'))
           <div class="checkbox icheck">
@@ -84,7 +77,6 @@
         </div>
         <!-- /.col -->
       </div>
-      <p class="border mt-3 pt-3" style="border-top: 1px gray solid">Don't have an account?  <a href="{{url("register")}}">Register</a></p>
     </form>
 
   </div>
@@ -93,7 +85,7 @@
 <!-- /.login-box -->
 
 <!-- jQuery 2.1.4 -->
-<script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js")}} "></script>
+<script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js")}}"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="{{ admin_asset("vendor/laravel-admin/AdminLTE/bootstrap/js/bootstrap.min.js")}}"></script>
 <!-- iCheck -->

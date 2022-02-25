@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Imports\UsersImport;
 use App\Models\Crop;
 use App\Models\CropVariety;
 use App\Models\FormSr10;
@@ -17,6 +18,8 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Hamcrest\Util;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Concerns\ToModel;
+
 
 class PlantingReturnController extends AdminController
 {
@@ -24,8 +27,8 @@ class PlantingReturnController extends AdminController
      * Title for current resource.
      *
      * @var string
-     */
-    protected $title = 'Planting Return';
+     */ 
+    protected $title = 'Planting Return - Company';
 
     /**
      * Make a grid builder.
@@ -35,6 +38,45 @@ class PlantingReturnController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new PlantingReturn());
+
+        /*
+        $sr = PlantingReturn::all()->first();
+        $sr->name = "Joan Doe";
+        $sr->status_comment .= rand(10000,1000000);
+        $sr->save();
+        
+        die();
+        
+        $file = null;
+        if(file_exists('./public/storage/'.$sr->sub_growers_file)){
+            $file = './public/storage/'.$sr->sub_growers_file;
+        }
+
+
+        
+
+        if($file!=null){
+  
+
+            $row = 1;
+            if (($handle = fopen($file, "r")) !== FALSE) {
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    $num = count($data);
+                    echo "<p> $num fields in line $row: <br /></p>\n";
+                    $row++;
+                    for ($c=0; $c < $num; $c++) {
+                        echo $data[$c] . "<br />\n";
+                    }
+                }
+                fclose($handle);
+            }else{
+                die("failed to open");
+            }
+        }
+
+        die($file);*/
+
+
         $grid->disableExport();
         $grid->disableFilter();
         $grid->disableRowSelector();
@@ -87,18 +129,20 @@ class PlantingReturnController extends AdminController
             });
         }
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('name', __('Company Name'));
+        $grid->column('address', __('Address'));
+        $grid->column('amount_enclosed', __('Amount enclosed'));
+        $grid->column('registerd_dealer', __('Registerd dealer'));
+         
         $grid->column('created_at', __('Created'))
             ->display(function ($item) {
                 if (!$item) {
-                    return "-";
+                    return "-"; 
                 }
-                return Carbon::parse($item)->diffForHumans();
+                return Carbon::parse($item)->toDateString();
             });
-        $grid->column('name', __('Name'));
-        $grid->column('address', __('Address'));
-        $grid->column('seed_rate', __('Seed rate'));
-        $grid->column('registerd_dealer', __('Registerd dealer'));
+
 
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
@@ -164,6 +208,9 @@ class PlantingReturnController extends AdminController
         // $now Carbon::parse($item)->diffForHumans();
 
         $form = new Form(new PlantingReturn());
+
+  
+        
         $sr4 = Utils::has_valid_sr6();
         if ($form->isCreating()) {
             if (!$sr4) {
@@ -233,36 +280,24 @@ class PlantingReturnController extends AdminController
         }
         $form->setWidth(8, 4);
 
+        $form->hidden('seed_rate', __('seed_rate'))->value(rand(10000,1000000))
+        ->default((rand(10000,1000000)));
+
         if (Admin::user()->isRole('basic-user')) {
-
-            $form->text('name', __('Name'))->default($user->name)->required();
-            $form->text('address', __('Address'))->required();
-            $form->text('telephone', __('Telephone'))->required();
-            $form->select('crop_id', 'Crop')->options(Crop::all()->pluck('name', 'id'))
-                ->required();
-            $form->text('lot_number', __('Lot number of seed used'))->required();
-            $form->text('size_of_land', __('Land size (in Acres)'))->attribute('type', 'number')->required();
-            $form->date('date_planted', __('Date planted'))->required();
-            $form->date('date_harvest', __('Appoximate date of harvest'))->required();
-            $form->text('previous_crops', 'Previous cropping for 3 seasons')
-                ->required();
-
-
-            $form->hasMany('planting_return_crops', __('Click on "New" crop varieties'), function (NestedForm $form) {
-                $_items = [];
-                foreach (CropVariety::all() as $key => $item) {
-                    $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
-                }
-                $form->select('crop_variety_id', 'Add Crop Variety')->options($_items)
-                    ->required();
-            });
-            $form->divider();
-
-            $form->text('seed_rate', __('Seed rate per hectare (in KGs)'))->attribute('type', 'float')->required();
+            $form->text('name', __('Company Name'))->default($user->name)->required(); 
+            $form->text('address', __('Company Address'))->required();
+            $form->text('telephone', __('Company Telephone'))->required();
             $form->text('amount_enclosed', __('Amount enclosed for application'))->attribute('type', 'number')->required();
             $form->file('payment_receipt', __('Payment receipt'))->required();
             $form->text('registerd_dealer', __('Registerd seed merchant/dealer to whome the entire seed stock will be sold'));
-            $form->latlong('latitude', 'longitude', 'Location of the land')->default(['lat' => 0.3130291, 'lng' => 32.5290854])->required();
+
+            $link = url('/public/assets/sub-growsers-template.xlsx');
+            $form->html('<h3>Download sub-growers template file (Excel) ... <a href="'.$link.'" clast="btn btn-primary"
+            style="border: solid green 2px;"
+            target="_blank"
+            >DOWNLOAD TEMPLATE</a></h3>');
+            $form->file('sub_growers_file','Sub-growers excel file')->required();
+ 
         }
 
 

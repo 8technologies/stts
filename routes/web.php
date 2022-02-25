@@ -7,6 +7,7 @@ use App\Http\Middleware\Authenticate;
 
 Route::get('/', [MainController::class, 'index']);
 Route::get('/about', [MainController::class, 'about']);
+Route::get('/import', [MainController::class, 'import']);
 Route::get('/register', [MainController::class, 'register'])->name("register");
 Route::match(['get', 'post'], '/login', [MainController::class, 'login'])->name("login");
 Route::post('/register', [MainController::class, 'register'])->name("register");

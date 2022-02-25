@@ -16,6 +16,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class ImportExportPermitController extends AdminController
 {
@@ -38,24 +39,24 @@ class ImportExportPermitController extends AdminController
         $grid->disableExport();
         $grid->model()->where('is_import', '=', 1);
 
-        
+
 
 
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
 
-            if (!Utils::can_create_import_form()) {
+            /*if (!Utils::can_create_import_form()) {
                 $grid->disableCreateButton();
-            }
+            }*/
 
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
-                $actions->disableEdit();
                 if (
                     $status == 2 ||
                     $status == 5 ||
                     $status == 6
-                ) {
+                    ) {
+                    $actions->disableEdit();
                     $actions->disableDelete();
                 }
             });
@@ -69,8 +70,16 @@ class ImportExportPermitController extends AdminController
                 if (
                     $status != 2
                 ) {
-                    $actions->disableEdit();
+                    //$actions->disableEdit();
                 }
+
+                if (
+                    $status == 5 
+                    ) {
+                    $actions->disableEdit();
+                    $actions->disableDelete();
+                }
+
             });
         } else {
             $grid->disableCreateButton();
@@ -141,6 +150,7 @@ class ImportExportPermitController extends AdminController
                 return $u->name;
             });
 
+        $show->field('type', __('Permit category'));
         $show->field('name', __('Name'));
         $show->field('address', __('Address'));
         $show->field('telephone', __('Telephone'));
@@ -158,7 +168,7 @@ class ImportExportPermitController extends AdminController
                 $headers = ['Crop', 'Variety', 'Category', 'weight'];
                 $rows = array();
                 foreach ($this->import_export_permits_has_crops as $key => $val) {
-                    $var = CropVariety::firstWhere($val->crop_variety_id);
+                    $var = CropVariety::find($val->crop_variety_id);
 
 
                     $row['crop'] = $var->crop->name;
@@ -185,15 +195,13 @@ class ImportExportPermitController extends AdminController
     protected function form()
     {
 
-        $sr4 = Utils::has_valid_sr4();
-        if (Admin::user()->isRole('basic-user')) {
-            if (!$sr4) {
-                admin_error("Alert", "You need to be a registred and approved seed merchant to apply for an import permit.");
-                return redirect(admin_url('import-export-permits'));
-            }
-        }
+
 
         $form = new Form(new ImportExportPermit());
+
+
+
+
         $form->setWidth(8, 4);
         $form->disableCreatingCheck();
         $form->tools(function (Form\Tools $tools) {
@@ -202,12 +210,12 @@ class ImportExportPermitController extends AdminController
         });
 
         $form->footer(function ($footer) {
-            $footer->disableReset(); 
+            $footer->disableReset();
             $footer->disableViewCheck();
             $footer->disableEditingCheck();
             $footer->disableCreatingCheck();
         });
-        
+
 
 
 
@@ -220,15 +228,85 @@ class ImportExportPermitController extends AdminController
             $form->hidden('administrator_id', __('Administrator id'));
         }
         if (Admin::user()->isRole('basic-user')) {
+
+
+            $form->submitted(function (Form $form) {
+
+
+                if ($_POST['type'] != 'Researchers') {
+                    $national_seed_board_reg_num =null;
+                    if(
+                        $_POST['national_seed_board_reg_num']!=null
+                    ){
+                        if(strlen($_POST['national_seed_board_reg_num'])>1){
+                            $national_seed_board_reg_num = $_POST['national_seed_board_reg_num'];
+                        }
+                    }
+                    if($national_seed_board_reg_num == null){
+                        return Redirect::back()->withErrors(['national_seed_board_reg_num' => [
+                            'Only researchers are allowed to apply without seed board reg number.',
+                            'If you don\'t have a valid seed board reg number, please go to applications apply for SR4 first.',
+                            'This field is automatically filled from your valid seed board reg number.',
+                            ]])->withInput();
+                    }
+                }
+     
+    
+                
+            });
+            
+
+
+
             $form->text('name', __('Name'))->default($user->name)->required();
             $form->text('address', __('Postal Address'))->required();
             $form->text('telephone', __('Phone number'))->required();
-            $form->text(
-                'national_seed_board_reg_num',
-                __('National seed board registration number')
-            )
-                ->readonly()
-                ->value($sr4->seed_board_registration_number);
+
+
+            $form->radio('type', __('Application category?'))
+                ->options([
+                    'Seed Merchant' => 'Seed Merchant',
+                    'Seed Producer' => 'Seed Producer',
+                    'Seed Stockist' => 'Seed Stockist',
+                    'Seed Importer' => 'Seed Importer',
+                    'Seed Exporter' => 'Seed Exporter',
+                    'Seed Processor' => 'Seed Processor',
+                    'Researchers' => 'Researchers',
+                ])
+                ->required()
+                ->help('Which SR4 type are tou applying for?');
+                // ->when('in', [
+                //     'Seed Merchant',
+                //     'Seed Producer',
+                //     'Seed Stockist',
+                //     'Seed Importer',
+                //     'Seed Exporter',
+                //     'Seed Processor',
+                // ], function (Form $form) {
+
+                   
+                // })
+
+                $seed_board_registration_number = null;
+                $sr4 = Utils::has_valid_sr4();
+                if ($sr4 != null) {
+                    if ($sr4->seed_board_registration_number != null) {
+                        if (strlen($sr4->seed_board_registration_number) > 1) {
+                           $seed_board_registration_number = $sr4->seed_board_registration_number;
+                        }
+                    }
+                }
+
+                $form->text(
+                    'national_seed_board_reg_num',
+                    __('National seed board registration number')
+                ) 
+                    ->readonly()
+                    ->value($seed_board_registration_number);
+
+
+
+
 
             $form->text('store_location', __('Location of the store'))->required();
             $form->text(
@@ -256,7 +334,7 @@ class ImportExportPermitController extends AdminController
                 $form->select('crop_variety_id', 'Add Crop Variety')->options($_items)
                     ->required();
                 $form->text('category', __('Category'))->required();
-                $form->text('weight', __('Weight (in KGs)'))->attribute('type','number')->required();
+                $form->text('weight', __('Weight (in KGs)'))->attribute('type', 'number')->required();
             });
         }
         if (Admin::user()->isRole('admin')) {
@@ -291,8 +369,8 @@ class ImportExportPermitController extends AdminController
                         ->help("Please specify with a comment");
                 })
                 ->when('in', [5, 6], function (Form $form) {
-                    $form->date('valid_from', 'Valid from date?');
-                    $form->date('valid_until', 'Valid until date?');
+                    $form->date('valid_from', 'Valid from date?')->readonly();
+                    $form->date('valid_until', 'Valid until date?')->readonly();
                 });
         }
 
@@ -310,7 +388,7 @@ class ImportExportPermitController extends AdminController
                 ->options([
                     '3' => 'Halted',
                     '4' => 'Rejected',
-                    '5' => 'Accepted', 
+                    '5' => 'Accepted',
                 ])
                 ->required()
                 ->when('2', function (Form $form) {
@@ -330,14 +408,15 @@ class ImportExportPermitController extends AdminController
                 })
                 ->when('in', [3, 4], function (Form $form) {
                     $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                        ->readonly()
                         ->help("Please specify with a comment");
                 })
                 ->when('in', [5, 6], function (Form $form) {
                     $form->text('permit_number', __('Permit number'))
                         ->help("Please Enter Permit number")
                         ->default(rand(10000, 1000000));
-                    $form->date('valid_from', 'Valid from date?');
-                    $form->date('valid_until', 'Valid until date?');
+                    $form->date('valid_from', 'Valid from date?')->readonly();
+                    $form->date('valid_until', 'Valid until date?')->readonly();
                 });
 
 
