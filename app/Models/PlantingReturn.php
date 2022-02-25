@@ -138,6 +138,26 @@ class PlantingReturn extends Model
         });
 
         self::created(function ($m) {
+            $file = null;
+            if ($m != null) {
+                if(strlen($m->sub_growers_file)>3){
+                    if (file_exists('./public/storage/' . $m->sub_growers_file)) {
+                        $file = './public/storage/' . $m->sub_growers_file;
+                    }else{ 
+                        $m->sub_growers_file = null;
+                        $m->save();
+                        return;
+                    }
+                }else{
+                    return $m;
+                }
+            }else{ 
+                return $m;
+            }
+
+            if($file == null){
+                return $m;
+            }
             self::import_sub_growers($m);
             return $m;
             //created
@@ -149,8 +169,28 @@ class PlantingReturn extends Model
         });
 
         self::updated(function ($m) {
+
+            $file = null;
+            if ($m != null) {
+                if(strlen($m->sub_growers_file)>3){
+                    if (file_exists('./public/storage/' . $m->sub_growers_file)) {
+                        $file = './public/storage/' . $m->sub_growers_file;
+                    }else{ 
+                        $m->sub_growers_file = null;
+                        $m->save();
+                        return;
+                    }
+                }else{
+                    return $m;
+                }
+            }else{ 
+                return $m;
+            }
+
+            if($file == null){
+                return $m;
+            }
             self::import_sub_growers($m);
-            return $m;
             // ... code here
         });
 
