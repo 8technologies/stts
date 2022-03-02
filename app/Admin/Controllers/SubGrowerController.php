@@ -178,7 +178,8 @@ class SubGrowerController extends AdminController
             return $_user->name;
         });
 
-        $grid->column('name', __('Name'))->sortable();
+        $grid->column('filed_name', __('Field Name'))->sortable();
+        $grid->column('name', __('Person responisble'))->sortable();
         $grid->column('size', __('Size'))->sortable();
         $grid->column('crop', __('Crop'))->sortable();
         $grid->column('variety', __('variety'))->sortable();
@@ -270,8 +271,10 @@ class SubGrowerController extends AdminController
 
             $form->select('variety', 'Variety')->options(CropVariety::all()->pluck('name', 'name'))
                 ->required();
+            $form->text('filed_name', __('Filed name'))->required();
             $form->text('district', __('District'))->required();
             $form->text('subcourty', __('Subcourty'))->required();
+            $form->text('village', __('Village'))->required();
             $form->date('planting_date', __('Planting date'))->required();
             $form->text('quantity_planted', __('Quantity planted'));
             $form->text('expected_yield', __('Expected yield'));
