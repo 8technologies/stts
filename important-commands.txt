@@ -35,7 +35,6 @@ php artisan make:migration create_event_table
 php artisan make:migration create_movements_table
 php artisan make:migration create_movement_animals_table
 php artisan make:migration create_movement_has_movement_animals_table
-php artisan make:migration create_sub_growers_table
 
 
 
@@ -63,7 +62,6 @@ php artisan admin:make FarmController --model=App\\Models\\Farm
 php artisan admin:make AnimalController --model=App\\Models\\Animal
 php artisan admin:make EventController --model=App\\Models\\Event
 php artisan admin:make MovementController --model=App\\Models\\Movement
-php artisan admin:make SubGrowerController --model=App\\Models\\SubGrower
 
 
 php artisan make:seeder DistrictsTableSeeder
@@ -107,4 +105,3 @@ php artisan make:model Event
 php artisan make:model Movement
 php artisan make:model MovementAnimal
 php artisan make:model MovementHasMovementAnimal
-php artisan make:model SubGrower
