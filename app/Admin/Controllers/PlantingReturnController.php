@@ -291,7 +291,7 @@ class PlantingReturnController extends AdminController
             $form->file('payment_receipt', __('Payment receipt'))->required();
             $form->text('registerd_dealer', __('Registerd seed merchant/dealer to whome the entire seed stock will be sold'));
 
-            $link = url('/public/assets/sub-growsers-template.xlsx');
+            $link = url('/public/assets/files/sub-growsers-template.xlsx');
             $form->html('<h3>Download sub-growers template file (Excel) ... <a href="'.$link.'" clast="btn btn-primary"
             style="border: solid green 2px;"
             target="_blank"

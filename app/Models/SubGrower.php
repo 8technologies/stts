@@ -14,19 +14,14 @@ class SubGrower extends Model
         parent::boot();
 
         self::creating(function ($m) {
-            $sub = SubGrower::where('administrator_id', $m->administrator_id)
+            $sub = SubGrower::where('field_name', $m->field_name)
                 ->where('name', $m->name)->first();
-
-
-            if($sub!=null){
-                return false;
-            } 
-            
-            $sub = SubGrower::where('phone_number', $m->phone_number)->first();
+ 
 
             if($sub!=null){
                 return false;
             } 
+             
 
             $m->status = 1;
             $m->inspector = 0;
