@@ -20,7 +20,7 @@ class FormSr4Controller extends AdminController
      *
      * @var string
      */
-    protected $title = 'Form SR4 - Seed Merchant';
+    protected $title = 'Form SR4';
 
     /**
      * Make a grid builder.

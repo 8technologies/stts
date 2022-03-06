@@ -24,7 +24,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<img width="100%" src="/stts/assets/images/stts/logos/logo_top.png" alt="Admin logo">',
+    'logo' => '<img width="100%" src="/assets/images/stts/logos/logo_top.png" alt="Admin logo">',
 
     /*
     |--------------------------------------------------------------------------
@@ -160,7 +160,7 @@ return [
         // Image and file upload path under the disk above.
         'directory' => [
             'image' => '/',
-            'file'  => '/',
+            'file'  => 'files',
         ],
     ],
 
