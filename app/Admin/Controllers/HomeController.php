@@ -245,7 +245,7 @@ class HomeController extends Controller
                     'wpforms',
                     $color,
                     admin_url('/form-qds'),
-                    $count . " - QDS froms"
+                    $count . " - QDS forms"
                 ));
             }
             #======================= QDS Producer - Ends =========================#
@@ -289,7 +289,7 @@ class HomeController extends Controller
                     'wpforms',
                     $color,
                     admin_url('/planting-returns'),
-                    $count . "  - QDS froms"
+                    $count . "  - QDS forms"
                 ));
             }
             #======================= Planting Return - Ends =========================#
