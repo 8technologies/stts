@@ -3,11 +3,13 @@
 use App\Http\Controllers\Dashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\PrintController2;
 use App\Http\Middleware\Authenticate;
 
 Route::get('/', [MainController::class, 'index']);
 Route::get('/about', [MainController::class, 'about']);
 Route::get('/import', [MainController::class, 'import']);
+
 Route::get('/register', [MainController::class, 'register'])->name("register");
 Route::match(['get', 'post'], '/login', [MainController::class, 'login'])->name("login");
 Route::post('/register', [MainController::class, 'register'])->name("register");
@@ -22,8 +24,12 @@ Route::get('/profile', [Dashboard::class, 'profile'])->middleware(Authenticate::
 Route::get('/logout', [Dashboard::class, 'logout'])->middleware(Authenticate::class);
 Route::match(['get', 'post'],'/messages/', [Dashboard::class, 'messages'])->name("messages")->middleware(Authenticate::class);
 Route::match(['get', 'post'],'/messages/{thread}', [Dashboard::class, 'messages'])->name("messages")->middleware(Authenticate::class);
-Route::match(['get', 'post'],'/{id}', [MainController::class, 'slugSwitcher']);
+
+Route::match(['get', 'post'], '/print', [PrintController2::class, 'index']);
 
 /*Route::get('/', function () {
     return view('welcome');
 });*/
+
+//always the last.
+Route::match(['get', 'post'],'/{id}', [MainController::class, 'slugSwitcher']);

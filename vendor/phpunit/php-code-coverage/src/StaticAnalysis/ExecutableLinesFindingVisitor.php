@@ -10,18 +10,25 @@
 namespace SebastianBergmann\CodeCoverage\StaticAnalysis;
 
 use PhpParser\Node;
+use PhpParser\Node\Expr\ArrayDimFetch;
 use PhpParser\Node\Expr\Assign;
 use PhpParser\Node\Expr\BinaryOp;
 use PhpParser\Node\Expr\CallLike;
+use PhpParser\Node\Expr\Cast;
 use PhpParser\Node\Expr\Closure;
+use PhpParser\Node\Expr\Match_;
+use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\NullsafePropertyFetch;
 use PhpParser\Node\Expr\PropertyFetch;
 use PhpParser\Node\Expr\StaticPropertyFetch;
 use PhpParser\Node\Expr\Ternary;
-use PhpParser\Node\Scalar;
+use PhpParser\Node\MatchArm;
+use PhpParser\Node\Scalar\Encapsed;
 use PhpParser\Node\Stmt\Break_;
 use PhpParser\Node\Stmt\Case_;
 use PhpParser\Node\Stmt\Catch_;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Continue_;
 use PhpParser\Node\Stmt\Do_;
 use PhpParser\Node\Stmt\Echo_;
@@ -79,6 +86,8 @@ final class ExecutableLinesFindingVisitor extends NodeVisitorAbstract
      */
     public function executableLines(): array
     {
+        sort($this->executableLines);
+
         return $this->executableLines;
     }
 
@@ -98,12 +107,47 @@ final class ExecutableLinesFindingVisitor extends NodeVisitorAbstract
      */
     private function getLines(Node $node): array
     {
-        if (
+        if ($node instanceof Cast ||
             $node instanceof PropertyFetch ||
             $node instanceof NullsafePropertyFetch ||
-            $node instanceof StaticPropertyFetch
-        ) {
+            $node instanceof StaticPropertyFetch) {
             return [$node->getEndLine()];
+        }
+
+        if ($node instanceof ArrayDimFetch) {
+            if (null === $node->dim) {
+                return [];
+            }
+
+            return [$node->dim->getStartLine()];
+        }
+
+        if ($node instanceof ClassMethod) {
+            if ($node->name->name !== '__construct') {
+                return [];
+            }
+
+            $existsAPromotedProperty = false;
+
+            foreach ($node->getParams() as $param) {
+                if (0 !== ($param->flags & Class_::VISIBILITY_MODIFIER_MASK)) {
+                    $existsAPromotedProperty = true;
+
+                    break;
+                }
+            }
+
+            if ($existsAPromotedProperty) {
+                // Only the line with `function` keyword should be listed here
+                // but `nikic/php-parser` doesn't provide a way to fetch it
+                return range($node->getStartLine(), $node->name->getEndLine());
+            }
+
+            return [];
+        }
+
+        if ($node instanceof MethodCall) {
+            return [$node->name->getStartLine()];
         }
 
         if ($node instanceof Ternary) {
@@ -118,33 +162,55 @@ final class ExecutableLinesFindingVisitor extends NodeVisitorAbstract
             return $lines;
         }
 
+        if ($node instanceof Match_) {
+            return [$node->cond->getStartLine()];
+        }
+
+        if ($node instanceof MatchArm) {
+            return [$node->body->getStartLine()];
+        }
+
+        if ($node instanceof Expression && (
+            $node->expr instanceof Cast ||
+            $node->expr instanceof Match_ ||
+            $node->expr instanceof MethodCall
+        )) {
+            return [];
+        }
+
         return [$node->getStartLine()];
     }
 
     private function isExecutable(Node $node): bool
     {
         return $node instanceof Assign ||
+               $node instanceof ArrayDimFetch ||
                $node instanceof BinaryOp ||
                $node instanceof Break_ ||
                $node instanceof CallLike ||
                $node instanceof Case_ ||
+               $node instanceof Cast ||
                $node instanceof Catch_ ||
+               $node instanceof ClassMethod ||
                $node instanceof Closure ||
                $node instanceof Continue_ ||
                $node instanceof Do_ ||
                $node instanceof Echo_ ||
                $node instanceof ElseIf_ ||
                $node instanceof Else_ ||
+               $node instanceof Encapsed ||
                $node instanceof Expression ||
                $node instanceof Finally_ ||
                $node instanceof For_ ||
                $node instanceof Foreach_ ||
                $node instanceof Goto_ ||
                $node instanceof If_ ||
+               $node instanceof Match_ ||
+               $node instanceof MatchArm ||
+               $node instanceof MethodCall ||
                $node instanceof NullsafePropertyFetch ||
                $node instanceof PropertyFetch ||
                $node instanceof Return_ ||
-               $node instanceof Scalar ||
                $node instanceof StaticPropertyFetch ||
                $node instanceof Switch_ ||
                $node instanceof Ternary ||
