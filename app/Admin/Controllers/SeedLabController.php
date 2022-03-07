@@ -70,6 +70,10 @@ class SeedLabController extends AdminController
             return Utils::tell_status($status);
         })->sortable();
 
+        $grid->column('print', __('Lab Certificate'))->display(function ($status) {
+            return '<a target="_blank" href="'.url('/print').'">Print Certificate</a>';
+        })->sortable();
+ 
 
         $grid->column('inspector', __('Inspector'))->display(function ($userId) {
             if (Admin::user()->isRole('basic-user')) {
