@@ -34,26 +34,31 @@ class HomeController extends Controller
 
         $content->row(function ($row) {
 
-            $box = new Box('Marketable seed', view('admin.dashboard.chart-marketable-seed'));
-            $box->removable();
-            $box->collapsable();
-            $box->style('success');
-            $box->solid();
-            $row->column(6, $box);
 
-            $box = new Box('Seed stock', view('admin.dashboard.chart-seed-stock'));
-            $box->removable();
-            $box->collapsable();
-            $box->style('success');
-            $box->solid();
-            $row->column(6, $box);
+            if (
+                Admin::user()->isRole('admin') ||
+                Admin::user()->isRole('inspector') 
+            ) {
+                $box = new Box('Marketable seed', view('admin.dashboard.chart-marketable-seed'));
+                $box->removable();
+                $box->collapsable();
+                $box->style('success');
+                $box->solid();
+                $row->column(6, $box);
+
+                $box = new Box('Seed stock', view('admin.dashboard.chart-seed-stock'));
+                $box->removable();
+                $box->collapsable();
+                $box->style('success');
+                $box->solid();
+                $row->column(6, $box);
+            }
 
 
             #======================= Users - Starts =========================#
             if (
                 Admin::user()->isRole('admin') ||
-                Admin::user()->isRole('inspector') ||
-                Admin::user()->isRole('basic-user')
+                Admin::user()->isRole('inspector') 
             ) {
                 $row->column(4, new InfoBox(
                     ''
