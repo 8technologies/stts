@@ -205,7 +205,7 @@ class FormSr6Controller extends AdminController
                 }
                 return $item;
             });
-        $show->field('signature_of_applicant', __('Signature of applicant'))->file();
+        $show->field('signature_of_applicant', __('Attach receipt'))->file();
         $show->field('grower_number', __('Grower number'));
         $show->field('valid_from', __('Valid from'))
             ->as(function ($item) {
@@ -367,7 +367,7 @@ class FormSr6Controller extends AdminController
                     '0' => 'No',
                 ])
                 ->required();
-            $form->file('signature_of_applicant', __('Signature of applicant'));
+            $form->file('signature_of_applicant', __('Attach receipt'));
         }
 
         if (Admin::user()->isRole('admin')) {
