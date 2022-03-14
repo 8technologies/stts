@@ -43,14 +43,14 @@ class FormQdsController extends AdminController
             }
 
             $grid->actions(function ($actions) {
-                $actions->disableEdit();
+                $actions->disableDelete();
                 $status = ((int)(($actions->row['status'])));
                 if (
                     $status == 2 ||
                     $status == 5 ||
                     $status == 6
                 ) {
-                    $actions->disableDelete();
+                    $actions->disableEdit();
                 }
             });
         } else if (Admin::user()->isRole('inspector')) {
@@ -142,7 +142,7 @@ class FormQdsController extends AdminController
             });
         $show->field('name_of_applicant', __('Name of applicant'));
         $show->field('address', __('Address'));
-        $show->field('company_initials', __('Company initials'));
+
         $show->field('premises_location', __('Premises location'));
         $show->field('years_of_expirience', __('Years of experience'));
         $show->field('dealers_in', __('Dealers in'))
@@ -500,8 +500,9 @@ class FormQdsController extends AdminController
                 })
                 ->when('in', [5, 6], function (Form $form) {
 
-                    $form->text('grower_number', __('Grower number'))
-                        ->help("Please Enter grower number");
+                    $form->hidden('grower_number', __('Grower number'))
+                        ->value("000")
+                        ->default("0000");
                     $form->text('registration_number', __('Registration number'))
                         ->help("Please Enter Registration number");
                     $form->date('valid_from', 'Valid from date?');

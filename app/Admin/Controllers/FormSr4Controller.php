@@ -20,7 +20,7 @@ class FormSr4Controller extends AdminController
      *
      * @var string
      */
-    protected $title = 'Form SR4';
+    protected $title = 'Form SR4'; 
 
     /**
      * Make a grid builder.
@@ -130,6 +130,7 @@ class FormSr4Controller extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('created_at', __('Created on'));
+        $show->field('seed_board_registration_number', __('Seed board registration number'));
         $show->field('administrator_id', __('Created by'))->as(function ($userId) {
             $u = Administrator::find($userId);
             if (!$u)
@@ -161,7 +162,7 @@ class FormSr4Controller extends AdminController
             return $item;
         });
         $show->field('land_size', __('Land size (In Acres)'));
-        $show->field('eqipment', __('Eqipment'));
+        $show->field('eqipment', __('Equipment'));
         $show->field('have_adequate_equipment', __('Have adequate equipment'))->as(function ($item) {
             if ($item) {
                 return "Yes";
@@ -308,7 +309,7 @@ class FormSr4Controller extends AdminController
                 ->rules('required');
 
 
-            $form->html('<h3>I/We wish to apply for a certificate as a seed merchant.</h3>');
+            $form->html('<h3>I/We wish to apply for a certificate as a seed stockist.</h3>');
 
             $form->radio('dealers_in', __('Applicant is applying for production of?'))
                 ->options([

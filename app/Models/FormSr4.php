@@ -26,7 +26,8 @@ class FormSr4 extends Model
             ){
                 $model->status = 1;
                 return $model;
-            }
+            } 
+            
             if(Admin::user()->isRole('inspector')){
                 if($model->status == 5){    
                     if(
