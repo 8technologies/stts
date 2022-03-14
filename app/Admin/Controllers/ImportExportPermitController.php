@@ -55,7 +55,7 @@ class ImportExportPermitController extends AdminController
                     $status == 2 ||
                     $status == 5 ||
                     $status == 6
-                    ) {
+                ) {
                     $actions->disableEdit();
                     $actions->disableDelete();
                 }
@@ -74,12 +74,11 @@ class ImportExportPermitController extends AdminController
                 }
 
                 if (
-                    $status == 5 
-                    ) {
+                    $status == 5
+                ) {
                     $actions->disableEdit();
                     $actions->disableDelete();
                 }
-
             });
         } else {
             $grid->disableCreateButton();
@@ -234,27 +233,24 @@ class ImportExportPermitController extends AdminController
 
 
                 if ($_POST['type'] != 'Researchers') {
-                    $national_seed_board_reg_num =null;
-                    if(
-                        $_POST['national_seed_board_reg_num']!=null
-                    ){
-                        if(strlen($_POST['national_seed_board_reg_num'])>1){
+                    $national_seed_board_reg_num = null;
+                    if (
+                        $_POST['national_seed_board_reg_num'] != null
+                    ) {
+                        if (strlen($_POST['national_seed_board_reg_num']) > 1) {
                             $national_seed_board_reg_num = $_POST['national_seed_board_reg_num'];
                         }
                     }
-                    if($national_seed_board_reg_num == null){
+                    if ($national_seed_board_reg_num == null) {
                         return Redirect::back()->withErrors(['national_seed_board_reg_num' => [
                             'Only researchers are allowed to apply without seed board reg number.',
                             'If you don\'t have a valid seed board reg number, please go to applications apply for SR4 first.',
                             'This field is automatically filled from your valid seed board reg number.',
-                            ]])->withInput();
+                        ]])->withInput();
                     }
                 }
-     
-    
-                
             });
-            
+
 
 
 
@@ -275,34 +271,34 @@ class ImportExportPermitController extends AdminController
                 ])
                 ->required()
                 ->help('Which SR4 type are tou applying for?');
-                // ->when('in', [
-                //     'Seed Merchant',
-                //     'Seed Producer',
-                //     'Seed Stockist',
-                //     'Seed Importer',
-                //     'Seed Exporter',
-                //     'Seed Processor',
-                // ], function (Form $form) {
+            // ->when('in', [
+            //     'Seed Merchant',
+            //     'Seed Producer',
+            //     'Seed Stockist',
+            //     'Seed Importer',
+            //     'Seed Exporter',
+            //     'Seed Processor',
+            // ], function (Form $form) {
 
-                   
-                // })
 
-                $seed_board_registration_number = null;
-                $sr4 = Utils::has_valid_sr4();
-                if ($sr4 != null) {
-                    if ($sr4->seed_board_registration_number != null) {
-                        if (strlen($sr4->seed_board_registration_number) > 1) {
-                           $seed_board_registration_number = $sr4->seed_board_registration_number;
-                        }
+            // })
+
+            $seed_board_registration_number = null;
+            $sr4 = Utils::has_valid_sr4();
+            if ($sr4 != null) {
+                if ($sr4->seed_board_registration_number != null) {
+                    if (strlen($sr4->seed_board_registration_number) > 1) {
+                        $seed_board_registration_number = $sr4->seed_board_registration_number;
                     }
                 }
+            }
 
-                $form->text(
-                    'national_seed_board_reg_num',
-                    __('National seed board registration number')
-                ) 
-                    ->readonly()
-                    ->value($seed_board_registration_number);
+            $form->text(
+                'national_seed_board_reg_num',
+                __('National seed board registration number')
+            )
+                ->readonly()
+                ->value($seed_board_registration_number);
 
 
 
@@ -325,15 +321,31 @@ class ImportExportPermitController extends AdminController
 
             $form->html('<h3>I/We wish to apply for a license to import seed as indicated below:</h3>');
 
+
+
+            $form->radio('crop_category', __('Category'))
+                ->options([
+                    'Commercial' => 'Commercial',
+                    'Research' => 'Research',
+                    'Own use' => 'Own use',
+                ])
+                ->required();
+
+ 
+
+
+
             $form->hasMany('import_export_permits_has_crops', __('Click on "New" to Add Crop varieties
             '), function (NestedForm $form) {
                 $_items = [];
+
                 foreach (CropVariety::all() as $key => $item) {
                     $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
                 }
+
                 $form->select('crop_variety_id', 'Add Crop Variety')->options($_items)
                     ->required();
-                $form->text('category', __('Category'))->required();
+                $form->hidden('category', __('Category'))->default("")->value("");
                 $form->text('weight', __('Weight (in KGs)'))->attribute('type', 'number')->required();
             });
         }
