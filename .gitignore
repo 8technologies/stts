@@ -1,6 +1,4 @@
-.DS_Store
-.DS_Store
-.DS_Store
+.env
 vendor/symfony/.DS_Store
 vendor/phpunit/.DS_Store
 vendor/laravel/.DS_Store
@@ -14,4 +12,5 @@ app/.DS_Store
 .DS_Store
 .DS_Store
 .DS_Store
+/.env
 .env
