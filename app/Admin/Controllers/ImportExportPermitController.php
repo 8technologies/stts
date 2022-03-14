@@ -92,7 +92,7 @@ class ImportExportPermitController extends AdminController
             })->sortable();
         $grid->column('name', __('Name'));
         $grid->column('telephone', __('Telephone'));
-        $grid->column('quantiry_of_seed', __('Quantiry of seed'));
+        $grid->column('quantiry_of_seed', __('Quantity of seed'));
 
         $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
             $u = Administrator::find($userId);
@@ -155,7 +155,7 @@ class ImportExportPermitController extends AdminController
         $show->field('telephone', __('Telephone'));
         $show->field('national_seed_board_reg_num', __('National seed board reg num'));
         $show->field('store_location', __('Store location'));
-        $show->field('quantiry_of_seed', __('Quantiry of seed'));
+        $show->field('quantiry_of_seed', __('Quantity of seed'));
         $show->field('name_address_of_origin', __('Name address of origin'));
         $show->field('dealers_in', __('Crops'))
             ->unescape()
