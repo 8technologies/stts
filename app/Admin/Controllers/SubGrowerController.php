@@ -284,15 +284,39 @@ class SubGrowerController extends AdminController
             $form->textarea('detail', __('Detail'));
         }
 
-        if (Admin::user()->isRole('inspector')) { 
+        if (Admin::user()->isRole('inspector')) {
 
+
+            $form->select('seed_class', 'Select Seed Class')->options([
+                'Pre-Basic' => 'Pre-Basic',
+                'Certified seed' => 'Certified seed',
+                'Basic seed' => 'Basic seed',
+            ])
+                ->required();
+
+
+ 
+
+            $form->text('crop_cultivar', __('Crop cultivar characteristics: (Off Types)'));
+            $form->text('size_of_field', __('Enter size of field: (acres)'));
+            $form->text('cultivar_characteristics_types', __('Crop cultivar characteristics: (Off Types)'));
+            $form->text('cultivar_characteristics_disease', __('Crop cultivar characteristics: (Diseases)'));
+            $form->text('cultivar_characteristics_features', __('Crop cultivar characteristics: (Other features)'));
+            $form->text('cultivar_characteristics_noxious_weeds', __('Crop cultivar characteristics: (Noxious Weeds)'));
+            $form->text('isolation_distance', __('Enter isolation distance: (meters)'))->attribute('type', 'number');
+            $form->text('proposed_distance', __('Status of proposed distance:'));
+            $form->text('isolation_time', __('Enter isolation time: (days)'))->attribute('type', 'number');
+            $form->text('proposed_isolation', __('Status of proposed isolation time:'));
+            $form->textarea('general_condition_of_the_crop', __('Please enter general condition of the crop: (drought, crop husbandry, etc)'));
+            $form->textarea('further_remarks', __('Enter any further remarks'));
+            $form->text('estimated_yield', __('Enter estimated yield: (metric tonnes)'))->attribute('type', 'number');
             $form->radio('status', __('Review application'))
                 ->options([
-                    '5' => 'Accepted',
-                    '3' => 'Halted',
+                    '7' => 'Provisional',
                     '4' => 'Rejected',
+                    '5' => 'Accepted',
                 ])
-                ->required() 
+                ->required()
                 ->when('in', [3, 4], function (Form $form) {
                     $form->textarea('status_comment', 'Enter status comment (Remarks)')
                         ->help("Please specify with a comment");
