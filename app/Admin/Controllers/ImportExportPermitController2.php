@@ -323,6 +323,9 @@ class ImportExportPermitController2 extends AdminController
                 $form->text('category', __('Category'))->required();
                 $form->text('weight', __('Weight (in KGs)'))->required();
             });
+
+            $form->textarea('status_comment', 'Inspector\'s (Remarks)')
+                        ->readonly();
         }
         if (Admin::user()->isRole('admin')) {
             //$form->file('ista_certificate', __('Ista certificate'))->required();
