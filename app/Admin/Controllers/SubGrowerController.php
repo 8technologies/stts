@@ -287,6 +287,26 @@ class SubGrowerController extends AdminController
         if (Admin::user()->isRole('inspector')) {
 
 
+
+            $id = request()->route()->parameters['sub_grower'];
+            $model = $form->model()->find($id);
+            $u = Administrator::find($model->administrator_id);
+
+
+            $form->html('<h3>Initialize inspection</h3>');
+            $form->html('<p class="alert alert-info">This inspection form (SR10) has not been inizilized yet. 
+            Select initialize below and submit to start inspection process.</p>');
+
+            $form->display('', __('Applicant'))->default($u->name)->readonly();
+            $form->display('', __('Person responsible'))->default($model->name)->readonly();
+            $form->display('', __('Field name'))->default($model->filed_name)->readonly();
+            $form->display('', __('District'))->default($model->district)->readonly();
+            $form->display('', __('Subcourty'))->default($model->subcourty)->readonly();
+            $form->display('', __('Village'))->default($model->village)->readonly();
+            $form->display('', __('Crop'))->default($model->crop)->readonly();
+            $form->display('', __('Variety'))->default($model->variety)->readonly();
+            $form->divider();
+
             $form->select('seed_class', 'Select Seed Class')->options([
                 'Pre-Basic' => 'Pre-Basic',
                 'Certified seed' => 'Certified seed',
@@ -295,7 +315,62 @@ class SubGrowerController extends AdminController
                 ->required();
 
 
- 
+            $_items = [];
+            $crop_val = "";
+            foreach (CropVariety::all() as $key => $item) {
+                $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
+              
+                
+                if ($model->variety == $item->name) {
+                    $crop_val = $item->crop->id;
+                }
+            }
+
+
+
+            $form->select('variety', 'Select  Seed')->options($_items)->value($crop_val)
+                ->default($crop_val)
+                ->required();
+
+            $form->radio('status', 'Inialize this form')->options([
+                '1' => 'Inilize form'
+            ])->value($crop_val)
+                ->required();
+
+            /*
+            "filed_name" => "Jesus"
+            "district" => "Kasese"
+            "subcourty" => "Bwera"
+            "village" => "Nyambambuka"
+
+            "crop" => "Climbing Beans"
+            "variety" => "NABE2"
+            "seed_class" => null
+            "id" => 5
+            "created_at" => "2022-03-21 10:20:20"
+            "updated_at" => "2022-03-21 11:06:55"
+            "administrator_id" => 3
+            "name" => "Christ"
+            "size" => 11
+            "planting_date" => "44176"
+            "quantity_planted" => "12"
+            "expected_yield" => null
+            "phone_number" => "0779755798"
+            "gps_latitude" => "0.233"
+            "gps_longitude" => "0.111"
+            "detail" => null
+            "status" => "2"
+            "inspector" => 20
+            "status_comment" => null
+            "field_name" => null
+
+
+            $form->select('seed_class', 'Select Seed Class')->options([
+                'Pre-Basic' => 'Pre-Basic',
+                'Certified seed' => 'Certified seed',
+                'Basic seed' => 'Basic seed',
+            ])
+                ->required(); 
 
             $form->text('crop_cultivar', __('Crop cultivar characteristics: (Off Types)'));
             $form->text('size_of_field', __('Enter size of field: (acres)'));
@@ -320,7 +395,7 @@ class SubGrowerController extends AdminController
                 ->when('in', [3, 4], function (Form $form) {
                     $form->textarea('status_comment', 'Enter status comment (Remarks)')
                         ->help("Please specify with a comment");
-                });
+                }); */
 
             //$form->number('inspector', __('Inspector'));
             //$form->textarea('status_comment', __('Status comment'));

@@ -13,18 +13,16 @@ class SubGrower extends Model
     {
         parent::boot();
 
-        self::creating(function ($m) {
+        self::creating(function ($m) { 
             $sub = SubGrower::where('filed_name', $m->filed_name)
                 ->where('name', $m->name)->first();
  
-
             if($sub!=null){
                 return false;
             } 
-             
-
+            
             $m->status = 1;
-            $m->inspector = 0;
+            $m->inspector = 0; 
             
             return $m;
         });

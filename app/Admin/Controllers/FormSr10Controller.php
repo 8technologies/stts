@@ -23,8 +23,6 @@ class FormSr10Controller extends AdminController
     protected $title = 'Sr10 - Field inspection';
 
     /**
-     * Make a grid builder.
-     *
      * @return Grid
      */
     protected function grid()
@@ -224,25 +222,7 @@ class FormSr10Controller extends AdminController
             }
             $id = request()->route()->parameters['form_sr10'];
             $model = $form->model()->find($id);
-            if ($model == null) {
-                admin_error("Warning", "SR10  not found.");
-                $can_edit = false;
-            }
-
-            $min_date = Carbon::parse($model->min_date);
-            if (!$min_date->isToday()) {
-                if (!$min_date->isPast()) {
-                    admin_error(
-                        "Attempting early submission",
-                        "This SR10 is to be submited " .
-                            $min_date->diffForHumans()
-                            . " on "
-                            . $min_date->toDateString()
-
-                    );
-                    $can_edit = false;
-                }
-            }
+             
             if (!$model->is_active) {
                 admin_error("Warning", "This form is not ative yet. You need to submit the previous stage before this.");
                 $can_edit = false;
@@ -250,7 +230,7 @@ class FormSr10Controller extends AdminController
             if ($model->is_done) {
                 admin_error("Warning", "This form is already submited. You cannot modify it anymore.");
                 $can_edit = false;
-            }
+            } 
         }
 
         if ($can_edit) {
@@ -317,13 +297,13 @@ class FormSr10Controller extends AdminController
                     $form->text('other_features', __('Crop cultivar characteristics (Other features)'))->required();
                     $form->text('other_weeds', __('Crop cultivar characteristics (Other weeds)'))->required();
                     $form->text('isolation_distance', __('Enter isolation distance (in Meters)'))->attribute('type', 'number');
+                    $form->text('variety', __('variety'))->attribute('type', 'number');
 
                     $form->select('proposed_distance', __('Status of proposed distance'))
                         ->options([
                             'Adequate' => 'Adequate',
                             'Inadequate' => 'Inadequate'
                         ]);
-
 
                     $form->textarea('general_conditions_of_crop', __('General conditions of crop'));
                     $form->text('estimated_yield', __('Enter estimated yield (in metric tonnes)'));
