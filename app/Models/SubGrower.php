@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Encore\Admin\Facades\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,13 +32,27 @@ class SubGrower extends Model
             //created
         });
 
-        self::updating(function ($model) {
-            // ... code here
-
+        self::updating(function ($sr10) {
+         
         });
 
-        self::updated(function ($model) {
+        self::updated(function ($sr10) {
             // ... code here
+            if(!Utils::sr10_inialized($sr10)){
+                if (Admin::user()->isRole('inspector')){
+                    $crop = Crop::find($sr10->crop);
+                    if($crop != null){
+                        if($crop->crop_inspection_types !=null){
+                            foreach ($crop->crop_inspection_types as $key => $val) {
+                                dd($val);
+                            }
+                        }
+                    }
+                    dd($sr10);
+                }
+            }
+            die("====>!!<=====");
+            //$sr10->planting_return_id  = $sub;
         });
 
         self::deleting(function ($model) {

@@ -17,6 +17,20 @@ class Utils
 {
 
 
+    public static function sr10_inialized(SubGrower $sr10)
+    {
+        if (!$sr10) {
+            return false;
+        }
+        $forms = FormSr10::where('planting_return_id', $sr10->id)->get();
+        if (count($forms) <1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
     public static function start_session()
     {
         if (session_status() === PHP_SESSION_NONE) {

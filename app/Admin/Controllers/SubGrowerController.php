@@ -32,10 +32,15 @@ class SubGrowerController extends AdminController
 
      * Make a grid builder.
      *
-     * @return Grid
+     * @return Grid 
      */
     protected function grid()
     {
+ 
+        $s = SubGrower::find(5);
+        $s->size = rand(10000,1000000000);
+        $s->save();
+        dd($s);
         $grid = new Grid(new SubGrower());
 
         if (Admin::user()->isRole('admin')) {
@@ -317,23 +322,21 @@ class SubGrowerController extends AdminController
 
             $_items = [];
             $crop_val = "";
-            foreach (CropVariety::all() as $key => $item) {
-                $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
-              
-                
-                if ($model->variety == $item->name) {
-                    $crop_val = $item->crop->id;
+            foreach (Crop::all() as $key => $item) {
+                $_items[$item->id] = "CROP: " . $item->name;
+                if ($model->crop == $item->name) {
+                    $crop_val = $item->id;
                 }
             }
 
 
 
-            $form->select('variety', 'Select  Seed')->options($_items)->value($crop_val)
+            $form->select('crop', 'Select crop')->options($_items)->value($crop_val)
                 ->default($crop_val)
                 ->required();
 
-            $form->radio('status', 'Inialize this form')->options([
-                '1' => 'Inilize form'
+            $form->radio('status', 'Initialize this form')->options([
+                '1' => 'Initialize form'
             ])->value($crop_val)
                 ->required();
 
