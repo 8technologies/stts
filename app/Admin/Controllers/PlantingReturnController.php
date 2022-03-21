@@ -6,6 +6,7 @@ use App\Imports\UsersImport;
 use App\Models\Crop;
 use App\Models\CropVariety;
 use App\Models\FormSr10;
+use App\Models\FormSr6;
 use App\Models\PlantingReturn;
 use App\Models\Utils;
 use Carbon\Carbon;
@@ -27,7 +28,7 @@ class PlantingReturnController extends AdminController
      * Title for current resource.
      *
      * @var string
-     */ 
+     */  
     protected $title = 'Planting Return - Company';
 
     /**
@@ -38,6 +39,10 @@ class PlantingReturnController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new PlantingReturn());
+        /*$sr = PlantingReturn::all()->first();
+        $sr->sub_growers_file ="test_1.xlsx";
+        $sr->import_sub_growers($sr); 
+        die();*/
 
         /*
         $sr = PlantingReturn::all()->first();
@@ -209,6 +214,7 @@ class PlantingReturnController extends AdminController
 
         $form = new Form(new PlantingReturn());
 
+
   
         
         $sr4 = Utils::has_valid_sr6();
@@ -283,9 +289,20 @@ class PlantingReturnController extends AdminController
         $form->hidden('seed_rate', __('seed_rate'))->value(rand(10000,1000000))
         ->default((rand(10000,1000000)));
 
+        $name_of_applicant = "";
+        $address = "";
         if (Admin::user()->isRole('basic-user')) {
-            $form->text('name', __('Company Name'))->default($user->name)->required(); 
-            $form->text('address', __('Company Address'))->required();
+
+            if($user != null){
+                $sr = FormSr6::find($user->id);
+                if($sr!=null){
+                    $address = $sr->address;
+                    $name_of_applicant = $sr->name_of_applicant;
+                }
+            } 
+
+            $form->text('name', __('Company Name'))->default($name_of_applicant)->required(); 
+            $form->text('address', __('Company Address'))->required()->default($address);
             $form->text('telephone', __('Company Telephone'))->required();
             $form->text('amount_enclosed', __('Amount enclosed for application'))->attribute('type', 'number')->required();
             $form->file('payment_receipt', __('Payment receipt'))->required();

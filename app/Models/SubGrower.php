@@ -14,7 +14,7 @@ class SubGrower extends Model
         parent::boot();
 
         self::creating(function ($m) {
-            $sub = SubGrower::where('field_name', $m->field_name)
+            $sub = SubGrower::where('filed_name', $m->filed_name)
                 ->where('name', $m->name)->first();
  
 

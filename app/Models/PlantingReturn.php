@@ -13,6 +13,7 @@ class PlantingReturn extends Model
 
     public static function import_sub_growers($m)
     {
+
         $file = null;
         if ($m != null) {
             if (strlen($m->sub_growers_file) > 3) {
@@ -21,10 +22,16 @@ class PlantingReturn extends Model
                 }
             }
         }
+
+        if ($file == null) {
+            return;
+        }
+
+
+
         if ($file != null) {
             $array = Excel::toArray([], $file);
-            if (isset($array[0]))
-                $i = 0;
+            $i = 0;
             foreach ($array[0] as $key => $value) {
                 $i++;
                 if ($i <= 1) {
@@ -33,13 +40,13 @@ class PlantingReturn extends Model
                 if (count($value) > 11) {
                     $sub = new SubGrower();
 
-
                     if (isset($value[0]))
                         if ($value[0] != null) {
                             if (strlen($value[0]) > 1) {
-                                $sub->field_name = $value[0];
+                                $sub->filed_name = $value[0];
                             }
                         }
+
 
                     if ($value[1] != null) {
                         if (strlen($value[1]) > 2) {
@@ -48,12 +55,11 @@ class PlantingReturn extends Model
                     }
 
 
-                    if (isset($value[2]))
+                    if (isset($value[2])) {
                         if ($value[2] != null) {
-                            if (strlen($value[2]) > 2) {
-                                $sub->size = $value[2];
-                            }
+                            $sub->size = $value[2];
                         }
+                    }
 
                     if (isset($value[3]))
                         if ($value[3] != null) {
@@ -101,7 +107,7 @@ class PlantingReturn extends Model
 
                     if (isset($value[9]))
                         if ($value[9] != null) {
-                            if (strlen($value[9]) > 5) {
+                            if (strlen($value[9]) > 1) {
                                 $sub->gps_latitude = $value[9];
                             }
                         }
@@ -137,18 +143,19 @@ class PlantingReturn extends Model
                             }
                         }
                     }
-
-
+                    
                     $sub->administrator_id = $m->administrator_id;
                     $sub->save();
                 }
             }
+
+
             $m->sub_growers_file = null;
             $m->save();
-            //unlink($file);
+            unlink($file);
         }
     }
-    
+
     public static function boot()
     {
         parent::boot();
