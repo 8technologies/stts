@@ -20,7 +20,7 @@ class FormSr10Controller extends AdminController
      *
      * @var string
      */
-    protected $title = 'Sr10 - Feild inspection';
+    protected $title = 'Sr10 - Field inspection';
 
     /**
      * Make a grid builder.
