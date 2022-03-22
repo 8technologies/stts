@@ -37,25 +37,25 @@ class SubGrowerController extends AdminController
     protected function grid()
     {
  
-        $s = SubGrower::find(5);
+        /*$s = SubGrower::find(5);
         $s->size = rand(10000,1000000000);
         $s->save();
-        dd($s);
+        dd($s);*/
         $grid = new Grid(new SubGrower());
 
         if (Admin::user()->isRole('admin')) {
             $grid->batchActions(function ($batch) {
-                $batch->add(new BatchReplicate());
+                $batch->add(new BatchReplicate()); 
             });
             $grid->disableCreateButton();
         }
 
         if (Admin::user()->isRole('inspector')) {
             $grid->disableCreateButton();
+            $grid->disableBatchActions();
         }
 
-
-
+ 
         $grid->filter(function ($filter) {
             $filter->equal('status', "Filter by Status")->select([
                 '1' => 'Pending',
@@ -142,10 +142,21 @@ class SubGrowerController extends AdminController
         } else if (Admin::user()->isRole('inspector')) {
             $grid->model()->where('inspector', '=', Admin::user()->id);
 
+
+            
+            
+
             $grid->actions(function ($actions) {
-                $actions->disableDelete();
-                $actions->disableView();
-            });
+
+        
+
+                $status = ((int)(($actions->row['status'])));
+                if ($status == 16) {
+                    $actions->disableDelete();
+                    $actions->disableEdit();
+                }
+
+            }); 
         } else if (Admin::user()->isRole('basic-user')) {
             $grid->actions(function ($actions) {
 

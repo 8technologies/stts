@@ -279,7 +279,11 @@ class Utils
             return '<span class="badge badge-success">Lables Printed</span>';
         if ($status == 15)
             return '<span class="badge badge-danger">Declined</span>';
-        return "Pending";
+        if ($status == 16)
+            return '<span class="badge badge-success">Initialized</span>';
+        if ($status == 17)
+            return '<span class="badge badge-warning">Skipped</span>';
+        return $status;
     }
 
     public static function show_response($status = 0, $code = 0, $body = "")

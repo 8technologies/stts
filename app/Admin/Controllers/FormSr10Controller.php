@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Crop;
 use App\Models\FormSr10;
 use App\Models\FormSr10HasVarietyInspection;
 use App\Models\Utils;
@@ -27,8 +28,12 @@ class FormSr10Controller extends AdminController
      */
     protected function grid()
     {
+        // $sr = FormSr10::find(3); 
+        // $sr->seed_class = rand(10000,100000000);
+        // $sr->save();
+        // dd("here");
+        
         $grid = new Grid(new FormSr10());
-
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
             $grid->actions(function ($actions) {
@@ -45,7 +50,15 @@ class FormSr10Controller extends AdminController
         } else if (Admin::user()->isRole('inspector')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
             $grid->disableCreateButton();
+            $grid->disableBatchActions();
+
             $grid->actions(function ($actions) {
+
+                if ($actions->row['is_active'] == 0) {
+                    $actions->disableEdit();
+                }
+
+
                 $status = ((int)(($actions->row['status'])));
                 $actions->disableDelete();
                 if (
@@ -110,7 +123,7 @@ class FormSr10Controller extends AdminController
         $can_edit = true;
 
         if ($form->isEditing()) {
-            $form->saving(function (Form $form) {
+            /*$form->saving(function (Form $form) {
                 $id = request()->route()->parameters['form_sr10'];
                 $sr10 = $form->model()->find($id);
                 if (isset($_POST['is_initialized'])) {
@@ -137,7 +150,6 @@ class FormSr10Controller extends AdminController
                     die();
                 } else {
 
-                    $is_final = true;
                     $model = $sr10;
 
                     if (isset($_POST['status'])) {
@@ -212,7 +224,7 @@ class FormSr10Controller extends AdminController
                     $form->is_done = 1;
                     $form->is_active = 0;
                 }
-            });
+            });*/
         }
 
         if ($form->isEditing()) {
@@ -222,15 +234,11 @@ class FormSr10Controller extends AdminController
             }
             $id = request()->route()->parameters['form_sr10'];
             $model = $form->model()->find($id);
-             
+
             if (!$model->is_active) {
                 admin_error("Warning", "This form is not ative yet. You need to submit the previous stage before this.");
                 $can_edit = false;
             }
-            if ($model->is_done) {
-                admin_error("Warning", "This form is already submited. You cannot modify it anymore.");
-                $can_edit = false;
-            } 
         }
 
         if ($can_edit) {
@@ -244,117 +252,118 @@ class FormSr10Controller extends AdminController
             //$form->display('planting_return_id', __('Planting return id'))->readonly();
             $form->hidden('is_done', __('is_done'))->value(1);
             $form->hidden('is_active', __('is_done'))->value(0);
+
+
+
             $form->display('', __('Name'))->default($model->planting_return->name)->readonly();
-            $form->display('', __('Address'))->default($model->planting_return->address)->readonly();
-            $form->display('', __('Telephone'))->default($model->planting_return->telephone)->readonly();
-            $form->display('', __('Seed rate'))->default($model->planting_return->seed_rate)->readonly();
+            $form->display('', __('Address'))->default(
+                $model->planting_return->district . ", " .
+                    $model->planting_return->subcourty . ", " . $model->planting_return->village
+
+            )->readonly();
+            $form->display('', __('GPS'))->default($model->planting_return->gps_latitude . ", " . $model->planting_return->gps_longitude)->readonly();
+            $form->display('', __('Telephone'))->default($model->planting_return->phone_number)->readonly();
             $form->divider();
-            $is_final = true;
-            if ($model->is_initialized) {
-                $max_stage = 0;
-                if ($model->planting_return != null) {
-                    if ($model->planting_return->form_sr10s != null) {
-                        foreach ($model->planting_return->form_sr10s as $key => $val) {
-                            if ($val->stage == $model->stage) {
-                                $max_stage = $val->id;
+            $is_final = false;
+
+            $max_stage = 0;
+            $crop = Crop::find($model->planting_return->crop);
+            $max = 0;
+            $_max = "";
+      
+            if($crop != null){
+                if($crop->crop_inspection_types!=null){
+                    foreach ($crop->crop_inspection_types as $key => $value) {
+                        if($value->id > $max){
+                            $_max = $value;
+                            $max = $value->id;
+                            if($model->stage == $value->name){
+                                $is_final = true;
                             }
-                        }
-                        foreach ($model->planting_return->form_sr10s as $key => $val) {
-                            if ($max_stage < $val->id) {
-                                $max_stage = $val->id;
-                                $is_final = false;
-                            }
-                        }
+                        } 
                     }
                 }
-
-
-                $form->html('<h3>About this Field inspection report - (SR10)</h3>');
-                //$form->number('numbernumber', __('Planting return id'));
-                $form->text('stage', __('Stage'))->readonly();
-                $form->date('min_date', __('To be submited after'))->readonly();
-                $form->date('submited_date', __('Date Submited'))->value(Carbon::now()->toDateString())->default(Carbon::now()->toDateString())->readonly();
-
-
-
-                $form->divider();
-                $form->html('<h3>Crop varieties inspection</h3>');
-
-                $form->hasMany('form_sr10_has_variety_inspections', __(''), function (NestedForm $form) {
-
-                    $form->text('planting_return_crop_name', __('Crop/Variety'))->readonly();
-                    $form->select('seed_class', __('seed_class'))
-                        ->options([
-                            'Pre-Basic seed' => 'Pre-Basic seed',
-                            'Basic seed' => 'Basic seed',
-                            'Certified seed' => 'Certified seed',
-                        ])
-                        ->required();
-                    $form->text('size_of_field', __('Enter size of field (in Acres)'))->attribute('type', 'number')->required();
-                    $form->text('off_types', __('Crop cultivar characteristics (Off-types)'));
-                    $form->text('diseases', __('Crop cultivar characteristics (Diseases)'))->required();
-                    $form->text('noxious_weeds', __('Crop cultivar characteristics (Noxious weeds)'))->required();
-                    $form->text('other_features', __('Crop cultivar characteristics (Other features)'))->required();
-                    $form->text('other_weeds', __('Crop cultivar characteristics (Other weeds)'))->required();
-                    $form->text('isolation_distance', __('Enter isolation distance (in Meters)'))->attribute('type', 'number');
-                    $form->text('variety', __('variety'))->attribute('type', 'number');
-
-                    $form->select('proposed_distance', __('Status of proposed distance'))
-                        ->options([
-                            'Adequate' => 'Adequate',
-                            'Inadequate' => 'Inadequate'
-                        ]);
-
-                    $form->textarea('general_conditions_of_crop', __('General conditions of crop'));
-                    $form->text('estimated_yield', __('Enter estimated yield (in metric tonnes)'));
-                    $form->textarea('futher_remarks', __('Enter any futher remarks'));
-                    $form->radio('variety_status', __('The crop is?'))
-
-                        ->options([
-                            '4' => 'Rejected',
-                            '5' => 'Accepted'
-                        ]);
-                });
-
-                if ($is_final) {
-                    $form->radio('status', __('Inspection decision'))
-                        ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be revarsed.")
-                        ->options([
-                            '4' => 'Rejected',
-                            '5' => 'Accepted',
-                        ])
-                        ->required()
-                        ->when('in', [3, 4], function (Form $form) {
-                            $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                                ->help("Please specify with a comment");
-                        })
-                        ->when('in', [5], function (Form $form) {
-                            $form->date('valid_from', 'Valid from date?');
-                            $form->date('valid_until', 'Valid until date?');
-                        });
-                } else {
-                    $form->radio('status', __('Inspection decision'))
-                        ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be revarsed.")
-                        ->options([
-                            '4' => 'Rejected',
-                            '7' => 'Provisional',
-                        ])
-                        ->required()
-                        ->when('in', [3, 4], function (Form $form) {
-                            $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                                ->help("Please specify with a comment");
-                        });
-                }
-            } else {
-                $form->html('<h3>Initialize inspection</h3>');
-                $form->html('<p class="alert alert-info">This inspection form (SR10) has not been inizilized yet. 
-                Select initialize below and submit to start inspection process.</p>');
-
-                $form->radio('is_initialized', __('Inspection decision'))
-                    ->options([
-                        '1' => 'Initialize inspection'
-                    ])->required();
             }
+
+            $form->html('<h3>About this Field inspection report - (SR10)</h3>');
+            $form->display('', __('Seed class'))->default($model->planting_return->seed_class)->readonly();
+            $crop = Crop::find($model->planting_return->crop);
+            $crop_name = "";
+            if ($crop != null) {
+                $crop_name = $crop->name;
+            }
+            $form->display('', __('Crop'))->default($crop_name)->readonly();
+            $form->text('stage', __('Stage'))->readonly();
+            $form->date('min_date', __('To be submited after'))->readonly();
+            $form->date('submited_date', __('Date Submited'))->value(Carbon::now()->toDateString())->default(Carbon::now()->toDateString())->readonly();
+
+            $form->divider();
+            $form->html('<h3>Crop inspection</h3>');
+            $form->select('seed_class', __('seed_class'))
+                ->options([
+                    'Pre-Basic seed' => 'Pre-Basic seed',
+                    'Basic seed' => 'Basic seed',
+                    'Certified seed' => 'Certified seed',
+                ]);
+            $form->text('size_of_field', __('Enter size of field (in Acres)'))->attribute('type', 'number');
+            $form->text('off_types', __('Crop cultivar characteristics (Off-types)'));
+            $form->text('diseases', __('Crop cultivar characteristics (Diseases)'));
+            $form->text('noxious_weeds', __('Crop cultivar characteristics (Noxious weeds)'));
+            $form->text('other_features', __('Crop cultivar characteristics (Other features)'));
+            $form->text('other_weeds', __('Crop cultivar characteristics (Other weeds)'));
+            $form->text('isolation_distance', __('Enter isolation distance (in Meters)'))->attribute('type', 'number');
+            $form->text('variety', __('variety'))->attribute('type', 'number');
+            $form->select('proposed_distance', __('Status of proposed distance'))
+                ->options([
+                    'Adequate' => 'Adequate',
+                    'Inadequate' => 'Inadequate'
+                ]);
+            $form->textarea('general_conditions_of_crop', __('General conditions of crop'));
+            $form->text('estimated_yield', __('Enter estimated yield (in metric tonnes)'));
+            $form->textarea('futher_remarks', __('Enter any futher remarks'));
+            // $form->radio('variety_status', __('The crop is?'))
+
+            //     ->options([
+            //         '4' => 'Rejected',
+            //         '5' => 'Accepted'
+            //     ]);
+
+            $form->divider();
+
+
+
+
+            if ($is_final) {
+                $form->radio('status', __('Inspection decision'))
+                    ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be revarsed.")
+                    ->options([
+                        '4' => 'Rejected',
+                        '5' => 'Accepted',
+                    ])
+                    ->required()
+                    ->when('in', [3, 4], function (Form $form) {
+                        $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                            ->help("Please specify with a comment");
+                    })
+                    ->when('in', [5], function (Form $form) {
+                        $form->date('valid_from', 'Valid from date?');
+                        $form->date('valid_until', 'Valid until date?');
+                    });
+            } else {
+                $form->radio('status', __('Inspection decision'))
+                    ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be revarsed.")
+                    ->options([
+                        '4' => 'Rejected',
+                        '7' => 'Provisional',
+                        '17' => 'Skip',
+                    ])
+                    ->required()
+                    ->when('in', [3, 4,17], function (Form $form) {
+                        $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                            ->help("Please specify with a comment");
+                    });
+            }
+
 
             $form->tools(function (Form\Tools $tools) {
                 $tools->disableList();
