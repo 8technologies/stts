@@ -4,10 +4,12 @@ namespace App\Admin\Controllers;
 
 use App\Models\CropVariety;
 use App\Models\FormCropDeclaration;
+use App\Models\FormSr10;
 use App\Models\FormStockExaminationRequest;
 use App\Models\ImportExportPermit;
 use App\Models\PlantingReturn;
 use App\Models\StockRecord;
+use App\Models\SubGrower;
 use App\Models\Utils;
 use Carbon\Carbon;
 use Encore\Admin\Auth\Database\Administrator;
@@ -132,7 +134,7 @@ class FormStockExaminationRequestController extends AdminController
         $show->field('created_at', __('Created'))
             ->display(function ($item) {
                 return Carbon::parse($item)->diffForHumans();
-            })->sortable(); 
+            })->sortable();
         $show->field('import_export_permit_id', __('Import export permit id'));
         $show->field('planting_return_id', __('Planting return id'));
         $show->field('form_qds_id', __('Form qds id'));
@@ -190,7 +192,7 @@ class FormStockExaminationRequestController extends AdminController
                 if ($model->status == 5) {
                     $stock = new StockRecord();
                     $stock->administrator_id = $model->administrator_id;
-                    $stock->crop_variety_id = $model->crop_variety_id;
+                    //$stock->crop_variety_id = $model->crop_variety_id;
                     $stock->detail = 'From stock exanination ID: ' . $model->id;
                     $stock->is_deposit = 1;
                     $stock->quantity = $form->yield;
@@ -222,7 +224,7 @@ class FormStockExaminationRequestController extends AdminController
                 'administrator_id' => Admin::user()->id
             ])->get();
             $_my_qds = [];
-            $all_vars = [];
+
             foreach ($all_qds as $key => $value) {
                 if ($value->status == 5) {
                     if (!$value->is_not_used) {
@@ -342,25 +344,49 @@ class FormStockExaminationRequestController extends AdminController
 
                     if (count($import_permits) >= 1) {
                         $form->select('import_export_permit_id', __('Import permit number'))
+                            ->rules('required')
                             ->options($import_permits);
                     }
                 })
                 ->when('2', function (Form $form) {
-                    $all_planting_returning =  PlantingReturn::where([
+
+
+
+
+                    $SubGrowers =  SubGrower::where([
                         'administrator_id' => Admin::user()->id
                     ])->get();
-                    foreach ($all_planting_returning as $key => $value) {
-                        if ($value->status == 5) {
-                            if (!$value->is_not_used) {
-                                $planting_returnings[$value->id] = "SR8 number: " . $value->id;
+
+
+                    $sr10s = [];
+                    $planting_returnings = [];
+                    $verified_isnpections = [];
+                    foreach ($SubGrowers as $SubGrower) {
+                        $_sr10s = FormSr10::where(['planting_return_id' => $SubGrower->id])->get();
+                        foreach ($_sr10s as $_sr10) {
+                            $sr10s[] = $_sr10;
+                        }
+                    }
+                    foreach ($sr10s as $key => $sr10) {
+                        if ($sr10->is_final) {
+                            if ($sr10->status == 5) {
+                                $verified_isnpections[] = $sr10;
                             }
                         }
                     }
 
-                    if (count($planting_returnings) >= 1) {
-                        $form->select('planting_return_id', __('Select approved planting return'))
-                            ->options($planting_returnings);
+                    foreach ($verified_isnpections as $key => $value) {
+                        if ($value->status == 5) {
+                            if (!$value->is_not_used) {
+                                $planting_returnings[$value->id] = "SR10 number: " . $value->sr10_number;
+                            }
+                        }
                     }
+
+                
+                $form->select('planting_return_id', __('Select approved SR10'))
+                        ->rules('required')
+                        ->options($planting_returnings);
                 })
                 ->when('3', function (Form $form) {
                     $all_qds =  FormCropDeclaration::where([
@@ -379,6 +405,7 @@ class FormStockExaminationRequestController extends AdminController
 
                     if (count($my_qds) >= 1) {
                         $form->select('form_qds_id', __('Select QDS'))
+                            ->rules('required')
                             ->options($my_qds);
                     }
                 })->required();
@@ -387,8 +414,7 @@ class FormStockExaminationRequestController extends AdminController
             foreach (CropVariety::all() as $key => $item) {
                 $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
             }
-            $form->select('crop_variety_id', 'Select crop variety')->options($all_vars)
-                ->required();
+
 
             $form->textarea('remarks', __('Enter remarks'))->required();
 
@@ -415,8 +441,7 @@ class FormStockExaminationRequestController extends AdminController
             }
             $form->display('name', __('Name of applicant'))
                 ->default($u->name);
-            $form->display('cat', __('Examination category'))
-                ->default($cat);
+        
 
             $form->divider();
             $form->radio('status', __('Status'))
@@ -481,9 +506,7 @@ class FormStockExaminationRequestController extends AdminController
             }
             $form->display('name', __('Name of applicant'))
                 ->default($u->name);
-            $form->display('cat', __('Examination category'))
-                ->default($cat);
-            $form->divider();
+  
 
             $form->text('yield', __('Enter Yield/Seed quantity (in Metric tonnes)'))
                 ->attribute('type', 'number')

@@ -388,11 +388,11 @@ class PlantingReturnController extends AdminController
                     ->when('in', [3, 4], function (Form $form) {
                         $form->textarea('status_comment', 'Enter status comment (Remarks)')
                             ->help("Please specify with a comment");
-                    })
-                    ->when('in', [5, 6], function (Form $form) {
-                        $form->date('valid_from', 'Valid from date?');
-                        $form->date('valid_until', 'Valid until date?');
                     });
+                    // ->when('in', [5, 6], function (Form $form) {
+                    //     $form->date('valid_from', 'Valid from date?');
+                    //     $form->date('valid_until', 'Valid until date?');
+                    // });
             }
         }
 

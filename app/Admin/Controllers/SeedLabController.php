@@ -22,7 +22,7 @@ class SeedLabController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Seed Lab';
+    protected $title = 'Seed Sample - analysis';
 
     /**
      * Make a grid builder.
@@ -251,22 +251,26 @@ class SeedLabController extends AdminController
                 'status' => 5
             ])->get();
 
+
             if (count($exams) < 1) {
                 admin_error("Warning", "You don't have any valid stock examination request.");
                 return redirect(admin_url('seed-labs'));
             }
             $form->hidden('crop_variety_id', __('Crop variety id'));
 
-            $_exams = [];
+            $_exams = []; 
             foreach ($exams as $key => $exam) {
-                $_exams[$exam->id] = "Exam  ID: " . $exam->id . ", Crop: " . $exam->variety->crop->name . ", Variety: " . $exam->variety->name;
+                if($exam->crop()->id <1){
+                    continue;
+                }
+                $_exams[$exam->id] = "Exam  ID: " . $exam->id . ", Crop: " . $exam->crop()->name;
             }
 
             $form->setWidth(8, 4);
             $form->select('form_stock_examination_request_id', __('Select Stock examination form'))
                 ->options($_exams);
             $form->date('collection_date', __('Collection date'))->default(date('Y-m-d'));
-            $form->file('payment_receipt', __('Attrch Payment receipt'));
+            $form->file('payment_receipt', __('Attach Payment receipt'));
             $form->hidden('crop_variety_id', __('crop_variety_id'));
             $form->textarea('applicant_remarks', __('Enter remarks'));
         }
