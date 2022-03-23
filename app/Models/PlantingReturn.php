@@ -14,6 +14,7 @@ class PlantingReturn extends Model
     public static function import_sub_growers($m)
     {
 
+
         $file = null;
         if ($m != null) {
             if (strlen($m->sub_growers_file) > 3) {
@@ -190,9 +191,7 @@ class PlantingReturn extends Model
             //created
         });
 
-        self::updating(function ($model) {
-            // ... code here
-
+        self::updating(function ($model) { 
         });
 
         self::updated(function ($m) {

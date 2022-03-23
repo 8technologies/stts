@@ -39,10 +39,13 @@ class PlantingReturnController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new PlantingReturn());
-        /*$sr = PlantingReturn::all()->first();
-        $sr->sub_growers_file ="test_1.xlsx";
-        $sr->import_sub_growers($sr); 
-        die();*/
+        // $sr = PlantingReturn::all()->first();
+        // $sr = PlantingReturn::find("13");
+        // $sr->sub_growers_file ="test_1.xlsx";
+        // $sr->valid_from = rand(10000,10000000)."";
+        // $sr->save();
+        // //$sr->import_sub_growers($sr); 
+        // die("done");
 
         /*
         $sr = PlantingReturn::all()->first();
@@ -88,6 +91,7 @@ class PlantingReturnController extends AdminController
 
 
         if (Admin::user()->isRole('basic-user')) {
+            $grid->disableBatchActions();
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
