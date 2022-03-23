@@ -114,7 +114,7 @@ class PlantingReturnController extends AdminController
                     $status != 1
                 ) {
                     $actions->disableDelete();
-                    $actions->disableEdit();
+                    //$actions->disableEdit();
                 }
             });
         } else if (Admin::user()->isRole('basic-user'))  {

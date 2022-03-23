@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Crop;
+use App\Models\CropInspectionType;
 use App\Models\FormSr10;
 use App\Models\FormSr10HasVarietyInspection;
 use App\Models\Utils;
@@ -264,26 +265,8 @@ class FormSr10Controller extends AdminController
             $form->display('', __('GPS'))->default($model->planting_return->gps_latitude . ", " . $model->planting_return->gps_longitude)->readonly();
             $form->display('', __('Telephone'))->default($model->planting_return->phone_number)->readonly();
             $form->divider();
-            $is_final = false;
-
-            $max_stage = 0;
-            $crop = Crop::find($model->planting_return->crop);
-            $max = 0;
-            $_max = "";
-      
-            if($crop != null){
-                if($crop->crop_inspection_types!=null){
-                    foreach ($crop->crop_inspection_types as $key => $value) {
-                        if($value->id > $max){
-                            $_max = $value;
-                            $max = $value->id;
-                            if($model->stage == $value->name){
-                                $is_final = true;
-                            }
-                        } 
-                    }
-                }
-            }
+            
+            $is_final = FormSr10::is_final_sr10($model);
 
             $form->html('<h3>About this Field inspection report - (SR10)</h3>');
             $form->display('', __('Seed class'))->default($model->planting_return->seed_class)->readonly();

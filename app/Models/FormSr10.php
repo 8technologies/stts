@@ -11,6 +11,8 @@ class FormSr10 extends Model
 {
     use HasFactory;
 
+
+
     // this is a recommended way to declare event handlers
     public static function boot()
     {
@@ -26,6 +28,31 @@ class FormSr10 extends Model
                 $all = FormSr10::where(['planting_return_id' => $model->planting_return_id])->get();
                 $position = 0;
                 $_position = 0;
+
+                if(FormSr10::is_final_sr10($model)){
+                    
+                    $sr10_number = rand(1000000,100000000)."";
+                    if($model->status == 5){
+                        if(strlen($model->sr10_number)<4){
+                            DB::update(
+                                'UPDATE form_sr10s 
+                                        SET 
+                                        sr10_number = :sr10_number, 
+                                        is_final = :is_final 
+                                        WHERE 
+                                        id = :id
+                                    ',
+                                [
+                                    'sr10_number' => $sr10_number,
+                                    'is_final' => 1,
+                                    'id' => $model->id, 
+                                ]
+                            );
+                        }
+                    }
+
+                }
+
                 if ($model->planting_return != null) {
                     if ($model->planting_return->crop != null) {
                         $crop = Crop::find($model->planting_return)->first();
@@ -49,8 +76,8 @@ class FormSr10 extends Model
                                         $now = $all[$position];
                                     }
 
-                                    if($now!=null){
-                                        if($now->id > 0){
+                                    if ($now != null) {
+                                        if ($now->id > 0) {
                                             DB::update(
                                                 'UPDATE form_sr10s 
                                                     SET 
@@ -58,15 +85,15 @@ class FormSr10 extends Model
                                                     is_active = :is_active 
                                                     WHERE 
                                                     id = :id
-                                                ',[
-                                                    'id' => $now->id, 
-                                                    'is_done' => true, 
-                                                    'is_active' => false, 
+                                                ',
+                                                [
+                                                    'id' => $now->id,
+                                                    'is_done' => true,
+                                                    'is_active' => false,
                                                 ]
-                                            );  
+                                            );
                                         }
                                     }
- 
                                 } else {
                                     if ($position < (count($crop->crop_inspection_types))) {
                                         $prev = new FormSr10();
@@ -85,22 +112,23 @@ class FormSr10 extends Model
                                             $next = $all[$position + 1];
                                         }
 
-                                        if($now->id > 0){ 
+                                        if ($now->id > 0) {
 
                                             DB::update(
-                                                    'UPDATE form_sr10s 
+                                                'UPDATE form_sr10s 
                                                         SET 
                                                         is_done = :is_done,
                                                         is_active = :is_active 
                                                         WHERE 
                                                         id = :id
-                                                    ',[
-                                                        'id' => $now->id, 
-                                                        'is_done' => true, 
-                                                        'is_active' => false, 
-                                                    ]
-                                            );  
-                                            if($next->id >0){
+                                                    ',
+                                                [
+                                                    'id' => $now->id,
+                                                    'is_done' => true,
+                                                    'is_active' => false,
+                                                ]
+                                            );
+                                            if ($next->id > 0) {
                                                 DB::update(
                                                     'UPDATE form_sr10s 
                                                         SET 
@@ -108,20 +136,18 @@ class FormSr10 extends Model
                                                         is_active = :is_active 
                                                         WHERE 
                                                         id = :id
-                                                    ',[
-                                                        'id' => $next->id, 
-                                                        'is_done' => false, 
-                                                        'is_active' => true, 
+                                                    ',
+                                                    [
+                                                        'id' => $next->id,
+                                                        'is_done' => false,
+                                                        'is_active' => true,
                                                     ]
-                                                 );  
+                                                );
                                             }
-                                             
-                                        }else{
- 
+                                        } else {
+
                                             return;
                                         }
-
-                                      
                                     }
                                 }
                             }
@@ -186,4 +212,37 @@ class FormSr10 extends Model
         'is_done',
         'is_initialized',
     ];
+
+
+
+    public static function is_final_sr10(FormSr10 $model)
+    {
+        if ($model == null) {
+            return false;
+        }
+
+        $is_final = false;
+
+        $crop = Crop::find($model->planting_return->crop);
+        $max = 0;
+        $max_inspe = new CropInspectionType();
+        if ($crop != null) {
+            if ($crop->crop_inspection_types != null) {
+                foreach ($crop->crop_inspection_types as $key => $value) {
+                    if ($value->id > $max) {
+                        $max = $value->id;
+                        $max_inspe = $value;
+                    }
+                }
+            }
+        }
+
+        if ($model->stage == $max_inspe->inspection_stage) {
+            $is_final = true;
+        } else {
+            $is_final = false;
+        }
+
+        return $is_final;
+    }
 }
