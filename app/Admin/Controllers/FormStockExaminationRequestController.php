@@ -224,6 +224,7 @@ class FormStockExaminationRequestController extends AdminController
                 'administrator_id' => Admin::user()->id
             ])->get();
             $_my_qds = [];
+            $all_vars = [];
 
             foreach ($all_qds as $key => $value) {
                 if ($value->status == 5) {
@@ -308,13 +309,13 @@ class FormStockExaminationRequestController extends AdminController
             }
 
 
-            if (
-                (count($all_vars) < 1)
-            ) {
-                admin_warning("Warning", "You cannot create a new Stock examination requests if don't have
-            either valid Import permit or SR8 or QDS.");
-                return redirect(admin_url('form-stock-examination-requests'));
-            }
+            // if (
+            //     (count($all_vars) < 1)
+            // ) {
+            //     admin_warning("Warning", "You cannot create a new Stock examination requests if don't have
+            // either valid Import permit or SR8 or QDS.");
+            //     return redirect(admin_url('form-stock-examination-requests'));
+            // }
 
 
             $form->radio('examination_category', __('Select examination category'))
