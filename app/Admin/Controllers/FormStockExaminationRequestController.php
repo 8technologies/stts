@@ -343,11 +343,11 @@ class FormStockExaminationRequestController extends AdminController
                         }
                     }
 
-                    if (count($import_permits) >= 1) {
-                        $form->select('import_export_permit_id', __('Import permit number'))
-                            ->rules('required')
-                            ->options($import_permits);
-                    }
+                    // if (count($import_permits) >= 1) {
+                    //     $form->select('import_export_permit_id', __('Import permit number'))
+                    //         ->rules('required')
+                    //         ->options($import_permits);
+                    // }
                 })
                 ->when('2', function (Form $form) {
 
