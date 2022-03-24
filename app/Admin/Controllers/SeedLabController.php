@@ -239,7 +239,7 @@ class SeedLabController extends AdminController
                 if (!$exam) {
                     dd("Exam not found");
                 }
-                $form->crop_variety_id = $exam->variety->id;
+                //$form->crop_variety_id = $exam->variety->id;
                 $user = Admin::user();
                 $form->administrator_id = $user->id;
             });
