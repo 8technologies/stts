@@ -303,7 +303,7 @@ class FormStockExaminationRequestController extends AdminController
             foreach ($_import_permits as $key => $value) {
                 if ($value->import_export_permits_has_crops != null) {
                     foreach ($value->import_export_permits_has_crops as $key => $val) {
-                        $all_vars[$val->variety->id] = "CROP: " . $val->variety->name . ", VARIETY: " . $val->variety->name;
+                        $all_vars[$val->id] = "CROP: " . $val->name . ", VARIETY: " . $val->name;
                     }
                 }
             }
