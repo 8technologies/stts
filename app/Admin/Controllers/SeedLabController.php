@@ -31,6 +31,9 @@ class SeedLabController extends AdminController
      */
     protected function grid()
     {
+        // $s = SeedLab::find(23);
+        
+        // dd("done");
         $grid = new Grid(new SeedLab());
 
         $grid->column('id', __('Id'));

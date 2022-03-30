@@ -26,7 +26,7 @@ class ImportExportPermitController extends AdminController
      * @var string
      */
     protected $title = 'Import Permit';
-
+ 
     /**
      * Make a grid builder.
      *
@@ -319,6 +319,10 @@ class ImportExportPermitController extends AdminController
                 ->required();
 
 
+                $form->file('ista_certificate', __('ISTA certificate'));
+                $form->file('phytosanitary_certificate', __('Phytosanitary certificate'));
+
+
             $form->html('<h3>I/We wish to apply for a license to import seed as indicated below:</h3>');
 
 
@@ -348,6 +352,7 @@ class ImportExportPermitController extends AdminController
                 $form->hidden('category', __('Category'))->default("")->value("");
                 $form->text('weight', __('Weight (in KGs)'))->attribute('type', 'number')->required();
             });
+
         }
         if (Admin::user()->isRole('admin')) {
             //$form->file('ista_certificate', __('Ista certificate'))->required();

@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Crop;
 use App\Models\CropInspectionType;
+use App\Models\CropVariety;
 use App\Models\FormSr10;
 use App\Models\FormSr10HasVarietyInspection;
 use App\Models\Utils;
@@ -33,7 +34,7 @@ class FormSr10Controller extends AdminController
         // $sr->seed_class = rand(10000,100000000);
         // $sr->save();
         // dd("here");
-        
+
         $grid = new Grid(new FormSr10());
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
@@ -265,7 +266,7 @@ class FormSr10Controller extends AdminController
             $form->display('', __('GPS'))->default($model->planting_return->gps_latitude . ", " . $model->planting_return->gps_longitude)->readonly();
             $form->display('', __('Telephone'))->default($model->planting_return->phone_number)->readonly();
             $form->divider();
-            
+
             $is_final = FormSr10::is_final_sr10($model);
 
             $form->html('<h3>About this Field inspection report - (SR10)</h3>');
@@ -294,13 +295,42 @@ class FormSr10Controller extends AdminController
             $form->text('noxious_weeds', __('Crop cultivar characteristics (Noxious weeds)'));
             $form->text('other_features', __('Crop cultivar characteristics (Other features)'));
             $form->text('other_weeds', __('Crop cultivar characteristics (Other weeds)'));
-            $form->text('isolation_distance', __('Enter isolation distance (in Meters)'))->attribute('type', 'number');
-            $form->text('variety', __('variety'))->attribute('type', 'number');
+
+
+            $form->radio('isolation_distance', __('Enter isolation')) 
+            ->options([
+                'in time' => 'Time',
+                'in distance' => 'Distance',
+            ]) 
+            ->when('in', ['in time'], function (Form $form) {
+                $form->text('isolation_distance', __('Enter isolation (in Hours)'))->attribute('type', 'number');
+            })
+            ->when('in', ['in distance'], function (Form $form) {
+                $form->text('isolation_distance', __('Enter isolation (in Meters)'))->attribute('type', 'number');
+            });
+
+
+
+
+            $varieties_all = CropVariety::all();
+            $varieties = [];
+            foreach ($varieties_all as $key => $var) {
+                if ($var->crop_id == $crop->id) {
+                    $varieties[$var->id] = $var->crop->name . ", " . $var->name;
+                }
+            }
+            $form->select('variety', __('Select Crop variety'))
+                ->options($varieties);
+ 
+
+
             $form->select('proposed_distance', __('Status of proposed distance'))
                 ->options([
                     'Adequate' => 'Adequate',
                     'Inadequate' => 'Inadequate'
-                ]);
+                ]); 
+
+                
             $form->textarea('general_conditions_of_crop', __('General conditions of crop'));
             $form->text('estimated_yield', __('Enter estimated yield (in metric tonnes)'));
             $form->textarea('futher_remarks', __('Enter any futher remarks'));
@@ -323,15 +353,16 @@ class FormSr10Controller extends AdminController
                         '4' => 'Rejected',
                         '5' => 'Accepted',
                     ])
-                    ->required()
-                    ->when('in', [3, 4], function (Form $form) {
-                        $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                            ->help("Please specify with a comment");
-                    })
-                    ->when('in', [5], function (Form $form) {
-                        $form->date('valid_from', 'Valid from date?');
-                        $form->date('valid_until', 'Valid until date?');
-                    });
+                    ->required();
+
+                    // ->when('in', [3, 4], function (Form $form) {
+                    //     $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                    //         ->help("Please specify with a comment");
+                    // })
+                    // ->when('in', [5], function (Form $form) {
+                    //     $form->date('valid_from', 'Valid from date?');
+                    //     $form->date('valid_until', 'Valid until date?');
+                    // });
             } else {
                 $form->radio('status', __('Inspection decision'))
                     ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be revarsed.")
@@ -341,7 +372,7 @@ class FormSr10Controller extends AdminController
                         '17' => 'Skip',
                     ])
                     ->required()
-                    ->when('in', [3, 4,17], function (Form $form) {
+                    ->when('in', [3, 4, 17], function (Form $form) {
                         $form->textarea('status_comment', 'Enter status comment (Remarks)')
                             ->help("Please specify with a comment");
                     });
