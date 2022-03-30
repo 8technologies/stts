@@ -68,13 +68,11 @@ class SeedLabelPackageController extends AdminController
     protected function form()
     {
         $form = new Form(new SeedLabelPackage());
-        $varieties_all = CropVariety::all();
+        $varieties_all = CropVariety::all(); 
         $varieties = [];
         foreach ($varieties_all as $key => $var) {
             $varieties[$var->id] = $var->crop->name . ", " . $var->name;
         }
-
-
         $form->select('crop_variety_id', __('Select Crop variety'))
             ->options($varieties)
             ->required();
