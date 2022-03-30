@@ -22,12 +22,12 @@ class SeedLabController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Seed Sample - analysis';
+    protected $title = 'Seed lab - analysis';
 
     /**
      * Make a grid builder.
      *
-     * @return Grid
+     * @return Grid 
      */
     protected function grid()
     {
@@ -227,13 +227,8 @@ class SeedLabController extends AdminController
 
         $user = Admin::user();
         if ($form->isCreating()) {
-            if (!Admin::user()->isRole('basic-user')) {
-                admin_error("Warning", "You don't have previleges to create this form.");
-                return redirect(admin_url('seed-labs'));
-            }
             $form->hidden('administrator_id', __('Administrator id'))
-                ->default($user->id);
-
+                ->default($user->id); 
             $form->saving(function ($form) {
                 $exam = FormStockExaminationRequest::find($form->form_stock_examination_request_id);
                 if (!$exam) {
@@ -269,10 +264,10 @@ class SeedLabController extends AdminController
             $form->setWidth(8, 4);
             $form->select('form_stock_examination_request_id', __('Select Stock examination form'))
                 ->options($_exams);
-            $form->date('collection_date', __('Collection date'))->default(date('Y-m-d'));
-            $form->file('payment_receipt', __('Attach Payment receipt'));
+            $form->date('collection_date', __('Collection date'))->default(date('Y-m-d'))->required();
+            $form->file('payment_receipt', __('Attach Payment receipt'))->required();
             $form->hidden('crop_variety_id', __('crop_variety_id'));
-            $form->textarea('applicant_remarks', __('Enter remarks'));
+            $form->textarea('applicant_remarks', __('Enter remarks'))->required();
         }
 
         if (Admin::user()->isRole('admin') ) {

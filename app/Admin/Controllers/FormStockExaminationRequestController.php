@@ -36,8 +36,16 @@ class FormStockExaminationRequestController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new FormStockExaminationRequest());
 
+        /*$ms = FormStockExaminationRequest::all();
+        $m = $ms->first();
+        $m->germination = rand(1000000000,100000000000);
+        $m->status = 5;
+        $m->save();
+        dd($m->id."");
+        die();*/
+
+        $grid = new Grid(new FormStockExaminationRequest());
 
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
@@ -183,26 +191,7 @@ class FormStockExaminationRequestController extends AdminController
             }
         }
 
-        if (Admin::user()->isRole('inspector')) {
-            $form->saving(function ($form) {
-                $id = request()->route()->parameters['form_stock_examination_request'];
-                $model = $form->model()->find($id);
-                $model->status = $form->status;
-                $model->save();
-                if ($model->status == 5) {
-                    $stock = new StockRecord();
-                    $stock->administrator_id = $model->administrator_id;
-                    //$stock->crop_variety_id = $model->crop_variety_id;
-                    $stock->detail = 'From stock exanination ID: ' . $model->id;
-                    $stock->is_deposit = 1;
-                    $stock->quantity = $form->yield;
-                    $stock->seed_class = $form->seed_class;
-                    $stock->source = 'Stock examination';
-                    $model->save();
-                }
-                $form->status = 1;
-            });
-        }
+
         $import_permits = [];
         $planting_returnings = [];
         $all_planting_returning = [];
