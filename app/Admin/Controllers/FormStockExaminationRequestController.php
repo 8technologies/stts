@@ -24,14 +24,14 @@ class FormStockExaminationRequestController extends AdminController
 {
     /**
      * Title for current resource.
-     *
+     * 
      * @var string
-     */
+     */ 
     protected $title = 'Stock examination requests';
 
     /**
-     * Make a grid builder.
-     *
+     * Make a grid builder. 
+     * 
      * @return Grid
      */
     protected function grid()

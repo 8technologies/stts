@@ -29,7 +29,7 @@ class ImportExportPermitController extends AdminController
  
     /**
      * Make a grid builder.
-     *
+     *  
      * @return Grid
      */
     protected function grid()
@@ -425,7 +425,6 @@ class ImportExportPermitController extends AdminController
                 })
                 ->when('in', [3, 4], function (Form $form) {
                     $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                        ->readonly()
                         ->help("Please specify with a comment");
                 })
                 ->when('in', [5, 6], function (Form $form) {
