@@ -23,7 +23,7 @@ class FormSr10Controller extends AdminController
      *
      * @var string
      */
-    protected $title = 'Sr10 - Field inspection';
+    protected $title = 'Sr10 - Field inspection'; 
 
     /**
      * @return Grid
@@ -99,18 +99,45 @@ class FormSr10Controller extends AdminController
     {
         $show = new Show(FormSr10::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('planting_return_id', __('Planting return id'));
-        $show->field('stage', __('Stage'));
-        $show->field('status', __('Status'));
-        $show->field('status_comment', __('Status comment'));
-        $show->field('administrator_id', __('Administrator id'));
-        $show->field('submited_date', __('Submited date'));
-        $show->field('min_date', __('Min date'));
-        $show->field('max_date', __('Max date'));
+        $model = FormSr10::findOrFail($id);
 
+ 
+        $show->field('id', __('Id')); 
+        $show->field('stage', __('Stage')); 
+        $show->field('submited_date', __('Submited date')); 
+        $show->field('name', __('Applicant\'s Name'))->as(function ($i) {
+            return $this->planting_return->name;
+        });
+        $show->field('address', __('Applicant\'s Address'))->as(function ($i) {
+
+            return $this->planting_return->district . ", " .
+            $this->planting_return->subcourty . ", " . $this->planting_return->village;
+ 
+        });
+        
+        
+        $show->field('gps', __('GPS'))->as(function ($i) {
+
+            return $this->planting_return->gps_latitude . ", " .
+            $this->planting_return->gps_longitude; 
+        });
+ 
+        $show->field('seed_class', __('Seed class')); 
+        $show->field('size_of_field', __('Size of field')); 
+        $show->field('off_types', __('Off types')); 
+        $show->field('status_comment', __('Status comment')); 
+        $show->field('diseases', __('Diseases')); 
+        $show->field('noxious_weeds', __('Noxious weeds')); 
+        $show->field('other_features', __('Other features')); 
+        $show->field('other_weeds', __('Other weeds')); 
+        $show->field('isolation_distance', __('Isolation distance')); 
+        $show->field('variety', __('Variety')); 
+        $show->field('proposed_distance', __('Proposed distance')); 
+        $show->field('general_conditions_of_crop', __('General conditions of crop')); 
+        $show->field('estimated_yield', __('Estimated yield')); 
+        $show->field('futher_remarks', __('Futher remarks')); 
+        $show->field('sr10_number', __('SR10s number')); 
+      
         return $show;
     }
 
