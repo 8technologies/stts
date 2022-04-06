@@ -55,11 +55,11 @@ class FormStockRecordController extends AdminController
             ->display(function ($item) {
                 return Carbon::parse($item)->diffForHumans();
             })->sortable();
-        $grid->column('crop_variety_id', __('Crop variety'))
-            ->display(function ($item) {
-                $var = CropVariety::find($item);
-                return $var->crop->name . ", " . $var->name;
-            })->sortable();
+        // $grid->column('crop_variety_id', __('Crop variety'))
+        //     ->display(function ($item) {
+        //         $var = CropVariety::find($item);
+        //         return $var->crop->name . ", " . $var->name;
+        //     })->sortable();
 
         $grid->column('detail', __('Reason'));
         $grid->column('is_deposit', __('Type'))
