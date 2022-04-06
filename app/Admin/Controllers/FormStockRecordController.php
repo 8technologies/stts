@@ -21,7 +21,7 @@ class FormStockRecordController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Stock Records';
+    protected $title = 'Stock Records'; 
 
     /**
      * Make a grid builder.

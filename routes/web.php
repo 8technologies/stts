@@ -22,8 +22,8 @@ Route::get('/post-ad/{id}', [Dashboard::class, 'postAd'])->middleware(Authentica
 Route::match(['get', 'post'], '/profile-edit/{id}', [Dashboard::class, 'profileEdit'])->name("profile-edit");
 Route::get('/profile', [Dashboard::class, 'profile'])->middleware(Authenticate::class);
 Route::get('/logout', [Dashboard::class, 'logout'])->middleware(Authenticate::class);
-Route::match(['get', 'post'],'/messages/', [Dashboard::class, 'messages'])->name("messages")->middleware(Authenticate::class);
-Route::match(['get', 'post'],'/messages/{thread}', [Dashboard::class, 'messages'])->name("messages")->middleware(Authenticate::class);
+Route::match(['get', 'post'], '/messages/', [Dashboard::class, 'messages'])->name("messages")->middleware(Authenticate::class);
+Route::match(['get', 'post'], '/messages/{thread}', [Dashboard::class, 'messages'])->name("messages")->middleware(Authenticate::class);
 
 Route::match(['get', 'post'], '/print', [PrintController2::class, 'index']);
 
@@ -32,4 +32,4 @@ Route::match(['get', 'post'], '/print', [PrintController2::class, 'index']);
 });*/
 
 //always the last.
-Route::match(['get', 'post'],'/{id}', [MainController::class, 'slugSwitcher']);
+Route::match(['get', 'post'], '/{id}', [MainController::class, 'slugSwitcher']);
