@@ -32,7 +32,7 @@ class SeedLabController extends AdminController
     protected function grid()
     {
         // $s = SeedLab::find(23);
-        
+
         // dd("done");
         $grid = new Grid(new SeedLab());
 
@@ -74,9 +74,9 @@ class SeedLabController extends AdminController
         })->sortable();
 
         $grid->column('print', __('Lab Certificate'))->display(function ($status) {
-            return '<a target="_blank" href="'.url('/print').'">Print Certificate</a>';
+            return '<a target="_blank" href="' . url('/print') . '">Print Certificate</a>';
         })->sortable();
- 
+
 
         $grid->column('inspector', __('Inspector'))->display(function ($userId) {
             if (Admin::user()->isRole('basic-user')) {
@@ -231,7 +231,7 @@ class SeedLabController extends AdminController
         $user = Admin::user();
         if ($form->isCreating()) {
             $form->hidden('administrator_id', __('Administrator id'))
-                ->default($user->id); 
+                ->default($user->id);
             $form->saving(function ($form) {
                 $exam = FormStockExaminationRequest::find($form->form_stock_examination_request_id);
                 if (!$exam) {
@@ -256,9 +256,9 @@ class SeedLabController extends AdminController
             }
             $form->hidden('crop_variety_id', __('Crop variety id'));
 
-            $_exams = []; 
+            $_exams = [];
             foreach ($exams as $key => $exam) {
-                if($exam->crop()->id <1){
+                if ($exam->crop()->id < 1) {
                     continue;
                 }
                 $_exams[$exam->id] = "Exam  ID: " . $exam->id . ", Crop: " . $exam->crop()->name;
@@ -273,7 +273,7 @@ class SeedLabController extends AdminController
             $form->textarea('applicant_remarks', __('Enter remarks'))->required();
         }
 
-        if (Admin::user()->isRole('admin') ) {
+        if (Admin::user()->isRole('admin')) {
             if ($form->isEditing()) {
                 $id = request()->route()->parameters['seed_lab'];
                 $model = $form->model()->find($id);
@@ -426,21 +426,23 @@ class SeedLabController extends AdminController
                 $form->divider();
 
                 $form->hidden('inspector_is_done', __('inspector_is_done'))->attribute('value', 1)->value(1)->default(1);
-                $form->date('sampling_date', __('Sampling date'))->default(date('y-m-d'));
+                $form->date('sampling_date', __('Sampling date'))->default(date('y-m-d'))->required();
 
                 $form->text('sample_weight', __('Enter weight of Sample (in KGs)'))
+                    ->required()
                     ->attribute('type', 'number');
                 $form->text('quantity', __('Enter the quantity represented (in Metric Tonnes)'))
                     ->default(1000)
                     ->attribute([
                         'type' => 'number',
                         'value' => $tot,
-                    ]);
-                $form->text('packaging', __('Packaging'));
+                    ])->required();
+                $form->text('packaging', __('Packaging'))->required();
                 $form->text('number_of_units', __('Number of units'))->default(15);
-                $form->text('mother_lot', __('Mother lot'))->attribute('type', 'number');
+                $form->text('mother_lot', __('Mother lot'))->attribute('type', 'number')->required();
                 $form->text('lot_number', __('lot_number'))->default(rand(10000000, 100000000));
                 $form->select('sample_condition', __('Sample condition'))
+                    ->required()
                     ->options([
                         'Raw seed' => 'Raw seed',
                         'Processed seed' => 'Processed seed',
@@ -453,9 +455,11 @@ class SeedLabController extends AdminController
 
 
                 $form->tags('tests_required', __('Tests required'))
+                    ->required()
                     ->options(['Moisture content', 'Purity', 'Germination', 'Seed health']);
 
                 $form->radio('status', __('Decision'))
+                    ->required()
                     ->options([
                         '9' => 'Accept',
                         '4' => 'Reject'
