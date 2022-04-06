@@ -37,7 +37,7 @@ class ImportExportPermitController extends AdminController
         $grid = new Grid(new ImportExportPermit());
         $grid->disableFilter();
         $grid->disableExport();
-        $grid->model()->where('is_import', '=', 1);
+        $grid->model()->where('is_import', '=', 1); 
 
 
 
@@ -170,8 +170,8 @@ class ImportExportPermitController extends AdminController
                     $var = CropVariety::find($val->crop_variety_id);
 
 
-                    $row['crop'] = $var->crop->name;
-                    $row['variety'] = $var->name;
+                    $row['crop'] = $var->name;
+                    //$row['variety'] = $var->name;
                     $row['ha'] = $val->category;
                     $row['origin'] = $val->weight;
                     $rows[] = $row;
