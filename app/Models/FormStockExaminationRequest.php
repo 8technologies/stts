@@ -19,7 +19,7 @@ class FormStockExaminationRequest extends Model
     public function crop()
     {
         $crop = new Crop();
-
+ 
         $import_export_permit_id = ((int)($this->import_export_permit_id));
         $planting_return_id = ((int)($this->planting_return_id));
         $form_qds_id = ((int)($this->form_qds_id));
@@ -63,14 +63,17 @@ class FormStockExaminationRequest extends Model
         parent::boot();
 
         self::creating(function ($model) {
+
         });
 
         self::created(function ($model) {
         });
 
         self::updating(function ($model) {
- 
-            // ... code here
+            if(strlen($model->lot_number)<2){
+                $model->lot_number = rand(10000000,1000000000);
+            }
+            return $model;
         });
 
         self::updated(function ($model) {

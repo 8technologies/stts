@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Crop;
 use App\Models\CropVariety;
+use App\Models\FormStockExaminationRequest;
 use App\Models\StockRecord;
 use Carbon\Carbon;
 use Encore\Admin\Auth\Database\Administrator;
@@ -31,6 +32,15 @@ class FormStockRecordController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new StockRecord());
+
+        //$as = FormStockExaminationRequest::all();
+        //$a = $as->first();
+
+        //$a->lot_number = rand(1,9);
+        //$a->save();
+
+
+        //die("done ====> {$a->id} ==> {$a->lot_number}"); 
 
         $grid->filter(function ($filter) {
 
@@ -61,6 +71,8 @@ class FormStockRecordController extends AdminController
         //         return $var->crop->name . ", " . $var->name;
         //     })->sortable();
 
+        $grid->column('lot_number', __('Lot number'));
+        $grid->column('detail', __('Reason'));
         $grid->column('detail', __('Reason'));
         $grid->column('is_deposit', __('Type'))
             ->display(function ($item) {
