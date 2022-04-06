@@ -167,10 +167,10 @@ class ImportExportPermitController extends AdminController
                 $headers = ['Crop', 'Variety', 'Category', 'weight'];
                 $rows = array();
                 foreach ($this->import_export_permits_has_crops as $key => $val) {
-                    $var = CropVariety::find($val->crop_variety_id);
+                    //$var = CropVariety::find($val->crop_variety_id);
 
 
-                    $row['crop'] = $var->name;
+                    $row['crop'] = $val->name;
                     //$row['variety'] = $var->name;
                     $row['ha'] = $val->category;
                     $row['origin'] = $val->weight;
