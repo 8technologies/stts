@@ -23,7 +23,7 @@ class FormSr6Controller extends AdminController
      *
      * @var string
      */
-    protected $title = 'Form SR6 - Seed Grower';
+    protected $title = 'Form SR6 - Seed Grower'; 
 
     /**
      * Make a grid builder.
