@@ -57,6 +57,8 @@ class FormStockRecordController extends AdminController
 
         if (!Admin::user()->isRole('admin')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
+        }else{
+            $grid->disableCreateButton();
         }
 
 

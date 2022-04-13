@@ -418,8 +418,8 @@ class SeedLabController extends AdminController
                 $form->display('applicant', 'Applicant')
                     ->default($model->user->name);
 
-                $form->display('applicant', 'Crop variety')
-                    ->default($model->crop_variety->crop->name . " - " . $model->crop_variety->name);
+                // $form->display('applicant', 'Crop variety')
+                //     ->default($model->crop_variety->crop->name . " - " . $model->crop_variety->name);
 
                 $form->display('collection_date', 'Collection date')
                     ->default($model->user->collection_date);
