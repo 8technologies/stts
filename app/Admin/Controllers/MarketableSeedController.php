@@ -222,7 +222,7 @@ class MarketableSeedController extends AdminController
         $vars = [];
         $stock = [];
         $stock_ids = [];
-
+        dd($user);  
         foreach ($user->marketable_seeds as $key => $value) {
             $stock[$value->lab_test_number][] = $value;
             if (!isset($stock_ids[$value->lab_test_number])) {
