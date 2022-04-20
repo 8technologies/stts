@@ -206,8 +206,8 @@ class FormStockRecordController extends AdminController
         $stock = [];
         $stock_ids = [];
         $vars = [];
-
         $recs = StockRecord::where('administrator_id', Admin::user()->id)->get();
+
         foreach ($recs as $key => $value) {
             $stock[$value->crop_variety_id][] = $value;
             if (!isset($stock_ids[$value->crop_variety_id])) {
@@ -221,6 +221,9 @@ class FormStockRecordController extends AdminController
         $rows = [];
         $i = 0; 
         foreach ($stock_ids as $key => $value) {
+            if(!isset($value['variety']->id)){
+                continue;
+            }
 
             if ($value['quantity'] > 0) {
                 $vars[$value['variety']->id] = "CROP: " . $value['variety']->crop->name .
