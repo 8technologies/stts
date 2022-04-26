@@ -32,7 +32,7 @@ class SeedLabelPackageController extends AdminController
 
 
         $grid->column('crop_variety_id', __('Crop variety'))->display(function ($id) {
-            return $this->crop_variety->crop->name . ", " . $this->crop_variety->name;
+            return $this->crop_variety->name ;
         });
         $grid->column('package_size', __('Package size'));
         $grid->column('package_price', __('Package price'));

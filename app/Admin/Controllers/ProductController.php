@@ -50,7 +50,7 @@ class ProductController extends AdminController
                 $new_pro->images = $market_rec->images;
                 $new_pro->source = $market_rec->source;
                 $new_pro->detail = $market_rec->detail;
-                $new_pro->name = $market_rec->crop_variety->crop->name." - ".$market_rec->crop_variety->name;
+                $new_pro->name = $market_rec->crop_variety->name;
 
                 $saved = false;
                 if ($new_pro->save()) {
@@ -65,7 +65,7 @@ class ProductController extends AdminController
                 }
             } else {
                 try {
-                    $pro->name = $market_rec->crop_variety->crop->name." - ".$market_rec->crop_variety->name;
+                    $pro->name = $market_rec->crop_variety->name;
                 } catch (\Throwable $th) {
                     $pro->name = "No name";
                 }

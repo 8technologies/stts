@@ -35,9 +35,9 @@ class SeedLabController extends AdminController
 
         $u = Admin::user();
 
-        //$tot = Utils::get_stock_balance($u->id,1);
-        //dd("romina ==> {$tot}");
-
+        $tot = Utils::get_stock_balance($u->id,1);
+        dd("romina ==> {$tot}");
+        
         // $s = SeedLab::find(23);
 
         // dd("done");
@@ -388,7 +388,7 @@ class SeedLabController extends AdminController
 
 
                     if ($quantity > $tot) {
-                        admin_error("Warning", "There is insufitient quantity stock of crop vareity {$model->crop_variety->crop->name} - {$model->crop_variety->name}. You tried to 
+                        admin_error("Warning", "There is insufitient quantity stock of crop vareity {$model->crop_variety->name}. You tried to 
                         enter quantity " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
                         return redirect(admin_url('seed-labs'));
                     }
@@ -425,8 +425,6 @@ class SeedLabController extends AdminController
                 $form->display('applicant', 'Applicant')
                     ->default($model->user->name);
 
-                // $form->display('applicant', 'Crop variety')
-                //     ->default($model->crop_variety->crop->name . " - " . $model->crop_variety->name);
 
                 $form->display('collection_date', 'Collection date')
                     ->default($model->user->collection_date);
@@ -524,7 +522,7 @@ class SeedLabController extends AdminController
                     ->disable();
 
                 $form->display('applicant', 'Crop variety')
-                    ->default($model->crop_variety->crop->name . " - " . $model->crop_variety->name);
+                    ->default($model->crop_variety->name);
 
                 $form->display('collection_date', 'Collection date')
                     ->default($model->user->collection_date);
@@ -631,7 +629,7 @@ class SeedLabController extends AdminController
                     }
 
                     if ($quantity > $tot) {
-                        admin_error("Warning", "There is insufitient quantity stock of crop vareity {$model->crop_variety->crop->name} - {$model->crop_variety->name}. You tried to 
+                        admin_error("Warning", "There is insufitient quantity stock of crop vareity {$model->crop_variety->name}. You tried to 
                         enter quantity " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
                         return redirect(admin_url('seed-labs/' . $model->id . "/edit"))->withInput();
                     }
@@ -677,7 +675,7 @@ class SeedLabController extends AdminController
                     ->disable();
 
                 $form->display('applicant', 'Crop variety')
-                    ->default($model->crop_variety->crop->name . " - " . $model->crop_variety->name);
+                    ->default($model->crop_variety->name);
 
 
                 $form->hidden('inspector_is_done', __('inspector_is_done'))->attribute('value', 1)->value(1)->default(1)
