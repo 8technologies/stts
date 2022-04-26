@@ -237,7 +237,7 @@ class MarketableSeedController extends AdminController
         foreach ($stock_ids as $key => $val) {
             $value = $val['variety'];
             if ($value->quantity > 0) {
-                $vars[$value['lab_test_number']] = "SEED: " . $value->crop_variety->crop->name . " - " . $value->crop_variety->name . ", LAB No.: " . $value->lab_test_number . ", QTY: " . $val['quantity'] . " KGs";
+                $vars[$value['lab_test_number']] = "SEED: " . $value->crop_variety->name . " - " . $value->crop_variety->name . ", LAB No.: " . $value->lab_test_number . ", QTY: " . $val['quantity'] . " KGs";
             }
         }
 

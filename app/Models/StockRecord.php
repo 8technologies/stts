@@ -11,6 +11,7 @@ class StockRecord extends Model
 
     public function crop_variety()
     {
+
         $cops =  Crop::all();
         $c = null;
         foreach ($cops as $key => $value) {
@@ -21,6 +22,9 @@ class StockRecord extends Model
         }
         if ($c == null) {
             $c = $cops[0];
+            $m = $this;
+            $m->crop_variety_id = $c->id;
+            $m->save();
         }
         return $c;
     }

@@ -17,6 +17,17 @@ class Utils
 {
 
 
+    public static function get_stock_balance($user_id,$crop_id){
+        $records = StockRecord::where([
+            'administrator_id' => $user_id,
+            'crop_variety_id' => $crop_id
+        ])->get();
+        $tot = 0;
+        foreach ($records as $key => $value) {
+            $tot += $value->quantity;
+        }
+        return $tot;
+    }
     public static function sr10_inialized(SubGrower $sr10)
     {
         if (!$sr10) {

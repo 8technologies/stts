@@ -152,8 +152,23 @@ class FormStockRecordController extends AdminController
             if ($quantity < 0) {
                 $quantity = (-1) * $quantity;
             }
-            $varity = CropVariety::find($varity_id);
+            $varity = Crop::find($varity_id);
             $detail_2 = $form->detail;
+
+            $records = StockRecord::where([
+                'administrator_id' => Admin::user()->id,
+                'crop_variety_id' => $varity_id
+            ])->get();
+            $tot = 0;
+            foreach ($records as $key => $value) {
+                $tot += ((int)($value->quantity));
+            }
+
+            if ($quantity > $tot) {
+                admin_error("Warning", "You have insufitient quantity stock of crop vareity {$varity->name}. You tried to 
+                transfer " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
+                return redirect(admin_url('stock-records/create'));
+            }
 
             if ($form->is_transfer) {
                 $receiver_id = ((int)($form->seed_class));
@@ -162,20 +177,7 @@ class FormStockRecordController extends AdminController
                     admin_error("Warning", "You did not select Receiver.");
                     return redirect(admin_url('stock-records/create'));
                 }
-                $records = StockRecord::where([
-                    'administrator_id' => Admin::user()->id,
-                    'crop_variety_id' => $varity_id
-                ])->get();
-                $tot = 0;
-                foreach ($records as $key => $value) {
-                    $tot += ((int)($value->quantity));
-                }
-
-                if ($quantity > $tot) {
-                    admin_error("Warning", "You have insufitient quantity stock of crop vareity {$varity->crop->name} - {$varity->name}. You tried to 
-                    transfer " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
-                    return redirect(admin_url('stock-records/create'));
-                }
+                
 
                 $receiver_record = new StockRecord();
                 $receiver_record->administrator_id = $receiver_id;

@@ -14,6 +14,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Facades\Auth;
 
 class SeedLabController extends AdminController
 {
@@ -31,6 +32,12 @@ class SeedLabController extends AdminController
      */
     protected function grid()
     {
+
+        $u = Admin::user();
+
+        //$tot = Utils::get_stock_balance($u->id,1);
+        //dd("romina ==> {$tot}");
+
         // $s = SeedLab::find(23);
 
         // dd("done");
