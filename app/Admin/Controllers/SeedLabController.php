@@ -628,7 +628,7 @@ class SeedLabController extends AdminController
                     }
 
                     if ($quantity > $tot) {
-                        admin_error("Warning", "There is insufitient quantity stock of crop vareity {$model->crop_variety->name}. You tried to 
+                        admin_error("Warning", "There is insufitient quantity stock of this crop variety. You tried to 
                         enter quantity " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
                         return redirect(admin_url('seed-labs/' . $model->id . "/edit"))->withInput();
                     }
