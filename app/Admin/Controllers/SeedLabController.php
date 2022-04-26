@@ -33,10 +33,9 @@ class SeedLabController extends AdminController
     protected function grid()
     {
 
-        $u = Admin::user();
+        //$u = Admin::user();
 
-        $tot = Utils::get_stock_balance($u->id,1);
-        dd("romina ==> {$tot}");
+        //$tot = Utils::get_stock_balance($u->id,1);
         
         // $s = SeedLab::find(23);
 
