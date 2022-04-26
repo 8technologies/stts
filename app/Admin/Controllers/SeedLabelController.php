@@ -118,7 +118,7 @@ class SeedLabelController extends AdminController
         // })->sortable();
 
         $grid->column('crop_variety_id', __('Crop variety'))->display(function ($user) {
-            return $this->crop_variety->name;
+            return $this->name;
         })->sortable();
 
         $grid->column('seed_label_package_id', __('Label package'))->display(function ($user) {
@@ -182,10 +182,12 @@ class SeedLabelController extends AdminController
      */
     protected function form()
     {
+
         $form = new Form(new SeedLabel());
         $user = Admin::user();
         $seed_labs = [];
         if ($form->isCreating()) {
+            
             if (!Admin::user()->isRole('basic-user')) {
                 admin_error("Warning", "You don't have previleges to create this form.");
                 return redirect(admin_url('seed-labels'));
@@ -238,12 +240,13 @@ class SeedLabelController extends AdminController
                 if ($sl->quantity < 1) {
                     continue;
                 }
-                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->crop->name . " - " . $sl->crop_variety->name . ", QTY: " . $sl->quantity . " KGs";
+                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety()->name.", QTY: " . $sl->quantity . " KGs";
             }
         }
 
         $form->setWidth(8, 4);
         if (Admin::user()->isRole('basic-user')) {
+            
             $form->saving(function ($form) {
                 $form->status = 1;
             });
@@ -252,6 +255,7 @@ class SeedLabelController extends AdminController
                 ->load('seed_label_package_id', url('/api/seed_label_packages_by_seed_lab'))
                 ->required();
 
+                
             $form->select('seed_label_package_id', __('Select Seed label package'))->required();
             $form->hidden('crop_variety_id')->default(1);
             $form->hidden('status')->default(1)->attribute('value', '1');
