@@ -60,7 +60,7 @@ class SeedLabController extends AdminController
             if (!$_user) {
                 return "-";
             }
-            return $_user->crop->name . ", " . $_user->name;
+            return $_user->crop()->name . ", " . $_user->name;
         })->sortable();
         $grid->column('mother_lot', __('Mother lot'));
         $grid->column('lot_number', __('Lot number'));
