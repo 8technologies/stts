@@ -22,7 +22,7 @@ class FormStockRecordController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Stock Records'; 
+    protected $title = 'Stock Records';
 
     /**
      * Make a grid builder.
@@ -31,6 +31,12 @@ class FormStockRecordController extends AdminController
      */
     protected function grid()
     {
+        $stocks = StockRecord::where('lot_number', '-')->get();
+        foreach ($stocks as $key => $value) {
+            $value->lot_number = rand(10000000, 1000000000);
+            $value->save();
+        }
+
         $grid = new Grid(new StockRecord());
 
         //$as = FormStockExaminationRequest::all();
@@ -57,7 +63,7 @@ class FormStockRecordController extends AdminController
 
         if (!Admin::user()->isRole('admin')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
-        }else{
+        } else {
             $grid->disableCreateButton();
         }
 
@@ -219,9 +225,9 @@ class FormStockRecordController extends AdminController
 
         $headers = ['#', 'Variety', 'Quantity (in Metric tonnes)',];
         $rows = [];
-        $i = 0; 
+        $i = 0;
         foreach ($stock_ids as $key => $value) {
-            if(!isset($value['variety']->id)){
+            if (!isset($value['variety']->id)) {
                 continue;
             }
 
