@@ -60,7 +60,7 @@ class SeedLabController extends AdminController
             if (!$_user) {
                 return "-";
             }
-            return $_user->crop->name . ", " . $_user->name;
+            return $_user->name . ", " . $_user->name;
         })->sortable();
         $grid->column('mother_lot', __('Mother lot'));
         $grid->column('lot_number', __('Lot number'));
@@ -387,7 +387,7 @@ class SeedLabController extends AdminController
 
 
                     if ($quantity > $tot) {
-                        admin_error("Warning", "There is insufitient quantity stock of crop vareity {$model->crop_variety->name}. You tried to 
+                        admin_error("Warning", "There is insufitient quantity stock of this crop vareity. You tried to 
                         enter quantity " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
                         return redirect(admin_url('seed-labs'));
                     }
@@ -657,6 +657,7 @@ class SeedLabController extends AdminController
                     $StockRecord->save();
                 });
 
+
                 $records = StockRecord::where([
                     'administrator_id' => $model->user->id,
                     'crop_variety_id' => $model->crop_variety_id
@@ -667,6 +668,7 @@ class SeedLabController extends AdminController
                 }
 
 
+
                 $form->setWidth(8, 4);
                 $form->display('applicant', 'Applicant')
                     ->default($model->user->name)
@@ -674,8 +676,7 @@ class SeedLabController extends AdminController
                     ->disable();
 
                 $form->display('applicant', 'Crop variety')
-                    ->default($model->crop_variety->name);
-
+                    ->default($model->crop_variety()->name);
 
                 $form->hidden('inspector_is_done', __('inspector_is_done'))->attribute('value', 1)->value(1)->default(1)
                     ->readonly()
