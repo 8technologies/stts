@@ -33,7 +33,7 @@ class SeedLabController extends AdminController
     protected function grid()
     {
 
-        //$u = Admin::user();
+        $u = Admin::user();
 
         //$tot = Utils::get_stock_balance($u->id,1);
         
@@ -60,7 +60,7 @@ class SeedLabController extends AdminController
             if (!$_user) {
                 return "-";
             }
-            return $_user->crop()->name . ", " . $_user->name;
+            return $_user->crop->name . ", " . $_user->name;
         })->sortable();
         $grid->column('mother_lot', __('Mother lot'));
         $grid->column('lot_number', __('Lot number'));
@@ -476,6 +476,7 @@ class SeedLabController extends AdminController
         }
 
         if (Admin::user()->isRole('lab-reception')) {
+
 
             if ($form->isEditing()) {
 
