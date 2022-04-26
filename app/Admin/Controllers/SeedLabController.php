@@ -477,7 +477,6 @@ class SeedLabController extends AdminController
 
         if (Admin::user()->isRole('lab-reception')) {
 
-
             if ($form->isEditing()) {
 
                 $id = request()->route()->parameters['seed_lab'];
@@ -522,7 +521,7 @@ class SeedLabController extends AdminController
                     ->disable();
 
                 $form->display('applicant', 'Crop variety')
-                    ->default($model->crop_variety->name);
+                    ->default($model->name);
 
                 $form->display('collection_date', 'Collection date')
                     ->default($model->user->collection_date);
