@@ -10,10 +10,25 @@ class MarketableSeed extends Model
     use HasFactory;
     
     public function crop_variety(){
-        return $this->belongsTo(CropVariety::class);
+
+        $cops =  Crop::all();
+        $c = null;
+        foreach ($cops as $key => $value) {
+            if ($value->id == $this->crop_variety_id) {
+                $c = $value;
+                break;
+            }
+        }
+        if ($c == null) {
+            $c = $cops[0];
+            $m = $this;
+            $m->crop_variety_id = $c->id;
+            $m->save();
+        }
+        return $c; 
     }
     
-    public function seed_label_package(){
+    public function seed_label_package(){ 
         return $this->belongsTo(SeedLabelPackage::class);
     }
 }
