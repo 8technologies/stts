@@ -147,7 +147,6 @@ class PreOrderController extends AdminController
                 ])
                 ->when('Certified', function (Form $form) {
                     $form->select('invetory_status', __('Select invetory status'))
-                        ->required()
                         ->options([
                             'Raw' => 'Raw',
                             'Processed' => 'Processed'
