@@ -26,6 +26,13 @@ class StockRecord extends Model
             return $model;
         });
  
+        self::creating(function ($model) {
+            if(strlen($model->lot_number)<2){
+                $model->lot_number = rand(10000000,1000000000);
+            }
+            return $model;
+        });
+ 
  
     }
 
