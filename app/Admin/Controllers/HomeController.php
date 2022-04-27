@@ -4,7 +4,8 @@ namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdminRoleUser;
-
+use App\Models\CropInspectionType;
+use App\Models\CropVariety;
 use App\Models\FormQds;
 use App\Models\FormSr4;
 use App\Models\FormSr6;
@@ -28,13 +29,16 @@ class HomeController extends Controller
     public function index(Content $content)
     {
 
+        
+        foreach (CropInspectionType::all() as $key => $v) {
+            echo "==> {$v->crop->name}<hr>";
+        }
+        dd();
 
         $content->title('Main Dashboard');
         //$content->description('Description...');
 
-        $content->row(function ($row) {
-
-
+        $content->row(function ($row) { 
             if (
                 Admin::user()->isRole('admin') ||
                 Admin::user()->isRole('inspector') 
