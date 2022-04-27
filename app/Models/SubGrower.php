@@ -82,8 +82,7 @@ class SubGrower extends Model
                 }
 
 
-                if ($crop != null) {
-                    dd("shit is NOT null");
+                if ($crop != null) { 
                     if ($crop->crop_inspection_types != null) {
                         foreach ($crop->crop_inspection_types as $key => $inspe) {
 
