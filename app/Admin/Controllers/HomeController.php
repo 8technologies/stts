@@ -30,10 +30,10 @@ class HomeController extends Controller
     {
 
         
-        foreach (CropInspectionType::all() as $key => $v) {
-            echo "==> {$v->crop->name}<hr>";
-        }
-        dd();
+        // foreach (CropInspectionType::all() as $key => $v) {
+        //     echo "==> {$v->crop->name}<hr>";
+        // }
+        // dd();
 
         $content->title('Main Dashboard');
         //$content->description('Description...');
