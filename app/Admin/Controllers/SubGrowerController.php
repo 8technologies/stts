@@ -37,10 +37,11 @@ class SubGrowerController extends AdminController
     protected function grid()
     {
  
-        /*$s = SubGrower::find(5);
+        $s = SubGrower::find(3);
+        $s->crop = 9;
         $s->size = rand(10000,1000000000);
         $s->save();
-        dd($s);*/
+        dd("done");
         $grid = new Grid(new SubGrower());
 
         if (Admin::user()->isRole('admin')) {
@@ -349,7 +350,7 @@ class SubGrowerController extends AdminController
                 ->required();
 
             $form->radio('status', 'Initialize this form')->options([
-                '1' => 'Initialize form'
+                '1' => 'Initialize form' 
             ])->value($crop_val)
                 ->required();
 

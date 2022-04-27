@@ -16,9 +16,9 @@ class SubGrower extends Model
         $id = (int)($this->crop);
 
         if ($id > 0) {
-            $c = Crop::find($id);
+            $c = CropVariety::find($id);
             if ($c != null) {
-                return $c->name;
+                return $c->crop->name . ", " . $c->name;
             }
         }
 
@@ -63,6 +63,7 @@ class SubGrower extends Model
         });
 
         self::updating(function ($sr10) {
+            $sr10->status = 16;
         });
 
         self::updated(function ($sr10) {
@@ -70,9 +71,19 @@ class SubGrower extends Model
 
 
             if (Admin::user()->isRole('inspector')) {
-                $crop = Crop::find($sr10->crop);
+                $id = (int)($sr10->crop);
+
+                $crop_var = CropVariety::find($sr10->crop);
+                $crop = null;
+                if ($crop_var != null) {
+                    if ($crop_var->crop != null) {
+                        $crop = $crop_var->crop;
+                    }
+                }
+
 
                 if ($crop != null) {
+                    dd("shit is NOT null");
                     if ($crop->crop_inspection_types != null) {
                         foreach ($crop->crop_inspection_types as $key => $inspe) {
 
@@ -112,6 +123,35 @@ class SubGrower extends Model
                                 $sr10->save();
                             }
                         }
+                    }
+                } else {
+
+                    $temp_sr10_1 = FormSr10::where([
+                        'planting_return_id' => $sr10->id,
+                    ])->get();
+
+                    $temp_sr10 = FormSr10::where([
+                        'planting_return_id' => $sr10->id,
+                    ])->get();
+
+                    if (count($temp_sr10) < 1) {
+                        $d['stage'] = 'Default inspection';
+                        $d['is_active'] = 1;
+                        $d['farmer_id'] = $sr10->administrator_id;
+                        $d['status'] = '1';
+                        $d['is_done'] = 0;
+                        $d['is_initialized'] = false;
+                        $d['status_comment'] = "";
+                        $d['planting_return_id'] = $sr10->id;
+                        $d['administrator_id'] = $sr10->inspector;
+                        $date_planted = Carbon::parse(time());
+                        $date_planted->addDays(1);
+                        $toDateString = $date_planted->toDateString();
+                        $d['min_date'] = $toDateString;
+                        $new_form_sr = new FormSr10($d);
+                        $new_form_sr->save();
+                        $sr10->status = 16;
+                        $sr10->save();
                     }
                 }
             }
