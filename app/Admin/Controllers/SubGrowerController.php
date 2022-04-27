@@ -197,7 +197,9 @@ class SubGrowerController extends AdminController
         $grid->column('filed_name', __('Field Name'))->sortable();
         $grid->column('name', __('Person responisble'))->sortable();
         $grid->column('size', __('Size'))->sortable();
-        $grid->column('crop', __('Crop'))->sortable();
+        $grid->column('crop', __('Crop'))->display(function(){
+            return $this->get_crop_name();
+        })->sortable();
         $grid->column('variety', __('variety'))->sortable();
         $grid->column('district', __('District'))->sortable();
         $grid->column('subcourty', __('Subcouty'))->sortable();
@@ -333,8 +335,8 @@ class SubGrowerController extends AdminController
 
             $_items = [];
             $crop_val = "";
-            foreach (Crop::all() as $key => $item) {
-                $_items[$item->id] = "CROP: " . $item->name;
+            foreach (CropVariety::all() as $key => $item) {
+                $_items[$item->id] = "CROP: " . $item->crop->name.", Variety: ".$item->name;
                 if ($model->crop == $item->name) {
                     $crop_val = $item->id;
                 }
@@ -342,7 +344,7 @@ class SubGrowerController extends AdminController
 
 
 
-            $form->select('crop', 'Select crop')->options($_items)->value($crop_val)
+            $form->select('crop', 'Select crop variety')->options($_items)->value($crop_val)
                 ->default($crop_val)
                 ->required();
 

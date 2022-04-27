@@ -11,6 +11,35 @@ class SubGrower extends Model
 {
     use HasFactory;
 
+    public function get_crop_name()
+    {
+        $id = (int)($this->crop);
+
+        if ($id > 0) {
+            $c = Crop::find($id);
+            if ($c != null) {
+                return $c->name;
+            }
+        }
+
+        return $this->crop;
+    }
+
+    public function get_crop()
+    {
+        $id = (int)($this->crop);
+        $c = Crop::find(1);
+        if ($id > 0) {
+            $c = Crop::find($id);
+            if ($c != null) {
+                return $c->name;
+            } else {
+                $c = Crop::find(1);
+            }
+        }
+
+        return $c;
+    }
     public static function boot()
     {
         parent::boot();
@@ -39,10 +68,10 @@ class SubGrower extends Model
         self::updated(function ($sr10) {
             // ... code here
 
- 
+
             if (Admin::user()->isRole('inspector')) {
                 $crop = Crop::find($sr10->crop);
-                
+
                 if ($crop != null) {
                     if ($crop->crop_inspection_types != null) {
                         foreach ($crop->crop_inspection_types as $key => $inspe) {
@@ -56,17 +85,17 @@ class SubGrower extends Model
                                 'stage' => $inspe->inspection_stage,
                             ])->get();
 
-                            if (count($temp_sr10) < 1) { 
+                            if (count($temp_sr10) < 1) {
                                 $d['stage'] = $inspe->inspection_stage;
                                 $d['farmer_id'] = $sr10->administrator_id;
                                 $d['status'] = '1';
-                                
-                                if(count($temp_sr10_1) < 1){
+
+                                if (count($temp_sr10_1) < 1) {
                                     $d['is_active'] = 1;
-                                }else{
+                                } else {
                                     $d['is_active'] = 0;
                                 }
-                               
+
 
                                 $d['is_done'] = 0;
                                 $d['is_initialized'] = false;
@@ -81,7 +110,6 @@ class SubGrower extends Model
                                 $new_form_sr->save();
                                 $sr10->status = 16;
                                 $sr10->save();
-
                             }
                         }
                     }
