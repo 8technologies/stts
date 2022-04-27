@@ -37,11 +37,11 @@ class SubGrowerController extends AdminController
     protected function grid()
     {
  
-        $s = SubGrower::find(3);
-        $s->crop = 9;
-        $s->size = rand(10000,1000000000);
-        $s->save();
-        dd("done");
+        // $s = SubGrower::find(3);
+        // $s->crop = 9;
+        // $s->size = rand(10000,1000000000);
+        // $s->save();
+        // dd("done");
         $grid = new Grid(new SubGrower());
 
         if (Admin::user()->isRole('admin')) {
