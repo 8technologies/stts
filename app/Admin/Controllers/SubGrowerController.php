@@ -350,7 +350,7 @@ class SubGrowerController extends AdminController
                 ->required();
 
             $form->radio('status', 'Initialize this form')->options([
-                '1' => 'Initialize form' 
+                '16' => 'Initialize form' 
             ])->value($crop_val)
                 ->required();
 
