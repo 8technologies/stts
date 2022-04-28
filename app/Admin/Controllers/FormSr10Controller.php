@@ -300,7 +300,6 @@ class FormSr10Controller extends AdminController
             $form->display('', __('Seed class'))->default($model->planting_return->seed_class)->readonly();
             $crop_var = CropVariety::find($model->planting_return->crop);
             $default_var =  CropVariety::find(1);
-            $default_var->name = "Default crop vareity";
             if($default_var == null){
                 $default_var = new CropVariety();
                 $default_var->id = 1;
