@@ -63,7 +63,7 @@ class SubGrower extends Model
         });
 
         self::updating(function ($sr10) {
-            $sr10->status = 16;
+            //$sr10->status = 16;
         });
 
         self::updated(function ($sr10) {
