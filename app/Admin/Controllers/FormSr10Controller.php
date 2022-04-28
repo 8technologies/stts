@@ -298,11 +298,26 @@ class FormSr10Controller extends AdminController
 
             $form->html('<h3>About this Field inspection report - (SR10)</h3>');
             $form->display('', __('Seed class'))->default($model->planting_return->seed_class)->readonly();
-            $crop = Crop::find($model->planting_return->crop);
-            $crop_name = "";
-            if ($crop != null) {
-                $crop_name = $crop->name;
+            $crop_var = CropVariety::find($model->planting_return->crop);
+            $default_var =  CropVariety::find(1);
+            $default_var->name = "Default crop vareity";
+            if($default_var == null){
+                $default_var = new CropVariety();
+                $default_var->id = 1;
+                $default_var->crop_id = 1;
+                $default_var->name = "Default crop vareity";
+                $default_var->save();
+                $model->planting_return->crop = 1;
+                $model->planting_return->save();
+                $crop_var = CropVariety::find($model->planting_return->crop);
             }
+            if($crop_var == null){
+                die("Crop varity was not found in the system.");
+            }
+ 
+            
+            $crop_name = $crop_var->crop->name.", ".$crop_var->name;
+
             $form->display('', __('Crop'))->default($crop_name)->readonly();
             $form->text('stage', __('Stage'))->readonly();
             $form->date('min_date', __('To be submited after'))->readonly();
@@ -342,7 +357,7 @@ class FormSr10Controller extends AdminController
             $varieties_all = CropVariety::all();
             $varieties = [];
             foreach ($varieties_all as $key => $var) {
-                if ($var->crop_id == $crop->id) {
+                if ($var->crop_id == $crop_var->id) {
                     $varieties[$var->id] = $var->crop->name . ", " . $var->name;
                 }
             }
