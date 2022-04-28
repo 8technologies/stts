@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use COM;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,12 +26,13 @@ class FormSr10 extends Model
             if (
                 Admin::user()->isRole('inspector')
             ) {
+
                 $all = FormSr10::where(['planting_return_id' => $model->planting_return_id])->get();
                 $position = 0;
                 $_position = 0;
 
                 if(FormSr10::is_final_sr10($model)){
-                    
+
                     $sr10_number = rand(1000000,100000000)."";
                     if($model->status == 5){
                         if(strlen($model->sr10_number)<4){
@@ -54,8 +56,15 @@ class FormSr10 extends Model
                 }
 
                 if ($model->planting_return != null) {
+
                     if ($model->planting_return->crop != null) {
-                        $crop = Crop::find($model->planting_return)->first();
+                        $crop_var =  CropVariety::find($model->planting_return->crop);
+                        if($crop_var == null){
+                            $crop = Crop::find(1);
+                        }else{
+                            $crop = $crop_var->crop;
+                        }
+
                         if ($crop != null) {
                             if ($crop->crop_inspection_types != null) {
                                 foreach ($crop->crop_inspection_types as $types) {
@@ -223,7 +232,14 @@ class FormSr10 extends Model
 
         $is_final = false;
 
-        $crop = Crop::find($model->planting_return->crop);
+        $crop_var = CropVariety::find($model->planting_return->crop);
+        if($crop_var == null){
+            die("Crop varirty not found");
+        }
+        if($crop_var->crop == null){
+            die("Crop not found");
+        }
+        $crop = $crop_var->crop;
         $max = 0;
         $max_inspe = new CropInspectionType();
         if ($crop != null) {

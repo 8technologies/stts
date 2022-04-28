@@ -30,8 +30,16 @@ class FormSr10Controller extends AdminController
      */
     protected function grid()
     {
-        // $sr = FormSr10::find(3); 
+
+        // $sr = FormSr10::find(8);
         // $sr->seed_class = rand(10000,100000000);
+        // $sr->save();
+        // if(FormSr10::is_final_sr10($sr)){
+        //     dd("yes");
+        // }else{
+        //     dd("no");
+        // }
+        // dd($sr->stage);
         // $sr->save();
         // dd("here");
 
