@@ -7,6 +7,7 @@ use Encore\Admin\Traits\AdminBuilder;
 use Encore\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\Types\This;
 
 class SeedLab extends Model
 {
@@ -32,19 +33,8 @@ class SeedLab extends Model
  
 
     public function crop_variety()
-    {
-        $cops =  Crop::all();
-        $c = null;
-        foreach ($cops as $key => $value) {
-            if ($value->id == $this->crop_variety_id) {
-                $c = $value;
-                break;
-            }
-        }
-        if ($c == null) {
-            $c = $cops[0];
-        }
-        return $c;
+    { 
+        return $this->belongsTo(CropVariety::class);
     }
     
     use HasFactory;

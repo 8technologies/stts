@@ -6,6 +6,7 @@ use App\Models\CropVariety;
 use App\Models\MarketableSeed;
 use App\Models\SeedLab;
 use App\Models\SeedLabel;
+use App\Models\SeedLabelPackage;
 use App\Models\Utils;
 use Carbon\Carbon;
 use Encore\Admin\Auth\Database\Administrator;
@@ -202,13 +203,11 @@ class SeedLabelController extends AdminController
             foreach ($res as $key => $sl) { 
                 if ($sl->quantity < 1) {
                     continue;
-                }
+                } 
                 $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name . " - " . $sl->crop_variety->name . ", QTY: " . $sl->quantity . " KGs";
             }
 
- 
-
-
+  
             if (count($seed_labs) < 1) {
                 admin_error("Warning", "You don't have any  valid LAB TEST NUMBER. Apply for seed lap to aquire a LAB TEST NUMBER.");
                 return redirect(admin_url('seed-labels'));
@@ -252,17 +251,24 @@ class SeedLabelController extends AdminController
             });
             $form->select('seed_lab_id', __('Select lab test number'))
                 ->options($seed_labs)
-                ->load('seed_label_package_id', url('/api/seed_label_packages_by_seed_lab'))
                 ->required();
+                //->load('seed_label_package_id', url('/api/seed_label_packages_by_seed_lab'))
 
-                
-            $form->select('seed_label_package_id', __('Select Seed label package'))->required();
+            $_lables = SeedLabelPackage::all();
+            $lables = [];
+            foreach ($_lables as $key => $val) {
+                $lables[$val->id] = "Package Size: {$val->package_size} Kgs @ : {$val->package_price} UGX";
+            }
+            $form->select('seed_label_package_id', __('Select Seed label package'))
+            ->options($lables)
+            ->required();
             $form->hidden('crop_variety_id')->default(1);
+            $form->hidden('images')->default("[]");
             $form->hidden('status')->default(1)->attribute('value', '1');
             $form->text('quantity', __('Quantity'))->attribute('type', 'number')->required();
             $form->text('price', __('Enter your selling unit price (Price per KG)'))->attribute('type', 'number')->required();
             $form->image('image', __('Thumbnail Image'));
-            $form->multipleImage('images', __('Crop gallary'));
+            //$form->multipleImage('images', __('Crop gallary'));
             $form->textarea('applicant_remarks', __('Remarks'));
             $form->file('receipt', __('Attach receipt'))->required();
         }
@@ -287,7 +293,6 @@ class SeedLabelController extends AdminController
 
         if (
             Admin::user()->isRole('usta')
-
         ) {
             $form->saving(function ($form) {
                 $id = request()->route()->parameters['seed_label'];
