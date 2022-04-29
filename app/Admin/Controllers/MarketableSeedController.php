@@ -222,8 +222,10 @@ class MarketableSeedController extends AdminController
         $vars = [];
         $stock = [];
         $stock_ids = [];
-        dd($user);  
-        foreach ($user->marketable_seeds as $key => $value) {
+        $marketable_seeds = MarketableSeed::WHERE([
+            'administrator_id' => $user->id
+        ])->get();
+        foreach ($marketable_seeds as $key => $value) { 
             $stock[$value->lab_test_number][] = $value;
             if (!isset($stock_ids[$value->lab_test_number])) {
                 $stock_ids[$value->lab_test_number]['quantity'] = 0;
@@ -237,7 +239,7 @@ class MarketableSeedController extends AdminController
         foreach ($stock_ids as $key => $val) {
             $value = $val['variety'];
             if ($value->quantity > 0) {
-                $vars[$value['lab_test_number']] = "SEED: " . $value->crop_variety()->name. ", LAB No.: " . $value->lab_test_number . ", QTY: " . $val['quantity'] . " KGs";
+                $vars[$value['lab_test_number']] = "SEED: " . $value->crop_variety->name. ", LAB No.: " . $value->lab_test_number . ", QTY: " . $val['quantity'] . " KGs";
             }
         }
 

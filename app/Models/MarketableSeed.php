@@ -9,13 +9,13 @@ class MarketableSeed extends Model
 {
     use HasFactory;
      
-    public function crop_variety(){
+    public function crop_variety(){  
         $var = CropVariety::find($this->crop_variety_id);
         if($var == null){
             Utils::create_default_tables();
             $this->crop_variety_id = 1;
             $this->save();
-        }
+        } 
         return $this->belongsTo(CropVariety::class);
     }
     
