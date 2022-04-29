@@ -118,8 +118,8 @@ class SeedLabelController extends AdminController
         //     return $this->seed_lab->lot_number;
         // })->sortable();
 
-        $grid->column('crop_variety_id', __('Crop variety'))->display(function ($user) {
-            return $this->name;
+        $grid->column('crop_variety_id', __('Crop variety'))->display(function () {
+            return $this->crop_variety->name;
         })->sortable();
 
         $grid->column('seed_label_package_id', __('Label package'))->display(function ($user) {
@@ -239,7 +239,7 @@ class SeedLabelController extends AdminController
                 if ($sl->quantity < 1) {
                     continue;
                 }
-                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety()->name.", QTY: " . $sl->quantity . " KGs";
+                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name.", QTY: " . $sl->quantity . " KGs";
             }
         }
 

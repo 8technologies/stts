@@ -8,24 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class MarketableSeed extends Model
 {
     use HasFactory;
-    
+     
     public function crop_variety(){
-
-        $cops =  Crop::all();
-        $c = null;
-        foreach ($cops as $key => $value) {
-            if ($value->id == $this->crop_variety_id) {
-                $c = $value;
-                break;
-            }
+        $var = CropVariety::find($this->crop_variety_id);
+        if($var == null){
+            Utils::create_default_tables();
+            $this->crop_variety_id = 1;
+            $this->save();
         }
-        if ($c == null) {
-            $c = $cops[0];
-            $m = $this;
-            $m->crop_variety_id = $c->id;
-            $m->save();
-        }
-        return $c; 
+        return $this->belongsTo(CropVariety::class);
     }
     
     public function seed_label_package(){ 
