@@ -24,7 +24,6 @@ class FormStockExaminationRequest extends Model
         $form_qds_id = ((int)($this->form_qds_id));
 
 
-
         if ($planting_return_id > 0) {
             $sr10 = FormSr10::find($planting_return_id);
             if ($sr10 != null) {

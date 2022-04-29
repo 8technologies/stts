@@ -36,7 +36,7 @@ class SeedLabController extends AdminController
         $u = Admin::user();
 
         //$tot = Utils::get_stock_balance($u->id,1);
-        
+
         // $s = SeedLab::find(23);
 
         // die("done");
@@ -232,7 +232,7 @@ class SeedLabController extends AdminController
      */
     protected function form()
     {
-        
+
         $form = new Form(new SeedLab());
 
         $user = Admin::user();
@@ -266,13 +266,20 @@ class SeedLabController extends AdminController
             $_exams = [];
             foreach ($exams as $key => $exam) {
                 $crop_variety = $exam->crop_variety();
-                if($crop_variety == null){
+                if ($crop_variety == null) {
                     continue;
                 }
-                if($crop_variety->id < 1){
+                if ($crop_variety->id < 1) {
                     continue;
                 }
-                $_exams[$exam->id] = "Exam  ID: " . $exam->id . ", Crop: " .$crop_variety->crop->name.", Varity: ". $crop_variety->name;
+
+
+                $u = Admin::user();
+                $tot = Utils::get_stock_balance($u->id, $crop_variety->id);
+                if ($tot < 1) {
+                    continue;
+                }
+                $_exams[$exam->id] = "Exam  ID: " . $exam->id . ", Crop: " . $crop_variety->crop->name . ", Varity: " . $crop_variety->name . ", Balence: {$tot}";
             }
 
             $form->setWidth(8, 4);
