@@ -251,40 +251,31 @@ class SeedLabController extends AdminController
         }
 
         if (Admin::user()->isRole('basic-user')) {
-            $exams = FormStockExaminationRequest::where([
+            $exams_list = FormStockExaminationRequest::where([
                 'administrator_id' => $user->id,
                 'status' => 5
             ])->get();
 
 
-            if (count($exams) < 1) {
+            if (count($exams_list) < 1) {
                 admin_error("Warning", "You don't have any valid stock examination request.");
                 return redirect(admin_url('seed-labs'));
             }
             $form->hidden('crop_variety_id', __('Crop variety id'));
 
-            $_exams = [];
-            foreach ($exams as $key => $exam) {
-                $crop_variety = $exam->crop_variety();
-                if ($crop_variety == null) {
-                    continue;
-                }
-                if ($crop_variety->id < 1) {
-                    continue;
-                }
-
-
+            $stocks = [];
+            foreach (CropVariety::all() as $key => $crop_variety) {
                 $u = Admin::user();
                 $tot = Utils::get_stock_balance($u->id, $crop_variety->id);
                 if ($tot < 1) {
                     continue;
                 }
-                $_exams[$exam->id] = "Exam  ID: " . $exam->id . ", Crop: " . $crop_variety->crop->name . ", Varity: " . $crop_variety->name . ", Balence: {$tot}";
+                $stocks[$crop_variety->id] = "Crop: " . $crop_variety->crop->name . ", Varity: " . $crop_variety->name . ", Balence: {$tot}";
             }
 
             $form->setWidth(8, 4);
             $form->select('form_stock_examination_request_id', __('Select Stock examination form'))
-                ->options($_exams);
+                ->options($stocks);
             $form->date('collection_date', __('Collection date'))->default(date('Y-m-d'))->required();
             $form->file('payment_receipt', __('Attach Payment receipt'))->required();
             $form->hidden('crop_variety_id', __('crop_variety_id'));
