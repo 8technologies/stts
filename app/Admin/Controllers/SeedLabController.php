@@ -240,11 +240,11 @@ class SeedLabController extends AdminController
             $form->hidden('administrator_id', __('Administrator id'))
                 ->default($user->id);
             $form->saving(function ($form) {
-                $exam = FormStockExaminationRequest::find($form->form_stock_examination_request_id);
-                if (!$exam) {
-                    die("Exam not found");
-                }
-                $form->crop_variety_id = $exam->id;
+                // $exam = FormStockExaminationRequest::find($form->form_stock_examination_request_id);
+                // if (!$exam) {
+                //     die("Exam not found");
+                // }
+                $form->crop_variety_id = $form->form_stock_examination_request_id;
                 $user = Admin::user();
                 $form->administrator_id = $user->id;
             });
