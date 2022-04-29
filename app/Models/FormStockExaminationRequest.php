@@ -16,9 +16,8 @@ class FormStockExaminationRequest extends Model
     }
 
 
-    public function crop()
+    public function crop_variety()
     {
-        $crop = new Crop();
  
         $import_export_permit_id = ((int)($this->import_export_permit_id));
         $planting_return_id = ((int)($this->planting_return_id));
@@ -31,9 +30,16 @@ class FormStockExaminationRequest extends Model
             if ($sr10 != null) {
                 $planting_return = SubGrower::find($sr10->planting_return_id);
                 if ($planting_return != null) {
-                    $crop = Crop::find($planting_return->crop);
-                    if ($crop != null) {
-                        return $crop;
+                    $crop_var = CropVariety::find($planting_return->crop);
+
+                    if ($crop_var != null) {
+                        return $crop_var;
+                    }else{
+                        Utils::create_default_tables();
+                        $planting_return->crop = 1;
+                        $planting_return->save();
+                        $varity = CropVariety::find(1);
+                        return $varity;
                     }
                 }
             }
@@ -43,13 +49,17 @@ class FormStockExaminationRequest extends Model
             $permit = ImportExportPermitsHasCrops::find($import_export_permit_id);
             if ($permit != null) {
                 $varity = CropVariety::find($permit->crop_variety_id);
-                if ($varity->crop != null) {
-                    return $varity->crop;
-                }
+                if ($varity != null) {
+                    return $varity;
+                }else{
+                    Utils::create_default_tables();
+                    $permit->crop_variety_id = 1;
+                    $permit->save();
+                    $varity = CropVariety::find(1);
+                    return $varity;
+                } 
             }
-        }
-
-        return $crop;
+        }  
     }
     public function variety()
     {

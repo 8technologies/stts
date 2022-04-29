@@ -16,6 +16,26 @@ use Encore\Admin\Facades\Admin;
 class Utils
 {
 
+    public static function create_default_tables(){
+        $crop = Crop::find(1);
+        if($crop == null){
+            $cro = new Crop();
+            $cro->name = "Default crop"; 
+            $cro->number_of_inspection = 0; 
+            $cro->crop_id = 1; 
+            $cro->number_of_days_before_submision = 0; 
+            $cro->save();
+        } 
+
+        $var = CropVariety::find(1);
+        if($var == null){
+            $var = new CropVariety();
+            $var->name = "Default crop variety";
+            $var->id = 1;
+            $var->crop_id = 1;
+            $var->save();
+        }
+    }
 
     public static function get_stock_balance($user_id,$crop_id){
         $records = StockRecord::where([

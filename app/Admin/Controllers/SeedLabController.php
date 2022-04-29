@@ -39,7 +39,7 @@ class SeedLabController extends AdminController
         
         // $s = SeedLab::find(23);
 
-        // dd("done");
+        // die("done");
         $grid = new Grid(new SeedLab());
 
         $grid->column('id', __('Id'));
@@ -232,6 +232,7 @@ class SeedLabController extends AdminController
      */
     protected function form()
     {
+        
         $form = new Form(new SeedLab());
 
         $user = Admin::user();
@@ -241,7 +242,7 @@ class SeedLabController extends AdminController
             $form->saving(function ($form) {
                 $exam = FormStockExaminationRequest::find($form->form_stock_examination_request_id);
                 if (!$exam) {
-                    dd("Exam not found");
+                    die("Exam not found");
                 }
                 $form->crop_variety_id = $exam->id;
                 $user = Admin::user();
@@ -264,10 +265,14 @@ class SeedLabController extends AdminController
 
             $_exams = [];
             foreach ($exams as $key => $exam) {
-                if ($exam->crop()->id < 1) {
+                $crop_variety = $exam->crop_variety();
+                if($crop_variety == null){
                     continue;
                 }
-                $_exams[$exam->id] = "Exam  ID: " . $exam->id . ", Crop: " . $exam->crop()->name;
+                if($crop_variety->id < 1){
+                    continue;
+                }
+                $_exams[$exam->id] = "Exam  ID: " . $exam->id . ", Crop: " .$crop_variety->crop->name.", Varity: ". $crop_variety->name;
             }
 
             $form->setWidth(8, 4);
@@ -284,7 +289,7 @@ class SeedLabController extends AdminController
                 $id = request()->route()->parameters['seed_lab'];
                 $model = $form->model()->find($id);
                 if (!$model) {
-                    dd("Form not found");
+                    die("Form not found");
                 }
 
 
@@ -348,7 +353,7 @@ class SeedLabController extends AdminController
                 $id = request()->route()->parameters['seed_lab'];
                 $model = $form->model()->find($id);
                 if (!$model) {
-                    dd("Form not found");
+                    die("Form not found");
                 }
                 if ($model->inspector_is_done == 1) {
                     admin_error("You cannot inspect this form more than once. Request adminstrator to re-activate this form.");
@@ -406,7 +411,7 @@ class SeedLabController extends AdminController
                         $form->order = $model->id;
                         $form->temp_parent = 0;
                     }
-                    //dd($form->quantity);
+                    //die($form->quantity);
                     $form->inspector_is_done = 1;
                 });
 
@@ -482,7 +487,7 @@ class SeedLabController extends AdminController
                 $id = request()->route()->parameters['seed_lab'];
                 $model = $form->model()->find($id);
                 if (!$model) {
-                    dd("Form not found");
+                    die("Form not found");
                 }
 
 
@@ -604,7 +609,7 @@ class SeedLabController extends AdminController
                 $id = request()->route()->parameters['seed_lab'];
                 $model = $form->model()->find($id);
                 if (!$model) {
-                    dd("Form not found");
+                    die("Form not found");
                 }
 
 
