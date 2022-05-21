@@ -25,9 +25,6 @@ class MarketController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Product());
-
-
-
         return $grid;
     }
 
