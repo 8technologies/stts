@@ -381,7 +381,6 @@ class Utils
         ) {
             $thread = $results[0]->thread;
         }
-
         return $thread;
     }
 
