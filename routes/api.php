@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/seed_label_packages_by_seed_lab', function () {
     $id = 0;
     if (isset($_GET['q'])) {
