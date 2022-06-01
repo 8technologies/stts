@@ -7,6 +7,9 @@ use App\Http\Controllers\PrintController2;
 use App\Http\Middleware\Authenticate;
 
 Route::get('/', [MainController::class, 'index']);
+Route::get('/test', [MainController::class, function (){
+    dd("Simple test");
+}]);
 Route::get('/about', [MainController::class, 'about']);
 Route::get('/import', [MainController::class, 'import']);
 

@@ -29,25 +29,12 @@
 </head>
 <body class="hold-transition login-page" @if(config('admin.login_background_image'))style="background: url({{config('admin.login_background_image')}}) no-repeat;background-size: cover;"@endif>
 <div class="login-box">
- 
+  <div class="login-logo">
+    <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}}</b></a>
+  </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-
-      <!-- /.login-logo -->
-      <div class="login-box-body"> 
-          <div class="login-logo h6 pt-4">
-        <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}}</b></a>
-      </div>
-
-
-
-    @if (config('admin.login_background_image_2'))
-    <img width="100%"  class="mb-3" src="{{config('admin.login_background_image_2')}}" alt="">
-@endif
-
-
-      <p class="login-box-msg">{{ trans('admin.login') }}</p>
-
+    <p class="login-box-msg">{{ trans('admin.login') }}</p>
 
     <form action="{{ admin_url('auth/login') }}" method="post">
       <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
@@ -90,7 +77,6 @@
         </div>
         <!-- /.col -->
       </div>
-      <p class="border mt-3 pt-3" style="border-top: 1px gray solid">Don't have account?  <a href="{{url("register")}}">Register</a></p>
     </form>
 
   </div>
