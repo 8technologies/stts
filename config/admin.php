@@ -301,7 +301,7 @@ return [
     | This value is used to set the background image of login page.
     |
     */
-    'login_background_image' => url( '/assets/images/stts/bg/bg-1.jpg'),
+    'login_background_image' => url( '/assets/images/stts/bg/bg-1.jpg'), 
     'login_background_image_2' =>  url('/assets/images/stts/bg/bg-2.jpeg'),
 
     /*
