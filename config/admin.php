@@ -158,7 +158,7 @@ return [
         'disk' => 'admin',
 
         // Image and file upload path under the disk above.
-        'directory' => [
+        'directory' => [ 
             'image' => '/',
             'file'  => 'files',
         ],
