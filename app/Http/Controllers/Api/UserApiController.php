@@ -22,7 +22,7 @@ class UserAPIController extends Controller
     }
 
     /** Update the specified resource in storage. */
-    public function patch(Request $request, $id)
+    public function update(Request $request, $id)
     {
         // With this function, the idea is that we GET the user, UPDATE and then POST them back with the PUT request method
         // The PUT method takes the same arguments as those of the POST method.

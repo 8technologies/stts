@@ -28,7 +28,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 // User workflow
 Route::get("user/list", [UserAPIController::class, "index"]);
 Route::get("user/{id}", [UserAPIController::class, "show"]);
-Route::patch("user/{id}", [UserAPIController::class, "patch"]);
+Route::put("user/{id}", [UserAPIController::class, "update"]);
 Route::delete("user/{id}", [UserAPIController::class, "destroy"]);
 Route::get("user/search/{name}", [UserAPIController::class, "where"]);
 
