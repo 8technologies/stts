@@ -158,7 +158,7 @@ return [
         'disk' => 'admin',
 
         // Image and file upload path under the disk above.
-        'directory' => [
+        'directory' => [ 
             'image' => '/',
             'file'  => 'files',
         ],
@@ -301,8 +301,13 @@ return [
     | This value is used to set the background image of login page.
     |
     */
+<<<<<<< HEAD
     // 'login_background_image' => url( '/assets/images/stts/bg/bg-1.jpg'),
     // 'login_background_image_2' =>  url('/assets/images/stts/bg/bg-2.jpeg'),
+=======
+    'login_background_image' => url( '/assets/images/stts/bg/bg-1.jpg'), 
+    'login_background_image_2' =>  url('/assets/images/stts/bg/bg-2.jpeg'),
+>>>>>>> b5eb45d47ce0cd51e2d22cc67326c84dfb8147b5
 
     /*
     |--------------------------------------------------------------------------

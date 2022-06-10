@@ -5,7 +5,11 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
+<<<<<<< HEAD
         'reference' => '64a0914d8256ab40a4c6b6a7a464ac31fff285a1',
+=======
+        'reference' => '308c0fcf5cd20e254ae5cdec885ecf6cd0b91f10',
+>>>>>>> b5eb45d47ce0cd51e2d22cc67326c84dfb8147b5
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -508,7 +512,11 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
+<<<<<<< HEAD
             'reference' => '64a0914d8256ab40a4c6b6a7a464ac31fff285a1',
+=======
+            'reference' => '308c0fcf5cd20e254ae5cdec885ecf6cd0b91f10',
+>>>>>>> b5eb45d47ce0cd51e2d22cc67326c84dfb8147b5
             'dev_requirement' => false,
         ),
         'laravel/legacy-factories' => array(
@@ -1715,6 +1723,7 @@
             'install_path' => __DIR__ . '/../webmozart/assert',
             'aliases' => array(),
             'reference' => '11cb2199493b2f8a3b53e7f19068fc6aac760991',
+<<<<<<< HEAD
             'dev_requirement' => false,
         ),
         'yajra/laravel-datatables' => array(
@@ -1769,6 +1778,8 @@
             'install_path' => __DIR__ . '/../yajra/laravel-datatables-oracle',
             'aliases' => array(),
             'reference' => '4c22b09c8c664df5aad9f17d99c3823c0f2d84e2',
+=======
+>>>>>>> b5eb45d47ce0cd51e2d22cc67326c84dfb8147b5
             'dev_requirement' => false,
         ),
     ),
