@@ -6,19 +6,34 @@ use App\Models\SeedLabel;
 use App\Models\SeedLabelPackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\PassportController;
+use App\Http\Controllers\Api\UserAPIController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+// Authentication APIs
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
+
+// Route::post('register', [PassportController::class, 'register']);
+// Route::post('login', [PassportController::class, 'login']);
+
+// // put all api protected routes here
+// Route::middleware('auth:api')->group(function () {
+//     Route::post('user-detail', [PassportController::class, 'userDetail']);
+//     Route::post('logout', [PassportController::class, 'logout']);
+// });
 
 
+// User workflow
+Route::get("user/list", [UserAPIController::class, "index"]);
+Route::get("user/{id}", [UserAPIController::class, "show"]);
+Route::patch("user/{id}", [UserAPIController::class, "patch"]);
+Route::delete("user/{id}", [UserAPIController::class, "destroy"]);
+Route::get("user/search/{name}", [UserAPIController::class, "where"]);
+
+
+// Data access APIs
 Route::get('/seed_label_packages_by_seed_lab', function () {
     $id = 0;
     if (isset($_GET['q'])) {
@@ -78,7 +93,6 @@ Route::get('/crops', function () {
     }
     return $crops;
 });
-
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
