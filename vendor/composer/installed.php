@@ -5,11 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-<<<<<<< HEAD
-        'reference' => '64a0914d8256ab40a4c6b6a7a464ac31fff285a1',
-=======
-        'reference' => '308c0fcf5cd20e254ae5cdec885ecf6cd0b91f10',
->>>>>>> b5eb45d47ce0cd51e2d22cc67326c84dfb8147b5
+        'reference' => 'c02196c9fccb0822667e09c36d07a80aa11ec30b',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -234,12 +230,12 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(
-            'pretty_version' => '7.4.3',
-            'version' => '7.4.3.0',
+            'pretty_version' => '7.4.4',
+            'version' => '7.4.4.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/guzzle',
             'aliases' => array(),
-            'reference' => '74a8602c6faec9ef74b7a9391ac82c5e65b1cdab',
+            'reference' => 'e3ff079b22820c2029d4c2a87796b6a0b8716ad8',
             'dev_requirement' => false,
         ),
         'guzzlehttp/promises' => array(
@@ -252,12 +248,12 @@
             'dev_requirement' => false,
         ),
         'guzzlehttp/psr7' => array(
-            'pretty_version' => '2.2.1',
-            'version' => '2.2.1.0',
+            'pretty_version' => '2.3.0',
+            'version' => '2.3.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
-            'reference' => 'c94a94f120803a18554c1805ef2e539f8285f9a2',
+            'reference' => '83260bb50b8fc753c72d14dc1621a2dac31877ee',
             'dev_requirement' => false,
         ),
         'hamcrest/hamcrest-php' => array(
@@ -512,11 +508,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-<<<<<<< HEAD
-            'reference' => '64a0914d8256ab40a4c6b6a7a464ac31fff285a1',
-=======
-            'reference' => '308c0fcf5cd20e254ae5cdec885ecf6cd0b91f10',
->>>>>>> b5eb45d47ce0cd51e2d22cc67326c84dfb8147b5
+            'reference' => 'c02196c9fccb0822667e09c36d07a80aa11ec30b',
             'dev_requirement' => false,
         ),
         'laravel/legacy-factories' => array(
@@ -538,12 +530,12 @@
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
-            'pretty_version' => 'v1.14.9',
-            'version' => '1.14.9.0',
+            'pretty_version' => 'v1.14.10',
+            'version' => '1.14.10.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laravel/sail',
             'aliases' => array(),
-            'reference' => '8435763e7735f6eff15b03df014cea1217fc826e',
+            'reference' => '0ea5d683af4d189071efcdb9e83946c10dab82c3',
             'dev_requirement' => true,
         ),
         'laravel/sanctum' => array(
@@ -739,12 +731,12 @@
             'dev_requirement' => true,
         ),
         'monolog/monolog' => array(
-            'pretty_version' => '2.6.0',
-            'version' => '2.6.0.0',
+            'pretty_version' => '2.7.0',
+            'version' => '2.7.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../monolog/monolog',
             'aliases' => array(),
-            'reference' => '247918972acd74356b0a91dfaa5adcaec069b6c0',
+            'reference' => '5579edf28aee1190a798bfa5be8bc16c563bd524',
             'dev_requirement' => false,
         ),
         'mtdowling/cron-expression' => array(
@@ -835,12 +827,12 @@
             'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(
-            'pretty_version' => 'v2.5.0',
-            'version' => '2.5.0.0',
+            'pretty_version' => 'v2.6.0',
+            'version' => '2.6.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../paragonie/constant_time_encoding',
             'aliases' => array(),
-            'reference' => '9229e15f2e6ba772f0c55dd6986c563b937170a8',
+            'reference' => '3f3bf06406244a94aeffd5818ba05b41a1754ae5',
             'dev_requirement' => false,
         ),
         'paragonie/random_compat' => array(
@@ -1723,7 +1715,6 @@
             'install_path' => __DIR__ . '/../webmozart/assert',
             'aliases' => array(),
             'reference' => '11cb2199493b2f8a3b53e7f19068fc6aac760991',
-<<<<<<< HEAD
             'dev_requirement' => false,
         ),
         'yajra/laravel-datatables' => array(
@@ -1778,8 +1769,6 @@
             'install_path' => __DIR__ . '/../yajra/laravel-datatables-oracle',
             'aliases' => array(),
             'reference' => '4c22b09c8c664df5aad9f17d99c3823c0f2d84e2',
-=======
->>>>>>> b5eb45d47ce0cd51e2d22cc67326c84dfb8147b5
             'dev_requirement' => false,
         ),
     ),
