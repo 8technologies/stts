@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Htp\Controllers\Api;
+namespace App\Http\Controllers\Api;
 
 use App\Models\FormSr4;
 use App\Models\Utils;
@@ -272,8 +272,7 @@ class FormSr4ApiController extends AdminController
         }
 
 
-
-        if (Admin::user()->isRole('basic-user')) {
+        if (auth()->user()->isRole('basic-user')) {
 
             $form->select('type', __('Application category?'))
             ->options([
@@ -284,7 +283,7 @@ class FormSr4ApiController extends AdminController
                 'Seed Exporter' => 'Seed Exporter',
                 'Seed Processor' => 'Seed Processor',
             ])
-            ->help('Which SR4 type are tou applying for?')
+            ->help('Which SR4 type are you applying for?')
             ->rules('required');
 
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required();

@@ -36,3 +36,14 @@ Route::match(['get', 'post'], '/print', [PrintController2::class, 'index']);
 
 //always the last.
 Route::match(['get', 'post'], '/{id}', [MainController::class, 'slugSwitcher']);
+
+
+
+
+
+
+Route::get('/wwwww', function ($postId, $commentId) {
+    dd(auth()->user);
+});
+
+
