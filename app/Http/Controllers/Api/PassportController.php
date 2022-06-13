@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api;
 
 // use Validator;
 use Illuminate\Support\Facades\Validator;
@@ -74,9 +74,11 @@ class PassportController extends Controller
                     'user_id' => $user->id
                 ]);
                 
+            $accessToken = $user->createToken('passportToken')->accessToken;
             return response()->json([
                 'success' => true,
-                'message' => 'User registered succesfully, Use Login method to receive token.'
+                'message' => 'User registered succesfully, Use Login method to receive token.',
+                'accessToken' => $accessToken,
             ], 200);
         } else {
                 return response()->json(['message' => 'Failed to created your account. Please try again1!'], 201);
@@ -117,10 +119,8 @@ class PassportController extends Controller
         }
 
         // authentication attempt
-        if (auth()->attempt($input)) {
+        if (auth()->attempt($validate_data)) {
             $token = auth()->user()->createToken('passport_token')->accessToken;
-        // if (request()->attempt($input)) {
-            // $token = request()->user()->createToken('passport_token')->accessToken;
             
             return response()->json([
                 'success' => true,
@@ -130,7 +130,7 @@ class PassportController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'User authentication failed.'
+                'message' => 'authentication failed'
             ], 401);
         }
     }

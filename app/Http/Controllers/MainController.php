@@ -12,10 +12,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
 use App\Imports\UsersImport;
+use App\Mail\FormSubmitted;
 use App\Models\SubGrower;
+use Encore\Admin\Actions\Toastr;
 use Excel;
+use Illuminate\Support\Facades\Mail;
 
 
 class MainController extends Controller
@@ -251,6 +253,13 @@ class MainController extends Controller
                     'role_id' => 3,
                     'user_id' => $admin->id
                 ]);
+                
+                $receiver = Administrator::findOrFail($request->user_id);
+                // Send the email...
+                Mail::to($request->user()->email)->send(new FormSubmitted($receiver));
+                admin_toastr('Success! Check your email for an activation link.');
+                
+                
             } else {
                 $errors['username'] = "Failed to created your account. Please try again.";
                 return redirect('register')

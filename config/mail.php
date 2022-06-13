@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'failover'),
+    'default' => env('MAIL_MAILER', 'mailgun'),
 
     /*
     |--------------------------------------------------------------------------
@@ -95,9 +95,19 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'sttstestmail@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'STTS Test'),
     ],
+
+    /*
+    In addition, you may define a global "reply_to" address within your 
+    config/mail.php configuration file:
+    */
+    'reply_to' => [
+        'address' => env('MAIL_REPLY_TO_ADDRESS', 'sttstestmail@gmail.com'),
+        'name' => env('MAIL_REPLY_TO_NAME', 'STTS Test'),
+    ],
+
 
     /*
     |--------------------------------------------------------------------------
