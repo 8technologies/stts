@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PassportController;
 use App\Http\Controllers\Api\UserAPIController;
 use App\Http\Controllers\Api\FormSr4ApiController;
+// use App\Http\Controllers\Api\FormSr6ApiController;
 
 // Authentication APIs
 // Route::post('/register', [AuthController::class, 'register']);
@@ -34,7 +35,17 @@ Route::delete("user/{id}", [UserAPIController::class, "destroy"]);
 Route::get("user/search/{name}", [UserAPIController::class, "where"]);
 
 // sr4 forms
-$router->apiResource('form-sr4s', FormSr4ApiController::class);
+Route::post("form-sr4s/{type}", [FormSr4ApiController::class, "sr4-create"]);
+// Route::post("form-sr6s/{type}", [FormSr6ApiController::class, "sr4-create"]);
+
+
+
+
+
+
+
+
+
 
 
 // Data access APIs

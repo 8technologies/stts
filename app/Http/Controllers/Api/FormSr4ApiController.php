@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Admin\Controllers;
 
 use App\Models\FormSr4;
 use App\Models\Utils;
@@ -12,7 +12,6 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Auth;
-
 
 class FormSr4ApiController extends AdminController
 {
@@ -32,6 +31,7 @@ class FormSr4ApiController extends AdminController
     {
         $grid = new Grid(new FormSr4());
 
+
         /*s = FormSr4::all()->first();
         $s->status_comment .= rand(100,1000000);
         $s->save();*/
@@ -48,7 +48,7 @@ class FormSr4ApiController extends AdminController
 
                 $status = ((int)(($actions->row['status'])));
                 if (
-                    $status == 2 || 
+                    $status == 2 ||
                     $status == 5 ||
                     $status == 6
                 ) {
@@ -56,12 +56,61 @@ class FormSr4ApiController extends AdminController
                     $actions->disableDelete();
                 }
             });
+        } else if (Admin::user()->isRole('inspector')) {
+            $grid->model()->where('inspector', '=', Admin::user()->id);
+            $grid->disableCreateButton();
 
-        } 
-        
+            $grid->actions(function ($actions) {
+                $status = ((int)(($actions->row['status'])));
+                $actions->disableDelete();
+                // if (
+                //     $status != 2
+                // ) {
+                //     $actions->disableEdit();
+                // }
+            });
+        } else {
+            $grid->disableCreateButton();
+        }
+
+        $grid->column('id', __('Id'))->sortable();
+
+        $grid->column('created_at', __('Created'))->display(function ($item) {
+            return Carbon::parse($item)->diffForHumans();
+        })->sortable();
+
+        $grid->column('status', __('Status'))->display(function ($status) {
+            return Utils::tell_status($status);
+        })->sortable();
+
+        $grid->column('valid_from', __('Starts'))->display(function ($item) {
+            return Carbon::parse($item)->diffForHumans();
+        })->sortable();
+        $grid->column('valid_until', __('Exipires'))->display(function ($item) {
+            return Carbon::parse($item)->diffForHumans();
+        })->sortable();
+
+        $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
+            $u = Administrator::find($userId);
+            if (!$u)
+                return "-";
+            return $u->name;
+        })->sortable();
+
+        $grid->column('address', __('Address'))->sortable();
+
+
+        $grid->column('inspector', __('Inspector'))->display(function ($userId) {
+            if (Admin::user()->isRole('basic-user')) {
+                return "-";
+            }
+            $u = Administrator::find($userId);
+            if (!$u)
+                return "Not assigned";
+            return $u->name;
+        })->sortable();
+
         return $grid;
-
-
     }
 
     /**
@@ -88,7 +137,6 @@ class FormSr4ApiController extends AdminController
                 return "-";
             return $u->name;
         });
-
         $show->field('name_of_applicant', __('Name of applicant'));
         $show->field('address', __('Address'));
         $show->field('company_initials', __('Company initials'));
@@ -147,7 +195,7 @@ class FormSr4ApiController extends AdminController
             }
             return $item;
         });
-        $show->field('souce_of_seed', __('Souce of seed'))->as(function ($userId) {
+        $show->field('source_of_seed', __('Souce of seed'))->as(function ($userId) {
             $u = Administrator::find($userId);
             if (!$u)
                 return $userId;
@@ -276,20 +324,6 @@ class FormSr4ApiController extends AdminController
                         ->help("Please specify Production that you are applying for");
                 });
 
-
-            $form->radio('processing_of', __('Applicant is applying for processing of?'))
-                ->options([
-                    'Agricultural crops' => 'Agricultural crops',
-                    'Horticultural crops' => 'Horticultural crops',
-                    'Other' => 'Other'
-                ])
-                ->required()
-                ->when('Other', function (Form $form) {
-                    $form->text('processing_of_other', __('Applicant is applying for Other processing of?'))
-                        ->help('Specify if you selected "Other" processing.');
-                });
-
-
             $form->radio('marketing_of', __('Applicant is applying for marketing of?'))
                 ->options([
                     'Agricultural crops' => 'Agricultural crops',
@@ -301,6 +335,7 @@ class FormSr4ApiController extends AdminController
                     $form->text('marketing_of_other', __('Applicant is applying for Other marketing of?'))
                         ->help('Please Specify if you selected "Other" marketing.');
                 });
+
 
             $form->radio('have_adequate_land', 'Do you have adequate land to handle basic seed?')
                 ->options([
@@ -356,25 +391,28 @@ class FormSr4ApiController extends AdminController
                 ])
                 ->required();
 
+
+
             $items = Administrator::all();
             $_items = [];
             foreach ($items as $key => $item) {
                 // if($item->parent>0){
                 //     continue;
                 // }
-                $_items[$item->id] = $item->name . " - " . $item->id;
+                $_items[$item->id] = $item->id . " - " . $item->name;
             }
             $_items['Other'] = "Other";
             $form->select(
-                'souce_of_seed',
+                'source_of_seed',
                 __('What is your source of seed?')
             )->options($_items)
                 ->help('Select "Other" if your supplier is not found on the list.')
                 ->required()
                 ->when('Other', function (Form $form) {
-                    $form->text('souce_of_seed_other', 'Specify your source of seed?')
+                    $form->text('source_of_seed_other', 'Specify your source of seed?')
                         ->help("Please specify your source of seed?");
                 });
+
 
             $form->radio(
                 'have_adequate_land_for_production',
@@ -413,88 +451,13 @@ class FormSr4ApiController extends AdminController
                     '1' => 'I Accept',
                 ])
                 ->required();
-        }
 
-        if (Admin::user()->isRole('admin')) {
-            $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
-            $form->text('address', __('Address'))->readonly();
-            $form->text('premises_location', __('Premises location'))->readonly();
+                
+        return response()->json([
+            'success' => true,
+            'message' => 'SR4 form submit success!'
+        ], 200);
 
-            $form->text('type', __('Applicant type'))->readonly();
-
-            $form->divider();
-            $form->radio('status', __('Status'))
-                ->options([
-                    '1' => 'Pending',
-                    '2' => 'Under inspection',
-                ])
-                ->required()
-                ->when('2', function (Form $form) {
-                    $items = Administrator::all();
-                    $_items = [];
-                    foreach ($items as $key => $item) {
-                        if (!Utils::has_role($item, "inspector")) {
-                            continue;
-                        }
-                        $_items[$item->id] = $item->name . " - " . $item->id;
-                    }
-                    $form->select('inspector', __('Inspector'))
-                        ->options($_items)
-                        ->help('Please select inspector')
-                        ->rules('required');
-                });
-        }
-
-
-        if (Admin::user()->isRole('inspector')) {
-            $form->text('type', __('Applicant type'))->readonly();
-            $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
-            $form->text('address', __('Address'))->readonly();
-            $form->text('company_initials', __('Company initials'))->readonly();
-            $form->text('premises_location', __('Premises location'))->readonly();
-
-            $form->radio('status', __('Status'))
-                ->options([
-                    '3' => 'Halted',
-                    '4' => 'Rejected',
-                    '5' => 'Accepted',
-                ])
-                ->required()
-                ->when('2', function (Form $form) {
-                    $items = Administrator::all();
-                    $_items = [];
-                    foreach ($items as $key => $item) {
-                        if (!Utils::has_role($item, "inspector")) {
-                            continue;
-                        }
-                        $_items[$item->id] = $item->name . " - " . $item->id;
-                    }
-                    $form->select('inspector', __('Inspector'))
-                        ->options($_items)
-                        ->readonly()
-                        ->help('Please select inspector')
-                        ->rules('required');
-                })
-                ->when('in', [3, 4], function (Form $form) {
-                    $form->textarea('status_comment', 'Inspector\'s comment (Remarks)')
-                        ->help("Please specify with a comment");
-                })
-                ->when('in', [5, 6], function (Form $form) {
-
-                    $today = Carbon::now();
-                    $_today = Carbon::now();
-                   /*  echo ($today);
-                    echo "<br>";
-                    $_today = $today->addYear();*/
-
- 
-
-                    $form->text('seed_board_registration_number', __('Enter seed board registration number'))
-                        ->help("Please Enter seed board registration number")
-                        ->default(rand(10000, 10000));
-                    $form->date('valid_from', 'Valid from date?')->readonly();
-                    $form->date('valid_until', 'Valid until date?')->readonly();
-                });
         }
 
 
