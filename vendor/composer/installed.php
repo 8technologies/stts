@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '9ab4b8ba5ca51bbaf00fb009a313b0a03514f5ce',
+        'reference' => 'beda3f8056d604ea8d6c8bedc3913a4ea9fecfe3',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -526,7 +526,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '9ab4b8ba5ca51bbaf00fb009a313b0a03514f5ce',
+            'reference' => 'beda3f8056d604ea8d6c8bedc3913a4ea9fecfe3',
             'dev_requirement' => false,
         ),
         'laravel/legacy-factories' => array(
@@ -854,12 +854,12 @@
             'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(
-            'pretty_version' => 'v2.6.1',
-            'version' => '2.6.1.0',
+            'pretty_version' => 'v2.6.2',
+            'version' => '2.6.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../paragonie/constant_time_encoding',
             'aliases' => array(),
-            'reference' => 'd6e1d5d0fb2458dfdd7018ec2f74be120353a3b9',
+            'reference' => 'c1b1d82d109846ba58a4664dc5480c69ad2fc097',
             'dev_requirement' => false,
         ),
         'paragonie/random_compat' => array(
