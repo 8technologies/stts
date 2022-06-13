@@ -35,7 +35,7 @@ Route::delete("user/{id}", [UserAPIController::class, "destroy"]);
 Route::get("user/search/{name}", [UserAPIController::class, "where"]);
 
 // sr4 forms
-Route::post("form-sr4s/{type}", [FormSr4ApiController::class, "sr4-create"]);
+Route::post("form-sr4s/new/", [FormSr4ApiController::class, "sr4-create"]);
 // Route::post("form-sr6s/{type}", [FormSr6ApiController::class, "sr4-create"]);
 
 
