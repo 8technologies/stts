@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 31, 2022 at 08:09 AM
+-- Generation Time: Jun 13, 2022 at 03:21 AM
 -- Server version: 10.3.34-MariaDB-log-cll-lve
 -- PHP Version: 7.4.29
 
@@ -45,41 +45,41 @@ CREATE TABLE `admin_menu` (
 --
 
 INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `permission`, `created_at`, `updated_at`) VALUES
-(1, 0, 1, 'Dashboard', 'fa-bar-chart', '/', NULL, NULL, '2022-02-23 06:03:17'),
-(2, 0, 30, 'Admin', 'fa-tasks', '', NULL, NULL, '2022-02-23 06:02:31'),
-(3, 2, 31, 'Users', 'fa-users', 'auth/users', NULL, NULL, '2022-02-23 06:02:31'),
-(4, 2, 32, 'Roles', 'fa-user', 'auth/roles', NULL, NULL, '2022-02-23 06:02:31'),
-(5, 2, 33, 'Permission', 'fa-ban', 'auth/permissions', NULL, NULL, '2022-02-23 06:02:31'),
-(6, 2, 34, 'Menu', 'fa-bars', 'auth/menu', NULL, NULL, '2022-02-23 06:02:31'),
-(7, 2, 35, 'Operation log', 'fa-history', 'auth/logs', NULL, NULL, '2022-02-23 06:02:31'),
-(8, 0, 29, 'Media manager', 'fa-file', 'media', NULL, '2021-10-20 12:28:29', '2022-02-23 06:02:31'),
-(10, 0, 28, 'My Profile', 'fa-user-md', 'auth/setting', NULL, '2021-10-20 13:29:13', '2022-02-23 06:02:31'),
-(12, 0, 3, 'Application Forms', 'fa-wpforms', NULL, NULL, '2021-10-20 17:41:29', '2022-02-23 06:03:17'),
-(13, 12, 4, 'SR4 - Seed Merchant/Producer/Stockist/Importer/Exporter/Processor', 'fa-wpforms', 'form-sr4s', NULL, '2021-10-20 17:42:02', '2022-02-23 06:03:17'),
-(15, 12, 5, 'SR6 - Seed grower/Company/Breeders', 'fa-wpforms', 'form-sr6s', NULL, '2021-10-22 03:47:14', '2022-05-17 12:59:39'),
-(16, 12, 6, 'QDS - Producer', 'fa-wpforms', 'form-qds', NULL, '2021-10-25 05:25:04', '2022-02-23 06:03:17'),
-(18, 0, 25, 'System Configuration', 'fa-cogs', 'configuration', NULL, '2021-10-27 04:22:36', '2022-02-23 06:02:31'),
-(19, 18, 26, 'Crops', 'fa-yelp', 'crops', NULL, '2021-10-27 04:24:09', '2022-02-23 06:02:31'),
-(25, 0, 7, 'Quality Assurance', 'fa-check', 'import-export-permits', NULL, '2021-10-27 08:48:57', '2022-02-23 06:03:17'),
-(26, 25, 8, 'Import permit', 'fa-wpforms', 'import-export-permits', NULL, '2021-10-27 08:50:08', '2022-02-23 06:03:17'),
-(27, 25, 10, 'Planting returns - Company', 'fa-archive', 'planting-returns', NULL, '2021-10-27 08:51:32', '2022-02-24 05:06:14'),
-(28, 25, 14, 'Seed lab', 'fa-adjust', 'seed-labs', NULL, '2021-10-27 08:52:30', '2022-02-23 06:02:31'),
-(29, 25, 15, 'Seed labels', 'fa-credit-card', 'seed-labels', NULL, '2021-10-27 08:53:14', '2022-02-23 06:02:31'),
-(30, 25, 9, 'Export permit', 'fa-wpforms', 'import-export-permits-2', NULL, '2020-12-31 21:06:05', '2022-02-23 06:03:17'),
-(31, 25, 12, 'SR10 - Plant inspection', 'fa-wpforms', 'form-sr10s', NULL, '2021-11-01 12:14:10', '2022-02-23 06:02:31'),
-(32, 25, 13, 'QDS - Crop declarations', 'fa-wpforms', 'form-crop-declarations', NULL, '2021-11-04 09:24:52', '2022-02-23 06:02:31'),
-(33, 0, 16, 'Seed stock', 'fa-archive', '#', NULL, '2021-11-05 10:45:53', '2022-02-23 06:02:31'),
-(34, 33, 17, 'Stock examination', 'fa-wpforms', 'form-stock-examination-requests', NULL, '2021-11-05 10:47:45', '2022-02-23 06:02:31'),
-(35, 33, 18, 'My stock', 'fa-archive', 'stock-records', NULL, '2021-11-05 10:49:04', '2022-02-23 06:02:31'),
-(36, 18, 27, 'Seed label packages', 'fa-money', 'seed-label-packages', NULL, '2021-11-15 05:54:18', '2022-02-23 06:02:31'),
-(37, 33, 19, 'Marketable seed', 'fa-money', 'marketable-seeds', NULL, '2021-11-16 19:10:17', '2022-02-23 06:02:31'),
-(38, 0, 20, 'Market place', 'fa-shopping-cart', 'products', NULL, '2021-11-22 03:42:16', '2022-02-23 06:02:31'),
-(39, 38, 22, 'Orders', 'fa-list-alt', 'orders', NULL, '2021-11-22 09:07:06', '2022-02-23 06:02:31'),
-(40, 38, 21, 'Market place', 'fa-shopping-basket', 'products', NULL, '2021-11-22 09:07:53', '2022-02-23 06:02:31'),
-(41, 38, 23, 'Pre-orders', 'fa-opencart', 'pre-orders', NULL, '2021-11-24 02:42:28', '2022-02-23 06:02:31'),
-(42, 38, 24, 'Quotations', 'fa-wpforms', 'quotations', NULL, '2021-11-24 04:35:22', '2022-02-23 06:02:31'),
-(43, 0, 2, 'Track and trace', 'fa-anchor', 'track-and-trace', NULL, '2021-11-24 08:54:28', '2022-02-23 06:03:17'),
-(44, 25, 11, 'Planting returns - Grower', 'fa-users', 'sub-growers', NULL, '2022-02-23 06:02:16', '2022-02-24 05:08:26');
+(1, 0, 1, 'Dashboard', 'fa-bar-chart', '/', NULL, NULL, '2022-02-23 11:03:17'),
+(2, 0, 30, 'Admin', 'fa-tasks', '', NULL, NULL, '2022-02-23 11:02:31'),
+(3, 2, 31, 'Users', 'fa-users', 'auth/users', NULL, NULL, '2022-02-23 11:02:31'),
+(4, 2, 32, 'Roles', 'fa-user', 'auth/roles', NULL, NULL, '2022-02-23 11:02:31'),
+(5, 2, 33, 'Permission', 'fa-ban', 'auth/permissions', NULL, NULL, '2022-02-23 11:02:31'),
+(6, 2, 34, 'Menu', 'fa-bars', 'auth/menu', NULL, NULL, '2022-02-23 11:02:31'),
+(7, 2, 35, 'Operation log', 'fa-history', 'auth/logs', NULL, NULL, '2022-02-23 11:02:31'),
+(8, 0, 29, 'Media manager', 'fa-file', 'media', NULL, '2021-10-20 16:28:29', '2022-02-23 11:02:31'),
+(10, 0, 28, 'My Profile', 'fa-user-md', 'auth/setting', NULL, '2021-10-20 17:29:13', '2022-02-23 11:02:31'),
+(12, 0, 3, 'Application Forms', 'fa-wpforms', NULL, NULL, '2021-10-20 21:41:29', '2022-02-23 11:03:17'),
+(13, 12, 4, 'SR4 - Seed Merchant/Producer/Stockist/Importer/Exporter/Processor', 'fa-wpforms', 'form-sr4s', NULL, '2021-10-20 21:42:02', '2022-02-23 11:03:17'),
+(15, 12, 5, 'SR6 - Seed grower/Company/Breeders', 'fa-wpforms', 'form-sr6s', NULL, '2021-10-22 07:47:14', '2022-05-17 16:59:39'),
+(16, 12, 6, 'QDS - Producer', 'fa-wpforms', 'form-qds', NULL, '2021-10-25 09:25:04', '2022-02-23 11:03:17'),
+(18, 0, 25, 'System Configuration', 'fa-cogs', 'configuration', NULL, '2021-10-27 08:22:36', '2022-02-23 11:02:31'),
+(19, 18, 26, 'Crops', 'fa-yelp', 'crops', NULL, '2021-10-27 08:24:09', '2022-02-23 11:02:31'),
+(25, 0, 7, 'Quality Assurance', 'fa-check', 'import-export-permits', NULL, '2021-10-27 12:48:57', '2022-02-23 11:03:17'),
+(26, 25, 8, 'Import permit', 'fa-wpforms', 'import-export-permits', NULL, '2021-10-27 12:50:08', '2022-02-23 11:03:17'),
+(27, 25, 10, 'Planting returns - Company', 'fa-archive', 'planting-returns', NULL, '2021-10-27 12:51:32', '2022-02-24 10:06:14'),
+(28, 25, 14, 'Seed lab', 'fa-adjust', 'seed-labs', NULL, '2021-10-27 12:52:30', '2022-02-23 11:02:31'),
+(29, 25, 15, 'Seed labels', 'fa-credit-card', 'seed-labels', NULL, '2021-10-27 12:53:14', '2022-02-23 11:02:31'),
+(30, 25, 9, 'Export permit', 'fa-wpforms', 'import-export-permits-2', NULL, '2021-01-01 02:06:05', '2022-02-23 11:03:17'),
+(31, 25, 12, 'SR10 - Plant inspection', 'fa-wpforms', 'form-sr10s', NULL, '2021-11-01 16:14:10', '2022-02-23 11:02:31'),
+(32, 25, 13, 'QDS - Crop declarations', 'fa-wpforms', 'form-crop-declarations', NULL, '2021-11-04 13:24:52', '2022-02-23 11:02:31'),
+(33, 0, 16, 'Seed stock', 'fa-archive', '#', NULL, '2021-11-05 14:45:53', '2022-02-23 11:02:31'),
+(34, 33, 17, 'Stock examination', 'fa-wpforms', 'form-stock-examination-requests', NULL, '2021-11-05 14:47:45', '2022-02-23 11:02:31'),
+(35, 33, 18, 'My stock', 'fa-archive', 'stock-records', NULL, '2021-11-05 14:49:04', '2022-02-23 11:02:31'),
+(36, 18, 27, 'Seed label packages', 'fa-money', 'seed-label-packages', NULL, '2021-11-15 10:54:18', '2022-02-23 11:02:31'),
+(37, 33, 19, 'Marketable seed', 'fa-money', 'marketable-seeds', NULL, '2021-11-17 00:10:17', '2022-02-23 11:02:31'),
+(38, 0, 20, 'Market place', 'fa-shopping-cart', 'products', NULL, '2021-11-22 08:42:16', '2022-02-23 11:02:31'),
+(39, 38, 22, 'Orders', 'fa-list-alt', 'orders', NULL, '2021-11-22 14:07:06', '2022-02-23 11:02:31'),
+(40, 38, 21, 'Market place', 'fa-shopping-basket', 'products', NULL, '2021-11-22 14:07:53', '2022-02-23 11:02:31'),
+(41, 38, 23, 'Pre-orders', 'fa-opencart', 'pre-orders', NULL, '2021-11-24 07:42:28', '2022-02-23 11:02:31'),
+(42, 38, 24, 'Quotations', 'fa-wpforms', 'quotations', NULL, '2021-11-24 09:35:22', '2022-02-23 11:02:31'),
+(43, 0, 2, 'Track and trace', 'fa-anchor', 'track-and-trace', NULL, '2021-11-24 13:54:28', '2022-02-23 11:03:17'),
+(44, 25, 11, 'Planting returns - Grower', 'fa-users', 'sub-growers', NULL, '2022-02-23 11:02:16', '2022-02-24 10:08:26');
 
 -- --------------------------------------------------------
 
@@ -370,8 +370,8 @@ CREATE TABLE `admin_users` (
 --
 
 INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `remember_token`, `created_at`, `updated_at`, `first_name`, `last_name`, `email`) VALUES
-(1, 'super-admin', '$2y$10$H6GEBthh.w0f7hTAiIPGReseT8KJRsPqCE2AtGvvRczN2OGmawONa', 'Administrator', 'ug.jpeg', '780vkcqiIrTIS8El57Yaopi9ti4YfeMcpP27gCyXnY1BVf0zXdrjXlEJehai', '2021-10-20 08:50:00', '2022-03-07 12:31:41', '', '', ''),
-(2, 'admin', '$2y$10$Xfk6Uop0crN0QaSFOfSa.ukJ5/FSiwlNchDf6trFnHoyvw2GjZfKy', 'Muhindo Mubaraka', 'harvesting.png', 'GHxqh8Z96xpYFHzOS72l5nGoHsHHjS6Lr1l7ImXyDEjz2XnpLA13QXp9hMOj', '2021-10-20 13:09:43', '2022-04-29 08:58:25', '', '', ''),
+(1, 'super-admin', '$2y$10$H6GEBthh.w0f7hTAiIPGReseT8KJRsPqCE2AtGvvRczN2OGmawONa', 'Administrator', 'ug.jpeg', 'uQyZD0XhZprh4lXIp6UXjVdt1qMmKEq8KGTi8C5gMmO6i6tn3LOyE2xGKAcP', '2021-10-20 08:50:00', '2022-03-07 12:31:41', '', '', ''),
+(2, 'admin', '$2y$10$Xfk6Uop0crN0QaSFOfSa.ukJ5/FSiwlNchDf6trFnHoyvw2GjZfKy', 'Muhindo Mubaraka', 'harvesting.png', 'EJhYyAm1oTra46vDQKEyDHm5hvVpEbuV6JtZGEjtvAxSy54waAq328nGAzBM', '2021-10-20 13:09:43', '2022-04-29 08:58:25', '', '', ''),
 (3, 'basic-user', '$2y$10$cBUNI05M8a7AUXSEgLr4cudiDW3nFZ2McpfuAQOf4HIfjUF.6Viha', 'Betty Namagembe', 'pic.png', 'dIuKB6PHoNiiH11CkbjHeKfZqrWVhvYV4HOBnPsghZ4OI87CbequsCPbHDgH', '2021-10-20 13:21:48', '2022-03-07 12:13:07', '', '', ''),
 (18, 'john1@gmail.com4998', '$2y$10$KFXQO6uMd4oaapJ6KdJMYOqQ2zWgFUT9S4NaQQE5UeaeK4BxSOTWa', 'John Doe', NULL, 'D4QAHDbt5IwphC254MLFEUlOwNhnFAG6iStX8ptSgp7XfHtjzdUo09GigscJ', '2021-10-24 14:44:31', '2021-11-10 05:21:22', 'John', 'Doe', 'john1@gmail.com4998'),
 (20, 'inspector', '$2y$10$xGq48MAYBM7ThjM/pLqeCu8Q3QOziQtuCQSW0Kz0I2dD8eA4oe0Oe', 'Thembo Akisam', '245863543_931529574441067_8414242258604896822_n.jpg', 'hOOskzK3QGwWdkRGVzR5Rb1Hxd7vlGqCEKP2SBD2mmpeBcqcn7HfbqmZaOdC', '2021-10-25 03:43:02', '2021-10-25 03:43:02', NULL, NULL, NULL),
@@ -452,9 +452,9 @@ INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `reme
 (99, 'muyingoali7@gmail.com', '$2y$10$CzjQTUydgYIMvNaLDlQU2OD/PC76KcNC0jCsMupf4.uoysdJWS0Ui', 'MUYINGO ALI', '1651131972151343519220794481266.jpg', 'OXxCgECnR8MzEGBjlr1cAOQF80yA86ApzOJDjyV1dYjQx2bFKTyROubD2utA', '2022-04-28 11:44:45', '2022-04-28 11:47:29', 'MUYINGO', 'ALI', 'muyingoali7@gmail.com'),
 (100, 'muyingoali8@gmail.com', '$2y$10$Oyu52DbmsVJtdBEAw/kfr.I17Sn/PMY.l6ycF14VVfRIlaCPzj8BC', 'MUYINGO ALI', NULL, 'NPgiazjavutA9IbijS1Pm0QFaJkp0aj36IzhLKEYdXGr0b54hwVgvXwJhxxn', '2022-04-28 16:48:17', '2022-04-28 16:48:17', 'MUYINGO', 'ALI', 'muyingoali8@gmail.com'),
 (101, 'masumugogo@gmail.com', '$2y$10$KtApDilG7uPJiLTr7lVtpuoWOZek2LyryQsNuLPmNzin28AOLJZwm', 'Masumu Gogo', 'RHINO SEEDS LOGO_page-0001 (2).jpg', 'AOpELryk2lcngJh892pvdr3M82eGAGDSq6QR0NUlhtdwZvwBWRDu4biUme26', '2022-04-29 10:27:10', '2022-04-29 10:34:29', 'Masumu', 'Gogo', 'masumugogo@gmail.com'),
-(102, 'naroholdings@gmail.com', '$2y$10$klWjRIfSEyqk6bR32tKAJuekLJNhCar0AyuxVqR7SqpWr6tlxabyi', 'NARO HOLDINGS LIMITED', 'logo naro.png', 'tISMsY9ysXJN9Y9z5C4n1HrXZknfMmCwwx77SIwXc7F4iF7fKRabU0eAMt55', '2022-05-04 10:46:53', '2022-05-24 12:15:31', 'NARO HOLDINGS LIMITED', 'NARO HOLDINGS LIMITED', 'naroholdings@gmail.com'),
+(102, 'naroholdings@gmail.com', '$2y$10$klWjRIfSEyqk6bR32tKAJuekLJNhCar0AyuxVqR7SqpWr6tlxabyi', 'NARO HOLDINGS LIMITED', 'logo naro.png', 'LXnBDUb9rfFTZktAT4agoT05oAOEeO6sCxeMiy9424ChRkjIM3PV8loK561r', '2022-05-04 10:46:53', '2022-05-24 12:15:31', 'NARO HOLDINGS LIMITED', 'NARO HOLDINGS LIMITED', 'naroholdings@gmail.com'),
 (103, 'syova.ug@easeed.com', '$2y$10$w.7lFrHzGhJCzG6EteJZ3.Z6IzVYUvPWBAXO9XiAheTF6/2YCNCZa', 'H.C.V REDDY', 'syova 111.png', 'Ll7dSDCFEYVy33723raAyFQW7JUE9UShilwmUlgoaTZ0N7EuazTFCMssaQsV', '2022-05-09 13:41:15', '2022-05-09 13:44:18', 'H.C.V', 'REDDY', 'syova.ug@easeed.com'),
-(104, 'musa@8technologies.net', '$2y$10$jPW8F7nm/4UIiVql91hfeuc/V.kUEpBzGNTyOUTuDgXJTnRWUcmF.', 'Musa Rahim', '8techacunt.jpg', 'U87k2vicYq0eXfSulrWyZjxRu0gNKYml1Qhv9Q2jDGrizr4coqU7WNFE9nGC', '2022-05-09 15:37:31', '2022-05-09 15:39:28', 'Musa', 'Rahim', 'musa@8technologies.net'),
+(104, 'musa@8technologies.net', '$2y$10$jPW8F7nm/4UIiVql91hfeuc/V.kUEpBzGNTyOUTuDgXJTnRWUcmF.', 'Musa Rahim', '8techacunt.jpg', 'IvltRoIfJSMYgeJ8nf2hGr5QKuVDtVFJwwIrP1SMvxG7GVj93x8zP5aAOK2b', '2022-05-09 15:37:31', '2022-05-09 15:39:28', 'Musa', 'Rahim', 'musa@8technologies.net'),
 (105, 'crownseeds17@gmail.com', '$2y$10$99NGxI46YXJPjeNuHXBxz.LYzKqLMXpLh03h3knKoJxQP2nRKytYC', 'Crown Seeds Ltd', 'Header.png', 'ABKTr9pWnejQwNH91m4Of0xw2RvzOXyzzcAWXkgxzJDeZ2P6Xc3fOE8wZihK', '2022-05-10 10:26:33', '2022-05-16 10:42:33', 'Crown', 'Seeds Ltd', 'crownseeds17@gmail.com'),
 (106, 'Kalks751@gmail.com', '$2y$10$y3LwUctaQlQXEGaHHwbbeeuY25ZqaUw9G04ogxhoRakS/AnXarcwK', 'Kalule Kusain', NULL, 'izrdzY9NuJXo5qs9Ji3qtLXuK0QhvI73KPd1LkdRlMA9xGRMSOfhsfDzAyWV', '2022-05-11 09:41:19', '2022-05-11 09:41:19', 'Kalule', 'Kusain', 'Kalks751@gmail.com'),
 (107, 'klyghfffd@gmail.com', '$2y$10$zdokDmcFCzB/oOo9TpDUOOOpPm87HcRD/unnUUOeDyxEiAhFzgBjm', 'opi iuy', NULL, 'bzAvB9w6dUQ9m1kbrSicUN50v5L6yhLDz4XQflBLQjSfaq07jZwf0idXZPyE', '2022-05-11 13:28:43', '2022-05-11 13:28:43', 'opi', 'iuy', 'klyghfffd@gmail.com'),
@@ -463,7 +463,7 @@ INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `reme
 (110, 'pearlseedltd1@gmail.com', '$2y$10$a8qLC/tO77LZ5VtotqdIDOO7qomadvHhjs75BliOfC2W8FLsifQh.', 'Masagazi Richard', 'MASAGAZI CLIFF RICHARD.jpg', 'EXwiY1tb1Kzfy88Z7P8ErGmMHnLYEotp1jHs3aMe1vC5wZSx2YFJODOzShZG', '2022-05-24 14:13:28', '2022-05-24 14:40:39', 'Masagazi', 'Richard', 'pearlseedltd1@gmail.com'),
 (111, 'michaeledema100@gmail.com', '$2y$10$P3.BtkpRS8/cXKvQ.NbnFe87hNHKWks8YIMyu90X2onBTjCtDX91m', 'Edema Michael', NULL, '4g4jZF81TfNV7f7aHidOoUtnCQPpTjjwqK7txdehLSpwkt8aAIlzc8c46NGH', '2022-05-25 11:55:36', '2022-05-25 11:55:36', 'Edema', 'Michael', 'michaeledema100@gmail.com'),
 (112, 'michaeledema20@yahoo.com', '$2y$10$OYrbF7DR5.XSm1WhqQlu6e.A2YWhpL6iYDn30GXL1aEpsXyloX6Aq', 'Edema Michael', NULL, 'X0yJ3sedPKbiptovuZmkZB4w2VHTtjYL5ElL4EXVXDJjGfjFmk3b0yqlbBQj', '2022-05-25 13:14:05', '2022-05-25 13:14:05', 'Edema', 'Michael', 'michaeledema20@yahoo.com'),
-(113, 'equatorseeds@yahoo.com', '$2y$10$rG4a2Nkt/xGRGuxbj8a0v.5AGZNM7S5tiDOPl/K6EbkNxKCOO5JRm', 'TONNY OKELLO', NULL, 'yeUfS8iY8bhqXXpbUWJP18u1S1RaEzN93r6sBLSRnUjovbxJVImrjEzl3DQd', '2022-05-30 12:58:41', '2022-05-30 12:58:41', 'TONNY', 'OKELLO', 'equatorseeds@yahoo.com'),
+(113, 'equatorseeds@yahoo.com', '$2y$10$Sl3J5EVawnUXuKOdF.bWHORWtrDIzlM.wCAHTWVKIPanfCzurU12S', 'EQUATOR SEEDS LIMITED', 'ESL LOGO.jpg', 'yeUfS8iY8bhqXXpbUWJP18u1S1RaEzN93r6sBLSRnUjovbxJVImrjEzl3DQd', '2022-05-30 12:58:41', '2022-06-08 12:53:05', 'TONNY', 'OKELLO', 'equatorseeds@yahoo.com'),
 (114, 'unitedseed.ug@gmail.com', '$2y$10$VBA./yA3bOgXE4Gw.U4W/.b6FUCQiC6.cNHri3Y2ZhiCokhgB2Xd.', 'UNITED SEEDS (U) LTD', 'United seeds logo.jpg', 'J0NyNO6xixvCcQMCN1bO4mO7cHml00rZbkDDHhteK43NzW2PH4q5wGntqZqF', '2022-05-31 11:35:02', '2022-05-31 12:01:19', 'OKELLO', 'HABERT', 'unitedseed.ug@gmail.com');
 
 -- --------------------------------------------------------
