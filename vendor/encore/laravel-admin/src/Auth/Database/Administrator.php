@@ -20,12 +20,12 @@ use Illuminate\Notifications\Notifiable;
  */
 class Administrator extends Model implements AuthenticatableContract
 {
-    use Authenticatable, 
-    HasPermissions, 
-    DefaultDatetimeFormat,
-    HasFactory, 
-    Notifiable, 
-    HasApiTokens;
+    use Authenticatable;
+    use HasPermissions;
+    use DefaultDatetimeFormat;
+    use HasFactory;
+    use Notifiable;
+    use HasApiTokens;
 
     protected $fillable = ['username', 'password', 'name', 'avatar'];
 

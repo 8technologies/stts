@@ -105,7 +105,7 @@ class PassportController extends Controller
 
         $validate_data = [
             'email' => 'required|email',
-            'password' => 'required|min:3',
+            'password' => 'required|min:3'
         ];
 
         $validator = Validator::make($input, $validate_data);

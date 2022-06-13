@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PrintController2;
 use App\Http\Middleware\Authenticate;
+use Illuminate\Support\Facades\Auth;
+
 
 Route::get('/', [MainController::class, 'index']);
 Route::get('/test', function(){
@@ -36,14 +38,4 @@ Route::match(['get', 'post'], '/print', [PrintController2::class, 'index']);
 
 //always the last.
 Route::match(['get', 'post'], '/{id}', [MainController::class, 'slugSwitcher']);
-
-
-
-
-
-
-Route::get('/wwwww', function ($postId, $commentId) {
-    dd(auth()->user);
-});
-
 
