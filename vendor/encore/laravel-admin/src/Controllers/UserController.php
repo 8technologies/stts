@@ -25,14 +25,8 @@ class UserController extends AdminController
     protected function grid()
     {
         $userModel = config('admin.database.users_model');
+
         $grid = new Grid(new $userModel());
-
-        $grid->filter(function ($filter) {
-
-            $filter->like('name', "Name");
-            
-        });
-
 
         $grid->column('id', 'ID')->sortable();
         $grid->column('username', trans('admin.username'));
