@@ -27,7 +27,7 @@ class Administrator extends Model implements AuthenticatableContract
     use Notifiable;
     use HasApiTokens;
 
-    protected $fillable = ['username', 'password', 'name', 'avatar'];
+    protected $fillable = ['username', 'first_name', 'last_name', 'email', 'name', 'remember_token', 'password', 'avatar'];
 
     /**
      * Create a new Eloquent model instance.

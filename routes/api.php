@@ -12,42 +12,41 @@ use App\Http\Controllers\Api\UserAPIController;
 use App\Http\Controllers\Api\FormSr4ApiController;
 use Illuminate\Routing\Router;
 // use App\Http\Controllers\Api\FormSr6ApiController;
+use App\Http\Middleware\EnsureTokenIsValid;
+
 
 // Authentication APIs
 // Route::post('/register', [AuthController::class, 'register']);
 // Route::post('/login', [AuthController::class, 'login']);
 // Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::post('register', [PassportController::class, 'register']);
-Route::post('login', [PassportController::class, 'login']);
+// Route::post('register', [PassportController::class, 'register']);
+// Route::post('login', [PassportController::class, 'login']);
+    // Route::post('user-detail', [PassportController::class, 'userDetail']);
+    // Route::post('logout', [PassportController::class, 'logout']);
 
-// // put all api protected routes here
+// All api protected routes here
 Route::middleware('auth:api')->group(function () {
-    Route::post('user-detail', [PassportController::class, 'userDetail']);
-    Route::post('logout', [PassportController::class, 'logout']);
+    Route::post("/logout", [PassportController::class, "logout"])->name('logout.api');
 });
 
 
-// User workflow
-Route::get("user/list", [UserAPIController::class, "index"]);
-Route::get("user/{id}", [UserAPIController::class, "show"]);
-Route::put("user/{id}", [UserAPIController::class, "update"]);
-Route::delete("user/{id}", [UserAPIController::class, "destroy"]);
-Route::get("user/search/{name}", [UserAPIController::class, "where"]);
+// User workflow  https://www.toptal.com/laravel/passport-tutorial-auth-user-access
+Route::group(['middleware' => ['cors', 'json.response']], function () {
+    // public routes
+    Route::post("/register", [PassportController::class, "register"])->name('register.api');
+    Route::post("/login", [PassportController::class, "login"])->name('login.api');
 
+    Route::get("user/list", [UserAPIController::class, "index"]);
+    Route::put("user/{id}", [UserAPIController::class, "update"]);
+    Route::delete("user/{id}", [UserAPIController::class, "destroy"]);
+    Route::get("user/search/{name}", [UserAPIController::class, "where"]);
 
-// sr4 forms
-Route::post("forms/sr4/new/", [FormSr4ApiController::class, "form"]);
-// Route::post("form-sr6s/{type}", [FormSr6ApiController::class, "form"]);
-
-
-
-
-
-
-
-
-
+    // sr4 forms
+    Route::post("forms/sr4/new/", [FormSr4ApiController::class, "form"])->middleware('auth');
+    // Route::post("form-sr6s/{type}", [FormSr6ApiController::class, "form"]);
+});
+    Route::get("user/{id}", [UserAPIController::class, "show"]);
 
 
 // Data access APIs

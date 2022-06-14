@@ -13,6 +13,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Auth;
 
+
 class FormSr4Controller extends AdminController
 {
     /**
@@ -195,7 +196,7 @@ class FormSr4Controller extends AdminController
             }
             return $item;
         });
-        $show->field('source_of_seed', __('Souce of seed'))->as(function ($userId) {
+        $show->field('souce_of_seed', __('Souce of seed'))->as(function ($userId) {
             $u = Administrator::find($userId);
             if (!$u)
                 return $userId;
@@ -417,14 +418,14 @@ class FormSr4Controller extends AdminController
             }
             $_items['Other'] = "Other";
             $form->select(
-                'source_of_seed',
-                __('What is your source of seed?')
+                'souce_of_seed',
+                __('What is your souce of seed?')
             )->options($_items)
                 ->help('Select "Other" if your supplier is not found on the list.')
                 ->required()
                 ->when('Other', function (Form $form) {
-                    $form->text('source_of_seed_other', 'Specify your source of seed?')
-                        ->help("Please specify your source of seed?");
+                    $form->text('souce_of_seed_other', 'Specify your souce of seed?')
+                        ->help("Please specify your souce of seed?");
                 });
 
 

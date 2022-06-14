@@ -11,7 +11,9 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Auth;
+use Auth;
+
 
 class FormSr4ApiController extends AdminController
 {
@@ -30,7 +32,6 @@ class FormSr4ApiController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new FormSr4());
-
 
         /*s = FormSr4::all()->first();
         $s->status_comment .= rand(100,1000000);
@@ -56,19 +57,6 @@ class FormSr4ApiController extends AdminController
                     $actions->disableDelete();
                 }
             });
-        } else if (Admin::user()->isRole('inspector')) {
-            $grid->model()->where('inspector', '=', Admin::user()->id);
-            $grid->disableCreateButton();
-
-            $grid->actions(function ($actions) {
-                $status = ((int)(($actions->row['status'])));
-                $actions->disableDelete();
-                // if (
-                //     $status != 2
-                // ) {
-                //     $actions->disableEdit();
-                // }
-            });
         } else {
             $grid->disableCreateButton();
         }
@@ -86,7 +74,7 @@ class FormSr4ApiController extends AdminController
         $grid->column('valid_from', __('Starts'))->display(function ($item) {
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
-        $grid->column('valid_until', __('Exipires'))->display(function ($item) {
+        $grid->column('valid_until', __('Expires'))->display(function ($item) {
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
 
@@ -100,15 +88,15 @@ class FormSr4ApiController extends AdminController
         $grid->column('address', __('Address'))->sortable();
 
 
-        $grid->column('inspector', __('Inspector'))->display(function ($userId) {
-            if (Admin::user()->isRole('basic-user')) {
-                return "-";
-            }
-            $u = Administrator::find($userId);
-            if (!$u)
-                return "Not assigned";
-            return $u->name;
-        })->sortable();
+        // $grid->column('inspector', __('Inspector'))->display(function ($userId) {
+        //     if (Admin::user()->isRole('basic-user')) {
+        //         return "-";
+        //     }
+        //     $u = Administrator::find($userId);
+        //     if (!$u)
+        //         return "Not assigned";
+        //     return $u->name;
+        // })->sortable();
 
         return $grid;
     }
@@ -195,7 +183,7 @@ class FormSr4ApiController extends AdminController
             }
             return $item;
         });
-        $show->field('source_of_seed', __('Souce of seed'))->as(function ($userId) {
+        $show->field('souce_of_seed', __('Souce of seed'))->as(function ($userId) {
             $u = Administrator::find($userId);
             if (!$u)
                 return $userId;
@@ -253,7 +241,6 @@ class FormSr4ApiController extends AdminController
                 return redirect(admin_url('form-sr6s'));
             }
         }
-
 
         $form->disableCreatingCheck();
         $form->tools(function (Form\Tools $tools) {
@@ -402,14 +389,14 @@ class FormSr4ApiController extends AdminController
             }
             $_items['Other'] = "Other";
             $form->select(
-                'source_of_seed',
-                __('What is your source of seed?')
+                'souce_of_seed',
+                __('What is your souce of seed?')
             )->options($_items)
                 ->help('Select "Other" if your supplier is not found on the list.')
                 ->required()
                 ->when('Other', function (Form $form) {
-                    $form->text('source_of_seed_other', 'Specify your source of seed?')
-                        ->help("Please specify your source of seed?");
+                    $form->text('souce_of_seed_other', 'Specify your souce of seed?')
+                        ->help("Please specify your souce of seed?");
                 });
 
 
