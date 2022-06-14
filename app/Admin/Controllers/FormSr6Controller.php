@@ -89,7 +89,7 @@ class FormSr6Controller extends AdminController
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
         
-        $grid->column('valid_until', __('Exipires'))->display(function ($item) {
+        $grid->column('valid_until', __('Expires'))->display(function ($item) {
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
 
@@ -105,15 +105,15 @@ class FormSr6Controller extends AdminController
         $grid->column('type', __('Category'))->sortable();
 
 
-        $grid->column('inspector', __('Inspector'))->display(function ($userId) {
-            if (Admin::user()->isRole('basic-user')) {
-                return "-";
-            }
-            $u = Administrator::find($userId);
-            if (!$u)
-                return "Not assigned";
-            return $u->name;
-        })->sortable();
+        // $grid->column('inspector', __('Inspector'))->display(function ($userId) {
+        //     if (Admin::user()->isRole('basic-user')) {
+        //         return "-";
+        //     }
+        //     $u = Administrator::find($userId);
+        //     if (!$u)
+        //         return "Not assigned";
+        //     return $u->name;
+        // })->sortable();
 
         return $grid;
     }

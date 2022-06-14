@@ -28,12 +28,13 @@ class Links
     </a>
 </li> -->
 
-
 <li class="dropdown notifications-menu">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 <i class="fa fa-envelope-o"></i>
       <span class="label label-success">4</span>
 </a>
+
+
 <ul class="dropdown-menu">
   <li class="header">You have 4 new Messages</li>
   <li>
