@@ -30,7 +30,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post("/logout", [PassportController::class, "logout"])->name('logout.api');
 });
 
-Route::get("user/list", [UserAPIController::class, "index"]);
 
 // User workflow  https://www.toptal.com/laravel/passport-tutorial-auth-user-access
 Route::group(['middleware' => ['cors', 'json.response']], function () {
@@ -38,6 +37,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post("/register", [PassportController::class, "register"])->name('register.api');
     Route::post("/login", [PassportController::class, "login"])->name('login.api');
 
+    Route::get("user/list", [UserAPIController::class, "index"]);
+    Route::get("user/{id}", [UserAPIController::class, "show"]);
     Route::put("user/{id}", [UserAPIController::class, "update"]);
     Route::delete("user/{id}", [UserAPIController::class, "destroy"]);
     Route::get("user/search/{name}", [UserAPIController::class, "where"]);
@@ -51,7 +52,6 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     // sr10 forms
     Route::post("forms/sr10/new/", [FormSr10ApiController::class, "form"])->middleware('auth');
 });
-    Route::get("user/{id}", [UserAPIController::class, "show"]);
 
 
 // Data access APIs
