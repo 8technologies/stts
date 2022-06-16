@@ -1,0 +1,35 @@
+php artisan make:component Alert --inline
+
+php artisan migrate
+
+php artisan make:migration create_form_sr4s_table
+php artisan make:migration create_form_sr6s_table
+php artisan make:migration create_form_qdss_table
+php artisan make:migration create_form_test1s_table
+php artisan make:migration create_form_test2s_table
+php artisan make:migration create_crops_table
+php artisan make:migration create_crop_varieties_table
+php artisan make:migration create_import_export_permits_has_crops_table
+
+php artisan make:migration create_import_export_permits_table
+
+Encore\Admin\Auth\Database\Administrator::class,
+php artisan admin:make FormSr4Controller --model=App\FormSr4
+
+php artisan admin:controller --model=App\FormSr4
+php artisan admin:make FormSr4Controller --model=App\FormSr4
+
+php artisan admin:make FormSr4Controller --model=App\\Models\\FormSr4
+php artisan admin:make FormSr6Controller --model=App\\Models\\FormSr6
+php artisan admin:make FormQdsController --model=App\\Models\\FormQds
+php artisan admin:make Test1Controller --model=App\\Models\\Test1
+php artisan admin:make FormSr6Controller --model=App\\Models\\FormSr6
+php artisan admin:make ImportExportPermitController --model=App\\Models\\ImportExportPermit
+
+
+php artisan make:model FormSr4
+php artisan make:model FormSr6
+php artisan make:model FormQds
+php artisan make:model CropVariety
+php artisan make:model ImportExportPermit
+php artisan make:model ImportExportPermitsHasCrops
