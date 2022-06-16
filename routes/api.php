@@ -43,8 +43,13 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::get("user/search/{name}", [UserAPIController::class, "where"]);
 
     // sr4 forms
-    Route::post("forms/sr4/new/", [FormSr4ApiController::class, "form"])->middleware('auth');
-    // Route::post("form-sr6s/{type}", [FormSr6ApiController::class, "form"]);
+    Route::post("forms/sr4/new/", [FormSr4piController::class, "form"])->middleware('auth');
+    // sr6 forms
+    Route::post("forms/sr6/new/", [FormSr6ApiController::class, "form"])->middleware('auth');
+    // QDS forms
+    Route::post("forms/qds/new/", [FormQDSApiController::class, "form"])->middleware('auth');
+    // sr10 forms
+    Route::post("forms/sr10/new/", [FormSr10ApiController::class, "form"])->middleware('auth');
 });
     Route::get("user/{id}", [UserAPIController::class, "show"]);
 
