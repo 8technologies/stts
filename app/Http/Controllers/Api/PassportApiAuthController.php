@@ -11,9 +11,11 @@ use Laravel\Passport\TokenRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+// use Auth;
 
 
-class PassportController extends Controller
+class PassportApiAuthController extends Controller
 {
     /**
      * Register user.
@@ -87,12 +89,20 @@ class PassportController extends Controller
      *
      * @return json
      */
-    public function userDetail()
+    public function my_details()
     {
+        if(auth()->user()){
+            return response()->json([
+                'success' => true,
+                'message' => 'Data fetched successfully.',
+                'data' => Auth::user()
+            ], 200);
+        }
+
         return response()->json([
-            'success' => true,
-            'message' => 'Data fetched successfully.',
-            'data' => auth()->user()
+            'success' => false,
+            'message' => 'Data fetch failed.',
+            'data' => Auth::user()
         ], 200);
     }
 

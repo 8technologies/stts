@@ -559,8 +559,8 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         ),
         'League\\Uri\\' => 
         array (
-            0 => __DIR__ . '/..' . '/league/uri/src',
-            1 => __DIR__ . '/..' . '/league/uri-interfaces/src',
+            0 => __DIR__ . '/..' . '/league/uri-interfaces/src',
+            1 => __DIR__ . '/..' . '/league/uri/src',
         ),
         'League\\OAuth2\\Server\\' => 
         array (
@@ -878,7 +878,7 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Api\\FormQDSApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/FormQDSApiController.php',
         'App\\Http\\Controllers\\Api\\FormSr4ApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/FormSr4ApiController.php',
-        'App\\Http\\Controllers\\Api\\PassportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PassportController.php',
+        'App\\Http\\Controllers\\Api\\PassportApiAuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PassportApiAuthController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\Dashboard' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard.php',
         'App\\Http\\Controllers\\MainController' => __DIR__ . '/../..' . '/app/Http/Controllers/MainController.php',

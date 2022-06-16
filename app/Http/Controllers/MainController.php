@@ -18,13 +18,10 @@ use App\Models\SubGrower;
 use Excel;
 
 
-
 class MainController extends Controller
 {
     public function import()
     {
-
- 
         $array = Excel::toArray([], $file);
         if (isset($array[0]))
             $i = 0;

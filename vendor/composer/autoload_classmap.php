@@ -69,7 +69,7 @@ return array(
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Api\\FormQDSApiController' => $baseDir . '/app/Http/Controllers/Api/FormQDSApiController.php',
     'App\\Http\\Controllers\\Api\\FormSr4ApiController' => $baseDir . '/app/Http/Controllers/Api/FormSr4ApiController.php',
-    'App\\Http\\Controllers\\Api\\PassportController' => $baseDir . '/app/Http/Controllers/Api/PassportController.php',
+    'App\\Http\\Controllers\\Api\\PassportApiAuthController' => $baseDir . '/app/Http/Controllers/Api/PassportApiAuthController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\Dashboard' => $baseDir . '/app/Http/Controllers/Dashboard.php',
     'App\\Http\\Controllers\\MainController' => $baseDir . '/app/Http/Controllers/MainController.php',
