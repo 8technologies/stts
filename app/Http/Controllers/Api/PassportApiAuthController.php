@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 // use Auth;
 
 
-class PassportApiAuthController extends Controller
+class PassportApiAuthApiController extends Controller
 {
     /**
      * Register user.
@@ -38,8 +38,33 @@ class PassportApiAuthController extends Controller
         $request['password']=Hash::make($request['password']);
         $request['remember_token'] = Str::random(10);
         $user = Administrator::create($request->toArray());
-        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+        $token = $request->user()->createToken($request->token_name);
         $response = ['token' => $token];
+
+        
+        // $user = new Administrator();
+        $user->first_name = $request->input("first_name");
+        $user->name = $request->input("first_name") . " " . $request->input("last_name");
+        $user->last_name = $request->input("last_name");
+        $user->username = $request->input("username");
+        $user->email = $request->input("username");
+        $user->password = Hash::make($request->input("password"));
+
+        if ($user->save()) {
+            DB::table('admin_role_users')->insert([
+                'role_id' => 3,
+                'user_id' => $user->id
+            ]);
+        } else {
+            $errors['username'] = "Failed to created your account. Please try again.";
+            return redirect('register')
+                ->withErrors($errors)
+                ->withInput();
+            die();
+        }
+
+
+
 
         return response()->json([
             'success' => true,
