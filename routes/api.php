@@ -26,15 +26,16 @@ use App\Http\Middleware\EnsureTokenIsValid;
     // Route::post('user-detail', [SanctumAuthApiController::class, 'userDetail']);
     // Route::post('logout', [SanctumAuthApiController::class, 'logout']);
 
-// All API protected routes here
-Route::middleware('auth:api')->group(function () {
-    Route::post("/logout", [SanctumAuthApiController::class, "logout"])->name('logout.api');
-});
+// // All API protected routes here
+// Route::middleware('auth:api')->group(function () {
+//     Route::post("/logout", [SanctumAuthApiController::class, "logout"])->name('logout.api');
+// });
 
 
 // User workflow  https://www.toptal.com/laravel/passport-tutorial-auth-user-access
 Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::get("user/list", [UserAPIController::class, "index"]);
+    Route::get("user/{id}", [UserAPIController::class, "show"]);
     Route::put("user/{id}", [UserAPIController::class, "update"]);
     Route::delete("user/{id}", [UserAPIController::class, "destroy"]);
     Route::get("user/search/{name}", [UserAPIController::class, "where"]);
@@ -48,7 +49,6 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     // sr10 forms
     Route::post("forms/sr10/new/", [FormSr10ApiController::class, "form"])->middleware('auth');
 });
-    Route::get("user/{id}", [UserAPIController::class, "show"]);
 
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post("/register", [SanctumAuthApiController::class, "register"])->name('register.api');
