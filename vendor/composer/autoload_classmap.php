@@ -1720,6 +1720,7 @@ return array(
     'Encore\\Admin\\Admin' => $vendorDir . '/encore/laravel-admin/src/Admin.php',
     'Encore\\Admin\\AdminServiceProvider' => $vendorDir . '/encore/laravel-admin/src/AdminServiceProvider.php',
     'Encore\\Admin\\Auth\\Database\\AdminTablesSeeder' => $vendorDir . '/encore/laravel-admin/src/Auth/Database/AdminTablesSeeder.php',
+    'Encore\\Admin\\Auth\\Database\\Administrator' => $vendorDir . '/encore/laravel-admin/src/Auth/Database/Administrator.php',
     'Encore\\Admin\\Auth\\Database\\HasPermissions' => $vendorDir . '/encore/laravel-admin/src/Auth/Database/HasPermissions.php',
     'Encore\\Admin\\Auth\\Database\\Menu' => $vendorDir . '/encore/laravel-admin/src/Auth/Database/Menu.php',
     'Encore\\Admin\\Auth\\Database\\OperationLog' => $vendorDir . '/encore/laravel-admin/src/Auth/Database/OperationLog.php',
