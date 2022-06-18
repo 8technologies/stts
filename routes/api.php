@@ -7,8 +7,9 @@ use App\Models\SeedLabelPackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\PassportApiAuthController;
 use App\Http\Controllers\Api\UserAPIController;
+// use App\Http\Controllers\Api\PassportApiAuthController;
+use App\Http\Controllers\Api\SanctumAuthApiController;
 use App\Http\Controllers\Api\FormSr4ApiController;
 use Illuminate\Routing\Router;
 // use App\Http\Controllers\Api\FormSr6ApiController;
@@ -20,25 +21,21 @@ use App\Http\Middleware\EnsureTokenIsValid;
 // Route::post('/login', [AuthController::class, 'login']);
 // Route::post('/logout', [AuthController::class, 'logout']);
 
-// Route::post('register', [PassportApiAuthController::class, 'register']);
-// Route::post('login', [PassportApiAuthController::class, 'login']);
-    // Route::post('user-detail', [PassportApiAuthController::class, 'userDetail']);
-    // Route::post('logout', [PassportApiAuthController::class, 'logout']);
+// Route::post('register', [SanctumAuthApiController::class, 'register']);
+// Route::post('login', [SanctumAuthApiController::class, 'login']);
+    // Route::post('user-detail', [SanctumAuthApiController::class, 'userDetail']);
+    // Route::post('logout', [SanctumAuthApiController::class, 'logout']);
 
-// All api protected routes here
-Route::middleware('auth:api')->group(function () {
-    Route::post("/logout", [PassportApiAuthController::class, "logout"])->name('logout.api');
-});
+// // All API protected routes here
+// Route::middleware('auth:api')->group(function () {
+//     Route::post("/logout", [SanctumAuthApiController::class, "logout"])->name('logout.api');
+// });
 
 
 // User workflow  https://www.toptal.com/laravel/passport-tutorial-auth-user-access
 Route::group(['middleware' => ['cors', 'json.response']], function () {
-    // public routes
-    Route::post("/register", [PassportApiAuthController::class, "register"])->name('register.api');
-    Route::post("/login", [PassportApiAuthController::class, "login"])->name('login.api');
-    Route::get("/me", [PassportApiAuthController::class, "my_details"])->name('my_details.api');
-
     Route::get("user/list", [UserAPIController::class, "index"]);
+    Route::get("user/{id}", [UserAPIController::class, "show"]);
     Route::put("user/{id}", [UserAPIController::class, "update"]);
     Route::delete("user/{id}", [UserAPIController::class, "destroy"]);
     Route::get("user/search/{name}", [UserAPIController::class, "where"]);
@@ -52,7 +49,35 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     // sr10 forms
     Route::post("forms/sr10/new/", [FormSr10ApiController::class, "form"])->middleware('auth');
 });
-    Route::get("user/{id}", [UserAPIController::class, "show"]);
+
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post("/register", [SanctumAuthApiController::class, "register"])->name('register.api');
+        Route::post("/login", [SanctumAuthApiController::class, "login"])->name('login.api');
+        Route::get('/profile', function(Request $request) {
+            return auth()->user();
+        });
+        // Route::post('/logout', [SanctumAuthApiController::class, 'logout']);
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Data access APIs

@@ -1,17 +1,19 @@
 <?php
 
+use App\Admin\Controllers\FormSr4Controller;
 use App\Http\Controllers\Dashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PrintController2;
 use App\Http\Middleware\Authenticate;
-use Illuminate\Support\Facades\Auth;
+use app\Mail\FormSubmitted;
+use Illuminate\Support\Facades\Mail;
 
 
 Route::get('/', [MainController::class, 'index']);
-Route::get('/test', function(){
-    return "Simple test";
-});
+Route::get('/test', [MainController::class, function (){
+    dd("Simple test");
+}]);
 Route::get('/about', [MainController::class, 'about']);
 Route::get('/import', [MainController::class, 'import']);
 
@@ -39,3 +41,6 @@ Route::match(['get', 'post'], '/print', [PrintController2::class, 'index']);
 //always the last.
 Route::match(['get', 'post'], '/{id}', [MainController::class, 'slugSwitcher']);
 
+
+// send emails
+Route::get('/notify', [FormSr4Controller::class, 'notify'])->name("notify")->middleware(Authenticate::class);
