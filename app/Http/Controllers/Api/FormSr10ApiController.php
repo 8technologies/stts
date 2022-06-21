@@ -25,6 +25,12 @@ class FormSr10Controller extends AdminController
      */
     protected $title = 'Sr10 - Field inspection'; 
 
+    public function __construct()
+    {
+        // $this->middleware('auth');
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
+
     /**
      * @return Grid
      */

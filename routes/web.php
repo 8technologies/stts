@@ -11,15 +11,15 @@ use Illuminate\Support\Facades\Mail;
 
 
 Route::get('/', [MainController::class, 'index']);
-Route::get('/test', [MainController::class, function (){
-    dd("Simple test");
-}]);
+// Route::get('/test', [MainController::class, function (){
+//     dd("Simple test");
+// }]);
 Route::get('/about', [MainController::class, 'about']);
 Route::get('/import', [MainController::class, 'import']);
 
 Route::get('/register', [MainController::class, 'register'])->name("register");
 Route::match(['get', 'post'], '/login', [MainController::class, 'login'])->name("login");
-Route::post('/register', [MainController::class, 'register'])->name("register");
+Route::post('/register', [MainController::class, 'register'])->name("register_post");
 Route::get('/dashboard', [Dashboard::class, 'index'])->name("dashboard")->middleware(Authenticate::class);
 Route::get('/complete-profile-request', [Dashboard::class, 'complete_profile_request'])->name("complete_profile_request")->middleware(Authenticate::class);
 Route::get('/membership', [Dashboard::class, 'membership'])->name("membership")->middleware(Authenticate::class);
@@ -30,7 +30,7 @@ Route::match(['get', 'post'], '/profile-edit/{id}', [Dashboard::class, 'profileE
 Route::get('/profile', [Dashboard::class, 'profile'])->middleware(Authenticate::class);
 Route::get('/logout', [Dashboard::class, 'logout'])->middleware(Authenticate::class);
 Route::match(['get', 'post'], '/messages/', [Dashboard::class, 'messages'])->name("messages")->middleware(Authenticate::class);
-Route::match(['get', 'post'], '/messages/{thread}', [Dashboard::class, 'messages'])->name("messages")->middleware(Authenticate::class);
+Route::match(['get', 'post'], '/messages/{thread}', [Dashboard::class, 'messages'])->name("messages_two")->middleware(Authenticate::class);
 
 Route::match(['get', 'post'], '/print', [PrintController2::class, 'index']);
 

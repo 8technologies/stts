@@ -28,6 +28,20 @@
       0 => 'Fruitcake\\Cors\\CorsServiceProvider',
     ),
   ),
+  'juststeveking/laravel-redoc' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'JustSteveKing\\Laravel\\LaravelRedoc\\RedocServiceProvider',
+    ),
+  ),
+  'laravel-admin-ext/api-tester' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Encore\\Admin\\ApiTester\\ApiTesterServiceProvider',
+    ),
+  ),
   'laravel-admin-ext/chartjs' => 
   array (
     'providers' => 
@@ -56,11 +70,25 @@
       0 => 'Encore\\Admin\\Media\\MediaServiceProvider',
     ),
   ),
+  'laravel/airlock' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravel\\Sanctum\\SanctumServiceProvider',
+    ),
+  ),
   'laravel/legacy-factories' => 
   array (
     'providers' => 
     array (
       0 => 'Illuminate\\Database\\Eloquent\\LegacyFactoryServiceProvider',
+    ),
+  ),
+  'laravel/passport' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravel\\Passport\\PassportServiceProvider',
     ),
   ),
   'laravel/sail' => 
@@ -148,6 +176,18 @@
     'providers' => 
     array (
       0 => 'Spatie\\Permission\\PermissionServiceProvider',
+    ),
+  ),
+  'tymon/jwt-auth' => 
+  array (
+    'aliases' => 
+    array (
+      'JWTAuth' => 'Tymon\\JWTAuth\\Facades\\JWTAuth',
+      'JWTFactory' => 'Tymon\\JWTAuth\\Facades\\JWTFactory',
+    ),
+    'providers' => 
+    array (
+      0 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
     ),
   ),
   'yajra/laravel-datatables-buttons' => 

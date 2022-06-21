@@ -92,14 +92,14 @@
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
 
-      <div class="form-group has-feedback {!! !$errors->has('password1') ?: 'has-error' !!}">
+      <div class="form-group has-feedback {!! !$errors->has('password_confirmation') ?: 'has-error' !!}">
 
-        @if($errors->has('password1'))
-          @foreach($errors->get('password1') as $message)
+        @if($errors->has('password_confirmation'))
+          @foreach($errors->get('password_confirmation') as $message)
             <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
           @endforeach
         @endif
-        <input type="password" required class="form-control" placeholder="Re-enter password" name="password1">
+        <input type="password" required class="form-control" placeholder="Re-enter password" name="password_confirmation">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
 

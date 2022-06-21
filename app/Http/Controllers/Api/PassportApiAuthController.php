@@ -27,8 +27,7 @@ class PassportApiAuthApiController extends Controller
             'first_name' => 'required|max:24|min:2',
             'last_name' => 'required|max:24|min:2',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|max:100|min:3',
-            'password1' => 'required|max:100|min:3'
+            'password' => 'required|confirmed|min:3'
         ]);
 
         if ($validator->fails()) {

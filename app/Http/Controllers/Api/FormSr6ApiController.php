@@ -16,7 +16,8 @@ use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Support\Facades\Auth;
 
-class FormSr6Controller extends AdminController
+
+class FormSr6ApiController extends AdminController
 {
     /**
      * Title for current resource.
@@ -24,6 +25,12 @@ class FormSr6Controller extends AdminController
      * @var string
      */
     protected $title = 'Form SR6 - Seed Grower'; 
+
+    public function __construct()
+    {
+        // $this->middleware('auth');
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
 
     /**
      * Make a grid builder.
@@ -308,7 +315,6 @@ class FormSr6Controller extends AdminController
                 $form->select('crop_id','Add Crop')->options( Crop::all()->pluck('name','id') )
                 ->required();
             });
-
 
             $form->radio(
                 'seed_grower_in_past',

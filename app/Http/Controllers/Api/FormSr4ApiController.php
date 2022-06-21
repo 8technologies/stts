@@ -24,6 +24,12 @@ class FormSr4ApiController extends AdminController
      */
     protected $title = 'Form SR4'; 
 
+    public function __construct()
+    {
+        // $this->middleware('auth');
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
+
     /**
      * Make a grid builder.
      *
@@ -234,6 +240,7 @@ class FormSr4ApiController extends AdminController
     {
 
         $form = new Form(new FormSr4());
+
         if ($form->isCreating()) {
 
             if (!Utils::can_create_sr4()) {
@@ -258,11 +265,8 @@ class FormSr4ApiController extends AdminController
             $form->hidden('administrator_id', __('Administrator id'));
         }
 
-
         if (auth()->user()->isRole('basic-user')) {
-
-            $form->select('type', __('Application category?'))
-            ->options([
+            $form->select('type', __('Application category?'))->options([
                 'Seed Merchant' => 'Seed Merchant',
                 'Seed Producer' => 'Seed Producer',
                 'Seed Stockist' => 'Seed Stockist',
@@ -270,18 +274,14 @@ class FormSr4ApiController extends AdminController
                 'Seed Exporter' => 'Seed Exporter',
                 'Seed Processor' => 'Seed Processor',
             ])
-            ->help('Which SR4 type are you applying for?')
-            ->rules('required');
+            ->help('Which SR4 type are you applying for?')->rules('required');
 
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required();
             $form->text('address', __('Address'))->required();
             $form->text('company_initials', __('Company initials'))->required();
             $form->text('premises_location', __('Premises location'))->required();
 
-            $form->text('expirience_in', __('Years of experience'))
-                ->rules('min:1')
-                ->attribute('type', 'number')
-                ->required();
+            $form->text('expirience_in', __('Years of experience'))->rules('min:1')->attribute('type', 'number')->required();
             $form->select('years_of_expirience', __('Experience in?'))
                 ->options([
                     'Seed Merchant' => 'Seed Merchant',
@@ -290,22 +290,15 @@ class FormSr4ApiController extends AdminController
                     'Seed Importer' => 'Seed Importer',
                     'Seed Exporter' => 'Seed Exporter',
                     'Seed Processor' => 'Seed Processor',
-                ])
-                ->help('What are you experienced in?')
-                ->rules('required');
-
+                ])->help('What are you experienced in?')->rules('required');
 
             $form->html('<h3>I/We wish to apply for a certificate as a seed stockist.</h3>');
 
-            $form->radio('dealers_in', __('Applicant is applying for production of?'))
-                ->options([
-
+            $form->radio('dealers_in', __('Applicant is applying for production of?'))->options([
                     'Agricultural crops' => 'Agricultural crops',
                     'Horticultural crops' => 'Horticultural crops',
                     'Other' => 'Other'
-                ])
-                ->required()
-                ->when('Other', function (Form $form) {
+                ])->required()->when('Other', function (Form $form) {
                     $form->text('dealers_in_other', 'Applicant is applying for Other Production of?')
                         ->help("Please specify Production that you are applying for");
                 });
@@ -315,13 +308,11 @@ class FormSr4ApiController extends AdminController
                     'Agricultural crops' => 'Agricultural crops',
                     'Horticultural crops' => 'Horticultural crops',
                     'Other' => 'Other'
-                ])
-                ->required()
+                ])->required()
                 ->when('Other', function (Form $form) {
                     $form->text('marketing_of_other', __('Applicant is applying for Other marketing of?'))
                         ->help('Please Specify if you selected "Other" marketing.');
                 });
-
 
             $form->radio('have_adequate_land', 'Do you have adequate land to handle basic seed?')
                 ->options([
@@ -334,7 +325,6 @@ class FormSr4ApiController extends AdminController
                         ->help("Please specify land (in Acres)")
                         ->attribute('min', 1);
                 });
-
 
             $form->radio('have_adequate_storage', 'I/We have adequate storage facilities to handle the resultant seed:')
                 ->options([
@@ -352,35 +342,24 @@ class FormSr4ApiController extends AdminController
                         ->help("Please specify the equipment");
                 });
 
-
             $form->radio('have_contractual_agreement', 'Do you have contractual agreement with the growers you have recruited?')
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
-                ])
-                ->required();
+                ])->required();
 
             $form->radio('have_adequate_field_officers', 'Do you have adequate field officers to supervise and advise growers on all operation of seed production?')
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
-                ])
-                ->required();
+                ])->required();
 
-            $form->radio(
-                'have_conversant_seed_matters',
-                __('Do you have adequate and knowledgeable personel who are conversant with seed matters?')
-            )
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->required();
-
-
+            $form->radio('have_conversant_seed_matters', __('Do you have adequate and knowledgeable personel who are conversant with seed matters?')
+            )->options(['1' => 'Yes', '0' => 'No', ])->required();
 
             $items = Administrator::all();
             $_items = [];
+
             foreach ($items as $key => $item) {
                 // if($item->parent>0){
                 //     continue;
@@ -399,27 +378,16 @@ class FormSr4ApiController extends AdminController
                         ->help("Please specify your souce of seed?");
                 });
 
-
             $form->radio(
                 'have_adequate_land_for_production',
                 __('Do you have adequate land for production of basic seed?')
-            )
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->required();
+            )->options(['1' => 'Yes', '0' => 'No', ])->required();
 
             $form->radio(
                 'have_internal_quality_program',
                 __('Do you have an internal quality program?')
             )
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->required();
-
+                ->options(['1' => 'Yes', '0' => 'No', ])->required();
 
             $form->file('receipt', __('Receipt'));
             $form->textarea('status_comment', __('Inspector\'s remarks.'))->readonly();
@@ -432,32 +400,21 @@ class FormSr4ApiController extends AdminController
             $form->radio(
                 'accept_declaration',
                 __('Accept declaration')
-            )
-                ->options([
-                    '1' => 'I Accept',
-                ])
-                ->required();
-
-                
-        return response()->json([
-            'success' => true,
-            'message' => 'SR4 form submit success!'
-        ], 200);
-
+            )->options(['1' => 'I Accept', ]) ->required();
         }
 
-
-        $form->footer(function ($footer) {
-
-            // disable reset btn
-            $footer->disableReset();
-
-            // disable `View` checkbox
-            $footer->disableViewCheck();
-
-            // disable `Continue Creating` checkbox
-            $footer->disableCreatingCheck();
-        });
-        return $form;
+            if ($form->saved(function (Form $form) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'SR4 form submit success!',
+                    'form' => $form
+                ], 200); 
+            })){
+                return response()->json([
+                    'success' => false,
+                    'error' =>"Failed to submit"
+                ], 203); 
+            }
+        // return response()->json(['form' => $form], 201);
     }
 }
