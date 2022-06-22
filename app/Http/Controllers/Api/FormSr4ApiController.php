@@ -46,7 +46,6 @@ class FormSr4ApiController extends AdminController
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
 
-
             if (!Utils::can_create_sr4()) {
                 $grid->disableCreateButton();
             }
@@ -121,7 +120,6 @@ class FormSr4ApiController extends AdminController
                 $tools->disableEdit();
                 $tools->disableDelete();
             });;
-
         $show->field('id', __('Id'));
         $show->field('created_at', __('Created on'));
         $show->field('seed_board_registration_number', __('Seed board registration number'));
@@ -153,7 +151,6 @@ class FormSr4ApiController extends AdminController
             } else {
                 return "No";
             }
-            return $item;
         });
         $show->field('land_size', __('Land size (In Acres)'));
         $show->field('eqipment', __('Equipment'));
@@ -163,7 +160,6 @@ class FormSr4ApiController extends AdminController
             } else {
                 return "No";
             }
-            return $item;
         });
         $show->field('have_contractual_agreement', __('Have contractual agreement'))->as(function ($item) {
             if ($item) {
@@ -171,7 +167,6 @@ class FormSr4ApiController extends AdminController
             } else {
                 return "No";
             }
-            return $item;
         });
         $show->field('have_adequate_field_officers', __('Have adequate field officers'))->as(function ($item) {
             if ($item) {
@@ -179,7 +174,6 @@ class FormSr4ApiController extends AdminController
             } else {
                 return "No";
             }
-            return $item;
         });
         $show->field('have_conversant_seed_matters', __('Have conversant seed matters'))->as(function ($item) {
             if ($item) {
@@ -187,7 +181,6 @@ class FormSr4ApiController extends AdminController
             } else {
                 return "No";
             }
-            return $item;
         });
         $show->field('souce_of_seed', __('Souce of seed'))->as(function ($userId) {
             $u = Administrator::find($userId);
@@ -201,7 +194,6 @@ class FormSr4ApiController extends AdminController
             } else {
                 return "No";
             }
-            return $item;
         });
         $show->field('have_internal_quality_program', __('Have internal quality program'))->as(function ($item) {
             if ($item) {
@@ -209,10 +201,8 @@ class FormSr4ApiController extends AdminController
             } else {
                 return "No";
             }
-            return $item;
         });
         $show->field('receipt', __('Receipt'))->file();
-
         $show->field('accept_declaration', __('Accepted declaration'))->as(function ($item) {
             if ($item) {
                 return "Yes";
@@ -394,27 +384,21 @@ class FormSr4ApiController extends AdminController
 
             $form->divider();
             $form->html('<h4>Declaration:</h4>
-                <p>I/WE* AT ANY TIME DURING OFFICIAL WORKING HOURS EVEN WITHOUT previous appointment will allow the inspectors entry to the seed stores and thereby provide them with the facilities necessary to carry out their inspection work as laid out in the seed and plant regulations, 2015.I/We further declare taht I/We am/are conversant with the Regulations. In addition I/We will send a list of all seed lots in our stores on a given date and or at such a date as can be mutually agreed upon between the National Seed Certification Service and ourselves.</p>
-        ');
-
+                <p>I/WE* AT ANY TIME DURING OFFICIAL WORKING HOURS EVEN WITHOUT previous appointment will allow the inspectors entry to the seed stores and thereby provide them with the facilities necessary to carry out their inspection work as laid out in the seed and plant regulations, 2015.I/We further declare taht I/We am/are conversant with the Regulations. In addition I/We will send a list of all seed lots in our stores on a given date and or at such a date as can be mutually agreed upon between the National Seed Certification Service and ourselves.</p>');
             $form->radio(
                 'accept_declaration',
                 __('Accept declaration')
             )->options(['1' => 'I Accept', ]) ->required();
         }
 
-            if ($form->saved(function (Form $form) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'SR4 form submit success!',
-                    'form' => $form
-                ], 200); 
-            })){
-                return response()->json([
-                    'success' => false,
-                    'error' =>"Failed to submit"
-                ], 203); 
-            }
-        // return response()->json(['form' => $form], 201);
+        if ($form->saved(function (Form $form) {
+            return response()->json([
+                'success' => true,
+                'message' => 'SR4 form submit success!',
+                'form' => $form
+            ], 200);
+        }))
+
+            return $form;
     }
 }
