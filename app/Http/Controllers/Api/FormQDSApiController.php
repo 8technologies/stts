@@ -23,7 +23,6 @@ class FormQDSApiController extends AdminController
      */
     protected $title = 'QDS R1 - Quality Declared Seed Producer';
 
-
     public function __construct()
     {
         // $this->middleware('auth');
