@@ -15,6 +15,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+
 /**
  * Class Administrator.
  *
@@ -71,7 +72,6 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
 
         return admin_asset($default);
     }
-
     
     /**
      * A user has and belongs to many roles.
