@@ -100,7 +100,7 @@ class JWTAuthApiController extends Controller {
         }
 
         //Request is validated
-        //Crean token
+        //Create token
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json([
@@ -108,13 +108,14 @@ class JWTAuthApiController extends Controller {
                 	'message' => 'Login credentials are invalid.',
                 ], 400);
             }
-        } 
+        }
+
         catch (JWTException $e) {
-    	return $credentials;
-            return response()->json([
-                	'success' => false,
-                	'message' => 'Could not create token.',
-                ], 500);
+            return $credentials;
+                return response()->json([
+                        'success' => false,
+                        'message' => 'Could not create token.',
+                    ], 500);
         }
  	
  		//Token created, return with success response and jwt token
@@ -166,8 +167,8 @@ class JWTAuthApiController extends Controller {
         }
         return response()->json(['message' => "User not found" ], 404);
     }
-    
-    
+
+
     /**
      * Refresh a token.
      *

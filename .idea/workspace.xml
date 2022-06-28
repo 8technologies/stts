@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b87a6d33-0dd4-4303-b43f-5829b0da3ebf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/JWTAuthApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/JWTAuthApiController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -255,7 +256,7 @@
       <workItem from="1655919466687" duration="593000" />
       <workItem from="1655979822963" duration="2766000" />
       <workItem from="1655983578614" duration="1025000" />
-      <workItem from="1656395563812" duration="11460000" />
+      <workItem from="1656395563812" duration="13422000" />
     </task>
     <servers />
   </component>
