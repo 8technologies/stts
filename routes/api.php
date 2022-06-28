@@ -38,12 +38,12 @@ use App\Http\Middleware\EnsureTokenIsValid;
 
     
         // sr4 forms
-        Route::post("/forms/sr4/new", [FormSr4ApiController::class, "form"]);
+        Route::post("/forms/sr4/new", [FormSr4ApiController::class, "new_sr4_form"]);
         // sr6 forms
-        Route::post("/forms/sr6/new", [FormSr6ApiController::class, "form"]);
-        // QDS forms
-        Route::post("/forms/qds/new", [FormQDSApiController::class, "form"]);
-        // sr10 forms
-        Route::post("/forms/sr10/new", [FormSr10ApiController::class, "form"]);
+        Route::post("/forms/sr6/new", [FormSr6ApiController::class, "new_sr6_form"]);
+//        // QDS forms
+//        Route::post("/forms/qds/new", [FormQDSApiController::class, "form"]);
+//        // sr10 forms
+//        Route::post("/forms/sr10/new", [FormSr10ApiController::class, "form"]);
 
      

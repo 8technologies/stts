@@ -22,15 +22,15 @@ use JWTAuth;
 
 class JWTAuthApiController extends Controller {
 
-    // /**
-    //  * Create a new AuthApiController instance.
-    //  *
-    //  * @return void
-    //  */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    // }
+     /**
+      * Create a new AuthApiController instance.
+      *
+      * @return void
+      */
+     public function __construct()
+     {
+         $this->middleware('auth:api', ['except' => ['login', 'register']]);
+     }
 
     
     public function register(Request $request)
