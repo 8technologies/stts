@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="author" content="Muhindo Mubaraka">
     <meta name="title" content="JO-Trace">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="keywords"
         content="classicads, classified, ads, classified ads, listing, business, directory, jobs, marketing, portal, advertising, local, posting, ad listing, ad posting,">
     <title>@yield('title')</title>
