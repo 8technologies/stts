@@ -1637,8 +1637,6 @@ class ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757
         'Aws\\RecycleBin\\RecycleBinClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/RecycleBin/RecycleBinClient.php',
         'Aws\\RedshiftDataAPIService\\Exception\\RedshiftDataAPIServiceException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/RedshiftDataAPIService/Exception/RedshiftDataAPIServiceException.php',
         'Aws\\RedshiftDataAPIService\\RedshiftDataAPIServiceClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/RedshiftDataAPIService/RedshiftDataAPIServiceClient.php',
-        'Aws\\RedshiftServerless\\Exception\\RedshiftServerlessException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/RedshiftServerless/Exception/RedshiftServerlessException.php',
-        'Aws\\RedshiftServerless\\RedshiftServerlessClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/RedshiftServerless/RedshiftServerlessClient.php',
         'Aws\\Redshift\\Exception\\RedshiftException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Redshift/Exception/RedshiftException.php',
         'Aws\\Redshift\\RedshiftClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Redshift/RedshiftClient.php',
         'Aws\\Rekognition\\Exception\\RekognitionException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Rekognition/Exception/RekognitionException.php',

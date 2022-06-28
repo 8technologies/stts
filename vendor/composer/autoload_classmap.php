@@ -807,8 +807,6 @@ return array(
     'Aws\\RecycleBin\\RecycleBinClient' => $vendorDir . '/aws/aws-sdk-php/src/RecycleBin/RecycleBinClient.php',
     'Aws\\RedshiftDataAPIService\\Exception\\RedshiftDataAPIServiceException' => $vendorDir . '/aws/aws-sdk-php/src/RedshiftDataAPIService/Exception/RedshiftDataAPIServiceException.php',
     'Aws\\RedshiftDataAPIService\\RedshiftDataAPIServiceClient' => $vendorDir . '/aws/aws-sdk-php/src/RedshiftDataAPIService/RedshiftDataAPIServiceClient.php',
-    'Aws\\RedshiftServerless\\Exception\\RedshiftServerlessException' => $vendorDir . '/aws/aws-sdk-php/src/RedshiftServerless/Exception/RedshiftServerlessException.php',
-    'Aws\\RedshiftServerless\\RedshiftServerlessClient' => $vendorDir . '/aws/aws-sdk-php/src/RedshiftServerless/RedshiftServerlessClient.php',
     'Aws\\Redshift\\Exception\\RedshiftException' => $vendorDir . '/aws/aws-sdk-php/src/Redshift/Exception/RedshiftException.php',
     'Aws\\Redshift\\RedshiftClient' => $vendorDir . '/aws/aws-sdk-php/src/Redshift/RedshiftClient.php',
     'Aws\\Rekognition\\Exception\\RekognitionException' => $vendorDir . '/aws/aws-sdk-php/src/Rekognition/Exception/RekognitionException.php',
