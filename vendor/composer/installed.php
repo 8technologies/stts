@@ -2,14 +2,10 @@
     'root' => array(
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-<<<<<<< HEAD
-=======
-        'reference' => '9420beb21e82f80c2f9da82b7678b00f70fca95c',
->>>>>>> 4b082dfe1224cffc3656947d976384f8a9be4c50
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '27f3e3f1bfe012bbec23a5aa074be3ee3209b9a3',
+        'reference' => 'e1ca8644f31476c8a2831b650e3fdaa7e82e3a94',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -563,14 +559,10 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-<<<<<<< HEAD
-=======
-            'reference' => '9420beb21e82f80c2f9da82b7678b00f70fca95c',
->>>>>>> 4b082dfe1224cffc3656947d976384f8a9be4c50
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '27f3e3f1bfe012bbec23a5aa074be3ee3209b9a3',
+            'reference' => 'e1ca8644f31476c8a2831b650e3fdaa7e82e3a94',
             'dev_requirement' => false,
         ),
         'laravel/legacy-factories' => array(
