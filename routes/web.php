@@ -11,15 +11,9 @@ use Illuminate\Support\Facades\Mail;
 
 
 Route::get('/', [MainController::class, 'index']);
-<<<<<<< HEAD
-Route::get('/test', [MainController::class, function (){
-    dd("Simple test");
-}]);
-=======
 // Route::get('/test', [MainController::class, function (){
 //     dd("Simple test");
 // }]);
->>>>>>> dev-1
 Route::get('/about', [MainController::class, 'about']);
 Route::get('/import', [MainController::class, 'import']);
 

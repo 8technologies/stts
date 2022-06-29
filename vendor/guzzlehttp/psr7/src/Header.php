@@ -51,23 +51,6 @@ final class Header
      */
     public static function normalize($header): array
     {
-<<<<<<< HEAD
-        $result = [];
-        foreach ((array) $header as $value) {
-            foreach ((array) $value as $v) {
-                if (strpos($v, ',') === false) {
-                    $trimmed = trim($v);
-                    if ($trimmed !== '') {
-                        $result[] = $trimmed;
-                    }
-                    continue;
-                }
-                foreach (preg_split('/,(?=([^"]*"([^"]|\\\\.)*")*[^"]*$)/', $v) as $vv) {
-                    $trimmed = trim($vv);
-                    if ($trimmed !== '') {
-                        $result[] = $trimmed;
-                    }
-=======
         $result = [];
         foreach ((array) $header as $value) {
             foreach (self::splitList($value) as $parsed) {
@@ -122,7 +105,6 @@ final class Header
 
                     $v = '';
                     continue;
->>>>>>> dev-1
                 }
 
                 if ($isQuoted && $value[$i] === '\\') {

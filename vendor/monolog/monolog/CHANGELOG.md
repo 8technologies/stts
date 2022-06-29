@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 ### 2.7.0 (2022-06-09)
 
   * Added `$datetime` parameter to `Logger::addRecord` as low level API to allow logging into the past or future (#1682)
@@ -8,7 +6,6 @@
   * Marked the reusable `Monolog\Test\TestCase` class as `@internal` to make sure PHPStorm does not show it above PHPUnit, you may still use it to test your own handlers/etc though (#1677)
   * Fixed RotatingFileHandler issue when the date format contained slashes (#1671)
 
->>>>>>> dev-1
 ### 2.6.0 (2022-05-10)
 
   * Deprecated `SwiftMailerHandler`, use `SymfonyMailerHandler` instead

@@ -2,8 +2,6 @@
 
 Please refer to [UPGRADING](UPGRADING.md) guide for upgrading to a major version.
 
-<<<<<<< HEAD
-=======
 ## 7.4.5 - 2022-06-20
 
 * Fix change in port should be considered a change in origin
@@ -14,7 +12,6 @@ Please refer to [UPGRADING](UPGRADING.md) guide for upgrading to a major version
 * Fix failure to strip Authorization header on HTTP downgrade
 * Fix failure to strip the Cookie header on change in host or HTTP downgrade
 
->>>>>>> dev-1
 ## 7.4.3 - 2022-05-25
 
 * Fix cross-domain cookie leakage

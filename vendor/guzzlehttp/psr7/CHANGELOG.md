@@ -7,8 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-<<<<<<< HEAD
-=======
 ## 2.4.0 - 2022-06-20
 
 ### Added
@@ -33,7 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Re-wrap exceptions thrown in `fread` into runtime exceptions
 - Throw an exception when multipart options is misformatted
 
->>>>>>> dev-1
 ## 2.2.1 - 2022-03-20
 
 ### Fixed

@@ -44,11 +44,7 @@ We use GitHub issues only to discuss bugs and new features. For support please r
 
 - [Documentation](https://docs.guzzlephp.org)
 - [Stack Overflow](https://stackoverflow.com/questions/tagged/guzzle)
-<<<<<<< HEAD
-- [#guzzle](https://app.slack.com/client/T0D2S9JCT/CE6UAAKL4) channel on [PHP-HTTP Slack](http://slack.httplug.io/)
-=======
 - [#guzzle](https://app.slack.com/client/T0D2S9JCT/CE6UAAKL4) channel on [PHP-HTTP Slack](https://slack.httplug.io/)
->>>>>>> dev-1
 - [Gitter](https://gitter.im/guzzle/guzzle)
 
 

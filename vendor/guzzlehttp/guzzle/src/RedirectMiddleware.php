@@ -88,15 +88,8 @@ class RedirectMiddleware
         $this->guardMax($request, $response, $options);
         $nextRequest = $this->modifyRequest($request, $options, $response);
 
-<<<<<<< HEAD
-        // If authorization is handled by curl, unset it if host is different.
-        if ($request->getUri()->getHost() !== $nextRequest->getUri()->getHost()
-            && defined('\CURLOPT_HTTPAUTH')
-        ) {
-=======
         // If authorization is handled by curl, unset it if URI is cross-origin.
         if (Psr7\UriComparator::isCrossOrigin($request->getUri(), $nextRequest->getUri()) && defined('\CURLOPT_HTTPAUTH')) {
->>>>>>> dev-1
             unset(
                 $options['curl'][\CURLOPT_HTTPAUTH],
                 $options['curl'][\CURLOPT_USERPWD]

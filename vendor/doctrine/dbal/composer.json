@@ -42,11 +42,7 @@
     "require-dev": {
         "doctrine/coding-standard": "9.0.0",
         "jetbrains/phpstorm-stubs": "2022.1",
-<<<<<<< HEAD
-        "phpstan/phpstan": "1.6.3",
-=======
         "phpstan/phpstan": "1.7.13",
->>>>>>> dev-1
         "phpstan/phpstan-strict-rules": "^1.2",
         "phpunit/phpunit": "9.5.20",
         "psalm/plugin-phpunit": "0.16.1",
