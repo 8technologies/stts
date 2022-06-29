@@ -45,36 +45,44 @@ class JWTAuthApiController extends Controller {
             'password_confirmation' => 'required|max:100|min:3'
         ]);
 
-        //Send failed response if request is not valid
-        if ($post_data->fails()) {
-            return response()->json(['error' => $post_data->messages()], 200);
-        }
-
-        $old_user = Administrator::where('email',  $request->input("email"))->first();
-        if ($old_user) {
+        if ($request->input("password") != $request->input("password_confirmation")) {
+            $errors['password_confirmation'] = "Passwords did not match.";
             return response()->json([
                 'success' => false,
-                'message' => 'email or username already exists!'
+                'message' => $errors,
             ], Response::HTTP_OK); 
         }
 
-        $user = Administrator::create([
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
-            'name' => $request->input('first_name') . " " . $request->input('last_name'),
-            'username' => $request->input('username'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-            'password_confirmation' => bcrypt($request->input('password_confirmation')),
-            'remember_token' => Str::random(62)
-        ]);  
+        $old_user = Administrator::where('username',  $request->input("username"))->first();
+        if ($old_user) {
+            $errors['username'] = "User with same email already exists.";
+            return response()->json([
+                'success' => false,
+                'message' => $errors,
+            ], Response::HTTP_OK); 
+        }
 
-        if ($user->create()) {
+        $user = new Administrator();            
+            $user->first_name = $request->input("first_name");
+            $user->last_name = $request->input("last_name");
+            $user->name = $request->input("first_name") . " " . $request->input("last_name");
+            $user->username = $request->input("username");
+            $user->email = $request->input("email");
+            $user->password = Hash::make($request->input("password"));
+            $user->remember_token = Str::random(62);
+            
+        if ($user->save()) {
             DB::table('admin_role_users')->insert([
                 'role_id' => 3,
                 'user_id' => $user->id
             ]);
-        } 
+        } else {
+            $errors['username'] = "Failed to created your account. Please try again.";
+            return response()->json([
+                'success' => false,
+                'message' => $errors
+            ], Response::HTTP_OK);
+        }
 
         //User created, return success response
         return response()->json([
@@ -82,7 +90,6 @@ class JWTAuthApiController extends Controller {
             'message' => 'User create Success'
         ], Response::HTTP_OK); 
     }
-
 
     public function login(Request $request)
     {
