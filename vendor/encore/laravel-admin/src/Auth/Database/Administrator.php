@@ -103,21 +103,25 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
 
 
     // the jwt auth to map this model to the jwt rest api token authentication 
-    /**
+     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
      */
-    public function getJWTIdentifier() {
+    public function getJWTIdentifier()
+    {
         return $this->getKey();
     }
+
     
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
      *
      * @return array
      */
-    public function getJWTCustomClaims() {
+    public function getJWTCustomClaims()
+    {
         return [];
     }
+     
 }
