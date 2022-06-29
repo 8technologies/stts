@@ -33,9 +33,6 @@ use App\Http\Middleware\EnsureTokenIsValid;
         Route::delete("/user/{id}", [UserAPIController::class, "destroy"]);
         Route::get("/user/search/{name}", [UserAPIController::class, "where"]);
 
-    });
-// });
-
     
         // sr4 forms
         Route::post("/forms/sr4/new", [FormSr4ApiController::class, "new_sr4_form"]);
@@ -47,3 +44,7 @@ use App\Http\Middleware\EnsureTokenIsValid;
 //        Route::post("/forms/sr10/new", [FormSr10ApiController::class, "form"]);
 
      
+
+
+});
+// });

@@ -8,19 +8,30 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
+// use Laravel\Passport\HasApiTokens;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
 
 /**
  * Class Administrator.
  *
  * @property Role[] $roles
  */
-class Administrator extends Model implements AuthenticatableContract
+class Administrator extends Model implements AuthenticatableContract, JWTSubject
 {
-    use Authenticatable;
-    use HasPermissions;
-    use DefaultDatetimeFormat;
-
-    protected $fillable = ['username', 'password', 'name', 'avatar'];
+    use Authenticatable, 
+    HasPermissions, 
+    DefaultDatetimeFormat, 
+    HasFactory, 
+    Notifiable
+    // HasApiTokens
+    ;
+    
+    protected $fillable = ['username', 'first_name', 'last_name', 'email', 'name', 'remember_token', 'password', 'avatar'];
 
     /**
      * Create a new Eloquent model instance.
@@ -61,7 +72,7 @@ class Administrator extends Model implements AuthenticatableContract
 
         return admin_asset($default);
     }
-
+    
     /**
      * A user has and belongs to many roles.
      *
@@ -88,5 +99,25 @@ class Administrator extends Model implements AuthenticatableContract
         $relatedModel = config('admin.database.permissions_model');
 
         return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'permission_id');
+    }
+
+
+    // the jwt auth to map this model to the jwt rest api token authentication 
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier() {
+        return $this->getKey();
+    }
+    
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims() {
+        return [];
     }
 }
