@@ -24,7 +24,6 @@ class ComposerAutoloaderInit655a54d4684d1b07a3e082ec53de1692
 
         require __DIR__ . '/platform_check.php';
 
-<<<<<<< HEAD
         spl_autoload_register(array('ComposerAutoloaderInit6610ade2b3586dfbab7a590c0b52e757', 'loadClassLoader'), true, true);
         self::$loader = $loader = new \Composer\Autoload\ClassLoader(\dirname(__DIR__));
         spl_autoload_unregister(array('ComposerAutoloaderInit6610ade2b3586dfbab7a590c0b52e757', 'loadClassLoader'));
@@ -35,18 +34,6 @@ class ComposerAutoloaderInit655a54d4684d1b07a3e082ec53de1692
         $loader->register(true);
 
         $includeFiles = \Composer\Autoload\ComposerStaticInit6610ade2b3586dfbab7a590c0b52e757::$files;
-=======
-        spl_autoload_register(array('ComposerAutoloaderInit655a54d4684d1b07a3e082ec53de1692', 'loadClassLoader'), true, true);
-        self::$loader = $loader = new \Composer\Autoload\ClassLoader(\dirname(__DIR__));
-        spl_autoload_unregister(array('ComposerAutoloaderInit655a54d4684d1b07a3e082ec53de1692', 'loadClassLoader'));
-
-        require __DIR__ . '/autoload_static.php';
-        call_user_func(\Composer\Autoload\ComposerStaticInit655a54d4684d1b07a3e082ec53de1692::getInitializer($loader));
-
-        $loader->register(true);
-
-        $includeFiles = \Composer\Autoload\ComposerStaticInit655a54d4684d1b07a3e082ec53de1692::$files;
->>>>>>> dev-1
         foreach ($includeFiles as $fileIdentifier => $file) {
             composerRequire655a54d4684d1b07a3e082ec53de1692($fileIdentifier, $file);
         }
