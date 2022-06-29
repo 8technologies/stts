@@ -43,10 +43,6 @@ Route::group([
     $router->resource('track-and-trace', TrackAndTraceController::class);
     $router->resource('sub-growers', SubGrowerController::class);
 
-
-
-    
-
     $router->resource('test-trees', TestTreeController::class);
         
     $router->resource('test1s', Test1Controller::class);

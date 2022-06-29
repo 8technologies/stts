@@ -2,6 +2,16 @@
 
 All notable changes of the PHPUnit 9.5 release series are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+<<<<<<< HEAD
+=======
+## [9.5.21] - 2022-06-19
+
+### Fixed
+
+* [#4950](https://github.com/sebastianbergmann/phpunit/issues/4950): False error on `atMost()` invocation rule without call
+* [#4962](https://github.com/sebastianbergmann/phpunit/issues/4962): Ukraine banner unreadable on white background
+
+>>>>>>> dev-1
 ## [9.5.20] - 2022-04-01
 
 ### Fixed
@@ -157,6 +167,10 @@ All notable changes of the PHPUnit 9.5 release series are documented in this fil
 
 * [#4535](https://github.com/sebastianbergmann/phpunit/issues/4535): `getMockFromWsdl()` does not handle methods that do not have parameters correctly
 
+<<<<<<< HEAD
+=======
+[9.5.21]: https://github.com/sebastianbergmann/phpunit/compare/9.5.20...9.5.21
+>>>>>>> dev-1
 [9.5.20]: https://github.com/sebastianbergmann/phpunit/compare/9.5.19...9.5.20
 [9.5.19]: https://github.com/sebastianbergmann/phpunit/compare/9.5.18...9.5.19
 [9.5.18]: https://github.com/sebastianbergmann/phpunit/compare/9.5.17...9.5.18

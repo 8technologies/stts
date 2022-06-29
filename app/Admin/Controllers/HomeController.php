@@ -120,7 +120,7 @@ class HomeController extends Controller
                     'wpforms',
                     $color,
                     admin_url('/import-export-permits'),
-                    $count . " - Sr6 Forms"
+                    $count . " - Sr6 Forms",
                 ));
             }
             #======================= Sr6s forms - Ends =========================#

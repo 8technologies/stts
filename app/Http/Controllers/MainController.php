@@ -12,19 +12,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
 use App\Imports\UsersImport;
+use App\Mail\FormSubmitted;
 use App\Models\SubGrower;
+use Encore\Admin\Actions\Toastr;
 use Excel;
-
+use Illuminate\Support\Facades\Mail;
 
 
 class MainController extends Controller
 {
     public function import()
     {
-
- 
         $array = Excel::toArray([], $file);
         if (isset($array[0]))
             $i = 0;
@@ -221,14 +220,11 @@ class MainController extends Controller
                 'first_name' => 'required|max:24|min:2',
                 'last_name' => 'required|max:24|min:2',
                 'password' => 'required|max:100|min:3',
-                'password1' => 'required|max:100|min:3',
+                'password_confirmation' => 'required|max:100|min:3',
             ]);
 
-            if (
-                $request->input("password") !=
-                $request->input("password1")
-            ) {
-                $errors['password1'] = "Passwords did not match.";
+            if ($request->input("password") != $request->input("password_confirmation")) {
+                $errors['password_confirmation'] = "Passwords did not match.";
                 return redirect('register')
                     ->withErrors($errors)
                     ->withInput();
@@ -257,6 +253,13 @@ class MainController extends Controller
                     'role_id' => 3,
                     'user_id' => $admin->id
                 ]);
+                
+                $receiver = Administrator::findOrFail($request->user_id);
+                // Send the email...
+                Mail::to($request->user()->email)->send(new FormSubmitted($receiver));
+                admin_toastr('Success! Check your email for an activation link.');
+                
+                
             } else {
                 $errors['username'] = "Failed to created your account. Please try again.";
                 return redirect('register')

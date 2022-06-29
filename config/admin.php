@@ -158,7 +158,7 @@ return [
         'disk' => 'admin',
 
         // Image and file upload path under the disk above.
-        'directory' => [
+        'directory' => [ 
             'image' => '/',
             'file'  => 'files',
         ],
@@ -301,8 +301,8 @@ return [
     | This value is used to set the background image of login page.
     |
     */
-    'login_background_image' => url( '/assets/images/stts/bg/bg-1.jpg'),
-    'login_background_image_2' =>  url('/assets/images/stts/bg/bg-2.jpeg'),
+    // 'login_background_image' => url( '/assets/images/stts/bg/bg-1.jpg'), 
+    // 'login_background_image_2' =>  url('/assets/images/stts/bg/bg-2.jpeg'),
 
     /*
     |--------------------------------------------------------------------------
@@ -360,7 +360,7 @@ return [
     | Enable/Disable sidebar menu search
     |--------------------------------------------------------------------------
     */
-    'enable_menu_search' => false,
+    'enable_menu_search' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -377,7 +377,7 @@ return [
     | Alert message that will displayed on top of the page.
     |--------------------------------------------------------------------------
     */
-    'top_alert' => '',
+    'top_alert' => 'You are viewing a dash',
 
     /*
     |--------------------------------------------------------------------------

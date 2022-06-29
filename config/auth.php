@@ -16,6 +16,7 @@ return [
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
+        'passwords' => 'admin_users',
     ],
 
     /*
@@ -40,6 +41,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+    
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -63,6 +70,7 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+            'model' => Encore\Admin\Auth\Database\Administrator::class,
         ],
 
         // 'users' => [
@@ -93,6 +101,13 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+
+        'admin_users' => [
+            'provider' => 'admin_users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
     ],
 
     /*
@@ -107,5 +122,18 @@ return [
     */
 
     'password_timeout' => 10800,
+
+    // Passport's api guard
+    'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+    
+        'api' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+        ],
+    ],
 
 ];

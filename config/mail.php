@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'mailgun'),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,6 +55,7 @@ return [
 
         'postmark' => [
             'transport' => 'postmark',
+            'message_stream_id' => env('POSTMARK_MESSAGE_STREAM_ID'),
         ],
 
         'sendmail' => [
@@ -74,8 +75,10 @@ return [
         'failover' => [
             'transport' => 'failover',
             'mailers' => [
-                'smtp',
-                'log',
+                'mailgun',
+                'postmark',
+                'ses',
+
             ],
         ],
     ],
@@ -92,9 +95,19 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'sttstestmail@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'STTS Test'),
     ],
+
+    /*
+    In addition, you may define a global "reply_to" address within your 
+    config/mail.php configuration file:
+    */
+    'reply_to' => [
+        'address' => env('MAIL_REPLY_TO_ADDRESS', 'sttstestmail@gmail.com'),
+        'name' => env('MAIL_REPLY_TO_NAME', 'STTS Test'),
+    ],
+
 
     /*
     |--------------------------------------------------------------------------

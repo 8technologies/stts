@@ -32,6 +32,10 @@ final class MimeType
         'aep' => 'application/vnd.audiograph',
         'afm' => 'application/x-font-type1',
         'afp' => 'application/vnd.ibm.modcap',
+<<<<<<< HEAD
+=======
+        'age' => 'application/vnd.age',
+>>>>>>> dev-1
         'ahead' => 'application/vnd.ahead.space',
         'ai' => 'application/pdf',
         'aif' => 'audio/x-aiff',
@@ -60,6 +64,11 @@ final class MimeType
         'atomsvc' => 'application/atomsvc+xml',
         'atx' => 'application/vnd.antix.game-component',
         'au' => 'audio/x-au',
+<<<<<<< HEAD
+=======
+        'avci' => 'image/avci',
+        'avcs' => 'image/avcs',
+>>>>>>> dev-1
         'avi' => 'video/x-msvideo',
         'avif' => 'image/avif',
         'aw' => 'application/applixware',
@@ -154,6 +163,10 @@ final class MimeType
         'com' => 'application/x-msdownload',
         'conf' => 'text/plain',
         'cpio' => 'application/x-cpio',
+<<<<<<< HEAD
+=======
+        'cpl' => 'application/cpl+xml',
+>>>>>>> dev-1
         'cpp' => 'text/x-c',
         'cpt' => 'application/mac-compactpro',
         'crd' => 'application/x-mscardfile',
@@ -316,6 +329,10 @@ final class MimeType
         'gca' => 'application/x-gca-compressed',
         'gdl' => 'model/vnd.gdl',
         'gdoc' => 'application/vnd.google-apps.document',
+<<<<<<< HEAD
+=======
+        'ged' => 'text/vnd.familysearch.gedcom',
+>>>>>>> dev-1
         'geo' => 'application/vnd.dynageo',
         'geojson' => 'application/geo+json',
         'gex' => 'application/vnd.geometry-explorer',
@@ -576,6 +593,10 @@ final class MimeType
         'mpd' => 'application/dash+xml',
         'mpe' => 'video/mpeg',
         'mpeg' => 'video/mpeg',
+<<<<<<< HEAD
+=======
+        'mpf' => 'application/media-policy-dataset+xml',
+>>>>>>> dev-1
         'mpg' => 'video/mpeg',
         'mpg4' => 'video/mp4',
         'mpga' => 'audio/mpeg',
@@ -719,6 +740,10 @@ final class MimeType
         'pgm' => 'image/x-portable-graymap',
         'pgn' => 'application/x-chess-pgn',
         'pgp' => 'application/pgp',
+<<<<<<< HEAD
+=======
+        'phar' => 'application/octet-stream',
+>>>>>>> dev-1
         'php' => 'application/x-httpd-php',
         'php3' => 'application/x-httpd-php',
         'php4' => 'application/x-httpd-php',
@@ -753,7 +778,11 @@ final class MimeType
         'pptm' => 'application/vnd.ms-powerpoint.presentation.macroEnabled.12',
         'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
         'pqa' => 'application/vnd.palm',
+<<<<<<< HEAD
         'prc' => 'application/x-pilot',
+=======
+        'prc' => 'model/prc',
+>>>>>>> dev-1
         'pre' => 'application/vnd.lotus-freelance',
         'prf' => 'application/pics-rules',
         'provx' => 'application/provenance+xml',
@@ -993,6 +1022,10 @@ final class MimeType
         'txd' => 'application/vnd.genomatix.tuxedo',
         'txf' => 'application/vnd.mobius.txf',
         'txt' => 'text/plain',
+<<<<<<< HEAD
+=======
+        'u3d' => 'model/u3d',
+>>>>>>> dev-1
         'u8dsn' => 'message/global-delivery-status',
         'u8hdr' => 'message/global-headers',
         'u8mdn' => 'message/global-disposition-notification',
@@ -1089,6 +1122,10 @@ final class MimeType
         'webp' => 'image/webp',
         'wg' => 'application/vnd.pmi.widget',
         'wgt' => 'application/widget',
+<<<<<<< HEAD
+=======
+        'wif' => 'application/watcherinfo+xml',
+>>>>>>> dev-1
         'wks' => 'application/vnd.ms-works',
         'wm' => 'video/x-ms-wm',
         'wma' => 'audio/x-ms-wma',

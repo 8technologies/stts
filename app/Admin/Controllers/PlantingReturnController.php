@@ -174,7 +174,7 @@ class PlantingReturnController extends AdminController
             ->tools(function ($tools) {
                 $tools->disableEdit();
                 $tools->disableDelete();
-            });;
+            });
 
         $show->field('id', __('Id'));
         $show->field('created_at', __('Created'))
