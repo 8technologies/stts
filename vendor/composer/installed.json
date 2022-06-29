@@ -446,7 +446,6 @@
         },
         {
             "name": "doctrine/dbal",
-<<<<<<< HEAD
             "version": "3.3.6",
             "version_normalized": "3.3.6.0",
             "source": {
@@ -458,19 +457,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/dbal/zipball/9e7f76dd1cde81c62574fdffa5a9c655c847ad21",
                 "reference": "9e7f76dd1cde81c62574fdffa5a9c655c847ad21",
-=======
-            "version": "3.3.7",
-            "version_normalized": "3.3.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/dbal.git",
-                "reference": "9f79d4650430b582f4598fe0954ef4d52fbc0a8a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/9f79d4650430b582f4598fe0954ef4d52fbc0a8a",
-                "reference": "9f79d4650430b582f4598fe0954ef4d52fbc0a8a",
->>>>>>> dev-1
                 "shasum": ""
             },
             "require": {
@@ -485,11 +471,7 @@
             "require-dev": {
                 "doctrine/coding-standard": "9.0.0",
                 "jetbrains/phpstorm-stubs": "2022.1",
-<<<<<<< HEAD
                 "phpstan/phpstan": "1.6.3",
-=======
-                "phpstan/phpstan": "1.7.13",
->>>>>>> dev-1
                 "phpstan/phpstan-strict-rules": "^1.2",
                 "phpunit/phpunit": "9.5.20",
                 "psalm/plugin-phpunit": "0.16.1",
@@ -501,11 +483,7 @@
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
             },
-<<<<<<< HEAD
             "time": "2022-05-02T17:21:01+00:00",
-=======
-            "time": "2022-06-13T21:43:03+00:00",
->>>>>>> dev-1
             "bin": [
                 "bin/doctrine-dbal"
             ],
@@ -562,11 +540,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/doctrine/dbal/tree/3.3.6"
-=======
-                "source": "https://github.com/doctrine/dbal/tree/3.3.7"
->>>>>>> dev-1
             },
             "funding": [
                 {
@@ -1725,7 +1699,6 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-<<<<<<< HEAD
             "version": "7.4.3",
             "version_normalized": "7.4.3.0",
             "source": {
@@ -1737,19 +1710,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/guzzle/guzzle/zipball/74a8602c6faec9ef74b7a9391ac82c5e65b1cdab",
                 "reference": "74a8602c6faec9ef74b7a9391ac82c5e65b1cdab",
-=======
-            "version": "7.4.5",
-            "version_normalized": "7.4.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "1dd98b0564cb3f6bd16ce683cb755f94c10fbd82"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/1dd98b0564cb3f6bd16ce683cb755f94c10fbd82",
-                "reference": "1dd98b0564cb3f6bd16ce683cb755f94c10fbd82",
->>>>>>> dev-1
                 "shasum": ""
             },
             "require": {
@@ -1850,11 +1810,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/guzzle/guzzle/tree/7.4.3"
-=======
-                "source": "https://github.com/guzzle/guzzle/tree/7.4.5"
->>>>>>> dev-1
             },
             "funding": [
                 {
@@ -1961,7 +1917,6 @@
         },
         {
             "name": "guzzlehttp/psr7",
-<<<<<<< HEAD
             "version": "2.2.1",
             "version_normalized": "2.2.1.0",
             "source": {
@@ -1973,19 +1928,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/guzzle/psr7/zipball/c94a94f120803a18554c1805ef2e539f8285f9a2",
                 "reference": "c94a94f120803a18554c1805ef2e539f8285f9a2",
-=======
-            "version": "2.4.0",
-            "version_normalized": "2.4.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/psr7.git",
-                "reference": "13388f00956b1503577598873fffb5ae994b5737"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/13388f00956b1503577598873fffb5ae994b5737",
-                "reference": "13388f00956b1503577598873fffb5ae994b5737",
->>>>>>> dev-1
                 "shasum": ""
             },
             "require": {
@@ -2081,11 +2023,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-<<<<<<< HEAD
                 "source": "https://github.com/guzzle/psr7/tree/2.2.1"
-=======
-                "source": "https://github.com/guzzle/psr7/tree/2.4.0"
->>>>>>> dev-1
             },
             "funding": [
                 {
