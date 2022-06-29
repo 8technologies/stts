@@ -1,0 +1,384 @@
+[16-Jun-2022 07:58:26 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:58:26 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:58:29 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:58:29 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:58:37 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:58:37 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:58:50 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:58:50 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:58:51 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:58:51 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:58:55 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:58:55 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:59:02 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:59:02 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:59:10 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:59:10 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:59:35 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 07:59:35 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:00:16 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:00:16 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:00:32 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:00:32 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:01:06 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:01:06 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:01:12 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:01:12 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:01:15 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:01:15 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:01:18 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:01:18 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:01:27 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:01:27 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:01:32 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:01:32 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:03:39 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:03:39 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:03:47 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:03:47 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:04:52 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:04:52 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:05:15 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:05:15 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:06:53 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:06:53 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:07:12 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:07:12 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:09:22 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:09:22 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:12:54 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:12:54 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:13:06 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:13:06 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:13:55 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 08:13:55 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:04 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:04 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:11 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:11 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:15 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:15 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:20 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:20 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:21 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:21 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:23 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:23 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:24 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:24 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:36 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:36 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:47 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:30:47 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:10 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:10 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:19 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:19 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:30 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:30 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:32 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:32 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:35 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:35 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:37 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:37 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:37 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:37 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:39 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:39 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:40 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:31:40 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:32:00 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:32:00 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:32:20 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:32:20 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:32:38 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:32:38 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:32:44 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:32:44 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:32:54 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:32:54 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:33:46 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:33:46 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:34:20 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:34:20 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:34:29 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:34:29 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:39:05 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:39:05 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:40:33 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:40:33 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:40:54 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:40:54 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:42:01 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:42:01 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:45:33 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:45:33 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:45:57 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:45:57 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:46:43 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:46:43 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:46:52 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:46:52 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:48:43 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:48:43 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:49:57 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:49:57 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:50:39 America/New_York] PHP Warning:  require(/home/eightechconsults/stts-dev/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/eightechconsults/stts-dev/public/index.php on line 35
+[16-Jun-2022 09:50:39 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/eightechconsults/stts-dev/public/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/eightechconsults/stts-dev/public/index.php:35
+Stack trace:
+#0 /home/eightechconsults/stts-dev/server.php(21): require_once()
+#1 {main}
+  thrown in /home/eightechconsults/stts-dev/public/index.php on line 35

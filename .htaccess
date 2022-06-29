@@ -19,5 +19,9 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ server.php
 </IfModule>
 
-RewriteCond %{HTTP:Authorization} ^(.+)$
+# RewriteCond %{HTTP:Authorization} ^(.+)$
+# RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Handle Authorization Header
+RewriteCond %{HTTP:Authorization} .
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
