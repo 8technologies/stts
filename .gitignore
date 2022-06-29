@@ -2,3 +2,5 @@
 important-commands.txt
 .env_remote
 storage/logs/laravel.log
+.idea
+
