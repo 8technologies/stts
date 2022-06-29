@@ -165,11 +165,12 @@ class JWTAuthApiController extends Controller {
  
     public function profile(Request $request)
     {
-        $this->validate($request, [
-            'token' => 'required'
-        ]);
+        // $this->validate($request, [
+        //     'token' => 'required'
+        // ]);
+        $token = $request->bearerToken();
  
-        $user = JWTAuth::authenticate($request->token);
+        $user = JWTAuth::authenticate($token);
  
         if ($user) {
             return response()->json(['user' => $user]);
