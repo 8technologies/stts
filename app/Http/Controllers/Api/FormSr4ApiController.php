@@ -6,14 +6,26 @@ use App\Models\FormSr4;
 use Encore\Admin\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Profile;
 
 
 class FormSr4ApiController extends AdminController {
+    
+     /**
+      * Create a new AuthApiController instance.
+      *
+      * @return void
+      */
+      public function __construct()
+      {
+          $this->middleware('auth');
+      } 
 
     // create new sr4 form via json response api end points defined in api.php
     public function new_sr4_form(Request $request): \Illuminate\Http\JsonResponse
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         $data = $request->only(
             'administrator_id',
@@ -66,11 +78,10 @@ class FormSr4ApiController extends AdminController {
             return response()->json(['error' => $post_data->messages()], 200);
         }
 
-
         $form = FormSr4::create([
-            'administrator_id' => '114',
+            'administrator_id' => $user->id,
             'type' => $request->input('type'),
-            'name_of_applicant' =>  'Jane Jaan',
+            'name_of_applicant' => $user->name,
             'address' => $request->input('address'),
             'company_initials' => $request->input('company_initials'),
             'premises_location' => $request->input('premises_location'),

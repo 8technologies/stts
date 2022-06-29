@@ -21,7 +21,6 @@ use JWTAuth;
 
 
 class JWTAuthApiController extends Controller {
-
      /**
       * Create a new AuthApiController instance.
       *
@@ -91,6 +90,7 @@ class JWTAuthApiController extends Controller {
         ], Response::HTTP_OK); 
     }
 
+
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -132,6 +132,7 @@ class JWTAuthApiController extends Controller {
             'token' => $token,
         ]);
     }
+
  
     public function logout(Request $request)
     {
@@ -160,6 +161,7 @@ class JWTAuthApiController extends Controller {
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
  
     public function profile(Request $request)
     {
