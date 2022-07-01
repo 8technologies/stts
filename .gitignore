@@ -1,4 +1,5 @@
 .env
 .env_remote
+storage/logs/laravel.log
 .idea
 .vscode
