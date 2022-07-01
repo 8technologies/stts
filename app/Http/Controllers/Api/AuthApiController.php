@@ -14,14 +14,14 @@ use Laravel\Passport\TokenRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-// use Laravel\Passport\Passport;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Response;
 use JWTAuth;
 
 
 class AuthApiController extends Controller {
-     /**
+    
+	/**
      * Create a new AuthController instance.
      *
      * @return void
@@ -108,9 +108,9 @@ class AuthApiController extends Controller {
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
         return $this->respondWithToken($token);
     }
+
 
     /**
      * Get the authenticated User.

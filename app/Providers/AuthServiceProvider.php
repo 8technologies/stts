@@ -33,5 +33,9 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensExpireIn(now()->addDays(15));
         Passport::refreshTokensExpireIn(now()->addDays(30));
         Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+
+        \Auth::viaRequest('email', function ($request) {
+            return Encore\Admin\Auth\Database\Administrator::where('email', $request->email)->first();
+         });
     }
 }
