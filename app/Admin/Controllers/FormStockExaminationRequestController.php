@@ -48,7 +48,7 @@ class FormStockExaminationRequestController extends AdminController
         $grid = new Grid(new FormStockExaminationRequest());
 
         if (Admin::user()->isRole('basic-user')) {
-            $grid->model()->where('administrator_id', '=', Admin::user()->id);
+            $grid->model()->where('administrator_id', '=', Admin::auth()->user()->id);
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
                 if (
@@ -84,8 +84,8 @@ class FormStockExaminationRequestController extends AdminController
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
         $grid->column('administrator_id', __('Requested by'))->display(function ($userId) {
-            // $u = Administrator::find($userId);
-            $u = Administrator::find(auth()->user()->id);
+            $u = Administrator::find($userId);
+            // $u = Administrator::find(auth()->user()->id);
             if (!$u)
                 return $userId;
             return $u->name;

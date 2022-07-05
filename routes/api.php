@@ -28,6 +28,7 @@ use App\Http\Controllers\Api\FormSr10ApiController;
 use App\Http\Controllers\Api\FormCropDeclarationApiController;
 use App\Http\Controllers\Api\SeedLabApiController;
 use App\Http\Controllers\Api\SeedLabelApiController;
+use App\Http\Controllers\Api\FormStockRecordApiController;
 use Illuminate\Routing\Router;
 use App\Http\Middleware\EnsureTokenIsValid;
 use Encore\Admin\Facades\Admin;
@@ -68,6 +69,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     // SeedStock
     Route::get("/form-stock-examination-requests/list", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_list"]);
+    Route::get("/form-stock-records/list", [FormStockRecordApiController::class, "form_stock_records_list"]);
     Route::get("/marktable-seed/list", [MarketableSeedApiController::class, "marktable_seed_list"]);
 
     // Quality Assurance

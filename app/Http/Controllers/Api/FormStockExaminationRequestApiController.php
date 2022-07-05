@@ -22,8 +22,8 @@ class FormStockExaminationRequestApiController extends AdminController
         
         */
         $user = auth()->user();
-        $query = DB::table('form_stock_examination_requests')->where('administrator_id', '=', $user->id)->get();
-        // $query = FormStockExaminationRequest::all();
+        // $query = DB::table('form_stock_examination_requests')->where('administrator_id', '=', $user->id)->get();
+        $query = FormStockExaminationRequest::all();
         
         return response()->json([
             'success' => true,

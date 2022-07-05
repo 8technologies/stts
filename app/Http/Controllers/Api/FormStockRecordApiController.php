@@ -2,29 +2,27 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\MarketableSeed;
-use App\Models\FormStockExaminationRequest;
+use App\Models\StockRecord;
 use Encore\Admin\Controllers\AdminController; 
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
 
 
-class MarketableSeedApiController extends AdminController
-{
+class FormStockRecordApiController extends AdminController
+{ 
     public function __construct()
     {
-        // $this->middleware('auth');
         $this->middleware('auth');
     }
 
-    public function marktable_seed_list()
+    public function form_stock_records_list()
     {
         /*  ---attributes---
         
         */
         $user = auth()->user();
-        $query = DB::table('marketable_seeds')->where('administrator_id', '=', $user->id)->get();
-        // $query = MarketableSeed::all();
+        $query = DB::table('stock_records')->where('administrator_id', '=', $user->id)->get();
+        // $query = StockRecord::all();
         
         return response()->json([
             'success' => true,
