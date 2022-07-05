@@ -20,7 +20,6 @@ use JWTAuth;
 
 
 class AuthApiController extends Controller {
-    
 	/**
      * Create a new AuthController instance.
      *
@@ -121,6 +120,19 @@ class AuthApiController extends Controller {
     {
         return response()->json(auth()->user());
     }
+
+
+    // update details of the currently logged in user.
+    public function update(Request $request)
+    {
+        $details=Administrator::find(auth()->user()->id);
+        $details->update($request->all());
+        return response()->json([
+            'success' => true,
+            'updated record' => $details,
+        ], Response::HTTP_OK); 
+    }
+
 
     /**
      * Log the user out (Invalidate the token).

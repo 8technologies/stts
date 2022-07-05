@@ -39,8 +39,10 @@ Route::post("/register", [AuthApiController::class, "register"]);
 Route::post("/login", [AuthApiController::class, "login"]);
 
 Route::group(['middleware' => 'api'], function ($router) {
-    Route::post("/logout", [AuthApiController::class, "logout"]);
     Route::get("/me", [AuthApiController::class, "me"]);
+    Route::put("/me/update", [AuthApiController::class, "update"]);
+
+    Route::post("/logout", [AuthApiController::class, "logout"]);
     
     Route::post('/refresh', [AuthApiController::class, 'refresh']);
 
