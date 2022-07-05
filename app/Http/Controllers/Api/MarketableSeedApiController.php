@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\MarketableSeed;
-use App\Models\FormStockExaminationRequest;
 use Encore\Admin\Controllers\AdminController; 
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;

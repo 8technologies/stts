@@ -2,33 +2,30 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\MarketableSeed;
-use App\Models\FormStockExaminationRequest;
 use Encore\Admin\Controllers\AdminController; 
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
 
 
-class FormStockExaminationRequestApiController extends AdminController
-{ 
+class ExportPermitApiController extends AdminController
+{
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function form_stock_examination_requests_list()
+    public function import_permits_list()
     {
         /*  ---attributes---
-        
         */
         $user = auth()->user();
-        $query = DB::table('form_stock_examination_requests')->where('administrator_id', $user->id)->get();
-        // $query = FormStockExaminationRequest::all();
+        $query = DB::table('import_export_permits')->where('administrator_id', '=', $user->id)->get();
+        // $query = ImportExportPermit::all();
         
         return response()->json([
             'success' => true,
             'Logged in user' => $user->name,
             'data' => $query,
         ], Response::HTTP_OK); 
-    }   
+    } 
 }
