@@ -15,6 +15,19 @@ use App\Http\Controllers\Api\UserAPIController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\ProductApiController;
 use App\Http\Controllers\Api\PProductApiController;
+use App\Http\Controllers\Api\OrderApiController;
+use App\Http\Controllers\Api\PreOrderApiController;
+use App\Http\Controllers\Api\QuotationApiController;
+use App\Http\Controllers\Api\FormStockExaminationRequestApiController;
+use App\Http\Controllers\Api\MarketableSeedApiController;
+use App\Http\Controllers\Api\ImportPermitApiController;
+use App\Http\Controllers\Api\ExportPermitApiController;
+use App\Http\Controllers\Api\PlantingReturnsCompanyApiController;
+use App\Http\Controllers\Api\PlantingReturnsGrowerApiController;
+use App\Http\Controllers\Api\FormSr10ApiController;
+use App\Http\Controllers\Api\FormCropDeclarationApiController;
+use App\Http\Controllers\Api\SeedLabApiController;
+use App\Http\Controllers\Api\SeedLabelApiController;
 use Illuminate\Routing\Router;
 use App\Http\Middleware\EnsureTokenIsValid;
 use Encore\Admin\Facades\Admin;
@@ -42,21 +55,33 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/user/search/{name}", [UserAPIController::class, "where"]);
 
 
-    // form submission
-    // sr4 forms
+    // Application forms
     Route::post("/forms/sr4/new", [FormSr4ApiController::class, "new_sr4_form"]);
-    // sr6 forms
     Route::post("/forms/sr6/new", [FormSr6ApiController::class, "new_sr6_form"]);
-    // // QDS forms
     // Route::post("/forms/qds/new", [FormQDSApiController::class, "form"]);
-    // // sr10 forms
-    // Route::post("/forms/sr10/new", [FormSr10ApiController::class, "form"]);
-
-
-
-});
 
     // marketplace
-    Route::get("/products/list", [PProductApiController::class, "products_list"]);
+    Route::get("/products/list", [ProductApiController::class, "products_list"]);
+    Route::get("/orders/list", [OrderApiController::class, "order_list"]);
+    Route::get("/pre-orders/list", [PreOrderApiController::class, "pre_order_list"]);
+    Route::get("/quotations/list", [QuotationApiController::class, "quotations_list"]);
+
+    // SeedStock
+    Route::get("/form-stock-examination-requests/list", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_list"]);
+    Route::get("/marktable-seed/list", [MarketableSeedApiController::class, "marktable_seed_list"]);
+
+    // Quality Assurance
+    Route::get("/import-permit/list", [ImportPermitApiController::class, "import_permits_list"]);
+    Route::get("/export-permit/list", [ExportPermitApiController::class, "export_permits_list"]);
+    Route::get("/planting-returns-company/list", [PlantingReturnsCompanyApiController::class, "planting_returns_company_list"]);
+    Route::get("/planting-returns-grower/list", [PlantingReturnsGrowerApiController::class, "planting_returns_grower_list"]);
+    Route::get("/form-sr10/list", [FormSr10ApiController::class, "form_sr10_list"]);
+    Route::get("/form-crop-declarations/list", [FormCropDeclarationApiController::class, "form_crop_declarations_list"]);
+    Route::get("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
+    Route::get("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
+
+
+    // $router->resource('products', ProductApiController::class);
+});
+
     
-    $router->resource('products', ProductApiController::class);

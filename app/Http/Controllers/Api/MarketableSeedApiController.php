@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Product;
+use App\Models\MarketableSeed;
 use App\Models\FormStockExaminationRequest;
 use Encore\Admin\Controllers\AdminController; 
 use Encore\Admin\Form; 
@@ -11,10 +11,9 @@ use Encore\Admin\Show;
 use Illuminate\Support\Facades\Request; 
 use App\Admin\Extensions\Tools\GridView; 
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\DB;
 
 
-class ProductApiController extends AdminController
+class MarketableSeedApiController extends AdminController
 {
     public function __construct()
     {
@@ -22,19 +21,18 @@ class ProductApiController extends AdminController
         $this->middleware('auth');
     }
 
-    public function products_list()
+    public function marktable_seed_list()
     {
         /*  ---attributes---
         
         */
+        // return MarketableSeed::all();  
         $user = auth()->user();
-        // $query = Product::where('administrator_id', $user->id)->get();
-        // $query = DB::table('products')->where('administrator_id', '=', $user->id)->get();
-        $query = Product::all();
+        $query = MarketableSeed::all()->where('administrator_id', $user->id)->get();
         
         return response()->json([
-            'success' => true,
-            'Logged in user' => $user->name,
+            'success' => false,
+            'user id' => $query,
             'data' => $query,
         ], Response::HTTP_OK); 
     }   

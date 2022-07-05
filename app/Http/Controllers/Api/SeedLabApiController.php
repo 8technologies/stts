@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\SeedLab;
 use Encore\Admin\Controllers\AdminController; 
-use App\Models\FormSr10;
 
-
-class FormSr10ApiController extends AdminController
+    
+class SeedLabApiController extends AdminController
 {
-    public function form_sr10_list()
+    public function seed_lab_list()
     {
         /*  ---attributes---
         
         */
-        return FormSr10::all();  
+        return SeedLab::all();  
     }   
 }

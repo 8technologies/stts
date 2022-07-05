@@ -80,11 +80,12 @@ class FormStockExaminationRequestController extends AdminController
 
 
         $grid->column('id', __('Id'));
-        $grid->column('created_at', __('Created'))->display(function ($item) {
+        $grid->column('created_at', __('Date Requested'))->display(function ($item) {
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
-        $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
-            $u = Administrator::find($userId);
+        $grid->column('administrator_id', __('Requested by'))->display(function ($userId) {
+            // $u = Administrator::find($userId);
+            $u = Administrator::find(auth()->user()->id);
             if (!$u)
                 return $userId;
             return $u->name;
