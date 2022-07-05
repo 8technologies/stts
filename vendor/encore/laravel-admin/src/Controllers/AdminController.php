@@ -84,6 +84,7 @@ class AdminController extends Controller
             ->description($this->description['edit'] ?? trans('admin.edit'))
             ->body($this->form()->edit($id));
     }
+    
 
     /**
      * Create interface.
