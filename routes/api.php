@@ -57,8 +57,11 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::delete("/user/{id}", [UserAPIController::class, "destroy"]);
     Route::get("/user/search/{name}", [UserAPIController::class, "where"]);
 
-
     // Application forms
+    Route::get("/form-sr4/list", [FormSr4ApiController::class, "form_sr4_list"]);
+    Route::get("/form-sr6/list", [FormSr6ApiController::class, "form_sr6_list"]);
+    Route::get("/form-qds/list", [FormQDSApiController::class, "form_qds_list"]);
+
     Route::post("/forms/sr4/new", [FormSr4ApiController::class, "new_sr4_form"]);
     Route::post("/forms/sr6/new", [FormSr6ApiController::class, "new_sr6_form"]);
     // Route::post("/forms/qds/new", [FormQDSApiController::class, "form"]);
