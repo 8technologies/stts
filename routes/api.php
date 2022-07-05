@@ -25,7 +25,7 @@ use App\Http\Controllers\Api\ExportPermitApiController;
 use App\Http\Controllers\Api\PlantingReturnsCompanyApiController;
 use App\Http\Controllers\Api\PlantingReturnsGrowerApiController;
 use App\Http\Controllers\Api\FormSr10ApiController;
-use App\Http\Controllers\Api\FormCropDeclarationApiController;
+use App\Http\Controllers\Api\QDSCropDeclarationApiController;
 use App\Http\Controllers\Api\SeedLabApiController;
 use App\Http\Controllers\Api\SeedLabelApiController;
 use App\Http\Controllers\Api\FormStockRecordApiController;
@@ -78,12 +78,12 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/planting-returns-company/list", [PlantingReturnsCompanyApiController::class, "planting_returns_company_list"]);
     Route::get("/planting-returns-grower/list", [PlantingReturnsGrowerApiController::class, "planting_returns_grower_list"]);
     Route::get("/form-sr10/list", [FormSr10ApiController::class, "form_sr10_list"]);
-    Route::get("/form-crop-declarations/list", [FormCropDeclarationApiController::class, "form_crop_declarations_list"]);
+    Route::get("/qds-crop-declarations/list", [QDSCropDeclarationApiController::class, "qds_crop_declarations_list"]);
     Route::get("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
     Route::get("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
 
 
-    // $router->resource('products', ProductApiController::class);
+    // $router->resource('products', ProductApiController::class);  
 });
 
     

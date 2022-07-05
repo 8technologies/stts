@@ -118,7 +118,11 @@ class SeedLabelController extends AdminController
         //     return $this->seed_lab->lot_number;
         // })->sortable();
 
-        $grid->column('crop_variety_id', __('Crop variety'))->display(function () {
+        $grid->column('crop_variety_id', __('Crop variety ID'))->display(function () {
+            return $this->crop_variety->id;
+        })->sortable();
+
+        $grid->column('crop_variety', __('Crop variety'))->display(function () {
             return $this->crop_variety->name;
         })->sortable();
 

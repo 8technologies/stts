@@ -14,7 +14,7 @@ class ExportPermitApiController extends AdminController
         $this->middleware('auth');
     }
 
-    public function import_permits_list()
+    public function export_permits_list()
     {
         /*  ---attributes---
         */

@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers\Api;
 
-use Encore\Admin\Controllers\AdminController; 
+use App\Models\FormCropDeclaration;
+use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB; 
 
-class PlantingReturnsGrowerApiController extends AdminController
-{
+    
+class QDSCropDeclarationApiController extends AdminController
+{   
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function planting_returns_grower_list()
+    public function qds_crop_declarations_list()
     {
         /*  ---attributes---
         */
         $user = auth()->user();
-        $query = DB::table('sub_growers')->where('administrator_id', '=', $user->id)->get();
-        // $query = SubGrower::all();
+        $query = DB::table('form_crop_declarations')->where('administrator_id', '=', $user->id)->get();
+        // $query = FormQds::all();
         
         return response()->json([
             'success' => true,
