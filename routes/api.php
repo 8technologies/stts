@@ -57,6 +57,6 @@ Route::group(['middleware' => 'api'], function ($router) {
 });
 
     // marketplace
-    Route::get("/marketplace-list", [PProductApiController::class, "index"]);
+    Route::get("/products/list", [PProductApiController::class, "products_list"]);
     
     $router->resource('products', ProductApiController::class);

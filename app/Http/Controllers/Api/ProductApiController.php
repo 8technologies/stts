@@ -35,7 +35,7 @@ class ProductApiController extends AdminController
         $show->field('source', __('Source'));
         $show->field('detail', __('Detail'));
 
-        return $show;
+        // return $show;
         return response()->json([
             'success' => true,
             'data' =>  $show

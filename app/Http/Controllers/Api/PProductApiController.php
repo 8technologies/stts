@@ -14,7 +14,7 @@ use App\Admin\Extensions\Tools\GridView;
 
 class PProductApiController extends AdminController
 {
-    public function index()
+    public function products_list()
     {
         /*  ---attributes---
         id, created_at , updated_at, administrator_id, crop_variety_id, seed_label_id, quantity,
