@@ -17,9 +17,13 @@ use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Response;
 use JWTAuth;
+use App\Traits\ApiResponser;
 
 
-class AuthApiController extends Controller {
+class AuthApiController extends Controller 
+{
+    use ApiResponser;
+
 	/**
      * Create a new AuthController instance.
      *
@@ -118,7 +122,8 @@ class AuthApiController extends Controller {
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        $query = auth()->user();
+        return $this->successResponse($query, $message="Profile details"); 
     }
 
 
@@ -127,10 +132,8 @@ class AuthApiController extends Controller {
     {
         $details=Administrator::find(auth()->user()->id);
         $details->update($request->all());
-        return response()->json([
-            'success' => true,
-            'updated record' => $details,
-        ], Response::HTTP_OK); 
+        
+        return $this->successResponse($details, $message="Updated Profile"); 
     }
 
 

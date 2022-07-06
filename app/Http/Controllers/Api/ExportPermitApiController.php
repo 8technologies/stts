@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Api;
 use Encore\Admin\Controllers\AdminController; 
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
+use App\Traits\ApiResponser;
 
 
 class ExportPermitApiController extends AdminController
 {
+    use ApiResponser;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -22,10 +25,6 @@ class ExportPermitApiController extends AdminController
         $query = DB::table('import_export_permits')->where('administrator_id', '=', $user->id)->get();
         // $query = ImportExportPermit::all();
         
-        return response()->json([
-            'success' => true,
-            'Logged in user' => $user->name,
-            'data' => $query,
-        ], Response::HTTP_OK); 
+        return $this->successResponse($query, $message="Export permits");  
     } 
 }

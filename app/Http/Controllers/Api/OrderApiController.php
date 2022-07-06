@@ -6,10 +6,13 @@ use App\Models\Order;
 use Encore\Admin\Controllers\AdminController; 
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
+use App\Traits\ApiResponser;
 
 
 class OrderApiController extends AdminController
 {
+    use ApiResponser;
+
     public function __construct()
     {
         // $this->middleware('auth');
@@ -26,10 +29,6 @@ class OrderApiController extends AdminController
         // $query = DB::table('orders')->where('order_by', $user->id)->get();
         // $query = Order::all();
         
-        return response()->json([
-            'success' => true,
-            'Logged in user' => $user->name,
-            'data' => $query,
-        ], Response::HTTP_OK); 
+        return $this->successResponse($query, $message="List of Orders"); 
     }   
 }

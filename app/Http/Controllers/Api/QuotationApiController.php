@@ -6,10 +6,13 @@ use App\Models\Quotation;
 use Encore\Admin\Controllers\AdminController;  
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
+use App\Traits\ApiResponser;
 
 
 class QuotationApiController extends AdminController
 {
+    use ApiResponser;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -24,10 +27,6 @@ class QuotationApiController extends AdminController
         $query = DB::table('quotations')->where('administrator_id', '=', $user->id)->get();
         // $query = Quotation::all();
         
-        return response()->json([
-            'success' => true,
-            'Logged in user' => $user->name,
-            'data' => $query,
-        ], Response::HTTP_OK); 
+        return $this->successResponse($query, $message="List of Quotations");
     }    
 }

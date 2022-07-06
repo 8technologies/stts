@@ -12,10 +12,13 @@ use Illuminate\Support\Facades\Request;
 use App\Admin\Extensions\Tools\GridView; 
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
+use App\Traits\ApiResponser;
 
 
 class ProductApiController extends AdminController
 {
+    use ApiResponser;
+
     public function __construct()
     {
         // $this->middleware('auth');
@@ -32,10 +35,6 @@ class ProductApiController extends AdminController
         // $query = DB::table('products')->where('administrator_id', '=', $user->id)->get();
         $query = Product::all();
         
-        return response()->json([
-            'success' => true,
-            'Logged in user' => $user->name,
-            'data' => $query,
-        ], Response::HTTP_OK); 
+        return $this->successResponse($query, $message="List of Marketplace products"); 
     }   
 }

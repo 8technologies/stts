@@ -7,10 +7,13 @@ use App\Models\FormStockExaminationRequest;
 use Encore\Admin\Controllers\AdminController; 
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
+use App\Traits\ApiResponser;
 
 
 class FormStockExaminationRequestApiController extends AdminController
 { 
+    use ApiResponser;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -25,10 +28,6 @@ class FormStockExaminationRequestApiController extends AdminController
         $query = DB::table('form_stock_examination_requests')->where('administrator_id', $user->id)->get();
         // $query = FormStockExaminationRequest::all();
         
-        return response()->json([
-            'success' => true,
-            'Logged in user' => $user->name,
-            'data' => $query,
-        ], Response::HTTP_OK); 
+        return $this->successResponse($query, $message="Stock Examination requests"); 
     }   
 }

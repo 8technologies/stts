@@ -1,10 +1,5 @@
 <?php
 
-use App\Models\Crop;
-use App\Models\SeedLab;
-use App\Models\SeedLabel;
-use App\Models\SeedLabelPackage;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\FormSr4ApiController;
 use App\Http\Controllers\Api\FormSr6ApiController;
@@ -14,7 +9,6 @@ use App\Http\Controllers\Api\AuthApiController;
 use App\Http\Controllers\Api\UserAPIController;
 use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\ProductApiController;
-use App\Http\Controllers\Api\PProductApiController;
 use App\Http\Controllers\Api\OrderApiController;
 use App\Http\Controllers\Api\PreOrderApiController;
 use App\Http\Controllers\Api\QuotationApiController;
@@ -29,8 +23,6 @@ use App\Http\Controllers\Api\QDSCropDeclarationApiController;
 use App\Http\Controllers\Api\SeedLabApiController;
 use App\Http\Controllers\Api\SeedLabelApiController;
 use App\Http\Controllers\Api\FormStockRecordApiController;
-use Illuminate\Routing\Router;
-use App\Http\Middleware\EnsureTokenIsValid;
 use Encore\Admin\Facades\Admin;
 
 Admin::routes();
@@ -64,7 +56,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     Route::post("/forms/sr4/new", [FormSr4ApiController::class, "new_sr4_form"]);
     Route::post("/forms/sr6/new", [FormSr6ApiController::class, "new_sr6_form"]);
-    // Route::post("/forms/qds/new", [FormQDSApiController::class, "form"]);
+    Route::post("/pre-order/new", [PreOrderApiController::class, "pre_order_create"]);
 
     // marketplace
     Route::get("/products/list", [ProductApiController::class, "products_list"]);
@@ -92,3 +84,16 @@ Route::group(['middleware' => 'api'], function ($router) {
 });
 
     
+/*
+Code 	Status 	Description
+200 	Ok The request was successfully completed.
+201 	Created. A new reesource was successfully created.
+400 	Bad Request The request was invalid.
+401 	Unauthorized. Invalid login credentials.
+403 	Forbidden. You do not have enough permissions to perform this action.
+404 	Not Found The requested resource/page not found.
+405 	Method Not Allowed. This request is not supported by the resource.
+409 	Conflict. The request could not be completed due to a conflict.
+500 	Internal Server Error. The request was not completed due to an internal error on the server side.
+503 	Service Unavailable. The server was unavailable. 
+*/
