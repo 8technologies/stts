@@ -82,18 +82,3 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     // $router->resource('products', ProductApiController::class);  
 });
-
-    
-/*
-Code 	Status 	Description
-200 	Ok The request was successfully completed.
-201 	Created. A new reesource was successfully created.
-400 	Bad Request The request was invalid.
-401 	Unauthorized. Invalid login credentials.
-403 	Forbidden. You do not have enough permissions to perform this action.
-404 	Not Found The requested resource/page not found.
-405 	Method Not Allowed. This request is not supported by the resource.
-409 	Conflict. The request could not be completed due to a conflict.
-500 	Internal Server Error. The request was not completed due to an internal error on the server side.
-503 	Service Unavailable. The server was unavailable. 
-*/

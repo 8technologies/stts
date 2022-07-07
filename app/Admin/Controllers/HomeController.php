@@ -28,21 +28,20 @@ class HomeController extends Controller
 {
     public function index(Content $content)
     {
-
-        
         // foreach (CropInspectionType::all() as $key => $v) {
         //     echo "==> {$v->crop->name}<hr>";
         // }
         // dd();
 
-        $content->title('Main Dashboard');
+        $content->title('Your STTS Dashboard');
         //$content->description('Description...');
 
         $content->row(function ($row) { 
             if (
                 Admin::user()->isRole('admin') ||
                 Admin::user()->isRole('inspector') 
-            ) {
+            ) 
+            {
                 $box = new Box('Marketable seed', view('admin.dashboard.chart-marketable-seed'));
                 $box->removable();
                 $box->collapsable();
