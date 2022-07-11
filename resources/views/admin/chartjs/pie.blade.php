@@ -58,16 +58,9 @@ $(function () {
         },
         options: {
             responsive: true,
-            
-            plugins: {
-                legend: {
-                    position: 'left',
-                },
-                title: {
-                    display: true,
-                    text: 'Chart.js Pie Chart'
-                }
-                },
+            legend: {
+                position: 'top',
+            },
             title: {
                 display: true,
                 text: 'Marketplace Pie Chart'
