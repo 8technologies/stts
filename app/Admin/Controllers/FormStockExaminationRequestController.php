@@ -71,7 +71,7 @@ class FormStockExaminationRequestController extends AdminController
                 if (
                     $status == 1
                 ) {
-                    //$actions->disableEdit();
+                    $actions->disableEdit();
                 }
             });
         } else {
@@ -101,13 +101,9 @@ class FormStockExaminationRequestController extends AdminController
             return $cat;
         })->sortable();
 
-
-
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
         })->sortable();
-
-
 
         $grid->column('inspector', __('Inspector'))->display(function ($userId) {
             if (Admin::user()->isRole('basic-user')) {
@@ -119,10 +115,10 @@ class FormStockExaminationRequestController extends AdminController
             return $u->name;
         })->sortable();
 
-
         return $grid;
     }
 
+    
     /**
      * Make a show builder.
      *

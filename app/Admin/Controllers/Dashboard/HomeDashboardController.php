@@ -185,9 +185,7 @@ class HomeDashboardController extends AdminController
             ['name' => 'Registered users:', 'value' => Administrator::get()->count()],
 
             ['name' => 'Import Permits:', 'value' =>  ImportExportPermit::get()->count()],
-            ['name' => 'Export Permits:', 'value' =>  ImportExportPermit::get()->count()],
-            
-            
+            ['name' => 'Export Permits:', 'value' =>  ImportExportPermit::get()->count()],            
         ];
 
         $user = auth()->user();
@@ -195,10 +193,7 @@ class HomeDashboardController extends AdminController
         $non_admin_envs = [
             ['name' => "DATA", 'value' => ""],
             ['name' => 'Import Permits:', 'value' =>  ImportExportPermit::where('administrator_id', $user->id)->count()],
-            ['name' => 'Export Permits:', 'value' =>  ImportExportPermit::where('administrator_id', $user->id)->count()],
-
-            
-            
+            ['name' => 'Export Permits:', 'value' =>  ImportExportPermit::where('administrator_id', $user->id)->count()],  
         ];
 
         

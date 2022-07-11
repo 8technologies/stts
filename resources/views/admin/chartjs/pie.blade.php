@@ -1,4 +1,5 @@
 <canvas id="pie" style="width: 100%;"></canvas>
+
 <script>
 
 $(function () {
@@ -58,9 +59,15 @@ $(function () {
         },
         options: {
             responsive: true,
-            legend: {
-                position: 'top',
-            },
+            plugins: {
+                legend: {
+                    position: 'left',
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Pie Chart'
+                }
+                },
             title: {
                 display: true,
                 text: 'Marketplace Pie Chart'

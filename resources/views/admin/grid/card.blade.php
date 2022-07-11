@@ -1,5 +1,7 @@
 @php
 use App\Models\Utils;
+use Encore\Admin\Facades\Admin;
+
 @endphp
 <div class="box">
     @if(isset($title))
@@ -51,6 +53,7 @@ use App\Models\Utils;
                         </p>
 
                         <?Php
+                        // use Encore\Admin\Facades\Admin;
                         $administrator_id = $row->column('administrator_id');
                         if($administrator_id == Admin::user()->id){  
                     ?>
