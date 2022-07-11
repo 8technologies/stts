@@ -1,5 +1,4 @@
 <canvas id="pie" style="width: 100%;"></canvas>
-
 <script>
 
 $(function () {
@@ -59,6 +58,7 @@ $(function () {
         },
         options: {
             responsive: true,
+            
             plugins: {
                 legend: {
                     position: 'left',
