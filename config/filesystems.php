@@ -44,6 +44,22 @@ return [
             'url' => env('APP_URL') . 'public/storage',
             'visibility' => 'public',
         ],
+        
+        // 'admin' => [
+        //     'driver' => 'local',
+        //     'root' => $_SERVER['DOCUMENT_ROOT'].'public/assets/images/stts/uploads',
+        //     'url' => env('APP_URL') . 'public/assets/images/stts/uploads',
+        //     'visibility' => 'public',
+        // ],
+        
+        
+        'admin' => [
+            'driver' => 'local',
+            'root' => public_path('assets/images/stts/uploads'),
+            'visibility' => 'public',
+            'url' => env('APP_URL') . 'assets/images/stts/uploads',
+        ],
+        
 
         's3' => [
             'driver' => 's3',
@@ -54,12 +70,6 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-        ],
-        'admin' => [
-            'driver' => 'local',
-            'root' => $_SERVER['DOCUMENT_ROOT'].'/public/storage',
-            'url' => env('APP_URL') . '/public/storage',
-            'visibility' => 'public',
         ],
     ],
 

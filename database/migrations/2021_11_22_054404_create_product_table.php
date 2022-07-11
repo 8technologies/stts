@@ -30,7 +30,7 @@ class CreateProductTable extends Migration
             $table->integer("seed_class")->nullable();
             $table->integer("price")->nullable();
             $table->integer("wholesale_price")->nullable();
-            $table->text("image")->nullable();
+            $table->string('image')->nullable();
             $table->text("images")->nullable();
             $table->text("source")->nullable();
             $table->text("detail")->nullable(); 

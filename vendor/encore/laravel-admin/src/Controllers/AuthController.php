@@ -157,6 +157,7 @@ class AuthController extends Controller
         return $form;
     }
 
+    
     /**
      * @return string|\Symfony\Component\Translation\TranslatorInterface
      */

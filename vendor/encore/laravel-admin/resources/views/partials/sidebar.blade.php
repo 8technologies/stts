@@ -11,7 +11,7 @@
             <div class="pull-left info">
                 <p>{{ Admin::user()->name }}</p>
                 <!-- Status -->
-                <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('admin.online') }}</a>
+                <a href="#"><i class="fa fa-check text-success"></i> {{ trans('admin.online') }}</a>
             </div>
         </div>
 
@@ -19,7 +19,7 @@
         <!-- search form (Optional) -->
         <form class="sidebar-form" style="overflow: initial;" onsubmit="return false;">
             <div class="input-group">
-                <input type="text" autocomplete="off" class="form-control autocomplete" placeholder="Search...">
+                <input type="text" autocomplete="off" class="form-control autocomplete" placeholder="Search Menu...">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>

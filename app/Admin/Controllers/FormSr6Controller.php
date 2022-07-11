@@ -285,8 +285,9 @@ class FormSr6Controller extends AdminController
 
             $form->select('type', __('Cateogry'))
             ->options([
-                'Individual' => 'Individual',
+                'Seed Grower' => 'Seed Grower',
                 'Company' => 'Company',
+                'Individual' => 'Individual',
             ])
             ->rules('required');
 

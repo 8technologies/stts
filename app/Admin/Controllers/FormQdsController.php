@@ -234,13 +234,13 @@ class FormQdsController extends AdminController
         $form = new Form(new FormQds());
         if ($form->isCreating()) {
             if (!Utils::can_create_qds()) {
-                admin_warning("Warning", "You cannot create a new QDS form with a while still having another active one.");
+                admin_warning("Warning", "You cannot create a new QDS form while still having another active one.");
                 return redirect(admin_url('form-qds'));
             }
         } 
 
-
         session_start();
+        
         if (!isset($_SESSION['sr6_refreshed'])) {
             $_SESSION['sr6_refreshed'] = "yes";
             $my_uri = $_SERVER['REQUEST_URI'];
@@ -258,8 +258,6 @@ class FormQdsController extends AdminController
                 //echo($form->dealers_in);
             }
         });
-
-
 
         $form->disableCreatingCheck();
         $form->tools(function (Form\Tools $tools) {

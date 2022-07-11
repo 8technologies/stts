@@ -21,6 +21,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Auth;
 
+
 class OrderController extends AdminController
 {
     /**
@@ -29,6 +30,7 @@ class OrderController extends AdminController
      * @var string
      */
     protected $title = 'Order';
+
 
     /**
      * Make a grid builder.
@@ -99,6 +101,7 @@ class OrderController extends AdminController
         return $grid;
     }
 
+
     /**
      * Make a show builder.
      *
@@ -123,6 +126,7 @@ class OrderController extends AdminController
 
         return $show;
     }
+
 
     /**
      * Make a form builder.
@@ -157,9 +161,7 @@ class OrderController extends AdminController
                 }
 
 
-
                 if ($form->status == 3) {
-
                     $market = new MarketableSeed();
                     $market->administrator_id = $order->administrator_id;
                     $market->quantity = $order->quantity;
@@ -308,7 +310,6 @@ class OrderController extends AdminController
             });
 
 
-
             $id = 0;
             if (isset($_GET['id'])) {
                 $id = (int)($_GET['id']);
@@ -317,12 +318,13 @@ class OrderController extends AdminController
                 die();
             }
 
+
             if (isset($_SESSION['product_id'])) {
                 $id = $_SESSION['product_id'];
             }
 
-            if ($id < 1) {
 
+            if ($id < 1) {
                 dd("pro not found");
                 return ("Product ID not found. You have to create new order from market place.");
             }
@@ -404,6 +406,7 @@ class OrderController extends AdminController
         $form->disableCreatingCheck();
         $form->disableViewCheck();
         $form->disableReset();
+
         return $form;
     }
 }

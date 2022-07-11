@@ -13,6 +13,7 @@ return [
     | login page.
     |
     */
+    // 'name' => 'The National STTS',
     'name' => 'The National Seed Tracking & Tracing System Uganda',
 
     /*
@@ -24,7 +25,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<img width="100%" src="/assets/images/stts/logos/logo_top.png" alt="Admin logo">',
+    // 'logo' => '<img width="100%" src="\assets\images\stts\logos\logo_top.png" alt="Admin logo">',
 
     /*
     |--------------------------------------------------------------------------
@@ -251,7 +252,7 @@ return [
     | Set a default avatar for newly created users.
     |
     */
-    'default_avatar' => 'vendor/laravel-admin/AdminLTE/dist/img/user2-160x160.jpg',
+    'default_avatar' => 'vendor/laravel-admin/AdminLTE/dist/img/default_profile.png',
 
     /*
     |--------------------------------------------------------------------------
@@ -291,7 +292,7 @@ return [
     | "sidebar-mini".
     |
     */
-    'layout' => ['fixed'],
+    'layout' => ['fixed', 'sidebar-mini'],
 
     /*
     |--------------------------------------------------------------------------
@@ -323,7 +324,7 @@ return [
     | Whether to display the environment at the footer of each page
     |
     */
-    'show_environment' => true,
+    'show_environment' => false,
 
     /*
     |--------------------------------------------------------------------------

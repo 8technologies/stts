@@ -396,8 +396,6 @@ class PlantingReturnController extends AdminController
             }
         }
 
-
-
         return $form;
     }
 }

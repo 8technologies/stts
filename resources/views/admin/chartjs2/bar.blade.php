@@ -3,10 +3,6 @@
     
 $(function () {
 
-    function randomScalingFactor() {
-        return Math.floor(Math.random() * 1000)
-    }
-
     window.chartColors = {
         red: 'rgb(255, 99, 132)',
         orange: 'rgb(255, 159, 64)',
@@ -14,33 +10,34 @@ $(function () {
         green: 'rgb(75, 192, 192)',
         blue: 'rgb(54, 162, 235)',
         purple: 'rgb(153, 102, 255)',
-        grey: 'rgb(201, 203, 207)',
-        ccc: '#318db4',
-        ggreen: '#008140'
+        grey: 'rgb(201, 203, 207)'
     };
 
     var barChartData = {
         labels: [
-            'Products', 
-            'Orders', 
-            'Pre-Orders', 
-            'Quotations',
+            'Import permits', 
+            'Export Permits', 
+            'Planting Returns- Company',
+            'Planting Returns- Grower',
+            'SR10 Forms', 
+            'QDS Forms', 
+            'Seed Labs',
+            'Seed Labels'
         ],
         datasets: [{
-            label: 'Marketplace',
+            label: 'Dataset 1',
+            borderColor: window.chartColors.red,
             borderWidth: 1,
             data: [
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor()
-            ] ,
-                backgroundColor: [
-                    window.chartColors.ggreen,
-                    window.chartColors.blue,
-                    window.chartColors.purple,
-                    window.chartColors.red,
-                ],
+                $total_import_permits,
+                $total_export_permits,
+                $total_planting_returns_company,
+                $total_planting_returns_grower,
+                $total_form_sr10s,
+                $total_form_qds,
+                $total_seed_labs,
+                $total_seed_labels
+            ]
         }]
     };
 
@@ -54,7 +51,7 @@ $(function () {
                 position: 'top',
             },
             title: {
-                display: false,
+                display: true,
                 text: 'Chart.js Bar Chart'
             }
         }

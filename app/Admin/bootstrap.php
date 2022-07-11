@@ -22,9 +22,6 @@ use Encore\Admin\Facades\Admin;
 
 Encore\Admin\Form::forget(['map', 'editor']);
 Admin::css('./assets/css/custom/admin.css');
-// Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
-//     $navbar->left(view('search-bar'));
-// });
 
 
 Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
@@ -32,3 +29,5 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
     $navbar->right(new \App\Admin\Extensions\Nav\Links());
 });
 
+// https://laravel-admin.org/docs/en/custom-chart
+Admin::js('/vendor/chartjs/dist/Chart.min.js');

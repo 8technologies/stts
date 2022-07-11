@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\FormSr4ApiController;
 use App\Http\Controllers\Api\FormSr6ApiController;
 use App\Http\Controllers\Api\FormQDSApiController;
-use App\Http\Controllers\Api\JWTAuthApiController;
 use App\Http\Controllers\Api\AuthApiController;
 use App\Http\Controllers\Api\UserAPIController;
 use App\Http\Controllers\Api\ResetPasswordController;
@@ -25,22 +24,23 @@ use App\Http\Controllers\Api\SeedLabelApiController;
 use App\Http\Controllers\Api\FormStockRecordApiController;
 use Encore\Admin\Facades\Admin;
 
+
 Admin::routes();
 
 Route::post("/register", [AuthApiController::class, "register"]);
 Route::post("/login", [AuthApiController::class, "login"]);
 
 Route::group(['middleware' => 'api'], function ($router) {
+    // auth
     Route::get("/me", [AuthApiController::class, "me"]);
     Route::put("/me/update", [AuthApiController::class, "update"]);
-
     Route::post("/logout", [AuthApiController::class, "logout"]);
     
+    // jwt
     Route::post('/refresh', [AuthApiController::class, 'refresh']);
 
     // password reset/ change
     Route::post('reset_password', [ResetPasswordController::class, 'sendEmail']);
-
 
     // users
     Route::get("/user/list", [UserAPIController::class, "index"]);
@@ -78,7 +78,6 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/qds-crop-declarations/list", [QDSCropDeclarationApiController::class, "qds_crop_declarations_list"]);
     Route::get("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
     Route::get("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
-
 
     // $router->resource('products', ProductApiController::class);  
 });

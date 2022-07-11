@@ -70,12 +70,23 @@
           </div>
           @endif
         </div>
+
         <!-- /.col -->
         <div class="col-xs-4">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <button type="submit" class="btn btn-primary btn-block btn-flat">{{ trans('admin.login') }}</button>
         </div>
         <!-- /.col -->
+      </div> 
+      
+      <hr>
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">Don't have an account? <a
+                        href="{{ route('register') }}">Register</a> </div>
+            </div>
+        </div>
       </div>
     </form>
 

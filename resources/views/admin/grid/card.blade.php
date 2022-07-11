@@ -22,12 +22,14 @@ use App\Models\Utils;
 
     <!-- /.box-header -->
     <div class="box-body">
+
         <ul class="mailbox-attachments clearfix">
             @foreach($grid->rows() as $row)
             @php
             $link = admin_url("/products/".$row->column('id'));
             $link_buy = admin_url("/orders/create?id=".$row->column('id'));
             @endphp
+
             <li>
                 @php
                 $img = Utils::get_file_url($row->column('image'));
@@ -54,8 +56,8 @@ use App\Models\Utils;
                     ?>
                 </a>
 
-                <?php }?>
-                <a class="btn btn-primary btn-block mt-2" href="{{$link_buy}}">BUY NOW</a>
+                <?php }?><br>
+                <a class="btn btn-primary mt-2" href="{{$link_buy}}">BUY NOW</a><br>
     </div>
 
 

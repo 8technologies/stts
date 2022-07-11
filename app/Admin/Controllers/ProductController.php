@@ -9,12 +9,13 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Request;
-use App\Admin\Extensions\Tools\GridView;
+use Encore\Admin\Facades\Admin;
+use Illuminate\Support\Facades\DB;
+use App\Models\Utils;
+
 
 class ProductController extends AdminController
 {
-
-
     /**
      * Title for current resource.
      *
@@ -29,9 +30,9 @@ class ProductController extends AdminController
      */
     protected function grid()
     {
-
-        $market_records = MarketableSeed::where('is_counted', 0)->get();
-        foreach ($market_records as $key => $market_rec) {
+        $market_records = MarketableSeed::where('is_counted', 1)->get();
+        
+        foreach ($market_records as $market_rec) {
             $pro = null;
             $pro = Product::where('lab_test_number', $market_rec->lab_test_number)->first();
 
@@ -69,6 +70,7 @@ class ProductController extends AdminController
                 } catch (\Throwable $th) {
                     $pro->name = "No name";
                 }
+
                 $pro->administrator_id = $market_rec->administrator_id;
                 $pro->crop_variety_id = $market_rec->crop_variety_id;
                 $pro->seed_label_id = $market_rec->seed_label_id;
@@ -78,55 +80,64 @@ class ProductController extends AdminController
                 $pro->seed_class = $market_rec->seed_class;
                 $pro->source = $market_rec->source;
                 $pro->detail = $market_rec->detail;
+                
                 if (!$pro->save()) {
                     dd("failed to save");
                 }
+
                 $market_rec->is_counted = 1;
                 $market_rec->save();
             }
-        }
+        }    // end forloop
 
         $grid = new Grid(new Product());
-        $grid->column('id', __('Id'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('administrator_id', __('Administrator id'));
         $grid->column('crop_variety_id', __('Crop variety id'));
         $grid->column('seed_label_id', __('Seed label id'));
-        $grid->column('quantity', __('Quantity'));
         $grid->column('lab_test_number', __('Lab test number'));
         $grid->column('lot_number', __('Lot number'));
         $grid->column('seed_class', __('Seed class'));
+        $grid->column("image", __("Photo"))->image('','60','60');
+        $grid->column('quantity', __('Quantity'));
         $grid->column('price', __('Price'));
         $grid->column('wholesale_price', __('Wholesale price'));
-        $grid->column('image', __('Image'));
-        $grid->column('images', __('Images'));
+        // $grid->column('id', __('Id'));
+        // $grid->column('administrator_id', __('Administrator id'));
+        // $grid->column('images', __('Images'));
         $grid->column('source', __('Source'));
-        $grid->column('detail', __('Detail'));
+        // $grid->column('detail', __('Detail'));
+        $grid->column('created_at', __('Created at'));
+        $grid->column('updated_at', __('Updated at'));
 
         $grid->actions(function ($actions) {
             $actions->disableDelete();
         });
-        $grid->disableBatchActions();
-        $grid->disableCreateButton();
-        $grid->disableExport();
- 
 
-        if (Request::get('view') !== 'table') {
-            $grid->setView('admin.grid.card');
+        $grid->disableBatchActions();
+        $grid->disableFilter();
+        $grid->quickSearch();
+        // $grid->quickSearch('wholesale_price');
+
+        // restrict creat marketplace items to the admin alone
+        if (! Admin::user()->isRole('admin')) {
+            $grid->disableCreateButton();
         }
 
+        $grid->disableExport();
+        
+        if (Request::get('view') !== 'table') {
+            $grid->setView('admin.grid.card', []);
+        }
 
         return $grid;
     }
 
+
     /**
      * Make a show builder.
-     *
      * @param mixed $id
      * @return Show
      */
-    protected function detail($id)
+    protected function detail($id)   // details page
     {
         $show = new Show(Product::findOrFail($id));
 
@@ -159,7 +170,7 @@ class ProductController extends AdminController
     {
         $form = new Form(new Product());
 
-        $form->number('administrator_id', __('Administrator id'))->default(1);
+        // $form->number('administrator_id', __('Administrator id'))->default(1);
         $form->number('crop_variety_id', __('Crop variety id'))->default(1);
         $form->number('seed_label_id', __('Seed label id'))->default(1);
         $form->number('quantity', __('Quantity'));

@@ -8,7 +8,10 @@ use App\Http\Controllers\PrintController2;
 use App\Http\Middleware\Authenticate;
 use app\Mail\FormSubmitted;
 use Illuminate\Support\Facades\Mail;
+use App\Admin\Controllers\Charts\QualityAssurance\BarGraphTotalsController;
 
+
+Route::get('/dd', [BarGraphTotalsController::class, 'index']);
 
 Route::get('/', [MainController::class, 'index']);
 // Route::get('/test', [MainController::class, function (){

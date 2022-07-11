@@ -41,23 +41,24 @@
 
                             <p>
                                 {{ Admin::user()->name }}
-                                <small>Member since admin {{ Admin::user()->created_at }}</small>
+                                <small>Joined on: {{ Admin::user()->created_at }}</small>
                             </p>
                         </li>
-                        <li class="user-footer">
+
+                        <li class="user-footer" style="background-color: #008140;">
                             <div class="pull-left">
-                                <a href="{{ admin_url('auth/setting') }}" class="btn btn-default btn-flat">{{ trans('admin.setting') }}</a>
+                                <a href="{{ admin_url('auth/setting') }}" class="btn btn-default">{{ trans('admin.setting') }}</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ admin_url('auth/logout') }}" class="btn btn-default btn-flat">{{ trans('admin.logout') }}</a>
+                                <a href="{{ admin_url('auth/logout') }}" class="btn btn-default">{{ trans('admin.logout') }}</a>
                             </div>
                         </li>
                     </ul>
                 </li>
                 <!-- Control Sidebar Toggle Button -->
-                {{--<li>--}}
+                <li>
                     {{--<a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>--}}
-                {{--</li>--}}
+                </li>
             </ul>
         </div>
     </nav>
