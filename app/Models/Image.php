@@ -11,6 +11,7 @@ class Image extends Model
     protected $fillable = [
         'src',
         'thumbnail',
+        
         'user_id',
     ];
 }

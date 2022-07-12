@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\QDSCropDeclarationApiController;
 use App\Http\Controllers\Api\SeedLabApiController;
 use App\Http\Controllers\Api\SeedLabelApiController;
 use App\Http\Controllers\Api\FormStockRecordApiController;
+use App\Http\Controllers\Api\CropApiController;
 use Encore\Admin\Facades\Admin;
 
 
@@ -80,4 +81,8 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
 
     // $router->resource('products', ProductApiController::class);  
+
+    
+    Route::get('/crops-list/', [CropApiController::class, "crops_list"]);
+    Route::post('/crops-create/', [CropApiController::class, "crops_list"]);
 });

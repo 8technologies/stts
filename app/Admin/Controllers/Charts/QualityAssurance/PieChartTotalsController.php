@@ -47,8 +47,6 @@ class PieChartTotalsController extends Controller
             'total_seed_labels'=> $total_seed_labels
         ];
 
-        $context['context'] = json_encode($context);
-
-        return view('admin.chartjs.pie', $context);
+    	return view('admin.chartjs.pie')->with('year',json_encode($total_import_permits,JSON_NUMERIC_CHECK));
     }
 }
