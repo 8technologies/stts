@@ -31,7 +31,6 @@ class CropApiController extends AdminController
         return $this->successResponse($query, $message="Crops list"); 
     } 
 
-
     
     // create a new Crop form
     public function crops_create(Request $request): \Illuminate\Http\JsonResponse
@@ -39,37 +38,30 @@ class CropApiController extends AdminController
         $user = auth()->user();
 
         $data = $request->only(
-            // 'administrator_id', 
-            'crop_variety_id', 
-            'quantity',  
-            'seed_class',    
-            'collection_date', 
-            'pickup_location',
-            'detail', 
+            'name',
+            'number_of_inspection',
+            'number_of_days_before_submision',
+            'created_at',
+            'updated_at',
         );
 
         $post_data = Validator::make($data, [
-            'crop_variety_id' => 'required|integer',
-            'quantity' => 'required|integer',
-            'seed_class' => 'required|nullable',
-            'collection_date' => 'date_format:mm-dd-yyyy|after:created_at',
-            'pickup_location' => 'required|string',
-            'detail' => 'required|string|nullable',
+            'name' => 'integer',
+            'number_of_inspection' => 'integer|nullable',
+            'number_of_days_before_submision' => 'integer|nullable',
+            'created_at' => 'date_format:mm-dd-yyyy|after:created_at|nullable',
+            'updated_at' => 'string|nullable',
         ]);
 
         $form = Crop::create([
-            'administrator_id' => auth()->user()->id,
-            'crop_variety_id' => $request->input('crop_variety_id'),
-            'quantity' => $request->input('quantity'),
-            'seed_class' => $request->input('seed_class'),
-            'collection_date' => $request->input('collection_date'),
-            'pickup_location' => $request->input('pickup_location'),
-            'detail' => $request->input('detail'),
+            'name' => $request->input('name'),
+            'number_of_inspection' => $request->input('number_of_inspection'),
+            'number_of_days_before_submision' => $request->input('number_of_days_before_submision'),
             'created_at' => date('m-d-y'),
             'updated_at' => date('m-d-y'), 
         ]);
 
         // Form created, return success response
-        return $this->successResponse($form, $message="Pre Order form submit success!");
+        return $this->successResponse($form, $message="Crop form create success!", 200);
     }
 }
