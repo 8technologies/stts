@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Crop;
-use Encore\Admin\Controllers\AdminController;
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\DB; 
+use Encore\Admin\Controllers\AdminController; 
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Validator;
@@ -22,10 +20,7 @@ class CropApiController extends AdminController
 
     public function crops_list()
     {
-        /*  ---attributes---
-        */
         $user = auth()->user();
-        // $query = DB::table('crops')->where('administrator_id', '=', $user->id)->get();
         $query = Crop::all();
 
         return $this->successResponse($query, $message="Crops list"); 
@@ -49,7 +44,7 @@ class CropApiController extends AdminController
             'name' => 'integer',
             'number_of_inspection' => 'integer|nullable',
             'number_of_days_before_submision' => 'integer|nullable',
-            'created_at' => 'date_format:mm-dd-yyyy|after:created_at|nullable',
+            'created_at' => 'date_format:mm-dd-yyyy|after:updated_at|nullable',
             'updated_at' => 'string|nullable',
         ]);
 
@@ -62,6 +57,6 @@ class CropApiController extends AdminController
         ]);
 
         // Form created, return success response
-        return $this->successResponse($form, $message="Crop form create success!", 200);
+        return $this->successResponse($form, $message="Crop create success!", 200);
     }
 }

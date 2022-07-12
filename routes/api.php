@@ -84,5 +84,5 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     
     Route::get('/crops-list/', [CropApiController::class, "crops_list"]);
-    Route::post('/crops-create/', [CropApiController::class, "crops_list"]);
+    Route::post('/crops-create/', [CropApiController::class, "crops_create"]);
 });
