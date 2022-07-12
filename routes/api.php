@@ -32,6 +32,7 @@ Route::post("/register", [AuthApiController::class, "register"]);
 Route::post("/login", [AuthApiController::class, "login"]);
 
 Route::group(['middleware' => 'api'], function ($router) {
+
     // auth
     Route::get("/me", [AuthApiController::class, "me"]);
     Route::put("/me/update", [AuthApiController::class, "update"]);
@@ -65,7 +66,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/pre-orders/list", [PreOrderApiController::class, "pre_order_list"]);
     Route::get("/quotations/list", [QuotationApiController::class, "quotations_list"]);
 
-    // SeedStock
+    // Seed Stock
     Route::get("/form-stock-examination-requests/list", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_list"]);
     Route::get("/form-stock-records/list", [FormStockRecordApiController::class, "form_stock_records_list"]);
     Route::get("/marktable-seed/list", [MarketableSeedApiController::class, "marktable_seed_list"]);
@@ -80,9 +81,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
     Route::get("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
 
-    // $router->resource('products', ProductApiController::class);  
-
-    
+    // Crops via the SR6 form submit form
     Route::get('/crops-list/', [CropApiController::class, "crops_list"]);
     Route::post('/crops-create/', [CropApiController::class, "crops_create"]);
 });
