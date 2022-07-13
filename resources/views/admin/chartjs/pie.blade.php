@@ -24,6 +24,7 @@ $(function () {
 
     var config = {
         type: 'pie',
+        
         data: {
             datasets: [{
                 data: [
@@ -48,6 +49,7 @@ $(function () {
                 ],
                 label: 'Marketplace Data'
             }],
+
             labels: [
                 'Import Permits',
                 'Export Permits',
@@ -59,6 +61,7 @@ $(function () {
                 'Seed Labels',
             ]
         },
+
         options: {
             responsive: true,
             plugins: {
@@ -73,8 +76,8 @@ $(function () {
                     animateScale: true,
                     animateRotate: true
                 }
-            }
-        }
+            },
+        },
     };
 
     var ctx = document.getElementById('pie').getContext('2d');
