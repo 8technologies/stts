@@ -12,10 +12,7 @@ use Spatie\LaravelIgnition\Solutions\SolutionProviders\MissingColumnSolutionProv
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\MissingImportSolutionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\MissingLivewireComponentSolutionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\MissingMixManifestSolutionProvider;
-<<<<<<< HEAD
-=======
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\MissingViteManifestSolutionProvider;
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\RunningLaravelDuskInProductionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\TableNotFoundSolutionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\UndefinedViewVariableSolutionProvider;
@@ -110,10 +107,7 @@ return [
         MissingColumnSolutionProvider::class,
         UnknownValidationSolutionProvider::class,
         MissingMixManifestSolutionProvider::class,
-<<<<<<< HEAD
-=======
         MissingViteManifestSolutionProvider::class,
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
         MissingLivewireComponentSolutionProvider::class,
         UndefinedViewVariableSolutionProvider::class,
         GenericLaravelExceptionSolutionProvider::class,

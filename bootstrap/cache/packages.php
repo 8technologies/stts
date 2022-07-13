@@ -171,8 +171,6 @@
       'ImageOptimizer' => 'Spatie\\LaravelImageOptimizer\\Facades\\ImageOptimizer',
     ),
   ),
-<<<<<<< HEAD
-=======
   'spatie/laravel-permission' => 
   array (
     'providers' => 
@@ -192,7 +190,6 @@
       0 => 'Tymon\\JWTAuth\\Providers\\LaravelServiceProvider',
     ),
   ),
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
   'yajra/laravel-datatables-buttons' => 
   array (
     'providers' => 

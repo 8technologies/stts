@@ -2,15 +2,12 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-<<<<<<< HEAD
-=======
 ## 1.5.1
 
 ### Fixed
 
 - Fixed deprecations on PHP 8.1
 
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
 ## 1.5.0
 
 ### Added

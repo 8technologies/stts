@@ -133,7 +133,6 @@ return array(
     'App\\Models\\Utils' => $baseDir . '/app/Models/Utils.php',
     'App\\Models\\category' => $baseDir . '/app/Models/category.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
-    'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
@@ -4052,10 +4051,7 @@ return array(
     'JmesPath\\TreeInterpreter' => $vendorDir . '/mtdowling/jmespath.php/src/TreeInterpreter.php',
     'JmesPath\\Utils' => $vendorDir . '/mtdowling/jmespath.php/src/Utils.php',
     'JsonException' => $vendorDir . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
-<<<<<<< HEAD
-=======
     'JustSteveKing\\Laravel\\LaravelRedoc\\RedocServiceProvider' => $vendorDir . '/juststeveking/laravel-redoc/src/RedocServiceProvider.php',
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
     'Laravel\\Passport\\ApiTokenCookieFactory' => $vendorDir . '/laravel/passport/src/ApiTokenCookieFactory.php',
     'Laravel\\Passport\\AuthCode' => $vendorDir . '/laravel/passport/src/AuthCode.php',
     'Laravel\\Passport\\Bridge\\AccessToken' => $vendorDir . '/laravel/passport/src/Bridge/AccessToken.php',
@@ -4123,27 +4119,6 @@ return array(
     'Laravel\\Sail\\Console\\InstallCommand' => $vendorDir . '/laravel/sail/src/Console/InstallCommand.php',
     'Laravel\\Sail\\Console\\PublishCommand' => $vendorDir . '/laravel/sail/src/Console/PublishCommand.php',
     'Laravel\\Sail\\SailServiceProvider' => $vendorDir . '/laravel/sail/src/SailServiceProvider.php',
-<<<<<<< HEAD
-    'Laravel\\Sanctum\\Console\\Commands\\PruneExpired' => $vendorDir . '/laravel/sanctum/src/Console/Commands/PruneExpired.php',
-    'Laravel\\Sanctum\\Contracts\\HasAbilities' => $vendorDir . '/laravel/sanctum/src/Contracts/HasAbilities.php',
-    'Laravel\\Sanctum\\Contracts\\HasApiTokens' => $vendorDir . '/laravel/sanctum/src/Contracts/HasApiTokens.php',
-    'Laravel\\Sanctum\\Events\\TokenAuthenticated' => $vendorDir . '/laravel/sanctum/src/Events/TokenAuthenticated.php',
-    'Laravel\\Sanctum\\Exceptions\\MissingAbilityException' => $vendorDir . '/laravel/sanctum/src/Exceptions/MissingAbilityException.php',
-    'Laravel\\Sanctum\\Exceptions\\MissingScopeException' => $vendorDir . '/laravel/sanctum/src/Exceptions/MissingScopeException.php',
-    'Laravel\\Sanctum\\Guard' => $vendorDir . '/laravel/sanctum/src/Guard.php',
-    'Laravel\\Sanctum\\HasApiTokens' => $vendorDir . '/laravel/sanctum/src/HasApiTokens.php',
-    'Laravel\\Sanctum\\Http\\Controllers\\CsrfCookieController' => $vendorDir . '/laravel/sanctum/src/Http/Controllers/CsrfCookieController.php',
-    'Laravel\\Sanctum\\Http\\Middleware\\CheckAbilities' => $vendorDir . '/laravel/sanctum/src/Http/Middleware/CheckAbilities.php',
-    'Laravel\\Sanctum\\Http\\Middleware\\CheckForAnyAbility' => $vendorDir . '/laravel/sanctum/src/Http/Middleware/CheckForAnyAbility.php',
-    'Laravel\\Sanctum\\Http\\Middleware\\CheckForAnyScope' => $vendorDir . '/laravel/sanctum/src/Http/Middleware/CheckForAnyScope.php',
-    'Laravel\\Sanctum\\Http\\Middleware\\CheckScopes' => $vendorDir . '/laravel/sanctum/src/Http/Middleware/CheckScopes.php',
-    'Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful' => $vendorDir . '/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php',
-    'Laravel\\Sanctum\\NewAccessToken' => $vendorDir . '/laravel/sanctum/src/NewAccessToken.php',
-    'Laravel\\Sanctum\\PersonalAccessToken' => $vendorDir . '/laravel/sanctum/src/PersonalAccessToken.php',
-    'Laravel\\Sanctum\\Sanctum' => $vendorDir . '/laravel/sanctum/src/Sanctum.php',
-    'Laravel\\Sanctum\\SanctumServiceProvider' => $vendorDir . '/laravel/sanctum/src/SanctumServiceProvider.php',
-    'Laravel\\Sanctum\\TransientToken' => $vendorDir . '/laravel/sanctum/src/TransientToken.php',
-=======
     'Laravel\\Sanctum\\Console\\Commands\\PruneExpired' => $vendorDir . '/laravel/airlock/src/Console/Commands/PruneExpired.php',
     'Laravel\\Sanctum\\Contracts\\HasAbilities' => $vendorDir . '/laravel/airlock/src/Contracts/HasAbilities.php',
     'Laravel\\Sanctum\\Contracts\\HasApiTokens' => $vendorDir . '/laravel/airlock/src/Contracts/HasApiTokens.php',
@@ -4163,7 +4138,6 @@ return array(
     'Laravel\\Sanctum\\Sanctum' => $vendorDir . '/laravel/airlock/src/Sanctum.php',
     'Laravel\\Sanctum\\SanctumServiceProvider' => $vendorDir . '/laravel/airlock/src/SanctumServiceProvider.php',
     'Laravel\\Sanctum\\TransientToken' => $vendorDir . '/laravel/airlock/src/TransientToken.php',
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
     'Laravel\\SerializableClosure\\Contracts\\Serializable' => $vendorDir . '/laravel/serializable-closure/src/Contracts/Serializable.php',
     'Laravel\\SerializableClosure\\Contracts\\Signer' => $vendorDir . '/laravel/serializable-closure/src/Contracts/Signer.php',
     'Laravel\\SerializableClosure\\Exceptions\\InvalidSignatureException' => $vendorDir . '/laravel/serializable-closure/src/Exceptions/InvalidSignatureException.php',
@@ -7207,10 +7181,7 @@ return array(
     'Spatie\\LaravelIgnition\\Solutions\\SolutionProviders\\MissingImportSolutionProvider' => $vendorDir . '/spatie/laravel-ignition/src/Solutions/SolutionProviders/MissingImportSolutionProvider.php',
     'Spatie\\LaravelIgnition\\Solutions\\SolutionProviders\\MissingLivewireComponentSolutionProvider' => $vendorDir . '/spatie/laravel-ignition/src/Solutions/SolutionProviders/MissingLivewireComponentSolutionProvider.php',
     'Spatie\\LaravelIgnition\\Solutions\\SolutionProviders\\MissingMixManifestSolutionProvider' => $vendorDir . '/spatie/laravel-ignition/src/Solutions/SolutionProviders/MissingMixManifestSolutionProvider.php',
-<<<<<<< HEAD
-=======
     'Spatie\\LaravelIgnition\\Solutions\\SolutionProviders\\MissingViteManifestSolutionProvider' => $vendorDir . '/spatie/laravel-ignition/src/Solutions/SolutionProviders/MissingViteManifestSolutionProvider.php',
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
     'Spatie\\LaravelIgnition\\Solutions\\SolutionProviders\\RouteNotDefinedSolutionProvider' => $vendorDir . '/spatie/laravel-ignition/src/Solutions/SolutionProviders/RouteNotDefinedSolutionProvider.php',
     'Spatie\\LaravelIgnition\\Solutions\\SolutionProviders\\RunningLaravelDuskInProductionProvider' => $vendorDir . '/spatie/laravel-ignition/src/Solutions/SolutionProviders/RunningLaravelDuskInProductionProvider.php',
     'Spatie\\LaravelIgnition\\Solutions\\SolutionProviders\\SolutionProviderRepository' => $vendorDir . '/spatie/laravel-ignition/src/Solutions/SolutionProviders/SolutionProviderRepository.php',
@@ -7243,8 +7214,6 @@ return array(
     'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider' => $vendorDir . '/spatie/laravel-image-optimizer/src/ImageOptimizerServiceProvider.php',
     'Spatie\\LaravelImageOptimizer\\Middlewares\\OptimizeImages' => $vendorDir . '/spatie/laravel-image-optimizer/src/Middlewares/OptimizeImages.php',
     'Spatie\\LaravelImageOptimizer\\OptimizerChainFactory' => $vendorDir . '/spatie/laravel-image-optimizer/src/OptimizerChainFactory.php',
-<<<<<<< HEAD
-=======
     'Spatie\\Permission\\Commands\\CacheReset' => $vendorDir . '/spatie/laravel-permission/src/Commands/CacheReset.php',
     'Spatie\\Permission\\Commands\\CreatePermission' => $vendorDir . '/spatie/laravel-permission/src/Commands/CreatePermission.php',
     'Spatie\\Permission\\Commands\\CreateRole' => $vendorDir . '/spatie/laravel-permission/src/Commands/CreateRole.php',
@@ -7272,7 +7241,6 @@ return array(
     'Spatie\\Permission\\Traits\\HasRoles' => $vendorDir . '/spatie/laravel-permission/src/Traits/HasRoles.php',
     'Spatie\\Permission\\Traits\\RefreshesPermissionCache' => $vendorDir . '/spatie/laravel-permission/src/Traits/RefreshesPermissionCache.php',
     'Spatie\\Permission\\WildcardPermission' => $vendorDir . '/spatie/laravel-permission/src/WildcardPermission.php',
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
     'StellaMaris\\Clock\\ClockInterface' => $vendorDir . '/stella-maris/clock/src/ClockInterface.php',
     'Stringable' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
     'Svg\\DefaultStyle' => $vendorDir . '/phenx/php-svg-lib/src/Svg/DefaultStyle.php',

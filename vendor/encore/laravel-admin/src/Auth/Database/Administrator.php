@@ -8,10 +8,6 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
-use Laravel\Passport\HasApiTokens;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Notifications\Notifiable;
-
 
 /**
  * Class Administrator.
@@ -20,12 +16,9 @@ use Illuminate\Notifications\Notifiable;
  */
 class Administrator extends Model implements AuthenticatableContract
 {
-    use Authenticatable, 
-    HasPermissions, 
-    DefaultDatetimeFormat,
-    HasFactory, 
-    Notifiable, 
-    HasApiTokens;
+    use Authenticatable;
+    use HasPermissions;
+    use DefaultDatetimeFormat;
 
     protected $fillable = ['username', 'password', 'name', 'avatar'];
 
@@ -69,7 +62,6 @@ class Administrator extends Model implements AuthenticatableContract
         return admin_asset($default);
     }
 
-    
     /**
      * A user has and belongs to many roles.
      *

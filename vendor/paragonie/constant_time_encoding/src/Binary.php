@@ -2,11 +2,8 @@
 declare(strict_types=1);
 namespace ParagonIE\ConstantTime;
 
-<<<<<<< HEAD
-=======
 use TypeError;
 
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
 /**
  *  Copyright (c) 2016 - 2022 Paragon Initiative Enterprises.
  *  Copyright (c) 2014 Steve "Sc00bz" Thomas (steve at tobtu dot com)
@@ -69,12 +66,8 @@ abstract class Binary
      * @param int $start
      * @param ?int $length
      * @return string
-<<<<<<< HEAD
-     * @throws \TypeError
-=======
      *
      * @throws TypeError
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
      */
     public static function safeSubstr(
         string $str,

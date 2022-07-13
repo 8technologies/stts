@@ -828,14 +828,6 @@ Whether two URIs can be considered equivalent. Both URIs are normalized automati
 This of course assumes they will be resolved against the same base URI. If this is not the case, determination of
 equivalence or difference of relative references does not mean anything.
 
-## Version Guidance
-
-| Version | Status         | PHP Version      |
-|---------|----------------|------------------|
-| 1.x     | Security fixes | >= 5.4, < 8.2    |
-| 2.x     | Latest         | ^7.2.5 \|\| ^8.0 |
-<<<<<<< HEAD
-=======
 
 ## Version Guidance
 
@@ -844,7 +836,6 @@ equivalence or difference of relative references does not mean anything.
 | 1.x     | Security fixes | >=5.4,<8.1       |
 | 2.x     | Latest         | ^7.2.5 \|\| ^8.0 |
 
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
 
 ## Security
 

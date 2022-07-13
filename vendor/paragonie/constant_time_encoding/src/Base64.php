@@ -4,10 +4,7 @@ namespace ParagonIE\ConstantTime;
 
 use InvalidArgumentException;
 use RangeException;
-<<<<<<< HEAD
-=======
 use TypeError;
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
 
 /**
  *  Copyright (c) 2016 - 2022 Paragon Initiative Enterprises.
@@ -47,12 +44,8 @@ abstract class Base64 implements EncoderInterface
      *
      * @param string $binString
      * @return string
-<<<<<<< HEAD
-     * @throws \TypeError
-=======
      *
      * @throws TypeError
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
      */
     public static function encode(string $binString): string
     {
@@ -66,12 +59,8 @@ abstract class Base64 implements EncoderInterface
      *
      * @param string $src
      * @return string
-<<<<<<< HEAD
-     * @throws \TypeError
-=======
      *
      * @throws TypeError
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
      */
     public static function encodeUnpadded(string $src): string
     {
@@ -82,12 +71,8 @@ abstract class Base64 implements EncoderInterface
      * @param string $src
      * @param bool $pad   Include = padding?
      * @return string
-<<<<<<< HEAD
-     * @throws \TypeError
-=======
      *
      * @throws TypeError
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
      */
     protected static function doEncode(string $src, bool $pad = true): string
     {
@@ -141,14 +126,9 @@ abstract class Base64 implements EncoderInterface
      * @param string $encodedString
      * @param bool $strictPadding
      * @return string
-<<<<<<< HEAD
-     * @throws \RangeException
-     * @throws \TypeError
-=======
      *
      * @throws RangeException
      * @throws TypeError
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
      * @psalm-suppress RedundantCondition
      */
     public static function decode(string $encodedString, bool $strictPadding = false): string

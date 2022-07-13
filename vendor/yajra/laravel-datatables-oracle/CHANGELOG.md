@@ -8,12 +8,6 @@
 
 ### [Unreleased]
 
-<<<<<<< HEAD
-### [v9.20.0] - 2022-22-09
-
-- Added orthogonal sort and filter for collection #2380
-- 
-=======
 ### [v9.21.1] - 2022-06-22
 
 - Fix sorting and pagination on empty records #2803
@@ -26,7 +20,6 @@
 
 - Added orthogonal sort and filter for collection #2380
 
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
 ### [v9.19.2] - 2022-04-07
 
 - Changed PHPDocs to have the most specific class as their super return type #2771
@@ -509,13 +502,9 @@ return (new CollectionDataTable(User::all())->toJson();
 - Fix orderColumn api where related tables are not joined.
 - Fix nested with relation search and sort function.
 
-<<<<<<< HEAD
-[Unreleased]: https://github.com/yajra/laravel-datatables/compare/v9.20.0...9.0
-=======
 [Unreleased]: https://github.com/yajra/laravel-datatables/compare/v9.21.1...9.0
 [v9.21.1]: https://github.com/yajra/laravel-datatables/compare/v9.21.0...v9.21.1
 [v9.21.0]: https://github.com/yajra/laravel-datatables/compare/v9.20.0...v9.21.0
->>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
 [v9.20.0]: https://github.com/yajra/laravel-datatables/compare/v9.19.1...v9.20.0
 [v9.19.1]: https://github.com/yajra/laravel-datatables/compare/v9.19.1...v9.19.1
 [v9.19.0]: https://github.com/yajra/laravel-datatables/compare/v9.18.2...v9.19.0
