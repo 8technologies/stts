@@ -64,7 +64,7 @@ $(function () {
         options: {
             responsive: true,
             legend: {
-                position: 'top',
+                position: 'left',
             },
             title: {
                 display: true,
