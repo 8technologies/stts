@@ -1,0 +1,2 @@
+https://phppasswordhash.com/    <-- hash passwords on the go
+

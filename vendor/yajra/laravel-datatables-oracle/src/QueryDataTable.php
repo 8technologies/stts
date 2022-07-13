@@ -140,9 +140,16 @@ class QueryDataTable extends DataTableAbstract
 
             if ($this->totalRecords) {
                 $this->filterRecords();
+<<<<<<< HEAD
                 $this->ordering();
                 $this->paginate();
             }
+=======
+            }
+
+            $this->ordering();
+            $this->paginate();
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
         }
 
         $this->prepared = true;

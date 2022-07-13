@@ -61,7 +61,20 @@ class Helper
     {
         if (is_string($content)) {
             return static::compileBlade($content, static::getMixedValue($data, $param));
+<<<<<<< HEAD
         } elseif (is_callable($content)) {
+=======
+        }
+
+        if (is_callable($content)) {
+            $reflection = new \ReflectionFunction($content);
+            $arguments  = $reflection->getParameters();
+
+            if (count($arguments) > 0) {
+                return app()->call($content, [$arguments[0]->name => $param]);
+            }
+
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
             return $content($param);
         }
 

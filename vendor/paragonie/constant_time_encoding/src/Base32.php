@@ -4,6 +4,10 @@ namespace ParagonIE\ConstantTime;
 
 use InvalidArgumentException;
 use RangeException;
+<<<<<<< HEAD
+=======
+use TypeError;
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
 
 /**
  *  Copyright (c) 2016 - 2022 Paragon Initiative Enterprises.
@@ -65,7 +69,11 @@ abstract class Base32 implements EncoderInterface
      *
      * @param string $binString
      * @return string
+<<<<<<< HEAD
      * @throws \TypeError
+=======
+     * @throws TypeError
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
      */
     public static function encode(string $binString): string
     {
@@ -76,7 +84,11 @@ abstract class Base32 implements EncoderInterface
      *
      * @param string $src
      * @return string
+<<<<<<< HEAD
      * @throws \TypeError
+=======
+     * @throws TypeError
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
      */
     public static function encodeUnpadded(string $src): string
     {
@@ -88,7 +100,11 @@ abstract class Base32 implements EncoderInterface
      *
      * @param string $src
      * @return string
+<<<<<<< HEAD
      * @throws \TypeError
+=======
+     * @throws TypeError
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
      */
     public static function encodeUpper(string $src): string
     {
@@ -100,7 +116,11 @@ abstract class Base32 implements EncoderInterface
      *
      * @param string $src
      * @return string
+<<<<<<< HEAD
      * @throws \TypeError
+=======
+     * @throws TypeError
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
      */
     public static function encodeUpperUnpadded(string $src): string
     {
@@ -187,6 +207,10 @@ abstract class Base32 implements EncoderInterface
 
     /**
      * @param string $encodedString
+<<<<<<< HEAD
+=======
+     * @param bool $upper
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
      * @return string
      */
     public static function decodeNoPadding(string $encodedString, bool $upper = false): string
@@ -196,8 +220,13 @@ abstract class Base32 implements EncoderInterface
             return '';
         }
         if (($srcLen & 7) === 0) {
+<<<<<<< HEAD
             for ($j = 0; $j < 7; ++$j) {
                 if ($encodedString[$srcLen - 1] === '=') {
+=======
+            for ($j = 0; $j < 7 && $j < $srcLen; ++$j) {
+                if ($encodedString[$srcLen - $j - 1] === '=') {
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
                     throw new InvalidArgumentException(
                         "decodeNoPadding() doesn't tolerate padding"
                     );
@@ -218,11 +247,23 @@ abstract class Base32 implements EncoderInterface
      * @param bool $upper
      * @param bool $strictPadding
      * @return string
+<<<<<<< HEAD
      * @throws \TypeError
      * @psalm-suppress RedundantCondition
      */
     protected static function doDecode(string $src, bool $upper = false, bool $strictPadding = false): string
     {
+=======
+     *
+     * @throws TypeError
+     * @psalm-suppress RedundantCondition
+     */
+    protected static function doDecode(
+        string $src,
+        bool $upper = false,
+        bool $strictPadding = false
+    ): string {
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
         // We do this to reduce code duplication:
         $method = $upper
             ? 'decode5BitsUpper'
@@ -244,7 +285,11 @@ abstract class Base32 implements EncoderInterface
                 }
             }
             if (($srcLen & 7) === 1) {
+<<<<<<< HEAD
                 throw new \RangeException(
+=======
+                throw new RangeException(
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
                     'Incorrect padding'
                 );
             }
@@ -426,7 +471,11 @@ abstract class Base32 implements EncoderInterface
      * @param bool $upper
      * @param bool $pad
      * @return string
+<<<<<<< HEAD
      * @throws \TypeError
+=======
+     * @throws TypeError
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
      */
     protected static function doEncode(string $src, bool $upper = false, $pad = true): string
     {

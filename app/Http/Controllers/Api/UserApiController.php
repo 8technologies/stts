@@ -47,9 +47,14 @@ class UserAPIController extends Controller
         // The convention above means that say you type 's' to search,
         // the result should contain character 's' somewhere at the start, middle or the end of the provided string which in our case is '$string'
     }
+<<<<<<< HEAD
 
     public function myBeneficiaries(){
         // code
 //        $this->myBeneficiaries()
     }
 }
+=======
+    
+}
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b

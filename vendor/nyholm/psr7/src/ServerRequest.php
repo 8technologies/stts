@@ -77,6 +77,12 @@ class ServerRequest implements ServerRequestInterface
         return $this->uploadedFiles;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @return static
+     */
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
     public function withUploadedFiles(array $uploadedFiles)
     {
         $new = clone $this;
@@ -90,6 +96,12 @@ class ServerRequest implements ServerRequestInterface
         return $this->cookieParams;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @return static
+     */
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
     public function withCookieParams(array $cookies)
     {
         $new = clone $this;
@@ -103,6 +115,12 @@ class ServerRequest implements ServerRequestInterface
         return $this->queryParams;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @return static
+     */
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
     public function withQueryParams(array $query)
     {
         $new = clone $this;
@@ -111,11 +129,23 @@ class ServerRequest implements ServerRequestInterface
         return $new;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @return array|object|null
+     */
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
     public function getParsedBody()
     {
         return $this->parsedBody;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @return static
+     */
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
     public function withParsedBody($data)
     {
         if (!\is_array($data) && !\is_object($data) && null !== $data) {

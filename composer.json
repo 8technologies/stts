@@ -1,35 +1,49 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The Laravel Framework..",
+    "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.3|^8.1.0",
+        "aws/aws-sdk-php": "^3.225",
         "barryvdh/laravel-dompdf": "^1.0",
+        "doctrine/dbal": "^3.3",
         "encore/laravel-admin": "1.*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "juststeveking/laravel-redoc": "*",
+        "laravel-admin-ext/api-tester": "^1.0",
         "laravel-admin-ext/chartjs": "^1.0",
         "laravel-admin-ext/helpers": "^2.0",
         "laravel-admin-ext/latlong": "2.x",
         "laravel-admin-ext/media-manager": "2.x",
-        "laravel/framework": "^8.54",
+        "laravel/airlock": "^2.15",
+        "laravel/framework": "*",
+        "laravel/helpers": "^1.5",
         "laravel/legacy-factories": "^1.1",
-        "laravel/sanctum": "^2.11",
+        "laravel/passport": "^10.4",
+        "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.2",
-        "maatwebsite/excel": "^3.1",
+        "maatwebsite/excel": "^3.1.31",
+        "phpoffice/phpspreadsheet": "^1.23.0",
         "spatie/laravel-image-optimizer": "^1.6",
-        "stefangabos/zebra_image": "dev-master"
+        "spatie/laravel-permission": "^5.5",
+        "stefangabos/zebra_image": "dev-master",
+        "symfony/http-client": "^6.1",
+        "symfony/mailgun-mailer": "^6.1",
+        "symfony/postmark-mailer": "^6.1",
+        "tymon/jwt-auth": "*",
+        "yajra/laravel-datatables": "1.5"
     },
     "require-dev": {
-        "facade/ignition": "^2.5",
+        "spatie/laravel-ignition": "^1.0",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
-        "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3"
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^5.10",
+        "phpunit/phpunit": "^9.5.10"
     },
     "autoload": {
         "psr-4": {
@@ -49,7 +63,7 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -60,7 +74,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/dusk"
+            ]
         }
     },
     "config": {

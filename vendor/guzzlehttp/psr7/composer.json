@@ -79,7 +79,11 @@
     },
     "extra": {
         "branch-alias": {
+<<<<<<< HEAD
             "dev-master": "2.3-dev"
+=======
+            "dev-master": "2.4-dev"
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
         }
     },
     "config": {

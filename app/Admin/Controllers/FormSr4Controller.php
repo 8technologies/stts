@@ -13,6 +13,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Auth;
 
+
 class FormSr4Controller extends AdminController
 {
     /**
@@ -325,17 +326,17 @@ class FormSr4Controller extends AdminController
                 });
 
 
-            $form->radio('processing_of', __('Applicant is applying for processing of?'))
-                ->options([
-                    'Agricultural crops' => 'Agricultural crops',
-                    'Horticultural crops' => 'Horticultural crops',
-                    'Other' => 'Other'
-                ])
-                ->required()
-                ->when('Other', function (Form $form) {
-                    $form->text('processing_of_other', __('Applicant is applying for Other processing of?'))
-                        ->help('Specify if you selected "Other" processing.');
-                });
+            // $form->radio('processing_of', __('Applicant is applying for processing of?'))
+            //     ->options([
+            //         'Agricultural crops' => 'Agricultural crops',
+            //         'Horticultural crops' => 'Horticultural crops',
+            //         'Other' => 'Other'
+            //     ])
+            //     ->required()
+            //     ->when('Other', function (Form $form) {
+            //         $form->text('processing_of_other', __('Applicant is applying for Other processing of?'))
+            //             ->help('Specify if you selected "Other" processing.');
+            //     });
 
 
             $form->radio('marketing_of', __('Applicant is applying for marketing of?'))
@@ -349,8 +350,6 @@ class FormSr4Controller extends AdminController
                     $form->text('marketing_of_other', __('Applicant is applying for Other marketing of?'))
                         ->help('Please Specify if you selected "Other" marketing.');
                 });
-
-
 
 
             $form->radio('have_adequate_land', 'Do you have adequate land to handle basic seed?')
@@ -415,18 +414,18 @@ class FormSr4Controller extends AdminController
                 // if($item->parent>0){
                 //     continue;
                 // }
-                $_items[$item->id] = $item->name . " - " . $item->id;
+                $_items[$item->id] = $item->id . " - " . $item->name;
             }
             $_items['Other'] = "Other";
             $form->select(
                 'souce_of_seed',
-                __('What is your source of seed?')
+                __('What is your souce of seed?')
             )->options($_items)
                 ->help('Select "Other" if your supplier is not found on the list.')
                 ->required()
                 ->when('Other', function (Form $form) {
-                    $form->text('souce_of_seed_other', 'Specify your source of seed?')
-                        ->help("Please specify your source of seed?");
+                    $form->text('souce_of_seed_other', 'Specify your souce of seed?')
+                        ->help("Please specify your souce of seed?");
                 });
 
 

@@ -146,7 +146,11 @@ class NativeSessionStorage implements SessionStorageInterface
         }
 
         $sessionId = $_COOKIE[session_name()] ?? null;
+<<<<<<< HEAD
         if ($sessionId && !preg_match('/^[a-zA-Z0-9,-]{22,}$/', $sessionId)) {
+=======
+        if ($sessionId && $this->saveHandler instanceof AbstractProxy && 'files' === $this->saveHandler->getSaveHandlerName() && !preg_match('/^[a-zA-Z0-9,-]{22,}$/', $sessionId)) {
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
             // the session ID in the header is invalid, create a new one
             session_id(session_create_id());
         }

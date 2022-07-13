@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Cross-Origin Resource Sharing (CORS) Configuration
@@ -15,7 +14,14 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => [
+        'api/*',
+        'sanctum/csrf-cookie',
+        // 'login', // this will enable us not to create any new endpoints when working with airlock.  that way we will be able to use the original login,logout routes as our endpoints for now
+        // 'logout',
+        // 'airlock/csrf-cookie',
+        // '/token'
+    ],
 
     'allowed_methods' => ['*'],
 
@@ -29,6 +35,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];

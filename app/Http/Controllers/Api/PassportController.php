@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\Api\Auth;
+=======
+namespace App\Http\Controllers\Api;
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
 
 // use Validator;
 use Illuminate\Support\Facades\Validator;
@@ -74,9 +78,17 @@ class PassportController extends Controller
                     'user_id' => $user->id
                 ]);
                 
+<<<<<<< HEAD
             return response()->json([
                 'success' => true,
                 'message' => 'User registered succesfully, Use Login method to receive token.'
+=======
+            $accessToken = $user->createToken('passportToken')->accessToken;
+            return response()->json([
+                'success' => true,
+                'message' => 'User registered succesfully, Use Login method to receive token.',
+                'accessToken' => $accessToken,
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
             ], 200);
         } else {
                 return response()->json(['message' => 'Failed to created your account. Please try again1!'], 201);
@@ -117,10 +129,15 @@ class PassportController extends Controller
         }
 
         // authentication attempt
+<<<<<<< HEAD
         if (auth()->attempt($input)) {
             $token = auth()->user()->createToken('passport_token')->accessToken;
         // if (request()->attempt($input)) {
             // $token = request()->user()->createToken('passport_token')->accessToken;
+=======
+        if (auth()->attempt($validate_data)) {
+            $token = auth()->user()->createToken('passport_token')->accessToken;
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
             
             return response()->json([
                 'success' => true,
@@ -130,7 +147,11 @@ class PassportController extends Controller
         } else {
             return response()->json([
                 'success' => false,
+<<<<<<< HEAD
                 'message' => 'User authentication failed.'
+=======
+                'message' => 'authentication failed'
+>>>>>>> 8dcea263367dc0c4dce767e13243cf31e543428b
             ], 401);
         }
     }

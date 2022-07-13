@@ -246,7 +246,6 @@ class FormSr6Controller extends AdminController
             }
         }
 
-
         session_start();
         if (!isset($_SESSION['sr6_refreshed'])) {
             $_SESSION['sr6_refreshed'] = "yes";
@@ -257,17 +256,13 @@ class FormSr6Controller extends AdminController
         }
 
         // callback before save
-
         $form->saving(function (Form $form) {
-
             $form->dealers_in = '[]';
             if (isset($_POST['group-a'])) {
                 $form->dealers_in = json_encode($_POST['group-a']);
                 //echo($form->dealers_in);
             }
         });
-
-
 
         $form->disableCreatingCheck();
         $form->tools(function (Form\Tools $tools) {
@@ -284,8 +279,6 @@ class FormSr6Controller extends AdminController
             $form->hidden('administrator_id', __('Administrator id'));
         }
  
-        
-
         $form->hidden('dealers_in', __('dealers_in'));
 
         if (Admin::user()->isRole('basic-user')) {
@@ -315,7 +308,6 @@ class FormSr6Controller extends AdminController
                 $form->select('crop_id','Add Crop')->options( Crop::all()->pluck('name','id') )
                 ->required();
             });
-
 
 
             $form->radio(
@@ -454,7 +446,6 @@ class FormSr6Controller extends AdminController
             // $form->number('inspector', __('Inspector'));
             // $form->textarea('status_comment', __('Status comment'));
         }
-
 
         return $form;
     }
