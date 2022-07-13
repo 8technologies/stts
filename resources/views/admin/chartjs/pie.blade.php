@@ -1,4 +1,9 @@
 <canvas id="pie" style="width: 100%;"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
 <script>
 
 $(function () {
