@@ -55,9 +55,9 @@ return [
         
         'admin' => [
             'driver' => 'local',
-            'root' => public_path('assets/images/stts/uploads'),
+            'root' => public_path('/assets/images/stts/uploads'),
             'visibility' => 'public',
-            'url' => env('APP_URL') . 'assets/images/stts/uploads',
+            'url' => env('APP_URL') . '/assets/images/stts/uploads',
         ],
         
 
