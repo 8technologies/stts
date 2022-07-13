@@ -2,8 +2,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
-
 <script>
 
 $(function () {
@@ -63,16 +61,18 @@ $(function () {
         },
         options: {
             responsive: true,
-            legend: {
-                position: 'left',
-            },
-            title: {
-                display: true,
-                text: 'Marketplace Pie Chart'
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
+            plugins: {
+                legend: {
+                    position: 'left',
+                },
+                title: {
+                    display: true,
+                    text: 'Marketplace Pie Chart'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
             }
         }
     };
