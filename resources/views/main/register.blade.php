@@ -44,6 +44,8 @@
     <p class="login-box-msg text-dark">Creating New Account</p>
 
     <form action="{{ url('register') }}" method="POST">
+      {!! csrf_field() !!}
+
 
 
     <div class="row">
