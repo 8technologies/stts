@@ -81,9 +81,9 @@ class FormSr4ApiController extends AdminController
             'accept_declaration' => 'required',
         ]);
 
-        if ($post_data->fails()) {
+/*         if ($post_data->fails()) {
             return $this->errorResponse("SR4 form submit error", 200); 
-        }
+        } */
 
 
         $form = FormSr4::create([
