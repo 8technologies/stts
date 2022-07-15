@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jun 13, 2022 at 03:21 AM
--- Server version: 10.3.34-MariaDB-log-cll-lve
--- PHP Version: 7.4.29
+-- Host: 127.0.0.1
+-- Generation Time: Jul 13, 2022 at 09:38 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `eightechconsults_stts`
+-- Database: `stts`
 --
 
 -- --------------------------------------------------------
@@ -45,15 +44,15 @@ CREATE TABLE `admin_menu` (
 --
 
 INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `permission`, `created_at`, `updated_at`) VALUES
-(1, 0, 1, 'Dashboard', 'fa-bar-chart', '/', NULL, NULL, '2022-02-23 11:03:17'),
-(2, 0, 30, 'Admin', 'fa-tasks', '', NULL, NULL, '2022-02-23 11:02:31'),
-(3, 2, 31, 'Users', 'fa-users', 'auth/users', NULL, NULL, '2022-02-23 11:02:31'),
-(4, 2, 32, 'Roles', 'fa-user', 'auth/roles', NULL, NULL, '2022-02-23 11:02:31'),
-(5, 2, 33, 'Permission', 'fa-ban', 'auth/permissions', NULL, NULL, '2022-02-23 11:02:31'),
-(6, 2, 34, 'Menu', 'fa-bars', 'auth/menu', NULL, NULL, '2022-02-23 11:02:31'),
-(7, 2, 35, 'Operation log', 'fa-history', 'auth/logs', NULL, NULL, '2022-02-23 11:02:31'),
-(8, 0, 29, 'Media manager', 'fa-file', 'media', NULL, '2021-10-20 16:28:29', '2022-02-23 11:02:31'),
-(10, 0, 28, 'My Profile', 'fa-user-md', 'auth/setting', NULL, '2021-10-20 17:29:13', '2022-02-23 11:02:31'),
+(1, 0, 1, 'Dashboard', 'fa-dashboard', '/', NULL, NULL, '2022-07-09 14:35:07'),
+(2, 0, 29, 'Admin', 'fa-tasks', '', NULL, NULL, '2022-07-10 05:51:50'),
+(3, 2, 30, 'Users', 'fa-users', 'auth/users', NULL, NULL, '2022-07-10 05:51:50'),
+(4, 2, 31, 'Roles', 'fa-user', 'auth/roles', NULL, NULL, '2022-07-10 05:51:50'),
+(5, 2, 32, 'Permission', 'fa-ban', 'auth/permissions', NULL, NULL, '2022-07-10 05:51:50'),
+(6, 2, 33, 'Menu', 'fa-bars', 'auth/menu', NULL, NULL, '2022-07-10 05:51:50'),
+(7, 2, 34, 'Operation log', 'fa-history', 'auth/logs', NULL, NULL, '2022-07-10 05:51:50'),
+(8, 0, 35, 'Media manager', 'fa-file', 'media', NULL, '2021-10-20 16:28:29', '2022-07-10 05:51:50'),
+(10, 0, 28, 'My Profile', 'fa-user', 'auth/setting', NULL, '2021-10-20 17:29:13', '2022-07-09 14:35:55'),
 (12, 0, 3, 'Application Forms', 'fa-wpforms', NULL, NULL, '2021-10-20 21:41:29', '2022-02-23 11:03:17'),
 (13, 12, 4, 'SR4 - Seed Merchant/Producer/Stockist/Importer/Exporter/Processor', 'fa-wpforms', 'form-sr4s', NULL, '2021-10-20 21:42:02', '2022-02-23 11:03:17'),
 (15, 12, 5, 'SR6 - Seed grower/Company/Breeders', 'fa-wpforms', 'form-sr6s', NULL, '2021-10-22 07:47:14', '2022-05-17 16:59:39'),
@@ -69,13 +68,13 @@ INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `p
 (31, 25, 12, 'SR10 - Plant inspection', 'fa-wpforms', 'form-sr10s', NULL, '2021-11-01 16:14:10', '2022-02-23 11:02:31'),
 (32, 25, 13, 'QDS - Crop declarations', 'fa-wpforms', 'form-crop-declarations', NULL, '2021-11-04 13:24:52', '2022-02-23 11:02:31'),
 (33, 0, 16, 'Seed stock', 'fa-archive', '#', NULL, '2021-11-05 14:45:53', '2022-02-23 11:02:31'),
-(34, 33, 17, 'Stock examination', 'fa-wpforms', 'form-stock-examination-requests', NULL, '2021-11-05 14:47:45', '2022-02-23 11:02:31'),
+(34, 33, 17, 'Stock examination Requests', 'fa-wpforms', 'form-stock-examination-requests', NULL, '2021-11-05 14:47:45', '2022-07-10 06:39:16'),
 (35, 33, 18, 'My stock', 'fa-archive', 'stock-records', NULL, '2021-11-05 14:49:04', '2022-02-23 11:02:31'),
 (36, 18, 27, 'Seed label packages', 'fa-money', 'seed-label-packages', NULL, '2021-11-15 10:54:18', '2022-02-23 11:02:31'),
 (37, 33, 19, 'Marketable seed', 'fa-money', 'marketable-seeds', NULL, '2021-11-17 00:10:17', '2022-02-23 11:02:31'),
 (38, 0, 20, 'Market place', 'fa-shopping-cart', 'products', NULL, '2021-11-22 08:42:16', '2022-02-23 11:02:31'),
 (39, 38, 22, 'Orders', 'fa-list-alt', 'orders', NULL, '2021-11-22 14:07:06', '2022-02-23 11:02:31'),
-(40, 38, 21, 'Market place', 'fa-shopping-basket', 'products', NULL, '2021-11-22 14:07:53', '2022-02-23 11:02:31'),
+(40, 38, 21, 'Market place (All Products)', 'fa-shopping-basket', 'products', NULL, '2021-11-22 14:07:53', '2022-07-10 05:51:07'),
 (41, 38, 23, 'Pre-orders', 'fa-opencart', 'pre-orders', NULL, '2021-11-24 07:42:28', '2022-02-23 11:02:31'),
 (42, 38, 24, 'Quotations', 'fa-wpforms', 'quotations', NULL, '2021-11-24 09:35:22', '2022-02-23 11:02:31'),
 (43, 0, 2, 'Track and trace', 'fa-anchor', 'track-and-trace', NULL, '2021-11-24 13:54:28', '2022-02-23 11:03:17'),
@@ -125,7 +124,8 @@ INSERT INTO `admin_permissions` (`id`, `name`, `slug`, `http_method`, `http_path
 (4, 'User setting', 'auth.setting', 'GET,PUT', '/auth/setting', NULL, NULL),
 (5, 'Auth management', 'auth.management', '', '/auth/roles\r\n/auth/permissions\r\n/auth/menu\r\n/auth/logs', NULL, NULL),
 (6, 'Media manager', 'ext.media-manager', '', '/media*', '2021-10-20 12:28:29', '2021-10-20 12:28:29'),
-(7, 'Admin helpers', 'ext.helpers', '', '/helpers/*', '2021-10-27 05:50:02', '2021-10-27 05:50:02');
+(7, 'Admin helpers', 'ext.helpers', '', '/helpers/*', '2021-10-27 05:50:02', '2021-10-27 05:50:02'),
+(8, 'Api tester', 'ext.api-tester', '', '/api-tester*', '2022-07-06 08:13:24', '2022-07-06 08:13:24');
 
 -- --------------------------------------------------------
 
@@ -343,7 +343,21 @@ INSERT INTO `admin_role_users` (`role_id`, `user_id`, `created_at`, `updated_at`
 (3, 111, NULL, NULL),
 (3, 112, NULL, NULL),
 (3, 113, NULL, NULL),
-(3, 114, NULL, NULL);
+(3, 114, NULL, NULL),
+(3, 115, NULL, NULL),
+(3, 116, NULL, NULL),
+(3, 117, NULL, NULL),
+(3, 118, NULL, NULL),
+(3, 119, NULL, NULL),
+(3, 120, NULL, NULL),
+(3, 121, NULL, NULL),
+(3, 122, NULL, NULL),
+(3, 123, NULL, NULL),
+(3, 124, NULL, NULL),
+(3, 125, NULL, NULL),
+(3, 126, NULL, NULL),
+(3, 127, NULL, NULL),
+(3, 128, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -370,101 +384,115 @@ CREATE TABLE `admin_users` (
 --
 
 INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `remember_token`, `created_at`, `updated_at`, `first_name`, `last_name`, `email`) VALUES
-(1, 'super-admin', '$2y$10$H6GEBthh.w0f7hTAiIPGReseT8KJRsPqCE2AtGvvRczN2OGmawONa', 'Administrator', 'ug.jpeg', 'uQyZD0XhZprh4lXIp6UXjVdt1qMmKEq8KGTi8C5gMmO6i6tn3LOyE2xGKAcP', '2021-10-20 08:50:00', '2022-03-07 12:31:41', '', '', ''),
-(2, 'admin', '$2y$10$Xfk6Uop0crN0QaSFOfSa.ukJ5/FSiwlNchDf6trFnHoyvw2GjZfKy', 'Muhindo Mubaraka', 'harvesting.png', 'EJhYyAm1oTra46vDQKEyDHm5hvVpEbuV6JtZGEjtvAxSy54waAq328nGAzBM', '2021-10-20 13:09:43', '2022-04-29 08:58:25', '', '', ''),
-(3, 'basic-user', '$2y$10$cBUNI05M8a7AUXSEgLr4cudiDW3nFZ2McpfuAQOf4HIfjUF.6Viha', 'Betty Namagembe', 'pic.png', 'dIuKB6PHoNiiH11CkbjHeKfZqrWVhvYV4HOBnPsghZ4OI87CbequsCPbHDgH', '2021-10-20 13:21:48', '2022-03-07 12:13:07', '', '', ''),
-(18, 'john1@gmail.com4998', '$2y$10$KFXQO6uMd4oaapJ6KdJMYOqQ2zWgFUT9S4NaQQE5UeaeK4BxSOTWa', 'John Doe', NULL, 'D4QAHDbt5IwphC254MLFEUlOwNhnFAG6iStX8ptSgp7XfHtjzdUo09GigscJ', '2021-10-24 14:44:31', '2021-11-10 05:21:22', 'John', 'Doe', 'john1@gmail.com4998'),
-(20, 'inspector', '$2y$10$xGq48MAYBM7ThjM/pLqeCu8Q3QOziQtuCQSW0Kz0I2dD8eA4oe0Oe', 'Thembo Akisam', '245863543_931529574441067_8414242258604896822_n.jpg', 'hOOskzK3QGwWdkRGVzR5Rb1Hxd7vlGqCEKP2SBD2mmpeBcqcn7HfbqmZaOdC', '2021-10-25 03:43:02', '2021-10-25 03:43:02', NULL, NULL, NULL),
-(21, 'basic-user@gmail.com', '$2y$10$q4kgzYEs.EfsFwX9Lj7CUeADqzCmkozFn5ipyVQCz2NEorxOyH5Lq', 'John Doe', NULL, 'T51bxD4QM0blrnI9QmXBoWBvFwm5uAa7LVSAtJhFiSVz1F4f56dLUOd38n92', '2021-10-25 06:42:33', '2021-10-25 06:42:33', 'John', 'Doe', 'basic-user@gmail.com'),
-(22, 'lab-reception', '$2y$10$iPiL4vUv2bQqIZhQ3dcRqONL4EuXOlMunIL97vADdLyOR..OkdkQ2', 'Musa Rahim', NULL, 'qLEThYoJUDYNUXU9vgwd8KRzrtblmEcSljppMXDxNIq6tvg5JoX6eGp5LBQp', '2021-11-12 08:25:49', '2021-11-12 08:25:49', NULL, NULL, NULL),
-(23, 'lab-technician', '$2y$10$l.6rACtWrpA7B.vd4OzDo.Nlss7smhGjkQNwFBuMVi3DotXYzAGr2', 'Tusiime Bob', NULL, 'Kyeokpy7T5XTw7j3JIMbfrsocLKU3CwwBBC9NEGpRNv6Gw9CelgHoLlgXELU', '2021-11-12 09:15:32', '2021-11-12 09:15:32', NULL, NULL, NULL),
-(24, 'usta', '$2y$10$v/FSc69swhxmu.eRIwaWQugkbGyD9T6MHdlH9STWrqhj0UpQccntu', 'Phiona', NULL, '7VvRq1b1wFtAQ2oaKyC9KbJ6aG54FtoSgNkmTww3sn4X3dKojKbjMaXrDdi6', '2021-11-16 06:54:54', '2021-11-16 06:54:54', NULL, NULL, NULL),
-(25, 'basic-user-2@gmail.com', '$2y$10$boHTa92bCZ8a4Z8ZCvlJLusCmuimK7ePU7trpY762eEP29i052NS6', 'John Paul', NULL, 'aX2ba1jsKKYkYLGqONvycLEkDyx1wvZhhr0l6M8VGjlSBQPJqaxEtvY2FTJA', '2021-11-24 06:13:20', '2021-11-24 06:13:20', 'John', 'Paul', 'basic-user-2@gmail.com'),
-(26, 'mutesiief@gmail.com', '$2y$10$vY4Cf0iwYwLi2EAC2obRM.6ucmctJLGQU1xts5ctk66Qjti5btGXC', 'Efulansi Mutesi', NULL, 'SSTzYKq9fvDXn7BjBDHXgXCTcuw50D1HtreDOvlz8HbRihGmr5n0mgtYqojw', '2022-03-07 14:20:30', '2022-03-07 14:20:30', 'Efulansi', 'Mutesi', 'mutesiief@gmail.com'),
-(27, 'mbabaziisaac@gmail.com', '$2y$10$gQCllgawSgK9uc097WvFjek1fg4WvSQhmpoilcjdyQnB6H4UkmiMm', 'Mbabazi Isaac', 'Capture.PNG', 'Kx50BYL1OTA3B5QJbBTMLS7lQNbc2qzxOLTiSi4JWaxDMv1t9zTPpTHspKb3', '2022-03-09 12:02:42', '2022-03-09 12:03:27', 'Mbabazi', 'Isaac', 'mbabaziisaac@gmail.com'),
-(28, 'isaac@8technologies.net', '$2y$10$jOPnKBHeOKO8h8ahcrTl6eZrfX0aqcCODjEqC61qrTnLfv7Jn64uK', 'Isaac Mbabazi', 'Zac.jpg', 'tpAF1MYdQ1mUMgQDcDWWw9zukPEs3w1Eec21HgXqEppDkmpk6AwCPbn4r3Zt', '2022-03-09 12:14:47', '2022-03-09 12:15:58', 'Mbabazi', 'Isaac', 'isaac@8technologies.net'),
-(30, 'csendaaza@gmail.com', '$2y$10$GgSY/pzJy6Uo0/67kjE3FOxx91XCMEiVX5HGHdRPUPjYxWMFGmHD2', 'sendaaza charles', NULL, 'UgF3QF3XeZVvI1LaAxhAHYgIP5RRTka2zhqxqQzqoCXKX3JlOr3oigfazapX', '2022-03-24 12:08:32', '2022-03-24 12:08:32', 'sendaaza', 'charles', 'csendaaza@gmail.com'),
-(32, 'wamusoi@yahoo.co.uk', '$2y$10$ysO5/BYMG5Gf4z4lK5dGt.cmiiwwqvCbulo91B/HrzoFg/li5MRP2', 'Isaac Wamatsembe', NULL, 'M6YK7tHGR5bvk5oRSZMO4NrclXg73Csa9Yej6SUH525Nlwmqbmc5McvgBHkn', '2022-03-24 12:10:52', '2022-03-24 12:10:52', 'Isaac', 'Wamatsembe', 'wamusoi@yahoo.co.uk'),
-(34, 'adrine.agaba@gmail.com', '$2y$10$50mOo0GSh/.xwRpHAxBe7uuxvK38UhWMVMLJbiQ6fGEDVteTFWuBK', 'Adrine Agaba', NULL, 'xat47TPjUXbKIVB5uk8CUaHhMDRKbWH8ucqQHrcZKkCtj8OVVhGvFPOngh9E', '2022-03-24 12:17:28', '2022-03-24 12:17:28', 'Adrine', 'Agaba', 'adrine.agaba@gmail.com'),
-(35, 'muyingojoseph2@gmail.com', '$2y$10$plObrYYpbIxfVObwnd5Pqe2007getF.8HmSnZk3TNx28AEieCdiBG', 'Joseph Muyingo', NULL, 'kba25dRG0CUio6PKAdy5JrjySAhxKfknAJv2CYZnNCIMtOTgOw0Zq7A29NEQ', '2022-03-24 13:44:12', '2022-03-24 13:44:12', 'Joseph', 'Muyingo', 'muyingojoseph2@gmail.com'),
-(36, 'idanc7@gmail.com', '$2y$10$JAaHgd484yOq3iOtur7bXOj3b0zBsToi/iU20KziB3mhHVpchGRya', 'Idan Cohen', NULL, '4QzKXiuTs9OgYZco95Ay8jfx5gdxyxKACHhSRhGmi8gfvwlmhJYGQYTTiGT1', '2022-04-12 22:50:53', '2022-04-12 22:50:53', 'Idan', 'Cohen', 'idanc7@gmail.com'),
-(37, 'coperemo@gmail.com', '$2y$10$YD7sLL/fvwXNM4nCwyPz2uUUVKKk7SXQSZfJ8ImGmmNRDaTeJAIMO', 'Charles Operemo', 'IMG_6453.jpg', 'KcjDfmnLCBajeNb72GdcNLacxHG7VAbdObR68ydUD3JEq1KHoqXpc82GmUdP', '2022-04-25 10:58:03', '2022-04-25 11:36:12', 'charles', 'Operemo', 'coperemo@gmail.com'),
-(38, 'brianmercy999@gmail.com', '$2y$10$rAxkWBnY7uKf/IUQJ1inUOFx.psNnc4Yc.JKx57pQzxxt.AUT7dx2', 'Mercy Brain', '1650871159874484077802900066233.jpg', 'VVdMPqXJ3U9JrAPnzkJ8lBhmtJxXRqaYebxyaDuKwcJl0h3bdOPMLKkoJ8HB', '2022-04-25 11:03:42', '2022-04-25 11:21:31', 'Mercy', 'Brain', 'brianmercy999@gmail.com'),
-(39, 'noahntum@gmail.com', '$2y$10$YO/3Aj1Q7dQoXHdsi7t5Te7PvfASxpXzkekHP..HxNjf6xjj.0qZW', 'Noah Ntumwa', 'NTUMWA.jpg', 'WJjSrLjPciozE1bOUUW1IljdUYaFr5jPDkLar3A8sIiH7QIgZZQUnz1EnEBl', '2022-04-25 11:03:45', '2022-04-25 11:19:13', 'Noah', 'Ntumwa', 'noahntum@gmail.com'),
-(40, 'josephkivumbi@gmail.com', '$2y$10$.lalB0jTLkra/PM/qhPE..mn9yEVhoWLmYy7asBk4037GoWq7P0Zm', 'JOSEPH KIVUMBI', 'IMG_20180928_074642.jpg', 'LoMzoq3DAGUkze1jbWpWCjfXuui0Mkk88YpfczOXxpAe1HgvBa3SjyFN91ED', '2022-04-25 11:03:54', '2022-04-25 11:21:22', 'JOSEPH', 'KIVUMBI', 'josephkivumbi@gmail.com'),
-(41, 'greenfirmafrica@gmail.com', '$2y$10$q.c1YIAaORXhEEfZqdIZJOy6jgolWId6ySB4wSXooBvXac1ZnRWz2', 'Amos Owamani', 'IMG_20200802_154121_486.jpg', 'gnko3kxkoN2kJZPkslKxujUsRyDnM5mfG25MfMfNo377mFMfRLbaeM4e1EZY', '2022-04-25 11:04:09', '2022-04-25 11:26:12', 'Amos', 'Owamani', 'greenfirmafrica@gmail.com'),
-(42, 'mjacobinheaven@gmail.com', '$2y$10$ozaDLP72A3RE5g87jE.ME.p0WYzb8mSGjL2PGm.lRw1BGc7mtl6NS', 'Jacob Mugisa', 'IMG-20200906-WA0009.jpg', '49S3iZtGW3OapPlZkEAMI4tQq4XwLudZZKU7rZ4vhdLCd5yJxeGTjavmak73', '2022-04-25 11:04:20', '2022-04-25 11:20:05', 'Jacob', 'Mugisa', 'mjacobinheaven@gmail.com'),
-(43, 'kawuzialie@gmail.com', '$2y$10$DXXq4n.igkMY2oLVKznE.uQ18qeXyPEHNkuock5TOAJDeVQiUfEga', 'Kawuzi Erimiya', 'IMG_20211027_113431_044.jpg', 'dDiMeMbP1GdTIFGEl0ilAr5HO3w3MEp4owYFe397hlWvp6c5CecwqpzMJ34g', '2022-04-25 11:04:24', '2022-04-25 11:21:57', 'Kawuzi', 'Erimiya', 'kawuzialie@gmail.com'),
-(44, 'nakalawatabisa@gmail.com', '$2y$10$MaSnZwpPrDk/Ru2NLXtzcOM85dYQoY63SP4YZeYk3XyFjEXfpNUp2', 'Tabiisa Nakalawa', 'WP_20150108_011.jpg', 'NRIhUV6zIoeOs8PH28tf9CEozRpssdS60q3dnhZJyko06D2UI7glhOk2crNm', '2022-04-25 11:04:42', '2022-04-25 11:20:39', 'Tabiisa', 'Nakalawa', 'nakalawatabisa@gmail.com'),
-(45, 'emilerwembuzi2002@gmail.com', '$2y$10$lr0z05gnJoMcxPVLEFjhFuhkRPj.IAVC05SYrXhvKLFcjN9KXJvSq', 'Ekyasimire Emill', 'IMG_20191015_125310.jpg', 'tnRB0wdcitV6IziEqLsn0cjpt57fmmVAacjK3U8QJJmI8nq8HW7AbtT1045X', '2022-04-25 11:04:58', '2022-04-25 11:22:50', 'Ekyasimire', 'Emill', 'emilerwembuzi2002@gmail.com'),
-(46, 'aloci2025@gmail.com', '$2y$10$1TL89cCvRbG0u1MrX0kYn.SajFfKlR/d1TX4g0DH0lesCZt0MaDyC', 'Sam Aloci', '16508712648021871092222.jpg', 'QrBj9OnYulmu9US4p2Xlwn2VaIPSOpcreFqndJON5mk0zW4aa6MLzjuKVNl7', '2022-04-25 11:05:06', '2022-04-25 11:20:31', 'Sam', 'Aloci', 'aloci2025@gmail.com'),
-(47, 'kemigisam36@gmail.com', '$2y$10$5.bhrKEkdcS.onWPRXg2Xe10jKSqZweMukIYSivaY4PKjy1ew0Kx2', 'MARY KEMIGISA', 'IMG_20211027_125959.jpg', 'ZrPGCDyIloXCfW8g5jkWqrN1EWPT1ulkpitesCddMx4X8TBTNHpVTtDrtzJm', '2022-04-25 11:05:21', '2022-04-25 11:27:41', 'MARY', 'KEMIGISA', 'kemigisam36@gmail.com'),
-(48, 'Benedictomatty@gmail.com', '$2y$10$rmMaf5J2LZjTUiyYM8/bOuMYHS0lN8UVH/nkcHfDgxpJlB1jVE6y2', 'Ben Kisitu', '93358eb0f1e3ec12709b316259be7572.jpg', 'jK8yNzN8P0ZQYlhshsMxpQSAm95we4xEZNi1AofIYglYO1amyTOsLCZkh2Jk', '2022-04-25 11:05:25', '2022-04-26 10:25:06', 'Ben', 'Kisitu', 'Benedictomatty@gmail.com'),
-(49, 'morynzopae@gmail.com', '$2y$10$kIt0sqUfLzLzruNZ/S7zWeKcQ8cExZDAf2Cqf1GvardJax1EwdDs.', 'Mourine Achulu', 'FSP_0353.JPG', 'rPDXmtpRJBDv0hZ4dF4s3Y1ThGCneoJicBxRlpgHoVnKsjDDXjmnjH81lp0i', '2022-04-25 11:05:31', '2022-04-25 11:20:50', 'Mourine', 'Achulu', 'morynzopae@gmail.com'),
-(50, 'aligumae@gmail.com', '$2y$10$lggV5akNPR8DdBlabw6kQuhi2Yrl09GbB6eXC9hxzeCYCiUWy7Cfu', 'Aliguma Emmanuel', '20211011_101357.jpg', 'TUXrZH6aLYRTBicyBzcWa78gyLObYlo5uiVGRae45KhJSuUMSCpRJdjIrOzu', '2022-04-25 11:05:56', '2022-04-25 11:11:11', 'Aliguma', 'Emmanuel', 'aligumae@gmail.com'),
-(51, 'mpairwejimmy@gmail.com', '$2y$10$CMXPRW.4o8HGaY1NCfGgju0.AYBT3I/3aOO0Jv6i.4oQtuM62.Afe', 'Jimmy Mpairwe', 'tmp-cam-3656652433527260082.jpg', '5DFHLpyLaTl2JUAen5kxteIF5O1FKou0EAPLdspwTEOSQwOBp5Dh2Yi8uIEY', '2022-04-25 11:06:05', '2022-04-25 11:23:55', 'Jimmy', 'Mpairwe', 'mpairwejimmy@gmail.com'),
-(52, 'rkmbabazi@gmail.com', '$2y$10$xrLO2kbmU.e7gBAdRjKRF.J84mR.zZMqyxOt0Gqt.2HaYYl.E3Jsa', 'Racheal Mbabazi', '20211029_211003.jpg', 'lfptldFWTjogmAwiP5Na9mCTF1d0WTwNQWwcr1LFWMjG9Ec6kIroVXq6BSfJ', '2022-04-25 11:06:09', '2022-04-25 11:20:29', 'Racheal', 'Mbabazi', 'rkmbabazi@gmail.com'),
-(53, 'hermanbyakagaba98@gmail.com', '$2y$10$0K2VZUSuV/M2BXTwXV1U.u8.aOcql5h8szJjFO0I3.Ey57UyzhRcq', 'Byakagaba Herman', 'IMG_20220411_090443_9.jpg', 'eylR8a862gMcZREhOprDNUsPmr7qXCSWbn3ebdGiIKhtgkix70xSU5HcD3Tf', '2022-04-25 11:06:17', '2022-04-25 11:24:44', 'Byakagaba', 'Herman', 'hermanbyakagaba98@gmail.com'),
-(54, 'masagazicliff@gmail.com', '$2y$10$NsNshL3sSaywXc5.7wSMx.ji2hE6cJ7RAsljWl48.ILHpPBLknVnK', 'Masagazi Cliff Richard', 'Cliff (2).jpg', 'TsA6GUcOqcY1prykptVqqIhYseX6kfEeFd5LuD95MjIm0EiuDtznqPw5DOh6', '2022-04-25 11:06:34', '2022-04-25 11:34:12', 'Masagazi', 'Cliff Richard', 'masagazicliff@gmail.com'),
-(55, 'isaac.mbabazi@gmail.com', '$2y$10$0zH7PJpeNQZS7PGADeLk0.NIoBZtfFZ.zQXopa5CRQtS5F2es.Y0C', 'Mbabazi Isaac', '2f087a39d1f3e96536aa707b6b2bf973.PNG', '06ndSv3tgUTwMpSH7oV6qLGHpq64eVsxY3iFwMdHtLhIE1iEU6dKA0Ncz3th', '2022-04-25 11:06:50', '2022-04-25 11:20:05', 'Mbabazi', 'Isaac', 'isaac.mbabazi@gmail.com'),
-(56, 'kirungigodwin8@gmail.com', '$2y$10$GIHNAvUTUiiZpSbL/GhC5eZ1MIdG4lIGXPzAo3PWyItBKUcVb9d5C', 'kirungi godwin', NULL, 'JB7K5cUNN4EhtPY9Pz8BWLlO9RPqQpBO1nFjk0CaVUtaBuqIfuDhDKfZ2mNi', '2022-04-25 11:07:03', '2022-04-25 11:07:03', 'kirungi', 'godwin', 'kirungigodwin8@gmail.com'),
-(57, 'kennedy.wekulo@brac.net', '$2y$10$5MPrD8YE7qrQrl1.BlrIiO3Y.R1hHUocQdURmLybxGwtqTFMMpED.', 'KENNEDY MANGWANA', 'Ken 01.JPG', 'RParyUFhoc5tNUjvJLNtxWdmkflAuAT201M1p0RRpGo39GFOXGmgyLpWwxXy', '2022-04-25 11:07:30', '2022-04-25 11:21:01', 'KENNEDY', 'MANGWANA', 'kennedy.wekulo@brac.net'),
-(58, 'lutaayajoseph@ymail.com', '$2y$10$ahFiIF5xvcQmH.kdsCFl7.u7zrBV2GW4sJrvlUGe6iHTCdnackA7q', 'Lutaaya Joseph', '16508710522663879462973333220467.jpg', 'K88iiUxM971NDApMThMKqiNxeTFBh7bVAUJaKGG8SK1D2O2P2fRWTcNr2TVF', '2022-04-25 11:07:51', '2022-04-25 11:20:10', 'Lutaaya', 'Joseph', 'lutaayajoseph@ymail.com'),
-(59, 'saviok@hotmail.co.uk', '$2y$10$htv4yl6EBB0OXC5eUyfJheO9pepolqCft23rRfU1UMMkjwgegmsaC', 'Kinkumu Ronald', NULL, 'ukUteJN5ThQFrpaSDW4mG65rlplSq5btY4dhC7TIcYVhnE191ex4unKRF2lY', '2022-04-25 11:08:35', '2022-04-25 11:08:35', 'Kinkumu', 'Ronald', 'saviok@hotmail.co.uk'),
-(60, 'gitta_paul@yahoo.com', '$2y$10$TYP3iMGHwQuSWpsRel5n2.AwGWM4KdlctlCLLGRsdm0zFjpGeDrS.', 'Paul Gitta', 'IMG_4890.JPG', 'Jr32rxFnPPEFSHWR0VkbfH977M7hJUiYfj2ShvCFWAhtvZoRE40AFy37PTLu', '2022-04-25 11:08:47', '2022-04-25 11:24:43', 'Paul', 'Gitta', 'gitta_paul@yahoo.com'),
-(61, 'moseotai@gmail.com', '$2y$10$SMOmgFaFps5SC63kEdbxu.bbF0t43arGz8wbz.lPJne45xXO49.vm', 'Moses Otai', NULL, 'HX9YKpJYcwiBWikfNMnz1gz7PwAH7yCqObo0W9vrxKELTcAskS2SSsbCuzih', '2022-04-25 11:08:56', '2022-04-25 11:08:56', 'Moses', 'Otai', 'moseotai@gmail.com'),
-(62, 'jralexewinyu@gmail.com', '$2y$10$BnIN1U6/8e/0R6Gb.WBWw.PRdXbCEt8ngoEJdX1av6fVFsMk898Pa', 'Alex Ewinyu', 'IMG_20211114_150336.jpg', 'aPzYL1L2kHqSgZ193rS6Y1iQrtUm1yH3ZoCjV36AYYojGheVJTFZbC34Z6Ei', '2022-04-25 11:09:28', '2022-04-25 11:20:27', 'Alex', 'Ewinyu', 'jralexewinyu@gmail.com'),
-(63, 'yafloina@gmail.com', '$2y$10$NIsS5LWJsjE5b5eB41Sjy.b2byPYq8Z39dPpzIciqm5PvqjxtKn9a', 'YAFESI OMUMWA', 'USTA LOgo (3).jpg', 'ScjjkSex073YOLwFtX079hh1LRY1Va9OuRRV8rsQG80mnaBupEx6Lv6xlIef', '2022-04-25 11:10:09', '2022-04-25 11:22:34', 'YAFESI', 'OMUMWA', 'yafloina@gmail.com'),
-(64, 'savanaseeds1@gmail.com', '$2y$10$ij01Bqi.7R2z6axLWHHif.6RCfGMvpY7nQdydfc2BCJBBNMKe/rFe', 'moses mugabirwe', 'a44ff6fa57c9dad49d0b1fe4d12cb2ef.jpg', 'MgPSqccfgWsIFb4Br9hh1ErUmz3G1yaNQPWVsPP3sBQt7ENkbCNfNisSWd0U', '2022-04-25 11:12:11', '2022-04-25 11:25:21', 'moses', 'mugabirwe', 'savanaseeds1@gmail.com'),
-(65, 'nakawukimariam8@gmail.com', '$2y$10$A4UngIIyIPjPZae9sJSTTOoU4ytjRjFJphJeOEy3iPzm5Pi/mqzRG', 'Nakawuki Mariam', 'IMG-20220420-WA0010.jpg', 'qXmrr3jSQS7ObpKqEjfGMhNSlswoQxJgKuNNGvdR8rIFORzWrzuirP6bQBOO', '2022-04-25 11:16:00', '2022-04-25 11:24:25', 'Nakawuki', 'Mariam', 'nakawukimariam8@gmail.com'),
-(66, 'ngcu@utlonline.co.ug', '$2y$10$VInkJn0fsSHuyeAniGZ8yeeVgLz/4oKcMZlcZzctbrD4FaucXaKwW', 'Mpabaisi Joseph', NULL, '8mtptxfVBhH5gZOctqWJdObJ518VHNjYE2kD5Nm0hCl6g7p02FSbDHMEWurV', '2022-04-25 11:21:17', '2022-04-25 11:21:17', 'Mpabaisi', 'Joseph', 'ngcu@utlonline.co.ug'),
-(67, 'lubegabernard37@gmail.com', '$2y$10$TMnZLa03TtH19B0N0/ZzYeYiHPs.Lbpy.YzQwK7yfu1osESJe9x4G', 'Lubega Benard', '4608c74c28778564fe91959ccfbb4ce8.jpg', '2NCHhSHXmXcB9gALZvUnrdaLx9egQ3Fbu9z2Cn6UR4t080YXc8KpDJCRztmy', '2022-04-25 11:22:31', '2022-04-25 11:31:14', 'Lubega', 'Benard', 'lubegabernard37@gmail.com'),
-(68, 'snabimanya@yahoo.com', '$2y$10$z/t.yM0C5slCRzoFpyMUMenmvNQ2e/K7.tE3deagjOUkhIwO3rDha', 'Nabimanya Samuel', 'GFA LOGO.png', 'h8hghBjG0v4cbxdxODFzW4EbAMYaaVOL3uUyLT3GVf9pf62D7LzJaXIEtJfR', '2022-04-25 11:29:29', '2022-04-25 11:33:25', 'Nabimanya', 'Samuel', 'snabimanya@yahoo.com'),
-(69, 'isaacowino84@gmail.com', '$2y$10$GaJ1V7c7xb/eLuTGQHW4suxIQIcvfbIzrmRg5fdWUM4AmN.xBksmS', 'Owino Isaac', NULL, 'wC3kSfqgtyLOLz3DGCfrGqIidcEPNY671zuEZ9VAPcnu7qXcaz30E0SEk7QX', '2022-04-25 12:43:13', '2022-04-25 12:43:13', 'Owino', 'Isaac', 'isaacowino84@gmail.com'),
-(70, 'kunihira1987@gmail.com', '$2y$10$uGphHIFyBTrDXNWCuqP5y.rva.FoznaJm75AyJ8Etdu8iPumnMQnO', 'Innocent Kunihira', NULL, '3gmLoevU0IsxXTNzUIFU2KgsHm2zwjngZuMr3lPFU0ZRCqRbYG6w67akC4j0', '2022-04-25 15:18:31', '2022-04-25 15:18:31', 'Innocent', 'Kunihira', 'kunihira1987@gmail.com'),
-(71, 'sharoncathyalobo@gmail.com', '$2y$10$1EdAYYWjT99g.ev027J3hOa8FQkRC/3imCXgVV.e9viwmYj3o2Uc.', 'Alobo Sharon Cathy', NULL, 'F7bjjDepEaPI4v9T1wEvGg8kuTPbsl5bh1vY6EYmExOnyWfmWO99aQ2AFmtr', '2022-04-25 17:36:07', '2022-04-25 17:36:07', 'Alobo', 'Sharon Cathy', 'sharoncathyalobo@gmail.com'),
-(73, 'basic@gmail.com', '$2y$10$DFvOQ9K/UbaZXJiL0C96AuV7YhKiU5tOYIl059AV7rHjC0TwM0QzK', 'Basic User', NULL, 'd39jf0IncVfTzFkOsyra8qmVI9KMpSaILMFZ4Bo7fuhtUGT1EJB8qVMrGZ7A', '2022-04-27 16:41:13', '2022-04-27 16:41:13', 'Basic', 'User', 'basic@gmail.com'),
-(74, 'eodongkara@gmail.com', '$2y$10$XZ/FKESe2ddRIJa9M0SlleVovAUecGW2.MqvCNOym7D45MXvx7mbO', 'Odongkara Emmanuel', 'IMG_20211218_123755_046.jpg', 'o02kc9i9QtRhIplzJkwANEuoGLRQecMIr7gEvfLBtHmy6RzGJITiHLtKRbXZ', '2022-04-28 10:44:41', '2022-04-28 11:01:40', 'Odongkara', 'Emmanuel', 'eodongkara@gmail.com'),
-(75, 'kennyomoding@gmail.com', '$2y$10$9op0BwaeD4nN5dY77Im3te4xcg4odPPILF2JZHfR34tE4oPpaL.pm', 'Kenneth Omoding', 'IMG-20170629-WA0015.jpg', 'aOvCoFHnJwF21duj2A9WartSSgqbKEDQOCZkORoGkl4dbgC2s5lRnXyjGYB1', '2022-04-28 10:45:07', '2022-04-28 11:01:31', 'Kenneth', 'Omoding', 'kennyomoding@gmail.com'),
-(76, 'mbabazi.isaac@gmail.com', '$2y$10$UOi5o8k2t.rVv8/QiZlKCO/7pzzyvgjryrbWwDjU7J/JxbB7xbawe', 'Isaac Mbabazi', 'de41d3f3489510a341266409e9a30427.PNG', 'eYAmqVUEc181A8EB1h5MgOPpNhFy24GxSISDr3dewTmckZQM3zT0cAne3HW9', '2022-04-28 10:45:29', '2022-04-28 11:01:29', 'Isaac', 'Mbabazi', 'mbabazi.isaac@gmail.com'),
-(77, 'muyingoali5@gmail.com', '$2y$10$eZnsFsSIBsqwNLA4zPZrue04xUkPmOzTVRZd/Ya9.UMCh4ew17ppu', 'MUYINGO ALI', NULL, 'H0pyaXF3EPvITdze96lWSskf5S5Gf7IQcfq5cVnN7zhuM4CYhBxws3Tt1vJ9', '2022-04-28 10:45:35', '2022-04-28 10:45:35', 'MUYINGO', 'ALI', 'muyingoali5@gmail.com'),
-(78, 'nelsonmasereka@gmail.com', '$2y$10$lTGl4un/hqqowQtAEfTfae3PqieKKQBvoiiZop1gVHiLfvLVKSQjG', 'Uganda Seed Trade Association', '3729fd7bcbafc2797ea6db5c94e4c20e.jpg', 'kX2CE88j59IvBLBvpNynArCPUYmDEyYRrBKmyBPaN0TSnFMFfMzZTyzbuwrH', '2022-04-28 10:45:36', '2022-04-28 11:07:51', 'Masereka', 'Nelson Sirikani', 'nelsonmasereka@gmail.com'),
-(79, 'christinebiira77@gmail.com', '$2y$10$TrKMo.LSluNKIAWopwWZ0e3Avdi1uLpHSFfrDhXIS.NQPwZhwRAty', 'Uganda Seed Trade Association', 'IMG_20220427_185449_599.jpg', '7fixOfP99kL3HXQFOWlBlUDy5kt8UlPGbxeJVIOXmgQRuMsfA5aGRSK2jjn1', '2022-04-28 10:45:41', '2022-04-28 11:01:46', 'Biira', 'Christine', 'christinebiira77@gmail.com'),
-(80, 'joelmukisa256@yahoo.com', '$2y$10$q/GLFjKXKDbxsaFXCvdVoOrPxx0n0wb6heaV4QMJd6mltF15XvzTS', 'MOVA SEED', 'joel 1.jpg', '3Y0TV8EpD1njoSTPDBCHD8pMrGDcEiwVEO0e5TAN7yJXmkxoLNJRBv9Jf5mR', '2022-04-28 10:45:41', '2022-04-28 11:08:04', 'Joel', 'Mukisa', 'joelmukisa256@yahoo.com'),
-(81, 'elyonagroconsultsltd2019@gmail.com', '$2y$10$AUlzCjiD.V4fFnHR6tV.9.3tJGvTkmHMM/dZnukdrWk8aGCqDCUu6', 'Miiro Steven', 'tmp-cam-8329085211235753052.jpg', 'dwlExcjqCZfAeNgBxzLDGH4XOPdihTLcj3bPs0WCJIUO8fM2J7wPnjGIdBT3', '2022-04-28 10:46:01', '2022-04-28 13:24:35', 'Miiro', 'Steven', 'elyonagroconsultsltd2019@gmail.com'),
-(82, 'mbowaarnold@gmail.com', '$2y$10$y6z63dA2C8j55HjcHnFjB.KkPobLZGTj7K5bAzswM/tAUmshdIRM.', 'Arnold Mbowa', 'Mr. Kakembe of Muwoko village - Mubende.jpeg', 'swdLgUyQcK1BMCQTKOPSq06Bf8b5ECZHNnGqbmftLIzh0dNDa3N0HB9zn0n6', '2022-04-28 10:46:03', '2022-04-28 11:03:37', 'Arnold', 'Mbowa', 'mbowaarnold@gmail.com'),
-(83, 'johnkalas96@gmail.com', '$2y$10$PV9dzdFvy22UUTWx6GhpYOzD.AfGVttPNuYkHR0.v6gkK.QrFSgCa', 'John Mulonde', '16511291975988023772235840383155.jpg', 'n7PVvScrfs3J4rsfUsFhFfD6xlblEDZbCimu8fLAQIWC21inGuecAxHH9ajk', '2022-04-28 10:46:12', '2022-04-28 11:01:37', 'John', 'Mulonde', 'johnkalas96@gmail.com'),
-(84, 'd88nyeko@gmail.com', '$2y$10$WjYJj2SRk1sEpp19OL8W0etrc9GdlXwSEtcFou/KmL/R9G9oZZRkS', 'Dominic Kimara', 'PHOTO.jpeg', 'rtvWCoyXXNH9l9xeyg8NNcn6DLaeB0ONLz7i0B79j8Y1VTgOUmmhvsOdveJB', '2022-04-28 10:46:14', '2022-04-28 11:04:12', 'Dominic', 'Kimara', 'd88nyeko@gmail.com'),
-(85, 'matatajob72@gmail.com', '$2y$10$qpJKIQMBGLU4kINlKY/Pr.2//JBsnVYMGfliOcjVjYYU3IxF1TX3m', 'SELECT SEED LIMITED', 'IMG_20211213_094738_257.jpg', 'LPcXH1m4z7UkEuzb3GzVq9bGq0eqykYm39jdIRgumc1ppRbnkf9wRmVJf7R6', '2022-04-28 10:46:20', '2022-04-28 11:01:57', 'MATATA', 'JOB', 'matatajob72@gmail.com'),
-(86, 'mutegekiivan@gmail.com', '$2y$10$ZPo6NGfxVnOYgifHkHgQ6uwPYlbsdlOoTIJ.W8obzt3yWa10bsqce', 'mutegeki ivan', 'IMG_20220524_091732_2.jpg', 'YuImr65uWRvi3HtaFqxPwFJEWMnexLqcp1nRCebawoUJd5JdMDXDz8XJ4x9U', '2022-04-28 10:46:22', '2022-05-24 14:20:03', 'IVAN', 'MUTEGEKI', 'mutegekiivan@gmail.com'),
-(87, 'sulajjemba4@gmail.com', '$2y$10$H/H.jpg.sACY5GzPP6U7WONjJZhwLxIWXmdF8djxGvX9yty4pgXdG', 'Sula Jjemba', '20220427_152327.jpg', 'BD3z99lGCRyQyOlqdQQqts4xpW5HzPVCXHdOSltxXqBWQ2Ad5sBuej3hpHq7', '2022-04-28 10:47:29', '2022-04-28 11:08:27', 'Sula', 'Jjemba', 'sulajjemba4@gmail.com'),
-(88, 'walufeloisimabonty16@gmail.com', '$2y$10$ivOFdBl9rgAK2dZCsQD4Deu166XmL/KukFPoq583TNws/D0fDK1Ty', 'walufelo isima', '1651129159685-174580839.jpg', 'bCcvpmCfuzJUEhcMmxXiQBNwW1n1CbrUVYEsWoQLhZC5JuUqrkg8riyGuxlS', '2022-04-28 10:47:31', '2022-04-28 11:02:18', 'walufelo', 'isima', 'walufeloisimabonty16@gmail.com'),
-(89, 'Opiobanya@gmail.com', '$2y$10$xQnoPMm7ikBEgjSK32IsGeMJlaLNPWYnjQhdLPsxgRNIdN1VAE4sy', 'Opio Kelvin', '20220428_085704.jpg', 'AJZkUvzUiEAB84L7QZANdvoxIbqxfrgSjG4voPds0npLBKoLSPkPVICTa9ux', '2022-04-28 10:48:48', '2022-04-28 11:02:54', 'Opio', 'Kelvin', 'Opiobanya@gmail.com'),
-(90, 'atiaserogal2@gmail.com', '$2y$10$FOSi3Vez9tbMGQCxsyVbuuVjUQ4mNnNC4Z44.H6ABAv12zKU1pX5W', 'Atia serogal', 'IMG_20220427_181457_543.jpg', 'gIMMIBcpFydVeBvsL6bV5z3NmQiZYppY3CCFuu5MRuz2sLeCxjsNKQcPYI79', '2022-04-28 10:49:01', '2022-04-28 11:01:43', 'Atia', 'Serogal', 'atiaserogal2@gmail.com'),
-(91, 'cathyadong3@gmail.com', '$2y$10$duLneh6mYCTJ2Y9MXWnX0uT2EoRquX80DH2EhVDc4ZpiHFzt0j2MS', 'Cathy Adong', 'IMG_20220427_075136.jpg', 'HL2rsPL2MCcceiSBgZHekM4AwzE8qWA4ah1dCodona0IaK1s5hipWl65x6Et', '2022-04-28 10:49:18', '2022-04-28 11:02:05', 'Cathy', 'Adong', 'cathyadong3@gmail.com'),
-(92, 'pollymagero23@gmail.com', '$2y$10$.NC4qrD.vH40ub0zylHnRejo50GgPm5Tyh2t2em5ZCt.svaXJ06WS', 'Polly Bantel', 'IMG-20210517-WA0004.jpeg', 'J5x7i8ZjDg4ClMIAZjWy6VmQsGkq0fgHp8ZkDvsF0uSTYLyxLAHtihYuFahe', '2022-04-28 10:50:38', '2022-04-28 11:01:32', 'Polly', 'Bantel', 'pollymagero23@gmail.com'),
-(93, 'wesigah@gmail.com', '$2y$10$KF3skTBHWj5iLSaNB23zZOBLGwuBJ1QE8yZ7FyjLkkfS3wI42ZAqW', 'WESIGA JIMMY', '100_2659.JPG', 'Bb6iTn1gqVKTPjbsp5HsgBckXRAo9BfAGJUGGrits0vDsfEdJY2hSkoPbysA', '2022-04-28 10:51:38', '2022-04-28 11:03:05', 'WESIGA', 'JIMMY', 'wesigah@gmail.com'),
-(94, 'wandabarnabas3@gmail.com', '$2y$10$8CG/RSeeZ8Scw4wRkSjYYuoN5k4joucbHYQjrjNetBkvQeOsJ97Z6', 'WANDA BARNABAS', 'IMG_20220421_103220_941[1].jpg', 'BSZ8mtkgzTxXaj5LyHO9yd3LBHbnlLQaJpjiZnjOsRFpwtbTo90UCnRMzFir', '2022-04-28 10:52:40', '2022-04-28 11:01:56', 'WANDA', 'BARNABAS', 'wandabarnabas3@gmail.com'),
-(95, 'wabusonko@gmail.com', '$2y$10$r/an7OBficthjV5voYS1/OAGzxC5AJB0io3.abVLiG4Nh5engLh7G', 'kibalama brian', 'photo.PNG', '2zzKuiuMdsFyBb3uZUNGuXQYj8JiUAHWCuCHBdWKQrHqV1TXbqL0FuG3WBRv', '2022-04-28 10:58:16', '2022-04-28 11:13:42', 'kibalama', 'brian', 'wabusonko@gmail.com'),
-(96, 'muyingoali6@gmail.com', '$2y$10$qE1ovUq8.LfcCjzKirS0ieAQqHKKDUZ1ICnqJmR1MRd10FgKfRv9W', 'MUYINGO ALI', 'IMG-20210325-WA0017.jpg', 'EgwYkL9F8mCaoK6u8s2NNnpywVhjooRahepXWvDXyYmrKFVeulOihtcjS4TZ', '2022-04-28 10:59:53', '2022-04-28 11:21:17', 'MUYINGO', 'ALI', 'muyingoali6@gmail.com'),
-(97, 'magimbig@gmail.com', '$2y$10$o7SEqvETlGFfUuP7Rt4yde13KWcaZKeuTlADsNHtgnQ4h09mCoTda', 'George Magimbi', NULL, 'J0kpzEYNdtZdyKHUR2iLahF1Cw8Gl0nQdeJ1gSGlyg6ZPEQsO5MB1uXjRB2m', '2022-04-28 11:19:15', '2022-04-28 11:19:15', 'George', 'Magimbi', 'magimbig@gmail.com'),
-(98, 'nbvicky@yahoo.com', '$2y$10$BKN/lZtpfVE/YCNC7FrIxe1.qMRhBr9rdsuqQN0d5/DMYeToJsfvK', 'Vicky Nyakatuura', NULL, 'fHpkbacIdkn7LzEF1YOehEHWxBLQtdzE8J66LU1PMhO4Qm6RNVopT8bbSVGX', '2022-04-28 11:36:46', '2022-04-28 11:36:46', 'Vicky', 'Nyakatuura', 'nbvicky@yahoo.com'),
-(99, 'muyingoali7@gmail.com', '$2y$10$CzjQTUydgYIMvNaLDlQU2OD/PC76KcNC0jCsMupf4.uoysdJWS0Ui', 'MUYINGO ALI', '1651131972151343519220794481266.jpg', 'OXxCgECnR8MzEGBjlr1cAOQF80yA86ApzOJDjyV1dYjQx2bFKTyROubD2utA', '2022-04-28 11:44:45', '2022-04-28 11:47:29', 'MUYINGO', 'ALI', 'muyingoali7@gmail.com'),
-(100, 'muyingoali8@gmail.com', '$2y$10$Oyu52DbmsVJtdBEAw/kfr.I17Sn/PMY.l6ycF14VVfRIlaCPzj8BC', 'MUYINGO ALI', NULL, 'NPgiazjavutA9IbijS1Pm0QFaJkp0aj36IzhLKEYdXGr0b54hwVgvXwJhxxn', '2022-04-28 16:48:17', '2022-04-28 16:48:17', 'MUYINGO', 'ALI', 'muyingoali8@gmail.com'),
-(101, 'masumugogo@gmail.com', '$2y$10$KtApDilG7uPJiLTr7lVtpuoWOZek2LyryQsNuLPmNzin28AOLJZwm', 'Masumu Gogo', 'RHINO SEEDS LOGO_page-0001 (2).jpg', 'AOpELryk2lcngJh892pvdr3M82eGAGDSq6QR0NUlhtdwZvwBWRDu4biUme26', '2022-04-29 10:27:10', '2022-04-29 10:34:29', 'Masumu', 'Gogo', 'masumugogo@gmail.com'),
-(102, 'naroholdings@gmail.com', '$2y$10$klWjRIfSEyqk6bR32tKAJuekLJNhCar0AyuxVqR7SqpWr6tlxabyi', 'NARO HOLDINGS LIMITED', 'logo naro.png', 'LXnBDUb9rfFTZktAT4agoT05oAOEeO6sCxeMiy9424ChRkjIM3PV8loK561r', '2022-05-04 10:46:53', '2022-05-24 12:15:31', 'NARO HOLDINGS LIMITED', 'NARO HOLDINGS LIMITED', 'naroholdings@gmail.com'),
-(103, 'syova.ug@easeed.com', '$2y$10$w.7lFrHzGhJCzG6EteJZ3.Z6IzVYUvPWBAXO9XiAheTF6/2YCNCZa', 'H.C.V REDDY', 'syova 111.png', 'Ll7dSDCFEYVy33723raAyFQW7JUE9UShilwmUlgoaTZ0N7EuazTFCMssaQsV', '2022-05-09 13:41:15', '2022-05-09 13:44:18', 'H.C.V', 'REDDY', 'syova.ug@easeed.com'),
-(104, 'musa@8technologies.net', '$2y$10$jPW8F7nm/4UIiVql91hfeuc/V.kUEpBzGNTyOUTuDgXJTnRWUcmF.', 'Musa Rahim', '8techacunt.jpg', 'IvltRoIfJSMYgeJ8nf2hGr5QKuVDtVFJwwIrP1SMvxG7GVj93x8zP5aAOK2b', '2022-05-09 15:37:31', '2022-05-09 15:39:28', 'Musa', 'Rahim', 'musa@8technologies.net'),
-(105, 'crownseeds17@gmail.com', '$2y$10$99NGxI46YXJPjeNuHXBxz.LYzKqLMXpLh03h3knKoJxQP2nRKytYC', 'Crown Seeds Ltd', 'Header.png', 'ABKTr9pWnejQwNH91m4Of0xw2RvzOXyzzcAWXkgxzJDeZ2P6Xc3fOE8wZihK', '2022-05-10 10:26:33', '2022-05-16 10:42:33', 'Crown', 'Seeds Ltd', 'crownseeds17@gmail.com'),
-(106, 'Kalks751@gmail.com', '$2y$10$y3LwUctaQlQXEGaHHwbbeeuY25ZqaUw9G04ogxhoRakS/AnXarcwK', 'Kalule Kusain', NULL, 'izrdzY9NuJXo5qs9Ji3qtLXuK0QhvI73KPd1LkdRlMA9xGRMSOfhsfDzAyWV', '2022-05-11 09:41:19', '2022-05-11 09:41:19', 'Kalule', 'Kusain', 'Kalks751@gmail.com'),
-(107, 'klyghfffd@gmail.com', '$2y$10$zdokDmcFCzB/oOo9TpDUOOOpPm87HcRD/unnUUOeDyxEiAhFzgBjm', 'opi iuy', NULL, 'bzAvB9w6dUQ9m1kbrSicUN50v5L6yhLDz4XQflBLQjSfaq07jZwf0idXZPyE', '2022-05-11 13:28:43', '2022-05-11 13:28:43', 'opi', 'iuy', 'klyghfffd@gmail.com'),
-(108, 'admin@growmoreseeds.com', '$2y$10$i4rfUGusOtes5sjCx9.vXukhyVXibABcZZPx.xT0Y7KIejt0f2CLe', 'Grow More Seeds and Chemicals Ltd', 'gms logo .png', 'd87XYmkto6d7HrNl3fGAzlLo0sCUCqyiVYOQdonvzO9xVh8Y0fd6p897RDf1', '2022-05-17 13:25:12', '2022-05-17 13:30:54', 'Grow More Seeds', 'and Chemicals Ltd', 'admin@growmoreseeds.com'),
-(109, 'joseph.lutaaya@brac.net', '$2y$10$Id0CxLge7Bqx0MNWx5C4QuYLUOQxAj3DajQTGX3WYbLeO5gkOn0me', 'Brac  social business enterprises limited', 'shop.jpg', 'A7AgqU4YZ2VgToevduYov0LRKQXnp9xqz3YN7lzhFzIs4P6Bw3DJRs0ManXT', '2022-05-18 15:14:42', '2022-05-18 15:40:22', 'Brac seed', 'social business', 'joseph.lutaaya@brac.net'),
-(110, 'pearlseedltd1@gmail.com', '$2y$10$a8qLC/tO77LZ5VtotqdIDOO7qomadvHhjs75BliOfC2W8FLsifQh.', 'Masagazi Richard', 'MASAGAZI CLIFF RICHARD.jpg', 'EXwiY1tb1Kzfy88Z7P8ErGmMHnLYEotp1jHs3aMe1vC5wZSx2YFJODOzShZG', '2022-05-24 14:13:28', '2022-05-24 14:40:39', 'Masagazi', 'Richard', 'pearlseedltd1@gmail.com'),
-(111, 'michaeledema100@gmail.com', '$2y$10$P3.BtkpRS8/cXKvQ.NbnFe87hNHKWks8YIMyu90X2onBTjCtDX91m', 'Edema Michael', NULL, '4g4jZF81TfNV7f7aHidOoUtnCQPpTjjwqK7txdehLSpwkt8aAIlzc8c46NGH', '2022-05-25 11:55:36', '2022-05-25 11:55:36', 'Edema', 'Michael', 'michaeledema100@gmail.com'),
-(112, 'michaeledema20@yahoo.com', '$2y$10$OYrbF7DR5.XSm1WhqQlu6e.A2YWhpL6iYDn30GXL1aEpsXyloX6Aq', 'Edema Michael', NULL, 'X0yJ3sedPKbiptovuZmkZB4w2VHTtjYL5ElL4EXVXDJjGfjFmk3b0yqlbBQj', '2022-05-25 13:14:05', '2022-05-25 13:14:05', 'Edema', 'Michael', 'michaeledema20@yahoo.com'),
-(113, 'equatorseeds@yahoo.com', '$2y$10$Sl3J5EVawnUXuKOdF.bWHORWtrDIzlM.wCAHTWVKIPanfCzurU12S', 'EQUATOR SEEDS LIMITED', 'ESL LOGO.jpg', 'yeUfS8iY8bhqXXpbUWJP18u1S1RaEzN93r6sBLSRnUjovbxJVImrjEzl3DQd', '2022-05-30 12:58:41', '2022-06-08 12:53:05', 'TONNY', 'OKELLO', 'equatorseeds@yahoo.com'),
-(114, 'unitedseed.ug@gmail.com', '$2y$10$VBA./yA3bOgXE4Gw.U4W/.b6FUCQiC6.cNHri3Y2ZhiCokhgB2Xd.', 'UNITED SEEDS (U) LTD', 'United seeds logo.jpg', 'J0NyNO6xixvCcQMCN1bO4mO7cHml00rZbkDDHhteK43NzW2PH4q5wGntqZqF', '2022-05-31 11:35:02', '2022-05-31 12:01:19', 'OKELLO', 'HABERT', 'unitedseed.ug@gmail.com');
+(1, 'super-admin', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Administrator', '3a8ce22996a9179023bfa7a889a3ea69.png', 'dYYjfDL3oEyZbQE6KUrSdQGDJBJM07HCXI6XOYROZJnML0h8jR6wExA3s0HY', '2021-10-20 08:50:00', '2022-07-10 08:57:07', '', '', ''),
+(2, 'admin', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'The Admin', 'office-worker.jpg', 'w2KSHZglPRQ0gcwfL6AcHKtcE2psASjFTZ72h3J5xeXtoBe8OUirjvUn26ls', '2021-10-20 13:09:43', '2022-07-09 12:25:47', '', '', ''),
+(3, 'basic-user', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Basic User', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'VfTzKRYOnZb5z3bazVL5ZC1ubI9hYP6M66bsM9UDfl9e84BalI8ujVEPTAk5', '2021-10-20 13:21:48', '2022-07-09 10:27:21', '', '', ''),
+(18, 'john1@gmail.com4998', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'John Doe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'D4QAHDbt5IwphC254MLFEUlOwNhnFAG6iStX8ptSgp7XfHtjzdUo09GigscJ', '2021-10-24 14:44:31', '2021-11-10 05:21:22', 'John', 'Doe', 'john1@gmail.com4998'),
+(20, 'inspector', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Thembo Akisam', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '0QzGTvwOSStY0cgtYRVcgLbSyucj2ovquADXRjtIeyOQLZAFqg5dXk3Jwpq8', '2021-10-25 03:43:02', '2021-10-25 03:43:02', NULL, NULL, NULL),
+(21, 'basic-user@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Mr. Kim Jong Un', 'kim jong un.jpg', '694LyuJCZTUj1t1rlXZambuGVEVOnIG0iJ8yLUYJ8aAoVF9FIfX8XpLGIIum', '2021-10-25 06:42:33', '2022-07-09 12:12:51', 'John', 'Doe', 'basic-user@gmail.com'),
+(22, 'lab-reception', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Musa Rahim', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'jE9O7yUjoBvR7gke5k6L3vGMiteCgFYUNXk3ddpgPHO00NQxG1wHzAZ4PybD', '2021-11-12 08:25:49', '2021-11-12 08:25:49', NULL, NULL, NULL),
+(23, 'lab-technician', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Tusiime Bob', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'Wwn1qu1i2jl7k9CqLoUDjJ3ZECpP8JUcugxvdMjyfKCLuB2Zb5jJNcIbArxt', '2021-11-12 09:15:32', '2021-11-12 09:15:32', NULL, NULL, NULL),
+(24, 'usta', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Phiona', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'Te8XdsC9tNaRLtzr0QtTcMyoCDw30DFFxPbkuiHCILgaaVqqoa2OPOdw6Wtm', '2021-11-16 06:54:54', '2021-11-16 06:54:54', NULL, NULL, NULL),
+(25, 'basic-user-2@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'John Paul', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'aX2ba1jsKKYkYLGqONvycLEkDyx1wvZhhr0l6M8VGjlSBQPJqaxEtvY2FTJA', '2021-11-24 06:13:20', '2021-11-24 06:13:20', 'John', 'Paul', 'basic-user-2@gmail.com'),
+(26, 'mutesiief@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Efulansi Mutesi', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'SSTzYKq9fvDXn7BjBDHXgXCTcuw50D1HtreDOvlz8HbRihGmr5n0mgtYqojw', '2022-03-07 14:20:30', '2022-03-07 14:20:30', 'Efulansi', 'Mutesi', 'mutesiief@gmail.com'),
+(27, 'mbabaziisaac@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Mbabazi Isaac', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'PX48BJgxhrhphYKRRCdo87aR7AJvHHJsqa0DniHtU6qZ5KqfNHdKzyAXDKVq', '2022-03-09 12:02:42', '2022-03-09 12:03:27', 'Mbabazi', 'Isaac', 'mbabaziisaac@gmail.com'),
+(28, 'isaac@8technologies.net', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Isaac Mbabazi', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'tpAF1MYdQ1mUMgQDcDWWw9zukPEs3w1Eec21HgXqEppDkmpk6AwCPbn4r3Zt', '2022-03-09 12:14:47', '2022-03-09 12:15:58', 'Mbabazi', 'Isaac', 'isaac@8technologies.net'),
+(30, 'csendaaza@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'sendaaza charles', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'UgF3QF3XeZVvI1LaAxhAHYgIP5RRTka2zhqxqQzqoCXKX3JlOr3oigfazapX', '2022-03-24 12:08:32', '2022-03-24 12:08:32', 'sendaaza', 'charles', 'csendaaza@gmail.com'),
+(32, 'wamusoi@yahoo.co.uk', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Isaac Wamatsembe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'M6YK7tHGR5bvk5oRSZMO4NrclXg73Csa9Yej6SUH525Nlwmqbmc5McvgBHkn', '2022-03-24 12:10:52', '2022-03-24 12:10:52', 'Isaac', 'Wamatsembe', 'wamusoi@yahoo.co.uk'),
+(34, 'adrine.agaba@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Adrine Agaba', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'xat47TPjUXbKIVB5uk8CUaHhMDRKbWH8ucqQHrcZKkCtj8OVVhGvFPOngh9E', '2022-03-24 12:17:28', '2022-03-24 12:17:28', 'Adrine', 'Agaba', 'adrine.agaba@gmail.com'),
+(35, 'muyingojoseph2@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Joseph Muyingo', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'kba25dRG0CUio6PKAdy5JrjySAhxKfknAJv2CYZnNCIMtOTgOw0Zq7A29NEQ', '2022-03-24 13:44:12', '2022-03-24 13:44:12', 'Joseph', 'Muyingo', 'muyingojoseph2@gmail.com'),
+(36, 'idanc7@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Idan Cohen', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '4QzKXiuTs9OgYZco95Ay8jfx5gdxyxKACHhSRhGmi8gfvwlmhJYGQYTTiGT1', '2022-04-12 22:50:53', '2022-04-12 22:50:53', 'Idan', 'Cohen', 'idanc7@gmail.com'),
+(37, 'coperemo@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Charles Operemo', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '1lwCevClLGf0cBiInr3DEuSydXilRJqSflgcizygk33LS5xRn58rzzCAkkfk', '2022-04-25 10:58:03', '2022-04-25 11:36:12', 'charles', 'Operemo', 'coperemo@gmail.com'),
+(38, 'brianmercy999@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Mercy Brain', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'VVdMPqXJ3U9JrAPnzkJ8lBhmtJxXRqaYebxyaDuKwcJl0h3bdOPMLKkoJ8HB', '2022-04-25 11:03:42', '2022-04-25 11:21:31', 'Mercy', 'Brain', 'brianmercy999@gmail.com'),
+(39, 'noahntum@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Noah Ntumwa', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'WJjSrLjPciozE1bOUUW1IljdUYaFr5jPDkLar3A8sIiH7QIgZZQUnz1EnEBl', '2022-04-25 11:03:45', '2022-04-25 11:19:13', 'Noah', 'Ntumwa', 'noahntum@gmail.com'),
+(40, 'josephkivumbi@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'JOSEPH KIVUMBI', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'IYTjBEDURU741RVqbOpyRTIetnW3WBxFO6Ur8WcY2RlRnAtlUimY1jHiAtCc', '2022-04-25 11:03:54', '2022-07-09 10:54:38', 'JOSEPH', 'KIVUMBI', 'josephkivumbi@gmail.com'),
+(41, 'greenfirmafrica@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Amos Owamani', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'gnko3kxkoN2kJZPkslKxujUsRyDnM5mfG25MfMfNo377mFMfRLbaeM4e1EZY', '2022-04-25 11:04:09', '2022-04-25 11:26:12', 'Amos', 'Owamani', 'greenfirmafrica@gmail.com'),
+(42, 'mjacobinheaven@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Jacob Mugisa', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '49S3iZtGW3OapPlZkEAMI4tQq4XwLudZZKU7rZ4vhdLCd5yJxeGTjavmak73', '2022-04-25 11:04:20', '2022-04-25 11:20:05', 'Jacob', 'Mugisa', 'mjacobinheaven@gmail.com'),
+(43, 'kawuzialie@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Kawuzi Erimiya', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'dDiMeMbP1GdTIFGEl0ilAr5HO3w3MEp4owYFe397hlWvp6c5CecwqpzMJ34g', '2022-04-25 11:04:24', '2022-04-25 11:21:57', 'Kawuzi', 'Erimiya', 'kawuzialie@gmail.com'),
+(44, 'nakalawatabisa@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Tabiisa Nakalawa', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'NRIhUV6zIoeOs8PH28tf9CEozRpssdS60q3dnhZJyko06D2UI7glhOk2crNm', '2022-04-25 11:04:42', '2022-04-25 11:20:39', 'Tabiisa', 'Nakalawa', 'nakalawatabisa@gmail.com'),
+(45, 'emilerwembuzi2002@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Ekyasimire Emill', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'tnRB0wdcitV6IziEqLsn0cjpt57fmmVAacjK3U8QJJmI8nq8HW7AbtT1045X', '2022-04-25 11:04:58', '2022-04-25 11:22:50', 'Ekyasimire', 'Emill', 'emilerwembuzi2002@gmail.com'),
+(46, 'aloci2025@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Sam Aloci', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'QrBj9OnYulmu9US4p2Xlwn2VaIPSOpcreFqndJON5mk0zW4aa6MLzjuKVNl7', '2022-04-25 11:05:06', '2022-04-25 11:20:31', 'Sam', 'Aloci', 'aloci2025@gmail.com'),
+(47, 'kemigisam36@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'MARY KEMIGISA', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'ZrPGCDyIloXCfW8g5jkWqrN1EWPT1ulkpitesCddMx4X8TBTNHpVTtDrtzJm', '2022-04-25 11:05:21', '2022-04-25 11:27:41', 'MARY', 'KEMIGISA', 'kemigisam36@gmail.com'),
+(48, 'Benedictomatty@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Ben Kisitu', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'jK8yNzN8P0ZQYlhshsMxpQSAm95we4xEZNi1AofIYglYO1amyTOsLCZkh2Jk', '2022-04-25 11:05:25', '2022-04-26 10:25:06', 'Ben', 'Kisitu', 'Benedictomatty@gmail.com'),
+(49, 'morynzopae@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Mourine Achulu', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'rPDXmtpRJBDv0hZ4dF4s3Y1ThGCneoJicBxRlpgHoVnKsjDDXjmnjH81lp0i', '2022-04-25 11:05:31', '2022-04-25 11:20:50', 'Mourine', 'Achulu', 'morynzopae@gmail.com'),
+(50, 'aligumae@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Aliguma Emmanuel', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'TUXrZH6aLYRTBicyBzcWa78gyLObYlo5uiVGRae45KhJSuUMSCpRJdjIrOzu', '2022-04-25 11:05:56', '2022-04-25 11:11:11', 'Aliguma', 'Emmanuel', 'aligumae@gmail.com'),
+(51, 'mpairwejimmy@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Jimmy Mpairwe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '5DFHLpyLaTl2JUAen5kxteIF5O1FKou0EAPLdspwTEOSQwOBp5Dh2Yi8uIEY', '2022-04-25 11:06:05', '2022-04-25 11:23:55', 'Jimmy', 'Mpairwe', 'mpairwejimmy@gmail.com'),
+(52, 'rkmbabazi@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Racheal Mbabazi', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'lfptldFWTjogmAwiP5Na9mCTF1d0WTwNQWwcr1LFWMjG9Ec6kIroVXq6BSfJ', '2022-04-25 11:06:09', '2022-04-25 11:20:29', 'Racheal', 'Mbabazi', 'rkmbabazi@gmail.com'),
+(53, 'hermanbyakagaba98@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Byakagaba Herman', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'eylR8a862gMcZREhOprDNUsPmr7qXCSWbn3ebdGiIKhtgkix70xSU5HcD3Tf', '2022-04-25 11:06:17', '2022-04-25 11:24:44', 'Byakagaba', 'Herman', 'hermanbyakagaba98@gmail.com'),
+(54, 'masagazicliff@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Masagazi Cliff Richard', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'TsA6GUcOqcY1prykptVqqIhYseX6kfEeFd5LuD95MjIm0EiuDtznqPw5DOh6', '2022-04-25 11:06:34', '2022-04-25 11:34:12', 'Masagazi', 'Cliff Richard', 'masagazicliff@gmail.com'),
+(55, 'isaac.mbabazi@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Mbabazi Isaac', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '06ndSv3tgUTwMpSH7oV6qLGHpq64eVsxY3iFwMdHtLhIE1iEU6dKA0Ncz3th', '2022-04-25 11:06:50', '2022-04-25 11:20:05', 'Mbabazi', 'Isaac', 'isaac.mbabazi@gmail.com'),
+(56, 'kirungigodwin8@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'kirungi godwin', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'JB7K5cUNN4EhtPY9Pz8BWLlO9RPqQpBO1nFjk0CaVUtaBuqIfuDhDKfZ2mNi', '2022-04-25 11:07:03', '2022-04-25 11:07:03', 'kirungi', 'godwin', 'kirungigodwin8@gmail.com'),
+(57, 'kennedy.wekulo@brac.net', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'KENNEDY MANGWANA', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'RParyUFhoc5tNUjvJLNtxWdmkflAuAT201M1p0RRpGo39GFOXGmgyLpWwxXy', '2022-04-25 11:07:30', '2022-04-25 11:21:01', 'KENNEDY', 'MANGWANA', 'kennedy.wekulo@brac.net'),
+(58, 'lutaayajoseph@ymail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Lutaaya Joseph', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'K88iiUxM971NDApMThMKqiNxeTFBh7bVAUJaKGG8SK1D2O2P2fRWTcNr2TVF', '2022-04-25 11:07:51', '2022-04-25 11:20:10', 'Lutaaya', 'Joseph', 'lutaayajoseph@ymail.com'),
+(59, 'saviok@hotmail.co.uk', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Kinkumu Ronald', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'ukUteJN5ThQFrpaSDW4mG65rlplSq5btY4dhC7TIcYVhnE191ex4unKRF2lY', '2022-04-25 11:08:35', '2022-04-25 11:08:35', 'Kinkumu', 'Ronald', 'saviok@hotmail.co.uk'),
+(60, 'gitta_paul@yahoo.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Paul Gitta', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'Jr32rxFnPPEFSHWR0VkbfH977M7hJUiYfj2ShvCFWAhtvZoRE40AFy37PTLu', '2022-04-25 11:08:47', '2022-04-25 11:24:43', 'Paul', 'Gitta', 'gitta_paul@yahoo.com'),
+(61, 'moseotai@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Moses Otai', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'HX9YKpJYcwiBWikfNMnz1gz7PwAH7yCqObo0W9vrxKELTcAskS2SSsbCuzih', '2022-04-25 11:08:56', '2022-04-25 11:08:56', 'Moses', 'Otai', 'moseotai@gmail.com'),
+(62, 'jralexewinyu@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Alex Ewinyu', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'aPzYL1L2kHqSgZ193rS6Y1iQrtUm1yH3ZoCjV36AYYojGheVJTFZbC34Z6Ei', '2022-04-25 11:09:28', '2022-04-25 11:20:27', 'Alex', 'Ewinyu', 'jralexewinyu@gmail.com'),
+(63, 'yafloina@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'YAFESI OMUMWA', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'ScjjkSex073YOLwFtX079hh1LRY1Va9OuRRV8rsQG80mnaBupEx6Lv6xlIef', '2022-04-25 11:10:09', '2022-04-25 11:22:34', 'YAFESI', 'OMUMWA', 'yafloina@gmail.com'),
+(64, 'savanaseeds1@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'moses mugabirwe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'MgPSqccfgWsIFb4Br9hh1ErUmz3G1yaNQPWVsPP3sBQt7ENkbCNfNisSWd0U', '2022-04-25 11:12:11', '2022-04-25 11:25:21', 'moses', 'mugabirwe', 'savanaseeds1@gmail.com'),
+(65, 'nakawukimariam8@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Nakawuki Mariam', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'qXmrr3jSQS7ObpKqEjfGMhNSlswoQxJgKuNNGvdR8rIFORzWrzuirP6bQBOO', '2022-04-25 11:16:00', '2022-04-25 11:24:25', 'Nakawuki', 'Mariam', 'nakawukimariam8@gmail.com'),
+(66, 'ngcu@utlonline.co.ug', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Mpabaisi Joseph', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '8mtptxfVBhH5gZOctqWJdObJ518VHNjYE2kD5Nm0hCl6g7p02FSbDHMEWurV', '2022-04-25 11:21:17', '2022-04-25 11:21:17', 'Mpabaisi', 'Joseph', 'ngcu@utlonline.co.ug'),
+(67, 'lubegabernard37@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Lubega Benard', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '2NCHhSHXmXcB9gALZvUnrdaLx9egQ3Fbu9z2Cn6UR4t080YXc8KpDJCRztmy', '2022-04-25 11:22:31', '2022-04-25 11:31:14', 'Lubega', 'Benard', 'lubegabernard37@gmail.com'),
+(68, 'snabimanya@yahoo.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Nabimanya Samuel', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'h8hghBjG0v4cbxdxODFzW4EbAMYaaVOL3uUyLT3GVf9pf62D7LzJaXIEtJfR', '2022-04-25 11:29:29', '2022-04-25 11:33:25', 'Nabimanya', 'Samuel', 'snabimanya@yahoo.com'),
+(69, 'isaacowino84@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Owino Isaac', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'wC3kSfqgtyLOLz3DGCfrGqIidcEPNY671zuEZ9VAPcnu7qXcaz30E0SEk7QX', '2022-04-25 12:43:13', '2022-04-25 12:43:13', 'Owino', 'Isaac', 'isaacowino84@gmail.com'),
+(70, 'kunihira1987@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Innocent Kunihira', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '3gmLoevU0IsxXTNzUIFU2KgsHm2zwjngZuMr3lPFU0ZRCqRbYG6w67akC4j0', '2022-04-25 15:18:31', '2022-04-25 15:18:31', 'Innocent', 'Kunihira', 'kunihira1987@gmail.com'),
+(71, 'sharoncathyalobo@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Alobo Sharon Cathy', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'F7bjjDepEaPI4v9T1wEvGg8kuTPbsl5bh1vY6EYmExOnyWfmWO99aQ2AFmtr', '2022-04-25 17:36:07', '2022-04-25 17:36:07', 'Alobo', 'Sharon Cathy', 'sharoncathyalobo@gmail.com'),
+(73, 'basic@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Basic User', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'd39jf0IncVfTzFkOsyra8qmVI9KMpSaILMFZ4Bo7fuhtUGT1EJB8qVMrGZ7A', '2022-04-27 16:41:13', '2022-04-27 16:41:13', 'Basic', 'User', 'basic@gmail.com'),
+(74, 'eodongkara@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Odongkara Emmanuel', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'o02kc9i9QtRhIplzJkwANEuoGLRQecMIr7gEvfLBtHmy6RzGJITiHLtKRbXZ', '2022-04-28 10:44:41', '2022-04-28 11:01:40', 'Odongkara', 'Emmanuel', 'eodongkara@gmail.com'),
+(75, 'kennyomoding@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Kenneth Omoding', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'aOvCoFHnJwF21duj2A9WartSSgqbKEDQOCZkORoGkl4dbgC2s5lRnXyjGYB1', '2022-04-28 10:45:07', '2022-04-28 11:01:31', 'Kenneth', 'Omoding', 'kennyomoding@gmail.com'),
+(76, 'mbabazi.isaac@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Isaac Mbabazi', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'eYAmqVUEc181A8EB1h5MgOPpNhFy24GxSISDr3dewTmckZQM3zT0cAne3HW9', '2022-04-28 10:45:29', '2022-04-28 11:01:29', 'Isaac', 'Mbabazi', 'mbabazi.isaac@gmail.com'),
+(77, 'muyingoali5@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'MUYINGO ALI', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'H0pyaXF3EPvITdze96lWSskf5S5Gf7IQcfq5cVnN7zhuM4CYhBxws3Tt1vJ9', '2022-04-28 10:45:35', '2022-04-28 10:45:35', 'MUYINGO', 'ALI', 'muyingoali5@gmail.com'),
+(78, 'nelsonmasereka@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Uganda Seed Trade Association', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'kX2CE88j59IvBLBvpNynArCPUYmDEyYRrBKmyBPaN0TSnFMFfMzZTyzbuwrH', '2022-04-28 10:45:36', '2022-04-28 11:07:51', 'Masereka', 'Nelson Sirikani', 'nelsonmasereka@gmail.com'),
+(79, 'christinebiira77@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Uganda Seed Trade Association', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '7fixOfP99kL3HXQFOWlBlUDy5kt8UlPGbxeJVIOXmgQRuMsfA5aGRSK2jjn1', '2022-04-28 10:45:41', '2022-04-28 11:01:46', 'Biira', 'Christine', 'christinebiira77@gmail.com'),
+(80, 'joelmukisa256@yahoo.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'MOVA SEED', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '3Y0TV8EpD1njoSTPDBCHD8pMrGDcEiwVEO0e5TAN7yJXmkxoLNJRBv9Jf5mR', '2022-04-28 10:45:41', '2022-04-28 11:08:04', 'Joel', 'Mukisa', 'joelmukisa256@yahoo.com'),
+(81, 'elyonagroconsultsltd2019@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Miiro Steven', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'dwlExcjqCZfAeNgBxzLDGH4XOPdihTLcj3bPs0WCJIUO8fM2J7wPnjGIdBT3', '2022-04-28 10:46:01', '2022-04-28 13:24:35', 'Miiro', 'Steven', 'elyonagroconsultsltd2019@gmail.com'),
+(82, 'mbowaarnold@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Arnold Mbowa', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'swdLgUyQcK1BMCQTKOPSq06Bf8b5ECZHNnGqbmftLIzh0dNDa3N0HB9zn0n6', '2022-04-28 10:46:03', '2022-04-28 11:03:37', 'Arnold', 'Mbowa', 'mbowaarnold@gmail.com'),
+(83, 'johnkalas96@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'John Mulonde', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'n7PVvScrfs3J4rsfUsFhFfD6xlblEDZbCimu8fLAQIWC21inGuecAxHH9ajk', '2022-04-28 10:46:12', '2022-04-28 11:01:37', 'John', 'Mulonde', 'johnkalas96@gmail.com'),
+(84, 'd88nyeko@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Dominic Kimara', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'rtvWCoyXXNH9l9xeyg8NNcn6DLaeB0ONLz7i0B79j8Y1VTgOUmmhvsOdveJB', '2022-04-28 10:46:14', '2022-04-28 11:04:12', 'Dominic', 'Kimara', 'd88nyeko@gmail.com'),
+(85, 'matatajob72@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'SELECT SEED LIMITED', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'LPcXH1m4z7UkEuzb3GzVq9bGq0eqykYm39jdIRgumc1ppRbnkf9wRmVJf7R6', '2022-04-28 10:46:20', '2022-04-28 11:01:57', 'MATATA', 'JOB', 'matatajob72@gmail.com'),
+(86, 'mutegekiivan@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'mutegeki ivan', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'YuImr65uWRvi3HtaFqxPwFJEWMnexLqcp1nRCebawoUJd5JdMDXDz8XJ4x9U', '2022-04-28 10:46:22', '2022-05-24 14:20:03', 'IVAN', 'MUTEGEKI', 'mutegekiivan@gmail.com'),
+(87, 'sulajjemba4@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Sula Jjemba', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'BD3z99lGCRyQyOlqdQQqts4xpW5HzPVCXHdOSltxXqBWQ2Ad5sBuej3hpHq7', '2022-04-28 10:47:29', '2022-04-28 11:08:27', 'Sula', 'Jjemba', 'sulajjemba4@gmail.com'),
+(88, 'walufeloisimabonty16@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'walufelo isima', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'bCcvpmCfuzJUEhcMmxXiQBNwW1n1CbrUVYEsWoQLhZC5JuUqrkg8riyGuxlS', '2022-04-28 10:47:31', '2022-04-28 11:02:18', 'walufelo', 'isima', 'walufeloisimabonty16@gmail.com'),
+(89, 'Opiobanya@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Opio Kelvin', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'AJZkUvzUiEAB84L7QZANdvoxIbqxfrgSjG4voPds0npLBKoLSPkPVICTa9ux', '2022-04-28 10:48:48', '2022-04-28 11:02:54', 'Opio', 'Kelvin', 'Opiobanya@gmail.com'),
+(90, 'atiaserogal2@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Atia serogal', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'gIMMIBcpFydVeBvsL6bV5z3NmQiZYppY3CCFuu5MRuz2sLeCxjsNKQcPYI79', '2022-04-28 10:49:01', '2022-04-28 11:01:43', 'Atia', 'Serogal', 'atiaserogal2@gmail.com'),
+(91, 'cathyadong3@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Cathy Adong', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'HL2rsPL2MCcceiSBgZHekM4AwzE8qWA4ah1dCodona0IaK1s5hipWl65x6Et', '2022-04-28 10:49:18', '2022-04-28 11:02:05', 'Cathy', 'Adong', 'cathyadong3@gmail.com'),
+(92, 'pollymagero23@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Polly Bantel', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'J5x7i8ZjDg4ClMIAZjWy6VmQsGkq0fgHp8ZkDvsF0uSTYLyxLAHtihYuFahe', '2022-04-28 10:50:38', '2022-04-28 11:01:32', 'Polly', 'Bantel', 'pollymagero23@gmail.com'),
+(93, 'wesigah@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'WESIGA JIMMY', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'Bb6iTn1gqVKTPjbsp5HsgBckXRAo9BfAGJUGGrits0vDsfEdJY2hSkoPbysA', '2022-04-28 10:51:38', '2022-04-28 11:03:05', 'WESIGA', 'JIMMY', 'wesigah@gmail.com'),
+(94, 'wandabarnabas3@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'WANDA BARNABAS', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'BSZ8mtkgzTxXaj5LyHO9yd3LBHbnlLQaJpjiZnjOsRFpwtbTo90UCnRMzFir', '2022-04-28 10:52:40', '2022-04-28 11:01:56', 'WANDA', 'BARNABAS', 'wandabarnabas3@gmail.com'),
+(95, 'wabusonko@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'kibalama brian', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '2zzKuiuMdsFyBb3uZUNGuXQYj8JiUAHWCuCHBdWKQrHqV1TXbqL0FuG3WBRv', '2022-04-28 10:58:16', '2022-04-28 11:13:42', 'kibalama', 'brian', 'wabusonko@gmail.com'),
+(96, 'muyingoali6@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'MUYINGO ALI', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'EgwYkL9F8mCaoK6u8s2NNnpywVhjooRahepXWvDXyYmrKFVeulOihtcjS4TZ', '2022-04-28 10:59:53', '2022-04-28 11:21:17', 'MUYINGO', 'ALI', 'muyingoali6@gmail.com'),
+(97, 'magimbig@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'George Magimbi', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'J0kpzEYNdtZdyKHUR2iLahF1Cw8Gl0nQdeJ1gSGlyg6ZPEQsO5MB1uXjRB2m', '2022-04-28 11:19:15', '2022-04-28 11:19:15', 'George', 'Magimbi', 'magimbig@gmail.com'),
+(98, 'nbvicky@yahoo.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Vicky Nyakatuura', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'fHpkbacIdkn7LzEF1YOehEHWxBLQtdzE8J66LU1PMhO4Qm6RNVopT8bbSVGX', '2022-04-28 11:36:46', '2022-04-28 11:36:46', 'Vicky', 'Nyakatuura', 'nbvicky@yahoo.com'),
+(99, 'muyingoali7@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'MUYINGO ALI', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'OXxCgECnR8MzEGBjlr1cAOQF80yA86ApzOJDjyV1dYjQx2bFKTyROubD2utA', '2022-04-28 11:44:45', '2022-04-28 11:47:29', 'MUYINGO', 'ALI', 'muyingoali7@gmail.com'),
+(100, 'muyingoali8@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'MUYINGO ALI', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'NPgiazjavutA9IbijS1Pm0QFaJkp0aj36IzhLKEYdXGr0b54hwVgvXwJhxxn', '2022-04-28 16:48:17', '2022-04-28 16:48:17', 'MUYINGO', 'ALI', 'muyingoali8@gmail.com'),
+(101, 'masumugogo@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Masumu Gogo', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'AOpELryk2lcngJh892pvdr3M82eGAGDSq6QR0NUlhtdwZvwBWRDu4biUme26', '2022-04-29 10:27:10', '2022-04-29 10:34:29', 'Masumu', 'Gogo', 'masumugogo@gmail.com'),
+(102, 'naroholdings@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'NARO HOLDINGS LIMITED', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'LXnBDUb9rfFTZktAT4agoT05oAOEeO6sCxeMiy9424ChRkjIM3PV8loK561r', '2022-05-04 10:46:53', '2022-05-24 12:15:31', 'NARO HOLDINGS LIMITED', 'NARO HOLDINGS LIMITED', 'naroholdings@gmail.com'),
+(103, 'syova.ug@easeed.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'H.C.V REDDY', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'Ll7dSDCFEYVy33723raAyFQW7JUE9UShilwmUlgoaTZ0N7EuazTFCMssaQsV', '2022-05-09 13:41:15', '2022-05-09 13:44:18', 'H.C.V', 'REDDY', 'syova.ug@easeed.com'),
+(104, 'musa@8technologies.net', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Musa Rahim', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'IvltRoIfJSMYgeJ8nf2hGr5QKuVDtVFJwwIrP1SMvxG7GVj93x8zP5aAOK2b', '2022-05-09 15:37:31', '2022-05-09 15:39:28', 'Musa', 'Rahim', 'musa@8technologies.net'),
+(105, 'crownseeds17@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Crown Seeds Ltd', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'ABKTr9pWnejQwNH91m4Of0xw2RvzOXyzzcAWXkgxzJDeZ2P6Xc3fOE8wZihK', '2022-05-10 10:26:33', '2022-05-16 10:42:33', 'Crown', 'Seeds Ltd', 'crownseeds17@gmail.com'),
+(106, 'Kalks751@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Kalule Kusain', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'izrdzY9NuJXo5qs9Ji3qtLXuK0QhvI73KPd1LkdRlMA9xGRMSOfhsfDzAyWV', '2022-05-11 09:41:19', '2022-05-11 09:41:19', 'Kalule', 'Kusain', 'Kalks751@gmail.com'),
+(107, 'klyghfffd@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'opi iuy', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'bzAvB9w6dUQ9m1kbrSicUN50v5L6yhLDz4XQflBLQjSfaq07jZwf0idXZPyE', '2022-05-11 13:28:43', '2022-05-11 13:28:43', 'opi', 'iuy', 'klyghfffd@gmail.com'),
+(108, 'admin@growmoreseeds.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Grow More Seeds and Chemicals Ltd', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'd87XYmkto6d7HrNl3fGAzlLo0sCUCqyiVYOQdonvzO9xVh8Y0fd6p897RDf1', '2022-05-17 13:25:12', '2022-05-17 13:30:54', 'Grow More Seeds', 'and Chemicals Ltd', 'admin@growmoreseeds.com'),
+(109, 'joseph.lutaaya@brac.net', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Brac  social business enterprises limited', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'A7AgqU4YZ2VgToevduYov0LRKQXnp9xqz3YN7lzhFzIs4P6Bw3DJRs0ManXT', '2022-05-18 15:14:42', '2022-05-18 15:40:22', 'Brac seed', 'social business', 'joseph.lutaaya@brac.net'),
+(110, 'pearlseedltd1@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Masagazi Richard', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'EXwiY1tb1Kzfy88Z7P8ErGmMHnLYEotp1jHs3aMe1vC5wZSx2YFJODOzShZG', '2022-05-24 14:13:28', '2022-05-24 14:40:39', 'Masagazi', 'Richard', 'pearlseedltd1@gmail.com'),
+(111, 'michaeledema100@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Edema Michael', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '4g4jZF81TfNV7f7aHidOoUtnCQPpTjjwqK7txdehLSpwkt8aAIlzc8c46NGH', '2022-05-25 11:55:36', '2022-05-25 11:55:36', 'Edema', 'Michael', 'michaeledema100@gmail.com'),
+(112, 'michaeledema20@yahoo.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Edema Michael', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'X0yJ3sedPKbiptovuZmkZB4w2VHTtjYL5ElL4EXVXDJjGfjFmk3b0yqlbBQj', '2022-05-25 13:14:05', '2022-05-25 13:14:05', 'Edema', 'Michael', 'michaeledema20@yahoo.com'),
+(113, 'equatorseeds@yahoo.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'EQUATOR SEEDS LIMITED', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'yeUfS8iY8bhqXXpbUWJP18u1S1RaEzN93r6sBLSRnUjovbxJVImrjEzl3DQd', '2022-05-30 12:58:41', '2022-06-08 12:53:05', 'TONNY', 'OKELLO', 'equatorseeds@yahoo.com'),
+(114, 'unitedseed.ug@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'UNITED SEEDS (U) LTD', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'J0NyNO6xixvCcQMCN1bO4mO7cHml00rZbkDDHhteK43NzW2PH4q5wGntqZqF', '2022-05-31 11:35:02', '2022-05-31 12:01:19', 'OKELLO', 'HABERT', 'unitedseed.ug@gmail.com'),
+(115, 'jasne11', '$2y$10$kdoR.i7w8tOBu7KcLxYrMeBwBO.uWkvuYdFq3ooLEPW6xv2tWLi7S', 'Jane Doe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'QB4b1FEibJjwVVSnTE6KSuzkAtfWXIAW727CIYw7yqXAdlvNfBbEd3rGvOa6UM', '2022-07-06 23:07:56', '2022-07-06 23:07:56', 'Jane', 'Doe', 'jane11s@gmail.com'),
+(116, NULL, '$2y$10$1/4mzCKZOhAx6hHnkYNT2.rFpFmH0VbOViSvS6I/1XdBFdcRUs94u', 'Jane Doe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'EBqG7iko5dWk8e4hMKfufmXnqaSGwRRmgo3FDb1MPCiXvuqdGmukmalWWAzkRF', '2022-07-06 23:10:26', '2022-07-06 23:10:26', 'Jane', 'Doe', 'jane11s@gmail.com'),
+(117, '2', '$2y$10$ozVq51usVX.0JrsSwsL0GOONs4rb/VPIGxHanIGefzEKI49ln5QoC', 'Jane Doe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'cluicUJvncfy5cneAHWd0S0nuahL2hIHmdcX8anvXn9voYcGEUvRUDffDihfK4', '2022-07-06 23:10:35', '2022-07-06 23:10:35', 'Jane', 'Doe', 'jane11s@gmail.com'),
+(118, 'goooo', '$2y$10$L6HpeYiu25J4EGZTbMUwr.eIgjXGXLpnI.BQa5SHnnPWfw4lKP96G', 'Jane Doe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'vrHzFxkXfNy7kk6PZOc8CyAvDbxKpCbLi04qP0leI8pgEIGDZRAhwBX0I64ZwV', '2022-07-06 23:13:31', '2022-07-06 23:13:31', 'Jane', 'Doe', 'jane11s@gmail.com'),
+(119, 'gookoo', '$2y$10$Yb/Cj2xnFagBKsURdeKxwOG5ikR/8WmsU8rocHzEzD.CwO6cI9Wde', 'Jane Doe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'gk0kbucz8q9qLRElKSHRs1WvbVRLHro84ixjpkGhIeb0MuomdDPbkqKhfDPfPV', '2022-07-06 23:13:40', '2022-07-06 23:13:40', 'Jane', 'Doe', 'jane11s@gmail.com'),
+(120, 'gookkoo', '$2y$10$x62m32m3/bW.Dq002X8sIuD/THLghhFQJKr/8KZChJU/gFzjwMgg.', 'Jane Doe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'qSih9JpoCKkqPzYOXghWPrgUSB2CPYdntyJ0vfdVPGVyXzxs8JJ7euWCgVPV7f', '2022-07-06 23:14:35', '2022-07-06 23:14:35', 'Jane', 'Doe', 'jane11s@gmail.com'),
+(121, 'gdookkoo', '$2y$10$gtNxErtntLTkbwTlFMilHuWpJRPQMFcSm0JgFSLSEK0NskDBx8XM6', 'Jane Doe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', '6305L7Fl1eSkQqX0cfmNL2bQjngU6rmxdfg4hZRoDn3Rd0C3mx8HYfhaHJ9eIn', '2022-07-06 23:16:21', '2022-07-06 23:16:21', 'Jane', 'Doe', 'jane11@gmail.com'),
+(122, 'gdookdkoo', '$2y$10$ZWzHsiRlvDlvqwqhcZClM.c3V05MeJLfBf3RfwJ6XAO0cDAYubNRy', 'Jane Doe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'ziWDXDZaPmBqD7M3OUl0bRuZkOpgwAudR5bLHLFjP9XtqiHuOB3jekbIUw5rnQ', '2022-07-06 23:16:45', '2022-07-06 23:16:45', 'Jane', 'Doe', 'jane11cddw@gmail.com'),
+(123, 'gdookkdkoo', '$2y$10$VZ2Y/PkWryE4Bmk2Yf9AMOEavqj2X3eN6Q5c89Jcri2eQKLP6/0aS', 'Jane Doe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'LAyTycwdXn2gUl2CUrhzxHKp9NGXYuUHecf02OOM2H0sesIZxAWZSP5VfngerG', '2022-07-06 23:18:29', '2022-07-06 23:18:29', 'Jane', 'Doe', 'jane11ocddw@gmail.com'),
+(124, 'gdopokkdkoo', '$2y$10$cMU78RomaSSUF5nhCxI.xuq2Yh/SWlV5ybyJazMXbG8ayA4t6z9Qq', 'Jane Doe', 'C:xampphtdocssttspublicpublicstoragecomplete-profile.jpg', 'm4fANgZlfbj2ooSdjiKY9OOHvdl8AZcOZjhUOH61cH4NE0kOOEN3lt4ddQ2QBe', '2022-07-06 23:18:42', '2022-07-06 23:18:42', 'Jane', 'Doe', 'jpane11ocddw@gmail.com'),
+(125, 'mukama@mukama.com', '$2y$10$.G2m7enkeEv0wB3fz/wXGunck31dZc3js5hI2GCAgNXNQTjOdFAua', 'nm mm', NULL, 'zdnCd5X5Aq1A8urWcRqZSlJZnGa4LF0fpMPlH1opjxEp0rvEu9qEv3OrDoGr', '2022-07-09 12:07:09', '2022-07-09 12:07:09', 'nm', 'mm', 'mukama@mukama.com'),
+(126, 'cccc@gmail.com', '$2y$10$F1Yh4PmTn3MAqZ96h80GdODZOkBktziqu2WReEKORGvESp.9TC2Vq', 'sdweregr qwerr', NULL, NULL, '2022-07-09 12:09:40', '2022-07-09 12:09:40', 'sdweregr', 'qwerr', 'cccc@gmail.com'),
+(127, 'adminnn@w.w', '$2y$10$4FGaqfH1HIf4zZA4Wc/T5.Aklw5AaOahJlgi.Z0400CNkfhsxj.Tq', 'jhg nn', NULL, '6E2gDTK4qnKGLR49vqPs9oMvzRxwqun4qOhs9FbnVrvGiSaaIVXIHOinvFYQ', '2022-07-09 16:49:07', '2022-07-09 16:49:07', 'jhg', 'nn', 'adminnn@w.w'),
+(128, 'mm@mm.mm', '$2y$10$dH/uFjgAAAc41qng07smMOe5H7g83Rf9Jh9.RnfzmyuZI4fF6rQLe', 'bnn nbb', NULL, 'YfWuVYsWQRTzaV8O29IYzjAXvWfk4mEifpN5jyFesKY5gvkSJ0r5TfJlStfT', '2022-07-10 06:41:21', '2022-07-10 06:41:21', 'bnn', 'nbb', 'mm@mm.mm');
 
 -- --------------------------------------------------------
 
@@ -1189,7 +1217,7 @@ CREATE TABLE `form_crop_declarations` (
 --
 
 INSERT INTO `form_crop_declarations` (`id`, `created_at`, `updated_at`, `administrator_id`, `form_qd_id`, `source_of_seed`, `field_size`, `seed_rate`, `amount`, `payment_receipt`, `status`, `inspector`, `status_comment`, `valid_from`, `valid_until`) VALUES
-(1, '2022-02-21 07:06:49', '2022-02-21 07:09:11', 3, 3, 'isaac mbabazi', '100', '10', '20000', 'ec2ee90688b64aed07c58b3607354aa2.jpeg', '5', 20, NULL, '2021-01-01', '2022-01-01');
+(1, '2022-02-21 07:06:49', '2022-02-21 07:09:11', 21, 3, 'isaac mbabazi', '100', '10', '20000', 'ec2ee90688b64aed07c58b3607354aa2.jpeg', '5', 20, NULL, '2021-01-01', '2022-01-01');
 
 -- --------------------------------------------------------
 
@@ -1259,8 +1287,9 @@ CREATE TABLE `form_qds` (
 --
 
 INSERT INTO `form_qds` (`id`, `created_at`, `updated_at`, `administrator_id`, `name_of_applicant`, `address`, `company_initials`, `premises_location`, `years_of_expirience`, `dealers_in`, `previous_grower_number`, `cropping_histroy`, `have_adequate_isolation`, `have_adequate_labor`, `aware_of_minimum_standards`, `signature_of_applicant`, `grower_number`, `registration_number`, `valid_from`, `valid_until`, `status`, `inspector`, `status_comment`, `have_been_qds`, `isolation_distance`, `number_of_labors`, `have_adequate_storage_facility`, `is_not_used`, `examination_category`) VALUES
-(6, '2022-04-28 12:00:58', '2022-04-28 12:00:58', 99, 'MUYINGO ALI', 'Kampala', NULL, 'Gayaaza', '3', '[{\"crop\":\"Maize\",\"variety\":\"Long4\",\"ha\":\"T\",\"origin\":\"Buganda\"}]', NULL, 'Virgine land', 0, 0, 1, 'files/SMALL ENTRPRISE   MANGT NOTES.doc', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, 1, NULL, NULL),
-(7, '2022-05-18 12:43:29', '2022-05-18 12:43:29', 106, 'Kalule Kusain', 'Rubaga', NULL, 'mengo', '-9', '[{\"crop\":\"cow\",\"variety\":\"cow\",\"ha\":\"ddd\",\"origin\":\"dddd\"},{\"crop\":\"sheep\",\"variety\":\"sheep\",\"ha\":\"ddd\",\"origin\":\"ddd\"}]', NULL, '2155555561981989812132121988/561616168131318125313', 0, 1, 1, 'files/63d245add734cac0dfd731a33eaa68d2.gif', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, -13, 0, NULL, NULL);
+(6, '2022-04-28 12:00:58', '2022-04-28 12:00:58', 21, 'MUYINGO ALI', 'Kampala', NULL, 'Gayaaza', '3', '[{\"crop\":\"Maize\",\"variety\":\"Long4\",\"ha\":\"T\",\"origin\":\"Buganda\"}]', NULL, 'Virgine land', 0, 0, 1, 'files/SMALL ENTRPRISE   MANGT NOTES.doc', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, 1, NULL, NULL),
+(7, '2022-05-18 12:43:29', '2022-05-18 12:43:29', 106, 'Kalule Kusain', 'Rubaga', NULL, 'mengo', '-9', '[{\"crop\":\"cow\",\"variety\":\"cow\",\"ha\":\"ddd\",\"origin\":\"dddd\"},{\"crop\":\"sheep\",\"variety\":\"sheep\",\"ha\":\"ddd\",\"origin\":\"ddd\"}]', NULL, '2155555561981989812132121988/561616168131318125313', 0, 1, 1, 'files/63d245add734cac0dfd731a33eaa68d2.gif', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, -13, 0, NULL, NULL),
+(9, '2022-07-10 05:05:39', '2022-07-10 05:05:39', 21, 'Mr. Kim Jong Un', 'wwww', NULL, 'wwwww', '22', '[{\"crop\":\"2\",\"variety\":\"22\",\"ha\":\"22\",\"origin\":\"222\"}]', '234', '234', 0, 0, 0, 'files/Receipt.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1314,7 +1343,7 @@ CREATE TABLE `form_sr4s` (
 
 INSERT INTO `form_sr4s` (`id`, `created_at`, `updated_at`, `administrator_id`, `name_of_applicant`, `address`, `company_initials`, `premises_location`, `years_of_expirience`, `expirience_in`, `dealers_in`, `processing_of`, `marketing_of`, `have_adequate_land`, `land_size`, `eqipment`, `have_adequate_equipment`, `have_contractual_agreement`, `have_adequate_field_officers`, `have_conversant_seed_matters`, `souce_of_seed`, `have_adequate_land_for_production`, `have_internal_quality_program`, `receipt`, `accept_declaration`, `valid_from`, `valid_until`, `status`, `status_comment`, `inspector`, `dealers_in_other`, `processing_of_other`, `marketing_of_other`, `souce_of_seed_other`, `have_adequate_storage`, `seed_board_registration_number`, `type`) VALUES
 (10, '2022-03-23 15:20:59', '2022-03-23 15:27:59', 28, 'Zac Seed Dealers.', 'Kampala', 'ZacSD', 'Namalere', 'Seed Merchant', '12', 'Agricultural crops', 'Agricultural crops', 'Agricultural crops', 1, 100, 'Tractors.', 1, 1, 1, 1, '3', 1, 0, 'files/USAID-logo.jpg', 1, '2022-03-23 15:27:59', '2023-03-23 15:27:59', '5', 'Your application is missing some information.', 27, NULL, NULL, NULL, NULL, 1, 'EXP/2022/0002', 'Seed Merchant'),
-(11, '2022-05-20 10:01:59', '2022-05-20 10:01:59', 106, 'Kalule Kusain', 'Rubaga', '6666', 'mengo', 'Seed Merchant', '-5', 'Agricultural crops', 'Agricultural crops', 'Agricultural crops', 0, NULL, NULL, 0, 0, 0, 1, '1', 1, 1, 'files/a9e65ee721afcdddf5a23015f6409d1d.gif', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 'Seed Merchant');
+(11, '2022-05-20 10:01:59', '2022-05-20 10:01:59', 21, 'Kalule Kusain', 'Rubaga', '6666', 'mengo', 'Seed Merchant', '-5', 'Agricultural crops', 'Agricultural crops', 'Agricultural crops', 0, NULL, NULL, 0, 0, 0, 1, '1', 1, 1, 'files/a9e65ee721afcdddf5a23015f6409d1d.gif', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 'Seed Merchant');
 
 -- --------------------------------------------------------
 
@@ -1332,6 +1361,7 @@ CREATE TABLE `form_sr6s` (
   `company_initials` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `premises_location` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `years_of_expirience` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+
   `dealers_in` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `previous_grower_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cropping_histroy` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1360,8 +1390,10 @@ INSERT INTO `form_sr6s` (`id`, `created_at`, `updated_at`, `administrator_id`, `
 (72, '2022-05-16 10:14:22', '2022-05-31 10:55:45', 105, 'Crown Seeds Ltd', 'P.O Box 293 Mukono, Kayunga Road', NULL, 'Mpoma, Mukono, Kayunga Rd.', '5', '[]', '068', 'The fields have been in crop rotation between legume and cereal seeds in different farms across the country', 1, 1, 1, 'files/Seed Grower Certificate.pdf', '068', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 1, 1, 'Company'),
 (73, '2022-05-17 13:53:04', '2022-05-31 10:58:35', 108, 'Grow More Seeds and Chemicals Ltd', 'plot 21, Luthuli Avenue, Bugolobi', NULL, 'plot 21, Luthuli Avenue, Bugolobi', '14', '[]', '023', 'Virgin Land', 1, 1, 1, NULL, '023', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 1, 1, 'Company'),
 (74, '2022-05-18 15:56:47', '2022-05-31 11:07:17', 109, 'Brac  social business enterprises limited', 'P.o.box 31817, clock tower', NULL, 'Nsambya Heritage Road', '15', '[]', NULL, 'crop cultivation: beans, soya beans maize some fields were under  virgin', 1, 1, 1, 'files/MAAIF CERTIFICATE.pdf', '034', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 0, 0, 'Company'),
-(75, '2022-05-24 13:27:58', '2022-05-31 11:21:31', 102, 'NARO HOLDINGS LIMITED', 'KIRYANDONGO DISTRICT', NULL, 'KIGUMBA. 2 km along Kigumba - masindi road.', '5', '[]', NULL, 'we have a seed farm where we are growing seeds of different crops like maize (hybrid and OPV\'s, soyabean, beans, ground nuts among others.\r\nwe recommend rotation patterns in seed production.\r\nwe also produce through out-growers (individual commercial farmers or groups) and NARO Institutes.', 1, 1, 1, 'files/NHL_Certificate_of_Incorporation[1] (1).pdf', '000', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 0, 0, 'Company'),
-(76, '2022-05-24 14:33:37', '2022-05-31 11:33:11', 110, 'Masagazi Richard', '36240', NULL, 'Plot 830 Kasambya, Busukuma Division, 7km Gayaza-Zirobwe Road, Nasaana Municipality , Wakiso District', '12', '[]', '028', 'Kamira-Luwero', 1, 1, 1, 'files/Licence to Seed.pdf', '028', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 1, 1, 'Company');
+(75, '2022-05-24 13:27:58', '2022-05-31 11:21:31', 21, 'NARO HOLDINGS LIMITED', 'KIRYANDONGO DISTRICT', NULL, 'KIGUMBA. 2 km along Kigumba - masindi road.', '5', '[]', NULL, 'we have a seed farm where we are growing seeds of different crops like maize (hybrid and OPV\'s, soyabean, beans, ground nuts among others.\r\nwe recommend rotation patterns in seed production.\r\nwe also produce through out-growers (individual commercial farmers or groups) and NARO Institutes.', 1, 1, 1, 'files/NHL_Certificate_of_Incorporation[1] (1).pdf', '000', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 0, 0, 'Company'),
+(76, '2022-05-24 14:33:37', '2022-05-31 11:33:11', 110, 'Masagazi Richard', '36240', NULL, 'Plot 830 Kasambya, Busukuma Division, 7km Gayaza-Zirobwe Road, Nasaana Municipality , Wakiso District', '12', '[]', '028', 'Kamira-Luwero', 1, 1, 1, 'files/Licence to Seed.pdf', '028', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 1, 1, 'Company'),
+(77, '2022-07-10 04:52:36', '2022-07-10 04:52:36', 21, 'Mr. Kim Jong Un', 'rrr', NULL, 'rrrr', '2', '[]', NULL, 'rrrr', 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 'Seed Grower'),
+(78, '2022-07-10 09:51:59', '2022-07-10 09:51:59', 1, 'Administrator', NULL, NULL, NULL, NULL, '[]', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 27, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1444,9 +1476,9 @@ CREATE TABLE `form_sr10s` (
 --
 
 INSERT INTO `form_sr10s` (`id`, `created_at`, `updated_at`, `planting_return_id`, `stage`, `status`, `status_comment`, `submited_date`, `min_date`, `max_date`, `administrator_id`, `is_active`, `is_done`, `is_initialized`, `valid_from`, `valid_until`, `approve_by_farmer`, `farmer_id`, `planting_return_crop_name`, `seed_class`, `size_of_field`, `off_types`, `diseases`, `noxious_weeds`, `other_features`, `other_weeds`, `isolation_distance`, `variety`, `proposed_distance`, `general_conditions_of_crop`, `estimated_yield`, `futher_remarks`, `sr10_number`, `is_final`) VALUES
-(11, '2022-04-28 13:35:02', '2022-04-28 13:35:02', 1, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 0, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(12, '2022-04-28 13:35:02', '2022-04-28 13:35:02', 1, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 0, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(13, '2022-04-28 13:37:56', '2022-04-28 16:56:29', 2, 'Pre-flowering', '17', 'asas', '2022-04-28', '2022-05-28', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, '2022-04-28 13:35:02', '2022-04-28 13:35:02', 1, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 21, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(12, '2022-04-28 13:35:02', '2022-04-28 13:35:02', 1, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 21, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(13, '2022-04-28 13:37:56', '2022-04-28 16:56:29', 2, 'Pre-flowering', '17', 'asas', '2022-04-28', '2022-05-28', NULL, 21, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (14, '2022-04-28 13:37:56', '2022-04-28 16:56:41', 2, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (15, '2022-04-28 13:37:56', '2022-04-28 16:56:50', 2, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '46502651', 1),
 (16, '2022-04-28 15:53:10', '2022-04-28 15:53:26', 6, 'Pre-flowering', '17', 'asas', '2022-04-28', '2022-05-28', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -1675,7 +1707,7 @@ INSERT INTO `form_stock_examination_requests` (`id`, `created_at`, `updated_at`,
 (5, '2022-03-24 13:52:59', '2022-03-24 14:00:59', NULL, 22, NULL, '12', '10000', '2022-03-24', '99', '90', '7', 'nil', 'nil', 'nil', NULL, 5, 34, NULL, 'Request for the approval inspection', 2, 33, 1, 'Certified seed', '-'),
 (6, '2022-03-24 14:06:36', '2022-03-24 14:08:38', NULL, 25, NULL, '2.5', '5', '2022-03-24', '98.9', '85', '9.4', 'minimal', 'none', 'none', NULL, 5, 30, NULL, 'Stock examinations', 2, 31, 1, 'Certified seed', '-'),
 (7, '2022-03-28 16:24:58', '2022-03-28 16:34:32', NULL, 31, NULL, '100', '1000', '2022-03-28', '100', '90', 'None', 'None', '90', 'None', NULL, 5, 27, NULL, 'Please come and do stock approval for my seeds.', 2, 28, 1, 'Basic seed', '-'),
-(8, '2022-03-29 11:53:49', '2022-04-04 11:43:13', NULL, 31, NULL, '100', '1000', '2022-04-04', '100', '90', 'None', 'None', '90', 'None', NULL, 5, 27, NULL, 'Please come pick my stock for Lab test', 2, 28, 1, 'Basic seed', '-'),
+(8, '2022-03-29 11:53:49', '2022-04-04 11:43:13', NULL, 31, NULL, '100', '1000', '2022-04-04', '100', '90', 'None', 'None', '90', 'None', NULL, 5, 27, NULL, 'Please come pick my stock for Lab test', 2, 27, 1, 'Basic seed', '-'),
 (9, '2022-04-04 15:52:31', '2022-04-06 12:27:56', NULL, 31, NULL, '12', '11', '2022-04-06', '11', '11', '11', '11', '11', '11', NULL, 5, 27, NULL, 'Stock examination request.', 2, 28, 1, 'Basic seed', '-'),
 (10, '2022-04-25 17:09:42', '2022-04-26 11:21:14', NULL, 84, NULL, '40', '30000', '2022-04-29', '96', '98', 'None', 'None', 'None', 'None', NULL, 5, 20, NULL, 'stock is very ok', 2, 41, 1, 'Certified seed', '922767129'),
 (11, '2022-04-25 17:11:22', '2022-04-26 11:22:08', NULL, 74, NULL, '12', '28000', '2022-04-14', '98', '98', 'None', 'None', 'None', 'None', NULL, 5, 20, NULL, 'My stock is very ready for inspection', 2, 40, 1, 'Certified seed', '373130064'),
@@ -1736,11 +1768,14 @@ INSERT INTO `form_stock_examination_requests` (`id`, `created_at`, `updated_at`,
 (67, '2022-04-28 17:24:05', '2022-04-29 10:50:06', NULL, 146, NULL, '50', '400', '2022-04-19', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 27, NULL, 'Kindly  come and do a stoke examination and approval', 2, 78, 1, 'Certified seed', '916004095'),
 (68, '2022-04-28 17:25:34', '2022-04-29 10:45:33', NULL, 98, NULL, '30', '1000', '2022-04-26', '99', '99', '10', '0', '0', '0', NULL, 5, 27, NULL, 'sucess', 2, 84, 1, 'Basic seed', '487943693'),
 (69, '2022-04-28 17:28:23', '2022-04-29 10:45:58', NULL, 71, NULL, '30', '4300', '2022-04-29', '100', '98', '13', '00', 'NONE', 'NONE', NULL, 5, 27, NULL, 'Please come for my stock approval', 2, 90, 1, 'Certified seed', '975258940'),
-(70, '2022-04-28 17:34:09', '2022-04-29 10:46:58', NULL, 75, NULL, '35', '450', '2022-04-23', '100', '100', 'None', 'None', 'None', 'None', NULL, 5, 27, NULL, 'Please come for my stock approval', 2, 75, 1, 'Basic seed', '742674581'),
+(70, '2022-04-28 17:34:09', '2022-04-29 10:46:58', NULL, 75, NULL, '35', '450', '2022-04-23', '100', '100', 'None', 'None', 'None', 'None', NULL, 4, 27, NULL, 'Please come for my stock approval', 2, 21, 1, 'Basic seed', '742674581'),
 (72, '2022-04-29 10:21:26', '2022-04-29 10:48:53', NULL, 30, NULL, '2', '30', '2022-04-06', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 27, NULL, 'Growing certified seeds', 2, 79, 1, 'Certified seed', '373480349'),
-(73, '2022-04-29 10:31:17', '2022-04-29 10:47:21', NULL, 18, NULL, '30', '2000', '2022-04-29', '100', '90', 'None', 'None', '90', 'None', NULL, 5, 27, NULL, 'Stock ready for examination.', 2, 76, 1, 'Basic seed', '768986469'),
+(73, '2022-04-29 10:31:17', '2022-04-29 10:47:21', NULL, 18, NULL, '30', '2000', '2022-04-29', '100', '90', 'None', 'None', '90', 'None', NULL, 5, 27, NULL, 'Stock ready for examination.', 2, 21, 1, 'Basic seed', '768986469'),
 (74, '2022-04-29 10:36:35', '2022-04-29 10:44:53', NULL, 62, NULL, '30', '3900', '2022-04-28', '100', '98', '13', '00', 'NONE', 'NONE', NULL, 5, 27, NULL, 'rt5r4', 2, 88, 1, 'Certified seed', '242671052'),
-(75, '2022-04-29 10:41:07', '2022-04-29 10:41:07', NULL, 140, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'My stock ready for inspection', 2, 93, 1, NULL, '-');
+(75, '2022-04-29 10:41:07', '2022-04-29 10:41:07', NULL, 140, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 'My stock ready for inspection', 2, 93, 1, NULL, '-'),
+(76, '2022-07-04 09:26:29', NULL, 4, 4, 3, '33', '34', '343', '34', '34', '34', '34', '34', '34', '34', 2, 34, '23232', '23232', 1, 21, 1, '323', '-'),
+(77, '2022-07-05 09:08:02', '2022-07-05 09:08:02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 'dfsdfsd', 1, 21, 1, NULL, '-'),
+(78, '2022-07-11 09:07:19', '2022-07-11 09:07:19', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, NULL, 'applying for imported seed', 1, 21, 1, NULL, '-');
 
 -- --------------------------------------------------------
 
@@ -1814,8 +1849,8 @@ CREATE TABLE `import_export_permits` (
 --
 
 INSERT INTO `import_export_permits` (`id`, `created_at`, `updated_at`, `administrator_id`, `name`, `address`, `telephone`, `national_seed_board_reg_num`, `store_location`, `quantiry_of_seed`, `name_address_of_origin`, `details`, `ista_certificate`, `valid_from`, `valid_until`, `status`, `inspector`, `status_comment`, `permit_number`, `is_import`, `phytosanitary_certificate`, `category`, `type`, `crop_category`) VALUES
-(25, '2022-03-17 14:05:29', '2022-03-17 14:12:09', 28, 'Isaac Mbabazi', 'Rukoki', '0780602550', NULL, 'Rukoki', '0', 'Nairobi Kenya', NULL, NULL, '2022-03-17 10:12:09', '2023-03-17 10:12:09', 5, 27, NULL, '265562', 1, NULL, NULL, 'Researchers', 'Own use'),
-(26, '2022-03-23 15:43:02', '2022-03-23 16:36:33', 28, 'Isaac Mbabazi', 'Kungu Trading Centre.', '+256753388839', 'EXP/2022/0002', 'Mubuku', '10', 'Nairobi Kenya', NULL, 'files/sorghum.jpg', '2022-03-23 12:36:33', '2023-03-23 12:36:33', 5, 27, 'The application has been Rejected.', 'EXPORT/2022/001', 0, 'files/Naro.JPG', NULL, 'Seed Merchant', NULL),
+(25, '2022-03-17 14:05:29', '2022-03-17 14:12:09', 21, 'Isaac Mbabazi', 'Rukoki', '0780602550', NULL, 'Rukoki', '0', 'Nairobi Kenya', NULL, NULL, '2022-03-17 10:12:09', '2023-03-17 10:12:09', 5, 27, NULL, '265562', 1, NULL, NULL, 'Researchers', 'Own use'),
+(26, '2022-03-23 15:43:02', '2022-03-23 16:36:33', 27, 'Isaac Mbabazi', 'Kungu Trading Centre.', '+256753388839', 'EXP/2022/0002', 'Mubuku', '10', 'Nairobi Kenya', NULL, 'files/sorghum.jpg', '2022-03-23 12:36:33', '2023-03-23 12:36:33', 5, 27, 'The application has been Rejected.', 'EXPORT/2022/001', 0, 'files/Naro.JPG', NULL, 'Seed Merchant', NULL),
 (27, '2022-03-28 17:42:00', '2022-04-04 13:43:37', 28, 'Isaac Mbabazi', 'Kampala', '+256753388839', 'EXP/2022/0002', 'Mubuku', '1000', 'Nairobi Kenya', NULL, NULL, NULL, NULL, 2, 27, NULL, NULL, 1, NULL, NULL, 'Researchers', 'Own use'),
 (28, '2022-04-04 13:42:20', '2022-04-04 13:43:48', 3, 'Betty Namagembe', 'Kampala', '+256753388839', NULL, 'Mubuku', '0', 'Tazania', NULL, 'files/QA.JPG', NULL, NULL, 2, 27, NULL, NULL, 1, 'files/twit.JPG', NULL, 'Researchers', 'Research'),
 (29, '2022-05-16 14:13:21', '2022-05-18 11:50:03', 106, 'Kalule Kusain', 'Rubaga', '111223176442', NULL, 'ffffff', '-2', 'Rubaga', NULL, 'files/eid anima585.gif', NULL, NULL, 1, NULL, NULL, NULL, 1, 'files/koll logo.mp4', NULL, 'Researchers', 'Commercial');
@@ -1889,9 +1924,9 @@ CREATE TABLE `marketable_seeds` (
 --
 
 INSERT INTO `marketable_seeds` (`id`, `created_at`, `updated_at`, `administrator_id`, `crop_variety_id`, `seed_label_id`, `lot_number`, `quantity`, `seed_class`, `source`, `detail`, `is_deposit`, `seed_label_package_id`, `lab_test_number`, `price`, `image`, `images`, `is_counted`) VALUES
-(1, '2022-04-29 15:30:55', '2022-04-29 15:36:18', 84, 1, 4, 58058008, 11, NULL, 'From seedlab test number: 009/2022/dom', 'From seedlab ID: 73', 1, 1, '009/2022/dom', 0, NULL, NULL, 1),
-(2, '2022-04-29 15:31:04', '2022-04-29 15:36:18', 90, 1, 5, 19767497, 2000, NULL, 'From seedlab test number: 008/dom/2022', 'From seedlab ID: 59', 1, 1, '008/dom/2022', 0, NULL, NULL, 1),
-(3, '2022-04-29 15:31:14', '2022-04-29 15:36:18', 89, 1, 6, 24770820, 500, NULL, 'From seedlab test number: Test1/2022/N0004', 'From seedlab ID: 67', 1, 2, 'Test1/2022/N0004', 0, NULL, NULL, 1),
+(1, '2022-04-29 15:30:55', '2022-04-29 15:36:18', 21, 1, 4, 58058008, 11, NULL, 'From seedlab test number: 009/2022/dom', 'From seedlab ID: 73', 1, 1, '009/2022/dom', 0, NULL, NULL, 1),
+(2, '2022-04-29 15:31:04', '2022-04-29 15:36:18', 27, 1, 5, 19767497, 2000, NULL, 'From seedlab test number: 008/dom/2022', 'From seedlab ID: 59', 1, 1, '008/dom/2022', 0, NULL, NULL, 1),
+(3, '2022-04-29 15:31:14', '2022-04-29 15:36:18', 21, 1, 6, 24770820, 500, NULL, 'From seedlab test number: Test1/2022/N0004', 'From seedlab ID: 67', 1, 2, 'Test1/2022/N0004', 0, NULL, NULL, 1),
 (4, '2022-04-29 15:31:24', '2022-04-29 15:36:18', 74, 1, 7, 71732547, 1000, NULL, 'From seedlab test number: 001/2022/dom', 'From seedlab ID: 69', 1, 3, '001/2022/dom', 0, NULL, NULL, 1),
 (5, '2022-04-29 15:31:34', '2022-04-29 15:36:18', 86, 1, 8, 25554681, 300, NULL, 'From seedlab test number: Test1/2022/N0002', 'From seedlab ID: 72', 1, 2, 'Test1/2022/N0002', 0, NULL, NULL, 1),
 (6, '2022-04-29 15:31:42', '2022-04-29 15:36:18', 94, 1, 9, 67857572, 200, NULL, 'From seedlab test number: TEST2/2022/2B', 'From seedlab ID: 74', 1, 1, 'TEST2/2022/2B', 0, NULL, NULL, 1),
@@ -1905,7 +1940,7 @@ INSERT INTO `marketable_seeds` (`id`, `created_at`, `updated_at`, `administrator
 (14, '2022-04-29 15:32:59', '2022-04-29 15:36:18', 85, 1, 17, 81650251, 50, NULL, 'From seedlab test number: Test1/2022/N0001', 'From seedlab ID: 77', 1, 2, 'Test1/2022/N0001', 0, NULL, NULL, 1),
 (15, '2022-04-29 15:40:29', '2022-04-29 15:43:35', 78, 1, 19, 91804360, 1000, NULL, 'From seedlab test number: 003/2022/dom', 'From seedlab ID: 63', 1, 1, '003/2022/dom', 0, NULL, NULL, 1),
 (16, '2022-04-29 15:40:43', '2022-04-29 15:43:35', 98, 1, 18, 72521820, 20, NULL, 'From seedlab test number: 006/2022/dom', 'From seedlab ID: 64', 1, 1, '006/2022/dom', 0, NULL, NULL, 1),
-(17, '2022-04-29 15:59:28', '2022-04-29 15:59:28', 3, 3, 3, 89806835, 1000, NULL, NULL, 'Sold crop to Uganda Seed Trade Association, ID: 79', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
+(17, '2022-04-29 15:59:28', '2022-07-08 06:39:59', 3, 1, 3, 89806835, 1000, NULL, NULL, 'Sold crop to Uganda Seed Trade Association, ID: 79', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
 (18, '2022-04-29 15:59:40', '2022-04-29 15:59:40', 95, 1, 10, 70484855, 100, NULL, NULL, 'Sold crop to Isaac Mbabazi, ID: 76', 0, NULL, 'Test1/2022/N0007', 0, NULL, NULL, 1),
 (19, '2022-04-29 15:59:47', '2022-04-29 15:59:47', 94, 1, 9, 67857572, 40, NULL, NULL, 'Sold crop to Polly Bantel, ID: 92', 0, NULL, 'TEST2/2022/2B', 0, NULL, NULL, 1),
 (20, '2022-04-29 15:59:48', '2022-04-29 15:59:48', 86, 1, 8, 25554681, 200, NULL, NULL, 'Sold crop to Uganda Seed Trade Association, ID: 78', 0, NULL, 'Test1/2022/N0002', 0, NULL, NULL, 1),
@@ -1913,7 +1948,7 @@ INSERT INTO `marketable_seeds` (`id`, `created_at`, `updated_at`, `administrator
 (22, '2022-04-29 15:59:59', '2022-04-29 15:59:59', 80, 1, 14, 25675580, 400, NULL, NULL, 'Sold crop to Uganda Seed Trade Association, ID: 78', 0, NULL, 'Test1/2022/N0009', 0, NULL, NULL, 1),
 (23, '2022-04-29 16:00:14', '2022-04-29 16:00:14', 80, 1, 14, 25675580, 433, NULL, NULL, 'Sold crop to Dominic Kimara, ID: 84', 0, NULL, 'Test1/2022/N0009', 0, NULL, NULL, 1),
 (24, '2022-04-29 16:00:17', '2022-04-29 16:00:17', 94, 1, 9, 67857572, 100, NULL, NULL, 'Sold crop to Isaac Mbabazi, ID: 76', 0, NULL, 'TEST2/2022/2B', 0, NULL, NULL, 1),
-(25, '2022-04-29 16:01:06', '2022-04-29 16:01:06', 3, 3, 3, 89806835, 100, NULL, NULL, 'Sold crop to John Paul, ID: 25', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
+(25, '2022-04-29 16:01:06', '2022-07-10 05:44:46', 3, 1, 3, 89806835, 100, NULL, NULL, 'Sold crop to John Paul, ID: 25', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
 (26, '2022-04-29 16:01:10', '2022-04-29 16:01:10', 88, 1, 15, 14196693, 1000, NULL, NULL, 'Sold crop to MUYINGO ALI, ID: 99', 0, NULL, '008/34/dom', 0, NULL, NULL, 1),
 (27, '2022-04-29 16:01:11', '2022-04-29 16:01:11', 85, 1, 17, 81650251, 20, NULL, NULL, 'Sold crop to Opio Kelvin, ID: 89', 0, NULL, 'Test1/2022/N0001', 0, NULL, NULL, 1),
 (28, '2022-04-29 16:01:21', '2022-04-29 16:01:21', 84, 1, 4, 58058008, 11, NULL, NULL, 'Sold crop to NARO HOLDINGS LIMITED, ID: 86', 0, NULL, '009/2022/dom', 0, NULL, NULL, 1),
@@ -1931,10 +1966,10 @@ INSERT INTO `marketable_seeds` (`id`, `created_at`, `updated_at`, `administrator
 (40, '2022-04-29 16:02:34', '2022-04-29 16:02:34', 78, 1, 19, 91804360, 500, NULL, NULL, 'Sold crop to Cathy Adong, ID: 91', 0, NULL, '003/2022/dom', 0, NULL, NULL, 1),
 (41, '2022-04-29 16:02:51', '2022-04-29 16:02:51', 86, 1, 8, 25554681, 100, NULL, NULL, 'Sold crop to SELECT SEED LIMITED, ID: 85', 0, NULL, 'Test1/2022/N0002', 0, NULL, NULL, 1),
 (42, '2022-04-29 16:03:07', '2022-04-29 16:03:07', 86, 1, 8, 25554681, 200, NULL, NULL, 'Sold crop to Cathy Adong, ID: 91', 0, NULL, 'Test1/2022/N0002', 0, NULL, NULL, 1),
-(43, '2022-04-29 16:04:04', '2022-04-29 16:04:04', 3, 3, 3, 89806835, 150, NULL, NULL, 'Sold crop to Polly Bantel, ID: 92', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
-(44, '2022-04-29 16:04:14', '2022-04-29 16:04:14', 3, 3, 3, 89806835, 100, NULL, NULL, 'Sold crop to Odongkara Emmanuel, ID: 74', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
-(45, '2022-04-29 16:04:22', '2022-04-29 16:04:22', 3, 3, 3, 89806835, 1000, NULL, NULL, 'Sold crop to kibalama brian, ID: 95', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
-(46, '2022-04-29 16:04:31', '2022-04-29 16:04:31', 3, 3, 3, 89806835, 1000, NULL, NULL, 'Sold crop to Atia serogal, ID: 90', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
+(43, '2022-04-29 16:04:04', '2022-07-10 05:44:46', 3, 1, 3, 89806835, 150, NULL, NULL, 'Sold crop to Polly Bantel, ID: 92', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
+(44, '2022-04-29 16:04:14', '2022-07-10 05:44:47', 3, 1, 3, 89806835, 100, NULL, NULL, 'Sold crop to Odongkara Emmanuel, ID: 74', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
+(45, '2022-04-29 16:04:22', '2022-07-10 05:44:47', 3, 1, 3, 89806835, 1000, NULL, NULL, 'Sold crop to kibalama brian, ID: 95', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
+(46, '2022-04-29 16:04:31', '2022-07-10 05:44:47', 3, 1, 3, 89806835, 1000, NULL, NULL, 'Sold crop to Atia serogal, ID: 90', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
 (47, '2022-04-29 16:07:24', '2022-04-29 16:07:24', 98, 1, 18, 72521820, 10, NULL, NULL, 'Sold crop to walufelo isima, ID: 88', 0, NULL, '006/2022/dom', 0, NULL, NULL, 1),
 (48, '2022-04-29 16:08:22', '2022-04-29 16:08:22', 90, 1, 5, 19767497, 2000, NULL, NULL, 'Sold crop to Uganda Seed Trade Association, ID: 79', 0, NULL, '008/dom/2022', 0, NULL, NULL, 1),
 (49, '2022-04-29 16:43:46', '2022-04-29 16:44:30', 76, 1, 11, 75190054, -200, NULL, 'From seedlab test number: 005/2022/dom', 'Schools', 0, 2, '005/2022/dom', 0, NULL, NULL, 1),
@@ -1952,7 +1987,9 @@ INSERT INTO `marketable_seeds` (`id`, `created_at`, `updated_at`, `administrator
 (61, '2022-04-29 16:45:37', '2022-04-29 16:49:16', 91, 1, 16, 94922685, -60, NULL, 'From seedlab test number: 004/2022/musa/001', 'User not in', 0, 1, '004/2022/musa/001', 0, NULL, NULL, 1),
 (62, '2022-04-29 16:45:59', '2022-04-29 16:49:16', 86, 1, 8, 25554681, -10, NULL, 'From seedlab test number: Test1/2022/N0002', 'Sold to school as grain', 0, 2, 'Test1/2022/N0002', 0, NULL, NULL, 1),
 (63, '2022-04-29 16:46:05', '2022-04-29 16:49:16', 92, 1, 12, 88952214, -10, NULL, 'From seedlab test number: TEST3/2022/3B', 'Sold as grain to dealers who\'s not user of the system', 0, 2, 'TEST3/2022/3B', 0, NULL, NULL, 1),
-(64, '2022-04-29 16:46:17', '2022-04-29 16:49:16', 88, 1, 15, 14196693, -70, NULL, 'From seedlab test number: 008/34/dom', 'sold to gfy who are not system users', 0, 2, '008/34/dom', 0, NULL, NULL, 1);
+(64, '2022-04-29 16:46:17', '2022-07-08 10:42:33', 88, 1, 15, 14196693, -70, NULL, 'From seedlab test number: 008/34/dom', 'sold to gfy who are not system users', 0, 2, '008/34/dom', 0, NULL, NULL, 1),
+(65, '2022-07-08 06:40:08', '2022-07-08 06:41:03', 3, 1, 3, 89806835, -2, NULL, NULL, '323re', 0, NULL, 'A000120C', 0, NULL, NULL, 1),
+(66, '2022-07-08 06:40:45', '2022-07-08 06:41:03', 3, 1, 3, 89806835, -10, NULL, NULL, '34ertrtfy', 0, NULL, 'A000120C', 0, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -2019,7 +2056,116 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (66, '2021_11_24_053127_create_pre_orders_table', 38),
 (67, '2021_11_24_072806_create_quotations_table', 39),
 (68, '2021_11_24_120813_create_test_trees_table', 40),
-(69, '2022_02_23_085326_create_sub_growers_table', 41);
+(69, '2022_02_23_085326_create_sub_growers_table', 41),
+(70, '2016_06_01_000001_create_oauth_auth_codes_table', 42),
+(71, '2016_06_01_000002_create_oauth_access_tokens_table', 42),
+(72, '2016_06_01_000003_create_oauth_refresh_tokens_table', 42),
+(73, '2016_06_01_000004_create_oauth_clients_table', 42),
+(74, '2016_06_01_000005_create_oauth_personal_access_clients_table', 42),
+(75, '2022_06_14_130244_create_permission_tables', 42);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_has_permissions`
+--
+
+CREATE TABLE `model_has_permissions` (
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_has_roles`
+--
+
+CREATE TABLE `model_has_roles` (
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_access_tokens`
+--
+
+CREATE TABLE `oauth_access_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_auth_codes`
+--
+
+CREATE TABLE `oauth_auth_codes` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_clients`
+--
+
+CREATE TABLE `oauth_clients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_access_client` tinyint(1) NOT NULL,
+  `password_client` tinyint(1) NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_personal_access_clients`
+--
+
+CREATE TABLE `oauth_personal_access_clients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_refresh_tokens`
+--
+
+CREATE TABLE `oauth_refresh_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2048,7 +2194,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `created_at`, `updated_at`, `administrator_id`, `order_by`, `crop_variety_id`, `product_id`, `quantity`, `detail`, `payment_type`, `receipt`, `status`, `total_price`) VALUES
-(1, '2021-11-24 06:18:20', '2022-04-29 16:01:06', 3, 25, 3, 3, 100, 'simple', NULL, NULL, '3', 90000),
+(1, '2021-11-24 06:18:20', '2022-04-29 16:01:06', 3, 21, 3, 3, 100, 'simple', NULL, NULL, '3', 90000),
 (2, '2021-11-24 07:11:09', '2021-11-24 07:11:09', 25, 2, 3, NULL, 8000, 'From pre-order ID: 7', NULL, NULL, '1', 0),
 (4, '2021-11-24 07:23:29', '2021-11-24 07:23:29', 25, 2, 3, NULL, 1000, 'From pre-order ID: 9', NULL, NULL, '1', 40000000),
 (5, '2021-11-24 08:18:58', '2021-11-24 08:18:58', 25, 3, 3, NULL, 1000, 'From pre-order ID: 10', NULL, NULL, '1', 800000),
@@ -2092,7 +2238,9 @@ INSERT INTO `orders` (`id`, `created_at`, `updated_at`, `administrator_id`, `ord
 (43, '2022-04-29 16:30:42', '2022-04-29 16:30:42', 84, 82, 1, 4, 11, '', NULL, NULL, '1', 0),
 (44, '2022-04-29 16:36:10', '2022-04-29 16:36:10', 3, 82, 3, 3, 1000, '', NULL, NULL, '1', 900000),
 (45, '2022-04-29 16:36:32', '2022-04-29 16:36:32', 63, 14, 13, NULL, 82, 'From pre-order ID: 20', NULL, NULL, '1', 82000),
-(46, '2022-04-29 16:36:51', '2022-04-29 16:36:51', 78, 14, 13, NULL, 30, 'From pre-order ID: 41', NULL, NULL, '1', 900000);
+(46, '2022-04-29 16:36:51', '2022-04-29 16:36:51', 78, 14, 13, NULL, 30, 'From pre-order ID: 41', NULL, NULL, '1', 900000),
+(47, '2022-07-10 09:53:31', '2022-07-10 09:53:31', 3, 21, 1, 3, 757714, '', NULL, NULL, '1', 681184886),
+(48, '2022-07-10 09:53:43', '2022-07-10 09:53:43', 3, 21, 1, 3, 761052, '', NULL, NULL, '1', 684185748);
 
 -- --------------------------------------------------------
 
@@ -2104,6 +2252,27 @@ CREATE TABLE `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('nakalawatabisa@gmail.com', '2cb4ClLU5RgvSZi7u24l5TeIg9lDDENPyVkdCJqF', '2022-07-07 00:05:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permissions`
+--
+
+CREATE TABLE `permissions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2159,6 +2328,13 @@ CREATE TABLE `planting_returns` (
   `sub_growers_file` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `planting_returns`
+--
+
+INSERT INTO `planting_returns` (`id`, `created_at`, `updated_at`, `administrator_id`, `name`, `address`, `telephone`, `seed_rate`, `registerd_dealer`, `longitude`, `latitude`, `status`, `inspector`, `status_comment`, `previous_crops`, `date_harvest`, `date_planted`, `size_of_land`, `lot_number`, `crop_id`, `amount_enclosed`, `payment_receipt`, `valid_from`, `valid_until`, `is_not_used`, `sub_growers_file`) VALUES
+(102, '2022-07-20 12:41:39', '2022-07-18 12:41:39', 21, 'fsdfs', 'sfasd', '3434323', '323', 'csd', '23455324', '34543343', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -2204,44 +2380,11 @@ CREATE TABLE `pre_orders` (
 --
 
 INSERT INTO `pre_orders` (`id`, `created_at`, `updated_at`, `administrator_id`, `crop_variety_id`, `quantity`, `seed_class`, `invetory_status`, `collection_date`, `pickup_location`, `detail`, `status`) VALUES
-(1, '2021-11-24 03:26:01', '2021-11-24 03:26:01', 1, 3, 8000, 'Certified', 'Processed', '2021-11-24', 'Simple pick', 'detail...', '1'),
-(2, '2021-11-24 06:11:54', '2021-11-24 06:11:54', 2, 3, 1000, 'Certified', 'Raw', '2021-11-30', 'Jinja', 'explanation...', '1'),
-(3, '2021-11-24 08:17:35', '2021-11-24 08:17:35', 2, 3, 8000, 'Certified', 'Processed', '2021-12-08', 'Mbale', 'simple', '1'),
-(4, '2022-04-26 16:55:39', '2022-04-26 16:55:39', 38, 12, 1000, 'Certified', 'Processed', '2022-04-28', 'Kampala', 'Credit', '1'),
-(5, '2022-04-26 16:55:41', '2022-04-26 16:55:41', 69, 13, 50, 'Certified', 'Raw', '2022-04-29', 'mbale', 'cash on delivery', '1'),
-(6, '2022-04-26 16:56:49', '2022-04-26 16:56:49', 56, 12, 10, 'Certified', 'Processed', '2022-04-26', 'JINJA', 'YOUR SEEDS WILL BE READY FOR PICKING AT THE ABOVE LOCATION', '1'),
-(7, '2022-04-26 16:57:01', '2022-04-26 16:57:01', 69, 13, 15, 'Certified', 'Processed', '2022-04-27', 'Namanve', 'payment after 1 month', '1'),
-(8, '2022-04-26 16:57:48', '2022-04-26 16:57:48', 53, 13, 200, 'Certified', 'Processed', '2022-04-26', 'HOIMA', 'Cash payment', '1'),
-(9, '2022-04-26 16:59:16', '2022-04-26 16:59:16', 54, 12, 200, 'Certified', 'Raw', '2022-05-12', 'Gayaza', 'Seed packed in 50kg bags', '1'),
-(10, '2022-04-26 17:00:37', '2022-04-26 17:00:37', 44, 19, 550, 'Certified', 'Processed', '2022-05-02', 'factory', 'if stock is ready before the collection date please let me know', '1'),
-(11, '2022-04-26 17:01:06', '2022-04-26 17:01:06', 23, 13, 800, 'Pre-basic', NULL, '2022-04-26', 'asasas', 'asas', '1'),
-(12, '2022-04-26 17:04:59', '2022-04-26 17:04:59', 63, 12, 250, 'Certified', 'Processed', '2022-04-26', 'Mbale', 'certified seed', '1'),
-(13, '2022-04-26 17:05:10', '2022-04-26 17:05:10', 47, 13, 4000, 'Certified', 'Raw', '2022-10-26', 'kafu', 'payment after delivery', '1'),
-(14, '2022-04-26 17:05:30', '2022-04-26 17:05:30', 55, 13, 1000, 'Certified', 'Raw', '2022-05-13', 'kampala', 'Cash payment', '1'),
-(15, '2022-04-26 17:06:31', '2022-04-26 17:06:31', 54, 12, 1000, 'Basic', NULL, '2022-04-29', 'Gayaza', 'Seed to be packed in 50 kgs', '1'),
-(16, '2022-04-26 17:06:50', '2022-04-26 17:06:50', 52, 173, 100, 'Pre-basic', NULL, '2023-02-01', 'Namulonge', 'Male and female', '1'),
-(17, '2022-04-26 17:07:26', '2022-04-26 17:07:26', 42, 13, 2000, 'Certified', 'Raw', '2022-04-26', 'Kampala', 'Pay through bank before delivery', '1'),
-(18, '2022-04-26 17:09:03', '2022-04-26 17:09:03', 50, 195, 500, 'Pre-basic', NULL, '2022-05-24', 'Kampala', 'Kindly deliver to our office', '1'),
-(19, '2022-04-26 17:10:04', '2022-04-26 17:10:04', 43, 194, 100, 'Quality declaired seed', NULL, '2022-10-01', 'Masaka', 'Pay by cash', '1'),
-(20, '2022-04-26 17:11:17', '2022-04-26 17:11:17', 41, 20, 43, 'Certified', 'Processed', '2022-04-28', 'kawempe', 'call me when everything is ready', '1'),
-(21, '2022-04-26 17:13:02', '2022-04-26 17:13:02', 62, 13, 2000, 'Pre-basic', NULL, '2022-04-30', 'Namulonge', 'Deliver in Ganny bags', '1'),
-(22, '2022-04-29 16:12:55', '2022-04-29 16:12:55', 94, 1, 20, 'Basic', NULL, '2022-06-06', 'kiryandongo', 'cash on delivery', '1'),
-(23, '2022-04-29 16:13:47', '2022-04-29 16:13:47', 76, 12, 1000, 'Pre-basic', NULL, '2022-08-31', 'kampala', 'To be paid in cash.', '1'),
-(24, '2022-04-29 16:14:09', '2022-04-29 16:14:09', 85, 12, 100, 'Pre-basic', NULL, '2022-04-08', 'Kampala', 'To be paid in cash', '1'),
-(25, '2022-04-29 16:14:20', '2022-04-29 16:14:20', 95, 12, 1000, 'Pre-basic', NULL, '2022-05-31', 'kawempe', 'to be delivered in future', '1'),
 (26, '2022-04-29 16:14:44', '2022-04-29 16:14:44', 98, 13, 85, 'Pre-basic', NULL, '2022-08-29', 'Mukono', 'Unshelled', '1'),
 (27, '2022-04-29 16:14:52', '2022-04-29 16:14:52', 74, 19, 1000, 'Certified', 'Processed', '2022-05-31', 'Supply store', 'Please supply and payment will be made on delivery', '1'),
-(28, '2022-04-29 16:15:07', '2022-04-29 16:15:07', 79, 1, 200, 'Pre-basic', NULL, '2022-05-29', 'Kasese', 'Will use link bus', '1'),
-(29, '2022-04-29 16:15:26', '2022-04-29 16:15:26', 80, 19, 200, 'Pre-basic', NULL, '2022-05-29', 'kampala', NULL, '1'),
-(30, '2022-04-29 16:15:29', '2022-04-29 16:15:29', 88, 1, 200, 'Pre-basic', NULL, '2022-09-22', 'bugiri', 'egyeg', '1'),
-(31, '2022-04-29 16:15:32', '2022-04-29 16:15:32', 94, 1, 1000, 'Pre-basic', NULL, '2022-07-04', 'kiryandongo', 'direct transfer', '1'),
-(32, '2022-04-29 16:16:09', '2022-04-29 16:16:09', 90, 1, 3000, 'Basic', NULL, '2022-04-16', 'Jinja', 'Payment after delivery', '1'),
-(33, '2022-04-29 16:16:49', '2022-04-29 16:16:49', 91, 12, 900, 'Pre-basic', NULL, '2022-05-05', 'Madindi', 'I will pay  at the end of the season', '1'),
-(34, '2022-04-29 16:17:11', '2022-04-29 16:17:11', 94, 1, 400, 'Certified', 'Processed', '2022-09-04', 'kampala', 'payment after delivery', '1'),
 (35, '2022-04-29 16:17:34', '2022-04-29 16:17:34', 89, 122, 150, 'Pre-basic', NULL, '2022-04-30', 'Gulu', 'Can be picked by the beginning of next season', '1'),
-(36, '2022-04-29 16:18:28', '2022-04-29 16:18:28', 86, 20, 100, 'Pre-basic', NULL, '2022-08-15', 'Kampala', 'I will pay on delivery', '1'),
-(37, '2022-04-29 16:22:23', '2022-04-29 16:22:23', 90, 12, 5000, 'Pre-basic', NULL, '2022-04-20', 'Kawempe', 'Payment on delivery', '1'),
-(38, '2022-05-31 12:08:27', '2022-05-31 12:08:27', 114, 86, 2000, 'Basic', NULL, '2022-06-01', 'At the storage location', 'Please supply this variety of soybean and must be ready to conduct germination test \r\nPayment will be made after the seeds have passed the required percentage of germination test', '1');
+(47, '2007-07-21 21:00:00', '2007-07-21 21:00:00', 21, 3, 8, '2', NULL, '03-04-2022', 'Ntinda', 'Freed', NULL),
+(48, '2022-07-06 23:22:02', '2022-07-06 23:22:02', 21, 12, 3, 'Pre-basic', NULL, '2022-07-21', 'erre', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -2275,22 +2418,23 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `created_at`, `updated_at`, `administrator_id`, `crop_variety_id`, `seed_label_id`, `quantity`, `lab_test_number`, `lot_number`, `seed_class`, `price`, `wholesale_price`, `image`, `images`, `source`, `detail`, `name`, `total_price`) VALUES
-(3, '2021-11-23 07:23:01', '2021-11-23 16:57:47', 3, 3, 3, 1000, 'A000120C', 89806835, NULL, 900, 0, 'a54783a032b79e0841ad2688d3ecf349.jpg', NULL, 'From seedlab test number: A000120C', 'From seedlab ID: 3', 'Bush Beans - NABE1', 0),
-(4, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 84, 1, 4, 6, '009/2022/dom', 58058008, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 009/2022/dom', 'good quality seed', 'Default crop vareity', 0),
-(5, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 90, 1, 5, 1850, '008/dom/2022', 19767497, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 008/dom/2022', 'Payment through Mobile', 'Default crop vareity', 0),
-(6, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 89, 1, 6, 250, 'Test1/2022/N0004', 24770820, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0004', 'Sold to a stockists', 'Default crop vareity', 0),
-(7, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 74, 1, 7, 850, '001/2022/dom', 71732547, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 001/2022/dom', 'Sold to to Tina who are not users of the system', 'Default crop vareity', 0),
-(8, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 86, 1, 8, 290, 'Test1/2022/N0002', 25554681, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0002', 'Sold to school as grain', 'Default crop vareity', 0),
-(9, '2022-04-29 15:36:18', '2022-04-29 16:44:30', 94, 1, 9, 150, 'TEST2/2022/2B', 67857572, NULL, 0, 0, NULL, NULL, 'From seedlab test number: TEST2/2022/2B', 'cash at hand', 'Default crop vareity', 0),
-(10, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 95, 1, 10, 700, 'Test1/2022/N0007', 70484855, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0007', 'not users of the sytem', 'Default crop vareity', 0),
-(11, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 76, 1, 11, 500, '005/2022/dom', 75190054, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 005/2022/dom', 'Sold to XYZ who are not users of the system.', 'Default crop vareity', 0),
-(12, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 92, 1, 12, 10, 'TEST3/2022/3B', 88952214, NULL, 0, 0, NULL, NULL, 'From seedlab test number: TEST3/2022/3B', 'Sold as grain to dealers who\'s not user of the system', 'Default crop vareity', 0),
-(13, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 91, 1, 16, 40, '004/2022/musa/001', 94922685, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 004/2022/musa/001', 'User not in', 'Default crop vareity', 0),
-(14, '2022-04-29 15:36:18', '2022-04-29 16:44:30', 80, 1, 14, 300, 'Test1/2022/N0009', 25675580, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0009', 'sold as grain to school', 'Default crop vareity', 0),
-(15, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 88, 1, 15, 1930, '008/34/dom', 14196693, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 008/34/dom', 'sold to gfy who are not system users', 'Default crop vareity', 0),
-(16, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 85, 1, 17, 10, 'Test1/2022/N0001', 81650251, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0001', 'Sold to Atia who is not a user of the system', 'Default crop vareity', 0),
-(17, '2022-04-29 15:43:35', '2022-04-29 16:49:16', 78, 1, 19, 950, '003/2022/dom', 91804360, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 003/2022/dom', 'Maize for food, for easy access', 'Default crop vareity', 0),
-(18, '2022-04-29 15:43:35', '2022-04-29 15:43:35', 98, 1, 18, 20, '006/2022/dom', 72521820, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 006/2022/dom', 'From seedlab ID: 64', 'Default crop vareity', 0);
+(3, '2021-11-23 07:23:01', '2022-07-12 17:13:49', 3, 1, 3, 1014740, 'A000120C', 89806835, NULL, 899, 500, 'http://localhost:8888/stts/storage/app/public/images/741d1fb2f0a84083801e7c1dd3697fe6.png', 'http://localhost:8888/stts/storage/app/public/images/741d1fb2f0a84083801e7c1dd3697fe6.png', NULL, '34ertrtfy', 'Default crop vareity', 0),
+(6, '2022-04-29 15:36:18', '2022-07-12 17:13:49', 89, 1, 6, 207882, 'Test1/2022/N0004', 24770820, NULL, 0, 0, 'fruitSalad-98841227-770x533-1-150x150.jpg', NULL, 'From seedlab test number: Test1/2022/N0004', 'Sold to a stockists', 'Default crop vareity', 0),
+(7, '2022-04-29 15:36:18', '2022-07-12 17:13:49', 74, 1, 7, 259700, '001/2022/dom', 71732547, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 001/2022/dom', 'Sold to to Tina who are not users of the system', 'Default crop vareity', 0),
+(24, '2022-07-10 05:47:22', '2022-07-12 17:13:49', 85, 1, 17, 29950, 'Test1/2022/N0001', 81650251, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0001', 'Sold to Atia who is not a user of the system', 'Default crop vareity', 0),
+(36, '2022-07-10 07:20:58', '2022-07-12 17:13:49', 84, 1, 4, 6814, '009/2022/dom', 58058008, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 009/2022/dom', 'good quality seed', 'Default crop vareity', 0),
+(37, '2022-07-10 07:20:58', '2022-07-12 17:13:49', 90, 1, 5, 968500, '008/dom/2022', 19767497, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 008/dom/2022', 'Payment through Mobile', 'Default crop vareity', 0),
+(38, '2022-07-10 07:20:58', '2022-07-12 17:13:49', 86, 1, 8, 274680, 'Test1/2022/N0002', 25554681, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0002', 'Sold to school as grain', 'Default crop vareity', 0),
+(39, '2022-07-10 07:20:58', '2022-07-12 17:13:49', 94, 1, 9, 72930, 'TEST2/2022/2B', 67857572, NULL, 0, 0, NULL, NULL, 'From seedlab test number: TEST2/2022/2B', 'cash at hand', 'Default crop vareity', 0),
+(40, '2022-07-10 07:20:58', '2022-07-12 17:13:49', 95, 1, 10, 224280, 'Test1/2022/N0007', 70484855, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0007', 'not users of the sytem', 'Default crop vareity', 0),
+(41, '2022-07-10 07:20:58', '2022-07-12 17:13:49', 76, 1, 11, 126300, '005/2022/dom', 75190054, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 005/2022/dom', 'Sold to XYZ who are not users of the system.', 'Default crop vareity', 0),
+(42, '2022-07-10 07:20:58', '2022-07-12 17:13:49', 92, 1, 12, 2520, 'TEST3/2022/3B', 88952214, NULL, 0, 0, NULL, NULL, 'From seedlab test number: TEST3/2022/3B', 'Sold as grain to dealers who\'s not user of the system', 'Default crop vareity', 0),
+(43, '2022-07-10 07:20:58', '2022-07-12 17:13:49', 91, 1, 16, 22680, '004/2022/musa/001', 94922685, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 004/2022/musa/001', 'User not in', 'Default crop vareity', 0),
+(44, '2022-07-10 07:20:58', '2022-07-12 17:13:49', 80, 1, 14, 285016, 'Test1/2022/N0009', 25675580, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0009', 'sold as grain to school', 'Default crop vareity', 0),
+(45, '2022-07-10 07:20:58', '2022-07-12 17:13:49', 88, 1, 15, 738430, '008/34/dom', 14196693, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 008/34/dom', 'sold to gfy who are not system users', 'Default crop vareity', 0),
+(46, '2022-07-10 07:20:58', '2022-07-12 17:13:49', 78, 1, 19, 385610, '003/2022/dom', 91804360, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 003/2022/dom', 'Maize for food, for easy access', 'Default crop vareity', 0),
+(47, '2022-07-10 07:20:59', '2022-07-12 17:13:49', 98, 1, 18, 7560, '006/2022/dom', 72521820, NULL, 0, 0, NULL, NULL, NULL, 'Sold crop to walufelo isima, ID: 88', 'Default crop vareity', 0),
+(48, '2022-07-10 07:40:02', '2022-07-10 09:42:06', 1, 4, 4, 3, '3', 2, 3, 2, 2, '24921-9-apple-fruit-thumb.png', NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -2362,7 +2506,7 @@ INSERT INTO `quotations` (`id`, `created_at`, `updated_at`, `administrator_id`, 
 (4, '2021-11-24 05:36:39', '2021-11-24 05:36:39', 2, 3, 1, 1800, '2021-11-30', 'Certified', 'Processed', 'detail.', 1, NULL, NULL, NULL),
 (5, '2021-11-24 05:36:51', '2021-11-24 05:36:51', 2, 3, 1, 800, '2021-11-24', 'Certified', 'Processed', 'details', 1, NULL, NULL, NULL),
 (6, '2021-11-24 05:37:41', '2021-11-24 05:37:41', 2, 3, 1, 1000, '2021-11-24', 'Certified', 'Processed', 'detail', 1, NULL, NULL, NULL),
-(8, '2021-11-24 07:21:37', '2021-11-24 07:21:37', 25, 3, 2, 10000, '2021-11-24', 'Certified', 'Raw', 'simple', 2, NULL, NULL, 400),
+(8, '2021-11-24 07:21:37', '2021-11-24 07:21:37', 27, 3, 2, 99000000, '2021-11-24', 'Certified', 'Raw', 'simple', 2, NULL, NULL, 400),
 (9, '2021-11-24 07:22:18', '2021-11-24 07:23:29', 25, 3, 2, 1000, '2021-12-01', 'Certified', 'Raw', 'simple', 2, 5, NULL, 40000),
 (10, '2021-11-24 08:18:35', '2021-11-24 08:18:58', 25, 3, 3, 1000, '2021-12-07', 'Certified', 'Processed', 'details...', 2, 5, NULL, 800),
 (11, '2022-04-26 17:03:12', '2022-04-26 17:03:12', 23, 13, 5, 800, '2022-04-21', 'Certified', 'Raw', 'ksdbjlkn', 69, NULL, NULL, 800),
@@ -2401,7 +2545,33 @@ INSERT INTO `quotations` (`id`, `created_at`, `updated_at`, `administrator_id`, 
 (45, '2022-04-29 16:36:19', '2022-04-29 16:36:19', 94, 20, 20, 10, '2022-05-02', 'Certified', 'Processed', 'cash on delivery', 41, NULL, NULL, 2500),
 (46, '2022-04-29 16:38:51', '2022-04-29 16:38:51', 94, 1, 32, 100, '2022-05-03', 'Basic', NULL, 'cash on delivery', 90, NULL, NULL, 10000),
 (47, '2022-04-29 16:40:52', '2022-04-29 16:40:52', 89, 19, 27, 200, '2022-04-27', 'Certified', 'Processed', 'Hurry', 74, NULL, NULL, 7000),
-(48, '2022-04-29 16:42:42', '2022-04-29 16:42:42', 89, 1, 31, 200, '2022-04-29', 'Pre-basic', NULL, 'Hurry', 94, NULL, NULL, 7000);
+(48, '2022-04-29 16:42:42', '2022-04-29 16:42:42', 89, 1, 31, 200, '2022-04-29', 'Pre-basic', NULL, 'Hurry', 94, NULL, NULL, 7000),
+(49, NULL, NULL, 1, 1, 39, 23, '2022-07-05', 'ds', 'sd', 'sdrfdf', 24, NULL, '24', 42000000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_has_permissions`
+--
+
+CREATE TABLE `role_has_permissions` (
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2466,14 +2636,25 @@ INSERT INTO `seed_labels` (`id`, `created_at`, `updated_at`, `administrator_id`,
 (9, '2022-04-29 15:19:33', '2022-04-29 15:31:42', 94, 74, 1, 1, '200', 'QUALITY IS OUR FIRST NAME', 14, NULL, 'files/IMG_20210730_123544.jpg', 1, 2500, 'IMG_20210730_123634.jpg', '[]'),
 (10, '2022-04-29 15:19:42', '2022-04-29 15:31:51', 95, 60, 1, 2, '1000', 'seeds ready for supply', 14, NULL, 'files/grower 7.xlsx', 1, 2000, '9f676db06ac87abb9745b70bcd9bb297.PNG', '[]'),
 (11, '2022-04-29 15:20:00', '2022-04-29 15:32:03', 76, 62, 1, 2, '1000', NULL, 14, NULL, 'files/Google workspace.JPG', 1, 2000, 'Market analysis-2.jpg', '[]'),
-(12, '2022-04-29 15:20:23', '2022-04-29 15:32:22', 92, 68, 1, 2, '20', 'Payment  made for labels', 14, NULL, 'files/9783ee581fde3e5cbcc6b01ba1841bc9.jpg', 1, 1000, 'IMG-20220421-WA0005.jpg', '[]'),
+(12, '2022-04-29 15:20:23', '2022-04-29 15:32:22', 21, 68, 1, 2, '20', 'Payment  made for labels', 14, NULL, 'files/9783ee581fde3e5cbcc6b01ba1841bc9.jpg', 1, 1000, 'IMG-20220421-WA0005.jpg', '[]'),
 (13, '2022-04-29 15:21:33', '2022-04-29 15:32:31', 79, 66, 1, 1, '200', 'It\'s a certified seed', 14, NULL, 'files/tmp-cam-5556624534290479018.jpg', 1, 400, 'Screenshot_20220429-122257.jpg', '[]'),
 (14, '2022-04-29 15:23:05', '2022-04-29 15:32:45', 80, 65, 1, 1, '500', NULL, 14, NULL, 'files/fc1cba05d1fd21a24d6257f8839dbec8.png', 1, 4500, 'beans.gif', '[]'),
 (15, '2022-04-29 15:24:22', '2022-04-29 15:32:55', 88, 71, 1, 2, '2000', NULL, 14, NULL, 'files/1651231386660509774517.jpg', 1, 5000, '1651231353620-156952194.jpg', '[]'),
 (16, '2022-04-29 15:24:25', '2022-04-29 15:32:41', 91, 76, 1, 1, '100', NULL, 14, NULL, 'files/IMG-20220429-WA0021.jpg', 1, 1000, 'IMG-20220429-WA0021.jpg', '[]'),
 (17, '2022-04-29 15:24:51', '2022-04-29 15:32:59', 85, 77, 1, 2, '50', 'Label', 14, NULL, 'files/16512314254025435177053817723483.jpg', 1, 1000, '16512313950653172031282489036791.jpg', '[]'),
 (18, '2022-04-29 15:35:56', '2022-04-29 15:40:43', 98, 64, 1, 1, '20', NULL, 14, NULL, 'files/tmp-cam-1886969605103182740.jpg', 1, 100, NULL, '[]'),
-(19, '2022-04-29 15:37:59', '2022-04-29 15:40:29', 78, 63, 1, 1, '1000', NULL, 14, NULL, 'files/DSC_7990.JPG', 1, 3000, 'DSC_7990.JPG', '[]');
+(19, '2022-04-29 15:37:59', '2022-04-29 15:40:29', 78, 63, 1, 1, '1000', NULL, 14, NULL, 'files/DSC_7990.JPG', 1, 3000, 'DSC_7990.JPG', '[]'),
+(20, '2022-07-05 10:10:20', '2022-07-05 10:10:20', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(21, '2022-07-05 10:10:20', '2022-07-05 10:10:20', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(22, '2022-07-05 10:10:56', '2022-07-05 10:10:56', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(23, '2022-07-05 10:10:56', '2022-07-05 10:10:56', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(24, '2022-07-05 10:12:01', '2022-07-05 10:12:01', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(25, '2022-07-05 10:12:01', '2022-07-05 10:12:01', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(26, '2022-07-05 10:12:07', '2022-07-05 10:12:07', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(27, '2022-07-05 10:12:07', '2022-07-05 10:12:07', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(28, '2022-07-06 22:17:49', '2022-07-06 22:17:49', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(29, '2022-07-06 22:17:49', '2022-07-06 22:17:49', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(30, '2022-07-10 06:42:31', '2022-07-10 06:42:31', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2496,9 +2677,9 @@ CREATE TABLE `seed_label_packages` (
 --
 
 INSERT INTO `seed_label_packages` (`id`, `created_at`, `updated_at`, `crop_variety_id`, `package_size`, `package_price`, `seed_label_package_id`) VALUES
-(1, '2021-11-15 06:22:43', '2021-11-15 06:23:34', 3, 1, 1000, NULL),
-(2, '2021-11-15 06:23:21', '2021-11-15 06:23:21', 3, 5, 5000, NULL),
-(3, '2021-11-15 06:23:53', '2021-11-15 06:23:53', 3, 10, 10000, NULL);
+(1, '2021-11-15 06:22:43', '2022-07-08 06:36:20', 1, 1, 1000, NULL),
+(2, '2021-11-15 06:23:21', '2022-07-08 06:36:20', 1, 5, 5000, NULL),
+(3, '2021-11-15 06:23:53', '2022-07-08 06:36:20', 1, 10, 10000, NULL);
 
 -- --------------------------------------------------------
 
@@ -2552,30 +2733,21 @@ CREATE TABLE `seed_labs` (
 --
 
 INSERT INTO `seed_labs` (`id`, `created_at`, `updated_at`, `administrator_id`, `crop_variety_id`, `form_stock_examination_request_id`, `collection_date`, `payment_receipt`, `applicant_remarks`, `sampling_date`, `sample_weight`, `packaging`, `number_of_units`, `mother_lot`, `sample_condition`, `inspector_remarks`, `tests_required`, `lab_technician_id`, `quantity`, `purity`, `germination_capacity`, `abnormal_sprouts`, `broken_germs`, `report_recommendation`, `inspector`, `inspector_is_done`, `status`, `status_comment`, `lot_number`, `receptionist_is_done`, `receptionist_remarks`, `lab_test_number`, `lab_technician`, `p_x_g`, `parent_id`, `order`, `title`, `temp_parent`) VALUES
-(1, '2021-11-26 04:51:13', '2022-04-26 16:33:00', 1, 3, 1, NULL, NULL, NULL, '2022-04-26', '20', 'Green', '15', '00001', NULL, NULL, 'Moisture content,Purity', NULL, 0, '100', '90', '90', '10', '11', 27, 1, 5, NULL, '10000', 1, NULL, '001', 23, 90, 0, 0, 'No name', 0),
-(2, '2021-11-26 04:51:26', '2022-04-26 16:35:13', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '2', '5', '15', '0000089', NULL, NULL, 'Moisture content,Purity,Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '86472944', 1, NULL, 'TestI002', 23, 90, 0, 0, 'No name', 0),
 (3, '2021-11-26 04:52:46', '2022-04-26 16:34:03', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '2', '5', '15', '0000758', NULL, NULL, 'Purity,Germination,Seed health', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '38069215', 1, NULL, 'test 123', 23, 90, 0, 0, 'No name', 0),
 (4, '2021-11-26 04:52:58', '2022-04-26 16:34:49', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '3', '5', '15', '7', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '76105202', 1, NULL, 'Test i ben00023', 23, 90, 0, 0, 'No name', 0),
-(5, '2021-11-26 04:53:15', '2022-04-26 16:33:42', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '20', '10', '1', '000085', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '50750684', 1, NULL, 'Test i ben0001', 23, 90, 0, 0, 'No name', 0),
-(6, '2021-11-26 04:53:26', '2022-04-26 16:34:15', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '9', '5', '15', '89', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '42169064', 1, NULL, '000198', 23, 90, 0, 0, 'No name', 0),
-(7, '2021-11-26 04:53:40', '2022-04-26 16:37:08', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '3', 'good', '15', '000056', NULL, NULL, 'Purity', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '36917997', 1, NULL, 'test1234', 23, 90, 0, 0, 'No name', 0),
-(8, '2021-11-26 04:53:51', '2022-04-26 16:33:22', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '2', '5', '15', '00007', NULL, NULL, 'Moisture content,Germination', NULL, 0, '99', '95', '00', '00', '11', 27, 1, 5, NULL, '75424505', 1, NULL, 'test 657898789', 23, 94, 6, 0, 'No name', 0),
-(9, '2021-11-26 04:54:03', '2022-04-26 16:35:57', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '20', 'green', '15', '005', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '43223090', 1, NULL, 'test 12345', 23, 90, 0, 0, 'No name', 0),
-(10, '2021-11-26 04:54:30', '2022-04-26 16:36:38', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '1', '5', '15', '7632', NULL, NULL, 'Moisture content,Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '17790424', 1, NULL, 'Test i ben00021', 23, 90, 4, 0, 'No name', 0),
-(11, '2021-11-26 04:54:40', '2022-04-26 16:38:11', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '3', '5', '15', '000065', NULL, NULL, 'Moisture content,Purity,Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '81826637', 1, NULL, 'test00987', 23, 90, 0, 0, 'No name', 0),
+(7, '2021-11-26 04:53:40', '2022-04-26 16:37:08', 21, 1, 1, NULL, NULL, NULL, '2022-04-26', '3', 'good', '15', '000056', NULL, NULL, 'Purity', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '36917997', 1, NULL, 'test1234', 23, 90, 0, 0, 'No name', 0),
+(9, '2021-11-26 04:54:03', '2022-04-26 16:35:57', 2, 1, 1, NULL, NULL, NULL, '2022-04-26', '20', 'green', '15', '005', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '43223090', 1, NULL, 'test 12345', 23, 90, 0, 0, 'No name', 0),
+(10, '2021-11-26 04:54:30', '2022-04-26 16:36:38', 21, 1, 1, NULL, NULL, NULL, '2022-04-26', '1', '5', '15', '7632', NULL, NULL, 'Moisture content,Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '17790424', 1, NULL, 'Test i ben00021', 23, 90, 4, 0, 'No name', 0),
+(11, '2021-11-26 04:54:40', '2022-04-26 16:38:11', 21, 1, 1, NULL, NULL, NULL, '2022-04-26', '3', '5', '15', '000065', NULL, NULL, 'Moisture content,Purity,Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '81826637', 1, NULL, 'test00987', 23, 90, 0, 0, 'No name', 0),
 (12, '2021-11-26 04:55:27', '2022-04-26 16:37:41', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '30', 'green', '15', '001', NULL, NULL, 'Purity', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '88703129', 1, NULL, 'Test i ben0004', 23, 90, 0, 0, 'No name', 0),
 (13, '2021-11-26 04:55:51', '2022-04-26 16:36:09', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '3', '5', '15', '87000', NULL, NULL, 'Moisture content,Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '74075858', 1, NULL, 'Test i ben0002', 23, 90, 0, 0, 'No name', 0),
 (14, '2021-11-26 04:56:27', '2022-04-26 16:34:01', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '4', '10', '15', '9', NULL, NULL, 'Purity', NULL, 0, '100', '98', '80', '10', '11', 27, 1, 5, NULL, '10015671', 1, NULL, 'Test i ben0006', 23, 98, 3, 0, 'No name', 0),
 (15, '2021-11-26 06:39:41', '2022-04-26 16:37:04', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '10', '5', '15', '6', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '81737716', 1, NULL, 'Test i ben0003', 23, 90, 8, 0, 'No name', 0),
 (16, '2021-11-26 06:40:07', '2022-04-26 16:35:20', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '5', '10', '2', '8585858', NULL, NULL, 'Germination', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '49328745', 1, NULL, 'test 123456', 23, 90, 15, 0, 'No name', 0),
-(17, '2021-11-26 08:54:39', '2021-11-26 10:45:45', 3, 3, 2, '2021-11-26', 'download.png', 'Simple', '2021-11-26', '100', 'No Packaging', '15', '10000', NULL, NULL, 'Purity,Germination', NULL, 1200, '10', '20', '10', '10', '11', 20, 1, 5, NULL, '46996209', 1, NULL, 'A1200', 23, 2, 1, 17, '46996209', 0),
 (18, '2022-02-21 06:34:04', '2022-04-29 13:00:23', 3, 3, 2, '2022-02-25', '33.jpeg', 'Collection ready', '2022-04-29', '3424', '20', '15', '5432', NULL, NULL, 'Germination', NULL, 0, NULL, NULL, NULL, NULL, NULL, 20, 1, 10, NULL, '60520736', 1, NULL, 'TEST1/2022/B001', 23, NULL, 0, 0, 'No name', 0),
-(19, '2022-02-25 07:25:11', '2022-02-25 07:29:09', 3, 3, 2, '2022-02-26', '375c1056abc77e562050c0e7c8aed20b.png', 'READY FOR SAMPLING', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(20, '2022-03-24 14:17:02', '2022-04-26 16:34:08', 31, 4, 4, '2022-03-25', NULL, 'Seed lab testing', '2022-04-26', '25', 'green', '15', '005', NULL, NULL, 'Purity', NULL, 0, '98', '95', '00', '00', '11', 27, 1, 5, NULL, '46345456', 1, NULL, 'test 2395', 23, 93, 1, 0, 'No name', 0),
 (21, '2022-03-29 10:13:27', '2022-04-26 16:36:32', 28, 7, 7, '2022-04-02', 'files/7d0fb76c674bceee023f3de38ddf2afb.jpg', 'Please get sample seeds for testing.', '2022-04-26', '10', 'good', '15', '000067', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '48372188', 1, NULL, 'test 65456', 23, 90, 0, 0, 'No name', 0),
 (22, '2022-04-26 12:20:32', '2022-04-26 16:33:52', 55, 13, 13, '2022-04-30', 'files/download.png', 'My seeds a ready for lab testing.', '2022-04-26', '25', 'green', '15', '003', NULL, NULL, 'Purity,Germination', NULL, 0, '100', '90', '10', '20', '11', 27, 1, 5, NULL, '95527227', 1, NULL, 'TestI003', 23, 90, 0, 0, 'No name', 0),
 (23, '2022-04-26 12:20:50', '2022-04-26 16:33:15', 39, 15, 15, '2022-04-30', 'files/4th distribution.xlsx', 'my seeds here to be tested', '2022-04-26', '10', 'green', '15', '00002', NULL, NULL, 'Moisture content', NULL, 0, '90', '90', '0', '0', '11', 27, 1, 5, NULL, '35913630', 1, NULL, 'test 897678', 23, 81, 0, 0, 'No name', 0),
-(24, '2022-04-26 12:21:04', '2022-04-26 16:33:34', 62, 12, 12, '2022-04-30', 'files/House plan', 'Please attend to my request for seed sampling', '2022-04-26', '20', 'green', '15', '0007', NULL, NULL, 'Purity', NULL, 0, '99', '99', '1', '0', '11', 27, 1, 5, NULL, '59121128', 1, NULL, 'Test i ben0009', 23, 98, 1, 0, 'No name', 0),
 (25, '2022-04-26 12:21:11', '2022-04-26 16:38:07', 52, 32, 32, '2022-04-28', 'files/3bd43f83cc877fd975d2c4427956f88f.jpg', '45mt', '2022-04-26', '1', '5', '15', '7685432', NULL, NULL, 'Germination', NULL, 0, '90', '85', '0', '0', '11', 27, 1, 5, NULL, '79813266', 1, NULL, 'Test i ben00025', 23, 77, 0, 0, 'No name', 0),
 (26, '2022-04-26 12:21:11', '2022-04-26 16:37:45', 69, 30, 30, '2022-04-29', 'files/c53fa12982eed4f614741b90c2c47b44.docx', 'My beans seeds is ready for collections\r\naaas', '2022-04-26', '1', '5', '15', '00075', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '85415259', 1, NULL, 'Test i ben00012', 23, 90, 0, 0, 'No name', 0),
 (27, '2022-04-26 12:21:27', '2022-04-26 16:37:40', 56, 19, 19, '2022-04-16', 'files/HAND OVER TO NALI.docx', 'my seed is over due for sampling', '2022-04-26', '2', '5', '15', '00000078', NULL, NULL, 'Seed health', NULL, 0, '90', '85', '0', '0', '11', 27, 1, 5, NULL, '28075991', 1, NULL, 'Test i ben00013', 23, 77, 0, 0, 'No name', 0),
@@ -2585,13 +2757,9 @@ INSERT INTO `seed_labs` (`id`, `created_at`, `updated_at`, `administrator_id`, `
 (31, '2022-04-26 12:21:47', '2022-04-26 16:39:10', 54, 44, 44, '2022-04-29', 'files/Booster Dose Letter.jpg', 'The seeds are packed in 100 kg bags', '2022-04-26', '3', 'good', '15', '43', NULL, NULL, 'Purity', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '10812083', 1, NULL, 'Test i ben00014', 23, 90, 0, 0, 'No name', 0),
 (32, '2022-04-26 12:22:07', '2022-04-26 16:38:44', 69, 17, 17, '2022-04-27', 'files/872e29aed3534f34143f6a761a1e01cd.docx', 'am here', '2022-04-26', '1', '5', '15', '00987', NULL, NULL, 'Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '56894193', 1, NULL, '0008', 23, 90, 0, 0, 'No name', 0),
 (33, '2022-04-26 12:22:22', '2022-04-26 16:37:56', 41, 10, 10, '2022-04-28', 'files/news extract.jpeg', 'my seeds are ready for collection to be tested', '2022-04-26', '3', 'good', '15', '74', NULL, NULL, 'Purity', NULL, 0, '99', '92', '00', '00', '11', 27, 1, 5, NULL, '95870819', 1, NULL, 'test 543234', 23, 91, 0, 0, 'No name', 0),
-(34, '2022-04-26 12:22:22', '2022-04-26 16:39:28', 45, 42, 42, '2022-04-26', 'files/IMG-20220426-WA0007.jpg', 'Seeds are ready for lab test', '2022-04-26', '50', '10', '10', '11234', NULL, NULL, 'Purity,Germination', NULL, 0, '99', '95', '00', '00', '11', 27, 1, 5, NULL, '58990635', 1, NULL, 'Test i ben00018', 23, 94, 1, 0, 'No name', 0),
 (35, '2022-04-26 12:22:24', '2022-04-26 16:39:45', 42, 34, 34, '2022-04-27', 'files/IMG-20220425-WA0031.jpg', 'Make sure you come tomorrow\r\nLast time you delayed', '2022-04-26', '3', 'good', '15', '12', NULL, NULL, 'Purity', NULL, 0, '99', '93', '00', '00', '11', 27, 1, 5, NULL, '35445364', 1, NULL, 'Test i ben00017', 23, 92, 0, 0, 'No name', 0),
 (36, '2022-04-26 12:22:30', '2022-04-26 16:38:46', 37, 25, 25, '2022-04-26', 'files/3f79bcfbe6d145b6da4ead463698f240.xlsx', 'My seeds are ready for testing. Please come for sseed sampling', '2022-04-26', '1', '5', '15', '0087', NULL, NULL, 'Moisture content', NULL, 0, '99', '91', '00', '00', '11', 27, 1, 5, NULL, '99891335', 1, NULL, 'test 1232123', 23, 90, 0, 0, 'No name', 0),
 (37, '2022-04-26 12:22:37', '2022-04-26 16:35:13', 62, 24, 24, '2022-04-30', 'files/1650961298349123462984.jpg', 'Collect my seed for lab testing', '2022-04-26', '2', '5', '15', '00000000876', NULL, NULL, 'Germination', NULL, 0, '99', '99', '0', '0', '11', 27, 1, 5, NULL, '63387258', 1, NULL, '00091', 23, 98, 0, 0, 'No name', 0),
-(38, '2022-04-26 12:22:53', '2022-04-26 12:31:04', 44, 16, 16, '2022-05-26', 'files/080f3eff0cdc12e67ede670a31a8e9f3.docx', 'please come and pick my samples', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 34, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(39, '2022-04-26 12:22:59', '2022-04-26 12:30:29', 69, 33, 33, '2022-04-28', 'files/c0eec54441c03b363c0a05d7f184f04c.docx', 'an on', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(40, '2022-04-26 12:23:08', '2022-04-26 12:28:57', 37, 25, 25, '2022-04-26', 'files/3b47f6c06047ef7e95aa68e02164eae0.xlsx', 'My seeds are ready for testing. Please come for seed sampling', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 34, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
 (41, '2022-04-26 12:23:25', '2022-04-26 16:39:57', 38, 14, 14, '2022-04-13', 'files/Screenshot_20220425-225419.jpg', 'Good', '2022-04-26', '2', '5', '15', '4562', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 20, 1, 5, NULL, '43841205', 1, NULL, 'Test i ben00024', 23, 90, 0, 0, 'No name', 0),
 (42, '2022-04-26 12:23:25', '2022-04-26 16:35:51', 53, 40, 40, '2021-02-20', 'files/193cb8367ea8b50a228499799bb460fb.jpg', 'Good sample', '2022-04-26', '3', 'good', '15', '89', NULL, NULL, 'Purity', NULL, 0, '99', '92', '00', '00', '11', 27, 1, 5, NULL, '60905069', 1, NULL, 'Test i ben00019', 23, 91, 0, 0, 'No name', 0),
 (43, '2022-04-26 12:23:43', '2022-04-26 16:35:13', 47, 18, 18, '2022-04-13', 'files/IMG_20210520_103045.jpg', 'please make sure that its ready by then', '2022-04-26', '3', 'good', '15', '73', NULL, NULL, 'Purity', NULL, 0, '99', '94', '00', '1', '11', 27, 1, 5, NULL, '29463972', 1, NULL, '0008', 23, 93, 0, 0, 'No name', 0),
@@ -2601,19 +2769,11 @@ INSERT INTO `seed_labs` (`id`, `created_at`, `updated_at`, `administrator_id`, `
 (47, '2022-04-26 12:24:19', '2022-04-26 16:34:44', 41, 41, 41, '2022-04-29', 'files/distribution.jpg', 'seed ready for lab test', '2022-04-26', '3', 'good', '15', '0000091', NULL, NULL, 'Purity', NULL, 0, '90', '90', '0', '0', '11', 27, 1, 5, NULL, '52595077', 1, NULL, 'A12002', 23, 81, 0, 0, 'No name', 0),
 (48, '2022-04-26 12:24:55', '2022-04-26 16:35:13', 63, 23, 23, '2022-04-26', 'files/33e344dc6628641aeb159fea3c0f1e4c.docx', 'My field seed samples are ready for lab test so kindly come and pick.', '2022-04-26', '10', '10', '100', '2011', NULL, NULL, 'Moisture content,Purity,Germination', NULL, 0, '95', '87', '0', '0', '11', 27, 1, 5, NULL, '92848435', 1, NULL, 'test 453212', 23, 83, 0, 0, 'No name', 0),
 (49, '2022-04-26 12:25:05', '2022-04-26 16:35:39', 44, 26, 26, '2022-05-26', 'files/78687634e44fc02dbe6a5de8c4c0947f.docx', 'samples are ready for collection', '2022-04-26', '12', '10', '15', '6', NULL, NULL, 'Purity', NULL, 0, '96', '87', '0', '0', '11', 27, 1, 5, NULL, '79136001', 1, NULL, '003', 23, 84, 0, 0, 'No name', 0),
-(50, '2022-04-26 12:25:58', '2022-04-29 13:09:10', 47, 28, 28, '2022-05-26', 'files/20210504_114758.jpg', 'please be fast', '2022-05-06', '40', '10', '15', '3', NULL, NULL, 'Purity', NULL, 0, '100', '98', '90', '90', '11', 27, 1, 5, NULL, '29268784', 1, NULL, 'Test1/2022/N0006', 23, 98, 1, 0, 'No name', 0),
 (51, '2022-04-26 12:27:34', '2022-04-26 16:48:00', 49, 29, 29, '2022-04-26', 'files/d3a51ac372845d0ecb4ced497025f10a.JPG', 'my stock is ready for collectiobn', '2022-04-26', '1', '5', '15', '00000000000009867', NULL, NULL, 'Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '77686635', 1, NULL, 'test 000000000009876', 23, 90, 0, 0, 'No name', 0),
 (52, '2022-04-26 12:28:10', '2022-04-26 16:36:35', 51, 35, 35, '2022-04-26', 'files/09d2707c7913b03b1576a16158f47964.jpg', 'To be tested for lab test', '2022-04-26', '10', '5', '150', '15432', NULL, NULL, 'Moisture content,Purity,Germination', NULL, 0, '95', '90', '0', '0', '11', 27, 1, 5, NULL, '36337843', 1, NULL, '0002', 23, 86, 0, 0, 'No name', 0),
-(53, '2022-04-26 12:30:42', '2022-04-26 12:32:35', 46, 39, 39, '2022-04-29', 'files/16509618771402014145511.jpg', 'Sent', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(54, '2022-04-26 12:37:35', '2022-04-29 12:22:14', 47, 37, 37, '2022-05-26', 'files/20210504_114720.jpg', 'the earlier the better', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(55, '2022-04-26 13:03:50', '2022-04-29 12:27:10', 55, 13, 13, '2022-04-26', 'files/ADVANCED.png', 'simple', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 34, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(56, '2022-04-26 13:23:33', '2022-04-29 12:25:33', 43, 20, 20, '2022-04-30', 'files/96390369eeb0d37501c5440df9001d01.jpg', 'Few', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(57, '2022-04-27 17:52:43', '2022-04-29 12:24:50', 73, 51, 51, '2022-04-30', 'files/85d1f3b54c4ee407bac2bdffd63b9168.png', 'Ready', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(58, '2022-04-29 10:51:20', '2022-04-29 10:52:19', 3, 52, 52, '2022-04-29', 'files/1_logo.png', 'simple', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
 (59, '2022-04-29 12:14:19', '2022-04-29 15:31:04', 90, 1, 1, '2022-04-29', 'files/IMG-20220428-WA0045.jpg', 'Come and pick seefs', '2022-04-29', '3441', '20', '15', '431135', NULL, NULL, 'Germination', NULL, 1700, '100', '98', '97', '90', '11', 20, 1, 5, NULL, '19767497', 1, NULL, '008/dom/2022', 23, 98, 0, 0, 'No name', 0),
 (60, '2022-04-29 12:14:27', '2022-04-29 15:31:51', 95, 1, 1, '2022-04-30', 'files/SPRAYERS INFO.docx', 'my stock should be picked tommorrow', '2022-05-07', '4', '10', '15', '1', NULL, NULL, 'Purity', NULL, 4351, '100', '98', '94', '95', '11', 20, 1, 5, NULL, '70484855', 1, NULL, 'Test1/2022/N0007', 23, 98, 0, 0, 'No name', 0),
 (61, '2022-04-29 12:14:30', '2022-04-29 12:21:27', 3, 20, 20, '2022-04-29', 'files/e11c09d7793b52bcd09066c6b7e00c85.png', 'Simple', '2022-04-29', '10', '12', '15', '10000001', NULL, NULL, 'Purity', NULL, 340, '10', '5', '10', '10', '11', 20, 1, 5, NULL, '44383647', 1, NULL, 'A120011', 23, 1, 0, 0, 'No name', 0),
-(62, '2022-04-29 12:14:43', '2022-04-29 15:32:03', 76, 1, 1, '2022-04-30', 'files/farmer feedback.jpg', 'Please come and pick up my seed samples for lab testing.', '2022-05-07', '10', '10', '15', '3', NULL, NULL, 'Germination', NULL, 8400, '99', '95', '1', '4', '11', 20, 1, 5, NULL, '75190054', 1, NULL, '005/2022/dom', 23, 94, 1, 0, 'No name', 0),
 (63, '2022-04-29 12:14:46', '2022-04-29 15:40:29', 78, 1, 1, '2022-04-30', 'files/Passport photographs.pdf', 'MY STOCK IS READY FOR SAMPLING', '2022-04-29', '543', '20', '15', '567', NULL, NULL, 'Germination', NULL, 200, '100', '98', '88', '99', '11', 20, 1, 5, NULL, '91804360', 1, NULL, '003/2022/dom', 23, 98, 0, 0, 'No name', 0),
 (64, '2022-04-29 12:14:49', '2022-04-29 15:40:43', 98, 1, 1, '2022-04-30', 'files/tmp-cam-7407545346261318361.jpg', 'Seed in sonfe', '2022-04-29', '3242', '20', '15', '567899', NULL, NULL, 'Germination', NULL, 28, '100', '98', '56', '76', '11', 20, 1, 5, NULL, '72521820', 1, NULL, '006/2022/dom', 23, 98, 0, 0, 'No name', 0),
 (65, '2022-04-29 12:14:56', '2022-04-29 15:32:45', 80, 1, 1, '2022-04-30', 'files/f49d4accde4a2725dd0818507909d27271ce2ef11461516266.png', 'please come take my sample for seed testing', '2022-04-29', '543', '20', '15', '1233445', NULL, NULL, 'Germination', NULL, 500, '99', '99', '3', '4', '11', 20, 1, 5, NULL, '25675580', 1, NULL, 'Test1/2022/N0009', 23, 98, 0, 0, 'No name', 0),
@@ -2624,13 +2784,11 @@ INSERT INTO `seed_labs` (`id`, `created_at`, `updated_at`, `administrator_id`, `
 (70, '2022-04-29 12:15:36', '2022-04-29 12:57:56', 85, 1, 1, '2022-04-14', 'files/IMG_20220428_172303_057.jpg', 'Seed sample for the lab test', '2022-04-29', '10', '10', '15', '40', NULL, NULL, 'Seed health', NULL, 700, NULL, NULL, NULL, NULL, NULL, 20, 1, 10, NULL, '85432161', 1, NULL, '006/2022/dom', 23, NULL, 0, 0, 'No name', 0),
 (71, '2022-04-29 12:15:38', '2022-04-29 15:32:55', 88, 1, 1, '2022-04-30', 'files/1651220022462793552128.jpg', 'pliz accept the attachment', '2022-05-05', '10', '10', '15', '1', NULL, NULL, 'Purity', NULL, 500, '99', '99', '9', '9', '11', 20, 1, 5, NULL, '14196693', 1, NULL, '008/34/dom', 23, 98, 0, 0, 'No name', 0),
 (72, '2022-04-29 12:15:44', '2022-04-29 15:31:34', 86, 1, 1, '2022-05-01', 'files/16512199758726012926958812860166.jpg', 'Please come and pick my seed samples for lab testing.', '2022-05-05', '10', '10', '15', '2', NULL, NULL, 'Seed health', NULL, 50, '99', '95', '3', '2', '11', 20, 1, 5, NULL, '25554681', 1, NULL, 'Test1/2022/N0002', 23, 94, 0, 0, 'No name', 0),
-(73, '2022-04-29 12:16:01', '2022-04-29 15:30:55', 84, 1, 1, '2022-06-15', 'files/20220311_181456.jpg', 'kindly be timely', '2022-05-06', '10', '10', '15', '2', NULL, NULL, 'Germination', NULL, 699, '99', '99', '1', '1', '11', 20, 1, 5, NULL, '58058008', 1, NULL, '009/2022/dom', 23, 98, 1, 0, 'No name', 0),
 (74, '2022-04-29 12:16:44', '2022-04-29 15:31:42', 94, 1, 1, '2022-05-02', 'files/IMG_20220305_095235_354[1].jpg', 'will be waiting for your response', '2022-04-29', '10', '10', '15', '40', NULL, NULL, 'Germination', NULL, 300, '99', '09', '1', '1', '11', 20, 1, 5, NULL, '67857572', 1, NULL, 'TEST2/2022/2B', 23, 9, 0, 0, 'No name', 0),
 (75, '2022-04-29 12:17:34', '2022-04-29 13:07:04', 93, 1, 1, '0001-05-20', 'files/eca6ebfb3cc04432beb3c976a6745139.jpg', 'My sample ready for test', '2022-04-29', '4321', '20', '15', '100004', NULL, NULL, 'Germination', NULL, 340, '99', '99', '1', '1', '11', 20, 1, 5, NULL, '84089167', 1, NULL, 'Test1/2022/N0003', 23, 98, 0, 0, 'No name', 0),
-(76, '2022-04-29 12:17:59', '2022-04-29 15:32:41', 91, 1, 1, '2022-05-05', 'files/VID-20210528-WA0003.mp4', 'Come and pick my seed', '2022-04-29', '12', 'Green', '15', '000005', NULL, NULL, 'Purity', NULL, 30, '99', '95', '2', '3', '11', 20, 1, 5, NULL, '94922685', 1, NULL, '004/2022/musa/001', 23, 94, 1, 0, 'No name', 0),
-(77, '2022-04-29 12:18:08', '2022-04-29 15:32:59', 85, 1, 1, '2022-04-14', 'files/16512202089632865585085765522949.jpg', 'Seed sample', '2022-05-04', '24', '10', '15', '02', NULL, NULL, 'Purity', NULL, 650, '100', '90', '89', '10', '11', 27, 1, 5, NULL, '81650251', 1, NULL, 'Test1/2022/N0001', 23, 90, 1, 0, 'No name', 0),
 (78, '2022-05-25 16:03:28', '2022-05-25 16:03:28', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'yhhuj', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, 1, NULL, 31, 0, 'No name', 0),
-(79, '2022-05-25 16:06:48', '2022-05-25 16:06:48', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, 1, NULL, 0, 0, 'No name', 0);
+(79, '2022-05-25 16:06:48', '2022-05-25 16:06:48', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, 1, NULL, 0, 0, 'No name', 0),
+(80, '2022-07-09 16:32:28', '2022-07-09 16:32:28', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, 1, NULL, 17, 0, 'No name', 0);
 
 -- --------------------------------------------------------
 
@@ -2676,7 +2834,7 @@ INSERT INTO `stock_records` (`id`, `created_at`, `updated_at`, `administrator_id
 (16, '2021-11-09 00:20:15', '2022-04-26 11:33:38', 3, 22, 'Pre-Basic seed', 'Stock examination', 'From stock exanination ID: 2', 1200, 1, 0, '895293723'),
 (17, '2021-11-09 00:20:15', '2022-04-26 11:33:38', 3, 23, 'Pre-Basic seed', 'Stock examination', 'From stock exanination ID: 2', 1260, 1, 0, '521992626'),
 (18, '2021-11-09 00:20:15', '2022-04-26 11:33:38', 3, 9, 'Pre-Basic seed', 'Stock examination', 'From stock exanination ID: 2', 1900, 1, 0, '490648445'),
-(19, '2021-11-09 00:21:10', '2022-04-26 11:33:38', 3, 5, 'Basic seed', 'Stock examination', 'From stock exanination ID: 2', 12000, 1, 0, '98430206'),
+(19, '2021-11-09 00:21:10', '2022-04-26 11:33:38', 27, 5, 'Basic seed', 'Stock examination', 'From stock exanination ID: 2', 12000, 1, 0, '98430206'),
 (26, '2021-11-10 04:45:42', '2022-04-26 11:33:38', 3, 3, '-', 'Stock transfer to John Doe, ID: 18', 'Stock transfer to John Doe, ID: 18', -500, 0, 1, '593552813'),
 (27, '2021-11-10 04:47:11', '2022-04-26 11:33:38', 18, 3, '-', 'Stock transfer from Betty Namagembe, ID: 3', 'Stock transfer from Betty Namagembe, ID: 3', 500, 1, 1, '961342340'),
 (28, '2021-11-10 04:47:11', '2022-04-26 11:33:38', 3, 3, '-', 'Stock transfer to John Doe, ID: 18', 'Stock transfer to John Doe, ID: 18', -500, 0, 1, '503772622'),
@@ -2956,7 +3114,9 @@ INSERT INTO `stock_records` (`id`, `created_at`, `updated_at`, `administrator_id
 (303, '2022-04-29 13:12:52', '2022-04-29 13:12:52', 80, 1, NULL, NULL, 'To seed lab. ID 65', -1000, 0, 0, '123936369'),
 (304, '2022-04-29 13:12:55', '2022-04-29 13:12:55', 80, 1, NULL, NULL, 'To seed lab. ID 65', -1000, 0, 0, '498643637'),
 (305, '2022-04-29 13:16:41', '2022-04-29 13:16:41', 98, 1, NULL, NULL, 'To seed lab. ID 64', -48, 0, 0, '710982604'),
-(306, '2022-04-29 13:16:54', '2022-04-29 13:16:54', 98, 1, NULL, NULL, 'To seed lab. ID 64', -48, 0, 0, '654240277');
+(306, '2022-04-29 13:16:54', '2022-04-29 13:16:54', 98, 1, NULL, NULL, 'To seed lab. ID 64', -48, 0, 0, '654240277'),
+(307, '2022-07-08 06:41:46', '2022-07-08 06:41:46', 25, 1, '-', 'Stock transfer from Betty Namagembe, ID: 3', 'Stock transfer from Betty Namagembe, ID: 3', 2, 1, 1, '233885158'),
+(308, '2022-07-08 06:41:46', '2022-07-08 06:41:46', 3, 1, '-', 'Stock transfer to John Paul, ID: 25', 'Stock transfer to John Paul, ID: 25', -2, 0, 1, '738719308');
 
 -- --------------------------------------------------------
 
@@ -3003,6 +3163,13 @@ CREATE TABLE `sub_growers` (
   `size_of_field` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `crop_cultivar` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sub_growers`
+--
+
+INSERT INTO `sub_growers` (`id`, `created_at`, `updated_at`, `administrator_id`, `name`, `size`, `crop`, `variety`, `district`, `subcourty`, `planting_date`, `quantity_planted`, `expected_yield`, `phone_number`, `gps_latitude`, `gps_longitude`, `detail`, `status`, `inspector`, `status_comment`, `field_name`, `village`, `filed_name`, `seed_class`, `estimated_yield`, `further_remarks`, `general_condition_of_the_crop`, `proposed_isolation`, `isolation_time`, `proposed_distance`, `isolation_distance`, `cultivar_characteristics_noxious_weeds`, `cultivar_characteristics_features`, `cultivar_characteristics_disease`, `cultivar_characteristics_types`, `size_of_field`, `crop_cultivar`) VALUES
+(105, '2022-07-05 12:45:23', '2022-07-05 12:45:23', 21, 'eee', NULL, 'erer', 'erer', 'erere', 'erer', 'rter', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3332,6 +3499,54 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `model_has_permissions`
+--
+ALTER TABLE `model_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indexes for table `model_has_roles`
+--
+ALTER TABLE `model_has_roles`
+  ADD PRIMARY KEY (`role_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indexes for table `oauth_access_tokens`
+--
+ALTER TABLE `oauth_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_access_tokens_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_auth_codes`
+--
+ALTER TABLE `oauth_auth_codes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_auth_codes_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_clients`
+--
+ALTER TABLE `oauth_clients`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_clients_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_personal_access_clients`
+--
+ALTER TABLE `oauth_personal_access_clients`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `oauth_refresh_tokens`
+--
+ALTER TABLE `oauth_refresh_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -3342,6 +3557,13 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`);
 
 --
 -- Indexes for table `personal_access_tokens`
@@ -3388,6 +3610,20 @@ ALTER TABLE `profiles`
 --
 ALTER TABLE `quotations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`);
+
+--
+-- Indexes for table `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`role_id`),
+  ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
 
 --
 -- Indexes for table `seed_label`
@@ -3464,7 +3700,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admin_menu`
 --
 ALTER TABLE `admin_menu`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `admin_operation_log`
@@ -3476,7 +3712,7 @@ ALTER TABLE `admin_operation_log`
 -- AUTO_INCREMENT for table `admin_permissions`
 --
 ALTER TABLE `admin_permissions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `admin_roles`
@@ -3488,7 +3724,7 @@ ALTER TABLE `admin_roles`
 -- AUTO_INCREMENT for table `admin_users`
 --
 ALTER TABLE `admin_users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `attributes`
@@ -3566,7 +3802,7 @@ ALTER TABLE `form_crop_declarations_has_crop_varieties`
 -- AUTO_INCREMENT for table `form_qds`
 --
 ALTER TABLE `form_qds`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `form_sr4s`
@@ -3578,7 +3814,7 @@ ALTER TABLE `form_sr4s`
 -- AUTO_INCREMENT for table `form_sr6s`
 --
 ALTER TABLE `form_sr6s`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `form_sr6_has_crops`
@@ -3602,7 +3838,7 @@ ALTER TABLE `form_sr10_has_variety_inspections`
 -- AUTO_INCREMENT for table `form_stock_examination_requests`
 --
 ALTER TABLE `form_stock_examination_requests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `form_test1s`
@@ -3632,19 +3868,37 @@ ALTER TABLE `import_export_permits_has_crops`
 -- AUTO_INCREMENT for table `marketable_seeds`
 --
 ALTER TABLE `marketable_seeds`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+
+--
+-- AUTO_INCREMENT for table `oauth_clients`
+--
+ALTER TABLE `oauth_clients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `oauth_personal_access_clients`
+--
+ALTER TABLE `oauth_personal_access_clients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- AUTO_INCREMENT for table `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -3656,7 +3910,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `planting_returns`
 --
 ALTER TABLE `planting_returns`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `planting_return_crops`
@@ -3668,13 +3922,13 @@ ALTER TABLE `planting_return_crops`
 -- AUTO_INCREMENT for table `pre_orders`
 --
 ALTER TABLE `pre_orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `profiles`
@@ -3686,7 +3940,13 @@ ALTER TABLE `profiles`
 -- AUTO_INCREMENT for table `quotations`
 --
 ALTER TABLE `quotations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `seed_label`
@@ -3698,7 +3958,7 @@ ALTER TABLE `seed_label`
 -- AUTO_INCREMENT for table `seed_labels`
 --
 ALTER TABLE `seed_labels`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `seed_label_packages`
@@ -3710,19 +3970,19 @@ ALTER TABLE `seed_label_packages`
 -- AUTO_INCREMENT for table `seed_labs`
 --
 ALTER TABLE `seed_labs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `stock_records`
 --
 ALTER TABLE `stock_records`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=307;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=309;
 
 --
 -- AUTO_INCREMENT for table `sub_growers`
 --
 ALTER TABLE `sub_growers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `test1s`
@@ -3765,11 +4025,30 @@ ALTER TABLE `crop_inspection_types`
   ADD CONSTRAINT `crop_inspection_types_crop_id_foreign` FOREIGN KEY (`crop_id`) REFERENCES `crops` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `model_has_permissions`
+--
+ALTER TABLE `model_has_permissions`
+  ADD CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `model_has_roles`
+--
+ALTER TABLE `model_has_roles`
+  ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `planting_return_crops`
 --
 ALTER TABLE `planting_return_crops`
   ADD CONSTRAINT `planting_return_crops_crop_variety_id_foreign` FOREIGN KEY (`crop_variety_id`) REFERENCES `crop_varieties` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `planting_return_crops_planting_return_id_foreign` FOREIGN KEY (`planting_return_id`) REFERENCES `planting_returns` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

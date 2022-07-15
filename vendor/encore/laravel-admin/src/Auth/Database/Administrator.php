@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+
+
 // use Laravel\Passport\HasApiTokens;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -26,8 +28,8 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
     use Authenticatable, 
     HasPermissions, 
     DefaultDatetimeFormat, 
-    HasFactory, 
-    Notifiable
+    Notifiable,
+    HasFactory
     // HasApiTokens
     ;
     

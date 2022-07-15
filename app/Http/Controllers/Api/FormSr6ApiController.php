@@ -20,8 +20,6 @@ class FormSr6ApiController extends AdminController
 
     public function form_sr6_list()
     {
-        /*  ---attributes---
-        */
         $user = auth()->user();
         $query = DB::table('form_sr6s')->where('administrator_id', '=', $user->id)->get();
         // $query = FormSr6::all();

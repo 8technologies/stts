@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'mailgun'),
+    'default' => env('MAIL_MAILER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +95,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'sttstestmail@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@8technologies.store'),
         'name' => env('MAIL_FROM_NAME', 'STTS Test'),
     ],
 
@@ -104,7 +104,7 @@ return [
     config/mail.php configuration file:
     */
     'reply_to' => [
-        'address' => env('MAIL_REPLY_TO_ADDRESS', 'sttstestmail@gmail.com'),
+        'address' => env('MAIL_REPLY_TO_ADDRESS', 'info@8technologies.store'),
         'name' => env('MAIL_REPLY_TO_NAME', 'STTS Test'),
     ],
 

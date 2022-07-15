@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 
 trait ApiResponser{
-    protected function successResponse($data, $message = null, $code = 200)
+    protected function successResponse($data=[], $message = null, $code = 200)
 	{
 		return response()->json([
 			'status'=> 'Success', 

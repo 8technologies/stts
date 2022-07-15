@@ -15,6 +15,11 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\SR6FormAdded;
+use App\Notifications\SR6FormAddedNotification;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+
 
 class FormSr6Controller extends AdminController
 {
@@ -24,6 +29,23 @@ class FormSr6Controller extends AdminController
      * @var string
      */
     protected $title = 'Form SR6 - Seed Grower'; 
+
+
+    
+
+    public function sendFormSR6CreateNotification() 
+    {
+        $user = Administrator::first();
+
+        $sr6_form_data = [
+            'body' => 'You received new notification',
+            'sr6_form_text' => 'New sr6 form created',
+            'url' => url('/'),
+            'thank_you_text' => 'Thank you for using STTS'
+        ];
+
+        $user->nofify(new SR6FormAddedNotification($sr6_form_data));
+    }
 
     /**
      * Make a grid builder.
@@ -261,6 +283,12 @@ class FormSr6Controller extends AdminController
             if (isset($_POST['group-a'])) {
                 $form->dealers_in = json_encode($_POST['group-a']);
                 //echo($form->dealers_in);
+
+                // call the function to send the notifications after sr6 create form/ form submit
+                $this->sendFormSR6CreateNotification();
+
+                // $user->nofify(new SR6FormAddedNotification($sr6_form_data));
+                Notification::send($user, new SR6FormAddedNotification($sr6_form_data));
             }
         });
 
@@ -272,9 +300,12 @@ class FormSr6Controller extends AdminController
 
         $form->setWidth(8, 4);
         Admin::style('.form-group  {margin-bottom: 25px;}');
+
         $user = Auth::user();
+
         if ($form->isCreating()) {
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
+            // Mail::to(Admin::user()->email)->send(new SR6FormAdded($form));
         } else {
             $form->hidden('administrator_id', __('Administrator id'));
         }
@@ -286,8 +317,8 @@ class FormSr6Controller extends AdminController
             $form->select('type', __('Cateogry'))
             ->options([
                 'Seed Grower' => 'Seed Grower',
-                'Company' => 'Company',
-                'Individual' => 'Individual',
+                'Company' => 'Seed Breeder',
+                'Individual' => 'Seed Company',
             ])
             ->rules('required');
 
@@ -450,4 +481,5 @@ class FormSr6Controller extends AdminController
 
         return $form;
     }
+
 }

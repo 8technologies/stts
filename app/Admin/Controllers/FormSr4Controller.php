@@ -87,7 +87,7 @@ class FormSr4Controller extends AdminController
         $grid->column('valid_from', __('Starts'))->display(function ($item) {
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
-        $grid->column('valid_until', __('Exipires'))->display(function ($item) {
+        $grid->column('valid_until', __('Expires'))->display(function ($item) {
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
 

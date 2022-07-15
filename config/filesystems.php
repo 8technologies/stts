@@ -55,9 +55,9 @@ return [
         
         'admin' => [
             'driver' => 'local',
-            'root' => public_path('/assets/images/stts/uploads'),
+            'root' => public_path('storage/app/public/images'),
             'visibility' => 'public',
-            'url' => env('APP_URL') . '/assets/images/stts/uploads',
+            'url' => env('APP_URL') . 'storage/app/public/images',
         ],
         
 
@@ -86,6 +86,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('storage') => storage_path('app/public/images/stts/uploads'),
+        public_path('images') => storage_path('app/public/images/stts/uploads'),
     ],
-
 ];
