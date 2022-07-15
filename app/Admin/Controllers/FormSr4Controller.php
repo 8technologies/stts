@@ -293,11 +293,11 @@ class FormSr4Controller extends AdminController
             $form->text('company_initials', __('Company initials'))->required();
             $form->text('premises_location', __('Premises location'))->required();
 
-            $form->text('years_of_expirience', __('Years of experience'))
+            $form->text('expirience_in', __('Years of experience'))
                 ->rules('min:1')
                 ->attribute('type', 'number')
                 ->required();
-            $form->select('expirience_in', __('Experience in?'))
+            $form->select('years_of_expirience', __('Experience in?'))
                 ->options([
                     'Seed Merchant' => 'Seed Merchant',
                     'Seed Producer' => 'Seed Producer',
@@ -314,6 +314,7 @@ class FormSr4Controller extends AdminController
 
             $form->radio('dealers_in', __('Applicant is applying for production of?'))
                 ->options([
+
                     'Agricultural crops' => 'Agricultural crops',
                     'Horticultural crops' => 'Horticultural crops',
                     'Other' => 'Other'
@@ -357,8 +358,7 @@ class FormSr4Controller extends AdminController
                     '0' => 'No',
                 ])->required()
                 ->when('1', function (Form $form) {
-                    $form->text('land_size', '[
-                        \-0')
+                    $form->text('land_size', 'Specify Land size. (in Acres)')
                         ->attribute('type', 'number')
                         ->help("Please specify land (in Acres)")
                         ->attribute('min', 1);
