@@ -7,6 +7,10 @@ use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB; 
 use App\Traits\ApiResponser;
+use App\Models\FormSr4;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 
 class FormSr4ApiController extends AdminController 
@@ -18,52 +22,23 @@ class FormSr4ApiController extends AdminController
         $this->middleware('auth');
     }
 
+
     public function form_sr4_list()
     {
-        /*  ---attributes---
-        */
         $user = auth()->user();
         $query = DB::table('form_sr4s')->where('administrator_id', '=', $user->id)->get();
-        // $query = FormSr4::all();
         
         return $this->successResponse($query, $message="SR4 forms"); 
     } 
-}
 
 
-
-
-/*
-
-<?php
-
-namespace App\Http\Controllers\Api;
-
-use App\Models\FormSr4;
-use Encore\Admin\Controllers\AdminController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Profile;
-
-
-class FormSr4ApiController extends AdminController {
-    
-    
-      public function __construct()
-      {
-          $this->middleware('auth');
-      } 
-
-      
-    public function new_sr4_form(Request $request): \Illuminate\Http\JsonResponse
+    // create new sr4 form
+    public function form_sr4_create(Request $request): \Illuminate\Http\JsonResponse
     {
         $user = Auth::user();
 
         $data = $request->only(
-            'administrator_id',
             'type',
-            'name_of_applicant',
             'address',
             'company_initials',
             'premises_location',
@@ -106,10 +81,10 @@ class FormSr4ApiController extends AdminController {
             'accept_declaration' => 'required',
         ]);
 
-        
         if ($post_data->fails()) {
-            return response()->json(['error' => $post_data->messages()], 200);
+            return $this->errorResponse("SR4 form submit error", 200); 
         }
+
 
         $form = FormSr4::create([
             'administrator_id' => $user->id,
@@ -136,18 +111,6 @@ class FormSr4ApiController extends AdminController {
         ]);
 
         // Form created, return success response
-        return response()->json([
-            'success' => true,
-            'message' => 'SR4 form submit success!',
-            'form' => $form
-        ], 200);
+        return $this->successResponse($form, "SR4 form submit success!", 201); 
     }
 }
-
-
-
-
-
-
-
-*/

@@ -3,9 +3,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-
+    
 $(function () {
-
     function randomScalingFactor() {
         return Math.floor(Math.random() * 1000)
     }
@@ -28,15 +27,16 @@ $(function () {
         data: {
             datasets: [{
                 data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
+                    $total_import_permits,
+                    $total_export_permits,
+                    $total_planting_returns_company,
+                    $total_planting_returns_grower,
+                    $total_form_sr10s,
+                    $total_form_qds,
+                    $total_seed_labs,
+                    $total_seed_labels
                 ], 
+                
                 backgroundColor: [
                     window.chartColors.red,
                     window.chartColors.orange,

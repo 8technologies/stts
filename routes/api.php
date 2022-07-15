@@ -56,8 +56,8 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/form-sr6/list", [FormSr6ApiController::class, "form_sr6_list"]);
     Route::get("/form-qds/list", [FormQDSApiController::class, "form_qds_list"]);
 
-    Route::post("/forms/sr4/new", [FormSr4ApiController::class, "new_sr4_form"]);
-    Route::post("/forms/sr6/new", [FormSr6ApiController::class, "new_sr6_form"]);
+    Route::post("/forms/sr4/new", [FormSr4ApiController::class, "form_sr4_create"]);
+    Route::post("/forms/sr6/new", [FormSr6ApiController::class, "form_sr6_create"]);
     Route::post("/pre-order/new", [PreOrderApiController::class, "pre_order_create"]);
 
     // marketplace
@@ -84,4 +84,5 @@ Route::group(['middleware' => 'api'], function ($router) {
     // Crops via the SR6 form submit form
     Route::get('/crops-list/', [CropApiController::class, "crops_list"]);
     Route::post('/crops-create/', [CropApiController::class, "crops_create"]);
+    
 });

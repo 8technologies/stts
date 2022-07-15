@@ -270,7 +270,32 @@ class ImportExportPermitController extends AdminController
                     'Researchers' => 'Researchers',
                 ])
                 ->required()
-                ->help('Which SR4 type are tou applying for?');
+                ->help('Which SR4 type are tou applying for?')
+                ->when('Seed Merchant', function (Form $form) {
+                    $form->text('national_seed_board_reg_num', __('National seed board registration number'));
+                })
+                ->when('Seed Producer', function (Form $form) {
+                    $form->text('national_seed_board_reg_num', __('National seed board registration number'));
+                })
+                
+                ->when('Seed Stockist', function (Form $form) {
+                    $form->text('national_seed_board_reg_num', __('National seed board registration number'));
+                })
+                
+                ->when('Seed Importer', function (Form $form) {
+                    $form->text('national_seed_board_reg_num', __('National seed board registration number'));
+                })
+                
+                ->when('Seed Exporter', function (Form $form) {
+                    $form->text('national_seed_board_reg_num', __('National seed board registration number'));
+                })
+                
+                ->when('Seed Processor', function (Form $form) {
+                    $form->text('national_seed_board_reg_num', __('National seed board registration number'));
+                })
+                
+                
+                ;
             // ->when('in', [
             //     'Seed Merchant',
             //     'Seed Producer',
@@ -293,14 +318,16 @@ class ImportExportPermitController extends AdminController
                 }
             }
 
-            $form->text(
-                'national_seed_board_reg_num',
-                __('National seed board registration number')
-            )
-                ->readonly()
-                ->value($seed_board_registration_number);
-
-
+            
+            
+            // if (!$form->radio('type') == 'Researchers') {
+                // $form->text(
+                //     'national_seed_board_reg_num',
+                //     __('National seed board registration number')
+                // )
+                //     ->readonly()
+                //     ->value($seed_board_registration_number);
+            // }
 
 
 
