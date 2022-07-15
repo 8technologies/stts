@@ -293,11 +293,11 @@ class FormSr4Controller extends AdminController
             $form->text('company_initials', __('Company initials'))->required();
             $form->text('premises_location', __('Premises location'))->required();
 
-            $form->text('expirience_in', __('Years of experience'))
+            $form->text('years_of_expirience', __('Years of experience'))
                 ->rules('min:1')
                 ->attribute('type', 'number')
                 ->required();
-            $form->select('years_of_expirience', __('Experience in?'))
+            $form->select('expirience_in', __('Experience in?'))
                 ->options([
                     'Seed Merchant' => 'Seed Merchant',
                     'Seed Producer' => 'Seed Producer',
@@ -314,7 +314,6 @@ class FormSr4Controller extends AdminController
 
             $form->radio('dealers_in', __('Applicant is applying for production of?'))
                 ->options([
-
                     'Agricultural crops' => 'Agricultural crops',
                     'Horticultural crops' => 'Horticultural crops',
                     'Other' => 'Other'

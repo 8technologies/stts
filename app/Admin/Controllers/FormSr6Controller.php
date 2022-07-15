@@ -314,7 +314,7 @@ class FormSr6Controller extends AdminController
 
         if (Admin::user()->isRole('basic-user')) {
 
-            $form->select('type', __('Cateogry'))
+            $form->select('type', __('Category'))
             ->options([
                 'Seed Grower' => 'Seed Grower',
                 'Company' => 'Seed Breeder',
