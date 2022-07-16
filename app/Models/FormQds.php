@@ -11,6 +11,22 @@ class FormQds extends Model
     use HasFactory; 
 
 
+    protected $fillable = [
+        'administrator_id',
+        'name_of_applicant',
+        'address',
+        'premises_location', 
+        'years_of_expirience',
+        'have_been_qds',
+        'have_adequate_storage_facility',
+        'cropping_histroy',
+        'have_adequate_isolation',
+        'have_adequate_labor',
+        'aware_of_minimum_standards',
+        'signature_of_applicant',
+    ];
+
+
     public static function boot()
     {
         parent::boot(); 
