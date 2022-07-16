@@ -237,7 +237,7 @@ class MainController extends Controller
                 return redirect('register')
                     ->withErrors($errors)
                     ->withInput();
-                die();
+                // die();
             }
 
             $admin = new Administrator();
@@ -256,9 +256,8 @@ class MainController extends Controller
                 
                 $receiver = Administrator::findOrFail($request->user_id);
                 // Send the email...
-                Mail::to($request->user()->email)->send(new FormSubmitted($receiver));
-                admin_toastr('Success! Check your email for an activation link.');
-                
+                // Mail::to($request->user()->email)->send(new FormSubmitted($receiver));
+                // admin_toastr('Success! Check your email for an activation link.');
                 
             } else {
                 $errors['username'] = "Failed to created your account. Please try again.";
@@ -267,7 +266,6 @@ class MainController extends Controller
                     ->withInput();
                 die();
             }
-
 
             $u['email'] = $request->input("username");
             $u['password'] = $request->input("password");
@@ -278,13 +276,14 @@ class MainController extends Controller
                 admin_toastr(trans('admin.login_successful'));
                 $request->session()->regenerate();
                 return redirect()->intended('admin');
-                die();
+                // die();
             }
 
             return back()->withErrors([
                 'username' => 'The provided credentials do not match our records.',
             ]);
         }
+
         return view('main.register');
     }
 
