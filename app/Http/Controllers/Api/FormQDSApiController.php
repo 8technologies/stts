@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Crop;
 use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB; 
 use App\Traits\ApiResponser;
 use App\Models\FormQds;
+use App\Models\QdsHasCrop;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -63,6 +65,7 @@ class FormQDSApiController extends AdminController
             'have_adequate_labor' => 'required',
             'aware_of_minimum_standards' => 'required',
             'signature_of_applicant' => 'required',
+            'qds_crops' => 'required',
         ]);
 
         if ($post_data->fails()) {
@@ -83,6 +86,23 @@ class FormQDSApiController extends AdminController
             'aware_of_minimum_standards' => $request->input('aware_of_minimum_standards'),
             'signature_of_applicant' => $request->input('signature_of_applicant'),
         ]);
+
+        $qds_crops_items = json_decode($request->input('qds_crops'));
+        if($qds_crops_items!=null){
+            if(is_array($qds_crops_items)){ 
+                foreach ($qds_crops_items as $key => $value) {
+                    $crop_id = ((int)($value));
+                    $crop = Crop::find($crop_id);
+                    if($crop == null){
+                        continue;
+                    }
+                    $sub_form = new QdsHasCrop();
+                    $sub_form->form_qds_id = $form->id;
+                    $sub_form->crop_id = $crop_id;
+                    $sub_form->save();
+                }
+            }
+        } 
 
         // Form created, return success response
         return $this->successResponse($form, "QDS form submit success!", 201); 

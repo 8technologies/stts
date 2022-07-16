@@ -109,6 +109,6 @@ class FormSr6ApiController extends AdminController
         } 
         
         // Form created, return success response
-        return $this->successResponse($form, "SR6 form submit success! => ".$form->id, 201); 
+        return $this->successResponse($form, "SR6 form submitted successfully!", 201); 
     }
 }

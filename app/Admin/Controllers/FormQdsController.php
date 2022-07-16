@@ -329,19 +329,19 @@ class FormQdsController extends AdminController
 
 
             $form->html('<h3>I/We wish to apply for a license to produce quality declared seed (QDS) as indicated below:</h3>');
-            $form->hasMany('qds_has_crops',__('Click on New to Add Crops
+            $form->hasMany('qds_has_crops',__('Click on "New" to Add Crops
                 '), function (NestedForm $form) {   
                 $_items = [];
                 foreach (Crop::all() as $key => $item) { 
                     $_items[$item->id] = $item->name . " - " . $item->id;
                 }
-                $form->select('crop_id','Add Crop')->options( Crop::all()->pluck('name','id') )
+                $form->select('crop_id','S Crop')->options( Crop::all()->pluck('name','id') )
                 ->required();
             });
 
 
 
-            $form->html('<div class="repeater">
+          /*   $form->html('<div class="repeater">
             <table class="table">
                 <thead>
                     <tr>
@@ -357,7 +357,7 @@ class FormQdsController extends AdminController
                 </tbody>
             </table>
             <input data-repeater-create class="btn btn-success btn-sm" type="button" value="Add record" />
-        </div>');
+        </div>'); */
 
 
 
@@ -369,8 +369,8 @@ class FormQdsController extends AdminController
             // });
 
             //URL::asset('/assets/js/vendor/nice-select.min.js')
-            Admin::js('/assets/js/vendor/jquery.repeater.min.js');
-            Admin::js('/assets/js/vendor/form-repeater.min.js');
+          /*   Admin::js('/assets/js/vendor/jquery.repeater.min.js');
+            Admin::js('/assets/js/vendor/form-repeater.min.js'); */
 
 
             //$form->textarea('dealers_in', __('Dealers in'));
