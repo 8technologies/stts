@@ -23,7 +23,7 @@ use App\Http\Controllers\Api\SeedLabApiController;
 use App\Http\Controllers\Api\SeedLabelApiController;
 use App\Http\Controllers\Api\FormStockRecordApiController;
 use App\Http\Controllers\Api\CropApiController;
-use App\Http\Controllers\Api\CropVarietiesApiController;
+use App\Http\Controllers\Api\CropVarietyApiController;
 use Encore\Admin\Facades\Admin;
 
 
@@ -64,7 +64,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     // Crops via the SR6 form submit form
     Route::get('/crops-list/', [CropApiController::class, "crops_list"]);
     Route::post('/crops-create/', [CropApiController::class, "crops_create"]);
-    Route::get('/crop-varieties-list/', [CropVarietiesApiController::class, "crop_varities_list"]);
+    Route::get('/crop-varieties-list/', [CropVarietyApiController::class, "crop_varities_list"]);
     
     // Quality Assurance
     Route::get("/import-permit/list", [ImportPermitApiController::class, "import_permits_list"]);

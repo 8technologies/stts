@@ -7,7 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use App\Traits\ApiResponser;
 
 
-class CropVarietiesApiController extends AdminController 
+class CropVarietyApiController extends AdminController 
 {
     use ApiResponser;
 
