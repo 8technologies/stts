@@ -38,25 +38,18 @@ class FormQDSApiController extends AdminController
         $user = Auth::user();
 
         $data = $request->only(
-            'type',
+            'name_of_applicant',
             'address',
-            'company_initials',
-            'premises_location',
-            'expirience_in',
+            'premises_location', 
             'years_of_expirience',
-            'dealers_in',
-            'marketing_of',
-            'have_adequate_land',
-            'have_adequate_storage',
-            'have_adequate_equipment',
-            'have_contractual_agreement',
-            'have_adequate_field_officers',
-            'have_conversant_seed_matters',
-            'souce_of_seed',
-            'have_adequate_land_for_production',
-            'have_internal_quality_program',
-            'receipt',
-            'accept_declaration'
+            'have_been_qds',
+            'have_adequate_storage_facility',
+            'cropping_histroy',
+            'have_adequate_isolation',
+            'have_adequate_labor',
+            'aware_of_minimum_standards',
+            'signature_of_applicant',
+
         );
 
         $post_data = Validator::make($data, [

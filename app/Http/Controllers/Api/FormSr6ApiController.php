@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Crop;
 use App\Models\FormSr6;
-use App\Models\FormSr4;
 use App\Models\FormSr6HasCrop;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +12,6 @@ use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB; 
 use App\Traits\ApiResponser; 
-
 
 
 class FormSr6ApiController extends AdminController 

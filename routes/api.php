@@ -60,6 +60,10 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post("/forms/sr6/new", [FormSr6ApiController::class, "form_sr6_create"]);
     Route::post("/forms/qds/new", [FormQDSApiController::class, "form_qds_create"]);
 
+    // Crops via the SR6 form submit form
+    Route::get('/crops-list/', [CropApiController::class, "crops_list"]);
+    Route::post('/crops-create/', [CropApiController::class, "crops_create"]);
+    Route::get('/crop-varieties-list/', [CropVarietiesApiController::class, "crop_varities_list"]);
     
     // Quality Assurance
     Route::get("/import-permit/list", [ImportPermitApiController::class, "import_permits_list"]);
@@ -90,14 +94,11 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post("/pre-order/new", [PreOrderApiController::class, "pre_order_create"]);
 
 
-    
+
     // Seed Stock
     Route::get("/form-stock-examination-requests/list", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_list"]);
     Route::get("/form-stock-records/list", [FormStockRecordApiController::class, "form_stock_records_list"]);
     Route::get("/marktable-seed/list", [MarketableSeedApiController::class, "marktable_seed_list"]);
 
-    // Crops via the SR6 form submit form
-    Route::get('/crops-list/', [CropApiController::class, "crops_list"]);
-    Route::post('/crops-create/', [CropApiController::class, "crops_create"]);
     
 });
