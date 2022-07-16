@@ -11,6 +11,16 @@ use phpDocumentor\Reflection\Types\This;
 
 class SeedLab extends Model
 {
+
+    protected $fillable = [
+        'administrator_id',
+        // 'form_stock_examination_request_id',
+        'collection_date', 
+        'payment_receipt',
+        'applicant_remarks'
+    ];
+
+
     public function user()
     {
         return $this->belongsTo(Administrator::class, 'administrator_id');

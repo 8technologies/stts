@@ -9,6 +9,17 @@ use Excel;
 class PlantingReturn extends Model
 {
     use HasFactory;
+ 
+    protected $fillable = [
+        'administrator_id',
+        'name',
+        'address', 
+        'telephone', 
+        'amount_enclosed',
+        'payment_receipt', 
+        'registerd_dealer',
+        'sub_growers_file', 
+    ];
 
 
     public static function import_sub_growers($m)

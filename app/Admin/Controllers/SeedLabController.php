@@ -256,7 +256,6 @@ class SeedLabController extends AdminController
                 'status' => 5
             ])->get();
 
-
             if (count($exams_list) < 1) {
                 admin_error("Warning", "You don't have any valid stock examination request.");
                 return redirect(admin_url('seed-labs'));
@@ -264,6 +263,7 @@ class SeedLabController extends AdminController
             $form->hidden('crop_variety_id', __('Crop variety id'));
 
             $stocks = [];
+            
             foreach (CropVariety::all() as $key => $crop_variety) {
                 $u = Admin::user();
                 $tot = Utils::get_stock_balance($u->id, $crop_variety->id);
@@ -599,7 +599,6 @@ class SeedLabController extends AdminController
             }
         }
 
-
         if (Admin::user()->isRole('lab-technician')) {
 
             if ($form->isEditing()) {
@@ -764,10 +763,6 @@ class SeedLabController extends AdminController
                 $form->html('<small>NOTE: You cannot reverse this process once is done.</small>');
             }
         }
-
-
-
-
 
         $form->disableEditingCheck();
         $form->disableCreatingCheck();
