@@ -45,19 +45,11 @@ return [
             'visibility' => 'public',
         ],
         
-        // 'admin' => [
-        //     'driver' => 'local',
-        //     'root' => $_SERVER['DOCUMENT_ROOT'].'public/assets/images/stts/uploads',
-        //     'url' => env('APP_URL') . 'public/assets/images/stts/uploads',
-        //     'visibility' => 'public',
-        // ],
-        
-        
         'admin' => [
             'driver' => 'local',
-            'root' => public_path('storage/app/public/images'),
+            'root' => $_SERVER['DOCUMENT_ROOT'].'/public/storage',
+            'url' => env('APP_URL') . '/public/storage',
             'visibility' => 'public',
-            'url' => env('APP_URL') . 'storage/app/public/images',
         ],
         
 

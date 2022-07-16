@@ -26,15 +26,15 @@ $(function () {
         
         data: {
             datasets: [{
-                data: [
-                    $total_import_permits,
-                    $total_export_permits,
-                    $total_planting_returns_company,
-                    $total_planting_returns_grower,
-                    $total_form_sr10s,
-                    $total_form_qds,
-                    $total_seed_labs,
-                    $total_seed_labels
+                data: [                    
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor()
                 ], 
                 
                 backgroundColor: [
