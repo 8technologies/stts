@@ -55,25 +55,12 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/form-sr4/list", [FormSr4ApiController::class, "form_sr4_list"]);
     Route::get("/form-sr6/list", [FormSr6ApiController::class, "form_sr6_list"]);
     Route::get("/form-qds/list", [FormQDSApiController::class, "form_qds_list"]);
-
+    // post
     Route::post("/forms/sr4/new", [FormSr4ApiController::class, "form_sr4_create"]);
     Route::post("/forms/sr6/new", [FormSr6ApiController::class, "form_sr6_create"]);
     Route::post("/forms/qds/new", [FormQDSApiController::class, "form_qds_create"]);
 
-
-    Route::post("/pre-order/new", [PreOrderApiController::class, "pre_order_create"]);
-
-    // marketplace
-    Route::get("/products/list", [ProductApiController::class, "products_list"]);
-    Route::get("/orders/list", [OrderApiController::class, "order_list"]);
-    Route::get("/pre-orders/list", [PreOrderApiController::class, "pre_order_list"]);
-    Route::get("/quotations/list", [QuotationApiController::class, "quotations_list"]);
-
-    // Seed Stock
-    Route::get("/form-stock-examination-requests/list", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_list"]);
-    Route::get("/form-stock-records/list", [FormStockRecordApiController::class, "form_stock_records_list"]);
-    Route::get("/marktable-seed/list", [MarketableSeedApiController::class, "marktable_seed_list"]);
-
+    
     // Quality Assurance
     Route::get("/import-permit/list", [ImportPermitApiController::class, "import_permits_list"]);
     Route::get("/export-permit/list", [ExportPermitApiController::class, "export_permits_list"]);
@@ -83,6 +70,31 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/qds-crop-declarations/list", [QDSCropDeclarationApiController::class, "qds_crop_declarations_list"]);
     Route::get("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
     Route::get("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
+    // post
+    Route::post("/import-permit/list", [ImportPermitApiController::class, "import_permits_list"]);
+    Route::post("/export-permit/list", [ExportPermitApiController::class, "export_permits_list"]);
+    Route::post("/planting-returns-company/list", [PlantingReturnsCompanyApiController::class, "planting_returns_company_list"]);
+    Route::post("/planting-returns-grower/list", [PlantingReturnsGrowerApiController::class, "planting_returns_grower_list"]);
+    Route::post("/form-sr10/list", [FormSr10ApiController::class, "form_sr10_list"]);
+    Route::post("/qds-crop-declarations/list", [QDSCropDeclarationApiController::class, "qds_crop_declarations_list"]);
+    Route::post("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
+    Route::post("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
+
+
+    // marketplace
+    Route::get("/products/list", [ProductApiController::class, "products_list"]);
+    Route::get("/orders/list", [OrderApiController::class, "order_list"]);
+    Route::get("/pre-orders/list", [PreOrderApiController::class, "pre_order_list"]);
+    Route::get("/quotations/list", [QuotationApiController::class, "quotations_list"]);
+    // post
+    Route::post("/pre-order/new", [PreOrderApiController::class, "pre_order_create"]);
+
+
+    
+    // Seed Stock
+    Route::get("/form-stock-examination-requests/list", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_list"]);
+    Route::get("/form-stock-records/list", [FormStockRecordApiController::class, "form_stock_records_list"]);
+    Route::get("/marktable-seed/list", [MarketableSeedApiController::class, "marktable_seed_list"]);
 
     // Crops via the SR6 form submit form
     Route::get('/crops-list/', [CropApiController::class, "crops_list"]);
