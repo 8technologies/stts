@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB; 
-use App\Traits\ApiResponser;
+use App\Traits\ApiResponser; 
 
 
 

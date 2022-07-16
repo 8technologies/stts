@@ -317,8 +317,9 @@ class FormSr6Controller extends AdminController
             $form->select('type', __('Category'))
             ->options([
                 'Seed Grower' => 'Seed Grower',
-                'Company' => 'Seed Breeder',
-                'Individual' => 'Seed Company',
+                'Seed Breeder' => 'Seed Breeder',
+                'Seed Company' => 'Seed Company',
+                'Individual' => 'Individual',
             ])
             ->rules('required');
 
