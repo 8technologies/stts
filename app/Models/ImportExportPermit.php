@@ -11,6 +11,19 @@ class ImportExportPermit extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'administrator_id',
+        'name', 
+        'address',
+        'telephone',
+        'type',
+        'store_location',
+        'quantiry_of_seed',
+        'name_address_of_origin',
+        'ista_certificate', 
+        'phytosanitary_certificate',
+        'crop_category',
+    ];
 
     public function import_export_permits_has_crops()
     {

@@ -48,7 +48,7 @@ return [
         'admin' => [
             'driver' => 'local',
             'root' => $_SERVER['DOCUMENT_ROOT'].'/public/storage',
-            'url' => env('APP_URL') . '/public/storage',
+            'url' => env('APP_URL') . 'public/storage',
             'visibility' => 'public',
         ],
         
@@ -78,7 +78,5 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('storage') => storage_path('app/public/images/stts/uploads'),
-        public_path('images') => storage_path('app/public/images/stts/uploads'),
     ],
 ];

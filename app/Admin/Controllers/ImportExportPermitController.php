@@ -193,13 +193,7 @@ class ImportExportPermitController extends AdminController
      */
     protected function form()
     {
-
-
-
         $form = new Form(new ImportExportPermit());
-
-
-
 
         $form->setWidth(8, 4);
         $form->disableCreatingCheck();
@@ -215,9 +209,6 @@ class ImportExportPermitController extends AdminController
             $footer->disableCreatingCheck();
         });
 
-
-
-
         $user = Auth::user();
         $form->hidden('is_import', __('is_import'))->value(1)->required();
 
@@ -227,13 +218,11 @@ class ImportExportPermitController extends AdminController
             $form->hidden('administrator_id', __('Administrator id'));
         }
         if (Admin::user()->isRole('basic-user')) {
-
-
             $form->submitted(function (Form $form) {
-
 
                 if ($_POST['type'] != 'Researchers') {
                     $national_seed_board_reg_num = null;
+                    
                     if (
                         $_POST['national_seed_board_reg_num'] != null
                     ) {
@@ -418,8 +407,6 @@ class ImportExportPermitController extends AdminController
                 });
         }
 
-
-
         if (Admin::user()->isRole('inspector')) {
 
             $form->text('name', __('Name of applicant'))->default($user->name)->readonly();
@@ -469,8 +456,6 @@ class ImportExportPermitController extends AdminController
             // $form->number('inspector', __('Inspector'));
             // $form->textarea('status_comment', __('Status comment'));
         }
-
-
 
         return $form;
     }

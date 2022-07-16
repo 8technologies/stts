@@ -7,9 +7,29 @@ use Encore\Admin\Facades\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class SubGrower extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'administrator_id',
+        'name',
+        'size', 
+        'crop',
+        'variety',
+        'filed_name',
+        'district',
+        'subcourty',
+        'village', 
+        'planting_date',
+        'quantity_planted',
+        'expected_yield', 
+        'phone_number', 
+        'gps_latitude', 
+        'gps_longitude',
+        'detail', 
+    ];
 
     public function get_crop_name()
     {
@@ -40,6 +60,7 @@ class SubGrower extends Model
 
         return $c;
     }
+    
     public static function boot()
     {
         parent::boot();

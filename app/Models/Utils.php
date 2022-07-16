@@ -386,10 +386,10 @@ class Utils
 
     public static function get_file_url($name)
     {
-        $url = url("/storage");
+        $url = url("/public/storage");
         if ($name == null || (strlen($name) < 2)) {
             $url .= '/default.png';
-        } else if (file_exists(public_path('storage/' . $name))) {
+        } else if (file_exists(public_path('/public/storage/' . $name))) {
             $url .= "/" . $name;
         } else {
             $url .= '/default.png';

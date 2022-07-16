@@ -76,14 +76,13 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
     Route::get("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
     // post
-    Route::post("/import-permit/list", [ImportPermitApiController::class, "import_permits_list"]);
-    Route::post("/export-permit/list", [ExportPermitApiController::class, "export_permits_list"]);
-    Route::post("/planting-returns-company/list", [PlantingReturnsCompanyApiController::class, "planting_returns_company_list"]);
-    Route::post("/planting-returns-grower/list", [PlantingReturnsGrowerApiController::class, "planting_returns_grower_list"]);
-    Route::post("/form-sr10/list", [FormSr10ApiController::class, "form_sr10_list"]);
-    Route::post("/qds-crop-declarations/list", [QDSCropDeclarationApiController::class, "qds_crop_declarations_list"]);
-    Route::post("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
-    Route::post("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
+    Route::post("/import-permit/new", [ImportPermitApiController::class, "import_permits_create"]);
+    Route::post("/planting-returns-company/new", [PlantingReturnsCompanyApiController::class, "planting_returns_company_create"]);
+    Route::post("/planting-returns-grower/new", [PlantingReturnsGrowerApiController::class, "planting_returns_grower_create"]);
+    // Route::post("/form-sr10/new", [FormSr10ApiController::class, "form_sr10_create"]);
+    Route::post("/qds-crop-declarations/new", [QDSCropDeclarationApiController::class, "qds_crop_declarations_create"]);
+    Route::post("/seed-labs/new", [SeedLabApiController::class, "seed_lab_create"]);
+    Route::post("/seed-labels/new", [SeedLabelApiController::class, "seed_label_create"]);
 
 
     // marketplace
