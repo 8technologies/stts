@@ -58,6 +58,9 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     Route::post("/forms/sr4/new", [FormSr4ApiController::class, "form_sr4_create"]);
     Route::post("/forms/sr6/new", [FormSr6ApiController::class, "form_sr6_create"]);
+    Route::post("/forms/qds/new", [FormQDSApiController::class, "form_qds_create"]);
+
+
     Route::post("/pre-order/new", [PreOrderApiController::class, "pre_order_create"]);
 
     // marketplace
