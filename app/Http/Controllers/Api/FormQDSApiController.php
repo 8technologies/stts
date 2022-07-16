@@ -57,19 +57,11 @@ class FormQDSApiController extends AdminController
         $post_data = Validator::make($data, [
             'address' => 'required',
             'premises_location' => 'required', 
-            'years_of_expirience' => 'required|min:1|integer',
-            'have_been_qds' => 'required',
-            'have_adequate_storage_facility' => 'required',
-            'cropping_histroy' => 'required',
-            'have_adequate_isolation' => 'required',
-            'have_adequate_labor' => 'required',
-            'aware_of_minimum_standards' => 'required',
-            'signature_of_applicant' => 'required',
-            'qds_crops' => 'required',
+            'years_of_expirience' => 'required', 
         ]);
 
         if ($post_data->fails()) {
-            //return $this->errorResponse("QDS form submit error", 200); 
+            return $this->errorResponse("QDS form submit error", 200); 
         }
 
         $form = FormQds::create([
