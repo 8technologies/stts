@@ -69,7 +69,7 @@ class FormQDSApiController extends AdminController
         ]);
 
         if ($post_data->fails()) {
-            return $this->errorResponse("QDS form submit error", 200); 
+            //return $this->errorResponse("QDS form submit error", 200); 
         }
 
         $form = FormQds::create([
