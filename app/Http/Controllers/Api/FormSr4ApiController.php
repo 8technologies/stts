@@ -70,7 +70,15 @@ class FormSr4ApiController extends AdminController
             'marketing_of' => 'required',
             'have_adequate_land' => 'required',
             'have_adequate_storage' => 'required',
-            'have_adequate_equipment' => 'required', 
+            'have_adequate_equipment' => 'required',
+            'have_contractual_agreement' => 'required',
+            'have_adequate_field_officers' => 'required',
+            'have_conversant_seed_matters' => 'required',
+            'souce_of_seed' => 'required',
+            'have_adequate_land_for_production' => 'required',
+            'have_internal_quality_program' => 'required',
+            'receipt' => 'required',
+            'accept_declaration' => 'required',
         ]);
 
         if ($post_data->fails()) {
