@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\SeedLabApiController;
 use App\Http\Controllers\Api\SeedLabelApiController;
 use App\Http\Controllers\Api\FormStockRecordApiController;
 use App\Http\Controllers\Api\CropApiController;
+use App\Http\Controllers\Api\CropVarietiesApiController;
 use Encore\Admin\Facades\Admin;
 
 
