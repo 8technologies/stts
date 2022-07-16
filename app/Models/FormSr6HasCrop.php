@@ -8,7 +8,7 @@ class FormSr6HasCrop extends Model
 {
     protected $table = 'form_sr6_has_crops'; 
     
-    protected $fillable = [
+    protected $fillable = [ 
         'form_sr6_id',
         'crop_id',
     ];

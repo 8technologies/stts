@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Crop;
 use App\Models\FormSr6;
 use App\Models\FormSr4;
+use App\Models\FormSr6HasCrop;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB; 
-use App\Traits\ApiResponser;
+use App\Traits\ApiResponser; 
 
 
 
@@ -58,18 +60,17 @@ class FormSr6ApiController extends AdminController
             'type' => 'required',
             'address' => 'required',
             'premises_location' => 'required',
-            'years_of_expirience' => 'required|min:1|integer',
+            'years_of_expirience' => 'required',
             'form_sr6_has_crops' => 'required',
-            'crop_id' => 'required',
             'seed_grower_in_past' => 'required',
             'cropping_histroy' => 'required',
             'have_adequate_storage' => 'required',
             'have_adequate_isolation' => 'required',
             'have_adequate_labor' => 'required',
-            'aware_of_minimum_standards' => 'required',
-            'signature_of_applicant',
+            'aware_of_minimum_standards' => 'required', 
         ]);
-
+        
+ 
         if ($post_data->fails()) {
             return $this->errorResponse("SR6 form submit error", 200); 
         }
@@ -80,18 +81,36 @@ class FormSr6ApiController extends AdminController
             'name_of_applicant' => $user->name,
             'address' => $request->input('address'),
             'premises_location' => $request->input('premises_location'),
-            'years_of_expirience' => $request->input('years_of_expirience'),
-            'form_sr6_has_crops' => $request->input('form_sr6_has_crops'),
+            'years_of_expirience' => $request->input('years_of_expirience'), 
             'seed_grower_in_past' => $request->input('seed_grower_in_past'),
             'cropping_histroy' => $request->input('cropping_histroy'),
             'have_adequate_storage' => $request->input('have_adequate_storage'),
             'have_adequate_isolation' => $request->input('have_adequate_isolation'),
             'have_adequate_labor' => $request->input('have_adequate_labor'),
-            'aware_of_minimum_standards' => $request->input('aware_of_minimum_standards'),
-            'signature_of_applicant' => $request->input('signature_of_applicant'),
+            'aware_of_minimum_standards' => $request->input('aware_of_minimum_standards'), 
+            'receipt' => $request->input('receipt'), 
+            'previous_grower_number' => $request->input('previous_grower_number'), 
         ]);
 
+        $form_sr6_has_crops_items = json_decode($request->input('form_sr6_has_crops'));
+        if($form_sr6_has_crops_items!=null){
+            if(is_array($form_sr6_has_crops_items)){ 
+                foreach ($form_sr6_has_crops_items as $key => $value) {
+                    $crop_id = ((int)($value));
+                    $crop = Crop::find($crop_id);
+                    if($crop == null){
+                        continue;
+                    }
+                    $FormSr6HasCrop = new FormSr6HasCrop();
+                    $FormSr6HasCrop->form_sr6_id = $form->id;
+                    $FormSr6HasCrop->crop_id = $crop_id;
+                    $FormSr6HasCrop->save();
+
+                }
+            }
+        } 
+        
         // Form created, return success response
-        return $this->successResponse($form, "SR6 form submit success!", 201); 
+        return $this->successResponse($form, "SR6 form submit success! => ".$form->id, 201); 
     }
 }
