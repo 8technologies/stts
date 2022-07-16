@@ -74,7 +74,7 @@ class FormSr4ApiController extends AdminController
         ]);
 
         if ($post_data->fails()) {
-            return $this->errorResponse("SR4 form submit error", 200); 
+            //return $this->errorResponse("SR4 form submit error", 200); 
         }
 
 
