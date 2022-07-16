@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Crop;
 use App\Models\FormQds;
 use App\Models\Utils;
 use Carbon\Carbon;
@@ -9,6 +10,7 @@ use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
+use Encore\Admin\Form\NestedForm;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
@@ -327,6 +329,18 @@ class FormQdsController extends AdminController
 
 
             $form->html('<h3>I/We wish to apply for a license to produce quality declared seed (QDS) as indicated below:</h3>');
+            $form->hasMany('qds_has_crops',__('Click on New to Add Crops
+                '), function (NestedForm $form) {   
+                $_items = [];
+                foreach (Crop::all() as $key => $item) { 
+                    $_items[$item->id] = $item->name . " - " . $item->id;
+                }
+                $form->select('crop_id','Add Crop')->options( Crop::all()->pluck('name','id') )
+                ->required();
+            });
+
+
+
             $form->html('<div class="repeater">
             <table class="table">
                 <thead>

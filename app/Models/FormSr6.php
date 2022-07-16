@@ -20,8 +20,9 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
         HasPermissions,
         DefaultDatetimeFormat,
         HasFactory,
-        Notifiable
-        ;
+        Notifiable;
+
+        
 
     protected $fillable = [
         'administrator_id',

@@ -10,6 +10,12 @@ class FormQds extends Model
 { 
     use HasFactory; 
 
+    public function qds_has_crops()
+    {
+        return $this->hasMany(QdsHasCrop::class);
+    } 
+
+    
 
     protected $fillable = [
         'administrator_id',
