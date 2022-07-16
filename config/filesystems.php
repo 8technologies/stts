@@ -45,20 +45,20 @@ return [
             'visibility' => 'public',
         ],
         
-        // 'admin' => [
-        //     'driver' => 'local',
-        //     'root' => $_SERVER['DOCUMENT_ROOT'].'public/assets/images/stts/uploads',
-        //     'url' => env('APP_URL') . 'public/assets/images/stts/uploads',
-        //     'visibility' => 'public',
-        // ],
-        
-        
         'admin' => [
             'driver' => 'local',
-            'root' => public_path('storage/app/public/images'),
+            'root' => $_SERVER['DOCUMENT_ROOT'].'public/assets/images/stts/uploads',
+            'url' => env('APP_URL') . 'public/assets/images/stts/uploads',
             'visibility' => 'public',
-            'url' => env('APP_URL') . 'storage/app/public/images',
         ],
+        
+        
+        // 'admin' => [
+        //     'driver' => 'local',
+        //     'root' => public_path('storage/app/public/images'),
+        //     'visibility' => 'public',
+        //     'url' => env('APP_URL') . 'storage/app/public/images',
+        // ],
         
 
         's3' => [

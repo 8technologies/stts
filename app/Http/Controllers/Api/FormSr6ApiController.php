@@ -70,7 +70,6 @@ class FormSr6ApiController extends AdminController
             'signature_of_applicant',
         ]);
 
-
         if ($post_data->fails()) {
             return $this->errorResponse("SR6 form submit error", 200); 
         }
