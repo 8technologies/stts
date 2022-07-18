@@ -231,7 +231,7 @@ class MainController extends Controller
                 die();
             }
 
-            $old_user = Administrator::where('username',  $request->input("username"))->first();
+            $old_user = Administrator::where('username',  $request->input("username"))->firstOrFail();
             if ($old_user) {
                 $errors['username'] = "User with same email already exist.";
                 return redirect('register')
