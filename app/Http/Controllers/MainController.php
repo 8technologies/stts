@@ -12,18 +12,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+
 use App\Imports\UsersImport;
-use App\Mail\FormSubmitted;
 use App\Models\SubGrower;
-use Encore\Admin\Actions\Toastr;
 use Excel;
-use Illuminate\Support\Facades\Mail;
+
 
 
 class MainController extends Controller
 {
     public function import()
     {
+
+ 
         $array = Excel::toArray([], $file);
         if (isset($array[0]))
             $i = 0;
@@ -223,7 +224,10 @@ class MainController extends Controller
                 'password_confirmation' => 'required|max:100|min:3',
             ]);
 
-            if ($request->input("password") != $request->input("password_confirmation")) {
+            if (
+                $request->input("password") !=
+                $request->input("password_confirmation")
+            ) {
                 $errors['password_confirmation'] = "Passwords did not match.";
                 return redirect('register')
                     ->withErrors($errors)
@@ -237,7 +241,7 @@ class MainController extends Controller
                 return redirect('register')
                     ->withErrors($errors)
                     ->withInput();
-                // die();
+                die();
             }
 
             $admin = new Administrator();
@@ -253,12 +257,6 @@ class MainController extends Controller
                     'role_id' => 3,
                     'user_id' => $admin->id
                 ]);
-                
-                $receiver = Administrator::findOrFail($request->user_id);
-                // Send the email...
-                // Mail::to($request->user()->email)->send(new FormSubmitted($receiver));
-                // admin_toastr('Success! Check your email for an activation link.');
-                
             } else {
                 $errors['username'] = "Failed to created your account. Please try again.";
                 return redirect('register')
@@ -266,6 +264,7 @@ class MainController extends Controller
                     ->withInput();
                 die();
             }
+
 
             $u['email'] = $request->input("username");
             $u['password'] = $request->input("password");
@@ -276,14 +275,13 @@ class MainController extends Controller
                 admin_toastr(trans('admin.login_successful'));
                 $request->session()->regenerate();
                 return redirect()->intended('admin');
-                // die();
+                die();
             }
 
             return back()->withErrors([
                 'username' => 'The provided credentials do not match our records.',
             ]);
         }
-
         return view('main.register');
     }
 
