@@ -42,7 +42,13 @@ class AuthApiController extends Controller
      */
     public function register(Request $request)
     {
-        $data = $request->only('first_name', 'last_name', 'email', 'password', 'password_confirmation');
+        $data = $request->only(
+            'first_name', 
+            'last_name', 
+            'email', 
+            'password', 
+            'password_confirmation'
+        );
 
         $post_data = Validator::make($data, [
             'first_name' => 'required|max:24|min:2',
