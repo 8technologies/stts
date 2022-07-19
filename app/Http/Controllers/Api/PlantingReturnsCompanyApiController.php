@@ -49,17 +49,33 @@ class PlantingReturnsCompanyApiController extends AdminController
 
         $post_data = Validator::make($data, [
             'address' => 'required', 
-            'telephone' => 'required', 
-            'amount_enclosed' => 'required',
+            'telephone' => 'required|integer', 
+            'amount_enclosed' => 'required|integer',
             'payment_receipt' => 'required', 
             'registerd_dealer',
             'sub_growers_file' => 'required',
         ]);
 
+        $messages= [
+            'eid.required' => "The :attribute field is required",
+            'eid.email' => "The :attribute :input format should be example@example.com/.in/.edu/.org....",
+            'eid.unique' => "The :attribute :input is taken. Please use another email address",
+            'confirm_password.same' => "Password and Confirm password fields must match exactly",
+            'mobno.digits' => "The :attribute  field accepts only numbers",
+            'mobno.digits:10' => "The :attribute should be 10 digits long",
+            'dob.date_format' => "The date format :input should be YYYY-MM-DD",
+            'address.string' => "The :attribute :input must be in the form of a string"
+        ];
+
+        $validate =  Validator::make($request->all(), $post_data, $messages);
+
         if ($post_data->fails()) {
-            return $this->errorResponse("Planting returns company submit error", 200); 
+            return $this->errorResponse($errors, 200)->withErrors($validate->messages())->withInput(); 
         }
 
+        if($post_data->fails()){
+            return $this->errorResponse($errors, 200)->withErrors($validate->messages())->withInput(); 
+        }
 
         $form = PlantingReturn::create([
             'administrator_id' => $user->id,
