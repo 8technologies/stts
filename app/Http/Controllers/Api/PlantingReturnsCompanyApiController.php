@@ -47,7 +47,7 @@ class PlantingReturnsCompanyApiController extends AdminController
             'sub_growers_file',
         );
 
-        $post_data = Validator::make($data, [
+        $validator = Validator::make($data, [
             'address' => 'required', 
             'telephone' => 'required|integer', 
             'amount_enclosed' => 'required|integer',
@@ -67,15 +67,19 @@ class PlantingReturnsCompanyApiController extends AdminController
             'address.string' => "The :attribute :input must be in the form of a string"
         ];
 
-        $validate =  Validator::make($request->all(), $post_data, $messages);
+        $validate =  Validator::make($request->all(), $validator, $messages);
+        
 
-        if ($post_data->fails()) {
-            return $this->errorResponse($errors, 200)->withErrors($validate->messages())->withInput(); 
+        if ($validator->fails()) {
+            return $this->errorResponse($validator->errors()->toJson(), 200)
+            ->withErrors($validate->messages())->withInput(); 
         }
 
-        if($post_data->fails()){
-            return $this->errorResponse($errors, 200)->withErrors($validate->messages())->withInput(); 
-        }
+    
+
+
+
+
 
         $form = PlantingReturn::create([
             'administrator_id' => $user->id,
