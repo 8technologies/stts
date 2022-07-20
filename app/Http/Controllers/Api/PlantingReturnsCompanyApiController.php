@@ -75,11 +75,6 @@ class PlantingReturnsCompanyApiController extends AdminController
             ->withErrors($validate->messages())->withInput(); 
         }
 
-    
-
-
-
-
 
         $form = PlantingReturn::create([
             'administrator_id' => $user->id,
