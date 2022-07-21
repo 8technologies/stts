@@ -1,3 +1,6 @@
+<div class="chart-container1" style="width:35vw">
+
+
 <canvas id="bar" style="width: 100%;"></canvas>
 <script>
     
@@ -61,3 +64,5 @@ $(function () {
     });
 });
 </script>
+
+</div>

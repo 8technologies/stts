@@ -1,4 +1,6 @@
-<canvas id="pie" style="width: 100%;"></canvas>
+<div class="chart-container" style="width:35vw">
+
+<canvas id="pie"></canvas>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -72,10 +74,10 @@ $(function () {
                     display: true,
                     text: 'Marketplace Pie Chart'
                 },
-                animation: {
-                    animateScale: true,
-                    animateRotate: true
-                }
+                // animation: {
+                //     animateScale: true,
+                //     animateRotate: true
+                // }
             },
         },
     };
@@ -84,3 +86,5 @@ $(function () {
     new Chart(ctx, config);
 });
 </script>
+
+</div>

@@ -1,3 +1,5 @@
+<div class="chart-container11" style="width:35vw">
+
 <canvas id="line" style="width: 100%;"></canvas>
 <script>
     
@@ -105,3 +107,5 @@ $(function () {
     new Chart(ctx, config);
 });
 </script>
+
+</div>
