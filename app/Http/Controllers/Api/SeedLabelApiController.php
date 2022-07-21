@@ -23,7 +23,7 @@ class SeedLabelApiController extends AdminController
             /*  ---attributes---
             */
             $user = auth()->user();
-            $query = DB::table('seed_labels')->where('administrator_id', '=', $user->id)->get();
+            $query = DB::table('seed_labels')->where('administrator_id', $user->id)->get();
             // $query = SeedLab::all();
             
             return $this->successResponse($query, $message="Seed Labels");  
