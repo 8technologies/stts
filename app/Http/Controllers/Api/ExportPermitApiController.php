@@ -22,7 +22,12 @@ class ExportPermitApiController extends AdminController
         /*  ---attributes---
         */
         $user = auth()->user();
-        $query = DB::table('import_export_permits')->where('administrator_id', '=', $user->id)->get();
+
+        $query = DB::table('import_export_permits')
+        ->where('administrator_id', $user->id)
+        ->where('is_import', '!=', 1)
+        ->get();
+        // $query = DB::table('import_export_permits')->where('administrator_id', '=', $user->id)->get(); 
         // $query = ImportExportPermit::all();
         
         return $this->successResponse($query, $message="Export permits");  
