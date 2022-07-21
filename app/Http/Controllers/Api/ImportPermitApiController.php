@@ -91,8 +91,8 @@ class ImportPermitApiController extends AdminController
             if(is_array($import_export_permits_has_crops)){ 
                 foreach ($import_export_permits_has_crops as $key => $value) {
                     $crop_variety_id = ((int)($value));
-                    $crop_variety_id = CropVariety::find($crop_variety_id);
-                    if($crop_variety_id == null){
+                    $crop_var = CropVariety::find($crop_variety_id);
+                    if($crop_var == null){
                         continue;
                     }
                     $ImportExportPermitsHasCrop = new ImportExportPermitsHasCrops();
