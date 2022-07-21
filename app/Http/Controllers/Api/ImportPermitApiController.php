@@ -61,15 +61,12 @@ class ImportPermitApiController extends AdminController
             'type' => 'required',
             'store_location' => 'required',
             'quantiry_of_seed' => 'required',
-            'name_address_of_origin' => 'required',
-            'ista_certificate', 
-            'phytosanitary_certificate',
-            'crop_category' => 'required',
+            'name_address_of_origin' => 'required', 
         ]);
         
  
         if ($post_data->fails()) {
-            return $this->errorResponse("Import Permit validation error", 200); 
+            return $this->errorResponse("Import Permit validation failed", 200); 
         }
 
         $form = ImportExportPermit::create([
