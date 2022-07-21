@@ -1,5 +1,5 @@
-<div class="box box-default">
-    <div class="box-header with-border">
+<div>
+    
         
     <?php 
         use Encore\Admin\Facades\Admin;
@@ -10,14 +10,6 @@
             <h3 class="box-title">At a glance- (Your activity)</h3>
         <?php } ?>
 
-        <!-- <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-        </div> -->
-    </div>
-
-    <!-- /.box-header -->
     <?php 
     // use Encore\Admin\Facades\Admin;
     
@@ -52,6 +44,46 @@
                     <td>{{ $env['value'] }}</td>
                 </tr>
                 @endforeach
+
+                <br>
+            <tr>
+                <th>QA Form</th>
+                <th>Count</th>
+                <th>Status</th>
+            </tr>
+
+                    @foreach($non_admin_envs_data as $env)
+                <tr>
+                        <td>{{ $env['name'] }}</td>
+                        <td>{{ $env['value'] }}</td>
+                    <td>
+
+                        @if ($env['name'] == 'Import Permits:')
+                            {!! $import_status !!}
+                        @elseif ($env['name']=='Export Permits:')
+                            {!! $export_permit_status !!}   
+                        @elseif ($env['name']=='Planting returns:')
+                            {!! $planting_return_status  !!} 
+                        @elseif ($env['name']=='SR10 Forms:')
+                            {!! $sr10_status !!}  
+                        @elseif ($env['name']=='QDS Forms::')
+                            {!! $qds_status !!}  
+                        @elseif ($env['name']=='Seed Labs:')
+                            {!! $seedlab_status !!}  
+                        @elseif ($env['name']=='Stock Examination Requests:')
+                            {!! $form_stock_er_status !!}  
+                        @elseif ($env['name']=='Orders:')
+                            {!! $order_status !!}  
+                        @elseif ($env['name']=='PreOrders:')
+                            {!! $pre_order_status !!}  
+                        @elseif ($env['name']=='Quotations:')
+                            {!! $quotation_status !!}  
+                        @endif
+                        
+                    </td>
+                </tr>
+                    @endforeach
+            
             
             </table>
         </div>
