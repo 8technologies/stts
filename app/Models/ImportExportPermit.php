@@ -23,6 +23,7 @@ class ImportExportPermit extends Model
         'ista_certificate', 
         'phytosanitary_certificate',
         'crop_category',
+        'is_import',
     ];
 
     public function import_export_permits_has_crops()

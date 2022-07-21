@@ -63,11 +63,25 @@ class ImportPermitApiController extends AdminController
             'quantiry_of_seed' => 'required',
             'name_address_of_origin' => 'required', 
         ]);
+
+        /* $f =  new ImportExportPermit();
+        $f->address = $r->address;
+        $f->address = $r->address;
+        $f->address = $r->address;
+        $f->address = $r->address;
+
+        if($f->save()){
+            ///
+        }else{
+            ///
+        } */
         
  
         if ($post_data->fails()) {
             return $this->errorResponse("Permit validation failed", 200); 
         }
+
+ 
 
         $form = ImportExportPermit::create([
             'administrator_id' => $user->id, 
@@ -80,7 +94,8 @@ class ImportPermitApiController extends AdminController
             'name_address_of_origin' => $request->input('name_address_of_origin'),
             'ista_certificate' => $request->input('ista_certificate'), 
             'phytosanitary_certificate' => $request->input('phytosanitary_certificate'),
-            'crop_category' => $request->input('crop_category')
+            'crop_category' => $request->input('crop_category'),
+            'is_import' => (int) ($request->input('is_import')),
         ]);
 
         $import_export_permits_has_crops = json_decode($request->input('import_export_permits_has_crops'));
