@@ -47,7 +47,7 @@
 
                 <br>
             <tr>
-                <th>QA Form</th>
+                <th>Form Entry</th>
                 <th>Count</th>
                 <th>Status</th>
             </tr>
