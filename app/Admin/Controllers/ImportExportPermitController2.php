@@ -91,7 +91,7 @@ class ImportExportPermitController2 extends AdminController
         
 
         $grid->column('quantiry_of_seed', __('Quantity of seed'));
-        $grid->column('type', __('Category'));
+        $grid->column('type', __('Category')); 
 
         $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
             $u = Administrator::find($userId);
