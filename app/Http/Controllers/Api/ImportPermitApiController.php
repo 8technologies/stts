@@ -86,7 +86,7 @@ class ImportPermitApiController extends AdminController
             'crop_category' => $request->input('crop_category')
         ]);
 
-        /* $import_export_permits_has_crops = json_decode($request->input('import_export_permits_has_crops'));
+        $import_export_permits_has_crops = json_decode($request->input('import_export_permits_has_crops'));
         if($import_export_permits_has_crops!=null){
             if(is_array($import_export_permits_has_crops)){ 
                 foreach ($import_export_permits_has_crops as $key => $value) {
@@ -102,7 +102,7 @@ class ImportPermitApiController extends AdminController
 
                 }
             }
-        }  */
+        } 
         
         // Form created, return success response
         return $this->successResponse($form, "Import Permit submit success! => ".$form->id, 201); 
