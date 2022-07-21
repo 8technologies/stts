@@ -105,7 +105,7 @@ class ImportPermitApiController extends AdminController
         } 
         
         // Form created, return success response
-        return $this->successResponse($form, "Import Permit submit success! => ".$form->id, 201); 
+        return $this->successResponse($form, "Import Permit submit success!", 201); 
     }
 }
 
