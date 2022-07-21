@@ -42,7 +42,13 @@ class AuthApiController extends Controller
      */
     public function register(Request $request)
     {
-        $data = $request->only('first_name', 'last_name', 'email', 'password', 'password_confirmation');
+        $data = $request->only(
+            'first_name', 
+            'last_name', 
+            'email', 
+            'password', 
+            'password_confirmation'
+        );
 
         $post_data = Validator::make($data, [
             'first_name' => 'required|max:24|min:2',
@@ -58,12 +64,12 @@ class AuthApiController extends Controller
             return $this->errorResponse($message="Passwords did not match.", 203); 
         }
 
-        $old_user = Administrator::where('username',  $request->input("username"))->first();
+        // $old_user = Administrator::where('username',  $request->input("username"))->first();
         $old_user_ = Administrator::where('email',  $request->input("email"))->first();
         
-        if ($old_user) {
-            return $this->errorResponse($message="Username already exists.", 203);
-        }
+        // if ($old_user) {
+        //     return $this->errorResponse($message="Username already exists.", 203);
+        // }
         if ($old_user_) {
             return $this->errorResponse($message="Email already exists.", 203);
         }
@@ -72,8 +78,8 @@ class AuthApiController extends Controller
             $user->first_name = $request->input("first_name");
             $user->last_name = $request->input("last_name");
             $user->name = $request->input("first_name") . " " . $request->input("last_name");
-            $user->username = $request->input("username");
             $user->email = $request->input("email");
+            $user->username = $request->input("email");
             $user->password = Hash::make($request->input("password"));
             $user->remember_token = Str::random(62);
             
