@@ -118,9 +118,9 @@ class ImportPermitApiController extends AdminController
         
         // Form created, return success response
         if(((int)($request->input('is_import'))) == 1){
-            $msg = "Import Permit submit success!";
+            $msg = "Import permit submitted successfully!";
         }else{
-            $msg = "Export Permit submit success!";
+            $msg = "Export permit submitted successfully!";
         }
         return $this->successResponse($form, $msg, 201); 
     }
