@@ -134,30 +134,32 @@ class FormCropDeclarationController extends AdminController
     protected function form()
     {
         $form = new Form(new FormCropDeclaration());
-        $user = Admin::user();
+        $user = Admin::user(); 
         $can_create = false;
         $qds_id = false;
         if ($user->qds == null) {
             $can_create = false;
         }
 
-        if (count($user->qds) <= 0) {
-            $can_create = false;
-        }
-        foreach ($user->qds as $key => $value) {
-            if ($value->status == 5) {
-                $min_date = Carbon::parse($value->valid_until);
-                if (!$min_date->isToday()) {
-                    if (!$min_date->isPast()) {
-                        $can_create = true;
+         
+
+        if(isset($user->qds)){
+            foreach ($user->qds as $key => $value) {
+                if ($value->status == 5) {
+                    $min_date = Carbon::parse($value->valid_until);
+                    if (!$min_date->isToday()) {
+                        if (!$min_date->isPast()) {
+                            $can_create = true;
+                            $qds_id = $value->id;
+                        }
+                    } else {
                         $qds_id = $value->id;
+                        $can_create = true;
                     }
-                } else {
-                    $qds_id = $value->id;
-                    $can_create = true;
                 }
             }
         }
+        
 
         if ($form->isCreating()) {
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
