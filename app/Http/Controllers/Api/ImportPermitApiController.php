@@ -66,7 +66,7 @@ class ImportPermitApiController extends AdminController
         
  
         if ($post_data->fails()) {
-            return $this->errorResponse("Import Permit validation failed", 200); 
+            return $this->errorResponse("Permit validation failed", 200); 
         }
 
         $form = ImportExportPermit::create([
