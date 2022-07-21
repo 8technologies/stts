@@ -24,7 +24,7 @@ use DateTime as GlobalDateTime;
 use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Form\Field\Datetime;
 
-class HomeDashboardController extends AdminController
+class HomeDashboardController2 extends AdminController
 {
     public function __construct()
     {
@@ -123,34 +123,14 @@ class HomeDashboardController extends AdminController
             ['name' => 'Quotations:', 'value' => Quotation::where('administrator_id', $user->id)->count()],
         ];
 
-        
-        $import_status = ImportExportPermit::where('administrator_id', $user->id)->get('status');
-        $export_permit_status = ImportExportPermit::where('administrator_id', $user->id)->get('status');
-        $planting_return_status = PlantingReturn::where('administrator_id', $user->id)->get('status');
-        $sr10_status = FormSr10::where('administrator_id', $user->id)->get('status');
-        $qds_status = FormQds::where('administrator_id', $user->id)->get('status');
-        $seedlab_status = SeedLab::where('administrator_id', $user->id)->get('status');
-        $form_stock_er_status = FormStockExaminationRequest::where('administrator_id', $user->id)->get('status');
-        $order_status = Order::where('administrator_id', $user->id)->get('status');
-        $pre_order_status = PreOrder::where('administrator_id', $user->id)->get('status');
-        $quotation_status = Quotation::where('administrator_id', $user->id)->get('status');
+    
         
         if (Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')) {
             return view('admin::dashboard.dash', compact('envs'));
         }
         return view('admin::dashboard.dash', compact(
             'non_admin_envs', 
-            'non_admin_envs_data',
-            'import_status',
-            'export_permit_status',
-            'planting_return_status',
-            'sr10_status',
-            'qds_status',
-            'seedlab_status',
-            'form_stock_er_status',
-            'order_status',
-            'pre_order_status',
-            'quotation_status',
+            'non_admin_envs_data'
         ));
     }
 

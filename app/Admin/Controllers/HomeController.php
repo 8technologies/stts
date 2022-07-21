@@ -9,7 +9,9 @@ use Encore\Admin\Layout\Row;
 use Encore\Admin\Widgets;
 use Encore\Admin\Widgets\Box;
 use Encore\Admin\Widgets\Callout;
-use App\Admin\Controllers\Dashboard\HomeDashboardController;
+use App\Admin\Controllers\Dashboard\HomeDashboardController1;
+use App\Admin\Controllers\Dashboard\HomeDashboardController2;
+use App\Admin\Controllers\Dashboard\HomeDashboardController3;
 use Encore\Admin\Facades\Admin;
 
 
@@ -23,7 +25,7 @@ class HomeController extends Controller
             ->row(function (Row $row) {
 
                 $row->column(4, function (Column $column) {
-                    $column->append(HomeDashboardController::indexx());
+                    $column->append(HomeDashboardController2::indexx());
                 });
 
                 $bar = view('admin.chartjs.pie');
@@ -36,11 +38,11 @@ class HomeController extends Controller
                 $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
 
                 $row->column(4, function (Column $column) {
-                    $column->append(HomeDashboardController::indexx2());
+                    $column->append(HomeDashboardController2::indexx2());
                 });
 
                 $row->column(4, function (Column $column) {
-                    $column->append(HomeDashboardController::indexx3());
+                    $column->append(HomeDashboardController2::indexx3());
                 });
             }); return $content
             ->title($title = Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')? 'The Admin Dashboard': 'Showing your Dashboard')
@@ -48,7 +50,7 @@ class HomeController extends Controller
             ->row(function (Row $row) {
 
                 $row->column(4, function (Column $column) {
-                    $column->append(HomeDashboardController::indexx());
+                    $column->append(HomeDashboardController2::indexx());
                 });
 
                 $bar = view('admin.chartjs.pie');
@@ -60,13 +62,13 @@ class HomeController extends Controller
                 $bar = view('admin.chartjs.line');
                 $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
 
-                $row->column(4, function (Column $column) {
-                    $column->append(HomeDashboardController::indexx2());
-                });
+                // $row->column(4, function (Column $column) {
+                //     $column->append(HomeDashboardController2::indexx2());
+                // });
 
-                $row->column(4, function (Column $column) {
-                    $column->append(HomeDashboardController::indexx3());
-                });
+                // $row->column(4, function (Column $column) {
+                //     $column->append(HomeDashboardController2::indexx3());
+                // });
             }); 
     }
         
@@ -79,8 +81,8 @@ class HomeController extends Controller
 
         $tab = new Widgets\Tab();
 
-        $box1 = new Widgets\Box('', HomeDashboardController::indexx());
-        // $box5 = new Widgets\Box('', HomeDashboardController::indexxx());
+        // $box5 = new Widgets\Box('', $this->myChart($content));
+        $box1 = new Widgets\Box('', HomeDashboardController2::indexx());
         
         $box2 = new Widgets\Box('', view('admin.chartjs.pie'), 'For latest data, kindly refresh the page!');
         $box3 = new Widgets\Box('', view('admin.chartjs.bar'), 'For latest data, kindly refresh the page!');
