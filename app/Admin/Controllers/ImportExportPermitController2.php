@@ -272,7 +272,7 @@ class ImportExportPermitController2 extends AdminController
                 'Researchers' => 'Researchers',
             ])
             ->required()
-            ->help('Which SR4 type are tou applying for?');
+            ->help('Which SR4 type are tou applying for?'); 
 
             $seed_board_registration_number = null;
             if ($sr4 != null) {
@@ -295,7 +295,7 @@ class ImportExportPermitController2 extends AdminController
 
             $form->text('store_location', __('Location of the store'))->required();
             $form->text(
-                'quantiry_of_seed',
+                'quantiry_of_seed', 
                 __('Quantity of seed of the same variety held in stock')
             )
                 ->help("In METRIC TONNES")
