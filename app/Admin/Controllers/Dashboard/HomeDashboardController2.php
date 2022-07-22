@@ -24,7 +24,7 @@ use DateTime as GlobalDateTime;
 use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Form\Field\Datetime;
 
-class HomeDashboardController extends AdminController
+class HomeDashboardController2 extends AdminController
 {
     public function __construct()
     {
@@ -97,8 +97,14 @@ class HomeDashboardController extends AdminController
         $non_admin_envs = [
             ['name' => 'Today:', 'value' => date('l, d F Y H:i:s')],
             ['name' => 'Logged in as: ', 'value' => $my_role],
-            
             ['name' => "DATA", 'value' => ""],
+            // ['name' => 'Timezone:', 'value' => config('app.timezone')],
+            // ['name' => 'Locale:', 'value' => config('app.locale')],
+        ];
+
+
+
+        $non_admin_envs_data = [
             ['name' => 'Import Permits:', 'value' =>  ImportExportPermit::where('administrator_id', $user->id)->count()],
             ['name' => 'Export Permits:', 'value' =>  ImportExportPermit::where('administrator_id', $user->id)->count()],
             ['name' => 'Planting returns:', 'value' => PlantingReturn::where('administrator_id', $user->id)->count()],
@@ -115,16 +121,17 @@ class HomeDashboardController extends AdminController
             ['name' => 'Orders:', 'value' => Order::where('administrator_id', $user->id)->count()],
             ['name' => 'PreOrders:', 'value' => PreOrder::where('administrator_id', $user->id)->count()],
             ['name' => 'Quotations:', 'value' => Quotation::where('administrator_id', $user->id)->count()],
-
-            // ['name' => 'Timezone:', 'value' => config('app.timezone')],
-            // ['name' => 'Locale:', 'value' => config('app.locale')],
         ];
 
+    
         
         if (Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')) {
             return view('admin::dashboard.dash', compact('envs'));
         }
-        return view('admin::dashboard.dash', compact('non_admin_envs'));
+        return view('admin::dashboard.dash', compact(
+            'non_admin_envs', 
+            'non_admin_envs_data'
+        ));
     }
 
 
@@ -202,4 +209,35 @@ class HomeDashboardController extends AdminController
         }
         return view('admin::dashboard.dash3', compact('non_admin_envs'));
     }
+
+
+    // public function indexxx(Type $var = null)
+    // {
+    //     return $content
+    //         ->title($title = Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')? 'The Admin Dashboard': 'Showing your Dashboard')
+        
+    //         ->row(function (Row $row) {
+
+    //             $row->column(4, function (Column $column) {
+    //                 $column->append(HomeDashboardController::indexx());
+    //             });
+
+    //             $bar = view('admin.chartjs.pie');
+    //             $row->column(1/3, new Box('Quality Assurance Statistics\' Pie Chart', $bar));
+
+    //             $bar = view('admin.chartjs.bar');
+    //             $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
+
+    //             $bar = view('admin.chartjs.line');
+    //             $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
+
+    //             $row->column(4, function (Column $column) {
+    //                 $column->append(HomeDashboardController::indexx2());
+    //             });
+
+    //             $row->column(4, function (Column $column) {
+    //                 $column->append(HomeDashboardController::indexx3());
+    //             });
+    //         }); 
+    // }
 }

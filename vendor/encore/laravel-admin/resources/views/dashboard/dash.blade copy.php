@@ -47,7 +47,7 @@
 
                 <br>
             <tr>
-                <th>Form Entry</th>
+                <th>QA Form</th>
                 <th>Count</th>
                 <th>Status</th>
             </tr>
@@ -56,7 +56,31 @@
                 <tr>
                         <td>{{ $env['name'] }}</td>
                         <td>{{ $env['value'] }}</td>
-                    <td>####</td>
+                    <td>
+
+                        <!-- @if ($env['name'] == 'Import Permits:')
+                            {!! $import_status !!}
+                        @elseif ($env['name']=='Export Permits:')
+                            {!! $export_permit_status !!}   
+                        @elseif ($env['name']=='Planting returns:')
+                            {!! $planting_return_status  !!} 
+                        @elseif ($env['name']=='SR10 Forms:')
+                            {!! $sr10_status !!}  
+                        @elseif ($env['name']=='QDS Forms::')
+                            {!! $qds_status !!}  
+                        @elseif ($env['name']=='Seed Labs:')
+                            {!! $seedlab_status !!}  
+                        @elseif ($env['name']=='Stock Examination Requests:')
+                            {!! $form_stock_er_status !!}  
+                        @elseif ($env['name']=='Orders:')
+                            {!! $order_status !!}  
+                        @elseif ($env['name']=='PreOrders:')
+                            {!! $pre_order_status !!}  
+                        @elseif ($env['name']=='Quotations:')
+                            {!! $quotation_status !!}  
+                        @endif -->
+                        
+                    </td>
                 </tr>
                     @endforeach
             
