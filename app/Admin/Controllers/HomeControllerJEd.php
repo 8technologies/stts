@@ -25,50 +25,12 @@ use Encore\Admin\Widgets\Table;
 use Illuminate\Support\Facades\Auth;
 
 
-class HomeController extends Controller
+class HomeControllerJEd extends Controller
 {
     public function index(Content $content)
     {
-        // foreach (CropInspectionType::all() as $key => $v) {
-        //     echo "==> {$v->crop->name}<hr>";
-        // }
-        // dd();
-
-        $content->title('Admin Dashboard');
-        //$content->description('Description...');
-
-        $content->row(function ($row) { 
-            if (Admin::user()->isRole('admin') || Admin::user()->isRole('inspector')) {
-
-                $box3 = new Box('About the SR4 Forms submitted', view('admin.dashboard.submitted_sr4_forms'));
-                $box3->removable();
-                $box3->collapsable();
-                $box3->style('success');
-                $box3->solid();
-                $row->column(6, $box3);
-
-                $box1 = new Box('Marketable seed', view('admin.dashboard.chart-marketable-seed'));
-                $box1->removable();
-                $box1->collapsable();
-                $box1->style('success');
-                $box1->solid();
-                $row->column(6, $box1);
-            }
-
-        });
-        return $content;
+        
+        return view('admin::dashboard.dash');
     
     }
-
-
-    // public function index2()
-    // {
-    //     if (Admin::user()->isRole('admin') || Admin::user()->isRole('inspector')) {
-    //         return Admin::content(function (Content $content) {
-    //             $content->header('chart');
-    //             $content->description('.....');
-    //             $content->body(view('admin.charts.bar'));
-    //         });
-    //     }
-    // }
 }

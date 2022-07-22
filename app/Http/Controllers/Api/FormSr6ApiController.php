@@ -12,6 +12,8 @@ use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB; 
 use App\Traits\ApiResponser; 
+use IWasHereFirst2\LaravelMultiMail\Facades\Multimail;
+use Illuminate\Support\Facades\Mail;
 
 
 class FormSr6ApiController extends AdminController 
@@ -90,6 +92,12 @@ class FormSr6ApiController extends AdminController
             'previous_grower_number' => $request->input('previous_grower_number'), 
         ]);
 
+        // send bunch of notification via email
+        if($form){
+            // MultiMail::to($user)->from('info@8technologies.net')->send(new \App\Mail\SR6FormAdded($user));
+            Mail::to($user)->send(new \App\Mail\SR6FormAdded($user));
+        }
+
         $form_sr6_has_crops_items = json_decode($request->input('form_sr6_has_crops'));
         if($form_sr6_has_crops_items!=null){
             if(is_array($form_sr6_has_crops_items)){ 
@@ -103,12 +111,12 @@ class FormSr6ApiController extends AdminController
                     $FormSr6HasCrop->form_sr6_id = $form->id;
                     $FormSr6HasCrop->crop_id = $crop_id;
                     $FormSr6HasCrop->save();
-
                 }
             }
         } 
         
         // Form created, return success response
+        
         return $this->successResponse($form, "SR6 form submitted successfully!", 201); 
     }
 }

@@ -14,6 +14,7 @@ Route::group([
     'as'            => config('admin.route.prefix') . '.',
 ], function (Router $router) {
 
+    // $router->get('/', 'HomeControllerJEd@index')->name('home');
     $router->get('/', 'HomeController@myChart')->name('home');
     // $router->get('/', 'HomeController@tab')->name('home');
     $router->resource('users', UserController::class);

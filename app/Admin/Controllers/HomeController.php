@@ -23,18 +23,18 @@ class HomeController extends Controller
     
         ->row(function (Row $row) {
 
-            $row->column(4, function (Column $column) {
-                $column->append(HomeDashboardController2::indexx());
-            });
-
-            $bar = view('admin.chartjs.pie');
-            $row->column(1/3, new Box('Quality Assurance Statistics\' Pie Chart', $bar));
+            // $row->column(4, function (Column $column) {
+            //     $column->append(HomeDashboardController2::indexx());
+            // });
 
             $bar = view('admin.chartjs.bar');
             $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
 
             $bar = view('admin.chartjs.line');
             $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
+
+            $bar = view('admin.chartjs.pie');
+            $row->column(1/3, new Box('Quality Assurance Statistics\' Pie Chart', $bar));
 
             // $row->column(4, function (Column $column) {
             //     $column->append(HomeDashboardController2::indexx2());

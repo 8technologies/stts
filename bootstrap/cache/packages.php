@@ -28,6 +28,17 @@
       0 => 'Fruitcake\\Cors\\CorsServiceProvider',
     ),
   ),
+  'iwasherefirst2/laravel-multimail' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'IWasHereFirst2\\LaravelMultiMail\\MultiMailServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'MultiMail' => 'IWasHereFirst2\\LaravelMultiMail\\Facades\\MultiMail',
+    ),
+  ),
   'juststeveking/laravel-redoc' => 
   array (
     'providers' => 
