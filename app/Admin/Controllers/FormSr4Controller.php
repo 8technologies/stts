@@ -397,7 +397,7 @@ class FormSr4Controller extends AdminController
 
             $form->radio(
                 'have_conversant_seed_matters',
-                __('Do you have adequate and knowledgeable personel who are conversant with seed matters?')
+                __('Do you have adequate and knowledgeable personal who are conversant with seed matters?')
             )
                 ->options([
                     '1' => 'Yes',
@@ -416,16 +416,9 @@ class FormSr4Controller extends AdminController
                 $_items[$item->id] = $item->id . " - " . $item->name;
             }
             $_items['Other'] = "Other";
-            $form->select(
-                'souce_of_seed',
-                __('What is your souce of seed?')
-            )->options($_items)
-                ->help('Select "Other" if your supplier is not found on the list.')
-                ->required()
-                ->when('Other', function (Form $form) {
-                    $form->text('souce_of_seed_other', 'Specify your souce of seed?')
-                        ->help("Please specify your souce of seed?");
-                });
+            
+            $form->text('souce_of_seed', __('What is your souce of seed?'))->required();
+    
 
 
             $form->radio(
@@ -447,7 +440,6 @@ class FormSr4Controller extends AdminController
                     '0' => 'No',
                 ])
                 ->required();
-
 
             $form->file('receipt', __('Receipt'));
             $form->textarea('status_comment', __('Inspector\'s remarks.'))->readonly();
@@ -538,9 +530,7 @@ class FormSr4Controller extends AdminController
                    /*  echo ($today);
                     echo "<br>";
                     $_today = $today->addYear();*/
-
  
-
                     $form->text('seed_board_registration_number', __('Enter seed board registration number'))
                         ->help("Please Enter seed board registration number")
                         ->default(rand(10000, 10000));
