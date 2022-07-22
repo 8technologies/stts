@@ -261,6 +261,10 @@ class FormSr6Controller extends AdminController
     protected function form()
     {
         $form = new Form(new FormSr6());
+        
+        $user = Auth::user();
+        Mail::to($user)->send(new \App\Mail\SR6FormAdded($user));
+        
         if ($form->isCreating()) {
             if (!Utils::can_create_sr6()) {
                 admin_warning("Warning", "You cannot create a new SR6 form with a while still having another active one.");
@@ -277,24 +281,18 @@ class FormSr6Controller extends AdminController
             unset($_SESSION['sr6_refreshed']);
         }
 
-        
         // callback before save
         $form->saving(function (Form $form) {
-            $user = Auth::user();
             $form->dealers_in = '[]';
             if (isset($_POST['group-a'])) {
                 $form->dealers_in = json_encode($_POST['group-a']);
-                
-                // //echo($form->dealers_in);
+                //echo($form->dealers_in);
 
-                // // call the function to send the notifications after sr6 create form/ form submit
-                // $this->sendFormSR6CreateNotification();
+                // call the function to send the notifications after sr6 create form/ form submit
+                $this->sendFormSR6CreateNotification();
 
-                // // $user->nofify(new SR6FormAddedNotification($sr6_form_data));
-                // Notification::send($user, new SR6FormAddedNotification($sr6_form_data));
-
-                Mail::to($user)->send(new \App\Mail\SR6FormAdded($user));
-
+                // $user->nofify(new SR6FormAddedNotification($sr6_form_data));
+                Notification::send($user, new SR6FormAddedNotification($sr6_form_data));
             }
         });
 
@@ -310,8 +308,8 @@ class FormSr6Controller extends AdminController
         $user = Auth::user();
 
         if ($form->isCreating()) {
-
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
+            // Mail::to(Admin::user()->email)->send(new SR6FormAdded($form));
         } else {
             $form->hidden('administrator_id', __('Administrator id'));
         }
@@ -486,10 +484,7 @@ class FormSr6Controller extends AdminController
             // $form->textarea('status_comment', __('Status comment'));
         }
 
-        if ($form){
-            Mail::to($user)->send(new \App\Mail\SR6FormAdded($user));
-            return $form;
-        }
-        return redirect('home');
+        return $form;
     }
+
 }
