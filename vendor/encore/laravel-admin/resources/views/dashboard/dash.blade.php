@@ -52,13 +52,13 @@
                 <th>Status</th>
             </tr>
 
-                    @foreach($non_admin_envs_data as $env)
+                @foreach($non_admin_envs_data as $env)
                 <tr>
-                        <td>{{ $env['name'] }}</td>
-                        <td>{{ $env['value'] }}</td>
+                    <td>{{ $env['name'] }}</td>
+                    <td>{{ $env['value'] }}</td>
                     <td>####</td>
                 </tr>
-                    @endforeach
+                @endforeach
             
             
             </table>
