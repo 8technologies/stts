@@ -1,4 +1,5 @@
-<div class="chart-container1" style="width:35vw">
+<!-- <div class="chart-container1" style="width:35vw"> -->
+<div class="chart-container1">
 
 
 <canvas id="bar" style="width: 100%;"></canvas>
