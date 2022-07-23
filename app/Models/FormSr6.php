@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 
 class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
@@ -43,18 +45,41 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
 
     public static function boot()
     {
+        $user = Auth::user();
+        
         parent::boot(); 
+
         self::creating(function($model){
             
         });
  
         self::updating(function($model){
-            if(
-                Admin::user()->isRole('basic-user')
-            ){
+            if(Admin::user()->isRole('basic-user') ){
                 $model->status = 1;
                 return $model;
             }
+        });
+
+
+        self::created(function ($model) {
+            $user = Auth::user();
+            Mail::to($user)->send(new \App\Mail\SR6FormAdded($user));
+        });
+
+        self::updated(function ($model) {
+            // ... code here
+            $user = Auth::user();
+            Mail::to($user)->send(new \App\Mail\SR6FormUpdated($user));
+        });
+
+        self::deleting(function ($model) {
+            // ... code here 
+            $user = Auth::user();
+            Mail::to($user)->send(new \App\Mail\SR6FormDeleted($user));
+        });
+
+        self::deleted(function ($model) {
+            // ... code here
         });
     }
 

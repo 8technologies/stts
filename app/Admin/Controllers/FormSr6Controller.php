@@ -15,9 +15,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\SR6FormAdded;
 use App\Notifications\SR6FormAddedNotification;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 
 
@@ -263,7 +261,6 @@ class FormSr6Controller extends AdminController
         $form = new Form(new FormSr6());
         
         $user = Auth::user();
-        Mail::to($user)->send(new \App\Mail\SR6FormAdded($user));
         
         if ($form->isCreating()) {
             if (!Utils::can_create_sr6()) {
@@ -309,7 +306,6 @@ class FormSr6Controller extends AdminController
 
         if ($form->isCreating()) {
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
-            // Mail::to(Admin::user()->email)->send(new SR6FormAdded($form));
         } else {
             $form->hidden('administrator_id', __('Administrator id'));
         }
