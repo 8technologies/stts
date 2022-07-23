@@ -31,34 +31,4 @@ class SR6FormAdded extends Mailable
     {
         return $this->view('emails.forms.formsr6added');
     }
-
-
-
-
-
-
-
-
-    //     /**
-    //  * Create a new message instance.
-    //  *
-    //  * @return void
-    //  */
-    // public function __construct($user)
-    // {
-    //     $this->to  = $user;
-    //     $this->fromMailer = 'info@8technologies.store';
-    //     $this->locale('en');
-    // }
-
-    // /**
-    //  * Build the message.
-    //  *
-    //  * @return $this
-    //  */
-    // public function build()
-    // {
-    //     // return $this->view('emails.forms.formsr6added');
-    //     return $this->markdown('emails.forms.formsr6added')->subject('New SR6 Added');
-    // }
 }
