@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Excel;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+
 
 class PlantingReturn extends Model
 {
@@ -172,7 +175,6 @@ class PlantingReturn extends Model
     {
         parent::boot();
 
-
         self::creating(function ($m) {
         });
 
@@ -198,6 +200,10 @@ class PlantingReturn extends Model
                 return $m;
             }
             self::import_sub_growers($m);
+            
+            $user = Auth::user();
+            Mail::to($user)->send(new \App\Mail\PlantingReturnsCompanyFormAdded($user));
+
             return $m;
             //created
         });
@@ -236,12 +242,13 @@ class PlantingReturn extends Model
         });
 
         self::deleted(function ($model) {
-            // ... code here
+            $user = Auth::user();
+            Mail::to($user)->send(new \App\Mail\PlantingReturnsCompanyFormDeleted($user));
         });
     }
 
 
-    
+
     public function form_sr10s()
     {
         return $this->hasMany(FormSr10::class);
