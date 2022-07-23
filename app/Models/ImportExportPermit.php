@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class ImportExportPermit extends Model
 {
@@ -59,7 +61,40 @@ class ImportExportPermit extends Model
                 }
             }
 
-        });   
+        }); 
+        
+        
+        self::created(function ($model) {
+            $user = Auth::user();
+            
+            if ($model->is_import){
+                // code here...
+                Mail::to($user)->send(new \App\Mail\ImportPermitFormAdded($user));
+            }
+            Mail::to($user)->send(new \App\Mail\ExportPermitFormAdded($user));
+        });
+
+        self::updated(function ($model) {
+            $user = Auth::user();
+
+            if ($model->is_import){
+                Mail::to($user)->send(new \App\Mail\ImportPermitFormUpdated($user));
+            }
+            Mail::to($user)->send(new \App\Mail\ExportPermitFormUpdated($user));
+        });
+
+        self::deleting(function ($model) {
+            $user = Auth::user();
+
+            if ($model->is_import){
+                Mail::to($user)->send(new \App\Mail\ImportPermitFormDeleted($user));
+            }
+            Mail::to($user)->send(new \App\Mail\ExportPermitFormDeleted($user));
+        });
+
+        self::deleted(function ($model) {
+            // ... code here
+        });
     } 
 
 }

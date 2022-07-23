@@ -50,7 +50,12 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
         parent::boot(); 
 
         self::creating(function($model){
-            
+            // code here            
+        });
+
+        self::created(function ($model) {
+            $user = Auth::user();
+            Mail::to($user)->send(new \App\Mail\SR6FormAdded($user));
         });
  
         self::updating(function($model){
@@ -60,20 +65,12 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
             }
         });
 
-
-        self::created(function ($model) {
-            $user = Auth::user();
-            Mail::to($user)->send(new \App\Mail\SR6FormAdded($user));
-        });
-
         self::updated(function ($model) {
-            // ... code here
             $user = Auth::user();
             Mail::to($user)->send(new \App\Mail\SR6FormUpdated($user));
         });
 
         self::deleting(function ($model) {
-            // ... code here 
             $user = Auth::user();
             Mail::to($user)->send(new \App\Mail\SR6FormDeleted($user));
         });

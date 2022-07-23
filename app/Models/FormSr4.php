@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 
 class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
@@ -78,7 +80,24 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
 
         });
 
+        self::created(function ($model) {
+            $user = Auth::user();
+            Mail::to($user)->send(new \App\Mail\SR4FormAdded($user));
+        });
 
+        self::updated(function ($model) {
+            $user = Auth::user();
+            Mail::to($user)->send(new \App\Mail\SR4FormUpdated($user));
+        });
+
+        self::deleting(function ($model) {
+            $user = Auth::user();
+            Mail::to($user)->send(new \App\Mail\SR4FormDeleted($user));
+        });
+
+        self::deleted(function ($model) {
+            // ... code here
+        });
     }
 
 
