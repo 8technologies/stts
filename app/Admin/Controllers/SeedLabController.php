@@ -110,7 +110,7 @@ class SeedLabController extends AdminController
                 if (
                     $status != 1
                 ) {
-                    $actions->disableEdit();
+                    // $actions->disableEdit();
                     $actions->disableDelete();
                 }
             });
