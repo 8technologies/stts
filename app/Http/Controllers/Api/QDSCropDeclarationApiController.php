@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\CropVariety;
 use App\Models\FormCropDeclaration;
+use App\Models\FormCropDeclarationsHasCropVariety;
 use App\Models\FormQds;
 use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,6 +50,8 @@ class QDSCropDeclarationApiController extends AdminController
             return $this->errorResponse("Failed. You don't have a valid QDS certificate.", 200);
         }
 
+        
+
 
         $data = $request->only(
             'source_of_seed',
@@ -64,7 +68,7 @@ class QDSCropDeclarationApiController extends AdminController
         ]);
 
         if ($post_data->fails()) {
-            return $this->errorResponse("Planting grower company submit error", 200);
+            return $this->errorResponse("Crop declaration submit error", 200);
         }
 
 
@@ -78,7 +82,25 @@ class QDSCropDeclarationApiController extends AdminController
             'amount' => $request->input('amount'),
         ]);
 
+        $crop_varieties = json_decode($request->input('crop_varieties'));
+        if($crop_varieties!=null){
+            if(is_array($crop_varieties)){ 
+                foreach ($crop_varieties as $key => $value) {
+                    $crop_id = ((int)($value));
+                    $crop = CropVariety::find($crop_id);
+                    if($crop == null){
+                        continue;
+                    } 
+                    $formVar = new FormCropDeclarationsHasCropVariety();
+                    $formVar->form_crop_declaration_id = $form->id;
+                    $formVar->crop_variety_id = $crop_id;
+                    $formVar->save(); 
+	
+                }
+            }
+        } 
+
         // Form created, return success response
-        return $this->successResponse($form, "Planting returns grower submit success! " . $form->id, 201);
+        return $this->successResponse($form, "Crop declaration submitted successfully! " . $form->id, 201);
     }
 }
