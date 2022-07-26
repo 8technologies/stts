@@ -49,7 +49,7 @@ class QDSCropDeclarationApiController extends AdminController
             // 'form_crop_declarations_has_crop_varieties',
             'amount', 
             'payment_receipt',
-        );
+        ); 
 
         $post_data = Validator::make($data, [            
             'field_size' => 'required', 
@@ -64,10 +64,13 @@ class QDSCropDeclarationApiController extends AdminController
         $form = FormCropDeclaration::create([
             'administrator_id' => $user->id,
             'name' => $user->name,            
-            'size' => $request->input('size'), 
-            
+            'status' => 1,             
+            'field_size' => $request->input('field_size'), 
+            'source_of_seed' => $request->input('source_of_seed'), 
+            'seed_rate' => $request->input('seed_rate'), 
+            'amount' => $request->input('amount'), 
         ]);
-
+        
         // Form created, return success response
         return $this->successResponse($form, "Planting returns grower submit success! ".$form->id, 201); 
     }
