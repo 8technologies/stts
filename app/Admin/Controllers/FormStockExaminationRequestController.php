@@ -405,7 +405,7 @@ class FormStockExaminationRequestController extends AdminController
             $form->textarea('remarks', __('Enter remarks'))->required();
 
             $user = Auth::user();
-            $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
+            $form->hidden('administrator_id', __('Administrator id'))->value($user->id); 
         }
 
         if (Admin::user()->isRole('admin') && $form->isEditing()) {
