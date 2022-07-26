@@ -62,8 +62,7 @@ class QDSCropDeclarationApiController extends AdminController
 
 
         $form = FormCropDeclaration::create([
-            'administrator_id' => $user->id,
-            'name' => $user->name,            
+            'administrator_id' => $user->id,       
             'status' => 1,             
             'field_size' => $request->input('field_size'), 
             'source_of_seed' => $request->input('source_of_seed'), 

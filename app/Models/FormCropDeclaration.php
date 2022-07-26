@@ -15,7 +15,6 @@ class FormCropDeclaration extends Model
         'source_of_seed',
         'seed_rate',
         'amount',
-        'name',
         'status',
         'payment_receipt',
     ];
