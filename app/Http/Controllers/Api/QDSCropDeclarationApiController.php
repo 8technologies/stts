@@ -38,7 +38,7 @@ class QDSCropDeclarationApiController extends AdminController
     
     
     // create new planting returns company form via api
-    public function planting_returns_grower_create(Request $request): \Illuminate\Http\JsonResponse
+    public function qds_crop_declarations_create(Request $request): \Illuminate\Http\JsonResponse
     {
         $user = Auth::user();
 
@@ -69,7 +69,7 @@ class QDSCropDeclarationApiController extends AdminController
         ]);
 
         // Form created, return success response
-        return $this->successResponse($form, "Planting returns grower submit success!", 201); 
+        return $this->successResponse($form, "Planting returns grower submit success! ".$form->id, 201); 
     }
 }
 
