@@ -15,7 +15,8 @@ Route::group([
 ], function (Router $router) {
 
     // $router->get('/', 'HomeControllerJEd@index')->name('home');
-    $router->get('/', 'HomeController@myChart')->name('home');
+    // $router->get('/', 'HomeController@myChart')->name('home');
+    $router->get('/', 'HomeDashboardBarChartController@index_bar')->name('home');
     // $router->get('/', 'HomeController@tab')->name('home');
     $router->resource('users', UserController::class);
     $router->resource('categories', CategoryController::class);
