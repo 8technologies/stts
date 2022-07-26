@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\FormCropDeclaration;
+use App\Models\FormQds;
 use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 use App\Traits\ApiResponser;
 use Illuminate\Support\Facades\Auth;
 use App\Models\SubGrower;
@@ -14,7 +15,7 @@ use Illuminate\Http\Request;
 
 
 class QDSCropDeclarationApiController extends AdminController
-{   
+{
     use ApiResponser;
 
     public function __construct()
@@ -29,53 +30,55 @@ class QDSCropDeclarationApiController extends AdminController
         $user = auth()->user();
         $query = DB::table('form_crop_declarations')->where('administrator_id', '=', $user->id)->get();
         // $query = FormQds::all();
-        
-        
-        return $this->successResponse($query, $message="QDS Crop Declarations"); 
-    } 
 
 
-    
-    
+        return $this->successResponse($query, $message = "QDS Crop Declarations");
+    }
+
+
+
+
     // create new planting returns company form via api
     public function qds_crop_declarations_create(Request $request): \Illuminate\Http\JsonResponse
     {
         $user = Auth::user();
 
-        $data = $request->only(
-            'source_of_seed', 
-            'field_size',
-            'seed_rate', 
-            // 'form_crop_declarations_has_crop_varieties',
-            'amount', 
-            'payment_receipt',
-        ); 
+        $qds = FormQds::where(['administrator_id' => $user->id])->first();
+        if ($qds == null) {
+            return $this->errorResponse("Failed. You don't have a valid QDS certificate.", 200);
+        }
 
-        $post_data = Validator::make($data, [            
-            'field_size' => 'required', 
-            
+
+        $data = $request->only(
+            'source_of_seed',
+            'field_size',
+            'seed_rate',
+            // 'form_crop_declarations_has_crop_varieties',
+            'amount',
+            'payment_receipt',
+        );
+
+        $post_data = Validator::make($data, [
+            'field_size' => 'required',
+
         ]);
 
         if ($post_data->fails()) {
-            return $this->errorResponse("Planting grower company submit error", 200); 
+            return $this->errorResponse("Planting grower company submit error", 200);
         }
 
 
         $form = FormCropDeclaration::create([
-            'administrator_id' => $user->id,       
-            'status' => 1,             
-            'field_size' => $request->input('field_size'), 
-            'source_of_seed' => $request->input('source_of_seed'), 
-            'seed_rate' => $request->input('seed_rate'), 
-            'amount' => $request->input('amount'), 
+            'administrator_id' => $user->id,
+            'status' => 1,
+            'form_qd_id' => $qds->id,
+            'field_size' => $request->input('field_size'),
+            'source_of_seed' => $request->input('source_of_seed'),
+            'seed_rate' => $request->input('seed_rate'),
+            'amount' => $request->input('amount'),
         ]);
-        
+
         // Form created, return success response
-        return $this->successResponse($form, "Planting returns grower submit success! ".$form->id, 201); 
+        return $this->successResponse($form, "Planting returns grower submit success! " . $form->id, 201);
     }
 }
-
-
-
-
-

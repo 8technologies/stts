@@ -17,9 +17,10 @@ class FormCropDeclaration extends Model
         'amount',
         'status',
         'payment_receipt',
+        'form_qd_id',
     ];
 
-
+    
     public function form_crop_declarations_has_crop_varieties()
     {
         return $this->hasMany(FormCropDeclarationsHasCropVariety::class);
