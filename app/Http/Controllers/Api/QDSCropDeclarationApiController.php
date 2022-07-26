@@ -52,7 +52,7 @@ class QDSCropDeclarationApiController extends AdminController
         );
 
         $post_data = Validator::make($data, [            
-            'size' => 'required', 
+            'field_size' => 'required', 
             
         ]);
 
