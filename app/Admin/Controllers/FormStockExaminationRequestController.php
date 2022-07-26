@@ -305,11 +305,11 @@ class FormStockExaminationRequestController extends AdminController
 
             $form->radio('examination_category', __('Select examination category'))
                 ->options([
-                    '1' => 'Imported seed',
-                    '2' => 'Grower seed',
-                    '3' => 'QDs',
+                    'Imported seed' => 'Imported seed',
+                    'Grower seed' => 'Grower seed',
+                    'QDs' => 'QDs',
                 ])
-                ->when('1', function (Form $form) {
+                ->when('Imported seed', function (Form $form) {
 
                     $all_import_permits =  ImportExportPermit::where([
                         'administrator_id' => Admin::user()->id,
@@ -334,7 +334,7 @@ class FormStockExaminationRequestController extends AdminController
                     //         ->options($import_permits);
                     // }
                 })
-                ->when('2', function (Form $form) {
+                ->when('Grower seed', function (Form $form) {
 
 
 
@@ -374,7 +374,7 @@ class FormStockExaminationRequestController extends AdminController
                         ->rules('required')
                         ->options($planting_returnings);
                 })
-                ->when('3', function (Form $form) {
+                ->when('QDs', function (Form $form) {
                     $all_qds =  FormCropDeclaration::where([
                         'administrator_id' => Admin::user()->id
                     ])->get();
