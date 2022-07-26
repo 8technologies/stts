@@ -96,6 +96,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 
 
     // Seed Stock
+    Route::post("/form-stock-examination-requests/new", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_create"]);
     Route::get("/form-stock-examination-requests/list", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_list"]);
     Route::get("/form-stock-records/list", [FormStockRecordApiController::class, "form_stock_records_list"]);
     Route::get("/marktable-seed/list", [MarketableSeedApiController::class, "marktable_seed_list"]);
