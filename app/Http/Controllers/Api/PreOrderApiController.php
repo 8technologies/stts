@@ -22,11 +22,8 @@ class PreOrderApiController extends AdminController
 
     public function pre_order_list()
     {
-        /*  ---attributes---
-        
-        */
         $user = auth()->user();
-        $query = DB::table('pre_orders')->where('administrator_id', '=', $user->id)->get();
+        $query = DB::table('pre_orders')->where('administrator_id', $user->id)->get();
         // $query = PreOrder::all();
         
         return $this->successResponse($query, $message="List of Pre Orders");
