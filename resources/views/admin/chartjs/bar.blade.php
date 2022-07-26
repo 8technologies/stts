@@ -1,15 +1,15 @@
 <!-- <div class="chart-container1" style="width:35vw"> -->
 <div class="chart-container1">
 
-
 <canvas id="bar" style="width: 100%;"></canvas>
-<script>
-    
-$(function () {
 
+<script>
+
+$(function () {
     function randomScalingFactor() {
-        return Math.floor(Math.random() * 10)
+        return Math.floor(Math.random() * 1000)
     }
+
 
     window.chartColors = {
         red: 'rgb(255, 99, 132)',
@@ -30,19 +30,20 @@ $(function () {
             'Pre-Orders', 
             'Quotations',
         ],
+        
         datasets: [{
             label: 'Marketplace',
             borderWidth: 1,
             data: [
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor()
+                JSON.parse('<?= json_encode($products_total) ?>'),
+                JSON.parse('<?= json_encode($orders_total) ?>'),
+                JSON.parse('<?= json_encode($pre_orders_total) ?>'),
+                JSON.parse('<?= json_encode($quotations_total) ?>')
             ] ,
                 backgroundColor: [
                     window.chartColors.ggreen,
                     window.chartColors.blue,
-                    window.chartColors.purple,
+                    window.chartColors.yellow,
                     window.chartColors.red,
                 ],
         }]
@@ -58,7 +59,7 @@ $(function () {
                 position: 'top',
             },
             title: {
-                display: false,
+                display: true,
                 text: 'Chart.js Bar Chart'
             }
         }
