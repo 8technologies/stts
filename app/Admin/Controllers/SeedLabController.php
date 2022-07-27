@@ -110,7 +110,7 @@ class SeedLabController extends AdminController
                 if (
                     $status != 1
                 ) {
-                    // $actions->disableEdit();
+                    $actions->disableEdit();
                     $actions->disableDelete();
                 }
             });
@@ -605,10 +605,10 @@ class SeedLabController extends AdminController
 
                 $id = request()->route()->parameters['seed_lab'];
                 $model = $form->model()->find($id);
+
                 if (!$model) {
                     die("Form not found");
                 }
-
 
                 $form->saving(function ($form) {
                     $id = request()->route()->parameters['seed_lab'];
@@ -668,7 +668,6 @@ class SeedLabController extends AdminController
                 foreach ($records as $key => $value) {
                     $tot += ((int)($value->quantity));
                 }
-
 
 
                 $form->setWidth(8, 4);

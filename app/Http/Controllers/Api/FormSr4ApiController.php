@@ -115,7 +115,7 @@ class FormSr4ApiController extends AdminController
         return $this->successResponse($form, "SR4 form submit success!", 201);
     }
 
-    // create new sr4 form
+    // delete sr4 form
     public function form_sr4_delete(Request $request): \Illuminate\Http\JsonResponse
     {
         $user = Auth::user();
@@ -131,9 +131,7 @@ class FormSr4ApiController extends AdminController
             return $this->errorResponse("Item at this stage cannot be deleted.", 200);
         }
 
-        FormSr4::where([
-            'id' => $id
-        ])->delete();
+        FormSr4::where(['id' => $id ])->delete();
 
 
         return $this->successResponse($item, "Item deleted successfully!", 201);
