@@ -73,6 +73,7 @@ return [
     //         'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
     //     ],
     // ],
+
     
     'disks' => [
 
@@ -98,8 +99,8 @@ return [
 
         'admin' => [
             'driver' => 'local',
-            'root' => public_path('/storage/uploads'),
-            'url' => env('APP_URL').'/storage/uploads',
+            'root' => public_path('storage/uploads'),
+            'url' => env('APP_URL').'storage/uploads',
             'visibility' => 'public',
         ],
 
