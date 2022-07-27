@@ -264,7 +264,7 @@ class FormSr6Controller extends AdminController
         
         if ($form->isCreating()) {
             if (!Utils::can_create_sr6()) {
-                admin_warning("Warning", "You cannot create a new SR6 form with a while still having another active one.");
+                return admin_warning("Warning", "You cannot create a new SR6 form with a while still having another active one.");
                 return redirect(admin_url('form-sr6s'));
             }
         }
