@@ -66,17 +66,10 @@ $(function () {
         options: {
             responsive: true,
             plugins: {
-                legend: {
-                    position: 'left',
-                },
                 title: {
                     display: true,
                     text: 'Marketplace Pie Chart'
                 },
-                // animation: {
-                //     animateScale: true,
-                //     animateRotate: true
-                // }
             },
         },
     };
@@ -89,4 +82,5 @@ $(function () {
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </div>
