@@ -1,6 +1,7 @@
 <div class="chart-container">
 
-<canvas id="radar-chart" style="width: 100%;"></canvas>
+<canvas id="radar-chart" height="100%" width="100%"></canvas>
+
 <script>
     
 $(function () {
