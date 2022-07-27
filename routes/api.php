@@ -86,14 +86,17 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/export-permit/list", [ExportPermitApiController::class, "export_permits_list"]);
     Route::post("/export-permit/delete", [ExportPermitApiController::class, "export_permit_delete"]);
 
+    // planting returns company
+    Route::post("/planting-returns-company/new", [PlantingReturnsCompanyApiController::class, "planting_returns_company_create"]);
     Route::get("/planting-returns-company/list", [PlantingReturnsCompanyApiController::class, "planting_returns_company_list"]);
+    Route::post("/planting-returns-company/delete", [PlantingReturnsCompanyApiController::class, "planting_returns_company_delete"]);
+
     Route::get("/planting-returns-grower/list", [PlantingReturnsGrowerApiController::class, "planting_returns_grower_list"]);
     Route::get("/form-sr10/list", [FormSr10ApiController::class, "form_sr10_list"]);
     Route::get("/qds-crop-declarations/list", [QDSCropDeclarationApiController::class, "qds_crop_declarations_list"]);
     Route::get("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
     Route::get("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
 
-    Route::post("/planting-returns-company/new", [PlantingReturnsCompanyApiController::class, "planting_returns_company_create"]);
     Route::post("/planting-returns-grower/new", [PlantingReturnsGrowerApiController::class, "planting_returns_grower_create"]);
     // Route::post("/form-sr10/new", [FormSr10ApiController::class, "form_sr10_create"]);
     Route::post("/qds-crop-declarations/new", [QDSCropDeclarationApiController::class, "qds_crop_declarations_create"]);
