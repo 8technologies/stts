@@ -10,7 +10,6 @@ $(function () {
         return Math.floor(Math.random() * 1000)
     }
 
-
     window.chartColors = {
         red: 'rgb(255, 99, 132)',
         orange: 'rgb(255, 159, 64)',
@@ -35,10 +34,10 @@ $(function () {
             label: 'Marketplace',
             borderWidth: 1,
             data: [
-                JSON.parse('<?= json_encode($products_total) ?>'),
-                JSON.parse('<?= json_encode($orders_total) ?>'),
-                JSON.parse('<?= json_encode($pre_orders_total) ?>'),
-                JSON.parse('<?= json_encode($quotations_total) ?>')
+                randomScalingFactor(),
+                randomScalingFactor(),
+                randomScalingFactor(),
+                randomScalingFactor()
             ] ,
                 backgroundColor: [
                     window.chartColors.ggreen,

@@ -16,9 +16,11 @@ Route::get('/dd', [BarGraphTotalsController::class, 'index']);
 Route::get('/dddd', [PieChartTotalsController::class, 'index']);
 
 Route::get('/', [MainController::class, 'index']);
+
 // Route::get('/test', [MainController::class, function (){
 //     dd("Simple test");
 // }]);
+
 Route::get('/about', [MainController::class, 'about']);
 Route::get('/import', [MainController::class, 'import']);
 

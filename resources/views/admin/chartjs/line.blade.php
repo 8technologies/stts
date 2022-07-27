@@ -59,22 +59,22 @@ $(function () {
             }, {
                 label: 'Marketable seed\n',
                 fill: false,
-                backgroundColor: window.chartColors.purple,
-                borderColor: window.chartColors.purple,
+                backgroundColor: window.chartColors.red,
+                borderColor: window.chartColors.red,
                 data: [
                     randomScalingFactor(),
                     randomScalingFactor(),
                     randomScalingFactor()
                 ]  ,
                 backgroundColor: [
-                    window.chartColors.purple,
+                    window.chartColors.red,
                 ],
             }]
         },
         options: {
             responsive: true,
             title: {
-                display: true,
+                display: false,
                 text: 'Seed Stock Line Chart'
             },
             tooltips: {

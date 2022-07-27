@@ -1,6 +1,5 @@
 <div>
     
-        
     <?php 
         use Encore\Admin\Facades\Admin;
         
@@ -9,7 +8,6 @@
         <?php } else { ?>
             <h3 class="box-title">At a glance- (Your activity)</h3>
         <?php } ?>
-
     <?php 
     // use Encore\Admin\Facades\Admin;
     
@@ -69,4 +67,3 @@
 
     <?php } ?>
 </div>
-
