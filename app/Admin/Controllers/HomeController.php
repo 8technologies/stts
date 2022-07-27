@@ -20,19 +20,10 @@ class HomeController extends Controller
     
         ->row(function (Row $row) {
             
-            // $row->column(4, function (Column $column) {
-            //     $column->append(HomeDashboardController2::indexx());
-            // });
-            
             $row->column(4, function (Column $column) {
-                $box  = new Box('Marketplace Bar Graph', view('admin.chartjs.bar', [
-                    'icon' => '3.png',
-                    'count' => '51',
-                    'sub_title' => 'Unread messages from your customers.',
-                ]));
-                $box->style('success');
                 $column->append(HomeDashboardController2::indexx());
             });
+            
 
             // $bar = view('admin.chartjs.bar');
             // $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
@@ -64,7 +55,7 @@ class HomeController extends Controller
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Marketplace Pie Chart', view('admin.chartjs.pie', [
+                $box  = new Box('Scatter Graph', view('admin.chartjs.scatter', [
                     'icon' => '3.png',
                     'count' => '51',
                     'sub_title' => 'Unread messages from your customers.',
@@ -84,7 +75,17 @@ class HomeController extends Controller
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Scatter Graph', view('admin.chartjs.scatter', [
+                $box  = new Box('Marketplace Pie Chart', view('admin.chartjs.pie', [
+                    'icon' => '3.png',
+                    'count' => '51',
+                    'sub_title' => 'Unread messages from your customers.',
+                ]));
+                $box->style('success');
+                $column->append($box);
+            });
+
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box('Scatter Graph', view('admin.chartjs.line-stacked', [
                     'icon' => '3.png',
                     'count' => '51',
                     'sub_title' => 'Unread messages from your customers.',

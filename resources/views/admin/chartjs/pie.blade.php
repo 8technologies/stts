@@ -1,6 +1,7 @@
-<div class="">
+<!-- <div class="chart-container" style="width:35vw"> -->
+<div class="chart-container">
 
-<canvas id="pie" width="100%"></canvas>
+<canvas id="pie"></canvas>
 
 <script>
     
@@ -50,25 +51,32 @@ $(function () {
                 label: 'Marketplace Data'
             }],
 
-            // labels: [
-            //     'Import Permits',
-            //     'Export Permits',
-            //     'Planting Returns Company',
-            //     'Planting Returns Grower',
-            //     'Form SR10s',
-            //     'Form QDS',
-            //     'Total Seed Labs',
-            //     'Seed Labels',
-            // ]
+            labels: [
+                'Import Permits',
+                'Export Permits',
+                'Planting Returns Company',
+                'Planting Returns Grower',
+                'Form SR10s',
+                'Form QDS',
+                'Total Seed Labs',
+                'Seed Labels',
+            ]
         },
 
         options: {
             responsive: true,
             plugins: {
+                legend: {
+                    position: 'left',
+                },
                 title: {
                     display: true,
                     text: 'Marketplace Pie Chart'
                 },
+                // animation: {
+                //     animateScale: true,
+                //     animateRotate: true
+                // }
             },
         },
     };
