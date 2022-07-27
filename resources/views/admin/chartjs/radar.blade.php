@@ -1,10 +1,10 @@
-<div class="chart-container11">
+<div class="chart-container">
 
 <canvas id="radar-chart" style="width: 100%;"></canvas>
 <script>
     
 $(function () {
-//Radar Chart
+  
 new Chart(document.getElementById("radar-chart"), {
     type: 'radar',
     data: {
