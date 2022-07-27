@@ -16,19 +16,20 @@ use Encore\Admin\Facades\Admin;
 class Utils
 {
 
-    public static function create_default_tables(){
+    public static function create_default_tables()
+    {
         $crop = Crop::find(1);
-        if($crop == null){
+        if ($crop == null) {
             $cro = new Crop();
-            $cro->name = "Default crop"; 
-            $cro->number_of_inspection = 0; 
-            $cro->crop_id = 1; 
-            $cro->number_of_days_before_submision = 0; 
+            $cro->name = "Default crop";
+            $cro->number_of_inspection = 0;
+            $cro->crop_id = 1;
+            $cro->number_of_days_before_submision = 0;
             $cro->save();
-        } 
+        }
 
         $var = CropVariety::find(1);
-        if($var == null){
+        if ($var == null) {
             $var = new CropVariety();
             $var->name = "Default crop variety";
             $var->id = 1;
@@ -37,7 +38,8 @@ class Utils
         }
     }
 
-    public static function get_stock_balance($user_id,$crop_id){
+    public static function get_stock_balance($user_id, $crop_id)
+    {
         $records = StockRecord::where([
             'administrator_id' => $user_id,
             'crop_variety_id' => $crop_id
@@ -54,7 +56,7 @@ class Utils
             return false;
         }
         $forms = FormSr10::where('planting_return_id', $sr10->id)->get();
-        if (count($forms) <1) {
+        if (count($forms) < 1) {
             return false;
         } else {
             return true;
@@ -314,6 +316,47 @@ class Utils
             return '<span class="badge badge-success">Initialized</span>';
         if ($status == 17)
             return '<span class="badge badge-warning">Skipped</span>';
+        return $status;
+    }
+
+    public static function can_be_deleted_by_user($status)
+    {
+        if (!$status)
+            return true;
+        if ($status == 1)
+            return true;
+        if ($status == 2)
+            return false;
+        if ($status == 3)
+            return true;
+        if ($status == 4)
+            return true;
+        if ($status == 5)
+            return false;
+        if ($status == 6)
+            return false;
+        if ($status == 7)
+            return false;
+        if ($status == 8)
+            return false;
+        if ($status == 9)
+            return false;
+        if ($status == 10)
+            return false;
+        if ($status == 11)
+            return false;
+        if ($status == 12)
+            return false;
+        if ($status == 13)
+            return false;
+        if ($status == 14)
+            return false;
+        if ($status == 15)
+            return true;
+        if ($status == 16)
+            return false;
+        if ($status == 17)
+            return false;
         return $status;
     }
 

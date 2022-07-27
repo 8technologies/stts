@@ -56,8 +56,11 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/form-sr4/list", [FormSr4ApiController::class, "form_sr4_list"]);
     Route::get("/form-sr6/list", [FormSr6ApiController::class, "form_sr6_list"]);
     Route::get("/form-qds/list", [FormQDSApiController::class, "form_qds_list"]);
+    
     // post
     Route::post("/forms/sr4/new", [FormSr4ApiController::class, "form_sr4_create"]);
+    Route::post("/forms/sr4/delete", [FormSr4ApiController::class, "form_sr4_delete"]);
+
     Route::post("/forms/sr6/new", [FormSr6ApiController::class, "form_sr6_create"]);
     Route::post("/forms/qds/new", [FormQDSApiController::class, "form_qds_create"]);
 
