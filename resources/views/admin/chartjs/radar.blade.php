@@ -1,5 +1,4 @@
 <div class="chart-container">
-
 <canvas id="radar-chart" height="100%" width="100%"></canvas>
 
 <script>

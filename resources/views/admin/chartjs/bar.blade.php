@@ -1,6 +1,6 @@
-<div class="chart-container">
+<div class="">
 
-<canvas id="bar" height="100%" width="100%"></canvas>
+<canvas id="bar" style="width: 100%;"></canvas>
 
 <script>
 

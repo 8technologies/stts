@@ -1,6 +1,5 @@
-<div class="chart-container">
+<canvas id="bar-line" style="width: 100%;"></canvas>
 
-<canvas id="bar-line" height="100%" width="100%"></canvas>
 
 <script>
 $(function () {

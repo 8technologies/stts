@@ -1,4 +1,4 @@
-<div class="chart-container11">
+<div class="chart-container">
 
 <canvas id="line" style="width: 100%;"></canvas>
 <script>

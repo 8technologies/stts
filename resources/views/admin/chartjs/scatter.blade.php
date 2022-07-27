@@ -1,4 +1,5 @@
 <canvas id="scatter" style="width: 100%;"></canvas>
+
 <script>
 $(function () {
     function randomScalingFactor() {
