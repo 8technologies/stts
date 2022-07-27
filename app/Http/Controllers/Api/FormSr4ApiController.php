@@ -54,7 +54,7 @@ class FormSr4ApiController extends AdminController
             'have_adequate_field_officers',
             'have_conversant_seed_matters',
             'souce_of_seed',
-            'have_adequate_land_for_production',
+            'have_adequate_land_for_production', 
             'have_internal_quality_program',
             'receipt',
             'accept_declaration'
@@ -82,6 +82,17 @@ class FormSr4ApiController extends AdminController
             'accept_declaration' => 'required',
         ]);
 
+        $has_form = FormSr4::where([
+            'administrator_id' => $user->id,
+            'status' => 5,
+            'type' => $request->input('type'),
+        ])->first();
+
+        $type = $request->input('type');
+        if ($has_form != null) {
+            return $this->errorResponse("You already have active $type form.", 200); 
+        }
+        
         if ($post_data->fails()) {
             //return $this->errorResponse("SR4 form submit error", 200); 
         }
