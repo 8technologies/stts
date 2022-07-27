@@ -133,7 +133,7 @@ class SubGrower extends Model
                                 $d['status_comment'] = "";
                                 $d['planting_return_id'] = $sr10->id;
                                 $d['administrator_id'] = $sr10->administrator_id;
-                                $d['inspector'] =  $sr10->inspector;
+                                $d['inspector'] =  Admin::user()->id;
                                 $date_planted = Carbon::parse($inspe->date_planted);
                                 $date_planted->addDays($inspe->period_after_planting);
                                 $toDateString = $date_planted->toDateString();
@@ -165,7 +165,7 @@ class SubGrower extends Model
                         $d['status_comment'] = "";
                         $d['planting_return_id'] = $sr10->id;
                         $d['administrator_id'] = $sr10->administrator_id;
-                        $d['inspector'] =  $sr10->inspector;
+                        $d['inspector'] =  Admin::user()->id;
                         $date_planted = Carbon::parse(time());
                         $date_planted->addDays(1);
                         $toDateString = $date_planted->toDateString();
