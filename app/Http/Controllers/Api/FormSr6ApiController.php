@@ -9,11 +9,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Encore\Admin\Controllers\AdminController;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB; 
 use App\Traits\ApiResponser; 
-use IWasHereFirst2\LaravelMultiMail\Facades\Multimail;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Utils;
 
 
 class FormSr6ApiController extends AdminController 
@@ -130,5 +129,26 @@ class FormSr6ApiController extends AdminController
         // Form created, return success response
         
         return $this->successResponse($form, "SR6 form submitted successfully!", 201); 
+    }
+
+    
+    // delete sr4 form
+    public function form_sr6_delete(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $user = Auth::user();
+        $id = ((int)($request->input('id')));
+        $item = FormSr6::find($id);
+        if ($item == null) {
+            return $this->errorResponse("Failed to delete  because the item was not found.", 200);
+        }
+        if ($item->administrator_id != $user->id) {
+            return $this->errorResponse("You cannot delete an item that does not belog to you.", 200);
+        }
+        if (!Utils::can_be_deleted_by_user($item->status)) {
+            return $this->errorResponse("Item at this stage cannot be deleted.", 200);
+        }
+        FormSr6::where(['id' => $id ])->delete();
+
+        return $this->successResponse($item, "Item deleted successfully!", 201);
     }
 }

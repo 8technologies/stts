@@ -97,7 +97,6 @@ class FormSr4ApiController extends AdminController
             //return $this->errorResponse("SR4 form submit error", 200); 
         }
 
-
         $form = FormSr4::create([
             'administrator_id' => $user->id,
             'type' => $request->input('type'),
@@ -126,6 +125,7 @@ class FormSr4ApiController extends AdminController
         return $this->successResponse($form, "SR4 form submit success!", 201);
     }
 
+    
     // delete sr4 form
     public function form_sr4_delete(Request $request): \Illuminate\Http\JsonResponse
     {
