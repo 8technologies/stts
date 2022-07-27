@@ -85,7 +85,7 @@ class HomeController extends Controller
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Scatter Graph', view('admin.chartjs.line-stacked', [
+                $box  = new Box('Scatter Graph', view('admin.chartjs.linear', [
                     'icon' => '3.png',
                     'count' => '51',
                     'sub_title' => 'Unread messages from your customers.',
