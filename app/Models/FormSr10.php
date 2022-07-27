@@ -220,6 +220,7 @@ class FormSr10 extends Model
         'is_active',
         'is_done',
         'is_initialized',
+        'inspector',
     ];
 
 
