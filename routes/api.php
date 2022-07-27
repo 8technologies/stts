@@ -34,6 +34,7 @@ Route::post("/login", [AuthApiController::class, "login"]);
 
 Route::group(['middleware' => 'api'], function ($router) {
 
+    /* ------------------------------------------------------------------------------------------------*/
     // auth
     Route::get("/me", [AuthApiController::class, "me"]);
     Route::put("/me/update", [AuthApiController::class, "update"]);
@@ -45,6 +46,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     // password reset/ change
     Route::post('reset_password', [ResetPasswordController::class, 'sendEmail']);
 
+    /* ------------------------------------------------------------------------------------------------*/
     // users
     Route::get("/user/list", [UserAPIController::class, "index"]);
     Route::get("/user/{id}", [UserAPIController::class, "show"]);
@@ -52,37 +54,44 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::delete("/user/{id}", [UserAPIController::class, "destroy"]);
     Route::get("/user/search/{name}", [UserAPIController::class, "where"]);
 
+    /* ------------------------------------------------------------------------------------------------*/
     // Application forms
-    Route::get("/form-sr4/list", [FormSr4ApiController::class, "form_sr4_list"]);
-    Route::get("/form-sr6/list", [FormSr6ApiController::class, "form_sr6_list"]);
-    Route::get("/form-qds/list", [FormQDSApiController::class, "form_qds_list"]);
-    
-    // post
+    // sr4
     Route::post("/forms/sr4/new", [FormSr4ApiController::class, "form_sr4_create"]);
+    Route::get("/form-sr4/list", [FormSr4ApiController::class, "form_sr4_list"]);
     Route::post("/forms/sr4/delete", [FormSr4ApiController::class, "form_sr4_delete"]);
-
+    // sr6
     Route::post("/forms/sr6/new", [FormSr6ApiController::class, "form_sr6_create"]);
+    Route::get("/form-sr6/list", [FormSr6ApiController::class, "form_sr6_list"]);
     Route::post("/forms/sr6/delete", [FormSr6ApiController::class, "form_sr6_delete"]);
-
+    // qds
     Route::post("/forms/qds/new", [FormQDSApiController::class, "form_qds_create"]);
+    Route::get("/form-qds/list", [FormQDSApiController::class, "form_qds_list"]);
     Route::post("/forms/qds/delete", [FormQDSApiController::class, "form_qds_delete"]);
 
     // Crops via the SR6 form submit form
     Route::get('/crops-list/', [CropApiController::class, "crops_list"]);
     Route::post('/crops-create/', [CropApiController::class, "crops_create"]);
     Route::get('/crop-varieties-list/', [CropVarietyApiController::class, "crop_varities_list"]);
-    
+
+    /* ------------------------------------------------------------------------------------------------*/
     // Quality Assurance
+    // import / export permits    ['is_import'=1  => 'import_permit'  |  'is_import'=0 => 'export_permit' ]
+    Route::post("/import-permit/new", [ImportPermitApiController::class, "import_permits_create"]);
     Route::get("/import-permit/list", [ImportPermitApiController::class, "import_permits_list"]);
+    Route::post("/import-permit/delete", [ImportPermitApiController::class, "import_permit_delete"]);
+
+    // export permits
+    // Route::post("/export-permit/new", [ImportExportPermitApiController::class, "import_permits_create"]);
     Route::get("/export-permit/list", [ExportPermitApiController::class, "export_permits_list"]);
+
     Route::get("/planting-returns-company/list", [PlantingReturnsCompanyApiController::class, "planting_returns_company_list"]);
     Route::get("/planting-returns-grower/list", [PlantingReturnsGrowerApiController::class, "planting_returns_grower_list"]);
     Route::get("/form-sr10/list", [FormSr10ApiController::class, "form_sr10_list"]);
     Route::get("/qds-crop-declarations/list", [QDSCropDeclarationApiController::class, "qds_crop_declarations_list"]);
     Route::get("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
     Route::get("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
-    // post
-    Route::post("/import-permit/new", [ImportPermitApiController::class, "import_permits_create"]);
+
     Route::post("/planting-returns-company/new", [PlantingReturnsCompanyApiController::class, "planting_returns_company_create"]);
     Route::post("/planting-returns-grower/new", [PlantingReturnsGrowerApiController::class, "planting_returns_grower_create"]);
     // Route::post("/form-sr10/new", [FormSr10ApiController::class, "form_sr10_create"]);

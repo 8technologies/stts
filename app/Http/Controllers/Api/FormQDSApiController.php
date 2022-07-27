@@ -101,8 +101,6 @@ class FormQDSApiController extends AdminController
         return $this->successResponse($form, "QDS form submit success!", 201); 
     }
 
-
-    
     
     // delete qds form
     public function form_qds_delete(Request $request): \Illuminate\Http\JsonResponse
