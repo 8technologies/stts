@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Traits\ApiResponser;
 use Illuminate\Support\Facades\Auth;
 use App\Models\SubGrower;
+use App\Models\Utils;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -102,5 +103,26 @@ class QDSCropDeclarationApiController extends AdminController
 
         // Form created, return success response
         return $this->successResponse($form, "Crop declaration submitted successfully! " . $form->id, 201);
+    }
+
+
+    
+    // delete qds crop declarations
+    public function qds_crop_declarations_delete(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $user_id = auth()->user()->id;
+        $id = ((int)($request->input('id')));
+        $item = FormCropDeclaration::find($id);
+        if ($item == null) {
+            return $this->errorResponse("Failed to delete  because the item was not found.", 200);
+        }
+        if ($item->administrator_id != $user_id) {
+            return $this->errorResponse("You cannot delete an item that does not belong to you.", 200);
+        }
+        if (!Utils::can_be_deleted_by_user($item->status)) {
+            return $this->errorResponse("Item at this stage cannot be deleted.", 200);
+        }
+        FormCropDeclaration::where('id', $id)->delete();
+        return $this->successResponse($item, "Item deleted successfully!", 201);
     }
 }
