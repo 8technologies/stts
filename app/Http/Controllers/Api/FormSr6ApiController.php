@@ -132,22 +132,23 @@ class FormSr6ApiController extends AdminController
     }
 
     
-    // delete sr4 form
+    // delete sr6 form
     public function form_sr6_delete(Request $request): \Illuminate\Http\JsonResponse
     {
-        $user = Auth::user();
+        $user_id = auth()->user()->id;
         $id = ((int)($request->input('id')));
         $item = FormSr6::find($id);
+
         if ($item == null) {
             return $this->errorResponse("Failed to delete  because the item was not found.", 200);
         }
-        if ($item->administrator_id != $user->id) {
-            return $this->errorResponse("You cannot delete an item that does not belog to you.", 200);
+        if ($item->administrator_id != $user_id) {
+            return $this->errorResponse("You cannot delete an item that does not belong to you.", 200);
         }
         if (!Utils::can_be_deleted_by_user($item->status)) {
             return $this->errorResponse("Item at this stage cannot be deleted.", 200);
         }
-        FormSr6::where(['id' => $id ])->delete();
+        FormSr6::where('id', $id)->delete();
 
         return $this->successResponse($item, "Item deleted successfully!", 201);
     }
