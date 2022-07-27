@@ -1,4 +1,3 @@
-<!-- <div class="chart-container11" style="width:35vw"> -->
 <div class="chart-container11">
 
 <canvas id="line" style="width: 100%;"></canvas>
