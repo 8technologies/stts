@@ -3,8 +3,6 @@
 
 <canvas id="pie" width="100%"></canvas>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
     
 $(function () {
@@ -88,4 +86,7 @@ $(function () {
 });
 </script>
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </div>
