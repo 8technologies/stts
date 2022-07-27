@@ -1,7 +1,7 @@
 <!-- <div class="chart-container" style="width:35vw"> -->
 <div class="chart-container">
 
-<canvas id="pie"></canvas>
+<canvas id="pie" width="100%"></canvas>
 
 <script>
     
