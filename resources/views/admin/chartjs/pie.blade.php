@@ -1,7 +1,7 @@
 <!-- <div class="chart-container" style="width:35vw"> -->
 <div class="chart-container">
 
-<canvas id="pie" width="100%"></canvas>
+<canvas id="pie" height="100%" width="100%"></canvas>
 
 <script>
     
@@ -23,7 +23,7 @@ $(function () {
     };
 
     var config = {
-        type: 'pie',
+        type: 'doughnut',
         
         data: {
             datasets: [{
