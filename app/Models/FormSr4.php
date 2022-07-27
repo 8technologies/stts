@@ -56,7 +56,30 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
         self::creating(function($model){
         });
  
-   
+        self::updating(function($model){
+            if(
+                Admin::user()->isRole('basic-user')
+            ){
+                $model->status = 1;
+                return $model;
+            } 
+            
+            if(Admin::user()->isRole('inspector')){
+                if($model->status == 5){    
+                    if(
+                        $model->valid_from == null ||
+                        strlen($model->valid_from) < 4 ||
+                        strlen($model->valid_until) < 4 
+                    ){
+                        $model->valid_from =  Carbon::now();
+                        $model->valid_until =  Carbon::now()->addYear();   
+                        return $model;   
+                    }
+                }
+            }
+
+        });
+
         self::created(function ($model) {
             $user = Auth::user();
             Mail::to($user)->send(new \App\Mail\SR4FormAdded($user));
@@ -67,7 +90,14 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
             Mail::to($user)->send(new \App\Mail\SR4FormUpdated($user));
         });
 
+        self::deleting(function ($model) {
+            $user = Auth::user();
+            Mail::to($user)->send(new \App\Mail\SR4FormDeleted($user));
+        });
 
+        self::deleted(function ($model) {
+            // ... code here
+        });
     }
 
 

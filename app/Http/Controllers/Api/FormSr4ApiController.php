@@ -131,7 +131,10 @@ class FormSr4ApiController extends AdminController
             return $this->errorResponse("Item at this stage cannot be deleted.", 200);
         }
 
-        $item->delete();
+        FormSr4::where([
+            'id' => $id
+        ])->delete();
+
 
         return $this->successResponse($item, "Item deleted successfully!", 201);
     }
