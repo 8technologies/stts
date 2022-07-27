@@ -1,4 +1,4 @@
-<div class="chart-container1">
+<div class="">
 
 <canvas id="bar" style="width: 100%;"></canvas>
 

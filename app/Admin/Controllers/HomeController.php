@@ -20,7 +20,17 @@ class HomeController extends Controller
     
         ->row(function (Row $row) {
             
+            // $row->column(4, function (Column $column) {
+            //     $column->append(HomeDashboardController2::indexx());
+            // });
+            
             $row->column(4, function (Column $column) {
+                $box  = new Box('Marketplace Bar Graph', view('admin.chartjs.bar', [
+                    'icon' => '3.png',
+                    'count' => '51',
+                    'sub_title' => 'Unread messages from your customers.',
+                ]));
+                $box->style('success');
                 $column->append(HomeDashboardController2::indexx());
             });
 
