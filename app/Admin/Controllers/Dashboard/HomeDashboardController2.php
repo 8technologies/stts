@@ -48,7 +48,7 @@ class HomeDashboardController2 extends AdminController
         if (Admin::user()->isRole('super-admin')) {
             $my_role= "Super Admin";
         } else if (Admin::user()->isRole('admin')) {
-            $my_role= "Admin"; 
+            $my_role= "Commissioner"; 
         }else if (Admin::user()->isRole('basic-user')) {
                 $my_role= "Basic User";
         } else if (Admin::user()->isRole('inspector')) {
