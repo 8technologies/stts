@@ -41,9 +41,11 @@ class FormStockExaminationRequestApiController extends AdminController
         $form = new FormStockExaminationRequest();
         $form->examination_category = $request->examination_category;
         $form->remarks = $request->remarks;
+        $form->administrator_id = $user->id;
         $form->status = 0;
         $form->save();
 
+    
         return $this->successResponse($form, 'Form was submitted successfully.', 201);
     }
 
