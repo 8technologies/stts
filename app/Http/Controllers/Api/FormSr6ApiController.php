@@ -69,6 +69,18 @@ class FormSr6ApiController extends AdminController
             'have_adequate_labor' => 'required',
             'aware_of_minimum_standards' => 'required', 
         ]);
+
+
+        $has_form = FormSr6::where([
+            'administrator_id' => $user->id,
+            'status' => 5,
+            'type' => $request->input('type'),
+        ])->first();
+
+        $type = $request->input('type');
+        if ($has_form != null) {
+            return $this->errorResponse("You already have active $type certificate.", 200); 
+        }
         
  
         if ($post_data->fails()) {
