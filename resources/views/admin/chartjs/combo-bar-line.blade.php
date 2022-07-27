@@ -3,7 +3,7 @@
 $(function () {
 
     function randomScalingFactor() {
-        return Math.floor(Math.random() * 100)
+        return Math.floor(Math.random() * 1000)
     }
 
     window.chartColors = {

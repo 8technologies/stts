@@ -1,4 +1,4 @@
-<div class="chart-container">
+<div class="">
 
 <canvas id="pie" width="100%"></canvas>
 
@@ -50,16 +50,16 @@ $(function () {
                 label: 'Marketplace Data'
             }],
 
-            labels: [
-                'Import Permits',
-                'Export Permits',
-                'Planting Returns Company',
-                'Planting Returns Grower',
-                'Form SR10s',
-                'Form QDS',
-                'Total Seed Labs',
-                'Seed Labels',
-            ]
+            // labels: [
+            //     'Import Permits',
+            //     'Export Permits',
+            //     'Planting Returns Company',
+            //     'Planting Returns Grower',
+            //     'Form SR10s',
+            //     'Form QDS',
+            //     'Total Seed Labs',
+            //     'Seed Labels',
+            // ]
         },
 
         options: {
