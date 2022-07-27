@@ -319,7 +319,7 @@ class FormSr6Controller extends AdminController
                 'Seed Grower' => 'Seed Grower',
                 'Seed Breeder' => 'Seed Breeder',
                 'Seed Company' => 'Seed Company',
-                'Individual' => 'Individual',
+                // 'Individual' => 'Individual',
             ])
             ->rules('required');
 

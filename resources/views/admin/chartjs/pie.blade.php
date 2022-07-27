@@ -1,4 +1,3 @@
-<!-- <div class="chart-container" style="width:35vw"> -->
 <div class="chart-container">
 
 <canvas id="pie" height="100%" width="100%"></canvas>
