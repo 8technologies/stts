@@ -15,20 +15,20 @@ class SubGrower extends Model
     protected $fillable = [
         'administrator_id',
         'name',
-        'size', 
+        'size',
         'crop',
         'variety',
         'filed_name',
         'district',
         'subcourty',
-        'village', 
+        'village',
         'planting_date',
         'quantity_planted',
-        'expected_yield', 
-        'phone_number', 
-        'gps_latitude', 
+        'expected_yield',
+        'phone_number',
+        'gps_latitude',
         'gps_longitude',
-        'detail', 
+        'detail',
     ];
 
     public function get_crop_name()
@@ -60,7 +60,7 @@ class SubGrower extends Model
 
         return $c;
     }
-    
+
     public static function boot()
     {
         parent::boot();
@@ -103,7 +103,7 @@ class SubGrower extends Model
                 }
 
 
-                if ($crop != null) { 
+                if ($crop != null) {
                     if ($crop->crop_inspection_types != null) {
                         foreach ($crop->crop_inspection_types as $key => $inspe) {
 
@@ -133,7 +133,7 @@ class SubGrower extends Model
                                 $d['status_comment'] = "";
                                 $d['planting_return_id'] = $sr10->id;
                                 $d['administrator_id'] = $sr10->administrator_id;
-                                $d['inspector'] = $sr10->inspector;
+                                $d['inspector'] =  Admin::user()->id;
                                 $date_planted = Carbon::parse($inspe->date_planted);
                                 $date_planted->addDays($inspe->period_after_planting);
                                 $toDateString = $date_planted->toDateString();
