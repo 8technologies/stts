@@ -109,11 +109,12 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
     Route::post("/seed-labs/delete", [SeedLabApiController::class, "seed_lab_delete"]);
 
-
+    // seed label
+    Route::post("/seed-labels/new", [SeedLabelApiController::class, "seed_label_create"]);
     Route::get("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
+    Route::post("/seed-labels/delete", [SeedLabelApiController::class, "seed_label_delete"]);
 
     // Route::post("/form-sr10/new", [FormSr10ApiController::class, "form_sr10_create"]);
-    Route::post("/seed-labels/new", [SeedLabelApiController::class, "seed_label_create"]);
 
 
     // marketplace
