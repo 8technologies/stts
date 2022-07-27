@@ -75,12 +75,12 @@ class ImportExportPermit extends Model
         });
 
         self::updated(function ($model) {
-            $user = Auth::user();
+            // $user = Auth::user();
 
-            if ($model->is_import){
-                Mail::to($user)->send(new \App\Mail\ImportPermitFormUpdated($user));
-            }
-            Mail::to($user)->send(new \App\Mail\ExportPermitFormUpdated($user));
+            // if ($model->is_import){
+            //     Mail::to($user)->send(new \App\Mail\ImportPermitFormUpdated($user));
+            // }
+            // Mail::to($user)->send(new \App\Mail\ExportPermitFormUpdated($user));
         });
 
         self::deleting(function ($model) {
