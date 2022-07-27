@@ -84,6 +84,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     // export permits
     // Route::post("/export-permit/new", [ImportExportPermitApiController::class, "import_permits_create"]);
     Route::get("/export-permit/list", [ExportPermitApiController::class, "export_permits_list"]);
+    Route::post("/export-permit/delete", [ExportPermitApiController::class, "export_permit_delete"]);
 
     Route::get("/planting-returns-company/list", [PlantingReturnsCompanyApiController::class, "planting_returns_company_list"]);
     Route::get("/planting-returns-grower/list", [PlantingReturnsGrowerApiController::class, "planting_returns_grower_list"]);
