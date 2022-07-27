@@ -66,8 +66,8 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
         });
 
         self::updated(function ($model) {
-            $user = Auth::user();
-            Mail::to($user)->send(new \App\Mail\SR6FormUpdated($user));
+            // $user = Auth::user();
+            // Mail::to($user)->send(new \App\Mail\SR6FormUpdated($user));
         });
 
         self::deleting(function ($model) {

@@ -62,7 +62,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post("/forms/sr4/delete", [FormSr4ApiController::class, "form_sr4_delete"]);
 
     Route::post("/forms/sr6/new", [FormSr6ApiController::class, "form_sr6_create"]);
-    Route::post("/forms/sr4/delete", [FormSr4ApiController::class, "form_sr4_delete"]);
+    Route::post("/forms/sr6/delete", [FormSr6ApiController::class, "form_sr6_delete"]);
 
     Route::post("/forms/qds/new", [FormQDSApiController::class, "form_qds_create"]);
 
