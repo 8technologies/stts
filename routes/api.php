@@ -33,7 +33,6 @@ Route::post("/register", [AuthApiController::class, "register"]);
 Route::post("/login", [AuthApiController::class, "login"]);
 
 Route::group(['middleware' => 'api'], function ($router) {
-
     /* ------------------------------------------------------------------------------------------------*/
     // auth
     Route::get("/me", [AuthApiController::class, "me"]);
