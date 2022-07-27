@@ -87,7 +87,6 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
     }
 
 
-
     // the jwt auth to map this model to the jwt rest api token authentication
 
     /**
