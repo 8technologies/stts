@@ -91,8 +91,8 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
         });
 
         self::deleting(function ($model) {
-            $user = Auth::user();
-            Mail::to($user)->send(new \App\Mail\SR4FormDeleted($user));
+            //$user = Auth::user(); 
+            //Mail::to($user)->send(new \App\Mail\SR4FormDeleted($user));
         });
 
         self::deleted(function ($model) {
