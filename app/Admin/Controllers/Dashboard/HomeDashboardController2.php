@@ -103,7 +103,6 @@ class HomeDashboardController2 extends AdminController
         ];
 
 
-
         $non_admin_envs_data = [
             ['name' => 'Import Permits:', 'value' =>  ImportExportPermit::where('administrator_id', $user->id)->count()],
             ['name' => 'Export Permits:', 'value' =>  ImportExportPermit::where('administrator_id', $user->id)->count()],
@@ -123,12 +122,10 @@ class HomeDashboardController2 extends AdminController
             ['name' => 'Quotations:', 'value' => Quotation::where('administrator_id', $user->id)->count()],
         ];
 
-    
-        
         if (Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')) {
-            return view('admin::dashboard.dash', compact('envs'));
+            return view('admin::dashboard.dash_table', compact('envs'));
         }
-        return view('admin::dashboard.dash', compact(
+        return view('admin::dashboard.dash_table', compact(
             'non_admin_envs', 
             'non_admin_envs_data'
         ));
@@ -159,9 +156,9 @@ class HomeDashboardController2 extends AdminController
 
         
         if (Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')) {
-            return view('admin::dashboard.dash', compact('envs'));
+            return view('admin::dashboard.dash_table', compact('envs'));
         }
-        return view('admin::dashboard.dash2', compact('non_admin_envs'));
+        return view('admin::dashboard.dash_table', compact('non_admin_envs'));
     }
 
 
@@ -205,9 +202,9 @@ class HomeDashboardController2 extends AdminController
 
         
         if (Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')) {
-            return view('admin::dashboard.dash', compact('envs'));
+            return view('admin::dashboard.dash_table', compact('envs'));
         }
-        return view('admin::dashboard.dash3', compact('non_admin_envs'));
+        return view('admin::dashboard.dash_table', compact('non_admin_envs'));
     }
 
 

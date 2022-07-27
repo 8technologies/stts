@@ -2,16 +2,13 @@
 
 namespace App\Admin\Controllers;
 
-use Encore\Admin\Layout\Column;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Layout\Row;
+use Encore\Admin\Layout\Column;
 use Encore\Admin\Widgets;
 use Encore\Admin\Widgets\Box;
-use Encore\Admin\Widgets\Callout;
-use App\Admin\Controllers\Dashboard\HomeDashboardController1;
 use App\Admin\Controllers\Dashboard\HomeDashboardController2;
-use App\Admin\Controllers\Dashboard\HomeDashboardController3;
 use Encore\Admin\Facades\Admin;
 
 
@@ -22,27 +19,72 @@ class HomeController extends Controller
         ->title($title = Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')? 'The Admin Dashboard': 'Showing your Dashboard')
     
         ->row(function (Row $row) {
+            
+            $row->column(4, function (Column $column) {
+                $column->append(HomeDashboardController2::indexx());
+            });
 
-            // $row->column(4, function (Column $column) {
-            //     $column->append(HomeDashboardController2::indexx());
-            // });
+            // $bar = view('admin.chartjs.bar');
+            // $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
 
-            $bar = view('admin.chartjs.bar');
-            $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
+            // $bar = view('admin.chartjs.line');
+            // $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
 
-            $bar = view('admin.chartjs.line');
-            $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
+            // $bar = view('admin.chartjs.pie');
+            // $row->column(1/3, new Box('Quality Assurance Statistics\' Pie Chart', $bar));
 
-            $bar = view('admin.chartjs.pie');
-            $row->column(1/3, new Box('Quality Assurance Statistics\' Pie Chart', $bar));
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box('Marketplace Bar Graph', view('admin.chartjs.bar', [
+                    'icon' => '3.png',
+                    'count' => '51',
+                    'sub_title' => 'Unread messages from your customers.',
+                ]));
+                $box->style('success');
+                $column->append($box);
+            });
 
-            // $row->column(4, function (Column $column) {
-            //     $column->append(HomeDashboardController2::indexx2());
-            // });
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box('Seed Stock Line Graph', view('admin.chartjs.line', [
+                    'icon' => '3.png',
+                    'count' => '51',
+                    'sub_title' => 'Unread messages from your customers.',
+                ]));
+                $box->style('success');
+                $column->append($box);
+            });
 
-            // $row->column(4, function (Column $column) {
-            //     $column->append(HomeDashboardController2::indexx3());
-            // });
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box('Marketplace Pie Chart', view('admin.chartjs.pie', [
+                    'icon' => '3.png',
+                    'count' => '51',
+                    'sub_title' => 'Unread messages from your customers.',
+                ]));
+                $box->style('success');
+                $column->append($box);
+            });
+
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box('Combo Bar Graph', view('admin.chartjs.combo-bar-line', [
+                    'icon' => '3.png',
+                    'count' => '51',
+                    'sub_title' => 'Unread messages from your customers.',
+                ]));
+                $box->style('success');
+                $column->append($box);
+            });
+
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box('Scatter Graph', view('admin.chartjs.scatter', [
+                    'icon' => '3.png',
+                    'count' => '51',
+                    'sub_title' => 'Unread messages from your customers.',
+                ]));
+                $box->style('success');
+                $column->append($box);
+            });
+
+            // $bar = view('admin::dashboard.dash');
+            // $row->column(11/12, new Box('Quality Assurance Statistics\' Pie Chart', $bar));
         }); 
     }
         

@@ -32,20 +32,12 @@ class HomeDashboardController1 extends AdminController
         $this->middleware('auth');
     }
 
-    // /**
-    //  * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-    //  */
-    // public static function title()
-    // {
-    //     return view('admin::dashboard.title');
-    // }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public static function indexx()
     {
-        
         if (Admin::user()->isRole('super-admin')) {
             $my_role= "Super Admin";
         } else if (Admin::user()->isRole('admin')) {
@@ -81,7 +73,7 @@ class HomeDashboardController1 extends AdminController
             ['name' => 'Seed Labels:', 'value' => SeedLabel::get()->count()],
 
             ['name' => 'Stock Examination Requests:', 'value' => FormStockExaminationRequest::get()->count()],
-            ['name' => 'Stock Records:', 'value' => StockRecord::get()->count()],
+            ['name' => 'Stock Records:', 'value' => StockRecord::where()->count()],
             ['name' => 'Marketable Seed:', 'value' => MarketableSeed::get()->count()],
 
             ['name' => 'Marketplace:', 'value' => Product::get()->count()],
@@ -120,12 +112,13 @@ class HomeDashboardController1 extends AdminController
             // ['name' => 'Timezone:', 'value' => config('app.timezone')],
             // ['name' => 'Locale:', 'value' => config('app.locale')],
         ];
-
         
         if (Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')) {
-            return view('admin::dashboard.dash', compact('envs'));
+            return view('admin.chartjs.bar', compact('envs'));
         }
-        return view('admin::dashboard.dash', compact('non_admin_envs'));
+        return view('admin.chartjs.bar', compact([
+            'Marketplace',
+        ]));
     }
 
 

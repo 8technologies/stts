@@ -138,7 +138,7 @@ class HomeDashboardController3 extends AdminController
         if (Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')) {
             return view('admin::dashboard.dash', compact('envs'));
         }
-        return view('admin::dashboard.dash', compact(
+        return view('admin.dashboard.dash', compact(
             'non_admin_envs', 
             'non_admin_envs_data',
             'import_status',
