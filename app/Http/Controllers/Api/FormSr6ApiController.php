@@ -138,7 +138,6 @@ class FormSr6ApiController extends AdminController
         $user_id = auth()->user()->id;
         $id = ((int)($request->input('id')));
         $item = FormSr6::find($id);
-
         if ($item == null) {
             return $this->errorResponse("Failed to delete  because the item was not found.", 200);
         }
@@ -149,7 +148,6 @@ class FormSr6ApiController extends AdminController
             return $this->errorResponse("Item at this stage cannot be deleted.", 200);
         }
         FormSr6::where('id', $id)->delete();
-
         return $this->successResponse($item, "Item deleted successfully!", 201);
     }
 }

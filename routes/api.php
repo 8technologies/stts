@@ -65,6 +65,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post("/forms/sr6/delete", [FormSr6ApiController::class, "form_sr6_delete"]);
 
     Route::post("/forms/qds/new", [FormQDSApiController::class, "form_qds_create"]);
+    Route::post("/forms/qds/delete", [FormQDSApiController::class, "form_qds_delete"]);
 
     // Crops via the SR6 form submit form
     Route::get('/crops-list/', [CropApiController::class, "crops_list"]);
