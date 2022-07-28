@@ -116,6 +116,17 @@ Route::group(['middleware' => 'api'], function ($router) {
     // Route::post("/form-sr10/new", [FormSr10ApiController::class, "form_sr10_create"]);
 
     /* ------------------------------------------------------------------------------------------------*/
+    // Seed Stock
+    // stock examination requests
+    Route::post("/form-stock-examination-requests/new", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_create"]);
+    Route::get("/form-stock-examination-requests/list", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_list"]);
+    Route::post("/form-stock-examination-requests/delete", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_delete"]);
+    
+    
+    Route::get("/form-stock-records/list", [FormStockRecordApiController::class, "form_stock_records_list"]);
+    Route::get("/marktable-seed/list", [MarketableSeedApiController::class, "marktable_seed_list"]);
+
+    /* ------------------------------------------------------------------------------------------------*/
     // marketplace
     Route::get("/products/list", [ProductApiController::class, "products_list"]);
     Route::get("/orders/list", [OrderApiController::class, "order_list"]);
@@ -123,14 +134,8 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/quotations/list", [QuotationApiController::class, "quotations_list"]);
     // post
     Route::post("/pre-order/new", [PreOrderApiController::class, "pre_order_create"]);
+    /* ------------------------------------------------------------------------------------------------*/
 
-
-
-    // Seed Stock
-    Route::post("/form-stock-examination-requests/new", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_create"]);
-    Route::get("/form-stock-examination-requests/list", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_list"]);
-    Route::get("/form-stock-records/list", [FormStockRecordApiController::class, "form_stock_records_list"]);
-    Route::get("/marktable-seed/list", [MarketableSeedApiController::class, "marktable_seed_list"]);
 
     
 });
