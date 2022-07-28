@@ -39,6 +39,8 @@
     <form action="{{ admin_url('auth/login') }}" method="post">
       <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
 
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
         @if($errors->has('username'))
           @foreach($errors->get('username') as $message)
             <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
@@ -73,7 +75,6 @@
 
         <!-- /.col -->
         <div class="col-xs-4">
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <button type="submit" class="btn btn-primary btn-block btn-flat">{{ trans('admin.login') }}</button>
         </div>
         <!-- /.col -->
