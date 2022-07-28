@@ -41,7 +41,7 @@ class SeedLabelApiController extends AdminController
         $item = SeedLabel::find($id);
         
         if ($item == null) {
-            return $this->errorResponse("Failed to delete  because the item was not found. ==> ($id) <== ", 200);
+            return $this->errorResponse("Failed to delete  because the item was not found.", 200);
         }
         if ($item->administrator_id != $user_id) {
             return $this->errorResponse("You cannot delete an item that does not belong to you.", 200);
