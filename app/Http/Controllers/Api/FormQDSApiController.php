@@ -40,6 +40,18 @@ class FormQDSApiController extends AdminController
     public function form_qds_create(Request $request){ // \Illuminate\Http\JsonResponse
         $user = Auth::user();
 
+
+        $has_form = FormQds::where([
+            'administrator_id' => $user->id,
+            'status' => 5, 
+        ])->first();
+ 
+        if ($has_form != null) {
+            return $this->errorResponse("You already have active QDS Certificate.", 200); 
+        }
+
+
+
         $data = $request->only(
             // 'name_of_applicant',
             'address',
@@ -64,7 +76,7 @@ class FormQDSApiController extends AdminController
         if ($post_data->fails()) {
             return $this->errorResponse("QDS form submit error", 200); 
         }
-
+ 
         $form = FormQds::create([
             'administrator_id' => $user->id,
             'name_of_applicant' => $user->name,
