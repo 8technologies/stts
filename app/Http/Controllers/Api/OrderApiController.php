@@ -35,7 +35,7 @@ class OrderApiController extends AdminController
     }   
 
     
-    // delete quotation
+    // delete order
     public function order_delete(Request $request): \Illuminate\Http\JsonResponse
     {
         $user_id = auth()->user()->id;

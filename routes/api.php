@@ -121,9 +121,11 @@ Route::group(['middleware' => 'api'], function ($router) {
     
     // my stock  / stock record
     Route::get("/form-stock-records/list", [FormStockRecordApiController::class, "form_stock_records_list"]);
+    Route::post("/form-stock-record/delete", [FormStockRecordApiController::class, "form_stock_record_delete"]);
 
     // marketable seed
     Route::get("/marktable-seed/list", [MarketableSeedApiController::class, "marktable_seed_list"]);
+    Route::post("/marktable-seed/delete", [MarketableSeedApiController::class, "marktable_seed_delete"]);
 
     // MARKETPLACE ------------------------------------------------------------------------------------------------*/
     // marketplace (all products)
