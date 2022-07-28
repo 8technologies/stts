@@ -40,7 +40,7 @@ class OrderApiController extends AdminController
     {
         $user_id = auth()->user()->id;
         $id = ((int)($request->input('id')));
-        $item = Order::where('administrator_id', '=>', $id)->find($id);
+        $item = Order::where('administrator_id', '=>', $user_id)->find($id);
         
         if ($item == null) {
             return $this->errorResponse("Failed to delete  because the item was not found.", 200);
