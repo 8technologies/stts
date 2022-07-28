@@ -47,6 +47,7 @@
           @endforeach
         @endif
 
+        <label for="uname"><b>Username / Email</b></label>
         <input type="text" class="form-control" placeholder="{{ trans('admin.username') }}" name="username" value="{{ old('username') }}">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
@@ -58,6 +59,7 @@
           @endforeach
         @endif
 
+        <label for="uname"><b>Password</b></label>
         <input type="password" class="form-control" placeholder="{{ trans('admin.password') }}" name="password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
