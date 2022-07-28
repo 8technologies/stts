@@ -43,6 +43,7 @@ class AuthApiController extends Controller
     public function register(Request $request)
     {
         $data = $request->only(
+            'username', 
             'first_name', 
             'last_name', 
             'email', 
@@ -51,7 +52,8 @@ class AuthApiController extends Controller
         );
 
         $post_data = Validator::make($data, [
-            'first_name' => 'required|max:24|min:2',
+            'username' => 'required|max:8|min:4',
+            'first_name' => 'required|max:8|min:4',
             'last_name' => 'required|max:24|min:2',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|max:100|min:3',
@@ -64,13 +66,14 @@ class AuthApiController extends Controller
             return $this->errorResponse($message="Passwords did not match.", 203); 
         }
 
-        // $old_user = Administrator::where('username',  $request->input("username"))->first();
-        $old_user_ = Administrator::where('email',  $request->input("email"))->first();
+        $old_user1 = Administrator::where('username',  $request->input("username"))->first();
+        $old_user2 = Administrator::where('email',  $request->input("email"))->first();
         
-        // if ($old_user) {
-        //     return $this->errorResponse($message="Username already exists.", 203);
-        // }
-        if ($old_user_) {
+        if ($old_user1) {
+            return $this->errorResponse($message="Username already exists.", 203);
+        }
+
+        if ($old_user2) {
             return $this->errorResponse($message="Email already exists.", 203);
         }
 
@@ -79,7 +82,7 @@ class AuthApiController extends Controller
             $user->last_name = $request->input("last_name");
             $user->name = $request->input("first_name") . " " . $request->input("last_name");
             $user->email = $request->input("email");
-            $user->username = $request->input("email");
+            $user->username = $request->input("username");
             $user->password = Hash::make($request->input("password"));
             $user->remember_token = Str::random(62);
             
