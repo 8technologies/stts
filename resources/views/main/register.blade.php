@@ -45,6 +45,18 @@
 
     <form action="{{ url('register') }}" method="POST">
 
+    
+    
+    <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
+        @if($errors->has('username'))
+          @foreach($errors->get('username') as $message)
+            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
+          @endforeach
+        @endif
+
+        <input type="email" class="form-control" placeholder="Username"  required name="username" value="{{ old('username') }}">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
 
     <div class="row">
         <div class="col-md-6">
@@ -69,15 +81,14 @@
         </div>
     </div>
     
-    
-      <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
-        @if($errors->has('username'))
-          @foreach($errors->get('username') as $message)
+      <div class="form-group has-feedback {!! !$errors->has('email') ?: 'has-error' !!}">
+        @if($errors->has('email'))
+          @foreach($errors->get('email') as $message)
             <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
           @endforeach
         @endif
 
-        <input type="email" class="form-control" placeholder="Email address"  required name="username" value="{{ old('username') }}">
+        <input type="email" class="form-control" placeholder="Email address"  required name="email" value="{{ old('email') }}">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
 
