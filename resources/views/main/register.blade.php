@@ -54,7 +54,7 @@
           @endforeach
         @endif
 
-        <input type="email" class="form-control" placeholder="Username"  required name="username" value="{{ old('username') }}">
+        <input type="text" class="form-control" placeholder="Username"  required name="username" value="{{ old('username') }}">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
 
