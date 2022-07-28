@@ -101,7 +101,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/qds-crop-declarations/list", [QDSCropDeclarationApiController::class, "qds_crop_declarations_list"]);
     Route::post("/qds-crop-declarations/delete", [QDSCropDeclarationApiController::class, "qds_crop_declarations_delete"]);
 
-    // seed lab- analysis
+    // seed lab analysis
     Route::post("/seed-labs/new", [SeedLabApiController::class, "seed_lab_create"]);
     Route::get("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
     Route::post("/seed-labs/delete", [SeedLabApiController::class, "seed_lab_delete"]);
