@@ -33,7 +33,7 @@ Route::post("/register", [AuthApiController::class, "register"]);
 Route::post("/login", [AuthApiController::class, "login"]);
 
 Route::group(['middleware' => 'api'], function ($router) {
-    /* ------------------------------------------------------------------------------------------------*/
+    // AUTH -----------------------------------------------------------------------------------------------------------*/
     // auth
     Route::get("/me", [AuthApiController::class, "me"]);
     Route::put("/me/update", [AuthApiController::class, "update"]);
@@ -45,7 +45,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     // password reset/ change
     Route::post('reset_password', [ResetPasswordController::class, 'sendEmail']);
 
-    /* ------------------------------------------------------------------------------------------------*/
+    // USERS -----------------------------------------------------------------------------------------------------------*/
     // users
     Route::get("/user/list", [UserAPIController::class, "index"]);
     Route::get("/user/{id}", [UserAPIController::class, "show"]);
@@ -53,8 +53,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::delete("/user/{id}", [UserAPIController::class, "destroy"]);
     Route::get("/user/search/{name}", [UserAPIController::class, "where"]);
 
-    /* ------------------------------------------------------------------------------------------------*/
-    // Application forms
+    // APPLICATION FORMS ------------------------------------------------------------------------------------------------*/
     // sr4
     Route::post("/forms/sr4/new", [FormSr4ApiController::class, "form_sr4_create"]);
     Route::get("/form-sr4/list", [FormSr4ApiController::class, "form_sr4_list"]);
@@ -73,8 +72,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::post('/crops-create/', [CropApiController::class, "crops_create"]);
     Route::get('/crop-varieties-list/', [CropVarietyApiController::class, "crop_varities_list"]);
 
-    /* ------------------------------------------------------------------------------------------------*/
-    // Quality Assurance
+    // QUALITY ASSURANCE ------------------------------------------------------------------------------------------------*/
     // import / export permits    ['is_import'=1  => 'import_permit'  |  'is_import'=0 => 'export_permit' ]
     Route::post("/import-permit/new", [ImportPermitApiController::class, "import_permits_create"]);
     Route::get("/import-permit/list", [ImportPermitApiController::class, "import_permits_list"]);
@@ -115,8 +113,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     // Route::post("/form-sr10/new", [FormSr10ApiController::class, "form_sr10_create"]);
 
-    /* ------------------------------------------------------------------------------------------------*/
-    // Seed Stock
+    // SEED STOCK ------------------------------------------------------------------------------------------------*/
     // stock examination requests
     Route::post("/form-stock-examination-requests/new", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_create"]);
     Route::get("/form-stock-examination-requests/list", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_list"]);
@@ -128,8 +125,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     // marketable seed
     Route::get("/marktable-seed/list", [MarketableSeedApiController::class, "marktable_seed_list"]);
 
-    /* ------------------------------------------------------------------------------------------------*/
-    // marketplace
+    // MARKETPLACE ------------------------------------------------------------------------------------------------*/
     // marketplace (all products)
     Route::get("/products/list", [ProductApiController::class, "products_list"]);
     Route::post("/product/delete", [ProductApiController::class, "product_delete"]);
@@ -144,5 +140,6 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     // quotations
     Route::get("/quotations/list", [QuotationApiController::class, "quotations_list"]);
-    /* ------------------------------------------------------------------------------------------------*/
+    Route::post("/quotation/delete", [QuotationApiController::class, "quotation_delete"]);
+    /* -----------------------------------------------------------------------------------------------------------*/
 });
