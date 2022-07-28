@@ -18,7 +18,8 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Response;
 use JWTAuth;
 use App\Traits\ApiResponser;
-
+use Encore\Admin\Form\Field\Email;
+use Illuminate\Log\Logger;
 
 class AuthApiController extends Controller 
 {
@@ -105,16 +106,24 @@ class AuthApiController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
-        $credentials1 = request(['email', 'password']);
-        $credentials2 = request(['username', 'password']);
+        // $credentials1 = request(['username', 'password']);
+        $credentials2 = request(['email', 'password']);
 
-        if (!(($token = auth()->attempt($credentials1)) || (($token = auth()->attempt($credentials2))))) {
-            return $this->errorResponse($message="Wrong login credentials", 401);
+        // $email = $request->input("email");
+        // $password = $request->input("password");
+        // $credentials3 = request([$email, $password]);
+
+        if (!(($token = auth()->attempt($credentials2)))) {
+            return $this->errorResponse("Wrong login credentials", 401);
         }
 
-        return $this->successResponse($token, $message="Log in success!", 202);
+        // if (!(($token = auth()->attempt($credentials1)) || (($token = auth()->attempt($credentials2))))) {
+        //     return $this->errorResponse($message="Wrong login credentials", 401);
+        // }
+
+        return $this->successResponse($token, "Log in success!", 202);
     }
 
 

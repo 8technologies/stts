@@ -5,18 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\Profile;
-use App\Models\User;
 use Encore\Admin\Auth\Database\Administrator;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
-use App\Imports\UsersImport;
 use App\Models\SubGrower;
 use Excel;
-
 
 
 class MainController extends Controller
@@ -133,7 +129,6 @@ class MainController extends Controller
         }
     }
 
-
     public function index()
     {
         return redirect()->intended('login');
@@ -219,6 +214,7 @@ class MainController extends Controller
 
             $validated = $request->validate([
                 'first_name' => 'required|max:24|min:2',
+                'first_name' => 'required|max:24|min:2',
                 'last_name' => 'required|max:24|min:2',
                 'password' => 'required|max:100|min:3',
                 'password_confirmation' => 'required|max:100|min:3',
@@ -249,7 +245,7 @@ class MainController extends Controller
             $admin->name = $request->input("first_name") . " " . $request->input("last_name");
             $admin->last_name = $request->input("last_name");
             $admin->username = $request->input("username");
-            $admin->email = $request->input("username");
+            $admin->email = $request->input("email");
             $admin->password = Hash::make($request->input("password"));
 
             if ($admin->save()) {
@@ -262,11 +258,10 @@ class MainController extends Controller
                 return redirect('register')
                     ->withErrors($errors)
                     ->withInput();
-                die();
+                // die();
             }
 
-
-            $u['email'] = $request->input("username");
+            $u['email'] = $request->input("email");
             $u['password'] = $request->input("password");
             //$u['password'] = Hash::make($request->input("password"));
             $remember = $request->get('remember', true);
