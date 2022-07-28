@@ -132,6 +132,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     // orders
     Route::get("/orders/list", [OrderApiController::class, "order_list"]);
+    Route::post("/order/delete", [OrderApiController::class, "order_delete"]);
 
     // pre-oders
     Route::get("/pre-orders/list", [PreOrderApiController::class, "pre_order_list"]);
