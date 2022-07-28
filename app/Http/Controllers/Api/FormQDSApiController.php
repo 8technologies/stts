@@ -42,8 +42,7 @@ class FormQDSApiController extends AdminController
 
 
         $has_form = FormQds::where([
-            'administrator_id' => $user->id,
-            'status' => 5, 
+            'administrator_id' => $user->id, 
         ])->first();
  
         if ($has_form != null) {
