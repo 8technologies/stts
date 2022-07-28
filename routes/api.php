@@ -134,15 +134,15 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/products/list", [ProductApiController::class, "products_list"]);
     Route::post("/product/delete", [ProductApiController::class, "product_delete"]);
 
-
-
+    // orders
     Route::get("/orders/list", [OrderApiController::class, "order_list"]);
+
+    // pre-oders
     Route::get("/pre-orders/list", [PreOrderApiController::class, "pre_order_list"]);
-    Route::get("/quotations/list", [QuotationApiController::class, "quotations_list"]);
-    // post
     Route::post("/pre-order/new", [PreOrderApiController::class, "pre_order_create"]);
+    Route::post("/pre-order/delete", [PreOrderApiController::class, "pre_order_delete"]);
+
+    // quotations
+    Route::get("/quotations/list", [QuotationApiController::class, "quotations_list"]);
     /* ------------------------------------------------------------------------------------------------*/
-
-
-    
 });
