@@ -122,13 +122,20 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/form-stock-examination-requests/list", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_list"]);
     Route::post("/form-stock-examination-requests/delete", [FormStockExaminationRequestApiController::class, "form_stock_examination_requests_delete"]);
     
-    
+    // my stock  / stock record
     Route::get("/form-stock-records/list", [FormStockRecordApiController::class, "form_stock_records_list"]);
+
+    // marketable seed
     Route::get("/marktable-seed/list", [MarketableSeedApiController::class, "marktable_seed_list"]);
 
     /* ------------------------------------------------------------------------------------------------*/
     // marketplace
+    // marketplace (all products)
     Route::get("/products/list", [ProductApiController::class, "products_list"]);
+    Route::post("/product/delete", [ProductApiController::class, "product_delete"]);
+
+
+
     Route::get("/orders/list", [OrderApiController::class, "order_list"]);
     Route::get("/pre-orders/list", [PreOrderApiController::class, "pre_order_list"]);
     Route::get("/quotations/list", [QuotationApiController::class, "quotations_list"]);

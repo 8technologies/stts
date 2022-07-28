@@ -124,9 +124,9 @@ class ProductController extends AdminController
 
         $grid->disableExport();
         
-        if (Request::get('view') !== 'table') {
-            $grid->setView('admin.grid.card', []);
-        }
+        // if (Request::get('view') !== 'table') {
+        //     $grid->setView('admin.grid.card', []);
+        // }
 
         return $grid;
     }
