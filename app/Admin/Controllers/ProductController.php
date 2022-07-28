@@ -174,7 +174,7 @@ class ProductController extends AdminController
         ]);
         $form->textarea('detail', __('Detail'))->required();
         $form->image('image', __('Thumbnail Image'))->required();
-        $form->multipleImage('images', __('Gallery photos'));
+        //$form->multipleImage('images', __('Gallery photos'));
 
         
 

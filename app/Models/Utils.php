@@ -433,12 +433,10 @@ class Utils
         if ($name == null || (strlen($name) < 2)) {
             $url .= '/default.png';
         } else if (file_exists(public_path('storage/uploads' . $name))) {
-            // $url .= "/" . $name;
-            $url = substr($name, 10, 79);
+            $url = url("storage/uploads/".$name);
         } else {
-            // $url .= '/default.png';
-            $url = substr($name, 10, 79);
-        }
+            $url = url("storage/uploads/".$name);
+        } 
         return $url;
     }
 
