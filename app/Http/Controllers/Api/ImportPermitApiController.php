@@ -139,7 +139,7 @@ class ImportPermitApiController extends AdminController
     {
         $user_id = auth()->user()->id;
         $id = ((int)($request->input('id')));
-        $item = ImportExportPermit::where('is_import', 1)->find($id);
+        $item = ImportExportPermit::where('is_import', '=>', 1)->find($id);
         if ($item == null) {
             return $this->errorResponse("Failed to delete  because the item was not found.", 200);
         }
