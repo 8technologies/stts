@@ -104,11 +104,17 @@ class AuthApiController extends Controller
      */
     public function login()
     {
-        $credentials = request(['email', 'password']);
+        $credentials1 = request(['email', 'password']);
+        $credentials2 = request(['username', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (! $token = auth()->attempt($credentials1)) {
             return $this->errorResponse($message="Wrong login credentials", 401);
         }
+
+        if (! $token = auth()->attempt($credentials2)) {
+            return $this->errorResponse($message="Wrong login credentials", 401);
+        }
+
         return $this->successResponse($token, $message="Log in success!", 202);
     }
 
