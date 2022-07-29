@@ -27,7 +27,7 @@ class OrderApiController extends AdminController
         
         */
         $user = auth()->user();
-        $query = Order::where('order_by', $user->id)->get();
+        $query = Order::where('administrator_id', $user->id)->get();
         // $query = DB::table('orders')->where('order_by', $user->id)->get();
         // $query = Order::all();
 
