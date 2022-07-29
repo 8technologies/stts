@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Crop;
 use App\Models\FormSr6;
+use App\Models\FormSr6HasCrop;
 use App\Models\Utils;
 use Carbon\Carbon;
 use Encore\Admin\Auth\Database\Administrator;
@@ -301,6 +302,7 @@ class FormSr6Controller extends AdminController
 
         $form->setWidth(8, 4);
         Admin::style('.form-group  {margin-bottom: 25px;}');
+        // Admin::style('.form-group  {margin-bottom: 25px; padding-right: 25px;}');
 
         $user = Auth::user();
 
@@ -326,24 +328,27 @@ class FormSr6Controller extends AdminController
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required()->required();
             $form->text('address', __('Address'))->required();
             $form->text('premises_location', __('Premises location'))->required();
+
             $form->text('years_of_expirience', __('Years of experience as seed grower'))
                 ->rules('min:1')
                 ->attribute('type', 'number')
                 ->required();
+
             $form->html('<h4>
-                            <b>I/We wish to apply for a license to produce seed as indicated below:<b>
+                            I/We wish to apply for a license to produce seed as indicated below:
                         </h4>'
-                    );
-                        
-            $form->hasMany('form_sr6_has_crops',__('Click New to Select Available Crops
-                '), function (NestedForm $form) {   
-                $_items = [];
-                foreach (Crop::all() as $key => $item) { 
-                    $_items[$item->id] = $item->name . " - " . $item->id;
-                }
-                $form->select('crop_id','Available crops')->options( Crop::all()->pluck('name','id') )
+                );
+
+            $form->hasMany('FormSr6_has_crop',__('Click New to Select Available Crops')
+                , function (NestedForm $form) {   
+                // $_items = [];
+                // foreach (FormSr6HasCrop::all() as $key => $item) { 
+                //     $_items[$item->id] = $item->name . " - " . $item->id;
+                // }
+                $form->listbox('crop_id','Available crops')->options(Crop::all()->pluck('name','id'))
                 ->required();
-            });
+            }
+        );
 
             // // ---------------------------------------------------------------------
             // $form->listbox('crop_id','Add Crop')->options( Crop::all()->pluck('name','id') )
