@@ -30,7 +30,7 @@ use Encore\Admin\Facades\Admin;
 Admin::routes();
 
 Route::post("/register", [AuthApiController::class, "register"]);
-Route::post("/login", [AuthApiController::class, "login"]);
+Route::post("/login", [AuthApiController::class, "login"]); 
 
 Route::group(['middleware' => 'api'], function ($router) {
     // AUTH -----------------------------------------------------------------------------------------------------------*/
@@ -135,6 +135,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     // orders
     Route::get("/orders/list", [OrderApiController::class, "order_list"]);
     Route::post("/order/delete", [OrderApiController::class, "order_delete"]);
+    Route::post("/order/new", [OrderApiController::class, "order_create"]);
 
     // pre-oders
     Route::get("/pre-orders/list", [PreOrderApiController::class, "pre_order_list"]);
