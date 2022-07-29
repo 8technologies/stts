@@ -5,21 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Laravel\Passport\RefreshTokenRepository;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Encore\Admin\Auth\Database\Administrator;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Passport\TokenRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Symfony\Component\HttpFoundation\Response;
-use JWTAuth;
 use App\Traits\ApiResponser;
-use Encore\Admin\Form\Field\Email;
-use Illuminate\Log\Logger;
+
 
 class AuthApiController extends Controller 
 {
@@ -161,100 +154,100 @@ class AuthApiController extends Controller
     }
 
 
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function refresh()
-    {
-        $foo = $this->respondWithToken(auth()->refresh());
-        return $this->successResponse($foo, $message="Token refreshed"); 
-    }
+    // /**
+    //  * Refresh a token.
+    //  *
+    //  * @return \Illuminate\Http\JsonResponse
+    //  */
+    // public function refresh()
+    // {
+    //     $foo = $this->respondWithToken(auth()->refresh());
+    //     return $this->successResponse($foo, $message="Token refreshed"); 
+    // }
 
     
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
-    }
+    // /**
+    //  * Get the token array structure.
+    //  *
+    //  * @param  string $token
+    //  *
+    //  * @return \Illuminate\Http\JsonResponse
+    //  */
+    // protected function respondWithToken($token)
+    // {
+    //     return response()->json([
+    //         'access_token' => $token,
+    //         'token_type' => 'bearer',
+    //         'expires_in' => auth()->factory()->getTTL() * 60
+    //     ]);
+    // }
 
 
-    // forgot password api end point
-    public function forgot_password(Request $request)
-    {
-        $input = $request->all();
-        $rules = array(
-            'email' => "required|email",
-        );
-        $validator = Validator::make($input, $rules);
-        if ($validator->fails()) {
-            $arr = array("status" => 400, "message" => $validator->errors()->first(), "data" => array());
-        } else {
-            try {
-                $response = Password::sendResetLink($request->only('email'), function (Message $message) {
-                    $message->subject($this->getEmailSubject());
-                });
-                switch ($response) {
-                    case Password::RESET_LINK_SENT:
-                        return \Response::json(array("status" => 200, "message" => trans($response), "data" => array()));
-                    case Password::INVALID_USER:
-                        return \Response::json(array("status" => 400, "message" => trans($response), "data" => array()));
-                }
-            } catch (\Swift_TransportException $ex) {
-                $arr = array("status" => 400, "message" => $ex->getMessage(), "data" => []);
-            } catch (Exception $ex) {
-                $arr = array("status" => 400, "message" => $ex->getMessage(), "data" => []);
-            }
-        }
-        return \Response::json($arr);
-    }
+    // // forgot password api end point
+    // public function forgot_password(Request $request)
+    // {
+    //     $input = $request->all();
+    //     $rules = array(
+    //         'email' => "required|email",
+    //     );
+    //     $validator = Validator::make($input, $rules);
+    //     if ($validator->fails()) {
+    //         $arr = array("status" => 400, "message" => $validator->errors()->first(), "data" => array());
+    //     } else {
+    //         try {
+    //             $response = Password::sendResetLink($request->only('email'), function (Message $message) {
+    //                 $message->subject($this->getEmailSubject());
+    //             });
+    //             switch ($response) {
+    //                 case Password::RESET_LINK_SENT:
+    //                     return \Response::json(array("status" => 200, "message" => trans($response), "data" => array()));
+    //                 case Password::INVALID_USER:
+    //                     return \Response::json(array("status" => 400, "message" => trans($response), "data" => array()));
+    //             }
+    //         } catch (\Swift_TransportException $ex) {
+    //             $arr = array("status" => 400, "message" => $ex->getMessage(), "data" => []);
+    //         } catch (Exception $ex) {
+    //             $arr = array("status" => 400, "message" => $ex->getMessage(), "data" => []);
+    //         }
+    //     }
+    //     return \Response::json($arr);
+    // }
 
 
-    // change passsword
-    public function change_password(Request $request)
-    {
-        $input = $request->all();
-        $userid = Auth::guard('api')->user()->id;
-        $rules = array(
-            'old_password' => 'required',
-            'new_password' => 'required|min:6',
-            'confirm_password' => 'required|same:new_password',
-        );
+    // // change passsword
+    // public function change_password(Request $request)
+    // {
+    //     $input = $request->all();
+    //     $userid = Auth::guard('api')->user()->id;
+    //     $rules = array(
+    //         'old_password' => 'required',
+    //         'new_password' => 'required|min:6',
+    //         'confirm_password' => 'required|same:new_password',
+    //     );
 
-        $validator = Validator::make($input, $rules);
-        if ($validator->fails()) {
-            $arr = array("status" => 400, "message" => $validator->errors()->first(), "data" => array());
-        } else {
-            try {
-                if ((Hash::check(request('old_password'), Auth::user()->password)) == false) {
-                    $arr = array("status" => 400, "message" => "Check your old password.", "data" => array());
-                } else if ((Hash::check(request('new_password'), Auth::user()->password)) == true) {
-                    $arr = array("status" => 400, "message" => "Please enter a password which is not similar then current password.", "data" => array());
-                } else {
-                    User::where('id', $userid)->update(['password' => Hash::make($input['new_password'])]);
-                    $arr = array("status" => 200, "message" => "Password updated successfully.", "data" => array());
-                }
-            } catch (\Exception $ex) {
-                if (isset($ex->errorInfo[2])) {
-                    $msg = $ex->errorInfo[2];
-                } else {
-                    $msg = $ex->getMessage();
-                }
-                $arr = array("status" => 400, "message" => $msg, "data" => array());
-            }
-        }
+    //     $validator = Validator::make($input, $rules);
+    //     if ($validator->fails()) {
+    //         $arr = array("status" => 400, "message" => $validator->errors()->first(), "data" => array());
+    //     } else {
+    //         try {
+    //             if ((Hash::check(request('old_password'), Auth::user()->password)) == false) {
+    //                 $arr = array("status" => 400, "message" => "Check your old password.", "data" => array());
+    //             } else if ((Hash::check(request('new_password'), Auth::user()->password)) == true) {
+    //                 $arr = array("status" => 400, "message" => "Please enter a password which is not similar then current password.", "data" => array());
+    //             } else {
+    //                 User::where('id', $userid)->update(['password' => Hash::make($input['new_password'])]);
+    //                 $arr = array("status" => 200, "message" => "Password updated successfully.", "data" => array());
+    //             }
+    //         } catch (\Exception $ex) {
+    //             if (isset($ex->errorInfo[2])) {
+    //                 $msg = $ex->errorInfo[2];
+    //             } else {
+    //                 $msg = $ex->getMessage();
+    //             }
+    //             $arr = array("status" => 400, "message" => $msg, "data" => array());
+    //         }
+    //     }
         
-        return \Response::json($arr);
-    }
+    //     return \Response::json($arr);
+    // }
 }
