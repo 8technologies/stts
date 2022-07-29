@@ -142,6 +142,7 @@ class FormCropDeclarationController extends AdminController
         $user = Admin::user(); 
         $can_create = false;
         $qds_id = false;
+        
         if ($user->qds == null) {
             $can_create = false;
         }

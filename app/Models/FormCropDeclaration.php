@@ -20,18 +20,18 @@ class FormCropDeclaration extends Model
         'form_qd_id',
     ];
 
-    // public static function boot()
-    // {
-    //     parent::boot(); 
+    public static function boot()
+    {
+        parent::boot(); 
 
-    //     self::creating(function($model){
+        self::creating(function($model){
             
-    //     });
+        });
  
-    //     self::updating(function($model){
-    //     });
+        self::updating(function($model){
+        });
  
-    // }
+    }
 
     
     public function form_crop_declarations_has_crop_varieties()
