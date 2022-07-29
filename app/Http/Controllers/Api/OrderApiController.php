@@ -28,7 +28,9 @@ class OrderApiController extends AdminController
         
         */
         $user = auth()->user();
-        $query = Order::where('administrator_id', $user->id)->get();
+        $query = Order::where('administrator_id', $user->id)
+            ->orWehere('order_by', $user->id)
+            ->get();
         // $query = DB::table('orders')->where('order_by', $user->id)->get();
         // $query = Order::all();
 
@@ -95,7 +97,7 @@ total_price	  */
         if ($item->order_by != $user_id) {
             return $this->errorResponse("You cannot delete an item that does not belong to you.", 200);
         }
-        
+
         if (!Utils::can_be_deleted_by_user($item->status)) {
             return $this->errorResponse("Item at this stage cannot be deleted.", 200);
         }
