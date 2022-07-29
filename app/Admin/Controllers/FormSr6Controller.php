@@ -330,19 +330,26 @@ class FormSr6Controller extends AdminController
                 ->rules('min:1')
                 ->attribute('type', 'number')
                 ->required();
-            $form->html('<h3>I/We wish to apply for a license to produce seed as indicated below:</h3>');
+            $form->html('<h4>
+                            <b>I/We wish to apply for a license to produce seed as indicated below:<b>
+                        </h4>'
+                    );
                         
-            $form->hasMany('form_sr6_has_crops',__('Click on New to Select Crops
+            $form->hasMany('form_sr6_has_crops',__('Click New to Select Available Crops
                 '), function (NestedForm $form) {   
                 $_items = [];
                 foreach (Crop::all() as $key => $item) { 
                     $_items[$item->id] = $item->name . " - " . $item->id;
                 }
-                $form->select('crop_id','Add Crop')->options( Crop::all()->pluck('name','id') )
+                $form->select('crop_id','Available crops')->options( Crop::all()->pluck('name','id') )
                 ->required();
             });
 
-
+            // // ---------------------------------------------------------------------
+            // $form->listbox('crop_id','Add Crop')->options( Crop::all()->pluck('name','id') )
+            // ->required();
+            // // ---------------------------------------------------------------------
+            
             $form->radio(
                 'seed_grower_in_past',
                 __('I/We have/has not been a seed grower in the past?')

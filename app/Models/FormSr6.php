@@ -24,8 +24,6 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
         HasFactory,
         Notifiable;
 
-        
-
     protected $fillable = [
         'administrator_id',
         'dealers_in',
@@ -85,6 +83,9 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
     {
         return $this->hasMany(FormSr6HasCrop::class, 'form_sr6_id');
     }
+
+    
+
 
 
     // the jwt auth to map this model to the jwt rest api token authentication
