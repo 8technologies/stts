@@ -40,6 +40,7 @@ class OrderApiController extends AdminController
     public function order_create(Request $request): \Illuminate\Http\JsonResponse
     {
 
+        return $this->errorResponse("siMPLE TEST.", 200);
         $user_id = auth()->user()->id;
         $product_id = ((int)($request->input('product_id')));
         $pro = Product::find($product_id);
