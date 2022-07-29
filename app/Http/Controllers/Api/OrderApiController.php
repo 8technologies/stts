@@ -40,7 +40,6 @@ class OrderApiController extends AdminController
     public function order_create(Request $request): \Illuminate\Http\JsonResponse
     {
 
-        return $this->errorResponse("siMPLE TEST.", 200);
         $user_id = auth()->user()->id;
         $product_id = ((int)($request->input('product_id')));
         $pro = Product::find($product_id);
@@ -87,14 +86,16 @@ total_price	  */
     {
         $user_id = auth()->user()->id;
         $id = ((int)($request->input('id')));
-        $item = Order::where('administrator_id', '=>', $user_id)->find($id);
+        $item = Order::find($id);
 
         if ($item == null) {
             return $this->errorResponse("Failed to delete  because the item was not found.", 200);
         }
-        if ($item->administrator_id != $user_id) {
+
+        if ($item->order_by != $user_id) {
             return $this->errorResponse("You cannot delete an item that does not belong to you.", 200);
         }
+        
         if (!Utils::can_be_deleted_by_user($item->status)) {
             return $this->errorResponse("Item at this stage cannot be deleted.", 200);
         }
