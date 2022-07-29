@@ -51,7 +51,7 @@ class MarketableSeedController extends AdminController
         if (!Admin::user()->isRole('admin')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
         }
-        if (!Admin::user()->isRole('basic-user')) {
+        if (Admin::user()->isRole('basic-user')) {
             $grid->disableCreateButton();
         }
 

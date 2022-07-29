@@ -286,10 +286,10 @@ class FormSr6Controller extends AdminController
                 //echo($form->dealers_in);
 
                 // call the function to send the notifications after sr6 create form/ form submit
-                $this->sendFormSR6CreateNotification();
+                // $this->sendFormSR6CreateNotification();
 
                 // $user->nofify(new SR6FormAddedNotification($sr6_form_data));
-                Notification::send($user, new SR6FormAddedNotification($sr6_form_data));
+                // Notification::send($user, new SR6FormAddedNotification($sr6_form_data));
             }
         });
 
@@ -332,7 +332,7 @@ class FormSr6Controller extends AdminController
                 ->required();
             $form->html('<h3>I/We wish to apply for a license to produce seed as indicated below:</h3>');
                         
-            $form->hasMany('form_sr6_has_crops',__('Click on New to Add Crops
+            $form->hasMany('form_sr6_has_crops',__('Click on New to Select Crops
                 '), function (NestedForm $form) {   
                 $_items = [];
                 foreach (Crop::all() as $key => $item) { 

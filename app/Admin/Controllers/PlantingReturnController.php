@@ -29,7 +29,7 @@ class PlantingReturnController extends AdminController
      *
      * @var string
      */  
-    protected $title = 'Planting Return - Company';
+    protected $title = 'Planting Return - Company/ Breeders';
 
     /**
      * Make a grid builder.
