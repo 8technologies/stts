@@ -35,6 +35,11 @@ class FormCropDeclarationController extends AdminController
         $grid = new Grid(new FormCropDeclaration());
 
         $grid->column('id', __('Id'))->sortable();
+        
+        $grid->column('created_at', __('Created'))
+            ->display(function ($item) {
+                return Carbon::parse($item)->diffForHumans();
+            })->sortable();
 
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
