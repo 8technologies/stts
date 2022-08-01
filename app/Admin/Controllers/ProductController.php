@@ -11,6 +11,7 @@ use Encore\Admin\Show;
 use Illuminate\Support\Facades\Request;
 use App\Admin\Extensions\Tools\GridView;
 
+
 class ProductController extends AdminController
 {
 
