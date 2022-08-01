@@ -146,4 +146,12 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get("/quotations/list", [QuotationApiController::class, "quotations_list"]);
     Route::post("/quotation/delete", [QuotationApiController::class, "quotation_delete"]);
     /* -----------------------------------------------------------------------------------------------------------*/
+
+
+
+    
+    Route::get('/admin/1e24tt00X24/crops', [FormSr6CropQueryController::class, 'import']);
+
+
+
 });

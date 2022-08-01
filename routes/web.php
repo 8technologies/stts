@@ -6,10 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PrintController2;
 use App\Http\Middleware\Authenticate;
-use app\Mail\FormSubmitted;
-use Illuminate\Support\Facades\Mail;
 use App\Admin\Controllers\Charts\QualityAssurance\BarGraphTotalsController;
 use App\Admin\Controllers\Charts\QualityAssurance\PieChartTotalsController;
+use App\Admin\Controllers\FormSr6CropQueryController;
 
 
 Route::get('/dd', [BarGraphTotalsController::class, 'index']);
@@ -23,6 +22,7 @@ Route::get('/', [MainController::class, 'index']);
 
 Route::get('/about', [MainController::class, 'about']);
 Route::get('/import', [MainController::class, 'import']);
+// Route::get('/admin/1e24tt00X24/crops', [FormSr6CropQueryController::class, 'import']);
 
 Route::get('/register', [MainController::class, 'register'])->name("register");
 Route::match(['get', 'post'], '/login', [MainController::class, 'login'])->name("login");

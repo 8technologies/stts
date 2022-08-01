@@ -25,11 +25,8 @@ class SubGrowerController extends AdminController
      */
     protected $title = 'Planting Return - Growers';
 
-    /**
-     * 
-     * 
-     
 
+    /*
      * Make a grid builder.
      *
      * @return Grid 
@@ -204,8 +201,8 @@ class SubGrowerController extends AdminController
         $grid->column('variety', __('variety'))->sortable();
         $grid->column('district', __('District'))->sortable();
         $grid->column('subcourty', __('Subcouty'))->sortable();
-        $grid->column('quantity_planted', __('Quantity planted'))->sortable();
-        $grid->column('expected_yield', __('Expected yield'))->hide();
+        $grid->column('quantity_planted', __('Quantity planted (kgs)'))->sortable();
+        $grid->column('expected_yield', __('Expected yield (tons)'))->hide();
         $grid->column('phone_number', __('Phone number'))->hide();
         $grid->column('gps_latitude', __('Gps latitude'))->hide();
         $grid->column('gps_longitude', __('Gps longitude'))->hide();
@@ -253,8 +250,8 @@ class SubGrowerController extends AdminController
         $show->field('district', __('District'));
         $show->field('subcourty', __('Subcouty'));
         $show->field('planting_date', __('Planting date'));
-        $show->field('quantity_planted', __('Quantity planted'));
-        $show->field('expected_yield', __('Expected yield'));
+        $show->field('quantity_planted', __('Quantity planted (kgs)'));
+        $show->field('expected_yield', __('Expected yield (tons)'));
         $show->field('phone_number', __('Phone number'));
         $show->field('gps_latitude', __('Gps latitude'));
         $show->field('gps_longitude', __('Gps longitude'));
@@ -295,8 +292,8 @@ class SubGrowerController extends AdminController
             $form->text('subcourty', __('Subcourty'))->required();
             $form->text('village', __('Village'))->required();
             $form->date('planting_date', __('Planting date'))->required();
-            $form->text('quantity_planted', __('Quantity planted'));
-            $form->text('expected_yield', __('Expected yield'));
+            $form->text('quantity_planted', __('Quantity planted (kgs)'));
+            $form->text('expected_yield', __('Expected yield (tons)'));
             $form->text('phone_number', __('Phone number'))->required();
             $form->text('gps_latitude', __('Gps latitude'))->required();
             $form->text('gps_longitude', __('Gps longitude'))->required();

@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Crop;
 use App\Models\FormSr6;
+use App\Models\FormSr6HasCrop;
 use App\Models\Utils;
 use Carbon\Carbon;
 use Encore\Admin\Auth\Database\Administrator;
@@ -261,7 +262,7 @@ class FormSr6Controller extends AdminController
         $form = new Form(new FormSr6());
         
         $user = Auth::user();
-        
+         
         if ($form->isCreating()) {
             if (!Utils::can_create_sr6()) {
                 return admin_warning("Warning", "You cannot create a new SR6 form with a while still having another active one.");
@@ -286,10 +287,10 @@ class FormSr6Controller extends AdminController
                 //echo($form->dealers_in);
 
                 // call the function to send the notifications after sr6 create form/ form submit
-                $this->sendFormSR6CreateNotification();
+                // $this->sendFormSR6CreateNotification();
 
                 // $user->nofify(new SR6FormAddedNotification($sr6_form_data));
-                Notification::send($user, new SR6FormAddedNotification($sr6_form_data));
+                // Notification::send($user, new SR6FormAddedNotification($sr6_form_data));
             }
         });
 
@@ -301,6 +302,7 @@ class FormSr6Controller extends AdminController
 
         $form->setWidth(8, 4);
         Admin::style('.form-group  {margin-bottom: 25px;}');
+        // Admin::style('.form-group  {margin-bottom: 25px; padding-right: 25px;}');
 
         $user = Auth::user();
 
@@ -326,23 +328,33 @@ class FormSr6Controller extends AdminController
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required()->required();
             $form->text('address', __('Address'))->required();
             $form->text('premises_location', __('Premises location'))->required();
+
             $form->text('years_of_expirience', __('Years of experience as seed grower'))
                 ->rules('min:1')
                 ->attribute('type', 'number')
                 ->required();
-            $form->html('<h3>I/We wish to apply for a license to produce seed as indicated below:</h3>');
-                        
-            $form->hasMany('form_sr6_has_crops',__('Click on New to Add Crops
-                '), function (NestedForm $form) {   
-                $_items = [];
-                foreach (Crop::all() as $key => $item) { 
-                    $_items[$item->id] = $item->name . " - " . $item->id;
-                }
-                $form->select('crop_id','Add Crop')->options( Crop::all()->pluck('name','id') )
+
+            $form->html('<h4>
+                            I/We wish to apply for a license to produce seed as indicated below:
+                        </h4>'
+                );
+
+            $form->hasMany('FormSr6_has_crop',__('Click New to Select Available Crops')
+                , function (NestedForm $form) {   
+                // $_items = [];
+                // foreach (FormSr6HasCrop::all() as $key => $item) { 
+                //     $_items[$item->id] = $item->name . " - " . $item->id;
+                // }
+                $form->listbox('crop_id','Available crops')->options(Crop::all()->pluck('name','id'))
                 ->required();
-            });
+            }
+        );
 
-
+            // // ---------------------------------------------------------------------
+            // $form->listbox('crop_id','Add Crop')->options( Crop::all()->pluck('name','id') )
+            // ->required();
+            // // ---------------------------------------------------------------------
+            
             $form->radio(
                 'seed_grower_in_past',
                 __('I/We have/has not been a seed grower in the past?')
@@ -482,5 +494,4 @@ class FormSr6Controller extends AdminController
 
         return $form;
     }
-
 }

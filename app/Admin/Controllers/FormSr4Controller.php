@@ -278,7 +278,7 @@ class FormSr4Controller extends AdminController
 
             $form->select('type', __('Application category?'))
             ->options([
-                'Seed Merchant' => 'Seed Merchant',
+                // 'Seed Merchant' => 'Seed Merchant',
                 'Seed Producer' => 'Seed Producer',
                 'Seed Stockist' => 'Seed Stockist',
                 'Seed Importer' => 'Seed Importer',
@@ -299,7 +299,7 @@ class FormSr4Controller extends AdminController
                 ->required();
             $form->select('expirience_in', __('Experience in?'))
                 ->options([
-                    'Seed Merchant' => 'Seed Merchant',
+                    // 'Seed Merchant' => 'Seed Merchant',
                     'Seed Producer' => 'Seed Producer',
                     'Seed Stockist' => 'Seed Stockist',
                     'Seed Importer' => 'Seed Importer',

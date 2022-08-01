@@ -59,9 +59,9 @@ class HomeDashboardController1 extends AdminController
         $envs = [
             ['name' => 'Today:', 'value' => date('l, d F Y H:i:s')],
             ['name' => 'Logged in as: ', 'value' => $my_role],
-                
+
             ['name' => "DATA", 'value' => ""],
-            
+
             ['name' => 'Registered users:', 'value' => Administrator::get()->count()],
 
             ['name' => 'Import Permits:', 'value' =>  ImportExportPermit::get()->count()],
