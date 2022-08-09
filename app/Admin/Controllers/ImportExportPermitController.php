@@ -234,15 +234,15 @@ class ImportExportPermitController extends AdminController
             $form->text('address', __('Postal Address'))->required();
             $form->text('telephone', __('Phone number'))->required();
 
-            $application_cats = [
-                'Seed Merchant' => 'Seed Merchant',
-                'Seed Producer' => 'Seed Producer',
-                'Seed Stockist' => 'Seed Stockist',
-                'Seed Importer' => 'Seed Importer',
-                'Seed Exporter' => 'Seed Exporter',
-                'Seed Processor' => 'Seed Processor',
-                'Researchers' => 'Researchers',
-            ];
+            // $application_cats = [
+            //     'Seed Merchant' => 'Seed Merchant',
+            //     'Seed Producer' => 'Seed Producer',
+            //     'Seed Stockist' => 'Seed Stockist',
+            //     'Seed Importer' => 'Seed Importer',
+            //     'Seed Exporter' => 'Seed Exporter',
+            //     'Seed Processor' => 'Seed Processor',
+            //     'Researchers' => 'Researchers',
+            // ];
 
             $form->radio('type', __('Application category?'))
                 ->options([
