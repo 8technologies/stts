@@ -244,6 +244,7 @@ class ImportExportPermitController extends AdminController
             //     'Researchers' => 'Researchers',
             // ];
 
+
             $form->radio('type', __('Application category?'))
                 ->options([
                     'Seed Merchant' => 'Seed Merchant',
@@ -345,7 +346,9 @@ class ImportExportPermitController extends AdminController
                     }
                 });
 
-            // ->when('in', [
+           
+           
+                // ->when('in', [
             //     'Seed Merchant',
             //     'Seed Producer',
             //     'Seed Stockist',
@@ -381,6 +384,7 @@ class ImportExportPermitController extends AdminController
                 //     ->readonly()
                 //     ->value($seed_board_registration_number);
             // }
+
 
             $form->text('store_location', __('Location of the store'))->required();
             $form->text(

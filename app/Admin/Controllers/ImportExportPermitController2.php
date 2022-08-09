@@ -257,34 +257,157 @@ class ImportExportPermitController2 extends AdminController
             $form->text('address', __('Postal Address'))->required();
             $form->text('telephone', __('Phone number'))->required();
 
+
+
+
+
+
+            
             $form->radio('type', __('Application category?'))
-            ->options([
-                'Seed Merchant' => 'Seed Merchant',
-                'Seed Producer' => 'Seed Producer',
-                'Seed Stockist' => 'Seed Stockist',
-                'Seed Importer' => 'Seed Importer',
-                'Seed Exporter' => 'Seed Exporter',
-                'Seed Processor' => 'Seed Processor',
-                'Researchers' => 'Researchers',
-            ])
-            ->required()
-            ->help('Which SR4 type are tou applying for?'); 
+                ->options([
+                    'Seed Merchant' => 'Seed Merchant',
+                    'Seed Producer' => 'Seed Producer',
+                    'Seed Stockist' => 'Seed Stockist',
+                    'Seed Importer' => 'Seed Importer',
+                    'Seed Exporter' => 'Seed Exporter',
+                    'Seed Processor' => 'Seed Processor',
+                    'Researchers' => 'Researchers',
+                    
+                    // foreach ($application_cats as $cat ) {
+                    //     return [$cat => $cat];
+                    // }
+                ])
+                // ->stacked()
+                ->required()
+                ->help('Which SR4 type are you applying for?')
 
-            $seed_board_registration_number = null;
-            if ($sr4 != null) {
-                if ($sr4->seed_board_registration_number != null) {
-                    if (strlen($sr4->seed_board_registration_number) > 1) {
-                       $seed_board_registration_number = $sr4->seed_board_registration_number;
+                ->when('Seed Merchant', function (Form $form) {
+                    $seed_board_registration_number = null;
+                    $sr4 = Utils::has_valid_sr4();
+                    // if basic-user has an active sr4 form (if their sr4 form application has been accepted)
+                    if ($sr4 != null) {
+                        if ($sr4->seed_board_registration_number != null) {
+                                $seed_board_registration_number = $sr4->seed_board_registration_number;
+                                $form->text("", __('National seed board registration number'))
+                                ->default($seed_board_registration_number)
+                                ->readonly();
+                        }
                     }
-                }
-            }
+                })
+                ->when('Seed Producer', function (Form $form) {
+                    $seed_board_registration_number = null;
+                    $sr4 = Utils::has_valid_sr4();
+                    // if basic-user has an active sr4 form (if their sr4 form application has been accepted)
+                    if ($sr4 != null) {
+                        if ($sr4->seed_board_registration_number != null) {
+                                $seed_board_registration_number = $sr4->seed_board_registration_number;
+                                $form->text("", __('National seed board registration number'))
+                                ->default($seed_board_registration_number)
+                                ->readonly();
+                        }
+                    }
+                })
+                
+                ->when('Seed Stockist', function (Form $form) {
+                    $seed_board_registration_number = null;
+                    $sr4 = Utils::has_valid_sr4();
+                    // if basic-user has an active sr4 form (if their sr4 form application has been accepted)
+                    if ($sr4 != null) {
+                        if ($sr4->seed_board_registration_number != null) {
+                                $seed_board_registration_number = $sr4->seed_board_registration_number;
+                                $form->text("", __('National seed board registration number'))
+                                ->default($seed_board_registration_number)
+                                ->readonly();
+                        }
+                    }
+                })
+                
+                ->when('Seed Importer', function (Form $form) {
+                    $seed_board_registration_number = null;
+                    $sr4 = Utils::has_valid_sr4();
+                    // if basic-user has an active sr4 form (if their sr4 form application has been accepted)
+                    if ($sr4 != null) {
+                        if ($sr4->seed_board_registration_number != null) {
+                                $seed_board_registration_number = $sr4->seed_board_registration_number;
+                                $form->text("", __('National seed board registration number'))
+                                ->default($seed_board_registration_number)
+                                ->readonly();
+                        }
+                    }
+                })
+                
+                ->when('Seed Exporter', function (Form $form) {
+                    $seed_board_registration_number = null;
+                    $sr4 = Utils::has_valid_sr4();
+                    // if basic-user has an active sr4 form (if their sr4 form application has been accepted)
+                    if ($sr4 != null) {
+                        if ($sr4->seed_board_registration_number != null) {
+                                $seed_board_registration_number = $sr4->seed_board_registration_number;
+                                $form->text("", __('National seed board registration number'))
+                                ->default($seed_board_registration_number)
+                                ->readonly();
+                        }
+                    }
+                })
+                
+                ->when('Seed Processor', function (Form $form) {
+                    $seed_board_registration_number = null;
+                    $sr4 = Utils::has_valid_sr4();
+                    // if basic-user has an active sr4 form (if their sr4 form application has been accepted)
+                    if ($sr4 != null) {
+                        if ($sr4->seed_board_registration_number != null) {
+                                $seed_board_registration_number = $sr4->seed_board_registration_number;
+                                $form->text("", __('National seed board registration number'))
+                                ->default($seed_board_registration_number)
+                                ->readonly();
+                        }
+                    }
+                });
 
-            $form->text(
-                'national_seed_board_reg_num',
-                __('National seed board registration number')
-            ) 
-                ->readonly()
-                ->value($seed_board_registration_number);
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // $form->radio('type', __('Application category?'))
+            // ->options([
+            //     'Seed Merchant' => 'Seed Merchant',
+            //     'Seed Producer' => 'Seed Producer',
+            //     'Seed Stockist' => 'Seed Stockist',
+            //     'Seed Importer' => 'Seed Importer',
+            //     'Seed Exporter' => 'Seed Exporter',
+            //     'Seed Processor' => 'Seed Processor',
+            //     'Researchers' => 'Researchers',
+            // ])
+            // ->required()
+            // ->help('Which SR4 type are tou applying for?'); 
+
+            // $seed_board_registration_number = null;
+            // if ($sr4 != null) {
+            //     if ($sr4->seed_board_registration_number != null) {
+            //         if (strlen($sr4->seed_board_registration_number) > 1) {
+            //            $seed_board_registration_number = $sr4->seed_board_registration_number;
+            //         }
+            //     }
+            // }
+
+            // $form->text(
+            //     'national_seed_board_reg_num',
+            //     __('National seed board registration number')
+            // ) 
+            //     ->readonly()
+            //     ->value($seed_board_registration_number);
 
 
 
@@ -294,7 +417,7 @@ class ImportExportPermitController2 extends AdminController
                 'quantiry_of_seed', 
                 __('Quantity of seed of the same variety held in stock')
             )
-                ->help("In METRIC TONNES")
+                ->help("(metric tons)")
                 ->attribute(['type' => 'number'])
                 ->required();
             $form->text(
@@ -302,8 +425,26 @@ class ImportExportPermitController2 extends AdminController
                 __('Name and address of destination')
             )
                 ->required();
-            $form->file('ista_certificate', __('ISTA certificate'));
-            $form->file('phytosanitary_certificate', __('Phytosanitary certificate'));
+
+            // $form->file('ista_certificate', __('ISTA certificate'));
+            // $form->file('phytosanitary_certificate', __('Phytosanitary certificate'));
+
+
+
+
+            
+            $form->checkbox("import_form_certificate", __("Type Of Certificate"))
+            ->options([
+                "ista_certificate" => 'ISTA certificate',
+                "phytosanitary_certificate" => 'Phytosanitary certificate'])->stacked();
+
+
+
+
+
+
+
+
 
 
             $form->html('<h3>I/We wish to apply for a license to import seed as indicated below:</h3>');
