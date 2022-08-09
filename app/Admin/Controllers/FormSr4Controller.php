@@ -513,11 +513,11 @@ class FormSr4Controller extends AdminController
                         }
                         $_items[$item->id] = $item->name . " - " . $item->id;
                     }
-                    $form->select('inspector', __('Inspector'))
-                        ->options($_items)
-                        ->readonly()
-                        ->help('Please select inspector')
-                        ->rules('required');
+
+                    // $form->text('inspector', __('Inspector'))
+                    //     ->options($_items)
+                    //     ->readonly()
+                    //     ->help('Name of the Inspector');
                 })
                 ->when('in', [3, 4], function (Form $form) {
                     $form->textarea('status_comment', 'Inspector\'s comment (Remarks)')

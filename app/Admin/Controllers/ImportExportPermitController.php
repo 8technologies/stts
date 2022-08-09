@@ -128,11 +128,12 @@ class ImportExportPermitController extends AdminController
     protected function detail($id)
     {
         $show = new Show(ImportExportPermit::findOrFail($id));
+        // $show->setWidth(8, 4);
         $show->panel()
             ->tools(function ($tools) {
                 $tools->disableEdit();
                 $tools->disableDelete();
-            });;
+            });
 
         $show->field('created_at', __('Created'))
             ->as(function ($item) {
@@ -194,6 +195,7 @@ class ImportExportPermitController extends AdminController
     protected function form()
     {
         $form = new Form(new ImportExportPermit());
+        $show = new Show(ImportExportPermit::get()->first());
 
         $form->setWidth(8, 4);
         $form->disableCreatingCheck();
@@ -221,32 +223,17 @@ class ImportExportPermitController extends AdminController
             $form->submitted(function (Form $form) {
 
                 if ($_POST['type'] != 'Researchers') {
-                    $national_seed_board_reg_num = null;
-                    
-                    if (
-                        $_POST['national_seed_board_reg_num'] != null
-                    ) {
-                        if (strlen($_POST['national_seed_board_reg_num']) > 1) {
-                            $national_seed_board_reg_num = $_POST['national_seed_board_reg_num'];
-                        }
-                    }
-                    if ($national_seed_board_reg_num == null) {
-                        return Redirect::back()->withErrors(['national_seed_board_reg_num' => [
-                            'Only researchers are allowed to apply without seed board reg number.',
-                            'If you don\'t have a valid seed board reg number, please go to applications apply for SR4 first.',
-                            'This field is automatically filled from your valid seed board reg number.',
-                        ]])->withInput();
-                    }
+                    $national_seed_board_reg_num = $this->show->field('national_seed_board_reg_num', __('National seed board reg num'));
+                    $form
+                    ->text($national_seed_board_reg_num, __('National seed board reg num'))
+                    ->required()
+                    ->readonly();
                 }
             });
-
-
-
 
             $form->text('name', __('Name'))->default($user->name)->required();
             $form->text('address', __('Postal Address'))->required();
             $form->text('telephone', __('Phone number'))->required();
-
 
             $form->radio('type', __('Application category?'))
                 ->options([
@@ -257,9 +244,9 @@ class ImportExportPermitController extends AdminController
                     'Seed Exporter' => 'Seed Exporter',
                     'Seed Processor' => 'Seed Processor',
                     'Researchers' => 'Researchers',
-                ])
+                ])->stacked()
                 ->required()
-                ->help('Which SR4 type are tou applying for?')
+                ->help('Which SR4 type are you applying for?')
                 ->when('Seed Merchant', function (Form $form) {
                     $form->text('national_seed_board_reg_num', __('National seed board registration number'));
                 })
@@ -281,10 +268,8 @@ class ImportExportPermitController extends AdminController
                 
                 ->when('Seed Processor', function (Form $form) {
                     $form->text('national_seed_board_reg_num', __('National seed board registration number'));
-                })
-                
-                
-                ;
+                });
+
             // ->when('in', [
             //     'Seed Merchant',
             //     'Seed Producer',
@@ -293,21 +278,28 @@ class ImportExportPermitController extends AdminController
             //     'Seed Exporter',
             //     'Seed Processor',
             // ], function (Form $form) {
-
-
             // })
 
             $seed_board_registration_number = null;
+
             $sr4 = Utils::has_valid_sr4();
+
             if ($sr4 != null) {
                 if ($sr4->seed_board_registration_number != null) {
                     if (strlen($sr4->seed_board_registration_number) > 1) {
                         $seed_board_registration_number = $sr4->seed_board_registration_number;
+                        $form
+                        ->text($seed_board_registration_number, __('111111111'))
+                        ->default($user->name)
+                        ->readonly();
                     }
                 }
             }
 
-            
+            $form
+            ->text('seed_board_registration_number', __('22222222222'))
+            ->default($user->name)
+            ->readonly();          
             
             // if (!$form->radio('type') == 'Researchers') {
                 // $form->text(
@@ -325,7 +317,7 @@ class ImportExportPermitController extends AdminController
                 'quantiry_of_seed',
                 __('Quantity of seed of the same variety held in stock')
             )
-                ->help("In METRIC TONNES")
+                ->help("(metric tons)")
                 ->attribute(['type' => 'number'])
                 ->required();
             $form->text(
@@ -334,26 +326,23 @@ class ImportExportPermitController extends AdminController
             )
                 ->required();
 
+            // $form->file('ista_certificate', __('ISTA certificate'));
+            // $form->file('phytosanitary_certificate', __('Phytosanitary certificate'));
 
-                $form->file('ista_certificate', __('ISTA certificate'));
-                $form->file('phytosanitary_certificate', __('Phytosanitary certificate'));
-
+            $form->checkbox()
+            ->options([
+                "ista_certificate" => 'ISTA certificate',
+                "phytosanitary_certificate" => 'Phytosanitary certificate'])->stacked();
 
             $form->html('<h3>I/We wish to apply for a license to import seed as indicated below:</h3>');
-
-
 
             $form->radio('crop_category', __('Category'))
                 ->options([
                     'Commercial' => 'Commercial',
                     'Research' => 'Research',
                     'Own use' => 'Own use',
-                ])
+                ])->stacked()
                 ->required();
-
- 
-
-
 
             $form->hasMany('import_export_permits_has_crops', __('Click on "New" to Add Crop varieties
             '), function (NestedForm $form) {
@@ -370,6 +359,7 @@ class ImportExportPermitController extends AdminController
             });
 
         }
+
         if (Admin::user()->isRole('admin')) {
             //$form->file('ista_certificate', __('Ista certificate'))->required();
             $form->text('name', __('Name of applicant'))->default($user->name)->readonly();

@@ -37,7 +37,6 @@ class ImportExportPermitController2 extends AdminController
         $grid->disableFilter();
         $grid->disableExport(); 
         $grid->model()->where('is_import', '!=', 1);
-         
 
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where(

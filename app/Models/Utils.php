@@ -102,7 +102,6 @@ class Utils
             if (!$value->valid_until) {
                 return null;
             }
-
             $now = time();
             $then = strtotime($value->valid_until);
             if ($now < $then) {
