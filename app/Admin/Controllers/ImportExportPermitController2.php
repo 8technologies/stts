@@ -409,7 +409,6 @@ class ImportExportPermitController2 extends AdminController
             //     ->readonly()
             //     ->value($seed_board_registration_number);
 
-
             $form->text('store_location', __('Location of the store'))->required();
             $form->text(
                 'quantiry_of_seed', 
