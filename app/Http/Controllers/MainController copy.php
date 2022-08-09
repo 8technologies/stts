@@ -210,9 +210,9 @@ class MainController extends Controller
 
     public function register(Request  $request)
     {
-        if (isset($_POST['username'])) {
+        // if (isset($_POST['username'])) {
 
-            $validated = $request->validate([
+            $request->validate([
                 'first_name' => 'required|max:24|min:2',
                 'first_name' => 'required|max:24|min:2',
                 'last_name' => 'required|max:24|min:2',
@@ -276,7 +276,7 @@ class MainController extends Controller
             return back()->withErrors([
                 'username' => 'The provided credentials do not match our records.',
             ]);
-        }
+        // }
         return view('main.register');
     }
 
