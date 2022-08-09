@@ -195,7 +195,6 @@ class ImportExportPermitController extends AdminController
     protected function form()
     {
         $form = new Form(new ImportExportPermit());
-        $show = new Show(ImportExportPermit::get()->first());
 
         $form->setWidth(8, 4);
         $form->disableCreatingCheck();
@@ -244,7 +243,8 @@ class ImportExportPermitController extends AdminController
                     'Seed Exporter' => 'Seed Exporter',
                     'Seed Processor' => 'Seed Processor',
                     'Researchers' => 'Researchers',
-                ])->stacked()
+                ])
+                // ->stacked()
                 ->required()
                 ->help('Which SR4 type are you applying for?')
                 ->when('Seed Merchant', function (Form $form) {
@@ -298,7 +298,7 @@ class ImportExportPermitController extends AdminController
 
             $form
             ->text('seed_board_registration_number', __('22222222222'))
-            ->default($user->name)
+            ->default($sr4)
             ->readonly();          
             
             // if (!$form->radio('type') == 'Researchers') {
@@ -329,7 +329,7 @@ class ImportExportPermitController extends AdminController
             // $form->file('ista_certificate', __('ISTA certificate'));
             // $form->file('phytosanitary_certificate', __('Phytosanitary certificate'));
 
-            $form->checkbox()
+            $form->checkbox("import_form_certificate", __("Type Of Certificate"))
             ->options([
                 "ista_certificate" => 'ISTA certificate',
                 "phytosanitary_certificate" => 'Phytosanitary certificate'])->stacked();
