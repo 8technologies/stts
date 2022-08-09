@@ -213,14 +213,9 @@ class PlantingReturnController extends AdminController
      */
     protected function form()
     {
-
         // $now Carbon::parse($item)->diffForHumans();
-
         $form = new Form(new PlantingReturn());
 
-
-  
-        
         $sr4 = Utils::has_valid_sr6();
         if ($form->isCreating()) {
             if (!$sr4) {
@@ -228,7 +223,6 @@ class PlantingReturnController extends AdminController
                 return redirect(admin_url('planting-returns'));
             }
         }
-
 
         $form->saving(function (Form $form) {
             $is_active_made = false;
@@ -280,7 +274,6 @@ class PlantingReturnController extends AdminController
             $tools->disableView();
         });
 
-
         $user = Auth::user();
         if ($form->isCreating()) {
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
@@ -305,9 +298,38 @@ class PlantingReturnController extends AdminController
                 }
             } 
 
-            $form->text('name', __('Company Name'))->default($name_of_applicant)->required(); 
-            $form->text('address', __('Company Address'))->required()->default($address);
-            $form->text('telephone', __('Company Telephone'))->required();
+
+            $sr6 = Utils::has_valid_sr6();
+            // dd($sr6);
+            $form->text('name', __('Company Name'))->default($sr6->name_of_applicant)->readonly();
+
+            // // if basic-user has an active sr6 form (if their sr6 form application has been accepted)
+            // if ($sr6 != null) {
+            //     if ($sr6->name_of_applicant != null) {
+            //             $name_of_applicant = $sr6->name_of_applicant;
+            //             $form->text("name_of_applicant", __('Company Name'))
+            //             ->default($name_of_applicant)
+            //             ->readonly();
+            //     }
+            //     if ($sr6->address != null) {
+            //             $address = $sr6->address;
+            //             $form->text("address", __('Company Address'))
+            //             ->default($address)
+            //             ->readonly();
+            //     }
+            //     if ($sr6->telephone != null) {
+            //             $telephone = $sr6->telephone;
+            //             $form->text("telephone", __('Company Telephone'))
+            //             ->default($sr6->telephone)
+            //             ->readonly();
+            //     }
+            // }
+
+            $form->text('address', __('Company Address'))->default($sr6->address)->readonly();
+            // $telephone_of_applying_basic_user = Administrator::where(Admin::user()->isRole('admin'), 'basic-user')->phone_number;
+            // $form->text('telephone', __('Company Telephone'))->default($telephone_of_applying_basic_user)->readonly();
+
+
             $form->text('amount_enclosed', __('Amount enclosed for application'))->attribute('type', 'number')->required();
             $form->file('payment_receipt', __('Payment receipt'))->required();
             $form->text('registerd_dealer', __('Registerd seed merchant/dealer to whome the entire seed stock will be sold'));
