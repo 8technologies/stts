@@ -280,13 +280,20 @@ class SubGrowerController extends AdminController
         if (Admin::user()->isRole('basic-user')) {
 
             $form->text('name', __('Name'))->default($user->name)->required();
-            $form->text('size', __('Garden Size (in Accre)'))->required();
+            $form->text('size', __('Garden Size (acres)'))->required();
 
-            $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'name'))
+            // $selected_crop = CropVariety::all()->pluck('name', 'name');
+            $selected_crop = CropVariety::with('crop')->get()->pluck('crop.name','crop');
+
+            // dd($selected_crop);
+
+            $form->select('crop', 'Crop')->options($selected_crop)
                 ->required();
 
             $form->select('variety', 'Variety')->options(CropVariety::all()->pluck('name', 'name'))
                 ->required();
+
+
             $form->text('filed_name', __('Filed name'))->required();
             $form->text('district', __('District'))->required();
             $form->text('subcourty', __('Subcourty'))->required();
@@ -321,6 +328,7 @@ class SubGrowerController extends AdminController
             $form->display('', __('Village'))->default($model->village)->readonly();
             $form->display('', __('Crop'))->default($model->crop)->readonly();
             $form->display('', __('Variety'))->default($model->variety)->readonly();
+
             $form->divider();
 
             $form->select('seed_class', 'Select Seed Class')->options([
@@ -328,11 +336,12 @@ class SubGrowerController extends AdminController
                 'Certified seed' => 'Certified seed',
                 'Basic seed' => 'Basic seed',
             ])
-                ->required();
+            ->required();
 
 
             $_items = [];
             $crop_val = "";
+
             foreach (CropVariety::all() as $key => $item) {
                 $_items[$item->id] = "CROP: " . $item->crop->name.", Variety: ".$item->name;
                 if ($model->crop == $item->name) {
@@ -340,10 +349,9 @@ class SubGrowerController extends AdminController
                 }
             }
 
-
-
             $form->select('crop', 'Select crop variety')->options($_items)->value($crop_val)
                 ->default($crop_val)
+                ->readonly()
                 ->required();
 
             $form->radio('status', 'Initialize this form')->options([
