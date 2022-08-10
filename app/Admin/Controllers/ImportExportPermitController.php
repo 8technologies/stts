@@ -95,6 +95,7 @@ class ImportExportPermitController extends AdminController
         $grid->column('quantiry_of_seed', __('Quantity of seed'));
         $grid->column('import_form_certificate_type', __('Type Of Certificate'))->sortable();
         
+        
         // $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
         //     $u = Administrator::find($userId);
         //     if (!$u)
