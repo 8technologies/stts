@@ -339,21 +339,21 @@ class FormSr6Controller extends AdminController
                         </h4>'
                 );
 
-            $form->hasMany('FormSr6_has_crop',__('Click New to Select Available Crops')
-                , function (NestedForm $form) {   
-                $_items = [];
-                foreach (FormSr6HasCrop::all() as $key => $item) { 
-                    $_items[$item->id] = $item->name . " - " . $item->id;
-                }
-                $form->listbox('crop_id','Available crops')->options(Crop::all()->pluck('name','id'))
-                ->required();
-            }
-        );
+        //     $form->hasMany('FormSr6_has_crop',__('Click New to Select Available Crops')
+        //         , function (NestedForm $form) {   
+        //         $_items = [];
+        //         foreach (FormSr6HasCrop::all() as $key => $item) { 
+        //             $_items[$item->id] = $item->name . " - " . $item->id;
+        //         }
+        //         $form->listbox('crop_id','Available crops')->options(Crop::all()->pluck('name','id'))
+        //         ->required();
+        //     }
+        // );
 
-            // // ---------------------------------------------------------------------
-            // $form->listbox('crop_id','Add Crop')->options( Crop::all()->pluck('name','id') )
-            // ->required();
-            // // ---------------------------------------------------------------------
+            // ---------------------------------------------------------------------
+            $form->listbox('crop_id','Add Crop')->options( Crop::all()->pluck('name','id') )
+            ->required();
+            // ---------------------------------------------------------------------
             
             $form->radio(
                 'seed_grower_in_past',

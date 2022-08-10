@@ -22,8 +22,9 @@ class ImportExportPermit extends Model
         'store_location',
         'quantiry_of_seed',
         'name_address_of_origin',
-        'ista_certificate', 
-        'phytosanitary_certificate',
+        // 'ista_certificate', 
+        // 'phytosanitary_certificate',
+        'import_form_certificate_type',
         'crop_category',
         'is_import',
     ];

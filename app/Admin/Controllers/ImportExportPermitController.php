@@ -403,10 +403,12 @@ class ImportExportPermitController extends AdminController
             // $form->file('ista_certificate', __('ISTA certificate'));
             // $form->file('phytosanitary_certificate', __('Phytosanitary certificate'));
 
-            $form->checkbox("import_form_certificate", __("Type Of Certificate"))
+            $form->radio("import_form_certificate_type", __("Type Of Certificate"))
             ->options([
-                "ista_certificate" => 'ISTA certificate',
-                "phytosanitary_certificate" => 'Phytosanitary certificate'])->stacked();
+                "ISTA certificate" => 'ISTA certificate',
+                "Phytosanitary certificate" => 'Phytosanitary certificate'])->stacked();
+                
+            // $form->radio($column[, $label])->options(['m' => 'Female', 'f'=> 'Male'])->default('m');
 
             $form->html('<h3>I/We wish to apply for a license to import seed as indicated below:</h3>');
 
