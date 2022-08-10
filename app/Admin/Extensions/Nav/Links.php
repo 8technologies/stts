@@ -28,56 +28,56 @@ class Links
     </a>
 </li> -->
 
-<li class="dropdown notifications-menu">
+<!-- <li class="dropdown notifications-menu">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 <i class="fa fa-envelope-o"></i>
       <span class="label label-success">4</span>
-</a>
+</a> -->
 
 
-<ul class="dropdown-menu">
-  <li class="header">You have 4 new Messages</li>
-  <li>
+<!-- <ul class="dropdown-menu"> -->
+  <!-- <li class="header">You have 4 new Messages</li> -->
+  <!-- <li> -->
     <!-- inner menu: contains the actual data -->
-    <ul class="menu">
-      <li>
+    <!-- <ul class="menu"> -->
+      <!-- <li>
         <a href="#">
           <i class="fa fa-users text-aqua"></i> Hi
         </a>
-      </li>
-      <li>
+      </li> -->
+      <!-- <li>
         <a href="#">
           <i class="fa fa-users text-aqua"></i> Hi
         </a>
-      </li>
-      <li>
+      </li> -->
+      <!-- <li>
         <a href="#">
           <i class="fa fa-users text-aqua"></i> Hi
         </a>
-      </li>
-      <li>
+      </li> -->
+      <!-- <li>
         <a href="#">
           <i class="fa fa-users text-aqua"></i> Hi
         </a>
-      </li>
-    </ul>
-  </li>
-  <li class="footer"><a href="#">View all</a></li>
-</ul>
-</li>
+      </li> -->
+    <!-- </ul> -->
+  <!-- </li> -->
+  <!-- <li class="footer"><a href="#">View all</a></li> -->
+<!-- </ul> -->
+<!-- </li> -->
 
 
-<li class="dropdown notifications-menu">
+<!-- <li class="dropdown notifications-menu">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
   
 <i class="fa fa-flag-o"></i>
       <span class="label label-danger">2</span>
-</a>
-<ul class="dropdown-menu">
+</a> -->
+<!-- <ul class="dropdown-menu">
   <li class="header">You have 2 flags</li>
-  <li>
+  <li> -->
     <!-- inner menu: contains the actual data -->
-    <ul class="menu">
+    <!-- <ul class="menu">
       <li>
         <a href="#">
           <i class="fa fa-warning text-yellow"></i> Form was rejected!
@@ -88,23 +88,23 @@ class Links
           <i class="fa fa-warning text-yellow"></i> Form was rejected!
         </a>
       </li>
-    </ul>
-  </li>
+    </ul> -->
+  <!-- </li>
   <li class="footer"><a href="#">View all</a></li>
 </ul>
-</li>
+</li> -->
 
 
-<li class="dropdown notifications-menu">
+<!-- <li class="dropdown notifications-menu">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
   <i class="fa fa-bell-o"></i>
   <span class="label label-warning">10</span>
 </a>
 <ul class="dropdown-menu">
   <li class="header">You have 10 notifications</li>
-  <li>
+  <li> -->
     <!-- inner menu: contains the actual data -->
-    <ul class="menu">
+    <!-- <ul class="menu">
       <li>
         <a href="#">
           <i class="fa fa-users text-aqua"></i> 5 new members joined today
@@ -116,8 +116,8 @@ class Links
           page and may cause design problems
         </a>
       </li>
-      <li>
-        <a href="#">
+      <li> -->
+        <!-- <a href="#">
           <i class="fa fa-users text-red"></i> 5 new members joined
         </a>
       </li>
@@ -136,7 +136,7 @@ class Links
   </li>
   <li class="footer"><a href="#">View all</a></li>
 </ul>
-</li>
+</li> -->
 
 
 HTML;
