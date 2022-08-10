@@ -147,6 +147,8 @@ class FormCropDeclarationController extends AdminController
             $can_create = false;
         }
 
+        dd($user->qds);
+        
         if(isset($user->qds)){
             foreach ($user->qds as $key => $value) {
                 if ($value->status == 5) {
