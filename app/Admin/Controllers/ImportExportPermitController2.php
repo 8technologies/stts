@@ -91,12 +91,15 @@ class ImportExportPermitController2 extends AdminController
         $grid->column('quantiry_of_seed', __('Quantity of seed'));
         $grid->column('type', __('Category')); 
 
-        $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
-            $u = Administrator::find($userId);
-            if (!$u)
-                return "-";
-            return $u->name;
-        })->sortable();
+        
+        $grid->column('import_form_certificate_type', __('Type Of Certificate'))->sortable();
+
+        // $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
+        //     $u = Administrator::find($userId);
+        //     if (!$u)
+        //         return "-";
+        //     return $u->name;
+        // })->sortable();
 
         $grid->column('inspector', __('Inspector'))->display(function ($userId) {
             if (Admin::user()->isRole('basic-user')) {
