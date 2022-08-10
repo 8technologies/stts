@@ -93,13 +93,14 @@ class ImportExportPermitController extends AdminController
         $grid->column('name', __('Name'));
         $grid->column('telephone', __('Telephone'));
         $grid->column('quantiry_of_seed', __('Quantity of seed'));
-
-        $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
-            $u = Administrator::find($userId);
-            if (!$u)
-                return "-";
-            return $u->name;
-        })->sortable();
+        $grid->column('import_form_certificate_type', __('Type Of Certificate'))->sortable();
+        
+        // $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
+        //     $u = Administrator::find($userId);
+        //     if (!$u)
+        //         return "-";
+        //     return $u->name;
+        // })->sortable();
 
         $grid->column('inspector', __('Inspector'))->display(function ($userId) {
             if (Admin::user()->isRole('basic-user')) {
@@ -219,16 +220,16 @@ class ImportExportPermitController extends AdminController
             $form->hidden('administrator_id', __('Administrator id'));
         }
         if (Admin::user()->isRole('basic-user')) {
-            $form->submitted(function (Form $form) {
+            // $form->submitted(function (Form $form) {
 
-                if ($_POST['type'] != 'Researchers') {
-                    $national_seed_board_reg_num = $this->show->field('national_seed_board_reg_num', __('National seed board reg num'));
-                    $form
-                    ->text($national_seed_board_reg_num, __('National seed board reg num'))
-                    ->required()
-                    ->readonly();
-                }
-            });
+            //     if ($_POST['type'] != 'Researchers') {
+            //         $national_seed_board_reg_num = $this->show->field('national_seed_board_reg_num', __('National seed board reg num'));
+            //         $form
+            //         ->text($national_seed_board_reg_num, __('National seed board reg num'))
+            //         ->required()
+            //         ->readonly();
+            //     }
+            // });
 
             $form->text('name', __('Name'))->default($user->name)->required();
             $form->text('address', __('Postal Address'))->required();
@@ -407,8 +408,6 @@ class ImportExportPermitController extends AdminController
             ->options([
                 "ISTA certificate" => 'ISTA certificate',
                 "Phytosanitary certificate" => 'Phytosanitary certificate'])->stacked();
-                
-            // $form->radio($column[, $label])->options(['m' => 'Female', 'f'=> 'Male'])->default('m');
 
             $form->html('<h3>I/We wish to apply for a license to import seed as indicated below:</h3>');
 
