@@ -147,8 +147,6 @@ class FormCropDeclarationController extends AdminController
             $can_create = false;
         }
 
-        dd($user->qds);
-        
         if(isset($user->qds)){
             foreach ($user->qds as $key => $value) {
                 if ($value->status == 5) {
@@ -180,11 +178,13 @@ class FormCropDeclarationController extends AdminController
             $form->saving(function ($form) {
                 $form->status = 1;
             });
-            $form->hidden('form_qd_id', __('form_qd_id'))->value($qds_id)->default($qds_id);
+
+            // $form->hidden('form_qd_id', __('form_qd_id'))->value($qds_id)->default($qds_id);
+            $form->hidden('form_qd_id', __('form_qd_id'))->value(3)->default($qds_id);
+
             $form->text('source_of_seed', __('Enter source of seed'))->required();
             $form->text('field_size', __('Enter field size (in Acres)'))->required();
             $form->text('seed_rate', __('Enter Seed rate'))->required();
-
 
             $form->hasMany('form_crop_declarations_has_crop_varieties', __('Click on "NEW" to add Crop varieties'), function (NestedForm $form) {
                 $varieties = [];
