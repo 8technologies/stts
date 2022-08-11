@@ -14,6 +14,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use App\Admin\Controllers\SubGrowerControllerJS;
 
 
 class SubGrowerController extends AdminController
@@ -282,18 +283,17 @@ class SubGrowerController extends AdminController
             $form->text('name', __('Name'))->default($user->name)->required();
             $form->text('size', __('Garden Size (acres)'))->required();
 
-            // $selected_crop = CropVariety::all()->pluck('name', 'name');
-            $selected_crop = CropVariety::with('crop')->get()->pluck('crop.name','crop');
-
-            // dd($selected_crop);
-
-            $form->select('crop', 'Crop')->options($selected_crop)
+            $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'name'))
                 ->required();
 
-            $form->select('variety', 'Variety')->options(CropVariety::all()->pluck('name', 'name'))
+                
+
+                foreach (selectCropVariety() as $item) {
+
+            $form->select($item['assignment_number'], 'Variety')->options(CropVariety::all()->pluck('name', 'name'))
                 ->required();
-
-
+                }
+                
             $form->text('filed_name', __('Filed name'))->required();
             $form->text('district', __('District'))->required();
             $form->text('subcourty', __('Subcourty'))->required();
