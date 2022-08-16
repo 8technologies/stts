@@ -264,9 +264,9 @@ class Utils
     public static function tell_order_status($status)
     {
         if (!$status)
-            return '<span class="badge badge-info">Pending</span>';
+            return '<span class="badge badge-warning">Pending</span>';
         if ($status == 1)
-            return '<span class="badge badge-info">Pending</span>';
+            return '<span class="badge badge-warning">Pending</span>';
         if ($status == 2)
             return '<span class="badge badge-warning">Shipping</span>';
         if ($status == 3)
@@ -280,9 +280,9 @@ class Utils
     public static function tell_status($status)
     {
         if (!$status)
-            return '<span class="badge badge-info">Pending</span>';
+            return '<span class="badge badge-warning">Pending</span>';
         if ($status == 1)
-            return '<span class="badge badge-info">Pending</span>';
+            return '<span class="badge badge-warning">Pending</span>';
         if ($status == 2)
             return '<span class="badge badge-primary">Inspection assigned</span>';
         if ($status == 3)
@@ -306,7 +306,7 @@ class Utils
         if ($status == 12)
             return '<span class="badge badge-danger">Not Marketable</span>';
         if ($status == 13)
-            return '<span class="badge badge-info">Pending for labeling</span>';
+            return '<span class="badge badge-warning">Pending for labeling</span>';
         if ($status == 14)
             return '<span class="badge badge-success">Lables Printed</span>';
         if ($status == 15)
@@ -432,10 +432,10 @@ class Utils
         if ($name == null || (strlen($name) < 2)) {
             $url .= '/default.png';
         } else if (file_exists(public_path('storage/uploads' . $name))) {
-            $url = url("storage/uploads/".$name);
+            $url = url("storage/uploads/" . $name);
         } else {
-            $url = url("storage/uploads/".$name);
-        } 
+            $url = url("storage/uploads/" . $name);
+        }
         return $url;
     }
 
