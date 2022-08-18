@@ -19,6 +19,7 @@ class SubGrower extends Model
         'crop',
         'variety',
         'filed_name',
+        'field_name',
         'district',
         'subcourty',
         'village',
