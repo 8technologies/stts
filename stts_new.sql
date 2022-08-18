@@ -3206,7 +3206,7 @@ CREATE TABLE `sub_growers` (
   `status_comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `field_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `village` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `filed_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `field_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `seed_class` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `estimated_yield` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `further_remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -3227,7 +3227,7 @@ CREATE TABLE `sub_growers` (
 -- Dumping data for table `sub_growers`
 --
 
-INSERT INTO `sub_growers` (`id`, `created_at`, `updated_at`, `administrator_id`, `name`, `size`, `crop`, `variety`, `district`, `subcourty`, `planting_date`, `quantity_planted`, `expected_yield`, `phone_number`, `gps_latitude`, `gps_longitude`, `detail`, `status`, `inspector`, `status_comment`, `field_name`, `village`, `filed_name`, `seed_class`, `estimated_yield`, `further_remarks`, `general_condition_of_the_crop`, `proposed_isolation`, `isolation_time`, `proposed_distance`, `isolation_distance`, `cultivar_characteristics_noxious_weeds`, `cultivar_characteristics_features`, `cultivar_characteristics_disease`, `cultivar_characteristics_types`, `size_of_field`, `crop_cultivar`) VALUES
+INSERT INTO `sub_growers` (`id`, `created_at`, `updated_at`, `administrator_id`, `name`, `size`, `crop`, `variety`, `district`, `subcourty`, `planting_date`, `quantity_planted`, `expected_yield`, `phone_number`, `gps_latitude`, `gps_longitude`, `detail`, `status`, `inspector`, `status_comment`, `field_name`, `village`, `field_name`, `seed_class`, `estimated_yield`, `further_remarks`, `general_condition_of_the_crop`, `proposed_isolation`, `isolation_time`, `proposed_distance`, `isolation_distance`, `cultivar_characteristics_noxious_weeds`, `cultivar_characteristics_features`, `cultivar_characteristics_disease`, `cultivar_characteristics_types`, `size_of_field`, `crop_cultivar`) VALUES
 (105, '2022-07-05 12:45:23', '2022-07-05 12:45:23', 21, 'eee', NULL, 'erer', 'erer', 'erere', 'erer', 'rter', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------

@@ -58,7 +58,7 @@ class PlantingReturn extends Model
                     if (isset($value[0]))
                         if ($value[0] != null) {
                             if (strlen($value[0]) > 1) {
-                                $sub->filed_name = $value[0];
+                                $sub->field_name = $value[0];
                             }
                         }
 

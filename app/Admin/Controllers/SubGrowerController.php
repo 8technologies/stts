@@ -193,7 +193,7 @@ class SubGrowerController extends AdminController
             return $_user->name;
         });
 
-        $grid->column('filed_name', __('Field Name'))->sortable();
+        $grid->column('field_name', __('Field Name'))->sortable();
         $grid->column('name', __('Person responisble'))->sortable();
         $grid->column('size', __('Size'))->sortable();
         $grid->column('crop', __('Crop'))->display(function(){
@@ -294,7 +294,7 @@ class SubGrowerController extends AdminController
                 ->required();
                 }
                 
-            $form->text('filed_name', __('Filed name'))->required();
+            $form->text('field_name', __('Filed name'))->required();
             $form->text('district', __('District'))->required();
             $form->text('subcourty', __('Subcourty'))->required();
             $form->text('village', __('Village'))->required();
@@ -322,7 +322,7 @@ class SubGrowerController extends AdminController
 
             $form->display('', __('Applicant'))->default($u->name)->readonly();
             $form->display('', __('Person responsible'))->default($model->name)->readonly();
-            $form->display('', __('Field name'))->default($model->filed_name)->readonly();
+            $form->display('', __('Field name'))->default($model->field_name)->readonly();
             $form->display('', __('District'))->default($model->district)->readonly();
             $form->display('', __('Subcourty'))->default($model->subcourty)->readonly();
             $form->display('', __('Village'))->default($model->village)->readonly();
@@ -360,7 +360,7 @@ class SubGrowerController extends AdminController
                 ->required();
 
             /*
-            "filed_name" => "Jesus"
+            "field_name" => "Jesus"
             "district" => "Kasese"
             "subcourty" => "Bwera"
             "village" => "Nyambambuka"

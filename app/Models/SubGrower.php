@@ -18,8 +18,7 @@ class SubGrower extends Model
         'size',
         'crop',
         'variety',
-        'filed_name',
-        'field_name',
+        'field_name', 
         'district',
         'subcourty',
         'village',
@@ -67,7 +66,7 @@ class SubGrower extends Model
         parent::boot();
 
         self::creating(function ($m) {
-            $sub = SubGrower::where('filed_name', $m->filed_name)
+            $sub = SubGrower::where('field_name', $m->field_name)
                 ->where('name', $m->name)->first();
 
             if ($sub != null) {

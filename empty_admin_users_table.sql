@@ -2886,7 +2886,7 @@ CREATE TABLE `sub_growers` (
   `status_comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `field_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `village` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `filed_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `field_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `seed_class` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `estimated_yield` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `further_remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
