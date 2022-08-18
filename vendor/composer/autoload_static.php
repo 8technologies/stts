@@ -893,6 +893,7 @@ class ComposerStaticInitd3fad8ea048b06fe5a0bdeeb2c192750
         'App\\Admin\\Controllers\\FormSr10Controller' => __DIR__ . '/../..' . '/app/Admin/Controllers/FormSr10Controller.php',
         'App\\Admin\\Controllers\\FormSr4Controller' => __DIR__ . '/../..' . '/app/Admin/Controllers/FormSr4Controller.php',
         'App\\Admin\\Controllers\\FormSr6Controller' => __DIR__ . '/../..' . '/app/Admin/Controllers/FormSr6Controller.php',
+        'App\\Admin\\Controllers\\FormSr6CropQueryController' => __DIR__ . '/../..' . '/app/Admin/Controllers/FormSr6CropQueryController.php',
         'App\\Admin\\Controllers\\FormStockExaminationRequestController' => __DIR__ . '/../..' . '/app/Admin/Controllers/FormStockExaminationRequestController.php',
         'App\\Admin\\Controllers\\FormStockRecordController' => __DIR__ . '/../..' . '/app/Admin/Controllers/FormStockRecordController.php',
         'App\\Admin\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Admin/Controllers/HomeController.php',

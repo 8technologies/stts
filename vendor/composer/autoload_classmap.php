@@ -48,6 +48,7 @@ return array(
     'App\\Admin\\Controllers\\FormSr10Controller' => $baseDir . '/app/Admin/Controllers/FormSr10Controller.php',
     'App\\Admin\\Controllers\\FormSr4Controller' => $baseDir . '/app/Admin/Controllers/FormSr4Controller.php',
     'App\\Admin\\Controllers\\FormSr6Controller' => $baseDir . '/app/Admin/Controllers/FormSr6Controller.php',
+    'App\\Admin\\Controllers\\FormSr6CropQueryController' => $baseDir . '/app/Admin/Controllers/FormSr6CropQueryController.php',
     'App\\Admin\\Controllers\\FormStockExaminationRequestController' => $baseDir . '/app/Admin/Controllers/FormStockExaminationRequestController.php',
     'App\\Admin\\Controllers\\FormStockRecordController' => $baseDir . '/app/Admin/Controllers/FormStockRecordController.php',
     'App\\Admin\\Controllers\\HomeController' => $baseDir . '/app/Admin/Controllers/HomeController.php',

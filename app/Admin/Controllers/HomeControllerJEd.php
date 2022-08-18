@@ -29,8 +29,6 @@ class HomeControllerJEd extends Controller
 {
     public function index(Content $content)
     {
-        
         return view('admin.dashboard.dashboard');
-    
     }
 }
