@@ -85,7 +85,7 @@ class PlantingReturnsGrowerApiController extends AdminController
             'size' => $request->input('size'), 
             'crop' => $request->input('crop'),
             'variety' => $request->input('variety'),
-            'filed_name' => $request->input('filed_name'),
+            'field_name' => $request->input('field_name'),
             'district' => $request->input('district'),
             'subcourty' => $request->input('subcourty'),
             'village' => $request->input('village'), 
