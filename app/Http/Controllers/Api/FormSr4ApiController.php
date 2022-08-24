@@ -38,8 +38,8 @@ class FormSr4ApiController extends AdminController
     {
 
 
-        $imgs = Utils::upload_images_1($_FILES,true); 
-        return $this->errorResponse($imgs, 200); 
+
+
         $user = Auth::user();
 
         $data = $request->only(
@@ -59,11 +59,11 @@ class FormSr4ApiController extends AdminController
             'have_conversant_seed_matters',
             'souce_of_seed',
             'have_adequate_land_for_production', 
-            'have_internal_quality_program',
-            'receipt',
+            'have_internal_quality_program', 
             'accept_declaration'
         );
 
+        $receipt = Utils::upload_images_1($_FILES,true); 
         $post_data = Validator::make($data, [
             'type' => 'required',
             'address' => 'required',
@@ -82,7 +82,7 @@ class FormSr4ApiController extends AdminController
             'souce_of_seed' => 'required',
             'have_adequate_land_for_production' => 'required',
             'have_internal_quality_program' => 'required',
-            'receipt' => 'required',
+            'receipt' => $receipt,
             'accept_declaration' => 'required',
         ]);
 
