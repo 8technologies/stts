@@ -57,7 +57,7 @@ class FormSr4Controller extends AdminController
                     $actions->disableDelete();
                 }
             });
-        } else if (Admin::user()->isRole('inspector')) {
+        } else if (Admin::user()->isRole('inspector')) { 
             $grid->model()->where('inspector', '=', Admin::user()->id);
             $grid->disableCreateButton();
 
@@ -464,7 +464,9 @@ class FormSr4Controller extends AdminController
             $form->text('address', __('Address'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
 
-            $form->text('type', __('Applicant type'))->readonly();
+            $form->text('type', __('Applicant type'))->readonly(); 
+
+            $form->file('receipt', __('Receipt'))->readonly(); 
 
             $form->divider();
             $form->radio('status', __('Status'))
