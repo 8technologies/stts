@@ -405,7 +405,7 @@ class FormSr6Controller extends AdminController
                     '0' => 'No',
                 ])
                 ->required();
-            $form->file('signature_of_applicant', __('Attach receipt'));
+            $form->file('signature_of_applicant', __('Receipt'));
         }
 
         if (Admin::user()->isRole('admin')) {
@@ -452,7 +452,7 @@ class FormSr6Controller extends AdminController
             $form->text('address', __('Address'))->readonly();
             $form->text('premises_location', __('Location of Farm'))->readonly();
 
-            $form->file('receipt', __('Receipt'))->readonly(); 
+            $form->file('signature_of_applicant', __('Receipt'))->readonly(); 
 
             $form->radio('status', __('Status'))
                 ->options([

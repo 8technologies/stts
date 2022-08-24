@@ -467,7 +467,7 @@ class Utils
         $uploaded_images = array();
         foreach ($files as $file) {
 
-            if (
+            if ( 
                 isset($file['name']) &&
                 isset($file['type']) &&
                 isset($file['tmp_name']) &&

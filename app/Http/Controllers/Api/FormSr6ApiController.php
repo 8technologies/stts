@@ -51,8 +51,7 @@ class FormSr6ApiController extends AdminController
             'have_adequate_storage',
             'have_adequate_isolation',
             'have_adequate_labor',
-            'aware_of_minimum_standards',
-            'signature_of_applicant',
+            'aware_of_minimum_standards', 
         );
 
         $post_data = Validator::make($data, [
@@ -100,7 +99,7 @@ class FormSr6ApiController extends AdminController
             'have_adequate_isolation' => $request->input('have_adequate_isolation'),
             'have_adequate_labor' => $request->input('have_adequate_labor'),
             'aware_of_minimum_standards' => $request->input('aware_of_minimum_standards'), 
-            'receipt' => $receipt,  
+            'signature_of_applicant' => $receipt,   
             'previous_grower_number' => $request->input('previous_grower_number'), 
         ]);
 
