@@ -61,7 +61,7 @@ class SubGrowerController extends AdminController
                 '2' => 'Inspection assigned',
                 '3' => 'Halted',
                 '4' => 'Rejected',
-                '5' => 'Accepted',
+                '5' => 'Accepted', 
             ]);
             $filter->equal('crop', "Filter by crop crop")->select(Crop::all()->pluck('name', 'name'));
             $filter->equal('variety', "Filter by crop variety")->select(CropVariety::all()->pluck('name', 'name'));
@@ -74,11 +74,11 @@ class SubGrowerController extends AdminController
 
         /*
         
-                    return '<span class="badge badge-info">Pending</span>';
+                    return '<span class="badge badge-warning">Pending</span>';
         if ($status == 1)
-            return '<span class="badge badge-info"></span>';
+            return '<span class="badge badge-warning"></span>';
         if ($status == 2)
-            return '<span class="badge badge-primary"></span>';
+            return '<span class="badge badge-warning"></span>';
         if ($status == 3)
             return '<span class="badge badge-warning"></span>';
         if ($status == 4)

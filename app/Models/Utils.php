@@ -284,7 +284,7 @@ class Utils
         if ($status == 1)
             return '<span class="badge badge-warning">Pending</span>';
         if ($status == 2)
-            return '<span class="badge badge-primary">Inspection assigned</span>';
+            return '<span class="badge badge-warning">Inspection assigned</span>';
         if ($status == 3)
             return '<span class="badge badge-warning">Halted</span>';
         if ($status == 4)
@@ -296,9 +296,9 @@ class Utils
         if ($status == 7)
             return '<span class="badge badge-warning">Provisional</span>';
         if ($status == 8)
-            return '<span class="badge badge-dark">Used</span>';
+            return '<span class="badge badge-warning">Used</span>';
         if ($status == 9)
-            return '<span class="badge badge-dark">Lab inspection</span>';
+            return '<span class="badge badge-warning">Lab inspection</span>';
         if ($status == 10)
             return '<span class="badge badge-warning">Lab test pending</span>';
         if ($status == 11)
