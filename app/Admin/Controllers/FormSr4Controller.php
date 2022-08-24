@@ -498,6 +498,7 @@ class FormSr4Controller extends AdminController
             $form->text('address', __('Address'))->readonly();
             $form->text('company_initials', __('Company initials'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
+            $form->file('receipt', __('Receipt'))->readonly(); 
 
             $form->radio('status', __('Status'))
                 ->options([
