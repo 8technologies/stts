@@ -85,7 +85,8 @@ class FormSr6ApiController extends AdminController
         if ($post_data->fails()) {
             return $this->errorResponse("SR6 form submit error", 200); 
         }
-
+ 
+        $receipt = Utils::upload_images_1($_FILES,true); 
         $form = FormSr6::create([
             'administrator_id' => $user->id,
             'type' => $request->input('type'),
@@ -99,14 +100,14 @@ class FormSr6ApiController extends AdminController
             'have_adequate_isolation' => $request->input('have_adequate_isolation'),
             'have_adequate_labor' => $request->input('have_adequate_labor'),
             'aware_of_minimum_standards' => $request->input('aware_of_minimum_standards'), 
-            'receipt' => $request->input('receipt'), 
+            'receipt' => $receipt,  
             'previous_grower_number' => $request->input('previous_grower_number'), 
         ]);
 
         // send bunch of notification via email
         if($form){
             // MultiMail::to($user)->from('info@8technologies.net')->send(new \App\Mail\SR6FormAdded($user));
-            Mail::to($user)->send(new \App\Mail\SR6FormAdded($user));
+            //Mail::to($user)->send(new \App\Mail\SR6FormAdded($user));
         }
 
         $form_sr6_has_crops_items = json_decode($request->input('form_sr6_has_crops'));

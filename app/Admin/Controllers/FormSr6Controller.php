@@ -124,6 +124,7 @@ class FormSr6Controller extends AdminController
 
         $grid->column('address', __('Address'))->sortable();
         $grid->column('type', __('Category'))->sortable();
+        
 
 
         $grid->column('inspector', __('Inspector'))->display(function ($userId) {
@@ -450,6 +451,8 @@ class FormSr6Controller extends AdminController
             $form->text('name_of_applicant', __('Name of applicant/Company'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
             $form->text('premises_location', __('Location of Farm'))->readonly();
+
+            $form->file('receipt', __('Receipt'))->readonly(); 
 
             $form->radio('status', __('Status'))
                 ->options([

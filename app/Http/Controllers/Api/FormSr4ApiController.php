@@ -38,7 +38,7 @@ class FormSr4ApiController extends AdminController
     {
  
         $user = Auth::user();
-
+ 
         $data = $request->only(
             'type',
             'address',

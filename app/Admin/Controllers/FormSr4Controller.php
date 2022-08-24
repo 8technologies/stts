@@ -466,7 +466,6 @@ class FormSr4Controller extends AdminController
 
             $form->text('type', __('Applicant type'))->readonly(); 
 
-            $form->file('receipt', __('Receipt'))->readonly(); 
 
             $form->divider();
             $form->radio('status', __('Status'))
@@ -501,7 +500,7 @@ class FormSr4Controller extends AdminController
             $form->file('receipt', __('Receipt'))->readonly(); 
 
             $form->radio('status', __('Status'))
-                ->options([
+                ->options([ 
                     '3' => 'Halted',
                     '4' => 'Rejected',
                     '5' => 'Accepted',
