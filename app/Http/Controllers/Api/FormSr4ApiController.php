@@ -62,8 +62,6 @@ class FormSr4ApiController extends AdminController
             'have_internal_quality_program', 
             'accept_declaration'
         );
-
-        $receipt = Utils::upload_images_1($_FILES,true); 
         $post_data = Validator::make($data, [
             'type' => 'required',
             'address' => 'required',
@@ -82,10 +80,9 @@ class FormSr4ApiController extends AdminController
             'souce_of_seed' => 'required',
             'have_adequate_land_for_production' => 'required',
             'have_internal_quality_program' => 'required',
-            'receipt' => $receipt,
+
             'accept_declaration' => 'required',
         ]);
-
         $has_form = FormSr4::where([
             'administrator_id' => $user->id,
             'status' => 5,
@@ -100,6 +97,8 @@ class FormSr4ApiController extends AdminController
         if ($post_data->fails()) {
             //return $this->errorResponse("SR4 form submit error", 200); 
         }
+
+        $receipt = Utils::upload_images_1($_FILES,true); 
 
         $form = FormSr4::create([
             'administrator_id' => $user->id,
@@ -121,7 +120,7 @@ class FormSr4ApiController extends AdminController
             'souce_of_seed' => $request->input('souce_of_seed'),
             'have_adequate_land_for_production' => $request->input('have_adequate_land_for_production'),
             'have_internal_quality_program' => $request->input('have_internal_quality_program'),
-            'receipt' => $request->input('receipt'),
+            'receipt' => $receipt,
             'accept_declaration' => $request->input('accept_declaration')
         ]);
 
