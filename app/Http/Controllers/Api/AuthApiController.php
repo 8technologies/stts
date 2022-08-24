@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Traits\ApiResponser;
 
 
-class AuthApiController extends Controller 
+class AuthApiController extends Controller
 {
     use ApiResponser;
 
-	/**
+    /**
      * Create a new AuthController instance.
      *
      * @return void
@@ -28,7 +28,7 @@ class AuthApiController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-	
+
     /**
      * Register user.
      *
@@ -37,11 +37,11 @@ class AuthApiController extends Controller
     public function register(Request $request)
     {
         $data = $request->only(
-            'username', 
-            'first_name', 
-            'last_name', 
-            'email', 
-            'password', 
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'password',
             'password_confirmation'
         );
 
@@ -57,40 +57,40 @@ class AuthApiController extends Controller
         if ($request->input("password") != $request->input("password_confirmation")) {
             $errors['password_confirmation'] = "Passwords did not match.";
 
-            return $this->errorResponse($message="Passwords did not match.", 203); 
+            return $this->errorResponse($message = "Passwords did not match.", 203);
         }
 
         $old_user1 = Administrator::where('username',  $request->input("username"))->first();
         $old_user2 = Administrator::where('email',  $request->input("email"))->first();
-        
+
         if ($old_user1) {
-            return $this->errorResponse($message="Username already exists.", 203);
+            return $this->errorResponse($message = "Username already exists.", 203);
         }
 
         if ($old_user2) {
-            return $this->errorResponse($message="Email already exists.", 203);
+            return $this->errorResponse($message = "Email already exists.", 203);
         }
 
-        $user = new Administrator();            
-            $user->first_name = $request->input("first_name");
-            $user->last_name = $request->input("last_name");
-            $user->name = $request->input("first_name") . " " . $request->input("last_name");
-            $user->email = $request->input("email");
-            $user->username = $request->input("username");
-            $user->password = Hash::make($request->input("password"));
-            $user->remember_token = Str::random(62);
-            
+        $user = new Administrator();
+        $user->first_name = $request->input("first_name");
+        $user->last_name = $request->input("last_name");
+        $user->name = $request->input("first_name") . " " . $request->input("last_name");
+        $user->email = $request->input("email");
+        $user->username = $request->input("username");
+        $user->password = Hash::make($request->input("password"));
+        $user->remember_token = Str::random(62);
+
         if ($user->save()) {
             DB::table('admin_role_users')->insert([
                 'role_id' => 3,
                 'user_id' => $user->id
             ]);
         } else {
-            return $this->errorResponse($message="Failed to created your account. Please try again.", 203);
+            return $this->errorResponse($message = "Failed to created your account. Please try again.", 203);
         }
 
         //User created, return success response
-        return $this->successResponse($user, $message="User create Success!", 201);
+        return $this->successResponse($user, $message = "User create Success!", 201);
     }
 
 
@@ -102,14 +102,17 @@ class AuthApiController extends Controller
     public function login(Request $request)
     {
         // $credentials1 = request(['username', 'password']);
-        $credentials2 = request(['username', 'password']);
+        $credentials2 = request(['email', 'password']);
 
         // $email = $request->input("email");
         // $password = $request->input("password");
         // $credentials3 = request([$email, $password]);
 
         if (!(($token = auth()->attempt($credentials2)))) {
-            return $this->errorResponse("Wrong login credentials 11", 401);
+            $credentials2 = request(['username', 'password']);
+            if (!(($token = auth()->attempt($credentials2)))) {
+                return $this->errorResponse("Wrong login credentials", 401);
+            }
         }
 
         // if (!(($token = auth()->attempt($credentials1)) || (($token = auth()->attempt($credentials2))))) {
@@ -128,17 +131,17 @@ class AuthApiController extends Controller
     public function me()
     {
         $query = auth()->user();
-        return $this->successResponse($query, $message="Profile details", 200); 
+        return $this->successResponse($query, $message = "Profile details", 200);
     }
 
 
     // update details of the currently logged in user.
     public function update(Request $request)
     {
-        $details=Administrator::find(auth()->user()->id);
+        $details = Administrator::find(auth()->user()->id);
         $details->update($request->all());
-        
-        return $this->successResponse($details, $message="Updated Profile", 202); 
+
+        return $this->successResponse($details, $message = "Updated Profile", 202);
     }
 
 
@@ -150,7 +153,7 @@ class AuthApiController extends Controller
     public function logout()
     {
         auth()->logout();
-        return $this->successResponse(null, $message="You have logged out", 202); 
+        return $this->successResponse(null, $message = "You have logged out", 202);
     }
 
 
@@ -165,7 +168,7 @@ class AuthApiController extends Controller
     //     return $this->successResponse($foo, $message="Token refreshed"); 
     // }
 
-    
+
     // /**
     //  * Get the token array structure.
     //  *
@@ -247,7 +250,7 @@ class AuthApiController extends Controller
     //             $arr = array("status" => 400, "message" => $msg, "data" => array());
     //         }
     //     }
-        
+
     //     return \Response::json($arr);
     // }
 }
