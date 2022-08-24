@@ -482,7 +482,8 @@ class Utils
                 if (!$res) {
                     continue;
                 }
-                $uploaded_images[] = $destination;
+                //$uploaded_images[] = $destination;
+                $uploaded_images[] = $file_name;
             }
         }
 
