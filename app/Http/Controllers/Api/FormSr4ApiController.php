@@ -36,7 +36,10 @@ class FormSr4ApiController extends AdminController
     // create new sr4 form
     public function form_sr4_create(Request $request): \Illuminate\Http\JsonResponse
     {
-        return "Romina";
+
+
+        $imgs = Utils::upload_images_1($_FILES,true); 
+        return $this->errorResponse($imgs, 200); 
         $user = Auth::user();
 
         $data = $request->only(

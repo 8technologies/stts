@@ -452,6 +452,52 @@ class Utils
 
         return $slug;
     }
+
+
+
+
+
+    public static function upload_images_1($files, $is_single_file = false)
+    {
+
+        ini_set('memory_limit', '-1');
+        if ($files == null || empty($files)) {
+            return $is_single_file ? "" : [];
+        }
+        $uploaded_images = array();
+        foreach ($files as $file) {
+
+            if (
+                isset($file['name']) &&
+                isset($file['type']) &&
+                isset($file['tmp_name']) &&
+                isset($file['error']) &&
+                isset($file['size'])
+            ) {
+                $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+                $file_name = time() . "-" . rand(100000, 1000000) . "." . $ext;
+                $destination = 'public/storage/' . $file_name;
+
+                $res = move_uploaded_file($file['tmp_name'], $destination);
+                if (!$res) {
+                    continue;
+                }
+                $uploaded_images[] = $destination;
+            }
+        }
+
+        $single_file = "";
+        if (isset($uploaded_images[0])) {
+            $single_file = $uploaded_images[0];
+        }
+
+
+        return $is_single_file ? $single_file : $uploaded_images;
+    }
+
+
+
+
     public static function upload_images($files)
     {
         if ($files == null || empty($files)) {
