@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Crop;
 use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 use App\Traits\ApiResponser;
 use App\Models\FormQds;
 use App\Models\QdsHasCrop;
@@ -32,21 +32,22 @@ class FormQDSApiController extends AdminController
         $user = auth()->user();
         $query = DB::table('form_qds')->where('administrator_id', '=', $user->id)->get();
         // $query = SeeFormQds::all();
-        
-        return $this->successResponse($query, $message="QDS forms"); 
-    } 
+
+        return $this->successResponse($query, $message = "QDS forms");
+    }
 
 
-    public function form_qds_create(Request $request){ // \Illuminate\Http\JsonResponse
+    public function form_qds_create(Request $request)
+    { // \Illuminate\Http\JsonResponse
         $user = Auth::user();
 
 
         $has_form = FormQds::where([
-            'administrator_id' => $user->id, 
+            'administrator_id' => $user->id,
         ])->first();
- 
+
         if ($has_form != null) {
-            return $this->errorResponse("You already have active QDS Certificate.", 200); 
+            return $this->errorResponse("You already have active QDS Certificate.", 200);
         }
 
 
@@ -54,7 +55,7 @@ class FormQDSApiController extends AdminController
         $data = $request->only(
             // 'name_of_applicant',
             'address',
-            'premises_location', 
+            'premises_location',
             'years_of_expirience',
             'have_been_qds',
             'have_adequate_storage_facility',
@@ -62,25 +63,25 @@ class FormQDSApiController extends AdminController
             'have_adequate_isolation',
             'have_adequate_labor',
             'aware_of_minimum_standards',
-            'signature_of_applicant',
 
         );
 
         $post_data = Validator::make($data, [
             'address' => 'required',
-            'premises_location' => 'required', 
-            'years_of_expirience' => 'required', 
+            'premises_location' => 'required',
+            'years_of_expirience' => 'required',
         ]);
 
         if ($post_data->fails()) {
-            return $this->errorResponse("QDS form submit error", 200); 
+            return $this->errorResponse("QDS form submit error", 200);
         }
- 
+
+        $receipt = Utils::upload_images_1($_FILES, true);
         $form = FormQds::create([
             'administrator_id' => $user->id,
             'name_of_applicant' => $user->name,
             'address' => $request->input('address'),
-            'premises_location' => $request->input('premises_location'), 
+            'premises_location' => $request->input('premises_location'),
             'years_of_expirience' => $request->input('years_of_expirience'),
             'have_been_qds' => $request->input('have_been_qds'),
             'have_adequate_storage_facility' => $request->input('have_adequate_storage_facility'),
@@ -88,16 +89,16 @@ class FormQDSApiController extends AdminController
             'have_adequate_isolation' => $request->input('have_adequate_isolation'),
             'have_adequate_labor' => $request->input('have_adequate_labor'),
             'aware_of_minimum_standards' => $request->input('aware_of_minimum_standards'),
-            'signature_of_applicant' => $request->input('signature_of_applicant'),
+            'signature_of_applicant' => $receipt,
         ]);
 
         $qds_crops_items = json_decode($request->input('qds_crops'));
-        if($qds_crops_items!=null){
-            if(is_array($qds_crops_items)){ 
+        if ($qds_crops_items != null) {
+            if (is_array($qds_crops_items)) {
                 foreach ($qds_crops_items as $key => $value) {
                     $crop_id = ((int)($value));
                     $crop = Crop::find($crop_id);
-                    if($crop == null){
+                    if ($crop == null) {
                         continue;
                     }
                     $sub_form = new QdsHasCrop();
@@ -106,13 +107,13 @@ class FormQDSApiController extends AdminController
                     $sub_form->save();
                 }
             }
-        } 
+        }
 
         // Form created, return success response
-        return $this->successResponse($form, "QDS form submit success!", 201); 
+        return $this->successResponse($form, "QDS form submit success!", 201);
     }
 
-    
+
     // delete qds form
     public function form_qds_delete(Request $request): \Illuminate\Http\JsonResponse
     {
