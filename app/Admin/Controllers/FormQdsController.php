@@ -23,7 +23,7 @@ class FormQdsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'QDS R1 - Quality Declared Seed Producer';
+    protected $title = 'QDS R1 - Quality Declared Seed Producer';  
 
     /**
      * Make a grid builder.
@@ -483,7 +483,8 @@ class FormQdsController extends AdminController
             $form->text('address', __('Address'))->readonly();
             $form->text('company_initials', __('Company initials'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
-
+            $form->file('signature_of_applicant', __('Receipt'))->readonly(); 
+            
             $form->radio('status', __('Status'))
                 ->options([
                     '3' => 'Halted',
