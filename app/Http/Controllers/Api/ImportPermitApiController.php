@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Crop;
 use App\Models\CropVariety;
-use Encore\Admin\Controllers\AdminController; 
+use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ApiResponser;
@@ -33,17 +33,25 @@ class ImportPermitApiController extends AdminController
         //$query = DB::table('import_export_permits')->where('administrator_id', $user->id)->get();
 
         $query = DB::table('import_export_permits')
-        ->where('administrator_id', $user->id)
-        ->where('is_import', '==', 1)
-        ->get();
+            ->where([
+                'administrator_id' => $user->id,
+                'is_import' => 1,
+            ])
+            ->get();
+        $items = [];
+        foreach ($query as $key => $val) {
+            $val->is_import = 1;
+            $items[] = $val;
+        }
+
 
         // $query = ImportExportPermit::all();
-        
-        return $this->successResponse($query, $message="Import permits"); 
-    } 
+
+        return $this->successResponse($query, $message = "Import permits");
+    }
 
 
-    
+
     // create new sr4 form
     public function import_permits_create(Request $request): \Illuminate\Http\JsonResponse
     {
@@ -57,7 +65,7 @@ class ImportPermitApiController extends AdminController
             'store_location',
             'quantiry_of_seed',
             'name_address_of_origin',
-            'ista_certificate', 
+            'ista_certificate',
             'phytosanitary_certificate',
             'crop_category',
         );
@@ -68,7 +76,7 @@ class ImportPermitApiController extends AdminController
             'type' => 'required',
             'store_location' => 'required',
             'quantiry_of_seed' => 'required',
-            'name_address_of_origin' => 'required', 
+            'name_address_of_origin' => 'required',
         ]);
 
         /* $f =  new ImportExportPermit();
@@ -82,16 +90,16 @@ class ImportPermitApiController extends AdminController
         }else{
             ///
         } */
-        
- 
+
+
         if ($post_data->fails()) {
-            return $this->errorResponse("Permit validation failed", 200); 
+            return $this->errorResponse("Permit validation failed", 200);
         }
 
- 
+
 
         $form = ImportExportPermit::create([
-            'administrator_id' => $user->id, 
+            'administrator_id' => $user->id,
             'name' => $user->name,
             'address' => $request->input('address'),
             'telephone' => $request->input('telephone'),
@@ -99,41 +107,40 @@ class ImportPermitApiController extends AdminController
             'store_location' => $request->input('store_location'),
             'quantiry_of_seed' => $request->input('quantiry_of_seed'),
             'name_address_of_origin' => $request->input('name_address_of_origin'),
-            'ista_certificate' => $request->input('ista_certificate'), 
+            'ista_certificate' => $request->input('ista_certificate'),
             'phytosanitary_certificate' => $request->input('phytosanitary_certificate'),
             'crop_category' => $request->input('crop_category'),
             'is_import' => (int) ($request->input('is_import')),
         ]);
 
         $import_export_permits_has_crops = json_decode($request->input('import_export_permits_has_crops'));
-        if($import_export_permits_has_crops!=null){
-            if(is_array($import_export_permits_has_crops)){ 
+        if ($import_export_permits_has_crops != null) {
+            if (is_array($import_export_permits_has_crops)) {
                 foreach ($import_export_permits_has_crops as $key => $value) {
                     $crop_variety_id = ((int)($value));
                     $crop_var = CropVariety::find($crop_variety_id);
-                    if($crop_var == null){
+                    if ($crop_var == null) {
                         continue;
                     }
                     $ImportExportPermitsHasCrop = new ImportExportPermitsHasCrops();
                     $ImportExportPermitsHasCrop->import_export_permit_id = $form->id;
                     $ImportExportPermitsHasCrop->crop_variety_id = $crop_variety_id;
                     $ImportExportPermitsHasCrop->save();
-
                 }
             }
-        } 
-        
+        }
+
         // Form created, return success response
-        if(((int)($request->input('is_import'))) == 1){
+        if (((int)($request->input('is_import'))) == 1) {
             $msg = "Import permit submitted successfully!";
-        }else{
+        } else {
             $msg = "Export permit submitted successfully!";
         }
-        return $this->successResponse($form, $msg, 201); 
+        return $this->successResponse($form, $msg, 201);
     }
 
 
-    
+
     // delete import permit form
     public function import_permit_delete(Request $request): \Illuminate\Http\JsonResponse
     {
