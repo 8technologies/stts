@@ -213,7 +213,7 @@ class ImportExportPermitController extends AdminController
         });
 
         $user = Auth::user();
-        $form->hidden('is_import', __('is_import'))->value(1)->required();
+        $form->hidden('is_import', __('is_import'))->default(1)->value(1)->required();
 
         if ($form->isCreating()) {
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
