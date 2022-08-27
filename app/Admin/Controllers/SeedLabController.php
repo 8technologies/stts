@@ -16,6 +16,8 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Auth;
 
+
+
 class SeedLabController extends AdminController
 {
     /** 
