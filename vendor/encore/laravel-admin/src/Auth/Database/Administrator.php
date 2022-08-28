@@ -21,7 +21,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * 
  * @property Role[] $roles
  */
-class Administrator extends Model implements AuthenticatableContract, JWTSubject, MustVerifyEmail
+// class Administrator extends Model implements AuthenticatableContract, JWTSubject, MustVerifyEmail
+class Administrator extends Model implements AuthenticatableContract, JWTSubject
 {
     use Authenticatable, 
     HasPermissions, 
@@ -121,26 +122,6 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
      * @return array
      */
     public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
-    public function hasVerifiedEmail()
-    {
-        return [];
-    }
-
-    public function markEmailAsVerified()
-    {
-        return [];
-    }
-
-    public function sendEmailVerificationNotification()
-    {
-        return [];
-    }
-
-    public function getEmailForVerification()
     {
         return [];
     }
