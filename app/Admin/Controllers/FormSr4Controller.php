@@ -57,7 +57,9 @@ class FormSr4Controller extends AdminController
                     $actions->disableDelete();
                 }
             });
-        } else if (Admin::user()->isRole('inspector')) { 
+        } 
+        
+        else if (Admin::user()->isRole('inspector')) { 
             $grid->model()->where('inspector', '=', Admin::user()->id);
             $grid->disableCreateButton();
 
@@ -70,11 +72,15 @@ class FormSr4Controller extends AdminController
                 //     $actions->disableEdit();
                 // }
             });
-        } else {
+        } 
+        
+        else {
             $grid->disableCreateButton();
         }
 
         $grid->column('id', __('Id'))->sortable();
+        
+        $grid->column('name_of_applicant', __("Search by Name of Applicant"))->sortable();
 
         $grid->column('created_at', __('Created'))->display(function ($item) {
             return Carbon::parse($item)->diffForHumans();
@@ -110,6 +116,11 @@ class FormSr4Controller extends AdminController
                 return "Not assigned";
             return $u->name;
         })->sortable();
+
+        $grid->filter(function($search_param){
+            $search_param->disableIdfilter();
+            $search_param->like('name_of_applicant', __("Search by Name of Applicant"));
+        });
 
         return $grid;
     }
