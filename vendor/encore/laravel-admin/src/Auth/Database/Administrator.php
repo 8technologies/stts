@@ -10,26 +10,25 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-
-
 // use Laravel\Passport\HasApiTokens;
-
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-/**
- * Class Administrator.
- *
+/** Class Administrator.
+ * 
  * @property Role[] $roles
  */
-class Administrator extends Model implements AuthenticatableContract, JWTSubject
+class Administrator extends Model implements AuthenticatableContract, JWTSubject, MustVerifyEmail
 {
     use Authenticatable, 
     HasPermissions, 
     DefaultDatetimeFormat, 
     Notifiable,
     HasFactory
+    // HasRoles
     // HasApiTokens
     ;
     
@@ -125,5 +124,25 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
     {
         return [];
     }
-     
+
+    public function hasVerifiedEmail()
+    {
+        return [];
+    }
+
+    public function markEmailAsVerified()
+    {
+        return [];
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        return [];
+    }
+
+    public function getEmailForVerification()
+    {
+        return [];
+    }
+
 }

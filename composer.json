@@ -27,6 +27,7 @@
         "laravel/sanctum": "^2.15",
         "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.5",
+        "laravel/ui": "*",
         "laravelcollective/html": "^6.2",
         "maatwebsite/excel": "^3.1.31",
         "phpoffice/phpspreadsheet": "^1.23.0",

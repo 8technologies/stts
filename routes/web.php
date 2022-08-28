@@ -51,3 +51,9 @@ Route::match(['get', 'post'], '/{id}', [MainController::class, 'slugSwitcher']);
 
 // send emails
 Route::get('/notify', [FormSr4Controller::class, 'notify'])->name("notify")->middleware(Authenticate::class);
+
+
+// Email Verification Routes
+Route::get('/email/verify', 'EmailVerificationController@show')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', 'EmailVerificationController@verify')->name('verification.verify')->middleware(['signed']);
+Route::post('/email/resend', 'EmailVerificationController@resend')->name('verification.resend');
