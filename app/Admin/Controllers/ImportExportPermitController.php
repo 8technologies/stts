@@ -4,6 +4,8 @@ namespace App\Admin\Controllers;
 
 use App\Models\Crop;
 use App\Models\CropVariety;
+use App\Models\FormSr4;
+use App\Models\FormSr6;
 use App\Models\ImportExportPermit;
 use App\Models\Utils;
 use Carbon\Carbon;
@@ -38,8 +40,6 @@ class ImportExportPermitController extends AdminController
         $grid->disableFilter();
         $grid->disableExport();
         $grid->model()->where('is_import', '=', 1); 
-
-
 
 
         if (Admin::user()->isRole('basic-user')) {
@@ -232,7 +232,17 @@ class ImportExportPermitController extends AdminController
             //     }
             // });
 
+
+            // ----------------------------------------------
+            // // $address_of_current_user = FormSr6::find('address')->where('name_of_applicant', $user->name)->get();
+
+            // $address_of_current_user = FormSr4::findOrFail('address')->get();
+
+            // dd($address_of_current_user);
+            // ----------------------------------------------
+
             $form->text('name', __('Name'))->default($user->name)->required();
+            // $form->text($address_of_current_user, __('Postal Address'))->required();
             $form->text('address', __('Postal Address'))->required();
             $form->text('telephone', __('Phone number'))->required();
 
@@ -278,6 +288,7 @@ class ImportExportPermitController extends AdminController
                         }
                     }
                 })
+
                 ->when('Seed Producer', function (Form $form) {
                     $seed_board_registration_number = null;
                     $sr4 = Utils::has_valid_sr4();

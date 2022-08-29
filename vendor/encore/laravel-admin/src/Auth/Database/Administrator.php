@@ -32,9 +32,9 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
     // HasRoles
     // HasApiTokens
     ;
-    
-    protected $fillable = ['username', 'first_name', 'last_name', 'email', 'name', 'remember_token', 'password', 'avatar'];
 
+    protected $fillable = ['username', 'first_name', 'last_name', 'email', 'name', 'remember_token', 'password', 'avatar'];
+    
     /**
      * Create a new Eloquent model instance.
      *
@@ -125,5 +125,8 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
     {
         return [];
     }
+
+
+  
 
 }
