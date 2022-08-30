@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SeedLabel extends Model
 {
     use HasFactory; 
+
     public function seed_lab()
     {
         return $this->belongsTo(SeedLab::class);
@@ -15,6 +16,7 @@ class SeedLabel extends Model
   
     public function crop_variety(){
         $var = CropVariety::find($this->crop_variety_id);
+        
         if($var == null){
             Utils::create_default_tables();
             $this->crop_variety_id = 1;
