@@ -134,8 +134,7 @@ class FormStockExaminationRequestController extends AdminController
                 $search_param->disableIdfilter();
 
                 $search_param->like('examination_category', __("Search by Category"));
-                $search_param->like('status', __("Search by Status"))
-                ->where('status', [1, 2, 3]);
+                $search_param->like('status', __("Search by Status"));
             });  
         }
 
