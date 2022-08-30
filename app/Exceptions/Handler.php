@@ -56,7 +56,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        
         if ($exception instanceof ModelNotFoundException) {
             return response()->json(['error' => 'Data not found.']);
         }
@@ -67,7 +66,6 @@ class Handler extends ExceptionHandler
 
     public function handleException($request, Throwable $exception)
     {
-
         if ($exception instanceof MethodNotAllowedHttpException) {
             return $this->errorResponse('The specified method for the request is invalid', 405);
         }
