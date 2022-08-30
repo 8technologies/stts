@@ -11,7 +11,6 @@ use phpDocumentor\Reflection\Types\This;
 
 class SeedLab extends Model
 {
-
     protected $fillable = [
         'administrator_id',
         // 'form_stock_examination_request_id',
@@ -19,7 +18,6 @@ class SeedLab extends Model
         'payment_receipt',
         'applicant_remarks'
     ];
-
 
     public function user()
     {
@@ -40,12 +38,10 @@ class SeedLab extends Model
         $this->setTitleColumn('mother_lot');
     }
 
- 
-
     public function crop_variety()
     { 
         return $this->belongsTo(CropVariety::class);
     }
-    
+
     use HasFactory;
 }

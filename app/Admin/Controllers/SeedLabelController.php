@@ -58,17 +58,17 @@ class SeedLabelController extends AdminController
 
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
+
                 if ($status == 0) {
                     $status = 1;
                 }
-                if (
-                    $status != 1 &&
-                    $status != 3
-                ) {
+                
+                if ($status != 1 && $status != 3) {
                     //$actions->disableEdit();
                     $actions->disableDelete();
                 }
             });
+
         } else if (Admin::user()->isRole('inspector')) {
             $grid->disableCreateButton();
             $grid->model()->where('administrator_id', '=', Admin::user()->id);

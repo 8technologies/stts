@@ -57,6 +57,7 @@ class SeedLabController extends AdminController
             }
             return $_user->name;
         })->sortable();
+
         $grid->column('crop_variety_id', __('Crop variety id'))->display(function ($user) {
             $_user = CropVariety::find($user);
             if (!$_user) {
@@ -116,7 +117,8 @@ class SeedLabController extends AdminController
                     $actions->disableDelete();
                 }
             });
-        } else if (Admin::user()->isRole('inspector')) {
+        }
+        else if (Admin::user()->isRole('inspector')) {
             $grid->model()->where('inspector', '=', Admin::user()->id);
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
@@ -127,13 +129,15 @@ class SeedLabController extends AdminController
                     $actions->disableEdit();
                 }
             });
-        } else if (Admin::user()->isRole('lab-reception')) {
+        }
+        else if (Admin::user()->isRole('lab-reception')) {
             $grid->model()->where('status', 9);
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
                 $status = ((int)(($actions->row['status'])));
             });
-        } else if (Admin::user()->isRole('lab-technician')) {
+        }
+        else if (Admin::user()->isRole('lab-technician')) {
             $grid->model()->where('status', 10)
                 ->orWhere('status', 5);
             $grid->actions(function ($actions) {
@@ -209,6 +213,7 @@ class SeedLabController extends AdminController
         $show->field('packaging', __('Packaging'));
         $show->field('number_of_units', __('Number of units'));
         $show->field('mother_lot', __('Mother lot'));
+        $show->field('lot_number', __('Lot Number'));
         $show->field('sample_condition', __('Sample condition'));
         $show->field('inspector_remarks', __('Inspector remarks'));
         $show->field('tests_required', __('Tests required'));

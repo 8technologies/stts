@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\Profile;
-use Illuminate\Support\Facades\Validator;
 
 
 class MainController extends Controller
@@ -65,16 +64,14 @@ class MainController extends Controller
         return view('main.index');
     }
 
-
     public function index()
     {
         return redirect()->intended('login');
     }
 
-
     public function register_get()
-    {        
-        return view('main.register');
+    {
+        return redirect()->intended('register_get');
     }
 
 
@@ -101,64 +98,79 @@ class MainController extends Controller
         // return view('main.login');
     }
 
-    //   /**
-    //  * Get a validator for an incoming registration request.
-    //  *
-    //  * @param  array  $data
-    //  * @return \Illuminate\Contracts\Validation\Validator
-    //  */
-    // protected function validator(array $data)
-    // {
-    //     return Validator::make($data, [
-    //         'first_name' => 'required|max:24|min:2',
-    //         'last_name' => 'required|max:24|min:2',
-    //         'email' => 'required|unique::admin_users',
-    //         'password' => 'required|confirmed|max:100|min:3',
-    //     ]);
-    // }
 
-
+    
     public function register(Request  $request)
     {
-        $this->validate($request, [
-            'first_name' => 'required|max:24|min:2',
-            'last_name' => 'required|max:24|min:2',
-            'email' => 'required|unique::admin_users',
-            'password' => 'required|confirmed|max:100|min:3',
-        ]);
+        if (isset($_POST['username'])) {
 
-        $user = Administrator::create([
-            'first_name' => $request->first_name,
-            'name' => $request->first_name . " " . $request->last_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'username' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            $validated = $request->validate([
+                'first_name' => 'required|max:24|min:2',
+                'last_name' => 'required|max:24|min:2',
+                'password' => 'required|max:100|min:3',
+                'password1' => 'required|max:100|min:3',
+            ]);
 
-        if ($user->save()) {
-            DB::table('admin_role_users')->insert([
-                'role_id' => 3,
-                'user_id' => $user->id
+            if (
+                $request->input("password") !=
+                $request->input("password1")
+            ) {
+                $errors['password1'] = "Passwords did not match.";
+                return redirect('register')
+                    ->withErrors($errors)
+                    ->withInput();
+                die();
+            }
+
+            $old_user = Administrator::where('username',  $request->input("username"))->first();
+            if ($old_user) {
+                $errors['username'] = "User with same email already exist.";
+                return redirect('register')
+                    ->withErrors($errors)
+                    ->withInput();
+                die();
+            }
+
+            $admin = new Administrator();
+            $admin->first_name = $request->input("first_name");
+            $admin->name = $request->input("first_name") . " " . $request->input("last_name");
+            $admin->last_name = $request->input("last_name");
+            $admin->username = $request->input("username");
+            $admin->email = $request->input("username");
+            $admin->password = Hash::make($request->input("password"));
+
+            if ($admin->save()) {
+                DB::table('admin_role_users')->insert([
+                    'role_id' => 3,
+                    'user_id' => $admin->id
+                ]);
+            } else {
+                $errors['username'] = "Failed to created your account. Please try again.";
+                return redirect('register')
+                    ->withErrors($errors)
+                    ->withInput();
+                die();
+            }
+
+
+            $u['email'] = $request->input("username");
+            $u['password'] = $request->input("password");
+            //$u['password'] = Hash::make($request->input("password"));
+            $remember = $request->get('remember', true);
+
+            if (Admin::guard()->attempt($u, $remember)) {
+                admin_toastr(trans('admin.login_successful'));
+                $request->session()->regenerate();
+                return redirect()->intended('admin');
+                die();
+            }
+
+            return back()->withErrors([
+                'username' => 'The provided credentials do not match our records.',
             ]);
         }
-
-        $u['email'] = $request->email;
-        $u['password'] = $request->password;
-
-        $remember = $request->get('remember', true);
-
-        // event(new Registered($u));
-
-        if (Admin::guard()->attempt($u, $remember)) {
-            admin_toastr(trans('admin.login_successful'));
-            $request->session()->regenerate();
-            return redirect()->intended('admin');
-        }
-
         return view('main.register');
-
-        // return back()->with(["status" => "success", "message" => "User Created!"]);
-        // Accessible on the frontend via `session()->get("message", "");`
     }
+
+
 }
