@@ -87,6 +87,7 @@ class MarketableSeedController extends AdminController
                 }
                 return $var->crop->name . ", " . $var->name;
             })->sortable();
+            
         $grid->column('lab_test_number', __('Lab test no.'))->sortable();
         $grid->column('lot_number', __('Lot number'))->sortable();
         //$grid->column('source', __('Source'));
