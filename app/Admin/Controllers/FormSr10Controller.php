@@ -44,6 +44,10 @@ class FormSr10Controller extends AdminController
         // dd("here");
 
         $grid = new Grid(new FormSr10());
+
+        $grid->disableFilter();
+
+
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
             $grid->actions(function ($actions) {
@@ -57,7 +61,9 @@ class FormSr10Controller extends AdminController
                     $actions->disableEdit();
                 }
             });
-        } else if (Admin::user()->isRole('inspector')) {
+        } 
+        
+        else if (Admin::user()->isRole('inspector')) {
             $grid->model()->where('inspector', '=', Admin::user()->id);
             $grid->disableCreateButton();//
             $grid->disableBatchActions();
@@ -77,7 +83,9 @@ class FormSr10Controller extends AdminController
                     //$actions->disableEdit();
                 }
             });
-        } else {
+        } 
+        
+        else {
             $grid->disableCreateButton();
         }
 
@@ -86,6 +94,18 @@ class FormSr10Controller extends AdminController
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
         })->sortable();
+
+        $grid->column('variety', __('Crop variety'))
+            ->display(function ($item) {
+                $var = CropVariety::find($item);
+                if(!$var){
+                    return "-";
+                }
+                return $var->crop->name . ", " . $var->name;
+            })->sortable();
+            
+
+
         $grid->column('is_active', __('Attension'))->display(function ($is_active) {
             if ($is_active) {
                 return '<span class="badge badge-danger">Needs your attension</span>';
@@ -321,8 +341,8 @@ class FormSr10Controller extends AdminController
             if($crop_var == null){
                 die("Crop varity was not found in the system.");
             }
- 
             
+
             $crop_name = $crop_var->crop->name.", ".$crop_var->name;
 
             $form->display('', __('Crop'))->default($crop_name)->readonly();
@@ -359,18 +379,12 @@ class FormSr10Controller extends AdminController
             });
 
 
-
-
-            $varieties_all = CropVariety::all();
-            $varieties = [];
-            foreach ($varieties_all as $key => $var) {
-                if ($var->crop_id == $crop_var->id) {
-                    $varieties[$var->id] = $var->crop->name . ", " . $var->name;
-                }
+            foreach (CropVariety::all() as $key => $item) {
+                $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
             }
-            $form->select('variety', __('Select Crop variety'))
-                ->options($varieties);
- 
+
+            $form->select('variety', 'Select Crop variety')->options($_items);
+
 
 
             $form->select('proposed_distance', __('Status of proposed distance'))
