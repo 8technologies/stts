@@ -481,7 +481,7 @@ class SeedLabController extends AdminController
                         $form->textarea('inspector_remarks', __('Additional remarks'));
                     });
 
-                $form->file('receipt', __('Attach receipt'))->required();
+                $form->file('payment_receipt', __('Attach receipt'))->readonly();
 
                 $form->html('<small>NOTE: You cannot reverse this process once is done.</small>');
             }
