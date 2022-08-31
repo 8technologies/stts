@@ -38,7 +38,7 @@ class PreOrderApiController extends AdminController
 
         $data = $request->only(
             // 'administrator_id', 
-            'crop_variety_id', 
+            'crop_variety_id',  
             'quantity',  
             'seed_class',    
             'collection_date', 

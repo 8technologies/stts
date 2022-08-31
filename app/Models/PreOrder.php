@@ -10,14 +10,34 @@ class PreOrder extends Model
     use HasFactory;
 
     protected $fillable = [
-        'administrator_id', 
-        'crop_variety_id', 
-        'quantity', 
-        'seed_class', 
-        'collection_date', 
-        'pickup_location', 
-        'detail', 
-        'created_at', 
+        'administrator_id',
+        'crop_variety_id',
+        'quantity',
+        'seed_class',
+        'collection_date',
+        'pickup_location',
+        'detail',
+        'created_at',
         'updated_at',
     ];
+
+
+    protected $appends = [
+        'crop_variety_text'
+    ];
+
+    public function getCropVarietyTextAttribute()
+    {
+        return $this->crop_variety->name;
+    }
+
+    public function crop_variety()
+    {
+        $c = CropVariety::find($this->crop_variety_id);
+        if ($c == null) {
+            $this->crop_variety_id = 1;
+            $this->save();
+        }
+        return $this->belongsTo(CropVariety::class);
+    }
 }
