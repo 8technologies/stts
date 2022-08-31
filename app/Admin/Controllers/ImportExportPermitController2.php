@@ -45,9 +45,9 @@ class ImportExportPermitController2 extends AdminController
                 Admin::user()->id
             );
 
-            if (!Utils::can_create_export_form()) {
-                $grid->disableCreateButton();
-            }
+            // if (!Utils::can_create_export_form()) {
+            //     $grid->disableCreateButton();
+            // }
 
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
@@ -421,9 +421,9 @@ class ImportExportPermitController2 extends AdminController
                 foreach (CropVariety::all() as $key => $item) {
                     $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
                 }
+                $form->select('crop_variety_id', 'Add Crop Variety')->options($_items)->required();
 
-                $form->select('crop_variety_id', 'Add Crop Variety')->options($_items)
-                    ->required();
+                
                 $form->hidden('category', __('Category'))->default("")->value("");
                 $form->text('weight', __('Weight (in KGs)'))->attribute('type', 'number')->required();
             });

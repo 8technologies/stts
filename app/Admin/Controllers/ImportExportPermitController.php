@@ -37,7 +37,7 @@ class ImportExportPermitController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new ImportExportPermit());
-        $grid->disableFilter();
+        // $grid->disableFilter();
         $grid->disableExport();
         $grid->model()->where('is_import', '=', 1); 
 
@@ -60,7 +60,9 @@ class ImportExportPermitController extends AdminController
                     $actions->disableDelete();
                 }
             });
-        } else if (Admin::user()->isRole('inspector')) {
+        } 
+        
+        else if (Admin::user()->isRole('inspector')) {
             $grid->model()->where('inspector', '=', Admin::user()->id);
             $grid->disableCreateButton();
 
@@ -80,7 +82,19 @@ class ImportExportPermitController extends AdminController
                     $actions->disableDelete();
                 }
             });
-        } else {
+        } 
+        
+        elseif (Admin::user()->isRole('admin')) {
+            $grid->disableCreateButton();
+
+            $grid->filter(function($search_param){
+                $search_param->disableIdfilter();
+                $search_param->like('name', __("Search by Name"));
+                $search_param->like('status', __("Search by Status"));
+            });
+        }
+        
+        else {
             $grid->disableCreateButton();
         }
 
@@ -118,8 +132,10 @@ class ImportExportPermitController extends AdminController
             return Utils::tell_status($status);
         })->sortable();
 
+
         return $grid;
     }
+
 
     /**
      * Make a show builder.
@@ -413,13 +429,13 @@ class ImportExportPermitController extends AdminController
             )
                 ->required();
 
-            // $form->file('ista_certificate', __('ISTA certificate'));
-            // $form->file('phytosanitary_certificate', __('Phytosanitary certificate'));
 
-            $form->radio("import_form_certificate_type", __("Type Of Certificate"))
+            $form->multipleSelect("import_form_certificate_type", __("Type Of Certificate"))
             ->options([
                 "ISTA certificate" => 'ISTA certificate',
-                "Phytosanitary certificate" => 'Phytosanitary certificate'])->stacked();
+                "Phytosanitary certificate" => 'Phytosanitary certificate'])
+                // ->stacked()
+                ;
 
             $form->html('<h3>I/We wish to apply for a license to import seed as indicated below:</h3>');
 
