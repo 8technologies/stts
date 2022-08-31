@@ -199,11 +199,9 @@ class PlantingReturn extends Model
             if ($file == null) {
                 return $m;
             }
-            self::import_sub_growers($m);
             
-            $user = Auth::user();
-            Mail::to($user)->send(new \App\Mail\PlantingReturnsCompanyFormAdded($user));
-
+            self::import_sub_growers($m);
+        
             return $m;
             //created
         });
@@ -242,8 +240,7 @@ class PlantingReturn extends Model
         });
 
         self::deleted(function ($model) {
-            $user = Auth::user();
-            Mail::to($user)->send(new \App\Mail\PlantingReturnsCompanyFormDeleted($user));
+            // ... code here
         });
     }
 
