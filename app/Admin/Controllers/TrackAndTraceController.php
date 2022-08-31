@@ -40,7 +40,6 @@ class TrackAndTraceController extends AdminController
      */
     protected function grid()
     {
-
         $grid = new Grid(new SeedLab());        
         $grid->column('id', __('Id'));
         $grid->column('lot_number', __('Lot number'))->badge($style = 'blue')->copyable();
@@ -65,34 +64,28 @@ class TrackAndTraceController extends AdminController
      */
     protected function detail($id)
     {
-        /***
-         * 
+        /** 
          * The details should show the company name, the crop variety, year, original quantity
          */
         $show = new Show(SeedLab::findOrFail($id));
-        // $show = new Show(FormQds::findOrFail($id));
-        // $show = new Show(FormStockExaminationRequest::findOrFail($id));
         
-        // $show->panel()
-        //     ->tools(function ($tools) {
-        //         $tools->disableEdit();
-        //         $tools->disableDelete();
-        //     });;
+        $show->panel()->tools(function ($tools) {
+                $tools->disableEdit();
+                $tools->disableDelete();
+        });
 
         $show->field('id', __('Id'));
         $show->field('lot_number', __('Lot number'))->badge($style = 'blue');
         $show->field('mother_lot', __('Mother lot'))->badge($style = 'green');
-        // $show_qds->field('dddddddddd', __('Company Name'));
-        // $show->field('dddddddddd', __('Crop Variety'));
-        $show->field('years_of_expirience', __('Years of Experience'));
-        // $show->field('dddddddddd', __('Original Quantity'));
+        $show->field($show->form_stock_examination_request_id->company, __('Company Name'));
+        $show->field('form_stock_examination_request_id', __('Crop Variety'));
+        $show->field('form_stock_examination_request_id', __('Years of Experience'));
+        $show->field('form_stock_examination_request_id', __('Original Quantity'));
 
 
         return $show;
         // return [$show, $show_qds];
     }
-
-
 
 
     protected function form()
