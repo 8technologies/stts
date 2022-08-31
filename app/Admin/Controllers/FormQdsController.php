@@ -98,6 +98,7 @@ class FormQdsController extends AdminController
 
         $grid->column('address', __('Address'))->sortable();
 
+        
 
         $grid->column('inspector', __('Inspector'))->display(function ($userId) {
             if (Admin::user()->isRole('basic-user')) {
@@ -108,6 +109,15 @@ class FormQdsController extends AdminController
                 return "Not assigned";
             return $u->name;
         })->sortable();
+
+        
+        if (($grid->status == '2') && (Admin::user()->isRole('basic-user'))){
+            $grid->actions(function ($actions) {
+                $actions->disableEdit();
+                $actions->disableDelete();
+            });  
+        }
+
 
         return $grid;
     }
@@ -121,8 +131,8 @@ class FormQdsController extends AdminController
     protected function detail($id)
     {
         $show = new Show(FormQds::findOrFail($id));
-        $show->panel()
-            ->tools(function ($tools) {
+
+        $show->panel()->tools(function ($tools) {
                 $tools->disableEdit();
                 $tools->disableDelete();
             });;
@@ -290,6 +300,7 @@ class FormQdsController extends AdminController
                 ->required();
 
             $repeat = "";
+
             if ($form->isEditing()) {
                 $sec  = ((int)(request()->segment(3)));
                 if ($sec > 0) {
@@ -439,7 +450,22 @@ class FormQdsController extends AdminController
                 ])
                 ->required();
             $form->file('signature_of_applicant', __('Upload payment receipt'))->required();
+
+
+            if ($form->status == '2'){
+                // $form->tools(function (Form\Tools $tools) {
+                //     $tools->disableDelete();
+                //     $tools->disableEdit();
+                // });
+                
+                $form->panel()->tools(function ($tools) {
+                    $tools->disableEdit();
+                    $tools->disableDelete();
+            });
+
+            }
         }
+
         if (Admin::user()->isRole('admin')) {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
@@ -501,10 +527,7 @@ class FormQdsController extends AdminController
                         }
                         $_items[$item->id] = $item->name . " - " . $item->id;
                     }
-                    $form->select('inspector', __('Inspector'))
-                        ->options($_items)
-                        ->help('Please select inspector')
-                        ->rules('required');
+                    
                 })
                 ->when('in', [3, 4], function (Form $form) {
                     $form->textarea('status_comment', 'Enter status comment (Remarks)')
