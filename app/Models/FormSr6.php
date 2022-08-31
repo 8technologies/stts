@@ -52,16 +52,19 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
         });
 
         self::created(function ($model) {
-            // $user = Auth::user();
-            // Mail::to($user)->send(new \App\Mail\SR6FormAdded($user));
+            // code here            
         });
  
+
         self::updating(function($model){
-            if(Admin::user()->isRole('basic-user') ){
+            if(
+                Admin::user()->isRole('basic-user')
+            ){
                 $model->status = 1;
                 return $model;
             }
         });
+
 
         self::updated(function ($model) {
             // $user = Auth::user();
@@ -82,6 +85,12 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
     public function crops()
     {
         return $this->belongsToMany(Crop::class, 'form_sr6_id');
+    }
+
+    
+    public function form_sr6_has_crops()
+    {
+        return $this->hasMany(FormSr6HasCrop::class, 'form_sr6_id');
     }
 
 
