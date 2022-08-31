@@ -33,7 +33,7 @@ class SeedLabController extends AdminController
      * @return Grid 
      */
     protected function grid()
-    { 
+    {
 
         $u = Admin::user();
 
@@ -117,8 +117,7 @@ class SeedLabController extends AdminController
                     $actions->disableDelete();
                 }
             });
-        }
-        else if (Admin::user()->isRole('inspector')) {
+        } else if (Admin::user()->isRole('inspector')) {
             $grid->model()->where('inspector', '=', Admin::user()->id);
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
@@ -129,15 +128,13 @@ class SeedLabController extends AdminController
                     $actions->disableEdit();
                 }
             });
-        }
-        else if (Admin::user()->isRole('lab-reception')) {
+        } else if (Admin::user()->isRole('lab-reception')) {
             $grid->model()->where('status', 9);
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
                 $status = ((int)(($actions->row['status'])));
             });
-        }
-        else if (Admin::user()->isRole('lab-technician')) {
+        } else if (Admin::user()->isRole('lab-technician')) {
             $grid->model()->where('status', 10)
                 ->orWhere('status', 5);
             $grid->actions(function ($actions) {
@@ -270,7 +267,7 @@ class SeedLabController extends AdminController
             $form->hidden('crop_variety_id', __('Crop variety id'));
 
             $stocks = [];
-            
+
             foreach (CropVariety::all() as $key => $crop_variety) {
                 $u = Admin::user();
                 $tot = Utils::get_stock_balance($u->id, $crop_variety->id);
@@ -351,9 +348,9 @@ class SeedLabController extends AdminController
             $form->hidden('parent_id');
             $form->hidden('order');
             $form->hidden('title');
-            $form->hidden('temp_parent'); 
+            $form->hidden('temp_parent');
 
-            if ($form->isEditing()) { 
+            if ($form->isEditing()) {
 
                 $id = request()->route()->parameters['seed_lab'];
                 $model = $form->model()->find($id);
@@ -472,6 +469,8 @@ class SeedLabController extends AdminController
                     ->required()
                     ->options(['Moisture content', 'Purity', 'Germination', 'Seed health']);
 
+                $form->file('payment_receipt', __('Attach receipt'))->readonly();
+
                 $form->radio('status', __('Decision'))
                     ->required()
                     ->options([
@@ -481,7 +480,7 @@ class SeedLabController extends AdminController
                         $form->textarea('inspector_remarks', __('Additional remarks'));
                     });
 
-                $form->file('payment_receipt', __('Attach receipt'))->readonly();
+
 
                 $form->html('<small>NOTE: You cannot reverse this process once is done.</small>');
             }
