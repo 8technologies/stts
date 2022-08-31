@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Controllers\AdminController;  
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\PreOrder;
 use App\Models\Utils;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request; 
+use Illuminate\Support\Facades\DB; 
 use Illuminate\Support\Facades\Validator;
 use App\Traits\ApiResponser;
 
@@ -23,13 +23,12 @@ class PreOrderApiController extends AdminController
 
     public function pre_order_list()
     {
-
         $user = auth()->user();
-        $query = PreOrder::where('administrator_id', $user->id)
-            ->get();
- 
-        return $this->successResponse($query, $message = "List of Orders");
-    }
+        // $query = DB::table('pre_orders')->where('administrator_id', $user->id)->get();
+        $query = PreOrder::all();
+        
+        return $this->successResponse($query, $message="List of Pre Orders");
+    }    
 
 
     // create a new preorder form
@@ -39,12 +38,12 @@ class PreOrderApiController extends AdminController
 
         $data = $request->only(
             // 'administrator_id', 
-            'crop_variety_id',
-            'quantity',
-            'seed_class',
-            'collection_date',
+            'crop_variety_id', 
+            'quantity',  
+            'seed_class',    
+            'collection_date', 
             'pickup_location',
-            'detail',
+            'detail', 
         );
 
         $post_data = Validator::make($data, [
@@ -65,11 +64,11 @@ class PreOrderApiController extends AdminController
             'pickup_location' => $request->input('pickup_location'),
             'detail' => $request->input('detail'),
             'created_at' => date('m-d-y'),
-            'updated_at' => date('m-d-y'),
+            'updated_at' => date('m-d-y'), 
         ]);
 
         // Form created, return success response
-        return $this->successResponse($form, $message = "Pre Order form submit success!");
+        return $this->successResponse($form, $message="Pre Order form submit success!");
     }
 
 
@@ -79,7 +78,7 @@ class PreOrderApiController extends AdminController
         $user_id = auth()->user()->id;
         $id = ((int)($request->input('id')));
         $item = PreOrder::find($id);
-
+        
         if ($item == null) {
             return $this->errorResponse("Failed to delete  because the item was not found.", 200);
         }
