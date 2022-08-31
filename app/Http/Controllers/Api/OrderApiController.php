@@ -34,11 +34,7 @@ class OrderApiController extends AdminController
             ->get();
         foreach ($query_1 as $key => $value) {
             $query[] = $value;
-        }
- 
-        // $query = DB::table('orders')->where('order_by', $user->id)->get();
-        // $query = Order::all();
-
+        } 
         return $this->successResponse($query, $message = "List of Orders");
     }
 
