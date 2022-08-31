@@ -95,6 +95,22 @@ class FormCropDeclarationController extends AdminController
             return $u->name;
         })->sortable();
 
+
+        
+
+        if (Admin::user()->isRole('basic-user')) {
+
+            $grid->actions(function ($actions) {
+                $status = ((int)(($actions->row['status'])));
+                
+                if ($status != '1' ) {
+                    $actions->disableEdit();
+                    $actions->disableDelete();
+                }
+            });
+        }
+            
+
         return $grid;
     }
 
