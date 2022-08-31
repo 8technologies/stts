@@ -35,13 +35,6 @@ class SeedLabController extends AdminController
     protected function grid()
     {
 
-        $u = Admin::user();
-
-        //$tot = Utils::get_stock_balance($u->id,1);
-
-        // $s = SeedLab::find(23);
-
-        // die("done");
         $grid = new Grid(new SeedLab());
 
         $grid->column('id', __('Id'));
