@@ -33,7 +33,7 @@ class SeedLabController extends AdminController
      * @return Grid 
      */
     protected function grid()
-    {
+    { 
 
         $u = Admin::user();
 
@@ -351,9 +351,9 @@ class SeedLabController extends AdminController
             $form->hidden('parent_id');
             $form->hidden('order');
             $form->hidden('title');
-            $form->hidden('temp_parent');
+            $form->hidden('temp_parent'); 
 
-            if ($form->isEditing()) {
+            if ($form->isEditing()) { 
 
                 $id = request()->route()->parameters['seed_lab'];
                 $model = $form->model()->find($id);
@@ -480,6 +480,8 @@ class SeedLabController extends AdminController
                     ])->when(4, function ($form) {
                         $form->textarea('inspector_remarks', __('Additional remarks'));
                     });
+
+                $form->file('receipt', __('Attach receipt'))->required();
 
                 $form->html('<small>NOTE: You cannot reverse this process once is done.</small>');
             }
