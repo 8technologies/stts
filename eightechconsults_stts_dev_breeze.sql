@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: May 31, 2022 at 08:09 AM
--- Server version: 10.3.34-MariaDB-log-cll-lve
--- PHP Version: 7.4.29
+-- Host: 127.0.0.1
+-- Generation Time: Aug 31, 2022 at 04:24 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `eightechconsults_stts`
+-- Database: `eightechconsults_stts_dev`
 --
 
 -- --------------------------------------------------------
@@ -45,41 +44,41 @@ CREATE TABLE `admin_menu` (
 --
 
 INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `permission`, `created_at`, `updated_at`) VALUES
-(1, 0, 1, 'Dashboard', 'fa-bar-chart', '/', NULL, NULL, '2022-02-23 06:03:17'),
-(2, 0, 30, 'Admin', 'fa-tasks', '', NULL, NULL, '2022-02-23 06:02:31'),
-(3, 2, 31, 'Users', 'fa-users', 'auth/users', NULL, NULL, '2022-02-23 06:02:31'),
-(4, 2, 32, 'Roles', 'fa-user', 'auth/roles', NULL, NULL, '2022-02-23 06:02:31'),
-(5, 2, 33, 'Permission', 'fa-ban', 'auth/permissions', NULL, NULL, '2022-02-23 06:02:31'),
-(6, 2, 34, 'Menu', 'fa-bars', 'auth/menu', NULL, NULL, '2022-02-23 06:02:31'),
-(7, 2, 35, 'Operation log', 'fa-history', 'auth/logs', NULL, NULL, '2022-02-23 06:02:31'),
-(8, 0, 29, 'Media manager', 'fa-file', 'media', NULL, '2021-10-20 12:28:29', '2022-02-23 06:02:31'),
-(10, 0, 28, 'My Profile', 'fa-user-md', 'auth/setting', NULL, '2021-10-20 13:29:13', '2022-02-23 06:02:31'),
-(12, 0, 3, 'Application Forms', 'fa-wpforms', NULL, NULL, '2021-10-20 17:41:29', '2022-02-23 06:03:17'),
-(13, 12, 4, 'SR4 - Seed Merchant/Producer/Stockist/Importer/Exporter/Processor', 'fa-wpforms', 'form-sr4s', NULL, '2021-10-20 17:42:02', '2022-02-23 06:03:17'),
-(15, 12, 5, 'SR6 - Seed grower/Company/Breeders', 'fa-wpforms', 'form-sr6s', NULL, '2021-10-22 03:47:14', '2022-05-17 12:59:39'),
-(16, 12, 6, 'QDS - Producer', 'fa-wpforms', 'form-qds', NULL, '2021-10-25 05:25:04', '2022-02-23 06:03:17'),
-(18, 0, 25, 'System Configuration', 'fa-cogs', 'configuration', NULL, '2021-10-27 04:22:36', '2022-02-23 06:02:31'),
-(19, 18, 26, 'Crops', 'fa-yelp', 'crops', NULL, '2021-10-27 04:24:09', '2022-02-23 06:02:31'),
-(25, 0, 7, 'Quality Assurance', 'fa-check', 'import-export-permits', NULL, '2021-10-27 08:48:57', '2022-02-23 06:03:17'),
-(26, 25, 8, 'Import permit', 'fa-wpforms', 'import-export-permits', NULL, '2021-10-27 08:50:08', '2022-02-23 06:03:17'),
-(27, 25, 10, 'Planting returns - Company', 'fa-archive', 'planting-returns', NULL, '2021-10-27 08:51:32', '2022-02-24 05:06:14'),
-(28, 25, 14, 'Seed lab', 'fa-adjust', 'seed-labs', NULL, '2021-10-27 08:52:30', '2022-02-23 06:02:31'),
-(29, 25, 15, 'Seed labels', 'fa-credit-card', 'seed-labels', NULL, '2021-10-27 08:53:14', '2022-02-23 06:02:31'),
-(30, 25, 9, 'Export permit', 'fa-wpforms', 'import-export-permits-2', NULL, '2020-12-31 21:06:05', '2022-02-23 06:03:17'),
-(31, 25, 12, 'SR10 - Plant inspection', 'fa-wpforms', 'form-sr10s', NULL, '2021-11-01 12:14:10', '2022-02-23 06:02:31'),
-(32, 25, 13, 'QDS - Crop declarations', 'fa-wpforms', 'form-crop-declarations', NULL, '2021-11-04 09:24:52', '2022-02-23 06:02:31'),
-(33, 0, 16, 'Seed stock', 'fa-archive', '#', NULL, '2021-11-05 10:45:53', '2022-02-23 06:02:31'),
-(34, 33, 17, 'Stock examination', 'fa-wpforms', 'form-stock-examination-requests', NULL, '2021-11-05 10:47:45', '2022-02-23 06:02:31'),
-(35, 33, 18, 'My stock', 'fa-archive', 'stock-records', NULL, '2021-11-05 10:49:04', '2022-02-23 06:02:31'),
-(36, 18, 27, 'Seed label packages', 'fa-money', 'seed-label-packages', NULL, '2021-11-15 05:54:18', '2022-02-23 06:02:31'),
-(37, 33, 19, 'Marketable seed', 'fa-money', 'marketable-seeds', NULL, '2021-11-16 19:10:17', '2022-02-23 06:02:31'),
-(38, 0, 20, 'Market place', 'fa-shopping-cart', 'products', NULL, '2021-11-22 03:42:16', '2022-02-23 06:02:31'),
-(39, 38, 22, 'Orders', 'fa-list-alt', 'orders', NULL, '2021-11-22 09:07:06', '2022-02-23 06:02:31'),
-(40, 38, 21, 'Market place', 'fa-shopping-basket', 'products', NULL, '2021-11-22 09:07:53', '2022-02-23 06:02:31'),
-(41, 38, 23, 'Pre-orders', 'fa-opencart', 'pre-orders', NULL, '2021-11-24 02:42:28', '2022-02-23 06:02:31'),
-(42, 38, 24, 'Quotations', 'fa-wpforms', 'quotations', NULL, '2021-11-24 04:35:22', '2022-02-23 06:02:31'),
-(43, 0, 2, 'Track and trace', 'fa-anchor', 'track-and-trace', NULL, '2021-11-24 08:54:28', '2022-02-23 06:03:17'),
-(44, 25, 11, 'Planting returns - Grower', 'fa-users', 'sub-growers', NULL, '2022-02-23 06:02:16', '2022-02-24 05:08:26');
+(1, 0, 1, 'Dashboard', 'fa-bar-chart', '/', NULL, NULL, '2022-02-23 11:03:17'),
+(2, 0, 30, 'Admin', 'fa-tasks', '', NULL, NULL, '2022-02-23 11:02:31'),
+(3, 2, 31, 'Users', 'fa-users', 'auth/users', NULL, NULL, '2022-02-23 11:02:31'),
+(4, 2, 32, 'Roles', 'fa-user', 'auth/roles', NULL, NULL, '2022-02-23 11:02:31'),
+(5, 2, 33, 'Permission', 'fa-ban', 'auth/permissions', NULL, NULL, '2022-02-23 11:02:31'),
+(6, 2, 34, 'Menu', 'fa-bars', 'auth/menu', NULL, NULL, '2022-02-23 11:02:31'),
+(7, 2, 35, 'Operation log', 'fa-history', 'auth/logs', NULL, NULL, '2022-02-23 11:02:31'),
+(8, 0, 29, 'Media manager', 'fa-file', 'media', NULL, '2021-10-20 16:28:29', '2022-02-23 11:02:31'),
+(10, 0, 28, 'My Profile', 'fa-user-md', 'auth/setting', NULL, '2021-10-20 17:29:13', '2022-02-23 11:02:31'),
+(12, 0, 3, 'Application Forms', 'fa-wpforms', NULL, NULL, '2021-10-20 21:41:29', '2022-02-23 11:03:17'),
+(13, 12, 4, 'SR4 - Seed Merchant/Producer/Stockist/Importer/Exporter/Processor', 'fa-wpforms', 'form-sr4s', NULL, '2021-10-20 21:42:02', '2022-02-23 11:03:17'),
+(15, 12, 5, 'SR6 - Seed grower/Company/Breeders', 'fa-wpforms', 'form-sr6s', NULL, '2021-10-22 07:47:14', '2022-05-17 16:59:39'),
+(16, 12, 6, 'QDS - Producer', 'fa-wpforms', 'form-qds', NULL, '2021-10-25 09:25:04', '2022-02-23 11:03:17'),
+(18, 0, 25, 'System Configuration', 'fa-cogs', 'configuration', NULL, '2021-10-27 08:22:36', '2022-02-23 11:02:31'),
+(19, 18, 26, 'Crops', 'fa-yelp', 'crops', NULL, '2021-10-27 08:24:09', '2022-02-23 11:02:31'),
+(25, 0, 7, 'Quality Assurance', 'fa-check', 'import-export-permits', NULL, '2021-10-27 12:48:57', '2022-02-23 11:03:17'),
+(26, 25, 8, 'Import permit', 'fa-wpforms', 'import-export-permits', NULL, '2021-10-27 12:50:08', '2022-02-23 11:03:17'),
+(27, 25, 10, 'Planting returns - Company/ Breeders', 'fa-archive', 'planting-returns', NULL, '2021-10-27 12:51:32', '2022-07-29 16:25:56'),
+(28, 25, 14, 'Seed lab', 'fa-adjust', 'seed-labs', NULL, '2021-10-27 12:52:30', '2022-02-23 11:02:31'),
+(29, 25, 15, 'Seed labels', 'fa-credit-card', 'seed-labels', NULL, '2021-10-27 12:53:14', '2022-02-23 11:02:31'),
+(30, 25, 9, 'Export permit', 'fa-wpforms', 'import-export-permits-2', NULL, '2021-01-01 02:06:05', '2022-02-23 11:03:17'),
+(31, 25, 12, 'SR10 - Plant inspection', 'fa-wpforms', 'form-sr10s', NULL, '2021-11-01 16:14:10', '2022-02-23 11:02:31'),
+(32, 25, 13, 'QDS - Crop declarations', 'fa-wpforms', 'form-crop-declarations', NULL, '2021-11-04 13:24:52', '2022-02-23 11:02:31'),
+(33, 0, 16, 'Seed stock', 'fa-archive', '#', NULL, '2021-11-05 14:45:53', '2022-02-23 11:02:31'),
+(34, 33, 17, 'Stock examination', 'fa-wpforms', 'form-stock-examination-requests', NULL, '2021-11-05 14:47:45', '2022-02-23 11:02:31'),
+(35, 33, 18, 'My stock', 'fa-archive', 'stock-records', NULL, '2021-11-05 14:49:04', '2022-02-23 11:02:31'),
+(36, 18, 27, 'Seed label packages', 'fa-money', 'seed-label-packages', NULL, '2021-11-15 10:54:18', '2022-02-23 11:02:31'),
+(37, 33, 19, 'Marketable seed', 'fa-money', 'marketable-seeds', NULL, '2021-11-17 00:10:17', '2022-02-23 11:02:31'),
+(38, 0, 20, 'Market place', 'fa-shopping-cart', 'products', NULL, '2021-11-22 08:42:16', '2022-02-23 11:02:31'),
+(39, 38, 22, 'Orders', 'fa-list-alt', 'orders', NULL, '2021-11-22 14:07:06', '2022-02-23 11:02:31'),
+(40, 38, 21, 'Market place', 'fa-shopping-basket', 'products', NULL, '2021-11-22 14:07:53', '2022-02-23 11:02:31'),
+(41, 38, 23, 'Pre-orders', 'fa-opencart', 'pre-orders', NULL, '2021-11-24 07:42:28', '2022-02-23 11:02:31'),
+(42, 38, 24, 'Quotations', 'fa-wpforms', 'quotations', NULL, '2021-11-24 09:35:22', '2022-02-23 11:02:31'),
+(43, 0, 2, 'Track and trace', 'fa-anchor', 'track-and-trace', NULL, '2021-11-24 13:54:28', '2022-02-23 11:03:17'),
+(44, 25, 11, 'Planting returns - Grower', 'fa-users', 'sub-growers', NULL, '2022-02-23 11:02:16', '2022-02-24 10:08:26');
 
 -- --------------------------------------------------------
 
@@ -147,7 +146,7 @@ CREATE TABLE `admin_roles` (
 
 INSERT INTO `admin_roles` (`id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
 (1, 'Super Admin', 'super-admin', '2021-10-20 08:50:00', '2021-10-20 12:56:12'),
-(2, 'Admin', 'admin', '2021-10-20 12:53:35', '2021-10-20 12:53:35'),
+(2, 'Commissioner', 'admin', '2021-10-20 12:53:35', '2021-10-20 12:53:35'),
 (3, 'Basic User', 'basic-user', '2021-10-20 13:02:58', '2021-10-20 13:02:58'),
 (4, 'Inspector', 'inspector', '2021-10-21 13:02:29', '2021-10-21 13:02:29'),
 (5, 'Lab receptionist', 'lab-reception', '2021-11-12 08:24:03', '2021-11-12 08:24:03'),
@@ -260,8 +259,6 @@ INSERT INTO `admin_role_users` (`role_id`, `user_id`, `created_at`, `updated_at`
 (7, 24, NULL, NULL),
 (3, 25, NULL, NULL),
 (3, 26, NULL, NULL),
-(4, 27, NULL, NULL),
-(3, 28, NULL, NULL),
 (4, 34, NULL, NULL),
 (4, 30, NULL, NULL),
 (2, 32, NULL, NULL),
@@ -343,7 +340,58 @@ INSERT INTO `admin_role_users` (`role_id`, `user_id`, `created_at`, `updated_at`
 (3, 111, NULL, NULL),
 (3, 112, NULL, NULL),
 (3, 113, NULL, NULL),
-(3, 114, NULL, NULL);
+(3, 114, NULL, NULL),
+(3, 115, NULL, NULL),
+(3, 116, NULL, NULL),
+(3, 117, NULL, NULL),
+(3, 118, NULL, NULL),
+(3, 119, NULL, NULL),
+(3, 120, NULL, NULL),
+(3, 121, NULL, NULL),
+(3, 122, NULL, NULL),
+(3, 123, NULL, NULL),
+(3, 124, NULL, NULL),
+(3, 125, NULL, NULL),
+(3, 126, NULL, NULL),
+(3, 127, NULL, NULL),
+(3, 128, NULL, NULL),
+(3, 129, NULL, NULL),
+(3, 130, NULL, NULL),
+(3, 131, NULL, NULL),
+(3, 132, NULL, NULL),
+(3, 133, NULL, NULL),
+(3, 134, NULL, NULL),
+(3, 135, NULL, NULL),
+(3, 136, NULL, NULL),
+(3, 137, NULL, NULL),
+(3, 138, NULL, NULL),
+(3, 139, NULL, NULL),
+(3, 140, NULL, NULL),
+(3, 141, NULL, NULL),
+(3, 142, NULL, NULL),
+(3, 143, NULL, NULL),
+(3, 144, NULL, NULL),
+(3, 145, NULL, NULL),
+(4, 28, NULL, NULL),
+(3, 27, NULL, NULL),
+(3, 146, NULL, NULL),
+(3, 147, NULL, NULL),
+(3, 148, NULL, NULL),
+(3, 149, NULL, NULL),
+(3, 150, NULL, NULL),
+(3, 151, NULL, NULL),
+(3, 152, NULL, NULL),
+(3, 153, NULL, NULL),
+(3, 154, NULL, NULL),
+(3, 155, NULL, NULL),
+(4, 4, NULL, NULL),
+(5, 5, NULL, NULL),
+(7, 7, NULL, NULL),
+(6, 6, NULL, NULL),
+(3, 31, NULL, NULL),
+(3, 32, NULL, NULL),
+(3, 33, NULL, NULL),
+(3, 34, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -352,18 +400,37 @@ INSERT INTO `admin_role_users` (`role_id`, `user_id`, `created_at`, `updated_at`
 --
 
 CREATE TABLE `admin_users` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `username` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `first_name` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_name` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `first_name` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `last_name` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `admin_users`
+--
+
+INSERT INTO `admin_users` (`id`, `username`, `first_name`, `last_name`, `name`, `email`, `email_verified_at`, `password`, `avatar`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'super-admin', 'SuperAdmin', NULL, 'Super Admin', 'admin@gmail.com', '2022-08-31 03:44:36', '$2y$10$hfuyNKj04pswdebcxP94K.sGhJAdxLBvpl57cAMpdnv6G9cmBBV6W', NULL, 'rrAh9Uixi1yVKhj8yw69knafPA0RlKZ6LRCimfOhQr0JnU4wkxYqPa3elhF1', '2022-08-31 03:40:36', NULL),
+(2, 'commissioner', 'Commissioner', NULL, 'Commissioner', 'admin@stts.app', '2022-08-31 03:43:25', '$2y$10$hfuyNKj04pswdebcxP94K.sGhJAdxLBvpl57cAMpdnv6G9cmBBV6W', NULL, 'AifBPJoA6FurM0vTbcNEGPLCEWNo5pvONNTpyQ1dEBqJRFqMShIop0NWReKY', '2022-08-31 03:43:25', NULL),
+(3, 'basic-user', 'BasicUser', NULL, 'Basic User', 'admin@sytts.app', '2022-08-31 03:43:25', '$2y$10$hfuyNKj04pswdebcxP94K.sGhJAdxLBvpl57cAMpdnv6G9cmBBV6W', NULL, 'GBL199pO1feHbzD76sClFpyqxu7Lsk41aVN7lKa8af1hRaPFEHVHNN5UN70d', '2022-08-31 03:43:25', NULL),
+(4, 'inspector', 'Inspector', NULL, 'Inspector', 'admin@sttts.app', '2022-08-31 03:43:25', '$2y$10$hfuyNKj04pswdebcxP94K.sGhJAdxLBvpl57cAMpdnv6G9cmBBV6W', NULL, '8FBn0PonPuixOJekweWT1LmQccBaV2C3RyPvd6IHyIbnWS9iIlwZyHxv0JhX', '2022-08-31 03:43:25', NULL),
+(5, 'lab-reception', 'LabReception', NULL, 'LabReception', 'admin@strts.app', '2022-08-31 03:43:25', '$2y$10$hfuyNKj04pswdebcxP94K.sGhJAdxLBvpl57cAMpdnv6G9cmBBV6W', NULL, 'uQ8olZWI4r3vKwAgNj3WoDJWM1W6fmbQ0ja41fIAQ9FWjjAGVT1J46qZA85S', '2022-08-31 03:43:25', NULL),
+(6, 'lab-technician', 'Lab Technician', NULL, 'Lab Technician', 'admin@sttes.app', '2022-08-31 03:43:25', '$2y$10$hfuyNKj04pswdebcxP94K.sGhJAdxLBvpl57cAMpdnv6G9cmBBV6W', NULL, 'jftYeX871s7PuX9sAcnrkByVqR25tAdKqh2CiQqqYaYquwRmhitZl1i42ZlK', '2022-08-31 03:43:25', NULL),
+(7, 'usta', 'Usta', NULL, 'Usta', 'admin@swtts.app', '2022-08-31 03:43:25', '$2y$10$hfuyNKj04pswdebcxP94K.sGhJAdxLBvpl57cAMpdnv6G9cmBBV6W', NULL, NULL, '2022-08-31 03:43:25', NULL),
+(21, 'basic-user@gmail.com', 'BasicUser2', NULL, 'BasicUser2', 'basic-user@gmail.com', '2022-08-31 03:43:25', '$2y$10$2S7ZXwKrmW.oqQ83u.PzIu7WYhj9QkE75iDES0FGaqZ1n2Nmd2RIW', NULL, 'dbQz401RChNo2GYdp3gpsq5Eujj4nLsEydncwY8jzJemVOymjDh208l3CqvO', '2022-08-31 03:43:25', NULL),
+(31, 'thiss@thiss.thiss', 'thiss', 'thiss', 'thiss thiss', 'thiss@thiss.thiss', NULL, '$2y$10$jj9bJPB6vhuRBcmpKlBMj..coOGGvkLLrRYjw165aDF6Zhjzgrn1i', NULL, NULL, '2022-08-31 06:35:35', '2022-08-31 06:35:35'),
+(32, 'ss@dd.dd', 'sss', 'ssss', 'sss ssss', 'ss@dd.dd', NULL, '$2y$10$AMhxzQBkjXO13XeDB6xTuOREYRY5hXynL9GNFd5giZBuDRnRjSX.W', NULL, NULL, '2022-08-31 06:52:46', '2022-08-31 06:52:46'),
+(33, 'ntaryebwa.mukama@gmail.com', 'Ntaryebwa', 'Mukama', 'Ntaryebwa Mukama', 'ntaryebwa.mukama@gmail.com', NULL, '$2y$10$/5FNTtbkAjp56bHUsuofeOoxjCYnR8KzmVoA9My7IFwCe/lnUas6C', NULL, 'w6VA48DfKSIvggSmc0HD0hCA0OFTA90fpulHP4hZUEpx6ZhuCHD9hWIhwrhA', '2022-08-31 07:21:59', '2022-08-31 07:21:59'),
+(34, NULL, 'dd', 'ddd', 'dd ddd', 'dd@ff.f', NULL, '$2y$10$JRdPXoJsVa/dqZ/wxtjtKuOlITkDcUIXMzIyR/oI9ULKwp/NFRAn6', NULL, NULL, '2022-08-31 09:14:55', '2022-08-31 09:14:55');
 
 -- --------------------------------------------------------
 
@@ -1083,13 +1150,6 @@ CREATE TABLE `form_crop_declarations` (
   `valid_until` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '2021-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `form_crop_declarations`
---
-
-INSERT INTO `form_crop_declarations` (`id`, `created_at`, `updated_at`, `administrator_id`, `form_qd_id`, `source_of_seed`, `field_size`, `seed_rate`, `amount`, `payment_receipt`, `status`, `inspector`, `status_comment`, `valid_from`, `valid_until`) VALUES
-(1, '2022-02-21 07:06:49', '2022-02-21 07:09:11', 3, 3, 'isaac mbabazi', '100', '10', '20000', 'ec2ee90688b64aed07c58b3607354aa2.jpeg', '5', 20, NULL, '2021-01-01', '2022-01-01');
-
 -- --------------------------------------------------------
 
 --
@@ -1113,7 +1173,21 @@ INSERT INTO `form_crop_declarations_has_crop_varieties` (`id`, `created_at`, `up
 (2, '2021-11-05 07:05:50', '2021-11-05 07:05:50', 1, 4),
 (3, '2021-11-09 05:19:35', '2021-11-09 05:19:35', 2, 3),
 (4, '2021-11-09 05:19:35', '2021-11-09 05:19:35', 2, 4),
-(5, '2022-02-21 07:06:49', '2022-02-21 07:06:49', 1, 3);
+(5, '2022-02-21 07:06:49', '2022-02-21 07:06:49', 1, 3),
+(6, '2022-07-26 15:22:20', '2022-07-26 15:22:20', 3, 29),
+(7, '2022-07-26 15:22:20', '2022-07-26 15:22:20', 3, 64),
+(8, '2022-07-26 15:22:20', '2022-07-26 15:22:20', 3, 63),
+(9, '2022-07-26 15:22:46', '2022-07-26 15:22:46', 4, 29),
+(10, '2022-07-26 15:22:46', '2022-07-26 15:22:46', 4, 64),
+(11, '2022-07-26 15:22:46', '2022-07-26 15:22:46', 4, 63),
+(12, '2022-07-26 15:25:00', '2022-07-26 15:25:00', 5, 29),
+(13, '2022-07-26 15:25:00', '2022-07-26 15:25:00', 5, 63),
+(14, '2022-07-27 18:59:54', '2022-07-27 18:59:54', 6, 19),
+(15, '2022-07-27 18:59:54', '2022-07-27 18:59:54', 6, 29),
+(16, '2022-07-27 20:45:40', '2022-07-27 20:45:40', 7, 20),
+(17, '2022-07-27 20:45:40', '2022-07-27 20:45:40', 7, 66),
+(18, '2022-08-19 20:35:41', '2022-08-19 20:35:41', 8, 63),
+(19, '2022-08-22 20:03:18', '2022-08-22 20:03:18', 9, 13);
 
 -- --------------------------------------------------------
 
@@ -1158,8 +1232,7 @@ CREATE TABLE `form_qds` (
 --
 
 INSERT INTO `form_qds` (`id`, `created_at`, `updated_at`, `administrator_id`, `name_of_applicant`, `address`, `company_initials`, `premises_location`, `years_of_expirience`, `dealers_in`, `previous_grower_number`, `cropping_histroy`, `have_adequate_isolation`, `have_adequate_labor`, `aware_of_minimum_standards`, `signature_of_applicant`, `grower_number`, `registration_number`, `valid_from`, `valid_until`, `status`, `inspector`, `status_comment`, `have_been_qds`, `isolation_distance`, `number_of_labors`, `have_adequate_storage_facility`, `is_not_used`, `examination_category`) VALUES
-(6, '2022-04-28 12:00:58', '2022-04-28 12:00:58', 99, 'MUYINGO ALI', 'Kampala', NULL, 'Gayaaza', '3', '[{\"crop\":\"Maize\",\"variety\":\"Long4\",\"ha\":\"T\",\"origin\":\"Buganda\"}]', NULL, 'Virgine land', 0, 0, 1, 'files/SMALL ENTRPRISE   MANGT NOTES.doc', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, 1, NULL, NULL),
-(7, '2022-05-18 12:43:29', '2022-05-18 12:43:29', 106, 'Kalule Kusain', 'Rubaga', NULL, 'mengo', '-9', '[{\"crop\":\"cow\",\"variety\":\"cow\",\"ha\":\"ddd\",\"origin\":\"dddd\"},{\"crop\":\"sheep\",\"variety\":\"sheep\",\"ha\":\"ddd\",\"origin\":\"ddd\"}]', NULL, '2155555561981989812132121988/561616168131318125313', 0, 1, 1, 'files/63d245add734cac0dfd731a33eaa68d2.gif', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, -13, 0, NULL, NULL);
+(1, '2022-08-25 13:00:34', '2022-08-31 13:27:22', 3, 'Lady Bruja', 'Ggg', NULL, 'Jjjj', '666', '[]', NULL, 'Ggh', 1, 1, 1, '1661407234-465877.jpg', NULL, NULL, NULL, NULL, '3', 4, NULL, 1, NULL, NULL, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1212,8 +1285,22 @@ CREATE TABLE `form_sr4s` (
 --
 
 INSERT INTO `form_sr4s` (`id`, `created_at`, `updated_at`, `administrator_id`, `name_of_applicant`, `address`, `company_initials`, `premises_location`, `years_of_expirience`, `expirience_in`, `dealers_in`, `processing_of`, `marketing_of`, `have_adequate_land`, `land_size`, `eqipment`, `have_adequate_equipment`, `have_contractual_agreement`, `have_adequate_field_officers`, `have_conversant_seed_matters`, `souce_of_seed`, `have_adequate_land_for_production`, `have_internal_quality_program`, `receipt`, `accept_declaration`, `valid_from`, `valid_until`, `status`, `status_comment`, `inspector`, `dealers_in_other`, `processing_of_other`, `marketing_of_other`, `souce_of_seed_other`, `have_adequate_storage`, `seed_board_registration_number`, `type`) VALUES
-(10, '2022-03-23 15:20:59', '2022-03-23 15:27:59', 28, 'Zac Seed Dealers.', 'Kampala', 'ZacSD', 'Namalere', 'Seed Merchant', '12', 'Agricultural crops', 'Agricultural crops', 'Agricultural crops', 1, 100, 'Tractors.', 1, 1, 1, 1, '3', 1, 0, 'files/USAID-logo.jpg', 1, '2022-03-23 15:27:59', '2023-03-23 15:27:59', '5', 'Your application is missing some information.', 27, NULL, NULL, NULL, NULL, 1, 'EXP/2022/0002', 'Seed Merchant'),
-(11, '2022-05-20 10:01:59', '2022-05-20 10:01:59', 106, 'Kalule Kusain', 'Rubaga', '6666', 'mengo', 'Seed Merchant', '-5', 'Agricultural crops', 'Agricultural crops', 'Agricultural crops', 0, NULL, NULL, 0, 0, 0, 1, '1', 1, 1, 'files/a9e65ee721afcdddf5a23015f6409d1d.gif', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 'Seed Merchant');
+(17, '2022-07-16 03:21:36', '2022-07-16 03:21:36', 21, 'Basic User', 'Bwera, Kasese', 'UG', 'Kampala, Uganda', '12', 'Seed Merchant', 'Agricultural crops', NULL, 'Horticultural crops', NULL, NULL, NULL, 0, 1, 1, NULL, 'Muhindo', 1, 1, '102817732', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 'Seed Stockist'),
+(18, '2022-07-17 06:10:26', '2022-07-17 06:10:26', 121, 'Rommina Muhindo', 'Bwera, Kasese', 'UG', 'Kampala, Uganda', '12', 'Seed Merchant', 'Agricultural crops', NULL, 'Horticultural crops', NULL, NULL, NULL, 0, 1, 1, NULL, 'Muhindo', 1, 1, '102817732', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 'Seed Stockist'),
+(20, '2022-07-17 18:44:38', '2022-07-17 18:44:38', 121, 'Rommina Muhindo', 'Bwera, Kasese', 'UG', 'Kampala, Uganda', '12', 'Seed Merchant', 'Agricultural crops', NULL, 'Horticultural crops', NULL, NULL, NULL, 0, 1, 1, NULL, 'Muhindo', 1, 1, '102817732', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 'Seed Stockist'),
+(21, '2022-07-20 16:19:49', '2022-07-20 16:23:03', 3, 'Simple Betty Namagember', 'Near Ndere Cultural Centre, Plot 4505 Kira Rd, Ntinda - Kisaasi Rd, Kampala.', '8technologies', 'Kasese', '12', 'Seed Producer', 'Agricultural crops', NULL, 'Agricultural crops', 1, 12, NULL, 0, 0, 0, 0, '138', 0, 0, NULL, 1, '2022-07-20 04:00:00', '2023-07-20 04:00:00', '5', 'some done', 20, NULL, NULL, NULL, NULL, 0, '10000', 'Seed Merchant'),
+(26, '2022-07-27 19:31:50', '2022-07-27 19:31:50', 145, 'John Otim', 'Store 5', 'S5', 'Bukoto', '8', 'Seed Stockist', 'Agricultural crops', NULL, 'Agricultural crops', NULL, NULL, NULL, 0, 1, 1, NULL, 'Villagers', 1, 1, 'N5656', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 'Seed Stockist'),
+(27, '2022-08-05 22:11:03', '2022-08-05 22:21:08', 147, 'Zak Kisakye', 'Kampala', 'KSD011', 'Kisaasi', '10', 'Seed Merchant', 'Agricultural crops', NULL, 'Agricultural crops', NULL, NULL, NULL, 0, 1, 1, NULL, 'Kenya', 1, 1, '001', 0, '2022-08-05 22:21:08', '2023-08-05 22:21:08', '5', NULL, 28, NULL, NULL, NULL, NULL, 0, '10000', 'Seed Merchant'),
+(28, '2022-08-17 17:27:57', '2022-08-17 17:27:57', 145, 'John Otim', 'Products', 'Jop', 'Naguru go', '5', 'Seed Producer', 'Agricultural crops', NULL, 'Agricultural crops', NULL, NULL, NULL, 0, 0, 0, NULL, 'Market', 1, 1, 'B4567', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 'Seed Producer'),
+(29, '2022-08-18 19:07:53', '2022-08-18 19:07:53', 150, 'Fiona Nyanzi', 'Bib', 'Bi', 'Bi', '63', 'Seed Producer', 'Agricultural crops', NULL, 'Horticultural crops', NULL, NULL, NULL, 0, 1, 1, NULL, 'Hu', 1, 0, 'Hu', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 'Seed Producer'),
+(30, '2022-08-22 18:37:30', '2022-08-22 19:01:01', 153, 'john bosco', 'naguru2', 'JB', 'plot 46 katale II roads', '10', 'Seed Producer', 'Agricultural crops', NULL, 'Agricultural crops', 1, 20, '5 tractors', 1, 1, 1, 1, 'government', 0, 0, 'files/download.png', 1, '2022-08-22 19:01:01', '2023-08-22 19:01:01', '5', 'The application missing a receipt', 28, NULL, NULL, NULL, NULL, 1, 'Otim/0001/2022', 'Seed Producer'),
+(33, '2022-08-22 20:47:47', '2022-08-22 20:53:50', 151, 'Kusein Otim', 'BO', 'KO', 'Rubaga', '12', 'Seed Importer', 'Horticultural crops', NULL, 'Horticultural crops', NULL, NULL, NULL, 0, 1, 1, NULL, 'Masaka', 1, 1, 'H97654', 0, '2022-08-22 20:53:50', '2023-08-22 20:53:50', '5', NULL, 28, NULL, NULL, NULL, NULL, 0, 'Otim/0002/2022', 'Seed Importer'),
+(34, '2022-08-23 16:50:55', '2022-08-23 18:27:48', 155, 'Micky Wine', 'Test', '8T', 'Kisaasi', '2', 'Seed Merchant', 'Agricultural crops', NULL, 'Agricultural crops', NULL, NULL, NULL, 0, 1, 1, NULL, 'Test', 1, 1, 'Uuu', 0, NULL, NULL, '4', 'Missing some details', 20, NULL, NULL, NULL, NULL, 0, NULL, 'Seed Merchant'),
+(35, '2022-08-23 17:14:27', '2022-08-23 17:39:45', 155, 'Micky Wine', 'Yyy', 'Yy', 'Ysush', '2', 'Seed Stockist', 'Agricultural crops', NULL, 'Agricultural crops', NULL, NULL, NULL, 0, 1, 1, NULL, 'Thhb', 0, 0, 'Ghha', 0, '2022-08-23 17:39:45', '2023-08-23 17:39:45', '5', NULL, 20, NULL, NULL, NULL, NULL, 0, '100007', 'Seed Stockist'),
+(36, '2022-08-23 17:42:14', '2022-08-23 17:43:30', 155, 'Micky Wine', 'Ntinda', 'NT', 'Ntinda', '3', 'Seed Merchant', 'Horticultural crops', NULL, 'Horticultural crops', NULL, NULL, NULL, 0, 1, 1, NULL, 'Market', 1, 1, 'Gt001', 0, '2022-08-23 17:43:30', '2023-08-23 17:43:30', '5', NULL, 20, NULL, NULL, NULL, NULL, 0, '10000', 'Seed Merchant'),
+(37, '2022-08-23 17:47:24', '2022-08-23 19:35:08', 155, 'Micky Wine', 'Bweyos', 'TG', 'Bweyos', '2', 'Seed Producer', 'Horticultural crops', NULL, 'Horticultural crops', NULL, NULL, NULL, 0, 1, 1, NULL, 'Thh', 1, 1, 'Yyhh', 0, NULL, NULL, '2', NULL, 20, NULL, NULL, NULL, NULL, 0, NULL, 'Seed Producer'),
+(42, '2022-08-24 15:54:10', '2022-08-24 16:06:10', 3, 'Lady Bruja', 'Ghhj', 'Hhh', 'Hhu', '25', 'Seed Producer', 'Horticultural crops', NULL, 'Horticultural crops', NULL, NULL, NULL, 0, 1, 1, NULL, 'Th', 1, 1, '1661331250-963986.jpg', 0, NULL, NULL, '2', NULL, 20, NULL, NULL, NULL, NULL, 0, NULL, 'Seed Stockist'),
+(43, '2022-08-24 17:11:28', '2022-08-24 17:12:03', 3, 'Lady Bruja', 'Makerere 8', 'MU', 'Makerere, Kampala', '4', 'Seed Stockist', 'Horticultural crops', NULL, 'Horticultural crops', 1, NULL, NULL, 1, 1, 1, 1, '2', 1, 1, '1661335888-438409.png', 1, NULL, NULL, '2', NULL, 20, NULL, NULL, NULL, NULL, 1, NULL, 'Seed Producer');
 
 -- --------------------------------------------------------
 
@@ -1255,12 +1342,55 @@ CREATE TABLE `form_sr6s` (
 --
 
 INSERT INTO `form_sr6s` (`id`, `created_at`, `updated_at`, `administrator_id`, `name_of_applicant`, `address`, `company_initials`, `premises_location`, `years_of_expirience`, `dealers_in`, `previous_grower_number`, `cropping_histroy`, `have_adequate_isolation`, `have_adequate_labor`, `aware_of_minimum_standards`, `signature_of_applicant`, `grower_number`, `registration_number`, `valid_from`, `valid_until`, `status`, `inspector`, `status_comment`, `have_adequate_storage`, `seed_grower_in_past`, `type`) VALUES
-(71, '2022-05-09 13:59:26', '2022-05-31 10:54:30', 103, 'H.C.V REDDY', 'PLOT 888 & 2981 BOMBO RAOD KAWEMPE, P.O. BOX 3678 KAMPALA - UGANDA', NULL, 'PLOT 888 & 2981 BOMBO RAOD KAWEMPE', '22', '[]', '008', 'Beans', 1, 1, 1, 'files/Syova - Seed Certificate 2021.pdf', '008', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 1, 1, 'Company'),
+(71, '2022-05-09 13:59:26', '2022-05-31 10:54:30', 21, 'H.C.V REDDY', 'PLOT 888 & 2981 BOMBO RAOD KAWEMPE, P.O. BOX 3678 KAMPALA - UGANDA', NULL, 'PLOT 888 & 2981 BOMBO RAOD KAWEMPE', '22', '[]', '008', 'Beans', 1, 1, 1, 'files/Syova - Seed Certificate 2021.pdf', '008', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 1, 1, 'Company'),
 (72, '2022-05-16 10:14:22', '2022-05-31 10:55:45', 105, 'Crown Seeds Ltd', 'P.O Box 293 Mukono, Kayunga Road', NULL, 'Mpoma, Mukono, Kayunga Rd.', '5', '[]', '068', 'The fields have been in crop rotation between legume and cereal seeds in different farms across the country', 1, 1, 1, 'files/Seed Grower Certificate.pdf', '068', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 1, 1, 'Company'),
 (73, '2022-05-17 13:53:04', '2022-05-31 10:58:35', 108, 'Grow More Seeds and Chemicals Ltd', 'plot 21, Luthuli Avenue, Bugolobi', NULL, 'plot 21, Luthuli Avenue, Bugolobi', '14', '[]', '023', 'Virgin Land', 1, 1, 1, NULL, '023', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 1, 1, 'Company'),
 (74, '2022-05-18 15:56:47', '2022-05-31 11:07:17', 109, 'Brac  social business enterprises limited', 'P.o.box 31817, clock tower', NULL, 'Nsambya Heritage Road', '15', '[]', NULL, 'crop cultivation: beans, soya beans maize some fields were under  virgin', 1, 1, 1, 'files/MAAIF CERTIFICATE.pdf', '034', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 0, 0, 'Company'),
 (75, '2022-05-24 13:27:58', '2022-05-31 11:21:31', 102, 'NARO HOLDINGS LIMITED', 'KIRYANDONGO DISTRICT', NULL, 'KIGUMBA. 2 km along Kigumba - masindi road.', '5', '[]', NULL, 'we have a seed farm where we are growing seeds of different crops like maize (hybrid and OPV\'s, soyabean, beans, ground nuts among others.\r\nwe recommend rotation patterns in seed production.\r\nwe also produce through out-growers (individual commercial farmers or groups) and NARO Institutes.', 1, 1, 1, 'files/NHL_Certificate_of_Incorporation[1] (1).pdf', '000', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 0, 0, 'Company'),
-(76, '2022-05-24 14:33:37', '2022-05-31 11:33:11', 110, 'Masagazi Richard', '36240', NULL, 'Plot 830 Kasambya, Busukuma Division, 7km Gayaza-Zirobwe Road, Nasaana Municipality , Wakiso District', '12', '[]', '028', 'Kamira-Luwero', 1, 1, 1, 'files/Licence to Seed.pdf', '028', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 1, 1, 'Company');
+(76, '2022-05-24 14:33:37', '2022-05-31 11:33:11', 110, 'Masagazi Richard', '36240', NULL, 'Plot 830 Kasambya, Busukuma Division, 7km Gayaza-Zirobwe Road, Nasaana Municipality , Wakiso District', '12', '[]', '028', 'Kamira-Luwero', 1, 1, 1, 'files/Licence to Seed.pdf', '028', NULL, '2022-01-01 05:00:00', '2022-12-31 05:00:00', '5', 30, NULL, 1, 1, 'Company'),
+(77, '2022-07-16 17:00:09', '2022-07-16 17:00:09', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(78, '2022-07-16 17:03:32', '2022-07-16 17:03:32', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(79, '2022-07-16 17:03:33', '2022-07-16 17:03:33', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(80, '2022-07-16 17:04:52', '2022-07-16 17:04:52', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(81, '2022-07-16 17:07:03', '2022-07-16 17:07:03', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(82, '2022-07-16 17:07:09', '2022-07-16 17:07:09', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(83, '2022-07-16 17:07:28', '2022-07-16 17:07:28', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(84, '2022-07-16 18:15:19', '2022-07-16 18:15:19', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(85, '2022-07-16 18:21:13', '2022-07-16 18:21:13', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(86, '2022-07-16 18:23:52', '2022-07-16 18:23:52', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(87, '2022-07-16 21:19:45', '2022-07-16 21:19:45', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(88, '2022-07-16 21:19:48', '2022-07-16 21:19:48', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(89, '2022-07-16 21:20:04', '2022-07-16 21:20:04', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(90, '2022-07-16 21:20:12', '2022-07-16 21:20:12', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(91, '2022-07-16 21:20:58', '2022-07-16 21:20:58', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(92, '2022-07-16 21:22:14', '2022-07-16 21:22:14', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(93, '2022-07-16 21:22:19', '2022-07-16 21:22:19', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(94, '2022-07-16 21:22:44', '2022-07-16 21:22:44', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(95, '2022-07-16 21:23:12', '2022-07-16 21:23:12', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, '5', NULL, NULL, NULL, 1, 'Seed Breeder'),
+(96, '2022-07-16 21:23:36', '2022-07-16 21:23:36', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(97, '2022-07-16 21:39:00', '2022-07-16 21:39:00', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(98, '2022-07-17 06:12:41', '2022-07-17 06:12:41', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', NULL, NULL, 'Simple history about my ....', 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Breeder'),
+(99, '2022-07-17 20:23:15', '2022-07-17 20:35:03', 121, 'Rommina Muhindo', 'Mbale, Uganda', NULL, 'Ntinda, Kampala', '18', '[]', NULL, 'Simple history about my ....', 1, 1, 0, NULL, '000116', NULL, '2022-07-17 04:00:00', '2022-10-13 04:00:00', '5', 20, 'Some reason for reections...', NULL, 1, 'Seed Breeder'),
+(100, '2022-07-20 16:23:50', '2022-07-20 16:24:37', 33, 'Betty Namagembe', 'Kibuli, Kampala, Uganda', NULL, 'Ntinda, Kisaasi', '12', '[]', '12', 'kjhjb', 1, 0, 0, NULL, '23223223', NULL, '2022-07-20 04:00:00', '2022-07-20 04:00:00', '5', 20, NULL, 0, 1, 'Seed Grower'),
+(101, '2022-07-27 12:56:51', '2022-07-27 12:56:51', 145, 'John Otim', 'Naguru', NULL, 'Naguru katale II plot 46', '5', NULL, NULL, 'Borrowed land', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'Seed Grower'),
+(106, '2022-07-27 15:54:13', '2022-07-27 15:54:13', 33, 'Lady Bruja', '2', NULL, '2', '2', '[]', NULL, '2', 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 'Seed Company'),
+(109, '2022-07-27 15:57:38', '2022-07-27 15:57:38', 31, 'Lady Bruja', 'Kasese', NULL, 'Business I feel about my', '12', NULL, NULL, '12', 1, 0, 0, NULL, NULL, NULL, NULL, NULL, '5', NULL, NULL, NULL, 1, 'Seed Grower'),
+(111, '2022-07-27 16:02:27', '2022-07-27 16:02:27', 3, 'Lady Bruja', 'The bank 🏦🏦🏦', NULL, 'Bbh', '66', NULL, NULL, 'The bank 🏦🏦 me know if', 1, 0, 1, NULL, NULL, NULL, NULL, NULL, '5', NULL, NULL, NULL, 1, 'Seed Grower'),
+(112, '2022-07-27 16:03:38', '2022-07-27 18:02:17', 28, 'ISSD', 'Kampala', NULL, 'Bugolobi', '10', '[]', NULL, 'Virgin Lan', 1, 1, 1, 'files/Screenshot 2022-07-27 115315.png', 'Grower/0001/2022', NULL, '2022-07-27 04:00:00', '2023-07-27 04:00:00', '5', 28, NULL, 0, 0, 'Seed Breeder'),
+(113, '2022-07-27 16:21:03', '2022-07-27 18:04:23', 27, 'ISSD', 'Kampala', NULL, 'Bugolobi', '10', '[]', NULL, 'Virgin Land', 1, 1, 1, 'files/16e673a56bc37f774da816738ccfb4a9.jpeg', 'Grower/0002/2022', NULL, '2022-07-27 04:00:00', '2023-07-27 04:00:00', '5', 28, NULL, 0, 0, 'Seed Breeder'),
+(114, '2022-08-05 21:57:39', '2022-08-17 22:02:52', 147, 'Zak Kisakye', 'Kungu', NULL, 'Kibwa', '10', '[]', NULL, 'Virgin land.', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, '3', 28, 'Missing Receipt number', NULL, 1, 'Seed Company'),
+(115, '2022-08-17 16:48:24', '2022-08-17 16:48:24', 145, 'John Otim', 'Katale', NULL, 'Naguru', '5', NULL, NULL, 'Building', 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'Seed Company'),
+(116, '2022-08-17 16:48:32', '2022-08-17 16:48:32', 145, 'John Otim', 'Katale', NULL, 'Naguru', '5', NULL, NULL, 'Building', 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'Seed Company'),
+(117, '2022-08-17 16:48:39', '2022-08-17 16:48:39', 145, 'John Otim', 'Katale', NULL, 'Naguru', '5', NULL, NULL, 'Building', 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'Seed Company'),
+(118, '2022-08-17 16:48:45', '2022-08-17 16:48:45', 145, 'John Otim', 'Katale', NULL, 'Naguru', '5', NULL, NULL, 'Building', 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'Seed Company'),
+(119, '2022-08-17 16:50:54', '2022-08-17 16:50:54', 145, 'John Otim', 'Katale', NULL, 'Naguru', '5', NULL, NULL, 'Building', 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'Seed Company'),
+(120, '2022-08-17 16:51:04', '2022-08-17 16:51:04', 145, 'John Otim', 'Katale', NULL, 'Naguru', '5', NULL, NULL, 'Building', 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 'Seed Company'),
+(121, '2022-08-22 21:06:23', '2022-08-22 21:19:31', 151, 'Kusein Otim', 'Nakawa', NULL, 'Nagurub', '12', '[]', NULL, 'Construction', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, '4', 28, 'This is not what we expected.', NULL, 1, 'Seed Company'),
+(122, '2022-08-22 21:06:35', '2022-08-22 21:24:44', 151, 'Kusein Otim', 'Nakawa', NULL, 'Nagurub', '12', '[]', NULL, 'Construction', 1, 1, 1, NULL, 'OTIM/0003/2022', NULL, NULL, NULL, '5', 28, NULL, NULL, 1, 'Seed Company'),
+(123, '2022-08-23 19:01:00', '2022-08-23 19:38:29', 155, 'Micky Wine', 'Test', NULL, 'Test', '5', '[]', NULL, 'Tyyyh', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, '2', 20, NULL, NULL, 1, 'Seed Grower'),
+(124, '2022-08-23 19:01:10', '2022-08-23 19:01:10', 155, 'Micky Wine', 'Test', NULL, 'Test', '5', NULL, NULL, 'Tyyyh', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'Seed Grower'),
+(127, '2022-08-24 17:05:58', '2022-08-24 17:08:26', 3, 'Lady Bruja', 'Romina', NULL, 'Tes', '252', '[]', NULL, 'Arun I feel about my', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, '2', 20, NULL, NULL, 1, 'Seed Breeder'),
+(129, '2022-08-24 17:27:55', '2022-08-25 12:43:48', 3, 'Lady Bruja', 'The parking lot to', NULL, 'The parking lot to go', '20', '[]', NULL, 'They are you too', 1, 0, 1, '1661336875-851651.jpg', '1600868803', NULL, '2022-08-25 04:00:00', '2022-08-26 04:00:00', '5', 20, 'Here is the reason why we have rejected!', NULL, 1, 'Individual');
 
 -- --------------------------------------------------------
 
@@ -1281,19 +1411,119 @@ CREATE TABLE `form_sr6_has_crops` (
 --
 
 INSERT INTO `form_sr6_has_crops` (`id`, `form_sr6_id`, `crop_id`, `created_at`, `updated_at`) VALUES
-(1, 68, 6, '2022-04-28 12:37:40', '2022-04-28 12:37:40'),
-(2, 54, 6, '2022-04-28 12:51:24', '2022-04-28 12:51:24'),
-(3, 54, 8, '2022-04-28 12:55:15', '2022-04-28 12:55:15'),
-(4, 72, 6, '2022-05-16 10:14:22', '2022-05-16 10:14:22'),
-(5, 72, 7, '2022-05-16 10:14:22', '2022-05-16 10:14:22'),
-(6, 72, 5, '2022-05-16 10:14:22', '2022-05-16 10:14:22'),
-(7, 72, 3, '2022-05-16 10:14:22', '2022-05-16 10:14:22'),
-(8, 72, 9, '2022-05-16 10:14:22', '2022-05-16 10:14:22'),
-(9, 72, 26, '2022-05-16 10:14:22', '2022-05-16 10:14:22'),
-(10, 72, 11, '2022-05-16 10:14:22', '2022-05-16 10:14:22'),
-(11, 72, 10, '2022-05-16 10:14:22', '2022-05-16 10:14:22'),
-(12, 72, 8, '2022-05-16 10:14:22', '2022-05-16 10:14:22'),
-(13, 72, 19, '2022-05-16 10:14:22', '2022-05-16 10:14:22');
+(1, 77, 1, '2022-07-16 17:00:09', '2022-07-16 17:00:09'),
+(2, 77, 3, '2022-07-16 17:00:09', '2022-07-16 17:00:09'),
+(3, 77, 5, '2022-07-16 17:00:09', '2022-07-16 17:00:09'),
+(4, 77, 7, '2022-07-16 17:00:09', '2022-07-16 17:00:09'),
+(5, 78, 1, '2022-07-16 17:03:32', '2022-07-16 17:03:32'),
+(6, 78, 3, '2022-07-16 17:03:32', '2022-07-16 17:03:32'),
+(7, 78, 5, '2022-07-16 17:03:32', '2022-07-16 17:03:32'),
+(8, 78, 7, '2022-07-16 17:03:32', '2022-07-16 17:03:32'),
+(9, 79, 1, '2022-07-16 17:03:33', '2022-07-16 17:03:33'),
+(10, 79, 3, '2022-07-16 17:03:33', '2022-07-16 17:03:33'),
+(11, 79, 5, '2022-07-16 17:03:33', '2022-07-16 17:03:33'),
+(12, 79, 7, '2022-07-16 17:03:33', '2022-07-16 17:03:33'),
+(13, 80, 1, '2022-07-16 17:04:52', '2022-07-16 17:04:52'),
+(14, 80, 3, '2022-07-16 17:04:52', '2022-07-16 17:04:52'),
+(15, 80, 5, '2022-07-16 17:04:52', '2022-07-16 17:04:52'),
+(16, 80, 7, '2022-07-16 17:04:52', '2022-07-16 17:04:52'),
+(17, 81, 1, '2022-07-16 17:07:03', '2022-07-16 17:07:03'),
+(18, 81, 3, '2022-07-16 17:07:03', '2022-07-16 17:07:03'),
+(19, 81, 5, '2022-07-16 17:07:03', '2022-07-16 17:07:03'),
+(20, 81, 7, '2022-07-16 17:07:03', '2022-07-16 17:07:03'),
+(21, 82, 1, '2022-07-16 17:07:09', '2022-07-16 17:07:09'),
+(22, 82, 3, '2022-07-16 17:07:09', '2022-07-16 17:07:09'),
+(23, 82, 5, '2022-07-16 17:07:09', '2022-07-16 17:07:09'),
+(24, 82, 7, '2022-07-16 17:07:09', '2022-07-16 17:07:09'),
+(25, 83, 1, '2022-07-16 17:07:28', '2022-07-16 17:07:28'),
+(26, 83, 3, '2022-07-16 17:07:28', '2022-07-16 17:07:28'),
+(27, 83, 5, '2022-07-16 17:07:28', '2022-07-16 17:07:28'),
+(28, 83, 7, '2022-07-16 17:07:28', '2022-07-16 17:07:28'),
+(29, 84, 1, '2022-07-16 18:15:19', '2022-07-16 18:15:19'),
+(30, 84, 3, '2022-07-16 18:15:19', '2022-07-16 18:15:19'),
+(31, 84, 5, '2022-07-16 18:15:19', '2022-07-16 18:15:19'),
+(32, 84, 7, '2022-07-16 18:15:19', '2022-07-16 18:15:19'),
+(33, 85, 1, '2022-07-16 18:21:14', '2022-07-16 18:21:14'),
+(34, 85, 3, '2022-07-16 18:21:14', '2022-07-16 18:21:14'),
+(35, 85, 5, '2022-07-16 18:21:14', '2022-07-16 18:21:14'),
+(36, 85, 7, '2022-07-16 18:21:14', '2022-07-16 18:21:14'),
+(37, 86, 1, '2022-07-16 18:23:52', '2022-07-16 18:23:52'),
+(38, 86, 3, '2022-07-16 18:23:52', '2022-07-16 18:23:52'),
+(39, 86, 5, '2022-07-16 18:23:52', '2022-07-16 18:23:52'),
+(40, 86, 7, '2022-07-16 18:23:52', '2022-07-16 18:23:52'),
+(41, 87, 1, '2022-07-16 21:19:45', '2022-07-16 21:19:45'),
+(42, 87, 3, '2022-07-16 21:19:45', '2022-07-16 21:19:45'),
+(43, 87, 5, '2022-07-16 21:19:45', '2022-07-16 21:19:45'),
+(44, 87, 7, '2022-07-16 21:19:45', '2022-07-16 21:19:45'),
+(45, 88, 1, '2022-07-16 21:19:48', '2022-07-16 21:19:48'),
+(46, 88, 3, '2022-07-16 21:19:48', '2022-07-16 21:19:48'),
+(47, 88, 5, '2022-07-16 21:19:48', '2022-07-16 21:19:48'),
+(48, 88, 7, '2022-07-16 21:19:48', '2022-07-16 21:19:48'),
+(49, 89, 1, '2022-07-16 21:20:04', '2022-07-16 21:20:04'),
+(50, 89, 3, '2022-07-16 21:20:04', '2022-07-16 21:20:04'),
+(51, 89, 5, '2022-07-16 21:20:04', '2022-07-16 21:20:04'),
+(52, 89, 7, '2022-07-16 21:20:04', '2022-07-16 21:20:04'),
+(53, 90, 1, '2022-07-16 21:20:12', '2022-07-16 21:20:12'),
+(54, 90, 3, '2022-07-16 21:20:12', '2022-07-16 21:20:12'),
+(55, 90, 5, '2022-07-16 21:20:12', '2022-07-16 21:20:12'),
+(56, 90, 7, '2022-07-16 21:20:12', '2022-07-16 21:20:12'),
+(57, 91, 1, '2022-07-16 21:20:58', '2022-07-16 21:20:58'),
+(58, 91, 3, '2022-07-16 21:20:58', '2022-07-16 21:20:58'),
+(59, 91, 5, '2022-07-16 21:20:58', '2022-07-16 21:20:58'),
+(60, 91, 7, '2022-07-16 21:20:58', '2022-07-16 21:20:58'),
+(61, 92, 8, '2022-07-16 21:22:14', '2022-07-16 21:22:14'),
+(62, 92, 10, '2022-07-16 21:22:14', '2022-07-16 21:22:14'),
+(63, 92, 7, '2022-07-16 21:22:14', '2022-07-16 21:22:14'),
+(64, 92, 4, '2022-07-16 21:22:14', '2022-07-16 21:22:14'),
+(65, 93, 8, '2022-07-16 21:22:19', '2022-07-16 21:22:19'),
+(66, 93, 10, '2022-07-16 21:22:19', '2022-07-16 21:22:19'),
+(67, 93, 7, '2022-07-16 21:22:20', '2022-07-16 21:22:20'),
+(68, 93, 4, '2022-07-16 21:22:20', '2022-07-16 21:22:20'),
+(69, 94, 8, '2022-07-16 21:22:45', '2022-07-16 21:22:45'),
+(70, 94, 10, '2022-07-16 21:22:45', '2022-07-16 21:22:45'),
+(71, 94, 7, '2022-07-16 21:22:45', '2022-07-16 21:22:45'),
+(72, 94, 4, '2022-07-16 21:22:45', '2022-07-16 21:22:45'),
+(73, 95, 8, '2022-07-16 21:23:12', '2022-07-16 21:23:12'),
+(74, 95, 10, '2022-07-16 21:23:12', '2022-07-16 21:23:12'),
+(75, 95, 7, '2022-07-16 21:23:12', '2022-07-16 21:23:12'),
+(76, 95, 4, '2022-07-16 21:23:12', '2022-07-16 21:23:12'),
+(77, 96, 8, '2022-07-16 21:23:36', '2022-07-16 21:23:36'),
+(78, 96, 10, '2022-07-16 21:23:36', '2022-07-16 21:23:36'),
+(79, 96, 7, '2022-07-16 21:23:36', '2022-07-16 21:23:36'),
+(80, 96, 4, '2022-07-16 21:23:36', '2022-07-16 21:23:36'),
+(81, 97, 10, '2022-07-16 21:39:00', '2022-07-16 21:39:00'),
+(82, 97, 8, '2022-07-16 21:39:00', '2022-07-16 21:39:00'),
+(83, 97, 9, '2022-07-16 21:39:00', '2022-07-16 21:39:00'),
+(84, 97, 11, '2022-07-16 21:39:00', '2022-07-16 21:39:00'),
+(85, 97, 5, '2022-07-16 21:39:00', '2022-07-16 21:39:00'),
+(86, 98, 9, '2022-07-17 06:12:41', '2022-07-17 06:12:41'),
+(87, 98, 6, '2022-07-17 06:12:41', '2022-07-17 06:12:41'),
+(88, 98, 7, '2022-07-17 06:12:41', '2022-07-17 06:12:41'),
+(89, 99, 6, '2022-07-17 20:23:15', '2022-07-17 20:23:15'),
+(90, 99, 9, '2022-07-17 20:23:15', '2022-07-17 20:23:15'),
+(91, 99, 7, '2022-07-17 20:23:15', '2022-07-17 20:23:15'),
+(92, 99, 8, '2022-07-17 20:23:15', '2022-07-17 20:23:15'),
+(93, 100, 3, '2022-07-20 16:23:50', '2022-07-20 16:23:50'),
+(94, 101, 5, '2022-07-27 12:56:51', '2022-07-27 12:56:51'),
+(95, 101, 7, '2022-07-27 12:56:51', '2022-07-27 12:56:51'),
+(96, 101, 17, '2022-07-27 12:56:52', '2022-07-27 12:56:52'),
+(97, 109, 10, '2022-07-27 15:57:38', '2022-07-27 15:57:38'),
+(98, 109, 12, '2022-07-27 15:57:38', '2022-07-27 15:57:38'),
+(99, 109, 11, '2022-07-27 15:57:38', '2022-07-27 15:57:38'),
+(100, 112, 1, '2022-07-27 16:03:38', '2022-07-27 16:03:38'),
+(101, 112, 4, '2022-07-27 16:03:38', '2022-07-27 16:03:38'),
+(102, 113, 4, '2022-07-27 16:21:03', '2022-07-27 16:21:03'),
+(103, 113, 3, '2022-07-27 16:21:03', '2022-07-27 16:21:03'),
+(104, 114, 3, '2022-08-05 21:57:40', '2022-08-05 21:57:40'),
+(105, 114, 4, '2022-08-05 21:57:40', '2022-08-05 21:57:40'),
+(106, 127, 10, '2022-08-24 17:05:58', '2022-08-24 17:05:58'),
+(107, 127, 9, '2022-08-24 17:05:58', '2022-08-24 17:05:58'),
+(108, 128, 12, '2022-08-24 17:19:44', '2022-08-24 17:19:44'),
+(109, 128, 11, '2022-08-24 17:19:44', '2022-08-24 17:19:44'),
+(110, 128, 9, '2022-08-24 17:19:44', '2022-08-24 17:19:44'),
+(111, 129, 10, '2022-08-24 17:27:55', '2022-08-24 17:27:55'),
+(112, 129, 7, '2022-08-24 17:27:55', '2022-08-24 17:27:55'),
+(113, 129, 8, '2022-08-24 17:27:55', '2022-08-24 17:27:55');
 
 -- --------------------------------------------------------
 
@@ -1335,171 +1565,29 @@ CREATE TABLE `form_sr10s` (
   `estimated_yield` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `futher_remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sr10_number` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_final` tinyint(4) DEFAULT NULL
+  `is_final` tinyint(4) DEFAULT NULL,
+  `inspector` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `form_sr10s`
 --
 
-INSERT INTO `form_sr10s` (`id`, `created_at`, `updated_at`, `planting_return_id`, `stage`, `status`, `status_comment`, `submited_date`, `min_date`, `max_date`, `administrator_id`, `is_active`, `is_done`, `is_initialized`, `valid_from`, `valid_until`, `approve_by_farmer`, `farmer_id`, `planting_return_crop_name`, `seed_class`, `size_of_field`, `off_types`, `diseases`, `noxious_weeds`, `other_features`, `other_weeds`, `isolation_distance`, `variety`, `proposed_distance`, `general_conditions_of_crop`, `estimated_yield`, `futher_remarks`, `sr10_number`, `is_final`) VALUES
-(11, '2022-04-28 13:35:02', '2022-04-28 13:35:02', 1, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 0, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(12, '2022-04-28 13:35:02', '2022-04-28 13:35:02', 1, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 0, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(13, '2022-04-28 13:37:56', '2022-04-28 16:56:29', 2, 'Pre-flowering', '17', 'asas', '2022-04-28', '2022-05-28', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(14, '2022-04-28 13:37:56', '2022-04-28 16:56:41', 2, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(15, '2022-04-28 13:37:56', '2022-04-28 16:56:50', 2, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '46502651', 1),
-(16, '2022-04-28 15:53:10', '2022-04-28 15:53:26', 6, 'Pre-flowering', '17', 'asas', '2022-04-28', '2022-05-28', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(17, '2022-04-28 15:53:10', '2022-04-28 15:53:36', 6, 'Flowering', '17', 'asas', '2022-04-28', '2022-06-12', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'asas', NULL, NULL),
-(18, '2022-04-28 15:53:10', '2022-04-28 15:53:44', 6, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'asasas', '71070252', 1),
-(19, '2022-04-28 16:33:08', '2022-04-28 17:01:10', 92, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(20, '2022-04-28 16:33:08', '2022-04-28 17:01:26', 92, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(21, '2022-04-28 16:33:08', '2022-04-28 17:01:47', 92, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '92327353', 1),
-(22, '2022-04-28 16:33:44', '2022-04-28 17:01:32', 9, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(23, '2022-04-28 16:33:44', '2022-04-28 17:02:07', 9, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(24, '2022-04-28 16:33:44', '2022-04-28 17:02:33', 9, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '32886026', 1),
-(25, '2022-04-28 16:34:37', '2022-04-28 17:02:42', 4, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(26, '2022-04-28 16:34:37', '2022-04-28 17:03:24', 4, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(27, '2022-04-28 16:34:37', '2022-04-28 17:03:50', 4, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '80711656', 1),
-(28, '2022-04-28 16:35:22', '2022-04-28 17:02:59', 22, 'pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(29, '2022-04-28 16:35:22', '2022-04-28 17:04:12', 22, 'flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(30, '2022-04-28 16:35:22', '2022-04-28 17:04:31', 22, 'pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '6830906', 1),
-(31, '2022-04-28 16:35:23', '2022-04-28 17:10:33', 5, 'Pre-flowering', '17', 'drougt', '2022-04-28', '2022-05-28', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'black african army worm', NULL, NULL),
-(32, '2022-04-28 16:35:23', '2022-04-28 16:35:23', 5, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(33, '2022-04-28 16:35:23', '2022-04-28 16:35:23', 5, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(34, '2022-04-28 16:35:50', '2022-04-28 17:03:07', 15, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(35, '2022-04-28 16:35:50', '2022-04-28 17:03:35', 15, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, 'Basic seed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(36, '2022-04-28 16:35:50', '2022-04-28 17:03:53', 15, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '22275505', 1),
-(37, '2022-04-28 16:36:18', '2022-04-28 17:04:55', 12, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(38, '2022-04-28 16:36:18', '2022-04-28 17:05:41', 12, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(39, '2022-04-28 16:36:18', '2022-04-28 17:08:32', 12, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '88455946', 1),
-(40, '2022-04-28 16:36:31', '2022-04-28 17:16:42', 7, 'Pre-flowering', '4', 'weaviled', '2022-04-28', '2022-05-28', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(41, '2022-04-28 16:36:31', '2022-04-28 16:36:31', 7, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(42, '2022-04-28 16:36:31', '2022-04-28 16:36:31', 7, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(43, '2022-04-28 16:36:57', '2022-04-28 17:08:45', 17, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(44, '2022-04-28 16:36:57', '2022-04-28 17:15:01', 17, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(45, '2022-04-28 16:36:57', '2022-04-28 17:17:46', 17, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '13865690', 1),
-(46, '2022-04-28 16:37:13', '2022-04-28 17:06:17', 11, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(47, '2022-04-28 16:37:13', '2022-04-28 17:17:41', 11, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(48, '2022-04-28 16:37:13', '2022-04-28 17:18:51', 11, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'good', '18590451', 1),
-(49, '2022-04-28 16:37:38', '2022-04-28 17:04:36', 10, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(50, '2022-04-28 16:37:38', '2022-04-28 17:16:59', 10, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(51, '2022-04-28 16:37:38', '2022-04-28 16:37:38', 10, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(52, '2022-04-28 16:38:24', '2022-04-28 17:14:41', 21, '5', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '16498102', 1),
-(53, '2022-04-28 16:38:51', '2022-04-28 17:05:44', 32, '5', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '25993078', 1),
-(54, '2022-04-28 16:39:19', '2022-04-28 17:06:00', 16, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(55, '2022-04-28 16:39:19', '2022-04-28 17:12:54', 16, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(56, '2022-04-28 16:39:19', '2022-04-28 16:39:19', 16, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(57, '2022-04-28 16:39:24', '2022-04-28 17:05:08', 31, 'pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(58, '2022-04-28 16:39:25', '2022-04-28 17:05:27', 31, 'flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(59, '2022-04-28 16:39:25', '2022-04-28 16:39:25', 31, 'pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(60, '2022-04-28 16:39:41', '2022-04-28 17:02:49', 23, 'Pre-flowering', '7', '', '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(61, '2022-04-28 16:39:41', '2022-04-28 17:03:31', 23, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(62, '2022-04-28 16:39:41', '2022-04-28 17:18:23', 23, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '55732210', 1),
-(63, '2022-04-28 16:39:53', '2022-04-28 17:15:30', 33, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(64, '2022-04-28 16:39:53', '2022-04-28 17:18:44', 33, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(65, '2022-04-28 16:39:53', '2022-04-28 16:39:53', 33, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(66, '2022-04-28 16:40:13', '2022-04-28 17:13:15', 14, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(67, '2022-04-28 16:40:14', '2022-04-28 16:40:14', 14, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(68, '2022-04-28 16:40:14', '2022-04-28 16:40:14', 14, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(69, '2022-04-28 16:40:23', '2022-04-28 17:05:49', 30, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(70, '2022-04-28 16:40:23', '2022-04-28 17:09:02', 30, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(71, '2022-04-28 16:40:23', '2022-04-28 17:12:07', 30, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '30709542', 1),
-(72, '2022-04-28 16:40:27', '2022-04-28 17:14:16', 13, '5', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '30260580', 1),
-(73, '2022-04-28 16:40:53', '2022-04-28 17:16:38', 27, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(74, '2022-04-28 16:40:53', '2022-04-28 17:31:09', 27, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(75, '2022-04-28 16:40:53', '2022-04-28 17:32:29', 27, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '41518188', 1),
-(76, '2022-04-28 16:41:02', '2022-04-28 17:06:19', 18, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(77, '2022-04-28 16:41:02', '2022-04-28 17:13:52', 18, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(78, '2022-04-28 16:41:02', '2022-04-28 17:19:07', 18, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '17313706', 1),
-(79, '2022-04-28 16:41:21', '2022-04-28 17:01:48', 20, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(80, '2022-04-28 16:41:21', '2022-04-28 17:10:57', 20, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(81, '2022-04-28 16:41:21', '2022-04-28 16:41:21', 20, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(82, '2022-04-28 16:41:58', '2022-04-28 17:08:08', 34, '5', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '8561677', 1),
-(83, '2022-04-28 16:42:14', '2022-04-28 16:42:14', 24, 'Pre-flowering', '1', '', NULL, '2022-05-28', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(84, '2022-04-28 16:42:14', '2022-04-28 16:42:14', 24, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(85, '2022-04-28 16:42:14', '2022-04-28 16:42:14', 24, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(86, '2022-04-28 16:42:28', '2022-04-28 16:42:28', 28, 'Pre-flowering', '1', '', NULL, '2022-05-28', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(87, '2022-04-28 16:42:28', '2022-04-28 16:42:28', 28, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(88, '2022-04-28 16:42:28', '2022-04-28 16:42:28', 28, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(89, '2022-04-28 16:42:47', '2022-04-28 16:42:47', 25, 'Pre-flowering', '1', '', NULL, '2022-05-28', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(90, '2022-04-28 16:42:47', '2022-04-28 16:42:47', 25, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(91, '2022-04-28 16:42:47', '2022-04-28 16:42:47', 25, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(92, '2022-04-28 16:43:37', '2022-04-28 16:43:37', 44, 'Pre-flowering', '1', '', NULL, '2022-05-28', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(93, '2022-04-28 16:43:37', '2022-04-28 16:43:37', 44, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(94, '2022-04-28 16:43:37', '2022-04-28 16:43:37', 44, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(95, '2022-04-28 16:44:08', '2022-04-28 16:44:08', 29, 'Pre-flowering', '1', '', NULL, '2022-05-28', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(96, '2022-04-28 16:44:08', '2022-04-28 16:44:08', 29, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(97, '2022-04-28 16:44:08', '2022-04-28 16:44:08', 29, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(98, '2022-04-28 16:45:18', '2022-04-28 17:24:22', 37, '5', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '32435505', 1),
-(99, '2022-04-28 16:45:26', '2022-04-28 16:45:26', 36, 'pre-flowering', '1', '', NULL, '2022-05-28', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(100, '2022-04-28 16:45:26', '2022-04-28 16:45:26', 36, 'flowering', '1', '', NULL, '2022-06-12', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(101, '2022-04-28 16:45:26', '2022-04-28 16:45:26', 36, 'pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(102, '2022-04-28 16:45:53', '2022-04-28 17:15:03', 38, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(103, '2022-04-28 16:45:53', '2022-04-28 17:16:01', 38, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(104, '2022-04-28 16:45:53', '2022-04-28 16:45:53', 38, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(105, '2022-04-28 16:46:16', '2022-04-28 16:46:16', 39, 'Pre-flowering', '1', '', NULL, '2022-05-28', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(106, '2022-04-28 16:46:16', '2022-04-28 16:46:16', 39, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(107, '2022-04-28 16:46:16', '2022-04-28 16:46:16', 39, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(108, '2022-04-28 16:46:42', '2022-04-28 17:07:32', 40, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(109, '2022-04-28 16:46:42', '2022-04-28 17:16:17', 40, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(110, '2022-04-28 16:46:42', '2022-04-28 16:46:42', 40, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(111, '2022-04-28 16:47:04', '2022-04-28 17:02:17', 41, 'Pre-flowering', '7', '', '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(112, '2022-04-28 16:47:04', '2022-04-28 17:07:21', 41, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(113, '2022-04-28 16:47:04', '2022-04-28 17:07:51', 41, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '40683661', 1),
-(114, '2022-04-28 16:47:25', '2022-04-28 17:31:58', 42, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(115, '2022-04-28 16:47:25', '2022-04-28 16:47:25', 42, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(116, '2022-04-28 16:47:25', '2022-04-28 16:47:25', 42, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(117, '2022-04-28 16:47:53', '2022-04-28 17:10:38', 45, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(118, '2022-04-28 16:47:53', '2022-04-28 16:47:53', 45, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(119, '2022-04-28 16:47:53', '2022-04-28 16:47:53', 45, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(120, '2022-04-28 16:48:48', '2022-04-28 17:06:37', 51, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(121, '2022-04-28 16:48:48', '2022-04-28 17:07:09', 51, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(122, '2022-04-28 16:48:48', '2022-04-28 17:07:21', 51, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '6268925', 1),
-(123, '2022-04-28 16:48:49', '2022-04-28 17:06:51', 46, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(124, '2022-04-28 16:48:49', '2022-04-28 17:07:34', 46, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(125, '2022-04-28 16:48:49', '2022-04-28 17:07:46', 46, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '52889777', 1),
-(126, '2022-04-28 16:49:51', '2022-04-28 17:07:58', 70, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(127, '2022-04-28 16:49:51', '2022-04-28 17:08:13', 70, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(128, '2022-04-28 16:49:51', '2022-04-28 17:08:28', 70, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '79605299', 1),
-(129, '2022-04-28 16:49:53', '2022-04-28 17:08:41', 47, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(130, '2022-04-28 16:49:53', '2022-04-28 17:08:57', 47, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(131, '2022-04-28 16:49:53', '2022-04-28 17:09:10', 47, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '39196861', 1),
-(132, '2022-04-28 16:50:30', '2022-04-28 17:09:29', 71, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(133, '2022-04-28 16:50:30', '2022-04-28 17:09:44', 71, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(134, '2022-04-28 16:50:30', '2022-04-28 17:09:56', 71, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '22773948', 1),
-(135, '2022-04-28 16:50:41', '2022-04-28 17:10:15', 54, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(136, '2022-04-28 16:50:41', '2022-04-28 17:10:29', 54, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(137, '2022-04-28 16:50:41', '2022-04-28 17:10:42', 54, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '51841572', 1),
-(138, '2022-04-28 16:51:02', '2022-04-28 17:10:57', 48, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(139, '2022-04-28 16:51:02', '2022-04-28 17:11:19', 48, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(140, '2022-04-28 16:51:02', '2022-04-28 17:11:28', 48, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '99894904', 1),
-(141, '2022-04-28 16:51:22', '2022-04-28 17:11:42', 49, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(142, '2022-04-28 16:51:22', '2022-04-28 17:11:55', 49, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(143, '2022-04-28 16:51:22', '2022-04-28 17:12:06', 49, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '10700714', 1),
-(144, '2022-04-28 16:51:51', '2022-04-28 17:12:22', 57, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(145, '2022-04-28 16:51:51', '2022-04-28 17:12:39', 57, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(146, '2022-04-28 16:51:51', '2022-04-28 17:12:54', 57, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '26610542', 1),
-(147, '2022-04-28 16:52:30', '2022-04-28 17:13:05', 67, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(148, '2022-04-28 16:52:30', '2022-04-28 17:13:26', 67, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(149, '2022-04-28 16:52:30', '2022-04-28 16:52:30', 67, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(150, '2022-04-28 16:52:58', '2022-04-28 16:52:58', 52, 'Pre-flowering', '1', '', NULL, '2022-05-28', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(151, '2022-04-28 16:52:58', '2022-04-28 16:52:58', 52, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(152, '2022-04-28 16:52:58', '2022-04-28 16:52:58', 52, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(153, '2022-04-28 16:52:59', '2022-04-28 16:52:59', 68, 'Pre-flowering', '1', '', NULL, '2022-05-28', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(154, '2022-04-28 16:52:59', '2022-04-28 16:52:59', 68, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(155, '2022-04-28 16:52:59', '2022-04-28 16:52:59', 68, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(156, '2022-04-28 16:53:43', '2022-04-28 16:53:43', 53, 'Pre-flowering', '1', '', NULL, '2022-05-28', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(157, '2022-04-28 16:53:43', '2022-04-28 16:53:43', 53, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(158, '2022-04-28 16:53:43', '2022-04-28 16:53:43', 53, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(159, '2022-04-28 16:55:01', '2022-04-28 17:13:54', 58, 'pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(160, '2022-04-28 16:55:01', '2022-04-28 16:55:01', 58, 'flowering', '1', '', NULL, '2022-06-12', NULL, 27, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(161, '2022-04-28 16:55:01', '2022-04-28 16:55:01', 58, 'pre-harvest', '1', '', NULL, '2022-06-27', NULL, 27, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(162, '2022-04-28 17:15:23', '2022-04-28 17:16:35', 99, 'Pre-flowering', '17', NULL, '2022-04-28', '2022-05-28', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(163, '2022-04-28 17:15:23', '2022-04-28 17:16:49', 99, 'Flowering', '17', NULL, '2022-04-28', '2022-06-12', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(164, '2022-04-28 17:15:23', '2022-04-28 17:17:06', 99, 'Pre-harvest', '5', '', '2022-04-28', '2022-06-27', NULL, 20, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4780978', 1),
-(165, '2022-04-28 17:15:56', '2022-04-28 17:15:56', 100, 'Pre-flowering', '1', '', NULL, '2022-05-28', NULL, 20, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(166, '2022-04-28 17:15:56', '2022-04-28 17:15:56', 100, 'Flowering', '1', '', NULL, '2022-06-12', NULL, 20, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(167, '2022-04-28 17:15:56', '2022-04-28 17:15:56', 100, 'Pre-harvest', '1', '', NULL, '2022-06-27', NULL, 20, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `form_sr10s` (`id`, `created_at`, `updated_at`, `planting_return_id`, `stage`, `status`, `status_comment`, `submited_date`, `min_date`, `max_date`, `administrator_id`, `is_active`, `is_done`, `is_initialized`, `valid_from`, `valid_until`, `approve_by_farmer`, `farmer_id`, `planting_return_crop_name`, `seed_class`, `size_of_field`, `off_types`, `diseases`, `noxious_weeds`, `other_features`, `other_weeds`, `isolation_distance`, `variety`, `proposed_distance`, `general_conditions_of_crop`, `estimated_yield`, `futher_remarks`, `sr10_number`, `is_final`, `inspector`) VALUES
+(22, '2022-07-27 15:04:22', '2022-07-27 15:04:22', 106, 'Pre-flowering', '1', '', NULL, '2022-08-26', NULL, 3, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20),
+(23, '2022-07-27 15:04:22', '2022-07-27 15:04:22', 106, 'Flowering', '1', '', NULL, '2022-09-10', NULL, 3, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20),
+(24, '2022-07-27 15:04:22', '2022-07-27 15:04:22', 106, 'Pre-harvest', '1', '', NULL, '2022-09-25', NULL, 3, 0, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20),
+(25, '2022-07-27 20:42:37', '2022-07-27 21:39:26', 107, 'Pre-flowering', '17', 'The filed was not inspected.', '2022-07-27', '2022-08-26', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28),
+(26, '2022-07-27 20:42:37', '2022-07-27 21:46:01', 107, 'Flowering', '17', 'Not inspected', '2022-07-27', '2022-09-10', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28),
+(27, '2022-07-27 20:42:37', '2022-07-27 21:46:14', 107, 'Pre-harvest', '5', '', '2022-07-27', '2022-09-25', NULL, 27, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '5624949', 1, 28),
+(28, '2022-07-27 20:44:05', '2022-07-27 21:48:16', 105, 'Pre-flowering', '7', '', '2022-07-27', '2022-08-26', NULL, 21, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28),
+(29, '2022-07-27 20:44:05', '2022-07-27 21:49:18', 105, 'Flowering', '17', 'Was not inspected.', '2022-07-27', '2022-09-10', NULL, 21, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28),
+(30, '2022-07-27 20:44:06', '2022-07-27 21:49:28', 105, 'Pre-harvest', '5', '', '2022-07-27', '2022-09-25', NULL, 21, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '57488200', 1, 28),
+(31, '2022-08-18 13:29:24', '2022-08-18 13:29:24', 109, 'Default inspection', '1', '', NULL, '2022-08-19', NULL, 147, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28),
+(32, '2022-08-22 20:11:27', '2022-08-22 20:11:27', 108, 'Default inspection', '1', '', NULL, '2022-08-23', NULL, 145, 1, 0, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28),
+(33, '2022-08-23 13:57:48', '2022-08-23 14:02:43', 115, 'Pre-flowering', '7', '', '2022-08-23', '2022-09-22', NULL, 151, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, 'Basic seed', '200', '60', '70', '50', 'None', 'None', '5', NULL, 'Adequate', 'None', '2000', 'Crop is ok.', NULL, NULL, 28),
+(34, '2022-08-23 13:57:48', '2022-08-23 14:03:21', 115, 'Flowering', '17', 'This was not done.', '2022-08-23', '2022-10-07', NULL, 151, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 28),
+(35, '2022-08-23 13:57:48', '2022-08-23 14:04:21', 115, 'Pre-harvest', '5', '', '2022-08-23', '2022-10-22', NULL, 151, 0, 1, 0, '2021-01-01', '2021-01-01', NULL, NULL, NULL, 'Basic seed', '89', '90', '70', '50', 'None', 'None', '5', NULL, 'Adequate', 'None', '2000', 'None', '7924006', 1, 28);
 
 -- --------------------------------------------------------
 
@@ -1574,7 +1662,7 @@ INSERT INTO `form_stock_examination_requests` (`id`, `created_at`, `updated_at`,
 (5, '2022-03-24 13:52:59', '2022-03-24 14:00:59', NULL, 22, NULL, '12', '10000', '2022-03-24', '99', '90', '7', 'nil', 'nil', 'nil', NULL, 5, 34, NULL, 'Request for the approval inspection', 2, 33, 1, 'Certified seed', '-'),
 (6, '2022-03-24 14:06:36', '2022-03-24 14:08:38', NULL, 25, NULL, '2.5', '5', '2022-03-24', '98.9', '85', '9.4', 'minimal', 'none', 'none', NULL, 5, 30, NULL, 'Stock examinations', 2, 31, 1, 'Certified seed', '-'),
 (7, '2022-03-28 16:24:58', '2022-03-28 16:34:32', NULL, 31, NULL, '100', '1000', '2022-03-28', '100', '90', 'None', 'None', '90', 'None', NULL, 5, 27, NULL, 'Please come and do stock approval for my seeds.', 2, 28, 1, 'Basic seed', '-'),
-(8, '2022-03-29 11:53:49', '2022-04-04 11:43:13', NULL, 31, NULL, '100', '1000', '2022-04-04', '100', '90', 'None', 'None', '90', 'None', NULL, 5, 27, NULL, 'Please come pick my stock for Lab test', 2, 28, 1, 'Basic seed', '-'),
+(8, '2022-03-29 11:53:49', '2022-04-04 11:43:13', NULL, 31, NULL, '100', '1000', '2022-04-04', '100', '90', 'None', 'None', '90', 'None', NULL, 5, 27, NULL, 'Please come pick my stock for Lab test', 2, 27, 1, 'Basic seed', '-'),
 (9, '2022-04-04 15:52:31', '2022-04-06 12:27:56', NULL, 31, NULL, '12', '11', '2022-04-06', '11', '11', '11', '11', '11', '11', NULL, 5, 27, NULL, 'Stock examination request.', 2, 28, 1, 'Basic seed', '-'),
 (10, '2022-04-25 17:09:42', '2022-04-26 11:21:14', NULL, 84, NULL, '40', '30000', '2022-04-29', '96', '98', 'None', 'None', 'None', 'None', NULL, 5, 20, NULL, 'stock is very ok', 2, 41, 1, 'Certified seed', '922767129'),
 (11, '2022-04-25 17:11:22', '2022-04-26 11:22:08', NULL, 74, NULL, '12', '28000', '2022-04-14', '98', '98', 'None', 'None', 'None', 'None', NULL, 5, 20, NULL, 'My stock is very ready for inspection', 2, 40, 1, 'Certified seed', '373130064'),
@@ -1639,7 +1727,14 @@ INSERT INTO `form_stock_examination_requests` (`id`, `created_at`, `updated_at`,
 (72, '2022-04-29 10:21:26', '2022-04-29 10:48:53', NULL, 30, NULL, '2', '30', '2022-04-06', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 27, NULL, 'Growing certified seeds', 2, 79, 1, 'Certified seed', '373480349'),
 (73, '2022-04-29 10:31:17', '2022-04-29 10:47:21', NULL, 18, NULL, '30', '2000', '2022-04-29', '100', '90', 'None', 'None', '90', 'None', NULL, 5, 27, NULL, 'Stock ready for examination.', 2, 76, 1, 'Basic seed', '768986469'),
 (74, '2022-04-29 10:36:35', '2022-04-29 10:44:53', NULL, 62, NULL, '30', '3900', '2022-04-28', '100', '98', '13', '00', 'NONE', 'NONE', NULL, 5, 27, NULL, 'rt5r4', 2, 88, 1, 'Certified seed', '242671052'),
-(75, '2022-04-29 10:41:07', '2022-04-29 10:41:07', NULL, 140, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'My stock ready for inspection', 2, 93, 1, NULL, '-');
+(75, '2022-04-29 10:41:07', '2022-07-28 20:10:30', NULL, 140, NULL, '30', '1000', '2022-07-28', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 28, NULL, 'My stock ready for inspection', 2, 93, 1, 'Basic seed', '757899743'),
+(76, '2022-07-04 09:26:29', '2022-07-28 20:11:02', 4, 4, 3, '33', '340000', '0343-01-01', '34', '34', '34', '34', '34', '34', '34', 5, 28, '23232', '23232', 1, 1, 1, 'Basic seed', '811942318'),
+(78, '2022-07-27 09:42:52', '2022-07-28 19:33:15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 28, NULL, 'The bank 🏦 hhu to', 2, 1, 1, NULL, '155655442'),
+(79, '2022-07-27 09:43:26', '2022-07-27 09:43:26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 'Test', 3, 1, 1, NULL, '-'),
+(80, '2022-07-27 09:47:11', '2022-07-27 09:47:11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 'Some details about the same as last', 2, 3, 1, NULL, '-'),
+(81, '2022-07-27 09:55:01', '2022-07-28 19:33:28', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 28, NULL, 'Test', 2, 3, 1, NULL, '988432090'),
+(83, '2022-08-19 21:26:49', '2022-08-19 21:41:39', NULL, NULL, NULL, '30', '2000', '2022-08-19', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 28, NULL, 'My harvest is ready for stock examination.', 2, 147, 1, 'Basic seed', '546489960'),
+(84, '2022-08-23 14:10:01', '2022-08-23 14:24:26', NULL, NULL, NULL, '50', '2000', '2022-08-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 28, NULL, 'Stock ready for examination', 2, 151, 1, 'Basic seed', '409243577');
 
 -- --------------------------------------------------------
 
@@ -1713,11 +1808,31 @@ CREATE TABLE `import_export_permits` (
 --
 
 INSERT INTO `import_export_permits` (`id`, `created_at`, `updated_at`, `administrator_id`, `name`, `address`, `telephone`, `national_seed_board_reg_num`, `store_location`, `quantiry_of_seed`, `name_address_of_origin`, `details`, `ista_certificate`, `valid_from`, `valid_until`, `status`, `inspector`, `status_comment`, `permit_number`, `is_import`, `phytosanitary_certificate`, `category`, `type`, `crop_category`) VALUES
-(25, '2022-03-17 14:05:29', '2022-03-17 14:12:09', 28, 'Isaac Mbabazi', 'Rukoki', '0780602550', NULL, 'Rukoki', '0', 'Nairobi Kenya', NULL, NULL, '2022-03-17 10:12:09', '2023-03-17 10:12:09', 5, 27, NULL, '265562', 1, NULL, NULL, 'Researchers', 'Own use'),
-(26, '2022-03-23 15:43:02', '2022-03-23 16:36:33', 28, 'Isaac Mbabazi', 'Kungu Trading Centre.', '+256753388839', 'EXP/2022/0002', 'Mubuku', '10', 'Nairobi Kenya', NULL, 'files/sorghum.jpg', '2022-03-23 12:36:33', '2023-03-23 12:36:33', 5, 27, 'The application has been Rejected.', 'EXPORT/2022/001', 0, 'files/Naro.JPG', NULL, 'Seed Merchant', NULL),
+(25, '2022-03-17 14:05:29', '2022-03-17 14:12:09', 21, 'Isaac Mbabazi', 'Rukoki', '0780602550', NULL, 'Rukoki', '0', 'Nairobi Kenya', NULL, NULL, '2022-03-17 10:12:09', '2023-03-17 10:12:09', 5, 27, NULL, '265562', 1, NULL, NULL, 'Researchers', 'Own use'),
+(26, '2022-03-23 15:43:02', '2022-03-23 16:36:33', 21, 'Isaac Mbabazi', 'Kungu Trading Centre.', '+256753388839', 'EXP/2022/0002', 'Mubuku', '10', 'Nairobi Kenya', NULL, 'files/sorghum.jpg', '2022-03-23 12:36:33', '2023-03-23 12:36:33', 5, 27, 'The application has been Rejected.', 'EXPORT/2022/001', 1, 'files/Naro.JPG', NULL, 'Seed Merchant', NULL),
 (27, '2022-03-28 17:42:00', '2022-04-04 13:43:37', 28, 'Isaac Mbabazi', 'Kampala', '+256753388839', 'EXP/2022/0002', 'Mubuku', '1000', 'Nairobi Kenya', NULL, NULL, NULL, NULL, 2, 27, NULL, NULL, 1, NULL, NULL, 'Researchers', 'Own use'),
-(28, '2022-04-04 13:42:20', '2022-04-04 13:43:48', 3, 'Betty Namagembe', 'Kampala', '+256753388839', NULL, 'Mubuku', '0', 'Tazania', NULL, 'files/QA.JPG', NULL, NULL, 2, 27, NULL, NULL, 1, 'files/twit.JPG', NULL, 'Researchers', 'Research'),
-(29, '2022-05-16 14:13:21', '2022-05-18 11:50:03', 106, 'Kalule Kusain', 'Rubaga', '111223176442', NULL, 'ffffff', '-2', 'Rubaga', NULL, 'files/eid anima585.gif', NULL, NULL, 1, NULL, NULL, NULL, 1, 'files/koll logo.mp4', NULL, 'Researchers', 'Commercial');
+(29, '2022-05-16 14:13:21', '2022-05-18 11:50:03', 106, 'Kalule Kusain', 'Rubaga', '111223176442', NULL, 'ffffff', '-2', 'Rubaga', NULL, 'files/eid anima585.gif', NULL, NULL, 1, NULL, NULL, NULL, 1, 'files/koll logo.mp4', NULL, 'Researchers', 'Commercial'),
+(30, '2022-07-21 17:15:01', '2022-07-21 17:15:01', 3, 'Betty Namagembe', 'The bank 🏦🏦🏦🏦', '3225633', NULL, 'LOH I feel about my company', '23', 'To go to the', NULL, 'Guhhy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ggh I feel about my company is', NULL, 'Research', '[32, 64]'),
+(31, '2022-07-21 17:15:59', '2022-07-21 17:15:59', 3, 'Betty Namagembe', 'The bank 🏦🏦🏦🏦', '3225633', NULL, 'LOH I feel about my company', '23', 'To go to the', NULL, 'Guhhy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ggh I feel about my company is', NULL, 'Research', '[32, 64]'),
+(32, '2022-07-21 17:17:10', '2022-07-21 17:17:10', 3, 'Betty Namagembe', 'The bank 🏦🏦🏦🏦', '3225633', NULL, 'LOH I feel about my company', '23', 'To go to the', NULL, 'Guhhy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ggh I feel about my company is', NULL, 'Research', '[32, 64]'),
+(33, '2022-07-21 17:18:15', '2022-07-21 17:18:15', 3, 'Betty Namagembe', 'The bank 🏦🏦🏦🏦', '3225633', NULL, 'LOH I feel about my company', '23', 'To go to the', NULL, 'Guhhy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ggh I feel about my company is', NULL, 'Research', '[32, 64]'),
+(34, '2022-07-21 17:18:36', '2022-07-21 17:18:36', 3, 'Betty Namagembe', 'The bank 🏦🏦🏦🏦', '3225633', NULL, 'LOH I feel about my company', '23', 'To go to the', NULL, 'Guhhy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ggh I feel about my company is', NULL, 'Research', '[32, 64]'),
+(35, '2022-07-21 17:22:34', '2022-07-21 17:22:34', 3, 'Betty Namagembe', 'The bank 🏦🏦🏦🏦', '3225633', NULL, 'LOH I feel about my company', '23', 'To go to the', NULL, 'Guhhy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ggh I feel about my company is', NULL, 'Research', '[32, 64]'),
+(36, '2022-07-21 17:26:09', '2022-07-21 17:26:09', 3, 'Betty Namagembe', 'The bank 🏦🏦🏦🏦', '3225633', NULL, 'LOH I feel about my company', '23', 'To go to the', NULL, 'Guhhy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ggh I feel about my company is', NULL, 'Research', '[32, 64]'),
+(37, '2022-07-21 17:34:31', '2022-07-21 17:34:31', 3, 'Betty Namagembe', 'The bank 🏦🏦🏦🏦', '3225633', NULL, 'LOH I feel about my company', '23', 'To go to the', NULL, 'Guhhy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ggh I feel about my company is', NULL, 'Commercial', '[64, 32, 28, 29, 31]'),
+(38, '2022-07-21 17:38:54', '2022-07-21 17:38:54', 3, 'Betty Namagembe', 'The bank 🏦🏦🏦🏦', '3225633', NULL, 'LOH I feel about my company', '23', 'To go to the', NULL, 'Guhhy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ggh I feel about my company is', NULL, 'Commercial', '[64, 32, 28, 29, 31]'),
+(39, '2022-07-21 17:39:33', '2022-07-21 17:39:33', 3, 'Betty Namagembe', 'The bank 🏦🏦🏦🏦', '3225633', NULL, 'LOH I feel about my company', '23', 'To go to the', NULL, 'Guhhy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ggh I feel about my company is', NULL, 'Commercial', '[64, 32, 28, 29, 31]'),
+(40, '2022-07-21 19:37:44', '2022-07-21 19:37:44', 21, 'Basic User', 'Bugiri', '0788329336', NULL, 'namalele', 'Good', 'Kawanda', NULL, '554465465', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '46489489565', NULL, 'Commercial', '[28, 30, 31]'),
+(41, '2022-07-21 21:18:35', '2022-07-21 21:18:35', 3, 'Betty Namagembe', 'Great 👌👌👌👌👌', '283868666', NULL, 'The bank 🏦🏦🏦🏦🏦', '20', 'How to get it done ✅✅', NULL, 'The bank 🏦🏦🏦🏦🏦 hhu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Hggh I feel about my company I have no idea', NULL, 'Research', '[32, 30]'),
+(48, '2022-07-26 13:38:52', '2022-07-26 13:38:52', 3, 'Betty Namagembe', 'Pox 34666', '0779755785', NULL, 'Kasese', '4321', 'They don\'t have a', NULL, 'We 4466', NULL, NULL, NULL, NULL, NULL, NULL, 0, 'pH balance back to', NULL, 'Research', '[63]'),
+(63, '2022-07-27 19:35:28', '2022-07-27 19:35:28', 145, 'John Otim', 'Kampala 46', '0789898989', NULL, 'Bukoto', '8', 'Kitgum', NULL, '87656', NULL, NULL, NULL, NULL, NULL, NULL, 1, 'N65656', NULL, 'Commercial', '[67, 32, 63]'),
+(64, '2022-07-27 19:35:36', '2022-07-27 19:35:36', 145, 'John Otim', 'Kampala 46', '0789898989', NULL, 'Bukoto', '8', 'Kitgum', NULL, '87656', NULL, NULL, NULL, NULL, NULL, NULL, 1, 'N65656', NULL, 'Commercial', '[67, 32, 63]'),
+(65, '2022-07-27 19:36:30', '2022-07-27 19:36:30', 145, 'John Otim', 'Kampala 46', '0789898989', NULL, 'Bukoto', '8', 'Kitgum', NULL, '87656', NULL, NULL, NULL, NULL, NULL, NULL, 1, 'N65656', NULL, 'Commercial', '[67, 32, 63]'),
+(70, '2022-08-06 14:31:53', '2022-08-19 20:12:23', 147, 'Zak Kisakye', 'Koboko', '0780602550', '10000', 'Koboko', '100', 'Kenyanta seeds Ltd.', NULL, NULL, '2022-08-19 16:12:23', '2023-08-19 16:12:23', 5, 28, NULL, '184164', 1, NULL, NULL, 'Seed Merchant', 'Commercial'),
+(71, '2022-08-16 15:42:21', '2022-08-16 15:42:21', 148, 'Bwambale Muhidin', 'The same updated app', '12', NULL, 'Kamaiba', '12', 'Kind regards the happy', NULL, 'The same updated app you have', NULL, NULL, NULL, NULL, NULL, NULL, 0, 'The know that we will be', NULL, 'Research', '[63, 64]'),
+(72, '2022-08-19 19:54:51', '2022-08-19 19:54:51', 147, 'Zak Kisakye', 'Mubuku', '0780602550', NULL, 'Mubuku', '200', 'Kenya Seeds', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, 'Commercial', '[97]'),
+(75, '2022-08-26 13:44:40', '2022-08-26 14:38:48', 3, 'Lady Bruja', 'The parking lot', '120000', NULL, 'The parking lot to', '20', 'The parking lot is the', NULL, NULL, '2022-08-26 10:38:48', '2023-08-26 10:38:48', 5, 20, NULL, '2122391', 0, NULL, NULL, 'Research', '[29, 28]'),
+(76, '2022-08-26 13:47:48', '2022-08-26 14:06:13', 3, 'Lady Bruja', 'The parking lot to', '079855685', NULL, 'The parking lot to go back', '25', 'They shall I feel about my company', NULL, NULL, '2022-08-26 10:06:13', '2023-08-26 10:06:13', 5, 20, NULL, '498667', 1, NULL, NULL, 'Research', '[28, 13, 20]');
 
 -- --------------------------------------------------------
 
@@ -1754,7 +1869,49 @@ INSERT INTO `import_export_permits_has_crops` (`id`, `created_at`, `updated_at`,
 (11, '2022-03-17 14:05:29', '2022-03-17 14:05:29', 25, 4, NULL, NULL, 100),
 (12, '2022-03-23 15:43:02', '2022-03-23 16:10:14', 26, 3, NULL, 'Research', 300),
 (13, '2022-03-28 17:42:00', '2022-03-28 17:42:00', 27, 90, NULL, NULL, 1000),
-(14, '2022-04-04 13:42:20', '2022-04-04 13:42:20', 28, 89, NULL, NULL, 200);
+(14, '2022-04-04 13:42:20', '2022-04-04 13:42:20', 28, 89, NULL, NULL, 200),
+(15, '2022-07-21 17:38:54', '2022-07-21 17:38:54', 38, 64, NULL, NULL, NULL),
+(16, '2022-07-21 17:38:54', '2022-07-21 17:38:54', 38, 32, NULL, NULL, NULL),
+(17, '2022-07-21 17:38:54', '2022-07-21 17:38:54', 38, 28, NULL, NULL, NULL),
+(18, '2022-07-21 17:38:54', '2022-07-21 17:38:54', 38, 29, NULL, NULL, NULL),
+(19, '2022-07-21 17:38:54', '2022-07-21 17:38:54', 38, 31, NULL, NULL, NULL),
+(20, '2022-07-21 17:39:33', '2022-07-21 17:39:33', 39, 64, NULL, NULL, NULL),
+(21, '2022-07-21 17:39:33', '2022-07-21 17:39:33', 39, 32, NULL, NULL, NULL),
+(22, '2022-07-21 17:39:33', '2022-07-21 17:39:33', 39, 28, NULL, NULL, NULL),
+(23, '2022-07-21 17:39:33', '2022-07-21 17:39:33', 39, 29, NULL, NULL, NULL),
+(24, '2022-07-21 17:39:33', '2022-07-21 17:39:33', 39, 31, NULL, NULL, NULL),
+(25, '2022-07-21 19:37:44', '2022-07-21 19:37:44', 40, 28, NULL, NULL, NULL),
+(26, '2022-07-21 19:37:44', '2022-07-21 19:37:44', 40, 30, NULL, NULL, NULL),
+(27, '2022-07-21 19:37:44', '2022-07-21 19:37:44', 40, 31, NULL, NULL, NULL),
+(28, '2022-07-21 21:18:35', '2022-07-21 21:18:35', 41, 32, NULL, NULL, NULL),
+(29, '2022-07-21 21:18:35', '2022-07-21 21:18:35', 41, 30, NULL, NULL, NULL),
+(30, '2022-07-21 21:26:07', '2022-07-21 21:26:07', 42, 32, NULL, NULL, NULL),
+(31, '2022-07-21 21:26:07', '2022-07-21 21:26:07', 42, 30, NULL, NULL, NULL),
+(32, '2022-07-21 21:28:07', '2022-07-21 21:28:07', 43, 32, NULL, NULL, NULL),
+(33, '2022-07-21 21:28:07', '2022-07-21 21:28:07', 43, 30, NULL, NULL, NULL),
+(34, '2022-07-21 21:28:32', '2022-07-21 21:28:32', 44, 32, NULL, NULL, NULL),
+(35, '2022-07-21 21:28:32', '2022-07-21 21:28:32', 44, 30, NULL, NULL, NULL),
+(36, '2022-07-21 21:28:53', '2022-07-21 21:28:53', 45, 32, NULL, NULL, NULL),
+(37, '2022-07-21 21:28:53', '2022-07-21 21:28:53', 45, 30, NULL, NULL, NULL),
+(38, '2022-07-21 21:40:38', '2022-07-21 21:40:38', 46, 32, NULL, NULL, NULL),
+(39, '2022-07-21 21:40:38', '2022-07-21 21:40:38', 46, 30, NULL, NULL, NULL),
+(40, '2022-07-27 21:57:41', '2022-07-27 21:57:41', 66, 63, NULL, NULL, 1000),
+(41, '2022-08-06 14:31:53', '2022-08-06 14:31:53', 70, 111, NULL, NULL, 35),
+(42, '2022-08-16 15:42:21', '2022-08-16 15:42:21', 71, 63, NULL, NULL, NULL),
+(43, '2022-08-16 15:42:21', '2022-08-16 15:42:21', 71, 64, NULL, NULL, NULL),
+(44, '2022-08-19 19:54:51', '2022-08-19 19:54:51', 72, 97, NULL, NULL, NULL),
+(45, '2022-08-23 13:10:53', '2022-08-23 13:10:53', 73, 13, NULL, NULL, NULL),
+(46, '2022-08-23 13:10:53', '2022-08-23 13:10:53', 73, 31, NULL, NULL, NULL),
+(47, '2022-08-23 13:10:53', '2022-08-23 13:10:53', 73, 64, NULL, NULL, NULL),
+(48, '2022-08-23 13:10:53', '2022-08-23 13:10:53', 73, 66, NULL, NULL, NULL),
+(49, '2022-08-23 13:27:56', '2022-08-23 13:27:56', 74, 63, NULL, NULL, NULL),
+(50, '2022-08-23 13:27:56', '2022-08-23 13:27:56', 74, 31, NULL, NULL, NULL),
+(51, '2022-08-23 13:27:56', '2022-08-23 13:27:56', 74, 29, NULL, NULL, NULL),
+(52, '2022-08-26 13:44:40', '2022-08-26 13:44:40', 75, 29, NULL, NULL, NULL),
+(53, '2022-08-26 13:44:40', '2022-08-26 13:44:40', 75, 28, NULL, NULL, NULL),
+(54, '2022-08-26 13:47:48', '2022-08-26 13:47:48', 76, 28, NULL, NULL, NULL),
+(55, '2022-08-26 13:47:48', '2022-08-26 13:47:48', 76, 13, NULL, NULL, NULL),
+(56, '2022-08-26 13:47:48', '2022-08-26 13:47:48', 76, 20, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1788,9 +1945,9 @@ CREATE TABLE `marketable_seeds` (
 --
 
 INSERT INTO `marketable_seeds` (`id`, `created_at`, `updated_at`, `administrator_id`, `crop_variety_id`, `seed_label_id`, `lot_number`, `quantity`, `seed_class`, `source`, `detail`, `is_deposit`, `seed_label_package_id`, `lab_test_number`, `price`, `image`, `images`, `is_counted`) VALUES
-(1, '2022-04-29 15:30:55', '2022-04-29 15:36:18', 84, 1, 4, 58058008, 11, NULL, 'From seedlab test number: 009/2022/dom', 'From seedlab ID: 73', 1, 1, '009/2022/dom', 0, NULL, NULL, 1),
-(2, '2022-04-29 15:31:04', '2022-04-29 15:36:18', 90, 1, 5, 19767497, 2000, NULL, 'From seedlab test number: 008/dom/2022', 'From seedlab ID: 59', 1, 1, '008/dom/2022', 0, NULL, NULL, 1),
-(3, '2022-04-29 15:31:14', '2022-04-29 15:36:18', 89, 1, 6, 24770820, 500, NULL, 'From seedlab test number: Test1/2022/N0004', 'From seedlab ID: 67', 1, 2, 'Test1/2022/N0004', 0, NULL, NULL, 1),
+(1, '2022-04-29 15:30:55', '2022-04-29 15:36:18', 21, 1, 4, 58058008, 11, NULL, 'From seedlab test number: 009/2022/dom', 'From seedlab ID: 73', 1, 1, '009/2022/dom', 0, NULL, NULL, 1),
+(2, '2022-04-29 15:31:04', '2022-04-29 15:36:18', 27, 1, 5, 19767497, 2000, NULL, 'From seedlab test number: 008/dom/2022', 'From seedlab ID: 59', 1, 1, '008/dom/2022', 0, NULL, NULL, 1),
+(3, '2022-04-29 15:31:14', '2022-04-29 15:36:18', 21, 1, 6, 24770820, 500, NULL, 'From seedlab test number: Test1/2022/N0004', 'From seedlab ID: 67', 1, 2, 'Test1/2022/N0004', 0, NULL, NULL, 1),
 (4, '2022-04-29 15:31:24', '2022-04-29 15:36:18', 74, 1, 7, 71732547, 1000, NULL, 'From seedlab test number: 001/2022/dom', 'From seedlab ID: 69', 1, 3, '001/2022/dom', 0, NULL, NULL, 1),
 (5, '2022-04-29 15:31:34', '2022-04-29 15:36:18', 86, 1, 8, 25554681, 300, NULL, 'From seedlab test number: Test1/2022/N0002', 'From seedlab ID: 72', 1, 2, 'Test1/2022/N0002', 0, NULL, NULL, 1),
 (6, '2022-04-29 15:31:42', '2022-04-29 15:36:18', 94, 1, 9, 67857572, 200, NULL, 'From seedlab test number: TEST2/2022/2B', 'From seedlab ID: 74', 1, 1, 'TEST2/2022/2B', 0, NULL, NULL, 1),
@@ -1804,7 +1961,7 @@ INSERT INTO `marketable_seeds` (`id`, `created_at`, `updated_at`, `administrator
 (14, '2022-04-29 15:32:59', '2022-04-29 15:36:18', 85, 1, 17, 81650251, 50, NULL, 'From seedlab test number: Test1/2022/N0001', 'From seedlab ID: 77', 1, 2, 'Test1/2022/N0001', 0, NULL, NULL, 1),
 (15, '2022-04-29 15:40:29', '2022-04-29 15:43:35', 78, 1, 19, 91804360, 1000, NULL, 'From seedlab test number: 003/2022/dom', 'From seedlab ID: 63', 1, 1, '003/2022/dom', 0, NULL, NULL, 1),
 (16, '2022-04-29 15:40:43', '2022-04-29 15:43:35', 98, 1, 18, 72521820, 20, NULL, 'From seedlab test number: 006/2022/dom', 'From seedlab ID: 64', 1, 1, '006/2022/dom', 0, NULL, NULL, 1),
-(17, '2022-04-29 15:59:28', '2022-04-29 15:59:28', 3, 3, 3, 89806835, 1000, NULL, NULL, 'Sold crop to Uganda Seed Trade Association, ID: 79', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
+(17, '2022-04-29 15:59:28', '2022-07-12 20:32:48', 3, 1, 3, 89806835, 1000, NULL, NULL, 'Sold crop to Uganda Seed Trade Association, ID: 79', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
 (18, '2022-04-29 15:59:40', '2022-04-29 15:59:40', 95, 1, 10, 70484855, 100, NULL, NULL, 'Sold crop to Isaac Mbabazi, ID: 76', 0, NULL, 'Test1/2022/N0007', 0, NULL, NULL, 1),
 (19, '2022-04-29 15:59:47', '2022-04-29 15:59:47', 94, 1, 9, 67857572, 40, NULL, NULL, 'Sold crop to Polly Bantel, ID: 92', 0, NULL, 'TEST2/2022/2B', 0, NULL, NULL, 1),
 (20, '2022-04-29 15:59:48', '2022-04-29 15:59:48', 86, 1, 8, 25554681, 200, NULL, NULL, 'Sold crop to Uganda Seed Trade Association, ID: 78', 0, NULL, 'Test1/2022/N0002', 0, NULL, NULL, 1),
@@ -1812,7 +1969,7 @@ INSERT INTO `marketable_seeds` (`id`, `created_at`, `updated_at`, `administrator
 (22, '2022-04-29 15:59:59', '2022-04-29 15:59:59', 80, 1, 14, 25675580, 400, NULL, NULL, 'Sold crop to Uganda Seed Trade Association, ID: 78', 0, NULL, 'Test1/2022/N0009', 0, NULL, NULL, 1),
 (23, '2022-04-29 16:00:14', '2022-04-29 16:00:14', 80, 1, 14, 25675580, 433, NULL, NULL, 'Sold crop to Dominic Kimara, ID: 84', 0, NULL, 'Test1/2022/N0009', 0, NULL, NULL, 1),
 (24, '2022-04-29 16:00:17', '2022-04-29 16:00:17', 94, 1, 9, 67857572, 100, NULL, NULL, 'Sold crop to Isaac Mbabazi, ID: 76', 0, NULL, 'TEST2/2022/2B', 0, NULL, NULL, 1),
-(25, '2022-04-29 16:01:06', '2022-04-29 16:01:06', 3, 3, 3, 89806835, 100, NULL, NULL, 'Sold crop to John Paul, ID: 25', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
+(25, '2022-04-29 16:01:06', '2022-07-12 20:32:48', 3, 1, 3, 89806835, 100, NULL, NULL, 'Sold crop to John Paul, ID: 25', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
 (26, '2022-04-29 16:01:10', '2022-04-29 16:01:10', 88, 1, 15, 14196693, 1000, NULL, NULL, 'Sold crop to MUYINGO ALI, ID: 99', 0, NULL, '008/34/dom', 0, NULL, NULL, 1),
 (27, '2022-04-29 16:01:11', '2022-04-29 16:01:11', 85, 1, 17, 81650251, 20, NULL, NULL, 'Sold crop to Opio Kelvin, ID: 89', 0, NULL, 'Test1/2022/N0001', 0, NULL, NULL, 1),
 (28, '2022-04-29 16:01:21', '2022-04-29 16:01:21', 84, 1, 4, 58058008, 11, NULL, NULL, 'Sold crop to NARO HOLDINGS LIMITED, ID: 86', 0, NULL, '009/2022/dom', 0, NULL, NULL, 1),
@@ -1830,10 +1987,10 @@ INSERT INTO `marketable_seeds` (`id`, `created_at`, `updated_at`, `administrator
 (40, '2022-04-29 16:02:34', '2022-04-29 16:02:34', 78, 1, 19, 91804360, 500, NULL, NULL, 'Sold crop to Cathy Adong, ID: 91', 0, NULL, '003/2022/dom', 0, NULL, NULL, 1),
 (41, '2022-04-29 16:02:51', '2022-04-29 16:02:51', 86, 1, 8, 25554681, 100, NULL, NULL, 'Sold crop to SELECT SEED LIMITED, ID: 85', 0, NULL, 'Test1/2022/N0002', 0, NULL, NULL, 1),
 (42, '2022-04-29 16:03:07', '2022-04-29 16:03:07', 86, 1, 8, 25554681, 200, NULL, NULL, 'Sold crop to Cathy Adong, ID: 91', 0, NULL, 'Test1/2022/N0002', 0, NULL, NULL, 1),
-(43, '2022-04-29 16:04:04', '2022-04-29 16:04:04', 3, 3, 3, 89806835, 150, NULL, NULL, 'Sold crop to Polly Bantel, ID: 92', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
-(44, '2022-04-29 16:04:14', '2022-04-29 16:04:14', 3, 3, 3, 89806835, 100, NULL, NULL, 'Sold crop to Odongkara Emmanuel, ID: 74', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
-(45, '2022-04-29 16:04:22', '2022-04-29 16:04:22', 3, 3, 3, 89806835, 1000, NULL, NULL, 'Sold crop to kibalama brian, ID: 95', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
-(46, '2022-04-29 16:04:31', '2022-04-29 16:04:31', 3, 3, 3, 89806835, 1000, NULL, NULL, 'Sold crop to Atia serogal, ID: 90', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
+(43, '2022-04-29 16:04:04', '2022-07-12 20:32:48', 3, 1, 3, 89806835, 150, NULL, NULL, 'Sold crop to Polly Bantel, ID: 92', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
+(44, '2022-04-29 16:04:14', '2022-07-12 20:32:48', 3, 1, 3, 89806835, 100, NULL, NULL, 'Sold crop to Odongkara Emmanuel, ID: 74', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
+(45, '2022-04-29 16:04:22', '2022-07-12 20:32:48', 3, 1, 3, 89806835, 1000, NULL, NULL, 'Sold crop to kibalama brian, ID: 95', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
+(46, '2022-04-29 16:04:31', '2022-07-12 20:32:48', 3, 1, 3, 89806835, 1000, NULL, NULL, 'Sold crop to Atia serogal, ID: 90', 0, NULL, 'A000120C', 900, NULL, NULL, 1),
 (47, '2022-04-29 16:07:24', '2022-04-29 16:07:24', 98, 1, 18, 72521820, 10, NULL, NULL, 'Sold crop to walufelo isima, ID: 88', 0, NULL, '006/2022/dom', 0, NULL, NULL, 1),
 (48, '2022-04-29 16:08:22', '2022-04-29 16:08:22', 90, 1, 5, 19767497, 2000, NULL, NULL, 'Sold crop to Uganda Seed Trade Association, ID: 79', 0, NULL, '008/dom/2022', 0, NULL, NULL, 1),
 (49, '2022-04-29 16:43:46', '2022-04-29 16:44:30', 76, 1, 11, 75190054, -200, NULL, 'From seedlab test number: 005/2022/dom', 'Schools', 0, 2, '005/2022/dom', 0, NULL, NULL, 1),
@@ -1918,7 +2075,134 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (66, '2021_11_24_053127_create_pre_orders_table', 38),
 (67, '2021_11_24_072806_create_quotations_table', 39),
 (68, '2021_11_24_120813_create_test_trees_table', 40),
-(69, '2022_02_23_085326_create_sub_growers_table', 41);
+(69, '2022_02_23_085326_create_sub_growers_table', 41),
+(70, '2016_06_01_000001_create_oauth_auth_codes_table', 42),
+(71, '2016_06_01_000002_create_oauth_access_tokens_table', 42),
+(72, '2016_06_01_000003_create_oauth_refresh_tokens_table', 42),
+(73, '2016_06_01_000004_create_oauth_clients_table', 42),
+(74, '2016_06_01_000005_create_oauth_personal_access_clients_table', 42),
+(75, '2022_06_14_130244_create_permission_tables', 42),
+(76, '2022_07_14_170802_create_notifications_table', 42);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_has_permissions`
+--
+
+CREATE TABLE `model_has_permissions` (
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_has_roles`
+--
+
+CREATE TABLE `model_has_roles` (
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_id` bigint(20) UNSIGNED NOT NULL,
+  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_access_tokens`
+--
+
+CREATE TABLE `oauth_access_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_auth_codes`
+--
+
+CREATE TABLE `oauth_auth_codes` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_clients`
+--
+
+CREATE TABLE `oauth_clients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_access_client` tinyint(1) NOT NULL,
+  `password_client` tinyint(1) NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_personal_access_clients`
+--
+
+CREATE TABLE `oauth_personal_access_clients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_refresh_tokens`
+--
+
+CREATE TABLE `oauth_refresh_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1947,51 +2231,13 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `created_at`, `updated_at`, `administrator_id`, `order_by`, `crop_variety_id`, `product_id`, `quantity`, `detail`, `payment_type`, `receipt`, `status`, `total_price`) VALUES
-(1, '2021-11-24 06:18:20', '2022-04-29 16:01:06', 3, 25, 3, 3, 100, 'simple', NULL, NULL, '3', 90000),
-(2, '2021-11-24 07:11:09', '2021-11-24 07:11:09', 25, 2, 3, NULL, 8000, 'From pre-order ID: 7', NULL, NULL, '1', 0),
-(4, '2021-11-24 07:23:29', '2021-11-24 07:23:29', 25, 2, 3, NULL, 1000, 'From pre-order ID: 9', NULL, NULL, '1', 40000000),
-(5, '2021-11-24 08:18:58', '2021-11-24 08:18:58', 25, 3, 3, NULL, 1000, 'From pre-order ID: 10', NULL, NULL, '1', 800000),
-(6, '2022-04-29 15:46:14', '2022-04-29 16:01:21', 84, 86, 1, 4, 11, '', NULL, NULL, '3', 0),
+(4, '2021-11-24 07:23:29', '2021-11-24 07:23:29', 21, 2, 3, NULL, 1000, 'From pre-order ID: 9', NULL, NULL, '1', 40000000),
+(5, '2021-11-24 08:18:58', '2021-11-24 08:18:58', 3, 3, 3, NULL, 1000, 'From pre-order ID: 10', NULL, NULL, '1', 800000),
+(6, '2022-04-29 15:46:14', '2022-04-29 16:01:21', 21, 86, 1, 4, 11, '', NULL, NULL, '3', 0),
 (7, '2022-04-29 15:47:36', '2022-04-29 15:59:40', 95, 76, 1, 10, 100, 'Please supply', NULL, NULL, '3', 0),
-(8, '2022-04-29 15:48:12', '2022-04-29 16:02:51', 86, 85, 1, 8, 100, 'Please supply', NULL, NULL, '3', 0),
-(9, '2022-04-29 15:48:32', '2022-04-29 16:04:22', 3, 95, 3, 3, 1000, 'on credit', NULL, NULL, '3', 900000),
-(10, '2022-04-29 15:48:39', '2022-04-29 15:59:58', 95, 94, 1, 10, 90, 'wait to see your response', NULL, NULL, '3', 0),
-(11, '2022-04-29 15:49:10', '2022-04-29 16:00:17', 94, 76, 1, 9, 100, 'Cash payment. ', NULL, NULL, '3', 0),
-(12, '2022-04-29 15:49:21', '2022-04-29 16:00:14', 80, 84, 1, 14, 433, ' i will send u mobile money', NULL, NULL, '3', 0),
-(13, '2022-04-29 15:49:38', '2022-04-29 16:04:31', 3, 90, 3, 3, 1000, 'Christine biira', NULL, NULL, '3', 900000),
-(14, '2022-04-29 15:49:43', '2022-04-29 16:07:24', 98, 88, 1, 18, 10, 'quality seed paid on delivery', NULL, NULL, '3', 0),
-(15, '2022-04-29 15:49:53', '2022-04-29 16:01:41', 85, 98, 1, 16, 20, 'Payment is by mobile phone service', NULL, NULL, '3', 0),
-(16, '2022-04-29 15:49:54', '2022-04-29 16:02:17', 78, 94, 1, 17, 50, 'cash on delivery', NULL, NULL, '3', 0),
-(17, '2022-04-29 15:49:56', '2022-04-29 16:04:14', 3, 74, 3, 3, 100, 'Please supply \r\nPayment will be made on delivery', NULL, NULL, '3', 90000),
-(18, '2022-04-29 15:49:57', '2022-04-29 16:01:55', 89, 80, 1, 6, 100, 'supply please', NULL, NULL, '3', 0),
-(19, '2022-04-29 15:50:04', '2022-04-29 16:01:10', 88, 99, 1, 15, 1000, 'Payment will be done using a check', NULL, NULL, '3', 0),
-(20, '2022-04-29 15:50:19', '2022-04-29 16:02:34', 78, 91, 1, 17, 500, 'Pay on deliveries', NULL, NULL, '3', 0),
-(21, '2022-04-29 15:50:28', '2022-04-29 16:08:22', 90, 79, 1, 5, 2000, 'Cash deposited  at the bank', NULL, NULL, '3', 0),
-(22, '2022-04-29 15:50:45', '2022-04-29 16:04:04', 3, 92, 3, 3, 150, 'Payment on delivery ', NULL, NULL, '3', 135000),
-(23, '2022-04-29 15:50:48', '2022-04-29 16:01:41', 78, 86, 1, 17, 10, 'cash on delivery ', NULL, NULL, '3', 0),
-(24, '2022-04-29 15:50:58', '2022-04-29 16:01:40', 84, 89, 1, 4, 10, 'Payment on delivery ', NULL, NULL, '3', 0),
-(25, '2022-04-29 15:51:13', '2022-04-29 15:51:13', 90, 80, 1, 5, 522, 'supply please', NULL, NULL, '1', 0),
-(26, '2022-04-29 15:51:17', '2022-04-29 15:59:48', 86, 78, 1, 8, 200, 'Pay by cheque on delivery', NULL, NULL, '3', 0),
-(27, '2022-04-29 15:51:24', '2022-04-29 15:59:15', 88, 94, 1, 15, 600, 'bank payment', NULL, NULL, '2', 0),
-(28, '2022-04-29 15:51:46', '2022-04-29 16:03:07', 86, 91, 1, 8, 200, 'Pay on deliveries', NULL, NULL, '3', 0),
-(29, '2022-04-29 15:52:08', '2022-04-29 15:52:08', 3, 90, 3, 3, 2000, 'Good quality', NULL, NULL, '1', 1800000),
-(30, '2022-04-29 15:52:09', '2022-04-29 15:59:28', 3, 79, 3, 3, 1000, 'Will deposit money on your phone', NULL, NULL, '3', 900000),
-(31, '2022-04-29 15:52:37', '2022-04-29 16:01:30', 91, 99, 1, 13, 50, 'Goods wornse taken are  nt ewtu in', NULL, NULL, '3', 0),
-(32, '2022-04-29 15:52:50', '2022-04-29 16:01:27', 85, 79, 1, 16, 50, '', NULL, NULL, '3', 0),
-(33, '2022-04-29 15:53:02', '2022-04-29 16:01:23', 78, 88, 1, 17, 20, 'pay on delivery', NULL, NULL, '3', 0),
-(34, '2022-04-29 15:53:02', '2022-04-29 16:01:44', 89, 74, 1, 6, 80, 'Please supply payment on delivery', NULL, NULL, '3', 0),
-(35, '2022-04-29 15:53:15', '2022-04-29 16:02:12', 86, 85, 1, 8, 300, 'Please supply', NULL, NULL, '3', 0),
-(36, '2022-04-29 15:53:23', '2022-04-29 15:59:59', 80, 78, 1, 14, 400, 'pay by cheques', NULL, NULL, '3', 0),
-(37, '2022-04-29 15:53:25', '2022-04-29 16:01:30', 89, 98, 1, 6, 253, 'Payment next week', NULL, NULL, '3', 0),
-(38, '2022-04-29 15:53:57', '2022-04-29 15:59:47', 94, 92, 1, 9, 40, 'Advance PAYMENT done', NULL, NULL, '3', 0),
-(39, '2022-04-29 15:54:29', '2022-04-29 16:01:11', 85, 89, 1, 16, 20, 'Transport at ur cost', NULL, NULL, '3', 0),
-(40, '2022-04-29 15:55:01', '2022-04-29 15:55:01', 98, 78, 1, 18, 10, 'Coming to pic', NULL, NULL, '1', 0),
-(41, '2022-04-29 16:23:17', '2022-04-29 16:23:17', 76, 24, 12, NULL, 300, 'From pre-order ID: 30', NULL, NULL, '1', 300000),
-(42, '2022-04-29 16:28:32', '2022-04-29 16:28:32', 89, 27, 19, NULL, 50, 'From pre-order ID: 33', NULL, NULL, '1', 350000),
-(43, '2022-04-29 16:30:42', '2022-04-29 16:30:42', 84, 82, 1, 4, 11, '', NULL, NULL, '1', 0),
-(44, '2022-04-29 16:36:10', '2022-04-29 16:36:10', 3, 82, 3, 3, 1000, '', NULL, NULL, '1', 900000),
-(45, '2022-04-29 16:36:32', '2022-04-29 16:36:32', 63, 14, 13, NULL, 82, 'From pre-order ID: 20', NULL, NULL, '1', 82000),
-(46, '2022-04-29 16:36:51', '2022-04-29 16:36:51', 78, 14, 13, NULL, 30, 'From pre-order ID: 41', NULL, NULL, '1', 900000);
+(47, '2022-07-29 15:12:46', '2022-07-29 15:12:46', 3, 3, 1, 3, 20, 'that\'s the only reason why ', NULL, NULL, '1', 18000),
+(49, '2022-08-23 16:01:12', '2022-08-23 16:01:12', 89, 151, 1, 6, 300000, 'am buying', NULL, NULL, '1', 0),
+(50, '2022-08-26 17:02:46', '2022-08-26 17:02:46', 90, 3, 1, 5, 2000, 'yet I feel ', NULL, NULL, '1', 0);
 
 -- --------------------------------------------------------
 
@@ -2003,6 +2249,20 @@ CREATE TABLE `password_resets` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permissions`
+--
+
+CREATE TABLE `permissions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2058,6 +2318,14 @@ CREATE TABLE `planting_returns` (
   `sub_growers_file` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `planting_returns`
+--
+
+INSERT INTO `planting_returns` (`id`, `created_at`, `updated_at`, `administrator_id`, `name`, `address`, `telephone`, `seed_rate`, `registerd_dealer`, `longitude`, `latitude`, `status`, `inspector`, `status_comment`, `previous_crops`, `date_harvest`, `date_planted`, `size_of_land`, `lot_number`, `crop_id`, `amount_enclosed`, `payment_receipt`, `valid_from`, `valid_until`, `is_not_used`, `sub_growers_file`) VALUES
+(102, '2022-07-20 12:41:39', '2022-07-18 12:41:39', 21, 'fsdfs', 'sfasd', '3434323', '323', 'csd', '23455324', '34543343', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(103, '2022-07-27 19:29:31', '2022-07-27 19:29:31', 27, 'ISSD', 'Kampala', '0780602550', '968454', NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 500000, 'files/Capture2.png', NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -2103,44 +2371,10 @@ CREATE TABLE `pre_orders` (
 --
 
 INSERT INTO `pre_orders` (`id`, `created_at`, `updated_at`, `administrator_id`, `crop_variety_id`, `quantity`, `seed_class`, `invetory_status`, `collection_date`, `pickup_location`, `detail`, `status`) VALUES
-(1, '2021-11-24 03:26:01', '2021-11-24 03:26:01', 1, 3, 8000, 'Certified', 'Processed', '2021-11-24', 'Simple pick', 'detail...', '1'),
-(2, '2021-11-24 06:11:54', '2021-11-24 06:11:54', 2, 3, 1000, 'Certified', 'Raw', '2021-11-30', 'Jinja', 'explanation...', '1'),
-(3, '2021-11-24 08:17:35', '2021-11-24 08:17:35', 2, 3, 8000, 'Certified', 'Processed', '2021-12-08', 'Mbale', 'simple', '1'),
-(4, '2022-04-26 16:55:39', '2022-04-26 16:55:39', 38, 12, 1000, 'Certified', 'Processed', '2022-04-28', 'Kampala', 'Credit', '1'),
 (5, '2022-04-26 16:55:41', '2022-04-26 16:55:41', 69, 13, 50, 'Certified', 'Raw', '2022-04-29', 'mbale', 'cash on delivery', '1'),
 (6, '2022-04-26 16:56:49', '2022-04-26 16:56:49', 56, 12, 10, 'Certified', 'Processed', '2022-04-26', 'JINJA', 'YOUR SEEDS WILL BE READY FOR PICKING AT THE ABOVE LOCATION', '1'),
-(7, '2022-04-26 16:57:01', '2022-04-26 16:57:01', 69, 13, 15, 'Certified', 'Processed', '2022-04-27', 'Namanve', 'payment after 1 month', '1'),
-(8, '2022-04-26 16:57:48', '2022-04-26 16:57:48', 53, 13, 200, 'Certified', 'Processed', '2022-04-26', 'HOIMA', 'Cash payment', '1'),
-(9, '2022-04-26 16:59:16', '2022-04-26 16:59:16', 54, 12, 200, 'Certified', 'Raw', '2022-05-12', 'Gayaza', 'Seed packed in 50kg bags', '1'),
-(10, '2022-04-26 17:00:37', '2022-04-26 17:00:37', 44, 19, 550, 'Certified', 'Processed', '2022-05-02', 'factory', 'if stock is ready before the collection date please let me know', '1'),
-(11, '2022-04-26 17:01:06', '2022-04-26 17:01:06', 23, 13, 800, 'Pre-basic', NULL, '2022-04-26', 'asasas', 'asas', '1'),
-(12, '2022-04-26 17:04:59', '2022-04-26 17:04:59', 63, 12, 250, 'Certified', 'Processed', '2022-04-26', 'Mbale', 'certified seed', '1'),
-(13, '2022-04-26 17:05:10', '2022-04-26 17:05:10', 47, 13, 4000, 'Certified', 'Raw', '2022-10-26', 'kafu', 'payment after delivery', '1'),
-(14, '2022-04-26 17:05:30', '2022-04-26 17:05:30', 55, 13, 1000, 'Certified', 'Raw', '2022-05-13', 'kampala', 'Cash payment', '1'),
-(15, '2022-04-26 17:06:31', '2022-04-26 17:06:31', 54, 12, 1000, 'Basic', NULL, '2022-04-29', 'Gayaza', 'Seed to be packed in 50 kgs', '1'),
-(16, '2022-04-26 17:06:50', '2022-04-26 17:06:50', 52, 173, 100, 'Pre-basic', NULL, '2023-02-01', 'Namulonge', 'Male and female', '1'),
-(17, '2022-04-26 17:07:26', '2022-04-26 17:07:26', 42, 13, 2000, 'Certified', 'Raw', '2022-04-26', 'Kampala', 'Pay through bank before delivery', '1'),
-(18, '2022-04-26 17:09:03', '2022-04-26 17:09:03', 50, 195, 500, 'Pre-basic', NULL, '2022-05-24', 'Kampala', 'Kindly deliver to our office', '1'),
-(19, '2022-04-26 17:10:04', '2022-04-26 17:10:04', 43, 194, 100, 'Quality declaired seed', NULL, '2022-10-01', 'Masaka', 'Pay by cash', '1'),
 (20, '2022-04-26 17:11:17', '2022-04-26 17:11:17', 41, 20, 43, 'Certified', 'Processed', '2022-04-28', 'kawempe', 'call me when everything is ready', '1'),
-(21, '2022-04-26 17:13:02', '2022-04-26 17:13:02', 62, 13, 2000, 'Pre-basic', NULL, '2022-04-30', 'Namulonge', 'Deliver in Ganny bags', '1'),
-(22, '2022-04-29 16:12:55', '2022-04-29 16:12:55', 94, 1, 20, 'Basic', NULL, '2022-06-06', 'kiryandongo', 'cash on delivery', '1'),
-(23, '2022-04-29 16:13:47', '2022-04-29 16:13:47', 76, 12, 1000, 'Pre-basic', NULL, '2022-08-31', 'kampala', 'To be paid in cash.', '1'),
-(24, '2022-04-29 16:14:09', '2022-04-29 16:14:09', 85, 12, 100, 'Pre-basic', NULL, '2022-04-08', 'Kampala', 'To be paid in cash', '1'),
-(25, '2022-04-29 16:14:20', '2022-04-29 16:14:20', 95, 12, 1000, 'Pre-basic', NULL, '2022-05-31', 'kawempe', 'to be delivered in future', '1'),
-(26, '2022-04-29 16:14:44', '2022-04-29 16:14:44', 98, 13, 85, 'Pre-basic', NULL, '2022-08-29', 'Mukono', 'Unshelled', '1'),
-(27, '2022-04-29 16:14:52', '2022-04-29 16:14:52', 74, 19, 1000, 'Certified', 'Processed', '2022-05-31', 'Supply store', 'Please supply and payment will be made on delivery', '1'),
-(28, '2022-04-29 16:15:07', '2022-04-29 16:15:07', 79, 1, 200, 'Pre-basic', NULL, '2022-05-29', 'Kasese', 'Will use link bus', '1'),
-(29, '2022-04-29 16:15:26', '2022-04-29 16:15:26', 80, 19, 200, 'Pre-basic', NULL, '2022-05-29', 'kampala', NULL, '1'),
-(30, '2022-04-29 16:15:29', '2022-04-29 16:15:29', 88, 1, 200, 'Pre-basic', NULL, '2022-09-22', 'bugiri', 'egyeg', '1'),
-(31, '2022-04-29 16:15:32', '2022-04-29 16:15:32', 94, 1, 1000, 'Pre-basic', NULL, '2022-07-04', 'kiryandongo', 'direct transfer', '1'),
-(32, '2022-04-29 16:16:09', '2022-04-29 16:16:09', 90, 1, 3000, 'Basic', NULL, '2022-04-16', 'Jinja', 'Payment after delivery', '1'),
-(33, '2022-04-29 16:16:49', '2022-04-29 16:16:49', 91, 12, 900, 'Pre-basic', NULL, '2022-05-05', 'Madindi', 'I will pay  at the end of the season', '1'),
-(34, '2022-04-29 16:17:11', '2022-04-29 16:17:11', 94, 1, 400, 'Certified', 'Processed', '2022-09-04', 'kampala', 'payment after delivery', '1'),
-(35, '2022-04-29 16:17:34', '2022-04-29 16:17:34', 89, 122, 150, 'Pre-basic', NULL, '2022-04-30', 'Gulu', 'Can be picked by the beginning of next season', '1'),
-(36, '2022-04-29 16:18:28', '2022-04-29 16:18:28', 86, 20, 100, 'Pre-basic', NULL, '2022-08-15', 'Kampala', 'I will pay on delivery', '1'),
-(37, '2022-04-29 16:22:23', '2022-04-29 16:22:23', 90, 12, 5000, 'Pre-basic', NULL, '2022-04-20', 'Kawempe', 'Payment on delivery', '1'),
-(38, '2022-05-31 12:08:27', '2022-05-31 12:08:27', 114, 86, 2000, 'Basic', NULL, '2022-06-01', 'At the storage location', 'Please supply this variety of soybean and must be ready to conduct germination test \r\nPayment will be made after the seeds have passed the required percentage of germination test', '1');
+(39, '2022-07-05 05:12:37', '2022-07-05 05:12:37', 27, 12, 9, 'Basic', NULL, '2022-07-05', 'Kampala', 'Good', '1');
 
 -- --------------------------------------------------------
 
@@ -2174,22 +2408,22 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `created_at`, `updated_at`, `administrator_id`, `crop_variety_id`, `seed_label_id`, `quantity`, `lab_test_number`, `lot_number`, `seed_class`, `price`, `wholesale_price`, `image`, `images`, `source`, `detail`, `name`, `total_price`) VALUES
-(3, '2021-11-23 07:23:01', '2021-11-23 16:57:47', 3, 3, 3, 1000, 'A000120C', 89806835, NULL, 900, 0, 'a54783a032b79e0841ad2688d3ecf349.jpg', NULL, 'From seedlab test number: A000120C', 'From seedlab ID: 3', 'Bush Beans - NABE1', 0),
-(4, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 84, 1, 4, 6, '009/2022/dom', 58058008, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 009/2022/dom', 'good quality seed', 'Default crop vareity', 0),
-(5, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 90, 1, 5, 1850, '008/dom/2022', 19767497, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 008/dom/2022', 'Payment through Mobile', 'Default crop vareity', 0),
-(6, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 89, 1, 6, 250, 'Test1/2022/N0004', 24770820, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0004', 'Sold to a stockists', 'Default crop vareity', 0),
-(7, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 74, 1, 7, 850, '001/2022/dom', 71732547, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 001/2022/dom', 'Sold to to Tina who are not users of the system', 'Default crop vareity', 0),
-(8, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 86, 1, 8, 290, 'Test1/2022/N0002', 25554681, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0002', 'Sold to school as grain', 'Default crop vareity', 0),
-(9, '2022-04-29 15:36:18', '2022-04-29 16:44:30', 94, 1, 9, 150, 'TEST2/2022/2B', 67857572, NULL, 0, 0, NULL, NULL, 'From seedlab test number: TEST2/2022/2B', 'cash at hand', 'Default crop vareity', 0),
-(10, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 95, 1, 10, 700, 'Test1/2022/N0007', 70484855, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0007', 'not users of the sytem', 'Default crop vareity', 0),
-(11, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 76, 1, 11, 500, '005/2022/dom', 75190054, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 005/2022/dom', 'Sold to XYZ who are not users of the system.', 'Default crop vareity', 0),
-(12, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 92, 1, 12, 10, 'TEST3/2022/3B', 88952214, NULL, 0, 0, NULL, NULL, 'From seedlab test number: TEST3/2022/3B', 'Sold as grain to dealers who\'s not user of the system', 'Default crop vareity', 0),
-(13, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 91, 1, 16, 40, '004/2022/musa/001', 94922685, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 004/2022/musa/001', 'User not in', 'Default crop vareity', 0),
-(14, '2022-04-29 15:36:18', '2022-04-29 16:44:30', 80, 1, 14, 300, 'Test1/2022/N0009', 25675580, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0009', 'sold as grain to school', 'Default crop vareity', 0),
-(15, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 88, 1, 15, 1930, '008/34/dom', 14196693, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 008/34/dom', 'sold to gfy who are not system users', 'Default crop vareity', 0),
-(16, '2022-04-29 15:36:18', '2022-04-29 16:49:16', 85, 1, 17, 10, 'Test1/2022/N0001', 81650251, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0001', 'Sold to Atia who is not a user of the system', 'Default crop vareity', 0),
-(17, '2022-04-29 15:43:35', '2022-04-29 16:49:16', 78, 1, 19, 950, '003/2022/dom', 91804360, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 003/2022/dom', 'Maize for food, for easy access', 'Default crop vareity', 0),
-(18, '2022-04-29 15:43:35', '2022-04-29 15:43:35', 98, 1, 18, 20, '006/2022/dom', 72521820, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 006/2022/dom', 'From seedlab ID: 64', 'Default crop vareity', 0);
+(3, '2021-11-23 07:23:01', '2022-08-31 04:32:16', 3, 1, 3, 104850, 'A000120C', 89806835, NULL, 900, 0, '6774af82692e5d5451834aeec2fbc027.png', NULL, NULL, 'Sold crop to Atia serogal, ID: 90', 'Default crop vareity', 0),
+(4, '2022-04-29 15:36:18', '2022-07-30 15:43:11', 84, 1, 4, 843, '009/2022/dom', 58058008, NULL, 0, 0, '5.jpg', '[\"dee857e51d6c41fc90aaaf98fdffac5c.png\",\"WhatsApp Image 2022-07-20 at 9.14.50 PM.jpeg\",\"on-phone-2.png\"]', 'From seedlab test number: 009/2022/dom', 'good quality seed', 'Default crop vareity', 0),
+(5, '2022-04-29 15:36:18', '2022-07-30 15:43:49', 90, 1, 5, 121200, '008/dom/2022', 19767497, NULL, 0, 0, '1.jpg', NULL, 'From seedlab test number: 008/dom/2022', 'Payment through Mobile', 'Default crop vareity', 0),
+(6, '2022-04-29 15:36:18', '2022-07-30 15:44:27', 89, 1, 6, 21423, 'Test1/2022/N0004', 24770820, NULL, 0, 0, '3.jpg', NULL, 'From seedlab test number: Test1/2022/N0004', 'Sold to a stockists', 'Default crop vareity', 0),
+(7, '2022-04-29 15:36:18', '2022-07-30 16:06:24', 74, 1, 7, 27200, '001/2022/dom', 71732547, NULL, 0, 0, '4.jpg', NULL, 'From seedlab test number: 001/2022/dom', 'Sold to to Tina who are not users of the system', 'Default crop vareity', 0),
+(8, '2022-04-29 15:36:18', '2022-07-30 16:07:31', 86, 1, 8, 34080, 'Test1/2022/N0002', 25554681, NULL, 0, 0, '97a0f9d123d353a9b79fb9e9f4e1c0d0.jpg', NULL, 'From seedlab test number: Test1/2022/N0002', 'Sold to school as grain', 'Default crop vareity', 0),
+(9, '2022-04-29 15:36:18', '2022-07-30 16:07:52', 94, 1, 9, 9140, 'TEST2/2022/2B', 67857572, NULL, 0, 0, '2.jpg', NULL, 'From seedlab test number: TEST2/2022/2B', 'cash at hand', 'Default crop vareity', 0),
+(10, '2022-04-29 15:36:18', '2022-07-30 16:08:15', 95, 1, 10, 28290, 'Test1/2022/N0007', 70484855, NULL, 0, 0, 'c878d65e7feb777bd7ac5a6a184117a5.jpg', NULL, 'From seedlab test number: Test1/2022/N0007', 'not users of the sytem', 'Default crop vareity', 0),
+(11, '2022-04-29 15:36:18', '2022-07-30 16:08:38', 76, 1, 11, 16000, '005/2022/dom', 75190054, NULL, 0, 0, '5d15d5109d102b019f4971ddd62c15ce.jpg', NULL, 'From seedlab test number: 005/2022/dom', 'Sold to XYZ who are not users of the system.', 'Default crop vareity', 0),
+(12, '2022-04-29 15:36:18', '2022-07-30 16:09:04', 92, 1, 12, 320, 'TEST3/2022/3B', 88952214, NULL, 0, 0, '903a89cedaf03808e720cb6d8d091571.jpg', NULL, 'From seedlab test number: TEST3/2022/3B', 'Sold as grain to dealers who\'s not user of the system', 'Default crop vareity', 0),
+(13, '2022-04-29 15:36:18', '2022-07-30 16:09:25', 91, 1, 16, 2830, '004/2022/musa/001', 94922685, NULL, 0, 0, '23728c3824df1545a3bb5d7df0f01368.jpg', NULL, 'From seedlab test number: 004/2022/musa/001', 'User not in', 'Default crop vareity', 0),
+(14, '2022-04-29 15:36:18', '2022-07-28 16:58:56', 80, 1, 14, 35423, 'Test1/2022/N0009', 25675580, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0009', 'sold as grain to school', 'Default crop vareity', 0),
+(15, '2022-04-29 15:36:18', '2022-07-28 16:58:57', 88, 1, 15, 92760, '008/34/dom', 14196693, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 008/34/dom', 'sold to gfy who are not system users', 'Default crop vareity', 0),
+(16, '2022-04-29 15:36:18', '2022-07-28 16:58:56', 85, 1, 17, 3110, 'Test1/2022/N0001', 81650251, NULL, 0, 0, NULL, NULL, 'From seedlab test number: Test1/2022/N0001', 'Sold to Atia who is not a user of the system', 'Default crop vareity', 0),
+(17, '2022-04-29 15:43:35', '2022-07-28 16:58:56', 78, 1, 19, 48380, '003/2022/dom', 91804360, NULL, 0, 0, NULL, NULL, 'From seedlab test number: 003/2022/dom', 'Maize for food, for easy access', 'Default crop vareity', 0),
+(18, '2022-04-29 15:43:35', '2022-07-28 16:58:56', 98, 1, 18, 950, '006/2022/dom', 72521820, NULL, 0, 0, NULL, NULL, NULL, 'Sold crop to walufelo isima, ID: 88', 'Default crop vareity', 0);
 
 -- --------------------------------------------------------
 
@@ -2231,6 +2465,79 @@ CREATE TABLE `profiles` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `qds_has_crops`
+--
+
+CREATE TABLE `qds_has_crops` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `crop_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1,
+  `form_qds_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `qds_has_crops`
+--
+
+INSERT INTO `qds_has_crops` (`id`, `created_at`, `updated_at`, `crop_id`, `form_qds_id`) VALUES
+(1, '2022-07-16 20:40:20', '2022-07-16 20:40:20', 3, 8),
+(2, '2022-07-16 20:40:20', '2022-07-16 20:40:20', 4, 8),
+(3, '2022-07-17 00:01:59', '2022-07-17 00:01:59', 6, 2),
+(4, '2022-07-17 00:01:59', '2022-07-17 00:01:59', 7, 2),
+(5, '2022-07-17 00:01:59', '2022-07-17 00:01:59', 12, 2),
+(6, '2022-07-17 00:02:59', '2022-07-17 00:02:59', 6, 3),
+(7, '2022-07-17 00:02:59', '2022-07-17 00:02:59', 7, 3),
+(8, '2022-07-17 00:02:59', '2022-07-17 00:02:59', 12, 3),
+(9, '2022-07-17 00:04:26', '2022-07-17 00:04:26', 6, 4),
+(10, '2022-07-17 00:04:26', '2022-07-17 00:04:26', 7, 4),
+(11, '2022-07-17 00:04:26', '2022-07-17 00:04:26', 12, 4),
+(12, '2022-07-17 00:08:25', '2022-07-17 00:08:25', 7, 5),
+(13, '2022-07-17 00:08:25', '2022-07-17 00:08:25', 11, 5),
+(14, '2022-07-17 00:08:25', '2022-07-17 00:08:25', 9, 5),
+(15, '2022-07-17 00:08:25', '2022-07-17 00:08:25', 4, 5),
+(16, '2022-07-17 00:08:25', '2022-07-17 00:08:25', 3, 5),
+(17, '2022-07-17 06:13:05', '2022-07-17 06:13:05', 7, 6),
+(18, '2022-07-17 06:13:05', '2022-07-17 06:13:05', 14, 6),
+(19, '2022-07-17 06:13:05', '2022-07-17 06:13:05', 9, 6),
+(20, '2022-07-22 16:29:18', '2022-07-22 16:29:18', 9, 8),
+(21, '2022-07-22 16:29:18', '2022-07-22 16:29:18', 7, 8),
+(22, '2022-07-22 16:30:55', '2022-07-22 16:30:55', 9, 9),
+(23, '2022-07-22 16:30:55', '2022-07-22 16:30:55', 7, 9),
+(24, '2022-07-27 18:49:12', '2022-07-27 18:49:12', 12, 10),
+(25, '2022-07-27 18:49:12', '2022-07-27 18:49:12', 11, 10),
+(26, '2022-07-27 18:49:12', '2022-07-27 18:49:12', 9, 10),
+(27, '2022-07-27 18:49:12', '2022-07-27 18:49:12', 8, 10),
+(28, '2022-07-27 18:49:12', '2022-07-27 18:49:12', 7, 10),
+(29, '2022-07-28 14:06:26', '2022-07-28 14:06:26', 10, 11),
+(30, '2022-07-28 14:06:26', '2022-07-28 14:06:26', 12, 11),
+(31, '2022-07-28 14:06:26', '2022-07-28 14:06:26', 11, 11),
+(32, '2022-07-28 14:08:52', '2022-07-28 14:08:52', 10, 12),
+(33, '2022-07-28 14:08:52', '2022-07-28 14:08:52', 12, 12),
+(34, '2022-07-28 14:08:52', '2022-07-28 14:08:52', 9, 12),
+(35, '2022-07-28 14:10:19', '2022-07-28 14:10:19', 8, 13),
+(36, '2022-07-28 14:10:19', '2022-07-28 14:10:19', 9, 13),
+(37, '2022-07-28 14:10:19', '2022-07-28 14:10:19', 11, 13),
+(38, '2022-07-28 14:10:25', '2022-07-28 14:10:25', 8, 14),
+(39, '2022-07-28 14:10:25', '2022-07-28 14:10:25', 9, 14),
+(40, '2022-07-28 14:10:25', '2022-07-28 14:10:25', 11, 14),
+(41, '2022-08-17 22:01:19', '2022-08-17 22:01:19', 3, 16),
+(42, '2022-08-22 18:37:50', '2022-08-22 18:37:50', 8, 17),
+(43, '2022-08-22 21:30:35', '2022-08-22 21:30:35', 7, 18),
+(44, '2022-08-22 21:30:35', '2022-08-22 21:30:35', 6, 18),
+(45, '2022-08-22 21:30:35', '2022-08-22 21:30:35', 5, 18),
+(46, '2022-08-22 21:30:35', '2022-08-22 21:30:35', 4, 18),
+(47, '2022-08-22 21:42:35', '2022-08-22 21:42:35', 11, 19),
+(48, '2022-08-22 21:42:35', '2022-08-22 21:42:35', 14, 19),
+(49, '2022-08-22 21:42:35', '2022-08-22 21:42:35', 15, 19),
+(50, '2022-08-22 21:42:35', '2022-08-22 21:42:35', 8, 19),
+(51, '2022-08-25 13:00:34', '2022-08-25 13:00:34', 11, 1),
+(52, '2022-08-25 13:00:34', '2022-08-25 13:00:34', 13, 1),
+(53, '2022-08-25 13:00:34', '2022-08-25 13:00:34', 12, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `quotations`
 --
 
@@ -2261,9 +2568,8 @@ INSERT INTO `quotations` (`id`, `created_at`, `updated_at`, `administrator_id`, 
 (4, '2021-11-24 05:36:39', '2021-11-24 05:36:39', 2, 3, 1, 1800, '2021-11-30', 'Certified', 'Processed', 'detail.', 1, NULL, NULL, NULL),
 (5, '2021-11-24 05:36:51', '2021-11-24 05:36:51', 2, 3, 1, 800, '2021-11-24', 'Certified', 'Processed', 'details', 1, NULL, NULL, NULL),
 (6, '2021-11-24 05:37:41', '2021-11-24 05:37:41', 2, 3, 1, 1000, '2021-11-24', 'Certified', 'Processed', 'detail', 1, NULL, NULL, NULL),
-(8, '2021-11-24 07:21:37', '2021-11-24 07:21:37', 25, 3, 2, 10000, '2021-11-24', 'Certified', 'Raw', 'simple', 2, NULL, NULL, 400),
 (9, '2021-11-24 07:22:18', '2021-11-24 07:23:29', 25, 3, 2, 1000, '2021-12-01', 'Certified', 'Raw', 'simple', 2, 5, NULL, 40000),
-(10, '2021-11-24 08:18:35', '2021-11-24 08:18:58', 25, 3, 3, 1000, '2021-12-07', 'Certified', 'Processed', 'details...', 2, 5, NULL, 800),
+(10, '2021-11-24 08:18:35', '2021-11-24 08:18:58', 21, 3, 3, 1000, '2021-12-07', 'Certified', 'Processed', 'details...', 2, 5, NULL, 800),
 (11, '2022-04-26 17:03:12', '2022-04-26 17:03:12', 23, 13, 5, 800, '2022-04-21', 'Certified', 'Raw', 'ksdbjlkn', 69, NULL, NULL, 800),
 (12, '2022-04-26 17:07:02', '2022-04-26 17:07:02', 55, 12, 4, 2000, '2022-05-20', 'Certified', 'Processed', NULL, 38, NULL, NULL, 1000),
 (13, '2022-04-26 17:07:31', '2022-04-26 17:07:31', 40, 13, 7, 14, '2022-04-30', 'Certified', 'Processed', 'Payment on delivery', 69, NULL, NULL, 15000),
@@ -2300,7 +2606,33 @@ INSERT INTO `quotations` (`id`, `created_at`, `updated_at`, `administrator_id`, 
 (45, '2022-04-29 16:36:19', '2022-04-29 16:36:19', 94, 20, 20, 10, '2022-05-02', 'Certified', 'Processed', 'cash on delivery', 41, NULL, NULL, 2500),
 (46, '2022-04-29 16:38:51', '2022-04-29 16:38:51', 94, 1, 32, 100, '2022-05-03', 'Basic', NULL, 'cash on delivery', 90, NULL, NULL, 10000),
 (47, '2022-04-29 16:40:52', '2022-04-29 16:40:52', 89, 19, 27, 200, '2022-04-27', 'Certified', 'Processed', 'Hurry', 74, NULL, NULL, 7000),
-(48, '2022-04-29 16:42:42', '2022-04-29 16:42:42', 89, 1, 31, 200, '2022-04-29', 'Pre-basic', NULL, 'Hurry', 94, NULL, NULL, 7000);
+(48, '2022-04-29 16:42:42', '2022-04-29 16:42:42', 89, 1, 31, 200, '2022-04-29', 'Pre-basic', NULL, 'Hurry', 94, NULL, NULL, 7000),
+(49, NULL, NULL, 1, 1, 39, 23, '2022-07-05', 'ds', 'sd', 'sdrfdf', 24, NULL, '24', 42000000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_has_permissions`
+--
+
+CREATE TABLE `role_has_permissions` (
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2356,7 +2688,6 @@ CREATE TABLE `seed_labels` (
 
 INSERT INTO `seed_labels` (`id`, `created_at`, `updated_at`, `administrator_id`, `seed_lab_id`, `crop_variety_id`, `seed_label_package_id`, `quantity`, `applicant_remarks`, `status`, `status_comment`, `receipt`, `is_processed`, `price`, `image`, `images`) VALUES
 (2, '2021-11-17 03:44:56', '2022-04-29 15:24:47', 3, 1, 1, 2, '7000', 'test', 14, NULL, 'files/Sandboxing.pptx', 1, 0, NULL, NULL),
-(3, '2021-11-23 07:20:48', '2022-04-29 15:24:47', 3, 3, 1, 2, '1000', 'detail..', 14, NULL, '017f0660b583f8feaa039da7030a631a.png', 1, 800, 'beans.jpg', NULL),
 (4, '2022-04-29 15:15:45', '2022-04-29 15:30:55', 84, 73, 1, 1, '11', 'good', 14, NULL, 'files/20220311_181708.jpg', 1, 2500, '20220311_181708.jpg', '[]'),
 (5, '2022-04-29 15:17:59', '2022-04-29 15:31:04', 90, 59, 1, 1, '2000', 'Quality seeds for better living', 14, NULL, 'files/IMG_20220429_122740_431.jpg', 1, 1000, 'IMG_20220429_123248_959.jpg', '[]'),
 (6, '2022-04-29 15:18:23', '2022-04-29 15:31:14', 89, 67, 1, 2, '500', 'Quality is our first name', 14, NULL, 'files/2322e9b600c53e60abaaa2cbb59c1100.jpg', 1, 6000, 'Screenshot_20220429-103319_GBWhatsApp.jpg', '[]'),
@@ -2365,14 +2696,120 @@ INSERT INTO `seed_labels` (`id`, `created_at`, `updated_at`, `administrator_id`,
 (9, '2022-04-29 15:19:33', '2022-04-29 15:31:42', 94, 74, 1, 1, '200', 'QUALITY IS OUR FIRST NAME', 14, NULL, 'files/IMG_20210730_123544.jpg', 1, 2500, 'IMG_20210730_123634.jpg', '[]'),
 (10, '2022-04-29 15:19:42', '2022-04-29 15:31:51', 95, 60, 1, 2, '1000', 'seeds ready for supply', 14, NULL, 'files/grower 7.xlsx', 1, 2000, '9f676db06ac87abb9745b70bcd9bb297.PNG', '[]'),
 (11, '2022-04-29 15:20:00', '2022-04-29 15:32:03', 76, 62, 1, 2, '1000', NULL, 14, NULL, 'files/Google workspace.JPG', 1, 2000, 'Market analysis-2.jpg', '[]'),
-(12, '2022-04-29 15:20:23', '2022-04-29 15:32:22', 92, 68, 1, 2, '20', 'Payment  made for labels', 14, NULL, 'files/9783ee581fde3e5cbcc6b01ba1841bc9.jpg', 1, 1000, 'IMG-20220421-WA0005.jpg', '[]'),
+(12, '2022-04-29 15:20:23', '2022-04-29 15:32:22', 21, 68, 1, 2, '20', 'Payment  made for labels', 14, NULL, 'files/9783ee581fde3e5cbcc6b01ba1841bc9.jpg', 1, 1000, 'IMG-20220421-WA0005.jpg', '[]'),
 (13, '2022-04-29 15:21:33', '2022-04-29 15:32:31', 79, 66, 1, 1, '200', 'It\'s a certified seed', 14, NULL, 'files/tmp-cam-5556624534290479018.jpg', 1, 400, 'Screenshot_20220429-122257.jpg', '[]'),
 (14, '2022-04-29 15:23:05', '2022-04-29 15:32:45', 80, 65, 1, 1, '500', NULL, 14, NULL, 'files/fc1cba05d1fd21a24d6257f8839dbec8.png', 1, 4500, 'beans.gif', '[]'),
 (15, '2022-04-29 15:24:22', '2022-04-29 15:32:55', 88, 71, 1, 2, '2000', NULL, 14, NULL, 'files/1651231386660509774517.jpg', 1, 5000, '1651231353620-156952194.jpg', '[]'),
 (16, '2022-04-29 15:24:25', '2022-04-29 15:32:41', 91, 76, 1, 1, '100', NULL, 14, NULL, 'files/IMG-20220429-WA0021.jpg', 1, 1000, 'IMG-20220429-WA0021.jpg', '[]'),
 (17, '2022-04-29 15:24:51', '2022-04-29 15:32:59', 85, 77, 1, 2, '50', 'Label', 14, NULL, 'files/16512314254025435177053817723483.jpg', 1, 1000, '16512313950653172031282489036791.jpg', '[]'),
 (18, '2022-04-29 15:35:56', '2022-04-29 15:40:43', 98, 64, 1, 1, '20', NULL, 14, NULL, 'files/tmp-cam-1886969605103182740.jpg', 1, 100, NULL, '[]'),
-(19, '2022-04-29 15:37:59', '2022-04-29 15:40:29', 78, 63, 1, 1, '1000', NULL, 14, NULL, 'files/DSC_7990.JPG', 1, 3000, 'DSC_7990.JPG', '[]');
+(19, '2022-04-29 15:37:59', '2022-04-29 15:40:29', 78, 63, 1, 1, '1000', NULL, 14, NULL, 'files/DSC_7990.JPG', 1, 3000, 'DSC_7990.JPG', '[]'),
+(20, '2022-07-05 10:10:20', '2022-07-05 10:10:20', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(21, '2022-07-05 10:10:20', '2022-07-05 10:10:20', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(22, '2022-07-05 10:10:56', '2022-07-05 10:10:56', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(23, '2022-07-05 10:10:56', '2022-07-05 10:10:56', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(24, '2022-07-05 10:12:01', '2022-07-05 10:12:01', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(25, '2022-07-05 10:12:01', '2022-07-05 10:12:01', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(26, '2022-07-05 10:12:07', '2022-07-05 10:12:07', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(27, '2022-07-05 10:12:07', '2022-07-05 10:12:07', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(28, '2022-07-12 22:48:48', '2022-07-12 22:48:48', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(29, '2022-07-12 22:48:48', '2022-07-12 22:48:48', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(30, '2022-07-16 16:49:34', '2022-07-16 16:49:34', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(31, '2022-07-17 19:53:54', '2022-07-17 19:53:54', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(32, '2022-07-17 19:53:54', '2022-07-17 19:53:54', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(33, '2022-07-17 19:53:57', '2022-07-17 19:53:57', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(34, '2022-07-17 19:53:57', '2022-07-17 19:53:57', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(35, '2022-07-17 19:54:11', '2022-07-17 19:54:11', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(36, '2022-07-17 19:54:11', '2022-07-17 19:54:11', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(37, '2022-07-18 17:19:05', '2022-07-18 17:19:05', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(38, '2022-07-18 17:19:05', '2022-07-18 17:19:05', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(39, '2022-07-18 17:20:22', '2022-07-18 17:20:22', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(40, '2022-07-18 17:20:22', '2022-07-18 17:20:22', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(41, '2022-07-21 15:24:55', '2022-07-21 15:24:55', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(42, '2022-07-21 15:24:55', '2022-07-21 15:24:55', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(43, '2022-07-21 15:24:58', '2022-07-21 15:24:58', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(44, '2022-07-21 15:24:58', '2022-07-21 15:24:58', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(45, '2022-07-21 20:55:24', '2022-07-21 20:55:24', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(46, '2022-07-21 20:55:24', '2022-07-21 20:55:24', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(47, '2022-07-21 21:02:41', '2022-07-21 21:02:41', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(48, '2022-07-21 21:02:41', '2022-07-21 21:02:41', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(49, '2022-07-21 21:03:10', '2022-07-21 21:03:10', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(50, '2022-07-21 21:03:10', '2022-07-21 21:03:10', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(51, '2022-07-22 16:17:10', '2022-07-22 16:17:10', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(52, '2022-07-22 16:17:10', '2022-07-22 16:17:10', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(53, '2022-07-22 16:17:13', '2022-07-22 16:17:13', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(54, '2022-07-22 16:17:13', '2022-07-22 16:17:13', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(55, '2022-07-22 16:17:16', '2022-07-22 16:17:16', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(56, '2022-07-22 16:17:16', '2022-07-22 16:17:16', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(57, '2022-07-22 16:17:18', '2022-07-22 16:17:18', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(58, '2022-07-22 16:17:18', '2022-07-22 16:17:18', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(59, '2022-07-22 16:17:46', '2022-07-22 16:17:46', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(60, '2022-07-22 16:17:46', '2022-07-22 16:17:46', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(61, '2022-07-22 16:17:49', '2022-07-22 16:17:49', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(62, '2022-07-22 16:17:49', '2022-07-22 16:17:49', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(63, '2022-07-22 16:54:12', '2022-07-22 16:54:12', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(64, '2022-07-22 16:54:13', '2022-07-22 16:54:13', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(65, '2022-07-22 16:54:20', '2022-07-22 16:54:20', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(66, '2022-07-22 16:54:20', '2022-07-22 16:54:20', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(67, '2022-07-22 16:55:41', '2022-07-22 16:55:41', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(68, '2022-07-22 16:55:41', '2022-07-22 16:55:41', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(69, '2022-07-22 16:55:46', '2022-07-22 16:55:46', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(70, '2022-07-22 16:55:46', '2022-07-22 16:55:46', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(71, '2022-07-22 16:55:55', '2022-07-22 16:55:55', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(72, '2022-07-22 16:55:55', '2022-07-22 16:55:55', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(73, '2022-07-22 16:56:20', '2022-07-22 16:56:20', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(74, '2022-07-22 16:56:20', '2022-07-22 16:56:20', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(75, '2022-07-22 16:58:12', '2022-07-22 16:58:12', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(76, '2022-07-22 16:58:12', '2022-07-22 16:58:12', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(77, '2022-07-22 16:58:15', '2022-07-22 16:58:15', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(78, '2022-07-22 16:58:15', '2022-07-22 16:58:15', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(79, '2022-07-22 18:07:22', '2022-07-22 18:07:22', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(80, '2022-07-22 18:07:22', '2022-07-22 18:07:22', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(81, '2022-07-22 18:07:26', '2022-07-22 18:07:26', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(82, '2022-07-22 18:07:26', '2022-07-22 18:07:26', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(83, '2022-07-22 18:07:38', '2022-07-22 18:07:38', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(84, '2022-07-22 18:07:38', '2022-07-22 18:07:38', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(85, '2022-07-22 18:09:22', '2022-07-22 18:09:22', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(86, '2022-07-22 18:09:22', '2022-07-22 18:09:22', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(87, '2022-07-22 18:09:25', '2022-07-22 18:09:25', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(88, '2022-07-22 18:09:25', '2022-07-22 18:09:25', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(89, '2022-07-22 18:11:02', '2022-07-22 18:11:02', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(90, '2022-07-22 18:11:02', '2022-07-22 18:11:02', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(91, '2022-07-22 18:46:20', '2022-07-22 18:46:20', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(92, '2022-07-22 18:46:20', '2022-07-22 18:46:20', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(93, '2022-07-22 18:46:25', '2022-07-22 18:46:25', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(94, '2022-07-22 18:46:25', '2022-07-22 18:46:25', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(95, '2022-07-26 12:00:11', '2022-07-26 12:00:11', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(96, '2022-07-26 12:00:11', '2022-07-26 12:00:11', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(97, '2022-07-26 12:29:57', '2022-07-26 12:29:57', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(98, '2022-07-26 12:29:57', '2022-07-26 12:29:57', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(99, '2022-07-26 12:58:36', '2022-07-26 12:58:36', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(100, '2022-07-26 12:58:36', '2022-07-26 12:58:36', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(101, '2022-07-26 12:58:39', '2022-07-26 12:58:39', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(102, '2022-07-26 12:58:39', '2022-07-26 12:58:39', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(103, '2022-07-26 12:58:42', '2022-07-26 12:58:42', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(104, '2022-07-26 12:58:42', '2022-07-26 12:58:42', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(105, '2022-07-27 20:36:06', '2022-07-27 20:36:06', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(106, '2022-07-27 20:36:06', '2022-07-27 20:36:06', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(107, '2022-07-27 20:38:49', '2022-07-27 20:38:49', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(108, '2022-07-27 20:38:49', '2022-07-27 20:38:49', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(109, '2022-08-23 15:34:39', '2022-08-23 15:34:39', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(110, '2022-08-23 15:34:44', '2022-08-23 15:34:44', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(111, '2022-08-23 15:34:50', '2022-08-23 15:34:50', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(112, '2022-08-23 15:35:16', '2022-08-23 15:35:16', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(113, '2022-08-23 15:35:16', '2022-08-23 15:35:16', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(114, '2022-08-23 15:35:19', '2022-08-23 15:35:19', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(115, '2022-08-23 15:35:19', '2022-08-23 15:35:19', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(116, '2022-08-23 15:35:22', '2022-08-23 15:35:22', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(117, '2022-08-23 15:35:22', '2022-08-23 15:35:22', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(118, '2022-08-23 15:35:29', '2022-08-23 15:35:29', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(119, '2022-08-23 15:35:29', '2022-08-23 15:35:29', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(120, '2022-08-23 15:35:40', '2022-08-23 15:35:40', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(121, '2022-08-23 15:35:40', '2022-08-23 15:35:40', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(122, '2022-08-23 15:35:43', '2022-08-23 15:35:43', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(123, '2022-08-23 15:35:43', '2022-08-23 15:35:43', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(124, '2022-08-23 15:36:22', '2022-08-23 15:36:22', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL),
+(125, '2022-08-23 15:36:25', '2022-08-23 15:36:25', 1, 1, 1, 1, NULL, NULL, 1, NULL, NULL, 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2395,9 +2832,9 @@ CREATE TABLE `seed_label_packages` (
 --
 
 INSERT INTO `seed_label_packages` (`id`, `created_at`, `updated_at`, `crop_variety_id`, `package_size`, `package_price`, `seed_label_package_id`) VALUES
-(1, '2021-11-15 06:22:43', '2021-11-15 06:23:34', 3, 1, 1000, NULL),
-(2, '2021-11-15 06:23:21', '2021-11-15 06:23:21', 3, 5, 5000, NULL),
-(3, '2021-11-15 06:23:53', '2021-11-15 06:23:53', 3, 10, 10000, NULL);
+(1, '2021-11-15 06:22:43', '2022-08-23 13:47:57', 1, 1, 1000, NULL),
+(2, '2021-11-15 06:23:21', '2022-08-23 13:47:57', 1, 5, 5000, NULL),
+(3, '2021-11-15 06:23:53', '2022-08-23 13:47:57', 1, 10, 10000, NULL);
 
 -- --------------------------------------------------------
 
@@ -2451,30 +2888,26 @@ CREATE TABLE `seed_labs` (
 --
 
 INSERT INTO `seed_labs` (`id`, `created_at`, `updated_at`, `administrator_id`, `crop_variety_id`, `form_stock_examination_request_id`, `collection_date`, `payment_receipt`, `applicant_remarks`, `sampling_date`, `sample_weight`, `packaging`, `number_of_units`, `mother_lot`, `sample_condition`, `inspector_remarks`, `tests_required`, `lab_technician_id`, `quantity`, `purity`, `germination_capacity`, `abnormal_sprouts`, `broken_germs`, `report_recommendation`, `inspector`, `inspector_is_done`, `status`, `status_comment`, `lot_number`, `receptionist_is_done`, `receptionist_remarks`, `lab_test_number`, `lab_technician`, `p_x_g`, `parent_id`, `order`, `title`, `temp_parent`) VALUES
-(1, '2021-11-26 04:51:13', '2022-04-26 16:33:00', 1, 3, 1, NULL, NULL, NULL, '2022-04-26', '20', 'Green', '15', '00001', NULL, NULL, 'Moisture content,Purity', NULL, 0, '100', '90', '90', '10', '11', 27, 1, 5, NULL, '10000', 1, NULL, '001', 23, 90, 0, 0, 'No name', 0),
 (2, '2021-11-26 04:51:26', '2022-04-26 16:35:13', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '2', '5', '15', '0000089', NULL, NULL, 'Moisture content,Purity,Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '86472944', 1, NULL, 'TestI002', 23, 90, 0, 0, 'No name', 0),
 (3, '2021-11-26 04:52:46', '2022-04-26 16:34:03', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '2', '5', '15', '0000758', NULL, NULL, 'Purity,Germination,Seed health', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '38069215', 1, NULL, 'test 123', 23, 90, 0, 0, 'No name', 0),
 (4, '2021-11-26 04:52:58', '2022-04-26 16:34:49', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '3', '5', '15', '7', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '76105202', 1, NULL, 'Test i ben00023', 23, 90, 0, 0, 'No name', 0),
 (5, '2021-11-26 04:53:15', '2022-04-26 16:33:42', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '20', '10', '1', '000085', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '50750684', 1, NULL, 'Test i ben0001', 23, 90, 0, 0, 'No name', 0),
 (6, '2021-11-26 04:53:26', '2022-04-26 16:34:15', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '9', '5', '15', '89', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '42169064', 1, NULL, '000198', 23, 90, 0, 0, 'No name', 0),
-(7, '2021-11-26 04:53:40', '2022-04-26 16:37:08', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '3', 'good', '15', '000056', NULL, NULL, 'Purity', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '36917997', 1, NULL, 'test1234', 23, 90, 0, 0, 'No name', 0),
+(7, '2021-11-26 04:53:40', '2022-04-26 16:37:08', 21, 1, 1, NULL, NULL, NULL, '2022-04-26', '3', 'good', '15', '000056', NULL, NULL, 'Purity', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '36917997', 1, NULL, 'test1234', 23, 90, 0, 0, 'No name', 0),
 (8, '2021-11-26 04:53:51', '2022-04-26 16:33:22', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '2', '5', '15', '00007', NULL, NULL, 'Moisture content,Germination', NULL, 0, '99', '95', '00', '00', '11', 27, 1, 5, NULL, '75424505', 1, NULL, 'test 657898789', 23, 94, 6, 0, 'No name', 0),
-(9, '2021-11-26 04:54:03', '2022-04-26 16:35:57', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '20', 'green', '15', '005', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '43223090', 1, NULL, 'test 12345', 23, 90, 0, 0, 'No name', 0),
-(10, '2021-11-26 04:54:30', '2022-04-26 16:36:38', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '1', '5', '15', '7632', NULL, NULL, 'Moisture content,Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '17790424', 1, NULL, 'Test i ben00021', 23, 90, 4, 0, 'No name', 0),
-(11, '2021-11-26 04:54:40', '2022-04-26 16:38:11', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '3', '5', '15', '000065', NULL, NULL, 'Moisture content,Purity,Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '81826637', 1, NULL, 'test00987', 23, 90, 0, 0, 'No name', 0),
+(9, '2021-11-26 04:54:03', '2022-04-26 16:35:57', 2, 1, 1, NULL, NULL, NULL, '2022-04-26', '20', 'green', '15', '005', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '43223090', 1, NULL, 'test 12345', 23, 90, 0, 0, 'No name', 0),
+(10, '2021-11-26 04:54:30', '2022-04-26 16:36:38', 21, 1, 1, NULL, NULL, NULL, '2022-04-26', '1', '5', '15', '7632', NULL, NULL, 'Moisture content,Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '17790424', 1, NULL, 'Test i ben00021', 23, 90, 4, 0, 'No name', 0),
+(11, '2021-11-26 04:54:40', '2022-04-26 16:38:11', 21, 1, 1, NULL, NULL, NULL, '2022-04-26', '3', '5', '15', '000065', NULL, NULL, 'Moisture content,Purity,Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '81826637', 1, NULL, 'test00987', 23, 90, 0, 0, 'No name', 0),
 (12, '2021-11-26 04:55:27', '2022-04-26 16:37:41', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '30', 'green', '15', '001', NULL, NULL, 'Purity', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '88703129', 1, NULL, 'Test i ben0004', 23, 90, 0, 0, 'No name', 0),
 (13, '2021-11-26 04:55:51', '2022-04-26 16:36:09', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '3', '5', '15', '87000', NULL, NULL, 'Moisture content,Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '74075858', 1, NULL, 'Test i ben0002', 23, 90, 0, 0, 'No name', 0),
 (14, '2021-11-26 04:56:27', '2022-04-26 16:34:01', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '4', '10', '15', '9', NULL, NULL, 'Purity', NULL, 0, '100', '98', '80', '10', '11', 27, 1, 5, NULL, '10015671', 1, NULL, 'Test i ben0006', 23, 98, 3, 0, 'No name', 0),
 (15, '2021-11-26 06:39:41', '2022-04-26 16:37:04', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '10', '5', '15', '6', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '81737716', 1, NULL, 'Test i ben0003', 23, 90, 8, 0, 'No name', 0),
 (16, '2021-11-26 06:40:07', '2022-04-26 16:35:20', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '5', '10', '2', '8585858', NULL, NULL, 'Germination', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '49328745', 1, NULL, 'test 123456', 23, 90, 15, 0, 'No name', 0),
-(17, '2021-11-26 08:54:39', '2021-11-26 10:45:45', 3, 3, 2, '2021-11-26', 'download.png', 'Simple', '2021-11-26', '100', 'No Packaging', '15', '10000', NULL, NULL, 'Purity,Germination', NULL, 1200, '10', '20', '10', '10', '11', 20, 1, 5, NULL, '46996209', 1, NULL, 'A1200', 23, 2, 1, 17, '46996209', 0),
-(18, '2022-02-21 06:34:04', '2022-04-29 13:00:23', 3, 3, 2, '2022-02-25', '33.jpeg', 'Collection ready', '2022-04-29', '3424', '20', '15', '5432', NULL, NULL, 'Germination', NULL, 0, NULL, NULL, NULL, NULL, NULL, 20, 1, 10, NULL, '60520736', 1, NULL, 'TEST1/2022/B001', 23, NULL, 0, 0, 'No name', 0),
-(19, '2022-02-25 07:25:11', '2022-02-25 07:29:09', 3, 3, 2, '2022-02-26', '375c1056abc77e562050c0e7c8aed20b.png', 'READY FOR SAMPLING', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(20, '2022-03-24 14:17:02', '2022-04-26 16:34:08', 31, 4, 4, '2022-03-25', NULL, 'Seed lab testing', '2022-04-26', '25', 'green', '15', '005', NULL, NULL, 'Purity', NULL, 0, '98', '95', '00', '00', '11', 27, 1, 5, NULL, '46345456', 1, NULL, 'test 2395', 23, 93, 1, 0, 'No name', 0),
+(17, '2021-11-26 08:54:39', '2022-08-23 15:31:37', 3, 3, 2, '2021-11-26', 'download.png', 'Simple', '2021-11-26', '100', 'No Packaging', '15', '10000', NULL, NULL, 'Purity,Germination', NULL, 1200, '10', '20', '10', '10', '11', 20, 1, 5, NULL, '46996209', 1, NULL, 'A1200', 23, 2, 0, 17, '46996209', 1),
+(18, '2022-02-21 06:34:04', '2022-07-28 21:21:21', 3, 3, 2, '2022-02-25', '33.jpeg', 'Collection ready', '2022-04-29', '3424', '20', '15', '5432', NULL, NULL, 'Germination,Moisture content,Purity', NULL, 0, NULL, NULL, NULL, NULL, NULL, 28, 1, 10, NULL, '60520736', 1, NULL, 'TEST1/2022/B001', 23, NULL, 0, 0, 'No name', 0),
 (21, '2022-03-29 10:13:27', '2022-04-26 16:36:32', 28, 7, 7, '2022-04-02', 'files/7d0fb76c674bceee023f3de38ddf2afb.jpg', 'Please get sample seeds for testing.', '2022-04-26', '10', 'good', '15', '000067', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '48372188', 1, NULL, 'test 65456', 23, 90, 0, 0, 'No name', 0),
 (22, '2022-04-26 12:20:32', '2022-04-26 16:33:52', 55, 13, 13, '2022-04-30', 'files/download.png', 'My seeds a ready for lab testing.', '2022-04-26', '25', 'green', '15', '003', NULL, NULL, 'Purity,Germination', NULL, 0, '100', '90', '10', '20', '11', 27, 1, 5, NULL, '95527227', 1, NULL, 'TestI003', 23, 90, 0, 0, 'No name', 0),
 (23, '2022-04-26 12:20:50', '2022-04-26 16:33:15', 39, 15, 15, '2022-04-30', 'files/4th distribution.xlsx', 'my seeds here to be tested', '2022-04-26', '10', 'green', '15', '00002', NULL, NULL, 'Moisture content', NULL, 0, '90', '90', '0', '0', '11', 27, 1, 5, NULL, '35913630', 1, NULL, 'test 897678', 23, 81, 0, 0, 'No name', 0),
-(24, '2022-04-26 12:21:04', '2022-04-26 16:33:34', 62, 12, 12, '2022-04-30', 'files/House plan', 'Please attend to my request for seed sampling', '2022-04-26', '20', 'green', '15', '0007', NULL, NULL, 'Purity', NULL, 0, '99', '99', '1', '0', '11', 27, 1, 5, NULL, '59121128', 1, NULL, 'Test i ben0009', 23, 98, 1, 0, 'No name', 0),
 (25, '2022-04-26 12:21:11', '2022-04-26 16:38:07', 52, 32, 32, '2022-04-28', 'files/3bd43f83cc877fd975d2c4427956f88f.jpg', '45mt', '2022-04-26', '1', '5', '15', '7685432', NULL, NULL, 'Germination', NULL, 0, '90', '85', '0', '0', '11', 27, 1, 5, NULL, '79813266', 1, NULL, 'Test i ben00025', 23, 77, 0, 0, 'No name', 0),
 (26, '2022-04-26 12:21:11', '2022-04-26 16:37:45', 69, 30, 30, '2022-04-29', 'files/c53fa12982eed4f614741b90c2c47b44.docx', 'My beans seeds is ready for collections\r\naaas', '2022-04-26', '1', '5', '15', '00075', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '85415259', 1, NULL, 'Test i ben00012', 23, 90, 0, 0, 'No name', 0),
 (27, '2022-04-26 12:21:27', '2022-04-26 16:37:40', 56, 19, 19, '2022-04-16', 'files/HAND OVER TO NALI.docx', 'my seed is over due for sampling', '2022-04-26', '2', '5', '15', '00000078', NULL, NULL, 'Seed health', NULL, 0, '90', '85', '0', '0', '11', 27, 1, 5, NULL, '28075991', 1, NULL, 'Test i ben00013', 23, 77, 0, 0, 'No name', 0),
@@ -2484,13 +2917,9 @@ INSERT INTO `seed_labs` (`id`, `created_at`, `updated_at`, `administrator_id`, `
 (31, '2022-04-26 12:21:47', '2022-04-26 16:39:10', 54, 44, 44, '2022-04-29', 'files/Booster Dose Letter.jpg', 'The seeds are packed in 100 kg bags', '2022-04-26', '3', 'good', '15', '43', NULL, NULL, 'Purity', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '10812083', 1, NULL, 'Test i ben00014', 23, 90, 0, 0, 'No name', 0),
 (32, '2022-04-26 12:22:07', '2022-04-26 16:38:44', 69, 17, 17, '2022-04-27', 'files/872e29aed3534f34143f6a761a1e01cd.docx', 'am here', '2022-04-26', '1', '5', '15', '00987', NULL, NULL, 'Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '56894193', 1, NULL, '0008', 23, 90, 0, 0, 'No name', 0),
 (33, '2022-04-26 12:22:22', '2022-04-26 16:37:56', 41, 10, 10, '2022-04-28', 'files/news extract.jpeg', 'my seeds are ready for collection to be tested', '2022-04-26', '3', 'good', '15', '74', NULL, NULL, 'Purity', NULL, 0, '99', '92', '00', '00', '11', 27, 1, 5, NULL, '95870819', 1, NULL, 'test 543234', 23, 91, 0, 0, 'No name', 0),
-(34, '2022-04-26 12:22:22', '2022-04-26 16:39:28', 45, 42, 42, '2022-04-26', 'files/IMG-20220426-WA0007.jpg', 'Seeds are ready for lab test', '2022-04-26', '50', '10', '10', '11234', NULL, NULL, 'Purity,Germination', NULL, 0, '99', '95', '00', '00', '11', 27, 1, 5, NULL, '58990635', 1, NULL, 'Test i ben00018', 23, 94, 1, 0, 'No name', 0),
 (35, '2022-04-26 12:22:24', '2022-04-26 16:39:45', 42, 34, 34, '2022-04-27', 'files/IMG-20220425-WA0031.jpg', 'Make sure you come tomorrow\r\nLast time you delayed', '2022-04-26', '3', 'good', '15', '12', NULL, NULL, 'Purity', NULL, 0, '99', '93', '00', '00', '11', 27, 1, 5, NULL, '35445364', 1, NULL, 'Test i ben00017', 23, 92, 0, 0, 'No name', 0),
 (36, '2022-04-26 12:22:30', '2022-04-26 16:38:46', 37, 25, 25, '2022-04-26', 'files/3f79bcfbe6d145b6da4ead463698f240.xlsx', 'My seeds are ready for testing. Please come for sseed sampling', '2022-04-26', '1', '5', '15', '0087', NULL, NULL, 'Moisture content', NULL, 0, '99', '91', '00', '00', '11', 27, 1, 5, NULL, '99891335', 1, NULL, 'test 1232123', 23, 90, 0, 0, 'No name', 0),
 (37, '2022-04-26 12:22:37', '2022-04-26 16:35:13', 62, 24, 24, '2022-04-30', 'files/1650961298349123462984.jpg', 'Collect my seed for lab testing', '2022-04-26', '2', '5', '15', '00000000876', NULL, NULL, 'Germination', NULL, 0, '99', '99', '0', '0', '11', 27, 1, 5, NULL, '63387258', 1, NULL, '00091', 23, 98, 0, 0, 'No name', 0),
-(38, '2022-04-26 12:22:53', '2022-04-26 12:31:04', 44, 16, 16, '2022-05-26', 'files/080f3eff0cdc12e67ede670a31a8e9f3.docx', 'please come and pick my samples', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 34, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(39, '2022-04-26 12:22:59', '2022-04-26 12:30:29', 69, 33, 33, '2022-04-28', 'files/c0eec54441c03b363c0a05d7f184f04c.docx', 'an on', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(40, '2022-04-26 12:23:08', '2022-04-26 12:28:57', 37, 25, 25, '2022-04-26', 'files/3b47f6c06047ef7e95aa68e02164eae0.xlsx', 'My seeds are ready for testing. Please come for seed sampling', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 34, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
 (41, '2022-04-26 12:23:25', '2022-04-26 16:39:57', 38, 14, 14, '2022-04-13', 'files/Screenshot_20220425-225419.jpg', 'Good', '2022-04-26', '2', '5', '15', '4562', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 20, 1, 5, NULL, '43841205', 1, NULL, 'Test i ben00024', 23, 90, 0, 0, 'No name', 0),
 (42, '2022-04-26 12:23:25', '2022-04-26 16:35:51', 53, 40, 40, '2021-02-20', 'files/193cb8367ea8b50a228499799bb460fb.jpg', 'Good sample', '2022-04-26', '3', 'good', '15', '89', NULL, NULL, 'Purity', NULL, 0, '99', '92', '00', '00', '11', 27, 1, 5, NULL, '60905069', 1, NULL, 'Test i ben00019', 23, 91, 0, 0, 'No name', 0),
 (43, '2022-04-26 12:23:43', '2022-04-26 16:35:13', 47, 18, 18, '2022-04-13', 'files/IMG_20210520_103045.jpg', 'please make sure that its ready by then', '2022-04-26', '3', 'good', '15', '73', NULL, NULL, 'Purity', NULL, 0, '99', '94', '00', '1', '11', 27, 1, 5, NULL, '29463972', 1, NULL, '0008', 23, 93, 0, 0, 'No name', 0),
@@ -2500,19 +2929,11 @@ INSERT INTO `seed_labs` (`id`, `created_at`, `updated_at`, `administrator_id`, `
 (47, '2022-04-26 12:24:19', '2022-04-26 16:34:44', 41, 41, 41, '2022-04-29', 'files/distribution.jpg', 'seed ready for lab test', '2022-04-26', '3', 'good', '15', '0000091', NULL, NULL, 'Purity', NULL, 0, '90', '90', '0', '0', '11', 27, 1, 5, NULL, '52595077', 1, NULL, 'A12002', 23, 81, 0, 0, 'No name', 0),
 (48, '2022-04-26 12:24:55', '2022-04-26 16:35:13', 63, 23, 23, '2022-04-26', 'files/33e344dc6628641aeb159fea3c0f1e4c.docx', 'My field seed samples are ready for lab test so kindly come and pick.', '2022-04-26', '10', '10', '100', '2011', NULL, NULL, 'Moisture content,Purity,Germination', NULL, 0, '95', '87', '0', '0', '11', 27, 1, 5, NULL, '92848435', 1, NULL, 'test 453212', 23, 83, 0, 0, 'No name', 0),
 (49, '2022-04-26 12:25:05', '2022-04-26 16:35:39', 44, 26, 26, '2022-05-26', 'files/78687634e44fc02dbe6a5de8c4c0947f.docx', 'samples are ready for collection', '2022-04-26', '12', '10', '15', '6', NULL, NULL, 'Purity', NULL, 0, '96', '87', '0', '0', '11', 27, 1, 5, NULL, '79136001', 1, NULL, '003', 23, 84, 0, 0, 'No name', 0),
-(50, '2022-04-26 12:25:58', '2022-04-29 13:09:10', 47, 28, 28, '2022-05-26', 'files/20210504_114758.jpg', 'please be fast', '2022-05-06', '40', '10', '15', '3', NULL, NULL, 'Purity', NULL, 0, '100', '98', '90', '90', '11', 27, 1, 5, NULL, '29268784', 1, NULL, 'Test1/2022/N0006', 23, 98, 1, 0, 'No name', 0),
 (51, '2022-04-26 12:27:34', '2022-04-26 16:48:00', 49, 29, 29, '2022-04-26', 'files/d3a51ac372845d0ecb4ced497025f10a.JPG', 'my stock is ready for collectiobn', '2022-04-26', '1', '5', '15', '00000000000009867', NULL, NULL, 'Germination', NULL, 0, '100', '90', '90', '90', '11', 27, 1, 5, NULL, '77686635', 1, NULL, 'test 000000000009876', 23, 90, 0, 0, 'No name', 0),
 (52, '2022-04-26 12:28:10', '2022-04-26 16:36:35', 51, 35, 35, '2022-04-26', 'files/09d2707c7913b03b1576a16158f47964.jpg', 'To be tested for lab test', '2022-04-26', '10', '5', '150', '15432', NULL, NULL, 'Moisture content,Purity,Germination', NULL, 0, '95', '90', '0', '0', '11', 27, 1, 5, NULL, '36337843', 1, NULL, '0002', 23, 86, 0, 0, 'No name', 0),
-(53, '2022-04-26 12:30:42', '2022-04-26 12:32:35', 46, 39, 39, '2022-04-29', 'files/16509618771402014145511.jpg', 'Sent', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(54, '2022-04-26 12:37:35', '2022-04-29 12:22:14', 47, 37, 37, '2022-05-26', 'files/20210504_114720.jpg', 'the earlier the better', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(55, '2022-04-26 13:03:50', '2022-04-29 12:27:10', 55, 13, 13, '2022-04-26', 'files/ADVANCED.png', 'simple', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 34, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(56, '2022-04-26 13:23:33', '2022-04-29 12:25:33', 43, 20, 20, '2022-04-30', 'files/96390369eeb0d37501c5440df9001d01.jpg', 'Few', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(57, '2022-04-27 17:52:43', '2022-04-29 12:24:50', 73, 51, 51, '2022-04-30', 'files/85d1f3b54c4ee407bac2bdffd63b9168.png', 'Ready', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(58, '2022-04-29 10:51:20', '2022-04-29 10:52:19', 3, 52, 52, '2022-04-29', 'files/1_logo.png', 'simple', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
 (59, '2022-04-29 12:14:19', '2022-04-29 15:31:04', 90, 1, 1, '2022-04-29', 'files/IMG-20220428-WA0045.jpg', 'Come and pick seefs', '2022-04-29', '3441', '20', '15', '431135', NULL, NULL, 'Germination', NULL, 1700, '100', '98', '97', '90', '11', 20, 1, 5, NULL, '19767497', 1, NULL, '008/dom/2022', 23, 98, 0, 0, 'No name', 0),
 (60, '2022-04-29 12:14:27', '2022-04-29 15:31:51', 95, 1, 1, '2022-04-30', 'files/SPRAYERS INFO.docx', 'my stock should be picked tommorrow', '2022-05-07', '4', '10', '15', '1', NULL, NULL, 'Purity', NULL, 4351, '100', '98', '94', '95', '11', 20, 1, 5, NULL, '70484855', 1, NULL, 'Test1/2022/N0007', 23, 98, 0, 0, 'No name', 0),
 (61, '2022-04-29 12:14:30', '2022-04-29 12:21:27', 3, 20, 20, '2022-04-29', 'files/e11c09d7793b52bcd09066c6b7e00c85.png', 'Simple', '2022-04-29', '10', '12', '15', '10000001', NULL, NULL, 'Purity', NULL, 340, '10', '5', '10', '10', '11', 20, 1, 5, NULL, '44383647', 1, NULL, 'A120011', 23, 1, 0, 0, 'No name', 0),
-(62, '2022-04-29 12:14:43', '2022-04-29 15:32:03', 76, 1, 1, '2022-04-30', 'files/farmer feedback.jpg', 'Please come and pick up my seed samples for lab testing.', '2022-05-07', '10', '10', '15', '3', NULL, NULL, 'Germination', NULL, 8400, '99', '95', '1', '4', '11', 20, 1, 5, NULL, '75190054', 1, NULL, '005/2022/dom', 23, 94, 1, 0, 'No name', 0),
 (63, '2022-04-29 12:14:46', '2022-04-29 15:40:29', 78, 1, 1, '2022-04-30', 'files/Passport photographs.pdf', 'MY STOCK IS READY FOR SAMPLING', '2022-04-29', '543', '20', '15', '567', NULL, NULL, 'Germination', NULL, 200, '100', '98', '88', '99', '11', 20, 1, 5, NULL, '91804360', 1, NULL, '003/2022/dom', 23, 98, 0, 0, 'No name', 0),
 (64, '2022-04-29 12:14:49', '2022-04-29 15:40:43', 98, 1, 1, '2022-04-30', 'files/tmp-cam-7407545346261318361.jpg', 'Seed in sonfe', '2022-04-29', '3242', '20', '15', '567899', NULL, NULL, 'Germination', NULL, 28, '100', '98', '56', '76', '11', 20, 1, 5, NULL, '72521820', 1, NULL, '006/2022/dom', 23, 98, 0, 0, 'No name', 0),
 (65, '2022-04-29 12:14:56', '2022-04-29 15:32:45', 80, 1, 1, '2022-04-30', 'files/f49d4accde4a2725dd0818507909d27271ce2ef11461516266.png', 'please come take my sample for seed testing', '2022-04-29', '543', '20', '15', '1233445', NULL, NULL, 'Germination', NULL, 500, '99', '99', '3', '4', '11', 20, 1, 5, NULL, '25675580', 1, NULL, 'Test1/2022/N0009', 23, 98, 0, 0, 'No name', 0),
@@ -2523,13 +2944,12 @@ INSERT INTO `seed_labs` (`id`, `created_at`, `updated_at`, `administrator_id`, `
 (70, '2022-04-29 12:15:36', '2022-04-29 12:57:56', 85, 1, 1, '2022-04-14', 'files/IMG_20220428_172303_057.jpg', 'Seed sample for the lab test', '2022-04-29', '10', '10', '15', '40', NULL, NULL, 'Seed health', NULL, 700, NULL, NULL, NULL, NULL, NULL, 20, 1, 10, NULL, '85432161', 1, NULL, '006/2022/dom', 23, NULL, 0, 0, 'No name', 0),
 (71, '2022-04-29 12:15:38', '2022-04-29 15:32:55', 88, 1, 1, '2022-04-30', 'files/1651220022462793552128.jpg', 'pliz accept the attachment', '2022-05-05', '10', '10', '15', '1', NULL, NULL, 'Purity', NULL, 500, '99', '99', '9', '9', '11', 20, 1, 5, NULL, '14196693', 1, NULL, '008/34/dom', 23, 98, 0, 0, 'No name', 0),
 (72, '2022-04-29 12:15:44', '2022-04-29 15:31:34', 86, 1, 1, '2022-05-01', 'files/16512199758726012926958812860166.jpg', 'Please come and pick my seed samples for lab testing.', '2022-05-05', '10', '10', '15', '2', NULL, NULL, 'Seed health', NULL, 50, '99', '95', '3', '2', '11', 20, 1, 5, NULL, '25554681', 1, NULL, 'Test1/2022/N0002', 23, 94, 0, 0, 'No name', 0),
-(73, '2022-04-29 12:16:01', '2022-04-29 15:30:55', 84, 1, 1, '2022-06-15', 'files/20220311_181456.jpg', 'kindly be timely', '2022-05-06', '10', '10', '15', '2', NULL, NULL, 'Germination', NULL, 699, '99', '99', '1', '1', '11', 20, 1, 5, NULL, '58058008', 1, NULL, '009/2022/dom', 23, 98, 1, 0, 'No name', 0),
 (74, '2022-04-29 12:16:44', '2022-04-29 15:31:42', 94, 1, 1, '2022-05-02', 'files/IMG_20220305_095235_354[1].jpg', 'will be waiting for your response', '2022-04-29', '10', '10', '15', '40', NULL, NULL, 'Germination', NULL, 300, '99', '09', '1', '1', '11', 20, 1, 5, NULL, '67857572', 1, NULL, 'TEST2/2022/2B', 23, 9, 0, 0, 'No name', 0),
 (75, '2022-04-29 12:17:34', '2022-04-29 13:07:04', 93, 1, 1, '0001-05-20', 'files/eca6ebfb3cc04432beb3c976a6745139.jpg', 'My sample ready for test', '2022-04-29', '4321', '20', '15', '100004', NULL, NULL, 'Germination', NULL, 340, '99', '99', '1', '1', '11', 20, 1, 5, NULL, '84089167', 1, NULL, 'Test1/2022/N0003', 23, 98, 0, 0, 'No name', 0),
-(76, '2022-04-29 12:17:59', '2022-04-29 15:32:41', 91, 1, 1, '2022-05-05', 'files/VID-20210528-WA0003.mp4', 'Come and pick my seed', '2022-04-29', '12', 'Green', '15', '000005', NULL, NULL, 'Purity', NULL, 30, '99', '95', '2', '3', '11', 20, 1, 5, NULL, '94922685', 1, NULL, '004/2022/musa/001', 23, 94, 1, 0, 'No name', 0),
-(77, '2022-04-29 12:18:08', '2022-04-29 15:32:59', 85, 1, 1, '2022-04-14', 'files/16512202089632865585085765522949.jpg', 'Seed sample', '2022-05-04', '24', '10', '15', '02', NULL, NULL, 'Purity', NULL, 650, '100', '90', '89', '10', '11', 27, 1, 5, NULL, '81650251', 1, NULL, 'Test1/2022/N0001', 23, 90, 1, 0, 'No name', 0),
 (78, '2022-05-25 16:03:28', '2022-05-25 16:03:28', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'yhhuj', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, 1, NULL, 31, 0, 'No name', 0),
-(79, '2022-05-25 16:06:48', '2022-05-25 16:06:48', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, 1, NULL, 0, 0, 'No name', 0);
+(79, '2022-05-25 16:06:48', '2022-05-25 16:06:48', 1, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, 1, NULL, 0, 0, 'No name', 0),
+(81, '2022-08-19 22:14:13', '2022-08-19 22:36:50', 147, 1, 1, '2022-08-19', '3000', 'Seed ready', '2022-08-19', '20', '15', '15', '000001', NULL, NULL, 'Purity', NULL, 2000, NULL, NULL, NULL, NULL, NULL, 28, 1, 10, NULL, '62562936', 1, NULL, 'Test/0001/2022', 23, NULL, 0, 0, 'No name', 0),
+(82, '2022-08-23 14:49:38', '2022-08-23 15:25:00', 151, 1, 1, '2022-08-27', 'Okj', 'Ready for lab testing', '2022-08-23', '20', 'Green', '15', '634119030', NULL, NULL, 'Purity,Germination', NULL, 2000, NULL, NULL, NULL, NULL, NULL, 28, 1, 10, NULL, '12591757', 1, NULL, 'Otim//2022/Bean-NABE1/Lab-test-0001', 23, NULL, 0, 0, 'No name', 0);
 
 -- --------------------------------------------------------
 
@@ -2575,7 +2995,7 @@ INSERT INTO `stock_records` (`id`, `created_at`, `updated_at`, `administrator_id
 (16, '2021-11-09 00:20:15', '2022-04-26 11:33:38', 3, 22, 'Pre-Basic seed', 'Stock examination', 'From stock exanination ID: 2', 1200, 1, 0, '895293723'),
 (17, '2021-11-09 00:20:15', '2022-04-26 11:33:38', 3, 23, 'Pre-Basic seed', 'Stock examination', 'From stock exanination ID: 2', 1260, 1, 0, '521992626'),
 (18, '2021-11-09 00:20:15', '2022-04-26 11:33:38', 3, 9, 'Pre-Basic seed', 'Stock examination', 'From stock exanination ID: 2', 1900, 1, 0, '490648445'),
-(19, '2021-11-09 00:21:10', '2022-04-26 11:33:38', 3, 5, 'Basic seed', 'Stock examination', 'From stock exanination ID: 2', 12000, 1, 0, '98430206'),
+(19, '2021-11-09 00:21:10', '2022-04-26 11:33:38', 27, 5, 'Basic seed', 'Stock examination', 'From stock exanination ID: 2', 12000, 1, 0, '98430206'),
 (26, '2021-11-10 04:45:42', '2022-04-26 11:33:38', 3, 3, '-', 'Stock transfer to John Doe, ID: 18', 'Stock transfer to John Doe, ID: 18', -500, 0, 1, '593552813'),
 (27, '2021-11-10 04:47:11', '2022-04-26 11:33:38', 18, 3, '-', 'Stock transfer from Betty Namagembe, ID: 3', 'Stock transfer from Betty Namagembe, ID: 3', 500, 1, 1, '961342340'),
 (28, '2021-11-10 04:47:11', '2022-04-26 11:33:38', 3, 3, '-', 'Stock transfer to John Doe, ID: 18', 'Stock transfer to John Doe, ID: 18', -500, 0, 1, '503772622'),
@@ -2855,7 +3275,11 @@ INSERT INTO `stock_records` (`id`, `created_at`, `updated_at`, `administrator_id
 (303, '2022-04-29 13:12:52', '2022-04-29 13:12:52', 80, 1, NULL, NULL, 'To seed lab. ID 65', -1000, 0, 0, '123936369'),
 (304, '2022-04-29 13:12:55', '2022-04-29 13:12:55', 80, 1, NULL, NULL, 'To seed lab. ID 65', -1000, 0, 0, '498643637'),
 (305, '2022-04-29 13:16:41', '2022-04-29 13:16:41', 98, 1, NULL, NULL, 'To seed lab. ID 64', -48, 0, 0, '710982604'),
-(306, '2022-04-29 13:16:54', '2022-04-29 13:16:54', 98, 1, NULL, NULL, 'To seed lab. ID 64', -48, 0, 0, '654240277');
+(306, '2022-04-29 13:16:54', '2022-04-29 13:16:54', 98, 1, NULL, NULL, 'To seed lab. ID 64', -48, 0, 0, '654240277'),
+(307, '2022-07-28 20:10:31', '2022-07-28 20:10:31', 93, 1, 'Basic seed', 'Stock examination', 'From stock exanination ID: 75', 1000, 1, 0, '794797898'),
+(308, '2022-07-28 20:11:02', '2022-07-28 20:11:02', 1, 1, 'Basic seed', 'Stock examination', 'From stock exanination ID: 76', 340000, 1, 0, '71358131'),
+(309, '2022-08-19 21:41:39', '2022-08-19 21:41:39', 147, 1, 'Basic seed', 'Stock examination', 'From stock exanination ID: 83', 2000, 1, 0, '228516625'),
+(310, '2022-08-23 14:24:26', '2022-08-23 14:24:26', 151, 1, 'Basic seed', 'Stock examination', 'From stock exanination ID: 84', 2000, 1, 0, '490362870');
 
 -- --------------------------------------------------------
 
@@ -2886,7 +3310,6 @@ CREATE TABLE `sub_growers` (
   `status_comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `field_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `village` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `field_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `seed_class` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `estimated_yield` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `further_remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -2902,6 +3325,23 @@ CREATE TABLE `sub_growers` (
   `size_of_field` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `crop_cultivar` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sub_growers`
+--
+
+INSERT INTO `sub_growers` (`id`, `created_at`, `updated_at`, `administrator_id`, `name`, `size`, `crop`, `variety`, `district`, `subcourty`, `planting_date`, `quantity_planted`, `expected_yield`, `phone_number`, `gps_latitude`, `gps_longitude`, `detail`, `status`, `inspector`, `status_comment`, `field_name`, `village`, `seed_class`, `estimated_yield`, `further_remarks`, `general_condition_of_the_crop`, `proposed_isolation`, `isolation_time`, `proposed_distance`, `isolation_distance`, `cultivar_characteristics_noxious_weeds`, `cultivar_characteristics_features`, `cultivar_characteristics_disease`, `cultivar_characteristics_types`, `size_of_field`, `crop_cultivar`) VALUES
+(105, '2022-07-05 12:45:23', '2022-07-27 20:44:05', 21, 'eee', NULL, '93', 'erer', 'erere', 'erer', 'rter', NULL, NULL, NULL, NULL, NULL, NULL, '16', 28, NULL, NULL, NULL, 'Certified seed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(106, '2022-07-21 23:19:53', '2022-07-27 15:04:22', 3, 'Betty Namagembe', 232, '89', '6', 'Kasese', 'bwera', '2022-07-21 00:00:00.000', '20', NULL, '0779755798', '8.65522', '1.558', 'Some of those things you', '16', 20, NULL, NULL, 'Kampala', 'Certified seed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(107, '2022-07-27 19:43:36', '2022-07-27 20:42:37', 27, 'Mbabazi Isaac', 3, '93', 'NABE 1 (OBA 1)', 'Kasese', 'Mubuku', '2022-07-16', '3', '15', '0780602550', '0.00000', '0.00000', 'This is a field for Bush beans.', '16', 28, NULL, NULL, 'Mubuku', 'Pre-Basic', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(108, '2022-07-27 19:44:28', '2022-08-22 20:11:27', 145, 'John Otim', 2, NULL, '9', 'Kit', 'muk', '2022-07-12 00:00:00.000', '5', '5 bags', '078588888', '258258', '8565', 'My products are nice', '16', 28, NULL, NULL, 'Kazo', 'Certified seed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(109, '2022-08-18 13:08:52', '2022-08-18 13:29:24', 147, 'Zak Kisakye', 5, NULL, '3', 'Kasese', 'Busongora', '2022-07-02 00:00:00.000', '5', '50', '0780602550', '0.000', '0.000', 'Field ready for inspection', '16', 28, NULL, NULL, 'Mubuku', 'Pre-Basic', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(110, '2022-08-18 21:04:18', '2022-08-18 21:04:18', 148, 'Bwambale Muhidin', 12, '77', '77', 'Kasese', 'bwera', '2022-08-18 17:02:33.263647', '12', '22', '0779755798', '0.33', '0.11', 'Some details about the app', '1', 0, NULL, NULL, 'Karambi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(111, '2022-08-18 21:50:59', '2022-08-18 21:50:59', 148, 'Bwambale Muhidin', 12, '30', '30', 'Kasese', 'Kampala', '2022-08-16 00:00:00.000', '12', '12', '0779755798', '0.3645827', '32.6063592', 'Some details', '1', 0, NULL, NULL, 'Bwera', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(112, '2022-08-18 22:00:32', '2022-08-18 22:00:32', 148, 'Bwambale Muhidin', 666, '63', '63', 'Kasese', 'Uganda', '2022-08-18 17:59:37.587490', '12', '12', '07797557985', '0.3647803', '32.6062474', 'Dinner was a', '1', 0, NULL, 'Th you are fine', 'Kampala', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(113, '2022-08-18 22:04:15', '2022-08-18 22:04:15', 148, 'Bwambale Muhidin', 666, '63', '63', 'Kasese', 'Uganda', '2022-08-18 17:59:37.587490', '12', '12', '07797557985', '0.3647803', '32.6062474', 'Dinner was a', '1', 0, NULL, 'Th you are fine love', 'Kampala', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(114, '2022-08-23 13:39:19', '2022-08-23 13:45:41', 151, 'Kusein Otim', 568, '20', '20', 'Masaka', 'kinoni', '2022-08-23 09:32:20.308973', '50', '500', '0705623584', '0.3648168', '32.6064344', 'Maize seeds of my garden', '16', 28, NULL, 'Cok', 'Kyabakuza', 'Pre-Basic', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(115, '2022-08-23 13:56:08', '2022-08-23 13:57:48', 151, 'Kusein Otim', 53, '107', '107', 'Mbarara', 'nyakayojo', '2022-08-23 09:52:54.979335', '100', '1000', '8962534', '0.3648181', '32.606434', 'Ok its for me', '16', 28, NULL, 'Kook', 'Nyakononi', 'Basic seed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3070,7 +3510,7 @@ ALTER TABLE `admin_role_users`
 --
 ALTER TABLE `admin_users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `admin_users_username_unique` (`username`);
+  ADD UNIQUE KEY `admin_users_email_unique` (`email`);
 
 --
 -- Indexes for table `admin_user_permissions`
@@ -3231,6 +3671,61 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `model_has_permissions`
+--
+ALTER TABLE `model_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indexes for table `model_has_roles`
+--
+ALTER TABLE `model_has_roles`
+  ADD PRIMARY KEY (`role_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
+
+--
+-- Indexes for table `oauth_access_tokens`
+--
+ALTER TABLE `oauth_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_access_tokens_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_auth_codes`
+--
+ALTER TABLE `oauth_auth_codes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_auth_codes_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_clients`
+--
+ALTER TABLE `oauth_clients`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_clients_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_personal_access_clients`
+--
+ALTER TABLE `oauth_personal_access_clients`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `oauth_refresh_tokens`
+--
+ALTER TABLE `oauth_refresh_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -3241,6 +3736,13 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`);
 
 --
 -- Indexes for table `personal_access_tokens`
@@ -3283,10 +3785,30 @@ ALTER TABLE `profiles`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `qds_has_crops`
+--
+ALTER TABLE `qds_has_crops`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `quotations`
 --
 ALTER TABLE `quotations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`);
+
+--
+-- Indexes for table `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`role_id`),
+  ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
 
 --
 -- Indexes for table `seed_label`
@@ -3387,7 +3909,7 @@ ALTER TABLE `admin_roles`
 -- AUTO_INCREMENT for table `admin_users`
 --
 ALTER TABLE `admin_users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `attributes`
@@ -3453,43 +3975,43 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `form_crop_declarations`
 --
 ALTER TABLE `form_crop_declarations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `form_crop_declarations_has_crop_varieties`
 --
 ALTER TABLE `form_crop_declarations_has_crop_varieties`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `form_qds`
 --
 ALTER TABLE `form_qds`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `form_sr4s`
 --
 ALTER TABLE `form_sr4s`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `form_sr6s`
 --
 ALTER TABLE `form_sr6s`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT for table `form_sr6_has_crops`
 --
 ALTER TABLE `form_sr6_has_crops`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `form_sr10s`
 --
 ALTER TABLE `form_sr10s`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `form_sr10_has_variety_inspections`
@@ -3501,7 +4023,7 @@ ALTER TABLE `form_sr10_has_variety_inspections`
 -- AUTO_INCREMENT for table `form_stock_examination_requests`
 --
 ALTER TABLE `form_stock_examination_requests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `form_test1s`
@@ -3519,13 +4041,13 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `import_export_permits`
 --
 ALTER TABLE `import_export_permits`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `import_export_permits_has_crops`
 --
 ALTER TABLE `import_export_permits_has_crops`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `marketable_seeds`
@@ -3537,13 +4059,31 @@ ALTER TABLE `marketable_seeds`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+
+--
+-- AUTO_INCREMENT for table `oauth_clients`
+--
+ALTER TABLE `oauth_clients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `oauth_personal_access_clients`
+--
+ALTER TABLE `oauth_personal_access_clients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- AUTO_INCREMENT for table `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -3555,7 +4095,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `planting_returns`
 --
 ALTER TABLE `planting_returns`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `planting_return_crops`
@@ -3567,7 +4107,7 @@ ALTER TABLE `planting_return_crops`
 -- AUTO_INCREMENT for table `pre_orders`
 --
 ALTER TABLE `pre_orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -3582,10 +4122,22 @@ ALTER TABLE `profiles`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `qds_has_crops`
+--
+ALTER TABLE `qds_has_crops`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+
+--
 -- AUTO_INCREMENT for table `quotations`
 --
 ALTER TABLE `quotations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `seed_label`
@@ -3597,7 +4149,7 @@ ALTER TABLE `seed_label`
 -- AUTO_INCREMENT for table `seed_labels`
 --
 ALTER TABLE `seed_labels`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `seed_label_packages`
@@ -3609,19 +4161,19 @@ ALTER TABLE `seed_label_packages`
 -- AUTO_INCREMENT for table `seed_labs`
 --
 ALTER TABLE `seed_labs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `stock_records`
 --
 ALTER TABLE `stock_records`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=307;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
 
 --
 -- AUTO_INCREMENT for table `sub_growers`
 --
 ALTER TABLE `sub_growers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `test1s`
@@ -3664,11 +4216,30 @@ ALTER TABLE `crop_inspection_types`
   ADD CONSTRAINT `crop_inspection_types_crop_id_foreign` FOREIGN KEY (`crop_id`) REFERENCES `crops` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `model_has_permissions`
+--
+ALTER TABLE `model_has_permissions`
+  ADD CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `model_has_roles`
+--
+ALTER TABLE `model_has_roles`
+  ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `planting_return_crops`
 --
 ALTER TABLE `planting_return_crops`
   ADD CONSTRAINT `planting_return_crops_crop_variety_id_foreign` FOREIGN KEY (`crop_variety_id`) REFERENCES `crop_varieties` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `planting_return_crops_planting_return_id_foreign` FOREIGN KEY (`planting_return_id`) REFERENCES `planting_returns` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

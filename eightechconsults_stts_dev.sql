@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 27, 2022 at 06:54 AM
+-- Generation Time: Aug 31, 2022 at 10:27 AM
 -- Server version: 10.3.35-MariaDB-log-cll-lve
 -- PHP Version: 7.4.30
 
@@ -416,7 +416,7 @@ INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `reme
 (3, 'basic-user', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Lady Bruja', 'f3bec83eed314edb9ecfd9fc264033ce.jpg', 'zvigbL3WgsmkgzoGcHyh032FVISeAq2GDL04zrQzMtFe1cicaBcmw0ATp37i', '2021-10-20 13:21:48', '2022-07-27 15:50:05', '', '', 'basic-user@mail.com'),
 (18, 'john1@gmail.com4998', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'John Doe', NULL, 'D4QAHDbt5IwphC254MLFEUlOwNhnFAG6iStX8ptSgp7XfHtjzdUo09GigscJ', '2021-10-24 14:44:31', '2021-11-10 05:21:22', 'John', 'Doe', 'john1@gmail.com4998'),
 (20, 'inspector', '$2y$10$nMZvzA6lvV6KXbIWvGcQOuhT.OkL2OWsWN.K3/jMZUc2QUbSPQVFG', 'Thembo Akisam', '245863543_931529574441067_8414242258604896822_n.jpg', 'LNDU7NP3GOhBTxSJmi8gBZbSfU4v6lDdBIcOelkhOOmxR6J3q5MRPOcCjOVV', '2021-10-25 03:43:02', '2022-07-17 20:33:23', NULL, NULL, NULL),
-(21, 'basic-user@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Basic User', '5bcd4f2d8cc8fe6c28b0a07597a4f013.jpg', 'yVS5E7kjJQy71ejRrQN7BpEMijaR8IUm9xg3WYNQWRhfnp8H6AhUfDVaH7W9', '2021-10-25 06:42:33', '2022-07-25 10:31:09', 'John', 'Doe', 'basic-user@gmail.com'),
+(21, 'basic-user@gmail.com', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Basic User', '5bcd4f2d8cc8fe6c28b0a07597a4f013.jpg', 'JBy29euxzIGBia4n5I4yM9LAlsYVXqrYxGV4cFM2HDQYDuGrvCrZ1J8wKqD1', '2021-10-25 06:42:33', '2022-07-25 10:31:09', 'John', 'Doe', 'basic-user@gmail.com'),
 (22, 'lab-reception', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Musa Rahim', NULL, 'LdbQkkqJ8I5O3PipM7tmOfCbS9qOePk2I55vG54t7n0qK3r5CdhqME4RgeHu', '2021-11-12 08:25:49', '2021-11-12 08:25:49', NULL, NULL, NULL),
 (23, 'lab-technician', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Tusiime Bob', NULL, 'RiD1KbCYQPKpIppm7xHZXvn76Fwaoaq6RLvXt78ciDhQrXkAFyNeEiaXHSdT', '2021-11-12 09:15:32', '2021-11-12 09:15:32', NULL, NULL, NULL),
 (24, 'usta', '$2y$10$26P/pjKQAZT0dmFtUhAbq.r9Jwdre8/8iRtYHTtJanSblCHtiwXWC', 'Phiona', NULL, '7VvRq1b1wFtAQ2oaKyC9KbJ6aG54FtoSgNkmTww3sn4X3dKojKbjMaXrDdi6', '2021-11-16 06:54:54', '2021-11-16 06:54:54', NULL, NULL, NULL),
@@ -2349,7 +2349,8 @@ INSERT INTO `pre_orders` (`id`, `created_at`, `updated_at`, `administrator_id`, 
 (5, '2022-04-26 16:55:41', '2022-04-26 16:55:41', 69, 13, 50, 'Certified', 'Raw', '2022-04-29', 'mbale', 'cash on delivery', '1'),
 (6, '2022-04-26 16:56:49', '2022-04-26 16:56:49', 56, 12, 10, 'Certified', 'Processed', '2022-04-26', 'JINJA', 'YOUR SEEDS WILL BE READY FOR PICKING AT THE ABOVE LOCATION', '1'),
 (20, '2022-04-26 17:11:17', '2022-04-26 17:11:17', 41, 20, 43, 'Certified', 'Processed', '2022-04-28', 'kawempe', 'call me when everything is ready', '1'),
-(39, '2022-07-05 05:12:37', '2022-07-05 05:12:37', 27, 12, 9, 'Basic', NULL, '2022-07-05', 'Kampala', 'Good', '1');
+(39, '2022-07-05 05:12:37', '2022-07-05 05:12:37', 27, 12, 9, 'Basic', NULL, '2022-07-05', 'Kampala', 'Good', '1'),
+(40, '2022-08-31 20:36:22', '2022-08-31 20:36:22', 3, 1, 200, 'Basic', NULL, '2022-08-31 16:27:50.435252', 'The parking lot to go', 'The same as last time', NULL);
 
 -- --------------------------------------------------------
 
@@ -2854,9 +2855,9 @@ INSERT INTO `seed_labs` (`id`, `created_at`, `updated_at`, `administrator_id`, `
 (14, '2021-11-26 04:56:27', '2022-04-26 16:34:01', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '4', '10', '15', '9', NULL, NULL, 'Purity', NULL, 0, '100', '98', '80', '10', '11', 27, 1, 5, NULL, '10015671', 1, NULL, 'Test i ben0006', 23, 98, 3, 0, 'No name', 0),
 (15, '2021-11-26 06:39:41', '2022-04-26 16:37:04', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '10', '5', '15', '6', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '81737716', 1, NULL, 'Test i ben0003', 23, 90, 8, 0, 'No name', 0),
 (16, '2021-11-26 06:40:07', '2022-04-26 16:35:20', 1, 1, 1, NULL, NULL, NULL, '2022-04-26', '5', '10', '2', '8585858', NULL, NULL, 'Germination', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '49328745', 1, NULL, 'test 123456', 23, 90, 15, 0, 'No name', 0),
-(17, '2021-11-26 08:54:39', '2022-08-23 15:31:37', 3, 3, 2, '2021-11-26', 'download.png', 'Simple', '2021-11-26', '100', 'No Packaging', '15', '10000', NULL, NULL, 'Purity,Germination', NULL, 1200, '10', '20', '10', '10', '11', 20, 1, 5, NULL, '46996209', 1, NULL, 'A1200', 23, 2, 0, 17, '46996209', 1),
-(18, '2022-02-21 06:34:04', '2022-07-28 21:21:21', 3, 3, 2, '2022-02-25', '33.jpeg', 'Collection ready', '2022-04-29', '3424', '20', '15', '5432', NULL, NULL, 'Germination,Moisture content,Purity', NULL, 0, NULL, NULL, NULL, NULL, NULL, 28, 1, 10, NULL, '60520736', 1, NULL, 'TEST1/2022/B001', 23, NULL, 0, 0, 'No name', 0),
-(19, '2022-02-25 07:25:11', '2022-02-25 07:29:09', 3, 3, 2, '2022-02-26', '375c1056abc77e562050c0e7c8aed20b.png', 'READY FOR SAMPLING', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
+(17, '2021-11-26 08:54:39', '2022-08-31 19:53:37', 3, 1, 2, '2021-11-26', 'download.png', 'Simple', '2021-11-26', '100', 'No Packaging', '15', '10000', NULL, NULL, 'Purity,Germination', NULL, 1200, '10', '20', '10', '10', '11', 20, 1, 5, NULL, '46996209', 1, NULL, 'A1200', 23, 2, 0, 17, '46996209', 1),
+(18, '2022-02-21 06:34:04', '2022-08-31 19:53:37', 3, 1, 2, '2022-02-25', '33.jpeg', 'Collection ready', '2022-04-29', '3424', '20', '15', '5432', NULL, NULL, 'Germination,Moisture content,Purity', NULL, 0, NULL, NULL, NULL, NULL, NULL, 28, 1, 10, NULL, '60520736', 1, NULL, 'TEST1/2022/B001', 23, NULL, 0, 0, 'No name', 0),
+(19, '2022-02-25 07:25:11', '2022-08-31 19:53:37', 3, 1, 2, '2022-02-26', '375c1056abc77e562050c0e7c8aed20b.png', 'READY FOR SAMPLING', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
 (20, '2022-03-24 14:17:02', '2022-04-26 16:34:08', 31, 4, 4, '2022-03-25', NULL, 'Seed lab testing', '2022-04-26', '25', 'green', '15', '005', NULL, NULL, 'Purity', NULL, 0, '98', '95', '00', '00', '11', 27, 1, 5, NULL, '46345456', 1, NULL, 'test 2395', 23, 93, 1, 0, 'No name', 0),
 (21, '2022-03-29 10:13:27', '2022-04-26 16:36:32', 28, 7, 7, '2022-04-02', 'files/7d0fb76c674bceee023f3de38ddf2afb.jpg', 'Please get sample seeds for testing.', '2022-04-26', '10', 'good', '15', '000067', NULL, NULL, 'Purity', NULL, 0, '100', '90', '1', '3', '11', 27, 1, 5, NULL, '48372188', 1, NULL, 'test 65456', 23, 90, 0, 0, 'No name', 0),
 (22, '2022-04-26 12:20:32', '2022-04-26 16:33:52', 55, 13, 13, '2022-04-30', 'files/download.png', 'My seeds a ready for lab testing.', '2022-04-26', '25', 'green', '15', '003', NULL, NULL, 'Purity,Germination', NULL, 0, '100', '90', '10', '20', '11', 27, 1, 5, NULL, '95527227', 1, NULL, 'TestI003', 23, 90, 0, 0, 'No name', 0),
@@ -2895,7 +2896,7 @@ INSERT INTO `seed_labs` (`id`, `created_at`, `updated_at`, `administrator_id`, `
 (55, '2022-04-26 13:03:50', '2022-04-29 12:27:10', 55, 13, 13, '2022-04-26', 'files/ADVANCED.png', 'simple', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 34, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
 (56, '2022-04-26 13:23:33', '2022-04-29 12:25:33', 43, 20, 20, '2022-04-30', 'files/96390369eeb0d37501c5440df9001d01.jpg', 'Few', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
 (57, '2022-04-27 17:52:43', '2022-04-29 12:24:50', 73, 51, 51, '2022-04-30', 'files/85d1f3b54c4ee407bac2bdffd63b9168.png', 'Ready', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
-(58, '2022-04-29 10:51:20', '2022-04-29 10:52:19', 3, 52, 52, '2022-04-29', 'files/1_logo.png', 'simple', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
+(58, '2022-04-29 10:51:20', '2022-08-31 19:53:37', 3, 1, 52, '2022-04-29', 'files/1_logo.png', 'simple', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
 (59, '2022-04-29 12:14:19', '2022-04-29 15:31:04', 90, 1, 1, '2022-04-29', 'files/IMG-20220428-WA0045.jpg', 'Come and pick seefs', '2022-04-29', '3441', '20', '15', '431135', NULL, NULL, 'Germination', NULL, 1700, '100', '98', '97', '90', '11', 20, 1, 5, NULL, '19767497', 1, NULL, '008/dom/2022', 23, 98, 0, 0, 'No name', 0),
 (60, '2022-04-29 12:14:27', '2022-04-29 15:31:51', 95, 1, 1, '2022-04-30', 'files/SPRAYERS INFO.docx', 'my stock should be picked tommorrow', '2022-05-07', '4', '10', '15', '1', NULL, NULL, 'Purity', NULL, 4351, '100', '98', '94', '95', '11', 20, 1, 5, NULL, '70484855', 1, NULL, 'Test1/2022/N0007', 23, 98, 0, 0, 'No name', 0),
 (61, '2022-04-29 12:14:30', '2022-04-29 12:21:27', 3, 20, 20, '2022-04-29', 'files/e11c09d7793b52bcd09066c6b7e00c85.png', 'Simple', '2022-04-29', '10', '12', '15', '10000001', NULL, NULL, 'Purity', NULL, 340, '10', '5', '10', '10', '11', 20, 1, 5, NULL, '44383647', 1, NULL, 'A120011', 23, 1, 0, 0, 'No name', 0),
@@ -2919,7 +2920,10 @@ INSERT INTO `seed_labs` (`id`, `created_at`, `updated_at`, `administrator_id`, `
 (79, '2022-05-25 16:06:48', '2022-05-25 16:06:48', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '78', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, 1, NULL, 0, 0, 'No name', 0),
 (80, '2022-07-27 19:01:30', '2022-07-27 19:01:30', 145, 1, 1, '2022-07-27', '9789', 'Seed lab form', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
 (81, '2022-08-19 22:14:13', '2022-08-19 22:36:50', 147, 1, 1, '2022-08-19', '3000', 'Seed ready', '2022-08-19', '20', '15', '15', '000001', NULL, NULL, 'Purity', NULL, 2000, NULL, NULL, NULL, NULL, NULL, 28, 1, 10, NULL, '62562936', 1, NULL, 'Test/0001/2022', 23, NULL, 0, 0, 'No name', 0),
-(82, '2022-08-23 14:49:38', '2022-08-23 15:25:00', 151, 1, 1, '2022-08-27', 'Okj', 'Ready for lab testing', '2022-08-23', '20', 'Green', '15', '634119030', NULL, NULL, 'Purity,Germination', NULL, 2000, NULL, NULL, NULL, NULL, NULL, 28, 1, 10, NULL, '12591757', 1, NULL, 'Otim//2022/Bean-NABE1/Lab-test-0001', 23, NULL, 0, 0, 'No name', 0);
+(82, '2022-08-23 14:49:38', '2022-08-23 15:25:00', 151, 1, 1, '2022-08-27', 'Okj', 'Ready for lab testing', '2022-08-23', '20', 'Green', '15', '634119030', NULL, NULL, 'Purity,Germination', NULL, 2000, NULL, NULL, NULL, NULL, NULL, 28, 1, 10, NULL, '12591757', 1, NULL, 'Otim//2022/Bean-NABE1/Lab-test-0001', 23, NULL, 0, 0, 'No name', 0),
+(84, '2022-08-31 16:06:05', '2022-08-31 16:24:37', 3, 1, 1, '2022-08-31', '1661936765-416950.jpg', 'Romina', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 2, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
+(85, '2022-08-31 16:18:17', '2022-08-31 16:18:17', 3, 1, 1, '2022-08-31', '1661937497-369150.jpg', 'And', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0),
+(86, '2022-08-31 16:18:50', '2022-08-31 16:18:50', 3, 1, 1, '2022-08-31', '1661937530-973440.jpg', 'And', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, 1, NULL, 1, 0, 'No name', 0);
 
 -- --------------------------------------------------------
 
@@ -3280,10 +3284,6 @@ CREATE TABLE `sub_growers` (
   `status_comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `field_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `village` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-<<<<<<< Updated upstream:stts.sql
-  `field_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-=======
->>>>>>> Stashed changes:eightechconsults_stts_dev.sql
   `seed_class` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `estimated_yield` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `further_remarks` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -3304,10 +3304,6 @@ CREATE TABLE `sub_growers` (
 -- Dumping data for table `sub_growers`
 --
 
-<<<<<<< Updated upstream:stts.sql
-INSERT INTO `sub_growers` (`id`, `created_at`, `updated_at`, `administrator_id`, `name`, `size`, `crop`, `variety`, `district`, `subcourty`, `planting_date`, `quantity_planted`, `expected_yield`, `phone_number`, `gps_latitude`, `gps_longitude`, `detail`, `status`, `inspector`, `status_comment`, `field_name`, `village`, `field_name`, `seed_class`, `estimated_yield`, `further_remarks`, `general_condition_of_the_crop`, `proposed_isolation`, `isolation_time`, `proposed_distance`, `isolation_distance`, `cultivar_characteristics_noxious_weeds`, `cultivar_characteristics_features`, `cultivar_characteristics_disease`, `cultivar_characteristics_types`, `size_of_field`, `crop_cultivar`) VALUES
-(105, '2022-07-05 12:45:23', '2022-07-05 12:45:23', 21, 'eee', NULL, 'erer', 'erer', 'erere', 'erer', 'rter', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-=======
 INSERT INTO `sub_growers` (`id`, `created_at`, `updated_at`, `administrator_id`, `name`, `size`, `crop`, `variety`, `district`, `subcourty`, `planting_date`, `quantity_planted`, `expected_yield`, `phone_number`, `gps_latitude`, `gps_longitude`, `detail`, `status`, `inspector`, `status_comment`, `field_name`, `village`, `seed_class`, `estimated_yield`, `further_remarks`, `general_condition_of_the_crop`, `proposed_isolation`, `isolation_time`, `proposed_distance`, `isolation_distance`, `cultivar_characteristics_noxious_weeds`, `cultivar_characteristics_features`, `cultivar_characteristics_disease`, `cultivar_characteristics_types`, `size_of_field`, `crop_cultivar`) VALUES
 (105, '2022-07-05 12:45:23', '2022-07-27 20:44:05', 21, 'eee', NULL, '93', 'erer', 'erere', 'erer', 'rter', NULL, NULL, NULL, NULL, NULL, NULL, '16', 28, NULL, NULL, NULL, 'Certified seed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (106, '2022-07-21 23:19:53', '2022-07-27 15:04:22', 3, 'Betty Namagembe', 232, '89', '6', 'Kasese', 'bwera', '2022-07-21 00:00:00.000', '20', NULL, '0779755798', '8.65522', '1.558', 'Some of those things you', '16', 20, NULL, NULL, 'Kampala', 'Certified seed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -3320,7 +3316,6 @@ INSERT INTO `sub_growers` (`id`, `created_at`, `updated_at`, `administrator_id`,
 (113, '2022-08-18 22:04:15', '2022-08-18 22:04:15', 148, 'Bwambale Muhidin', 666, '63', '63', 'Kasese', 'Uganda', '2022-08-18 17:59:37.587490', '12', '12', '07797557985', '0.3647803', '32.6062474', 'Dinner was a', '1', 0, NULL, 'Th you are fine love', 'Kampala', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (114, '2022-08-23 13:39:19', '2022-08-23 13:45:41', 151, 'Kusein Otim', 568, '20', '20', 'Masaka', 'kinoni', '2022-08-23 09:32:20.308973', '50', '500', '0705623584', '0.3648168', '32.6064344', 'Maize seeds of my garden', '16', 28, NULL, 'Cok', 'Kyabakuza', 'Pre-Basic', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (115, '2022-08-23 13:56:08', '2022-08-23 13:57:48', 151, 'Kusein Otim', 53, '107', '107', 'Mbarara', 'nyakayojo', '2022-08-23 09:52:54.979335', '100', '1000', '8962534', '0.3648181', '32.606434', 'Ok its for me', '16', 28, NULL, 'Kook', 'Nyakononi', 'Basic seed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
->>>>>>> Stashed changes:eightechconsults_stts_dev.sql
 
 -- --------------------------------------------------------
 
@@ -3992,7 +3987,7 @@ ALTER TABLE `planting_return_crops`
 -- AUTO_INCREMENT for table `pre_orders`
 --
 ALTER TABLE `pre_orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -4040,7 +4035,7 @@ ALTER TABLE `seed_label_packages`
 -- AUTO_INCREMENT for table `seed_labs`
 --
 ALTER TABLE `seed_labs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `stock_records`

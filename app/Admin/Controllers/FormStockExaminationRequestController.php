@@ -137,6 +137,9 @@ class FormStockExaminationRequestController extends AdminController
                 $search_param->like('status', __("Search by Status"));
             });  
         }
+        else{
+            $grid->disableFilter();
+        }
 
         return $grid;
     }
