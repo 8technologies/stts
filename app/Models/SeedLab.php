@@ -11,6 +11,7 @@ use phpDocumentor\Reflection\Types\This;
 
 class SeedLab extends Model
 {
+    
     protected $appends = [
         'crop_variety_text'
     ];
@@ -19,7 +20,7 @@ class SeedLab extends Model
         'form_stock_examination_request_id',
         'collection_date',
         'payment_receipt',
-        'applicant_remarks'
+        'applicant_remarks' 
     ];
 
     public function getCropVarietyTextAttribute()
