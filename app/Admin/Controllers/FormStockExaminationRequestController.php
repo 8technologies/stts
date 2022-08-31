@@ -29,6 +29,19 @@ class FormStockExaminationRequestController extends AdminController
      */ 
     protected $title = 'Stock examination requests';
 
+
+    
+    protected function seach_stock_exam_rec($cat) {
+        if ($cat == 1) {
+            return 'Imported seed';
+        } else if ($cat == 2) {
+            return 'Grower seed';
+        } else if ($cat == 3) {
+            return 'QDs';
+        }
+        return $cat;
+    }
+
     /**
      * Make a grid builder. 
      * 
@@ -114,6 +127,16 @@ class FormStockExaminationRequestController extends AdminController
                 return "Not assigned";
             return $u->name;
         })->sortable();
+        
+
+        if (Admin::user()->isRole('admin')) {
+            $grid->filter(function($search_param){
+                $search_param->disableIdfilter();
+
+                $search_param->like('examination_category', __("Search by Category"));
+                $search_param->like('status', __("Search by Status"));
+            });  
+        }
 
         return $grid;
     }

@@ -10,19 +10,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-
-
 // use Laravel\Passport\HasApiTokens;
-
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-/**
- * Class Administrator.
- *
+/** Class Administrator.
+ * 
  * @property Role[] $roles
  */
+// class Administrator extends Model implements AuthenticatableContract, JWTSubject, MustVerifyEmail
 class Administrator extends Model implements AuthenticatableContract, JWTSubject
 {
     use Authenticatable, 
@@ -30,11 +29,12 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
     DefaultDatetimeFormat, 
     Notifiable,
     HasFactory
+    // HasRoles
     // HasApiTokens
     ;
-    
-    protected $fillable = ['username', 'first_name', 'last_name', 'email', 'name', 'remember_token', 'password', 'avatar'];
 
+    protected $fillable = ['username', 'first_name', 'last_name', 'email', 'name', 'remember_token', 'password', 'avatar'];
+    
     /**
      * Create a new Eloquent model instance.
      *
@@ -125,5 +125,8 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
     {
         return [];
     }
-     
+
+
+  
+
 }

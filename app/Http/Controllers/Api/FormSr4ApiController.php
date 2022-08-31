@@ -23,7 +23,6 @@ class FormSr4ApiController extends AdminController
         $this->middleware('auth');
     }
 
-
     public function form_sr4_list()
     {
         $user = auth()->user();

@@ -14,7 +14,8 @@ return [
     |
     */
     // 'name' => 'The National STTS',
-    'name' => 'The National Seed Tracking & Tracing System Uganda',
+    'name' => 'STTS',
+    // 'name' => 'The National Seed Tracking & Tracing System Uganda',
 
     /*
     |--------------------------------------------------------------------------
