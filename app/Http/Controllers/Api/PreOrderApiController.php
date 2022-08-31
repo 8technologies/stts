@@ -41,7 +41,6 @@ class PreOrderApiController extends AdminController
             'crop_variety_id', 
             'quantity',  
             'seed_class',    
-            'collection_date', 
             'pickup_location',
             'detail', 
         );
@@ -50,7 +49,6 @@ class PreOrderApiController extends AdminController
             'crop_variety_id' => 'required|integer',
             'quantity' => 'required|integer',
             'seed_class' => 'required|nullable',
-            'collection_date' => 'date_format:mm-dd-yyyy|after:created_at',
             'pickup_location' => 'required|string',
             'detail' => 'required|string|nullable',
         ]);
@@ -63,8 +61,6 @@ class PreOrderApiController extends AdminController
             'collection_date' => $request->input('collection_date'),
             'pickup_location' => $request->input('pickup_location'),
             'detail' => $request->input('detail'),
-            'created_at' => date('m-d-y'),
-            'updated_at' => date('m-d-y'), 
         ]);
 
         // Form created, return success response

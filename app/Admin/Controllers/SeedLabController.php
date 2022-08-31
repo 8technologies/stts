@@ -33,13 +33,6 @@ class SeedLabController extends AdminController
     protected function grid()
     {
 
-        $u = Admin::user();
-
-        //$tot = Utils::get_stock_balance($u->id,1);
-
-        // $s = SeedLab::find(23);
-
-        // die("done");
         $grid = new Grid(new SeedLab());
 
         $grid->column('id', __('Id'));
@@ -264,6 +257,7 @@ class SeedLabController extends AdminController
             $form->hidden('crop_variety_id', __('Crop variety id'));
 
             $stocks = [];
+            
             foreach (CropVariety::all() as $key => $crop_variety) {
                 $u = Admin::user();
                 $tot = Utils::get_stock_balance($u->id, $crop_variety->id);
@@ -465,6 +459,8 @@ class SeedLabController extends AdminController
                     ->required()
                     ->options(['Moisture content', 'Purity', 'Germination', 'Seed health']);
 
+                $form->file('payment_receipt', __('Attach receipt'))->readonly();
+
                 $form->radio('status', __('Decision'))
                     ->required()
                     ->options([
@@ -474,6 +470,7 @@ class SeedLabController extends AdminController
                         $form->textarea('inspector_remarks', __('Additional remarks'));
                     });
 
+                    
                 $form->html('<small>NOTE: You cannot reverse this process once is done.</small>');
             }
         }

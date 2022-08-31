@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Encore\Admin\Auth\Database\Administrator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Encore\Admin\Traits\DefaultDatetimeFormat;
@@ -12,7 +13,20 @@ use Illuminate\Notifications\Notifiable;
 class Product extends Model
 {
     use Authenticatable, DefaultDatetimeFormat, HasFactory, Notifiable;
-    
+
+    protected $appends = [
+        'phone'
+    ];
+
+    public function getPhoneAttribute()
+    {
+        return "0783204665";
+        $u = Administrator::find($this->administrator_id);
+        return $u;
+    }
+
+
+
     // protected $fillable = [
     //     'crop_variety_id', 
     //     'seed_label_id', 
@@ -29,4 +43,4 @@ class Product extends Model
     //     'name',
     //     'total_price',
     // ];
-} 
+}

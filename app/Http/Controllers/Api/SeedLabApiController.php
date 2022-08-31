@@ -28,7 +28,7 @@ class SeedLabApiController extends AdminController
         /*  ---attributes---
         */
         $user = auth()->user();
-        $query = DB::table('seed_labs')->where('administrator_id', '=', $user->id)->get();
+        $query = SeedLab::where('administrator_id', '=', $user->id)->get();
         // $query = SeedLab::all();
 
         return $this->successResponse($query, $message = "Seed Labs");
