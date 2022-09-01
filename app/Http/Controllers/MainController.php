@@ -156,9 +156,9 @@ class MainController extends Controller
             return redirect()->intended('admin');
         }
 
-        return view('main.register');
+        // return redirect()->back()->withErrors(['error', 'has-error']);
 
-        // return back()->with(["status" => "success", "message" => "User Created!"]);
+        return back()->with(["status" => "success", "message" => "User Created!"]);
         // Accessible on the frontend via `session()->get("message", "");`
     }
 }

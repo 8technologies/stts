@@ -288,7 +288,7 @@ class SubGrowerController extends AdminController
 
                 
 
-                foreach (selectCropVariety() as $item) {
+                foreach (CropVariety::all() as $item) {
 
             $form->select($item['assignment_number'], 'Variety')->options(CropVariety::all()->pluck('name', 'name'))
                 ->required();

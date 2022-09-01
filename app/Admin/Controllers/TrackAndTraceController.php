@@ -74,13 +74,16 @@ class TrackAndTraceController extends AdminController
                 $tools->disableDelete();
         });
 
+        $ser = FormStockExaminationRequest::findOrFail(2);
+        
+
         $show->field('id', __('Id'));
         $show->field('lot_number', __('Lot number'))->badge($style = 'blue');
         $show->field('mother_lot', __('Mother lot'))->badge($style = 'green');
-        $show->field($show->form_stock_examination_request_id->company, __('Company Name'));
-        $show->field('form_stock_examination_request_id', __('Crop Variety'));
-        $show->field('form_stock_examination_request_id', __('Years of Experience'));
-        $show->field('form_stock_examination_request_id', __('Original Quantity'));
+        $show->field($ser->company, __('Company Name'));
+        $show->field('company', __('Crop Variety'));
+        $show->field('company', __('Years of Experience'));
+        $show->field('company', __('Original Quantity'));
 
 
         return $show;

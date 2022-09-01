@@ -15,6 +15,7 @@ class SeedLab extends Model
     protected $appends = [
         'crop_variety_text'
     ];
+
     protected $fillable = [
         'administrator_id',
         'form_stock_examination_request_id',
@@ -27,11 +28,11 @@ class SeedLab extends Model
     {
         return $this->crop_variety->name;
     }
+
     public function user()
     {
         return $this->belongsTo(Administrator::class, 'administrator_id');
     }
-
 
     use ModelTree, AdminBuilder;
 
@@ -51,6 +52,7 @@ class SeedLab extends Model
     public static function boot()
     {
         parent::boot();
+        
         static::creating(function ($m) {
             $crop_variety_id = 1;
             $form = FormStockExaminationRequest::find($m->form_stock_examination_request_id);
