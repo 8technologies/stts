@@ -111,7 +111,7 @@ class FormQdsController extends AdminController
         })->sortable();
 
         
-        if (($grid->status == '2') && (Admin::user()->isRole('basic-user'))){
+        if ( (Admin::user()->isRole('basic-user'))){
             $grid->actions(function ($actions) {
                 $actions->disableEdit();
                 $actions->disableDelete();
