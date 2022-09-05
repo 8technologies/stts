@@ -223,7 +223,7 @@ class FormStockExaminationRequestController extends AdminController
         $form->setWidth(8, 4);
         if ($form->isCreating()) {
             if (!Admin::user()->isRole('basic-user')) {
-                admin_warning("Warning", "You cannot create a new Stock examination requests.");
+                return  admin_warning("Warning", "You cannot create a new Stock examination requests.");
                 return redirect(admin_url('form-stock-examination-requests'));
             }
         }

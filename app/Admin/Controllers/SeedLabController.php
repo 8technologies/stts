@@ -252,7 +252,7 @@ class SeedLabController extends AdminController
 
 
             if (count($exams_list) < 1) {
-                admin_error("Warning", "You don't have any valid stock examination request.");
+                return admin_error("Warning", "You don't have any valid stock examination request.");
                 return redirect(admin_url('seed-labs'));
             }
             $form->hidden('crop_variety_id', __('Crop variety id'));
@@ -385,7 +385,7 @@ class SeedLabController extends AdminController
 
 
                     if ($quantity > $tot) {
-                        admin_error("Warning", "There is insufitient quantity stock of this crop vareity. You tried to 
+                        return   admin_error("Warning", "There is insufitient quantity stock of this crop vareity. You tried to 
                         enter quantity " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
                         return redirect(admin_url('seed-labs'));
                     }
@@ -395,7 +395,7 @@ class SeedLabController extends AdminController
                     $form->parent_id = 0;
                     if ($mother != null) {
                         if ($mother->crop_variety_id != $model->crop_variety_id) {
-                            admin_error('Invalid lot number', 'Crop varity of Mother lot number 
+                            return admin_error('Invalid lot number', 'Crop varity of Mother lot number 
                             doesn\' match with current crop variety.');
                             return redirect(admin_url('seed-labs/' . $model->id . "/edit"))->withInput();
                         }
@@ -629,7 +629,7 @@ class SeedLabController extends AdminController
                     }
 
                     if ($quantity > $tot) {
-                        admin_error("Warning", "There is insufitient quantity stock of this crop variety. You tried to 
+                        return admin_error("Warning", "There is insufitient quantity stock of this crop variety. You tried to 
                         enter quantity " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
                         return redirect(admin_url('seed-labs/' . $model->id . "/edit"))->withInput();
                     }

@@ -219,7 +219,7 @@ class PlantingReturnController extends AdminController
         $sr4 = Utils::has_valid_sr6();
         if ($form->isCreating()) {
             if (!$sr4) {
-                admin_error("Alert", "You need to be a registred and approved seed grower to apply for field inspection.");
+                return admin_error("Alert", "You need to be a registred and approved seed grower to apply for field inspection.");
                 return redirect(admin_url('planting-returns'));
             }
         }

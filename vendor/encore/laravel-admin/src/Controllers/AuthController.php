@@ -149,7 +149,7 @@ class AuthController extends Controller
         });
 
         $form->saved(function () {
-            admin_toastr(trans('admin.update_succeeded'));
+            return admin_toastr(trans('admin.update_succeeded'));
 
             return redirect(admin_url('auth/setting'));
         });

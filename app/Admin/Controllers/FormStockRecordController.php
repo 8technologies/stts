@@ -166,7 +166,7 @@ class FormStockRecordController extends AdminController
             }
 
             if ($quantity > $tot) {
-                admin_error("Warning", "You have insufitient quantity stock of crop vareity {$varity->name}. You tried to 
+                return  admin_error("Warning", "You have insufitient quantity stock of crop vareity {$varity->name}. You tried to 
                 transfer " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
                 return redirect(admin_url('stock-records/create'));
             }
@@ -175,7 +175,7 @@ class FormStockRecordController extends AdminController
                 $receiver_id = ((int)($form->seed_class));
 
                 if ($receiver_id < 0) {
-                    admin_error("Warning", "You did not select Receiver.");
+                    return  admin_error("Warning", "You did not select Receiver.");
                     return redirect(admin_url('stock-records/create'));
                 }
                 

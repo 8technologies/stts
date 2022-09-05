@@ -246,7 +246,7 @@ class FormQdsController extends AdminController
         $form = new Form(new FormQds());
         if ($form->isCreating()) {
             if (!Utils::can_create_qds()) {
-                admin_warning("Warning", "You cannot create a new QDS form while still having another active one.");
+                return admin_warning("Warning", "You cannot create a new QDS form while still having another active one.");
                 return redirect(admin_url('form-qds'));
             }
         } 

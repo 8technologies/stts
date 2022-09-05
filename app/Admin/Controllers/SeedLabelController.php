@@ -194,7 +194,7 @@ class SeedLabelController extends AdminController
         if ($form->isCreating()) {
             
             if (!Admin::user()->isRole('basic-user')) {
-                admin_error("Warning", "You don't have previleges to create this form.");
+                return admin_error("Warning", "You don't have previleges to create this form.");
                 return redirect(admin_url('seed-labels'));
             }
             $form->hidden('administrator_id', __('Administrator id'))
@@ -213,7 +213,7 @@ class SeedLabelController extends AdminController
 
   
             if (count($seed_labs) < 1) {
-                admin_error("Warning", "You don't have any  valid LAB TEST NUMBER. Apply for seed lap to aquire a LAB TEST NUMBER.");
+                return  admin_error("Warning", "You don't have any  valid LAB TEST NUMBER. Apply for seed lap to aquire a LAB TEST NUMBER.");
                 return redirect(admin_url('seed-labels'));
             }
             $form->hidden('administrator_id')->default($user->id);
@@ -223,7 +223,7 @@ class SeedLabelController extends AdminController
                     dd("seed_label not found");
                 }
                 if ($form->quantity > $seed_lab->quantity) {
-                    admin_error("Warning", "You have insufitient amount of this variety than what you have requested for..");
+                    return admin_error("Warning", "You have insufitient amount of this variety than what you have requested for..");
                     return redirect(admin_url('seed-labels/create'));
                 }
                 $form->crop_variety_id = $seed_lab->crop_variety->id;
@@ -308,7 +308,7 @@ class SeedLabelController extends AdminController
                     dd("Seed lab not found");
                 }
                 if ($model->quantity > $model->seed_lab->quantity) {
-                    admin_error("Warning", "There is insufitient amount of this variety in seedlab for this applicant.");
+                    return  admin_error("Warning", "There is insufitient amount of this variety in seedlab for this applicant.");
                     return redirect(admin_url('seed-labels'));
                 }
 
@@ -330,7 +330,7 @@ class SeedLabelController extends AdminController
                         $model->is_processed = 1;
                         $model->status = 14;
                         if ($model->save()) {
-                            admin_success("Success!", "Label priting was successfully processed.");
+                            return   admin_success("Success!", "Label priting was successfully processed.");
                             return redirect(admin_url('seed-labels'));
                         }
                     }
