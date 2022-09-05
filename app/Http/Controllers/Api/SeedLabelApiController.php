@@ -37,7 +37,7 @@ class SeedLabelApiController extends AdminController
 
         $seed_lab = SeedLab::find(((int)($r->seed_lab_id)));
         if ($seed_lab == null) {
-            return $this->errorResponse("Seedlab not found.", 200);
+            return $this->errorResponse("Seedlab not found. $r->seed_lab_id <===", 200);
         }   
 
         return $this->successResponse([], "Good to go with $seed_lab->crop_variety_id", 201);
