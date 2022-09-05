@@ -13,8 +13,18 @@ class SeedLabelPackage extends Model
             Utils::create_default_tables();
             $this->crop_variety_id = 1;
             $this->save();
-        }
+        } 
         return $this->belongsTo(CropVariety::class);
     }
     use HasFactory;
+
+    protected $appends = [
+        'crop_variety_text'
+    ];
+
+    public function getCropVarietyTextAttribute()
+    {
+        return $this->crop_variety->name;
+    }
+    
 }
