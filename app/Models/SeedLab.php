@@ -74,5 +74,7 @@ class SeedLab extends Model
         return $this->belongsTo(CropVariety::class);
     }
 
+    
+
     use HasFactory;
 }

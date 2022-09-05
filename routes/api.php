@@ -103,6 +103,7 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     // seed lab analysis
     Route::post("/seed-labs/new", [SeedLabApiController::class, "seed_lab_create"]);
+    Route::post("/seed-labs/new", [SeedLabApiController::class, "seed_lab_create"]);
     Route::get("/seed-labs/list", [SeedLabApiController::class, "seed_lab_list"]);
     Route::post("/seed-labs/delete", [SeedLabApiController::class, "seed_lab_delete"]);
 
