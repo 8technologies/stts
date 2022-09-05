@@ -109,6 +109,7 @@ Route::group(['middleware' => 'api'], function ($router) {
     // seed label
     Route::post("/seed-labels/new", [SeedLabelApiController::class, "seed_label_create"]);
     Route::get("/seed-labels/list", [SeedLabelApiController::class, "seed_label_list"]);
+    Route::get("/seed-labels-packages/list", [SeedLabelApiController::class, "seed_label_packages"]);
     Route::post("/seed-labels/delete", [SeedLabelApiController::class, "seed_label_delete"]);
 
     // Route::post("/form-sr10/new", [FormSr10ApiController::class, "form_sr10_create"]);

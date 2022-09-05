@@ -29,4 +29,13 @@ class SeedLabel extends Model
     {
         return $this->belongsTo(SeedLabelPackage::class);
     }
+
+    protected $appends = [
+        'crop_variety_text'
+    ];
+
+    public function getCropVarietyTextAttribute()
+    {
+        return $this->crop_variety->name;
+    }
 }

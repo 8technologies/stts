@@ -3,18 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\SeedLabel;
+use App\Models\SeedLabelPackage;
 use App\Models\Utils;
-use Encore\Admin\Controllers\AdminController; 
+use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
-    
+
 class SeedLabelApiController extends AdminController
 {
     use ApiResponser;
-    
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -27,19 +28,26 @@ class SeedLabelApiController extends AdminController
         $user = auth()->user();
         $query = DB::table('seed_labels')->where('administrator_id', $user->id)->get();
         // $query = SeedLabel::all();
-        
-        return $this->successResponse($query, $message="Seed Labels");  
-    } 
+
+        return $this->successResponse($query, $message = "Seed Labels");
+    }
 
 
-        
+    public function seed_label_packages()
+    {
+        $query = SeedLabelPackage::all();
+        return $this->successResponse($query, $message = "Seed Label packages");
+    }
+
+
+
     // delete seed lab
     public function seed_label_delete(Request $request)  //\Illuminate\Http\JsonResponse
     {
         $user_id = auth()->user()->id;
         $id = ((int)($request->input('id')));
         $item = SeedLabel::find($id);
-        
+
         if ($item == null) {
             return $this->errorResponse("Failed to delete  because the item was not found.", 200);
         }
@@ -51,6 +59,5 @@ class SeedLabelApiController extends AdminController
         }
         SeedLabel::where('id', $id)->delete();
         return $this->successResponse($item, "Item deleted successfully!", 201);
-
     }
-}    
+}
