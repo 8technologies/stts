@@ -42,7 +42,7 @@ class FormStockExaminationRequestApiController extends AdminController
         $form = new FormStockExaminationRequest();
         $form->examination_category = $request->examination_category;
         $form->remarks = $request->remarks;
-        $form->planting_return_id = $request->planting_return_id;
+        $form->planting_return_id = $request->planting_return_id;//    
         $form->administrator_id = $user->id;
         $form->status = 0;
         $form->save();
