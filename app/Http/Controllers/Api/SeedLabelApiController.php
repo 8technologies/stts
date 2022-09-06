@@ -25,7 +25,7 @@ class SeedLabelApiController extends AdminController
     public function seed_label_list()
     {
         $user = auth()->user();
-        $query = DB::table('seed_labels')->where('administrator_id', $user->id)->get();
+        $query = SeedLabel::where('administrator_id', $user->id)->get();
         return $this->successResponse($query, $message = "Seed Labels");
     }
 
@@ -74,8 +74,8 @@ class SeedLabelApiController extends AdminController
 
         if ($label->save()) {
             return $this->successResponse($label, 'Seed label created successfully.', 201);
-        }else{
-            return $this->errorResponse("Failed to create seed label. Please try again.", 200);//try again
+        } else {
+            return $this->errorResponse("Failed to create seed label. Please try again.", 200); //try again
         }
     }
 
