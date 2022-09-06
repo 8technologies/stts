@@ -36,31 +36,47 @@ class SeedLabelApiController extends AdminController
         $label = new SeedLabel();
 
         $seed_lab = SeedLab::find(((int)($r->seed_lab_id)));
+        $package = SeedLabelPackage::find(((int)($r->seed_label_package_id)));
         if ($seed_lab == null) {
-            return $this->errorResponse("Seedlab not found. $r->seed_lab_id <===", 200);
-        }   
+            return $this->errorResponse("Seedlab not found.", 200);
+        }
+        if ($package == null) {
+            return $this->errorResponse("Selected seed package not found", 200);
+        }
+        if (((int)($r->quantity)) < 1) {
+            return $this->errorResponse("Selected quantity too small.", 200);
+        }
 
-        return $this->successResponse([], "Good to go with $seed_lab->crop_variety_id", 201);
+        $pics = Utils::upload_images_1($_FILES, false);
+        if (!isset($pics[0])) {
+            return $this->errorResponse("Payment recept is required.", 200);
+        }
+        if (!isset($pics[1])) {
+            return $this->errorResponse("Seed photo is required.", 200);
+        }
 
-        /* $label->seed_lab_id = ;  
-        
-        crop_variety_text
+        $price =  ((((int)($r->quantity)) / ((int)($package->package_size))) * $package->package_price);
+        $price = ((int)($price));
+
+        $label->seed_lab_id = $seed_lab->id;
         $label->administrator_id = $user->id;
-        $label->crop_variety_id = $r->crop_variety_id;
+        $label->crop_variety_id = $seed_lab->crop_variety_id;
         $label->seed_label_package_id = $r->seed_label_package_id;
         $label->quantity = $r->quantity;
         $label->applicant_remarks = $r->applicant_remarks;
-        $label->price = $r->price;
+        $label->price = $price;
         $label->status = 1;
         $label->is_processed = 0;
         $label->status_comment = '';
-        $label->receipt = $receipt;
-        $label->image = $image;
-        $label->images = '[]'; 
-        return $this->successResponse($form, "Seed Lab submit success!", 201);
-        
-        
-        */
+        $label->receipt = $pics[0];
+        $label->image = $pics[1];
+        $label->images = '[]';
+
+        if ($label->save()) {
+            return $this->successResponse($label, 'Seed label created successfully.', 201);
+        }else{
+            return $this->errorResponse("Failed to create seed label. Please try again.", 200);//try again
+        }
     }
 
 
