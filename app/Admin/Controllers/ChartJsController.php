@@ -48,3 +48,4 @@ class ChartjsController extends Controller
         return new Callout($content, $title, 'info');
     }
 }
+
