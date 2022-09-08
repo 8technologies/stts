@@ -531,7 +531,7 @@ class FormStockExaminationRequestController extends AdminController
                 ])
                 ->required();
             $form->text('field_size', __('Enter field size (in Acres)'));
-            $form->date('date', __('Selected date sample was collected'));
+            $form->date('date', __('Stock Examination Date'));
 
             $form->divider();
             $form->html('<h3>Analysis results</h3>');

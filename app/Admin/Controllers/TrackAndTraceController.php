@@ -99,7 +99,6 @@ class TrackAndTraceController extends AdminController
         $show->field('form_stock_examination_request_id', __('Year'));
         $show->field('form_stock_examination_request_id', __('Original Quantity'));
 
-
         return $show;
         // return [$show, $show_qds];
     }

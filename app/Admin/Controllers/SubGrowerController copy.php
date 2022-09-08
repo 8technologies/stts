@@ -14,6 +14,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use App\Admin\Controllers\SubGrowerControllerJS;
 
 
 class SubGrowerController extends AdminController
@@ -25,11 +26,8 @@ class SubGrowerController extends AdminController
      */
     protected $title = 'Planting Return - Growers';
 
-    /**
-     * 
-     * 
-     
 
+    /*
      * Make a grid builder.
      *
      * @return Grid 
@@ -63,7 +61,7 @@ class SubGrowerController extends AdminController
                 '2' => 'Inspection assigned',
                 '3' => 'Halted',
                 '4' => 'Rejected',
-                '5' => 'Accepted',
+                '5' => 'Accepted', 
             ]);
             $filter->equal('crop', "Filter by crop crop")->select(Crop::all()->pluck('name', 'name'));
             $filter->equal('variety', "Filter by crop variety")->select(CropVariety::all()->pluck('name', 'name'));
@@ -76,11 +74,11 @@ class SubGrowerController extends AdminController
 
         /*
         
-                    return '<span class="badge badge-info">Pending</span>';
+                    return '<span class="badge badge-warning">Pending</span>';
         if ($status == 1)
-            return '<span class="badge badge-info"></span>';
+            return '<span class="badge badge-warning"></span>';
         if ($status == 2)
-            return '<span class="badge badge-primary"></span>';
+            return '<span class="badge badge-warning"></span>';
         if ($status == 3)
             return '<span class="badge badge-warning"></span>';
         if ($status == 4)
@@ -195,7 +193,7 @@ class SubGrowerController extends AdminController
             return $_user->name;
         });
 
-        $grid->column('filed_name', __('Field Name'))->sortable();
+        $grid->column('field_name', __('Field Name'))->sortable();
         $grid->column('name', __('Person responisble'))->sortable();
         $grid->column('size', __('Size'))->sortable();
         $grid->column('crop', __('Crop'))->display(function(){
@@ -204,8 +202,8 @@ class SubGrowerController extends AdminController
         $grid->column('variety', __('variety'))->sortable();
         $grid->column('district', __('District'))->sortable();
         $grid->column('subcourty', __('Subcouty'))->sortable();
-        $grid->column('quantity_planted', __('Quantity planted'))->sortable();
-        $grid->column('expected_yield', __('Expected yield'))->hide();
+        $grid->column('quantity_planted', __('Quantity planted (kgs)'))->sortable();
+        $grid->column('expected_yield', __('Expected yield (tons)'))->hide();
         $grid->column('phone_number', __('Phone number'))->hide();
         $grid->column('gps_latitude', __('Gps latitude'))->hide();
         $grid->column('gps_longitude', __('Gps longitude'))->hide();
@@ -253,8 +251,8 @@ class SubGrowerController extends AdminController
         $show->field('district', __('District'));
         $show->field('subcourty', __('Subcouty'));
         $show->field('planting_date', __('Planting date'));
-        $show->field('quantity_planted', __('Quantity planted'));
-        $show->field('expected_yield', __('Expected yield'));
+        $show->field('quantity_planted', __('Quantity planted (kgs)'));
+        $show->field('expected_yield', __('Expected yield (tons)'));
         $show->field('phone_number', __('Phone number'));
         $show->field('gps_latitude', __('Gps latitude'));
         $show->field('gps_longitude', __('Gps longitude'));
@@ -283,20 +281,26 @@ class SubGrowerController extends AdminController
         if (Admin::user()->isRole('basic-user')) {
 
             $form->text('name', __('Name'))->default($user->name)->required();
-            $form->text('size', __('Garden Size (in Accre)'))->required();
+            $form->text('size', __('Garden Size (acres)'))->required();
 
             $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'name'))
                 ->required();
 
-            $form->select('variety', 'Variety')->options(CropVariety::all()->pluck('name', 'name'))
+                
+
+                foreach (CropVariety::all() as $item) {
+
+            $form->select($item['assignment_number'], 'Variety')->options(CropVariety::all()->pluck('name', 'name'))
                 ->required();
-            $form->text('filed_name', __('Filed name'))->required();
+                }
+                
+            $form->text('field_name', __('Filed name'))->required();
             $form->text('district', __('District'))->required();
             $form->text('subcourty', __('Subcourty'))->required();
             $form->text('village', __('Village'))->required();
             $form->date('planting_date', __('Planting date'))->required();
-            $form->text('quantity_planted', __('Quantity planted'));
-            $form->text('expected_yield', __('Expected yield'));
+            $form->text('quantity_planted', __('Quantity planted (kgs)'));
+            $form->text('expected_yield', __('Expected yield (tons)'));
             $form->text('phone_number', __('Phone number'))->required();
             $form->text('gps_latitude', __('Gps latitude'))->required();
             $form->text('gps_longitude', __('Gps longitude'))->required();
@@ -318,12 +322,13 @@ class SubGrowerController extends AdminController
 
             $form->display('', __('Applicant'))->default($u->name)->readonly();
             $form->display('', __('Person responsible'))->default($model->name)->readonly();
-            $form->display('', __('Field name'))->default($model->filed_name)->readonly();
+            $form->display('', __('Field name'))->default($model->field_name)->readonly();
             $form->display('', __('District'))->default($model->district)->readonly();
             $form->display('', __('Subcourty'))->default($model->subcourty)->readonly();
             $form->display('', __('Village'))->default($model->village)->readonly();
             $form->display('', __('Crop'))->default($model->crop)->readonly();
             $form->display('', __('Variety'))->default($model->variety)->readonly();
+
             $form->divider();
 
             $form->select('seed_class', 'Select Seed Class')->options([
@@ -331,11 +336,12 @@ class SubGrowerController extends AdminController
                 'Certified seed' => 'Certified seed',
                 'Basic seed' => 'Basic seed',
             ])
-                ->required();
+            ->required();
 
 
             $_items = [];
             $crop_val = "";
+
             foreach (CropVariety::all() as $key => $item) {
                 $_items[$item->id] = "CROP: " . $item->crop->name.", Variety: ".$item->name;
                 if ($model->crop == $item->name) {
@@ -343,10 +349,9 @@ class SubGrowerController extends AdminController
                 }
             }
 
-
-
             $form->select('crop', 'Select crop variety')->options($_items)->value($crop_val)
                 ->default($crop_val)
+                ->readonly()
                 ->required();
 
             $form->radio('status', 'Initialize this form')->options([
@@ -355,7 +360,7 @@ class SubGrowerController extends AdminController
                 ->required();
 
             /*
-            "filed_name" => "Jesus"
+            "field_name" => "Jesus"
             "district" => "Kasese"
             "subcourty" => "Bwera"
             "village" => "Nyambambuka"
