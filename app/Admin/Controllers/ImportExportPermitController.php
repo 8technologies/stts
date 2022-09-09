@@ -398,7 +398,6 @@ class ImportExportPermitController extends AdminController
                     //             ->readonly();
                     //     }
                     // }
-
                     
                     if ($sr4 != null) {
                         if ($sr4->seed_board_registration_number != null) {
