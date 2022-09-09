@@ -57,27 +57,29 @@ class FormSr10Controller extends AdminController
                     $actions->disableEdit();
                 }
             });
-        } else if (Admin::user()->isRole('inspector')) {
-            $grid->model()->where('administrator_id', '=', Admin::user()->id);
-            $grid->disableCreateButton();
-            $grid->disableBatchActions();
+        } 
+        // else if (Admin::user()->isRole('inspector')) {
+        //     $grid->model()->where('administrator_id', '=', Admin::user()->id);
+        //     $grid->disableCreateButton();
+        //     $grid->disableBatchActions();
 
-            $grid->actions(function ($actions) {
+        //     $grid->actions(function ($actions) {
+        //         if ($actions->row['is_active'] == 0) {
+        //             $actions->disableEdit();
+        //         }
 
-                if ($actions->row['is_active'] == 0) {
-                    $actions->disableEdit();
-                }
+        //         $status = ((int)(($actions->row['status'])));
+        //         $actions->disableDelete();
+        //         if (
+        //             $status == 1
+        //         ) {
+        //             //$actions->disableEdit();
+        //         }
+        //     });
 
-
-                $status = ((int)(($actions->row['status'])));
-                $actions->disableDelete();
-                if (
-                    $status == 1
-                ) {
-                    //$actions->disableEdit();
-                }
-            });
-        } else {
+        // } 
+        
+        else {
             $grid->disableCreateButton();
         }
 
@@ -86,16 +88,21 @@ class FormSr10Controller extends AdminController
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
         })->sortable();
-        $grid->column('is_active', __('Attension'))->display(function ($is_active) {
-            if ($is_active) {
-                return '<span class="badge badge-danger">Needs your attension</span>';
-            } else {
-                return '-';
-            }
-        })->sortable();
+
+        if (!Admin::user()->isRole('basic-user')) {
+            $grid->column('is_active', __('Attension'))->display(function ($is_active) {
+                if ($is_active) {
+                    return '<span class="badge badge-danger">Needs your attension</span>';
+                } else {
+                    return '-';
+                }
+            })->sortable();
+        }
+
         $grid->column('min_date', __('To be submited before'));
         return $grid;
     }
+
 
     /**
      * Make a show builder.
@@ -109,23 +116,21 @@ class FormSr10Controller extends AdminController
 
         $model = FormSr10::findOrFail($id);
 
- 
         $show->field('id', __('Id')); 
         $show->field('stage', __('Stage')); 
-        $show->field('submited_date', __('Submited date')); 
+        $show->field('submited_date', __('Submited date'));
+
         $show->field('name', __('Applicant\'s Name'))->as(function ($i) {
             return $this->planting_return->name;
         });
+
         $show->field('address', __('Applicant\'s Address'))->as(function ($i) {
 
             return $this->planting_return->district . ", " .
             $this->planting_return->subcourty . ", " . $this->planting_return->village;
- 
         });
         
-        
         $show->field('gps', __('GPS'))->as(function ($i) {
-
             return $this->planting_return->gps_latitude . ", " .
             $this->planting_return->gps_longitude; 
         });
@@ -146,9 +151,16 @@ class FormSr10Controller extends AdminController
         $show->field('futher_remarks', __('Futher remarks')); 
         $show->field('sr10_number', __('SR10s number')); 
       
+        $show->panel()
+            ->tools(function ($tools) {
+                $tools->disableEdit();
+                $tools->disableDelete();
+            });
+
         return $show;
     }
 
+    
     /**
      * Make a form builder.
      *
@@ -266,9 +278,11 @@ class FormSr10Controller extends AdminController
 
         if ($form->isEditing()) {
             if (!Admin::user()->isRole('inspector')) {
-                admin_error("Warning", "Only inspectors are allowed to modify an SR10.");
+                admin_warning("Warning", "Only inspectors can edit an SR10 Form");
                 $can_edit = false;
+                // return redirect(admin_url('form-sr10s'));
             }
+
             $id = request()->route()->parameters['form_sr10'];
             $model = $form->model()->find($id);
 

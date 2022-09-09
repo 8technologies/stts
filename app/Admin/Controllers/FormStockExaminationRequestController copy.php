@@ -71,7 +71,7 @@ class FormStockExaminationRequestController extends AdminController
                 if (
                     $status == 1
                 ) {
-                    $actions->disableEdit();
+                    //$actions->disableEdit();
                 }
             });
         } else {
@@ -79,8 +79,8 @@ class FormStockExaminationRequestController extends AdminController
         }
 
 
-        // $grid->column('id', __('Id'));
-        $grid->column('created_at', __('Created On'))->display(function ($item) {
+        $grid->column('id', __('Id'));
+        $grid->column('created_at', __('Created'))->display(function ($item) {
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
         $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
@@ -213,7 +213,7 @@ class FormStockExaminationRequestController extends AdminController
         $form->setWidth(8, 4);
         if ($form->isCreating()) {
             if (!Admin::user()->isRole('basic-user')) {
-                return  admin_warning("Warning", "You cannot create a new Stock examination requests.");
+                admin_warning("Warning", "You cannot create a new Stock examination requests.");
                 return redirect(admin_url('form-stock-examination-requests'));
             }
         }
@@ -420,27 +420,12 @@ class FormStockExaminationRequestController extends AdminController
 
             $form->textarea('remarks', __('Enter remarks'))->required();
 
-            /**
-             * During stock examination the system should automatically 
-             * generate the lot number with this format 
-             * (company initials/ year/crop variety/ random number)
-             * NM/2022/Beans/23232332
-             */
-
-            // $lot_number_company = "NM";
-            // $lot_number_Year = date("Y");
-            // $lot_number_cropVariety = "Beans";
-            $lot_number_randNum = rand(100000000,999999999);
-            $form->hidden('lot_number', __('Lot Number'))
-            // ->value($lot_number_company . "/" . $lot_number_Year . "/" . $lot_number_cropVariety . "/" . $lot_number_randNum);
-            // ->value($lot_number_company . $lot_number_Year . $lot_number_cropVariety . $lot_number_randNum);            
-            ->value($lot_number_randNum);
-
             $user = Auth::user();
-            $form->hidden('administrator_id', __('Administrator id'))->value($user->id); 
+            $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
         }
 
         if (Admin::user()->isRole('admin') && $form->isEditing()) {
+
             $form->setTitle("Assigning an inspector");
 
             $id = request()->route()->parameters['form_stock_examination_request'];
@@ -521,10 +506,10 @@ class FormStockExaminationRequestController extends AdminController
             } else if ($cat == 3) {
                 $cat =  'QDs';
             }
-
             $form->display('name', __('Name of applicant'))
                 ->default($u->name);
   
+
             $form->text('yield', __('Enter Yield/Seed quantity (in Metric tonnes)'))
                 ->attribute('type', 'number')
                 ->required();
@@ -536,7 +521,7 @@ class FormStockExaminationRequestController extends AdminController
                 ])
                 ->required();
             $form->text('field_size', __('Enter field size (in Acres)'));
-            $form->date('date', __('Stock Examination Date'));
+            $form->date('date', __('Selected date sample was collected'));
 
             $form->divider();
             $form->html('<h3>Analysis results</h3>');

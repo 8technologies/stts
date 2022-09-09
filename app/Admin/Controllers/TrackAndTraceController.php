@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\CropVariety;
 use App\Models\FormStockExaminationRequest;
 use App\Models\SeedLab;
-use App\Models\FormQds;
 use App\Models\StockRecord;
 use App\Models\TestTree;
 use App\Models\Utils;
@@ -25,98 +24,221 @@ use Encore\Admin\Widgets\Table;
 
 class TrackAndTraceController extends AdminController
 {
-    
-    /** 
-     * Title for current resource.
-     *
-     * @var string
-     */
-    protected $title = 'Track and Trace Analysis';
-
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid 
-     */
-    protected function grid()
+    public function index(Content $content)
     {
-        $grid = new Grid(new SeedLab());    
-        $grid->column('id', __('Id'));
-        // $grid->column('', __(''));
-        $grid->column('lot_number', __('Lot number'))->badge($style = 'blue')->copyable();
-        $grid->column('mother_lot', __('Mother lot'))->badge($style = 'green')->copyable();     
+        return Admin::content(function (Content $content) {
+            $title = "No lot number set";
+            $lot_number = "";
+            $lot_is_set = false;
 
-        $grid->filter(function($search_param){
-            $search_param->disableIdfilter();
-            $search_param->like('lot_number', __("Search by Lot number"));
-            $search_param->like('mother_lot', __("Search by Mother Lot"));
+            if (isset($_GET['lot_number'])) {
+                if (strlen(trim($_GET['lot_number'])) > 0) {
+                    $lot_is_set = true;
+                    $lot_number = trim($_GET['lot_number']);
+                    $title = "LOT NUMBER: " . $lot_number;
+                }
+            }
+
+            $lab_works = SeedLab::where('temp_parent', '>', 0)->get();
+
+            foreach ($lab_works as $key => $lab_work) {
+                $lab_work->parent_id = $lab_work->temp_parent;
+                $lab_work->temp_parent = 0;
+                $lab_work->save();
+            }
+
+            $content->header($title);
+            $track = SeedLab::tree(
+                function (Tree $tree) {
+
+                    $lot_number = "";
+                    $lot_is_set = false;
+                    if (isset($_GET['lot_number'])) {
+                        if (strlen(trim($_GET['lot_number'])) > 0) {
+                            $lot_is_set = true;
+                            $lot_number = trim($_GET['lot_number']);
+                        }
+                    }
+
+                    if ($lot_is_set) {
+                        $tree->query(function ($model) {
+                            $pending = [];
+                            $done = [];
+                            $found = [];
+                            $temp = [];
+
+                            $lot_number = trim($_GET['lot_number']);
+                            $lab = SeedLab::where([
+                                'mother_lot' => $lot_number,
+                                'parent_id' => 0,
+                            ])
+                                ->first();
+
+                            if ($lab == null) {
+
+                                $lab_temp = SeedLab::where([
+                                    'mother_lot' => $lot_number,
+                                ])
+                                    ->first();
+                                if ($lab_temp != null) {
+                                    $lab_temp->temp_parent = $lab_temp->parent_id;
+                                    $lab_temp->parent_id = 0;
+                                    $lab_temp->save();
+                                }
+                                $lab = $lab_temp;
+                            }
+
+                            if ($lab != null) {
+                                $pending[] = $lab->id;
+                                $found[] = $lab->id;
+                                while (true) {
+
+
+                                    foreach ($pending as $key => $id) {
+                                        if (in_array($id, $done)) {
+                                            continue;
+                                        }
+                                        $found[] = $id;
+
+                                        $lab_2 = SeedLab::where('mother_lot', $id)
+                                            ->orWhere('lot_number', $id)
+                                            ->orWhere('parent_id', $id)
+                                            ->get();
+
+                                        if (!in_array($id, $done)) {
+                                            $done[] = $id;
+                                        }
+
+                                        foreach ($lab_2 as $key => $lab_2_value) {
+
+                                            if (!in_array($lab_2_value->id, $temp)) {
+                                                $temp[] = $lab_2_value->id;
+                                            }
+                                        }
+                                    }
+
+                                    $is_done = true;
+                                    foreach ($temp as $key => $temp_value) {
+                                        $pending[] = $temp_value;
+                                        if (!in_array($temp_value, $done)) {
+                                            $is_done = false;
+                                        }
+                                    }
+                                    if ($is_done) {
+                                        break;
+                                    }
+                                }
+                            }
+
+                            return $model->whereIn('id', $found);
+                        });
+                    }
+
+
+                    //$tree->disableCreate();
+                    $tree->disableSave();
+
+                    $tree->branch(function ($branch) {
+
+                        $ord = $branch['id'];
+                        $lab = SeedLab::find($ord);
+                        if (!$lab) {
+                            return $ord . " N/A";
+                        }
+                        return $lab->mother_lot . " => " . $lab->id;
+
+                        return ($branch['mother_lot']);
+
+                        $src = url("storage/" . $branch['logo']);
+
+                        $logo = "<img src='$src' style='max-width:30px;max-height:30px' class='img'/>";
+
+                        return '<a href="/love">' . "{$branch['id']} - {$branch['title']} $logo" . '</a>';
+                    });
+                }
+            );
+
+
+            $tab = new Tab();
+            $tab->add("Tracking", $track);
+            $trace_table = "Nothing to trace.";
+
+            if ($lot_is_set) {
+                $traces = [];
+                $temp_lot_number = $lot_number;
+
+                $trace_lab = SeedLab::where([
+                    'mother_lot' => $temp_lot_number,
+                ])
+                    ->first();
+
+                if ($trace_lab != null) {
+                    $traces[] = $trace_lab;
+                    $temp_lot_number = $trace_lab->parent_id;
+
+                    while (true) {
+                        $trace_lab = SeedLab::where([
+                            'id' => $temp_lot_number,
+                        ])
+                            ->first();
+                        if ($trace_lab == null) {
+                            break;
+                        }
+                        $temp_lot_number = $trace_lab->parent_id;
+                        $traces[] = $trace_lab;
+                    }
+                }
+
+                $headers = [
+                    'Id', 
+                    'Mother lot', 
+                    'Lot number', 
+                    'Form Stock Examination Request Id', 
+                    // 'Company Name', 
+                    // 'Crop Variety', 
+                    // 'Year', 
+                    // 'Original Quantity'
+                ];
+
+                $rows = [];
+
+                foreach ($traces as $key => $trace_value) {
+                    $row['id'] = $trace_value->id;
+                    $row['mother_lot'] = $trace_value->mother_lot;
+                    $row['lot_number'] = $trace_value->lot_number;
+                    $row['form_stock_examination_request_id'] = $trace_value->form_stock_examination_request_id;
+                    $row['form_stock_examination_request_id'] = $trace_value->form_stock_examination_request_id;
+                    // $row['id'] = $trace_value->id;
+                    // $row['id'] = $trace_value->id;
+                    // $row['id'] = $trace_value->id;
+                    $rows[] = $row;
+                }
+
+                $trace_table = new Table($headers, $rows);
+            }
+            
+            $tab->add("Tracing", $trace_table);
+
+            $content->body($tab);
         });
-        
-        $grid->disableCreateButton();
-        $grid->disableRowSelector();
-        $grid->disableColumnSelector();
-        $grid->disableExport();
 
-        
-        $grid->actions(function ($actions) {
-            $actions->disableDelete();
-            $actions->disableEdit();
-        });
-
-
-        return $grid;
+        return $content;
     }
 
-    
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     * @return Show 
-     */
-    protected function detail($id)
+
+    protected function form()
     {
-        /** 
-         * The details should show the company name, the crop variety, year, original quantity
-         */
-        $show = new Show(SeedLab::findOrFail($id));
-        
-        
-        if (!Admin::user()->isRole('admin') && !Admin::user()->isRole('super-admin')) {
-            $show->panel()->tools(function ($tools) {
-                    $tools->disableEdit();
-                    $tools->disableDelete();
-            });
-        }
+        $form = new Form(new SeedLab());
 
-        $ser = FormStockExaminationRequest::findOrFail(2); 
+        $form->display('id', 'ID');
 
-        $show->field('id', __('Id'));
-        $show->field('lot_number', __('Lot number'));
-        $show->field('mother_lot', __('Mother lot'));
-        $show->field('form_stock_examination_request_id', __('Company Name'));
-        $show->field('form_stock_examination_request_id', __('Crop Variety'));
-        $show->field('form_stock_examination_request_id', __('Year'));
-        $show->field('form_stock_examination_request_id', __('Original Quantity'));
+        $form->select('parent_id')->options(SeedLab::selectOptions());
 
-        return $show;
-        // return [$show, $show_qds];
+        $form->text('mother_lot')->rules('required');
+
+        //$form->image('logo');
+
+
+        return $form;
     }
-
-
-    // protected function form()
-    // {
-    //     $form = new Form(new SeedLab());
-
-    //     $form->display('id', 'ID');
-
-    //     $form->select('parent_id')->options(SeedLab::selectOptions());
-
-    //     $form->text('mother_lot')->rules('required');
-
-    //     //$form->image('logo');
-
-
-    //     return $form;
-    // }
 }

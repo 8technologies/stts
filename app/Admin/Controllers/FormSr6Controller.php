@@ -149,6 +149,7 @@ class FormSr6Controller extends AdminController
                     return "-";
                 return $u->name;
             });
+        $show->field('registration_number', __('Seed board registration number'));
         $show->field('name_of_applicant', __('Name of applicant'));
         $show->field('address', __('Address'));
         $show->field('premises_location', __('Premises location'));
@@ -443,6 +444,9 @@ class FormSr6Controller extends AdminController
                     $form->date('valid_until', 'Valid until date?');
                 });
 
+                $form->text('registration_number', __('Enter Seed Board Registration number'))
+                ->help("Please Enter seed board registration number")
+                ->default(rand(1000000, 9999999));
 
             // $form->datetime('valid_from', __('Valid from'))->default(date('Y-m-d H:i:s'));
             // $form->datetime('valid_until', __('Valid until'))->default(date('Y-m-d H:i:s'));

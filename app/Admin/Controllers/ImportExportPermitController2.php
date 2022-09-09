@@ -94,7 +94,7 @@ class ImportExportPermitController2 extends AdminController
         $grid->column('type', __('Category'));
 
 
-        $grid->column('import_form_certificate_type', __('Type Of Certificate'))->sortable();
+        $grid->column('ista_certificate', __('Type Of Certificate'))->sortable();
 
         // $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
         //     $u = Administrator::find($userId);
@@ -191,6 +191,25 @@ class ImportExportPermitController2 extends AdminController
     {
         $form = new Form(new ImportExportPermit());
 
+
+        if ($form->isCreating()) {
+
+            if (!Utils::can_create_sr4()) {
+                return admin_warning("Warning", "You dont have a valid SR4");
+                return redirect(admin_url('form-sr4s'));
+            }
+
+            elseif (!Utils::can_create_sr6()) {
+                return admin_warning("Warning", "You dont have a valid SR6");
+                return redirect(admin_url('form-sr6s'));
+            }
+
+            elseif (!Utils::can_create_qds()) {
+                return admin_warning("Warning", "You're not an approved QDS Producer");
+                return redirect(admin_url('form-qds'));
+            }
+        }
+        
         $form->setWidth(8, 4);
         $form->disableCreatingCheck();
         $form->tools(function (Form\Tools $tools) {
@@ -394,15 +413,11 @@ class ImportExportPermitController2 extends AdminController
                 __('Name and address of origin')
             )
                 ->required();
-
-            // $form->file('ista_certificate', __('ISTA certificate'));
-            // $form->file('phytosanitary_certificate', __('Phytosanitary certificate'));
-
-            $form->radio("import_form_certificate_type", __("Type Of Certificate"))
-                ->options([
-                    "ISTA certificate" => 'ISTA certificate',
-                    "Phytosanitary certificate" => 'Phytosanitary certificate'
-                ])->stacked();
+            // ------------------------------------------------------------------
+            $form->tags('ista_certificate', __('Type Of Certificate'))
+            ->required()
+            ->options(['ISTA certificate', 'Phytosanitary certificate']);
+            // ------------------------------------------------------------------
 
             $form->html('<h3>I/We wish to apply for a license to import seed as indicated below:</h3>');
 

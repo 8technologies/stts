@@ -33,6 +33,7 @@ Route::group([
     $router->resource('import-export-permits-2', ImportExportPermitController2::class);
     $router->resource('planting-returns', PlantingReturnController::class);
     $router->resource('form-sr10s', FormSr10Controller::class);
+    $router->resource('form-qds-inspection', FormQDSInspectionController::class);
     $router->resource('form-crop-declarations', FormCropDeclarationController::class);
     $router->resource('form-stock-examination-requests', FormStockExaminationRequestController::class);
     $router->resource('stock-records', FormStockRecordController::class);

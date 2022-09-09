@@ -285,10 +285,10 @@ class SubGrowerController extends AdminController
             $form->text('name', __('Name'))->default($user->name)->required();
             $form->text('size', __('Garden Size (in Accre)'))->required();
 
-            $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'name'))
-                ->required();
+            // $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'name'))
+            //     ->required();
 
-            $form->select('variety', 'Variety')->options(CropVariety::all()->pluck('name', 'name'))
+            $form->select('variety', 'Crop Variety')->options(CropVariety::all()->pluck('name', 'name'))
                 ->required();
             $form->text('filed_name', __('Filed name'))->required();
             $form->text('district', __('District'))->required();

@@ -16,6 +16,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Auth;
 
+
 class FormCropDeclarationController extends AdminController
 {
     /**
@@ -114,6 +115,7 @@ class FormCropDeclarationController extends AdminController
         return $grid;
     }
 
+
     /**
      * Make a show builder.
      *
@@ -155,6 +157,15 @@ class FormCropDeclarationController extends AdminController
     protected function form()
     {
         $form = new Form(new FormCropDeclaration());
+
+        if ($form->isCreating()) {
+            if (!Utils::can_create_qds()) {
+                return admin_warning("Warning", "To apply for QDS Declaration, you must be an approved QDS Producer");
+                return redirect(admin_url('form-crop-declarations'));
+            }
+        }
+
+
         $user = Admin::user(); 
         $can_create = false;
         $qds_id = false;

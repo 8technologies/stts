@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
 {
     use Authenticatable,
-        HasPermissions,
+        // HasPermissions,
         DefaultDatetimeFormat,
         HasFactory,
         Notifiable;

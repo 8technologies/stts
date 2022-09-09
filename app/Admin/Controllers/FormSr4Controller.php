@@ -90,12 +90,16 @@ class FormSr4Controller extends AdminController
             return Utils::tell_status($status);
         })->sortable();
 
-        $grid->column('valid_from', __('Starts'))->display(function ($item) {
-            return Carbon::parse($item)->diffForHumans();
-        })->sortable();
-        $grid->column('valid_until', __('Expires'))->display(function ($item) {
-            return Carbon::parse($item)->diffForHumans();
-        })->sortable();
+        $grid->column('valid_from', __("Starts"))->sortable();
+        $grid->column('valid_until', __("Expires"))->sortable();
+
+        // $grid->column('valid_from', __('Starts'))->display(function ($item) {
+        //     // return Carbon::parse($item)->diffForHumans();
+        // })
+        // ->sortable();
+        // $grid->column('valid_until', __('Expires'))->display(function ($item) {
+        //     return Carbon::parse($item)->diffForHumans();
+        // })->sortable();
 
         $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
             $u = Administrator::find($userId);
@@ -140,7 +144,7 @@ class FormSr4Controller extends AdminController
                 $tools->disableDelete();
             });;
 
-        $show->field('id', __('Id'));
+        $show->field('type', __('Application Category'));
         $show->field('created_at', __('Created on'));
         $show->field('seed_board_registration_number', __('Seed board registration number'));
         $show->field('administrator_id', __('Created by'))->as(function ($userId) {
@@ -261,7 +265,7 @@ class FormSr4Controller extends AdminController
         if ($form->isCreating()) {
 
             if (!Utils::can_create_sr4()) {
-                return admin_warning("Warning", "You cannot create a new SR4 form with a while still having another active one.");
+                return admin_warning("Warning", "You cannot create a new SR4 form with a while still having another PENDING one.");
                 return redirect(admin_url('form-sr6s'));
             }
         }
@@ -296,7 +300,8 @@ class FormSr4Controller extends AdminController
                 'Seed Exporter' => 'Seed Exporter',
                 'Seed Processor' => 'Seed Processor',
             ])
-            ->help('Which SR4 type are tou applying for?')
+            ->help('Which SR4 type are you applying for?')
+            // ->creationRules(["required", "unique:form_sr4s"])
             ->rules('required');
 
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required();
@@ -543,12 +548,22 @@ class FormSr4Controller extends AdminController
                    /*  echo ($today);
                     echo "<br>";
                     $_today = $today->addYear();*/
- 
-                    $form->text('seed_board_registration_number', __('Enter seed board registration number'))
+
+                    /**
+                     * 
+                     * $id = request()->route()->parameters['form-sr4s'];
+                     * $model = $form->model()->find($id);
+                     * dd($model);
+
+                     * Applicaiton forms can only allow a person to apply for a category once. 
+                     * After the status is approved, this person gets a number (seed board reg no.) 
+                     * that is unique to the category and the user himself
+                     */
+                    $form->text('seed_board_registration_number', __('Enter Seed Board Registration number'))
                         ->help("Please Enter seed board registration number")
-                        ->default(rand(10000, 10000));
-                    $form->date('valid_from', 'Valid from date?')->readonly();
-                    $form->date('valid_until', 'Valid until date?')->readonly();
+                        ->default(rand(1000000, 9999999));
+                    $form->date('valid_from', 'Valid from date?');
+                    $form->date('valid_until', 'Valid until date?');
                 });
         }
 

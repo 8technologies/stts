@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Auth;
 
 
 class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
+// class FormSr4 extends  Model
 {
     use Authenticatable,
-        HasPermissions,
+        // HasPermissions,
         DefaultDatetimeFormat,
         HasFactory,
         Notifiable
@@ -104,6 +105,8 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
     public function getJWTIdentifier() {
         return $this->getKey();
     }
+
+
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
      *

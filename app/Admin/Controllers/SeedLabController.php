@@ -24,7 +24,7 @@ class SeedLabController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Seed lab - analysis';
+    protected $title = 'Seed Lab - Analysis';
 
     /**
      * Make a grid builder.
@@ -441,8 +441,12 @@ class SeedLabController extends AdminController
                     ])->required();
                 $form->text('packaging', __('Packaging'))->required();
                 $form->text('number_of_units', __('Number of units'))->default(15);
+
+                $form->hidden('lab_test_number', __('Lab Test Number'))
+                ->default(rand(1000000, 9999999));
+
                 $form->text('mother_lot', __('Mother lot'))->attribute('type', 'number')->required();
-                $form->text('lot_number', __('lot_number'))->default(rand(10000000, 100000000));
+                $form->text('lot_number', __('lot_number'))->default(rand(10000000, 999999999));
                 $form->select('sample_condition', __('Sample condition'))
                     ->required()
                     ->options([
@@ -570,22 +574,30 @@ class SeedLabController extends AdminController
                 $form->display('tests_required', __('Tests required'))
                     ->options(['Moisture content', 'Purity', 'Germination', 'Seed health']);
                 $form->divider();
+
                 $form->radio('status', __('Decision'))
                     ->required()
                     ->options([
                         '10' => 'Accept',
                         '3' => 'Halt'
-                    ])->when(10, function ($form) {
+                    ])
+                    ->when(10, function ($form) {
                         $form->text('lab_test_number', __('Enter lab test number'))
-                            ->required();
+                        ->help("Please Enter Lab Test Number")
+                        ->default(rand(1000000, 9999999))
+                        ->required();
+
+
                         $items = Administrator::all();
                         $_items = [];
+
                         foreach ($items as $key => $item) {
                             if (!Utils::has_role($item, "lab-technician")) {
                                 continue;
                             }
                             $_items[$item->id] = $item->name . " - " . $item->id;
                         }
+
                         $form->select('lab_technician', __('Assign lab technician'))
                             ->options($_items)
                             ->help('Please select lab technician')
@@ -593,6 +605,7 @@ class SeedLabController extends AdminController
                     })->when(3, function ($form) {
                         $form->textarea('receptionist_remarks', __('Additional remarks'));
                     });
+
                 $form->html('<small>NOTE: You cannot reverse this process once is done.</small>');
             }
         }
@@ -676,8 +689,8 @@ class SeedLabController extends AdminController
                     ->readonly()
                     ->disable();
 
-                $form->display('applicant', 'Crop variety')
-                    ->default($model->crop_variety()->name);
+                $form->display('crop_variety_id', 'Crop variety')
+                    ->default($model->crop_variety());
 
                 $form->hidden('inspector_is_done', __('inspector_is_done'))->attribute('value', 1)->value(1)->default(1)
                     ->readonly()

@@ -115,6 +115,26 @@ class Utils
     }
 
 
+    // public static function has_valid_qds()
+    // {
+    //     $recs = FormQds::where('administrator_id',  Admin::user()->id)->get();
+    //     foreach ($recs as $key => $value) {
+    //         if (!$value->valid_from) {
+    //             return null;
+    //         }
+    //         if (!$value->valid_until) {
+    //             return null;
+    //         }
+    //         $now = time();
+    //         $then = strtotime($value->valid_until);
+    //         if ($now < $then) {
+    //             return $value;
+    //         }
+    //     }
+    //     return null;
+    // }
+
+
     public static function has_role($item, $role)
     {
         $roles = $item->roles()->get();
@@ -129,6 +149,33 @@ class Utils
     public static function can_create_qds()
     {
         $recs = FormQds::where('administrator_id',  Admin::user()->id)->get();
+        foreach ($recs as $key => $value) {
+
+            if ($value->status == 4) {
+                continue;
+            }
+
+            if (!$value->valid_from) {
+                return false;
+            }
+            if (!$value->valid_until) {
+                return false;
+            }
+
+            $now = time();
+            $then = strtotime($value->valid_until);
+            if ($now < $then) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static function can_create_qds_declaration()
+    {
+        $recs = FormCropDeclaration::where('administrator_id',  Admin::user()->id)->get();
         foreach ($recs as $key => $value) {
 
             if ($value->status == 4) {
