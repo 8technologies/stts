@@ -19,12 +19,15 @@ class HomeController extends Controller
         ->title($title = Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')? 'The Admin Dashboard': 'Showing your Dashboard')
     
         ->row(function (Row $row) {
-            
-            $row->column(4, function (Column $column) {
-                $column->append(HomeDashboardController2::indexx());
-            });
-            
 
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box(
+                    Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')?"At a glance- (General activity)":"At a glance- (Your activity)", HomeDashboardController2::indexx());
+                $box->style('success');
+                $column->append($box);
+            });
+
+            
             // $bar = view('admin.chartjs.bar');
             // $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
 
@@ -35,61 +38,37 @@ class HomeController extends Controller
             // $row->column(1/3, new Box('Quality Assurance Statistics\' Pie Chart', $bar));
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Marketplace Bar Graph', view('admin.chartjs.bar', [
-                    'icon' => '3.png',
-                    'count' => '51',
-                    'sub_title' => 'Unread messages from your customers.',
-                ]));
+                $box  = new Box('Marketplace Bar Graph', view('admin.chartjs.bar'));
                 $box->style('success');
                 $column->append($box);
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Seed Stock Line Graph', view('admin.chartjs.line', [
-                    'icon' => '3.png',
-                    'count' => '51',
-                    'sub_title' => 'Unread messages from your customers.',
-                ]));
+                $box  = new Box('Seed Stock Line Graph', view('admin.chartjs.line'));
                 $box->style('success');
                 $column->append($box);
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Scatter Graph', view('admin.chartjs.scatter', [
-                    'icon' => '3.png',
-                    'count' => '51',
-                    'sub_title' => 'Unread messages from your customers.',
-                ]));
+                $box  = new Box('Scatter Graph', view('admin.chartjs.scatter'));
                 $box->style('success');
                 $column->append($box);
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Combo Bar Graph', view('admin.chartjs.combo-bar-line', [
-                    'icon' => '3.png',
-                    'count' => '51',
-                    'sub_title' => 'Unread messages from your customers.',
-                ]));
+                $box  = new Box('Combo Bar Graph', view('admin.chartjs.combo-bar-line'));
                 $box->style('success');
                 $column->append($box);
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Marketplace Pie Chart', view('admin.chartjs.pie', [
-                    'icon' => '3.png',
-                    'count' => '51',
-                    'sub_title' => 'Unread messages from your customers.',
-                ]));
+                $box  = new Box('Marketplace Pie Chart', view('admin.chartjs.pie'));
                 $box->style('success');
                 $column->append($box);
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Radar Graph', view('admin.chartjs.radar', [
-                    'icon' => '3.png',
-                    'count' => '51',
-                    'sub_title' => 'Unread messages from your customers.',
-                ]));
+                $box  = new Box('Radar Graph', view('admin.chartjs.radar'));
                 $box->style('success');
                 $column->append($box);
             });
@@ -98,18 +77,25 @@ class HomeController extends Controller
             // $row->column(11/12, new Box('Quality Assurance Statistics\' Pie Chart', $bar));
         }); 
     }
-        
+
 
     public function tab(Content $content)
     {
-        $content->title('Your Dashboard');
+        $content->title('Your Dashboard')
+        ->row(function (Row $row) {
+            
+            $row->column(4, function (Column $column) {
+                // $column->append(HomeDashboardController2::indexx());
+            });
+        });
 
         $this->showFormParameters($content);
 
         $tab = new Widgets\Tab();
 
         $box1 = new Widgets\Box('', HomeController::myChart($content)); // overview tab // original
-        $box2 = new Widgets\Box('', HomeDashboardController2::indexx());  // the table
+        // $box2 = new Widgets\Box('', HomeDashboardController2::indexx());  // the table
+        
         
         $box3 = new Widgets\Box('', view('admin.chartjs.pie'), 'For latest data, kindly refresh the page!');
         $box4 = new Widgets\Box('', view('admin.chartjs.bar'), 'For latest data, kindly refresh the page!');

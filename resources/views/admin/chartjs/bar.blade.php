@@ -28,7 +28,7 @@ $(function () {
             'Pre-Orders', 
             'Quotations',
         ],
-        
+
         datasets: [{
             label: 'Marketplace',
             borderWidth: 1,

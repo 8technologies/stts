@@ -1,16 +1,7 @@
 <div>
-    
-        
-    <?php 
-        use Encore\Admin\Facades\Admin;
-        
-        if (Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')) { ?>
-            <h3 class="box-title">At a glance- (General activity)</h3>
-        <?php } else { ?>
-            <h3 class="box-title">At a glance- (Your activity)</h3>
-        <?php } ?>
 
-    <?php 
+    <?php
+
     // use Encore\Admin\Facades\Admin;
     
     if (Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')) { ?>
@@ -46,20 +37,27 @@
                 @endforeach
 
                 <br>
+
+                
+            </table>
+
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped"> 
             <tr>
-                <th>QA Form</th>
+                <th>Type of Form</th>
                 <th>Count</th>
-                <th>Status</th>
+                <!-- <th>Status</th> -->
             </tr>
 
                     @foreach($non_admin_envs_data as $env)
                 <tr>
-                        <td>{{ $env['name'] }}</td>
-                        <td>{{ $env['value'] }}</td>
-                    <td>####</td>
+                    <td>{{ $env['name'] }}</td>
+                    <td>{{ $env['value'] }}</td>
+                    <!-- <td>####</td> -->
                 </tr>
                     @endforeach
-            
             
             </table>
         </div>
@@ -69,4 +67,3 @@
 
     <?php } ?>
 </div>
-
