@@ -29,6 +29,12 @@ $(function () {
             'Quotations',
         ],
 
+        /**
+         * $auth_total_products
+$auth_total_orders
+$auth_total_pre_orders
+$auth_total_quotations
+         */
         datasets: [{
             label: 'Marketplace',
             borderWidth: 1,

@@ -20,16 +20,16 @@ class PieChartTotalsController extends Controller
 
         // $total_products = DB::table('import_export_permits')->where('administrator_id', $user->id)->count();
        
-        $auth_total_products = DB::table('products')->where('administrator_id', $user->id)->count();
-        $auth_total_orders = DB::table('orders')->where('administrator_id', $user->id)->count();
-        $auth_total_pre_orders = DB::table('pre_orders')->where('administrator_id', $user->id)->count();
-        $auth_total_quotations = DB::table('quotations')->where('administrator_id', $user->id)->count();
+        $total_products = DB::table('products')->where('administrator_id', 3)->count();
+        $total_orders = DB::table('orders')->where('administrator_id', 3)->count();
+        $total_pre_orders = DB::table('pre_orders')->where('administrator_id', 3)->count();
+        $total_quotations = DB::table('quotations')->where('administrator_id', 3)->count();
         
         $context = [
-            'auth_total_products'=> $auth_total_products,
-            'auth_total_orders'=> $auth_total_orders,
-            'auth_total_pre_orders'=> $auth_total_pre_orders,
-            'auth_total_quotations'=> $auth_total_quotations
+            'total_products'=> $total_products,
+            'total_orders'=> $total_orders,
+            'total_pre_orders'=> $total_pre_orders,
+            'total_quotations'=> $total_quotations
         ];
 
         return view('admin.chartjs.bar', compact('context'));
