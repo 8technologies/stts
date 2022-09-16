@@ -170,7 +170,6 @@ class ImportExportPermitController2 extends AdminController
                 foreach ($this->import_export_permits_has_crops as $key => $val) {
                     $var = CropVariety::find($val->crop_variety_id);
 
-
                     $row['crop'] = $var->crop->name;
                     $row['variety'] = $var->name;
                     $row['ha'] = $val->category;
@@ -191,25 +190,24 @@ class ImportExportPermitController2 extends AdminController
     {
         $form = new Form(new ImportExportPermit());
 
-
         if ($form->isCreating()) {
 
             if (!Utils::can_create_sr4()) {
-                return admin_warning("Warning", "You dont have a valid SR4");
+                return admin_warning("Warning", "You must apply for SR4 and be 'accepted' or have an 'accepted' SR4 to apply for an Export permit");
                 return redirect(admin_url('form-sr4s'));
             }
 
-            elseif (!Utils::can_create_sr6()) {
-                return admin_warning("Warning", "You dont have a valid SR6");
-                return redirect(admin_url('form-sr6s'));
-            }
+            // elseif (!Utils::can_create_sr4()) {
+            //     return admin_warning("Warning", "You must apply for SR4 and be 'accepted' or have an 'accepted' SR4 to apply for an Export permit");
+            //     return redirect(admin_url('form-sr4s'));
+            // }
 
             elseif (!Utils::can_create_qds()) {
                 return admin_warning("Warning", "You're not an approved QDS Producer");
                 return redirect(admin_url('form-qds'));
             }
         }
-        
+ 
         $form->setWidth(8, 4);
         $form->disableCreatingCheck();
         $form->tools(function (Form\Tools $tools) {

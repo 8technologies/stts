@@ -28,6 +28,7 @@ class FormSr10Controller extends AdminController
     /**
      * @return Grid
      */
+    
     protected function grid()
     {
 
@@ -57,6 +58,8 @@ class FormSr10Controller extends AdminController
                     $actions->disableEdit();
                 }
             });
+            
+            $grid->disableCreateButton();
         } 
         // else if (Admin::user()->isRole('inspector')) {
         //     $grid->model()->where('administrator_id', '=', Admin::user()->id);
@@ -78,10 +81,7 @@ class FormSr10Controller extends AdminController
         //     });
 
         // } 
-        
-        else {
-            $grid->disableCreateButton();
-        }
+
 
         $grid->column('id', __('Id'));
         $grid->column('stage', __('Stage'));
@@ -89,7 +89,7 @@ class FormSr10Controller extends AdminController
             return Utils::tell_status($status);
         })->sortable();
 
-        if (!Admin::user()->isRole('basic-user')) {
+        if (Admin::user()->isRole('inspector')) {
             $grid->column('is_active', __('Attension'))->display(function ($is_active) {
                 if ($is_active) {
                     return '<span class="badge badge-danger">Needs your attension</span>';
@@ -97,6 +97,16 @@ class FormSr10Controller extends AdminController
                     return '-';
                 }
             })->sortable();
+        }
+        
+        else if(Admin::user()->isRole('basic-user') || Admin::user()->isRole('admin') || !$grid->model()->where('status', '=', 5)){
+
+            $grid->actions(function ($actions) {
+                
+                    $actions->disableEdit();
+                    $actions->disableDelete();
+                    
+            });
         }
 
         $grid->column('min_date', __('To be submited before'));

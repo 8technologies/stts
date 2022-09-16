@@ -104,8 +104,8 @@ class HomeDashboardController2 extends AdminController
 
 
         $non_admin_envs_data = [
-            ['name' => 'Import Permits:', 'value' =>  ImportExportPermit::where('administrator_id', $user->id)->count()],
-            ['name' => 'Export Permits:', 'value' =>  ImportExportPermit::where('administrator_id', $user->id)->count()],
+            ['name' => 'Import Permits:', 'value' =>  ImportExportPermit::where(['administrator_id' => $user->id, 'is_import' => 1])->count()],
+            ['name' => 'Export Permits:', 'value' =>  ImportExportPermit::where(['administrator_id' => $user->id, 'is_import' => 0])->count()],
             ['name' => 'Planting returns:', 'value' => PlantingReturn::where('administrator_id', $user->id)->count()],
             ['name' => 'SR10 Forms:', 'value' => FormSr10::where('administrator_id', $user->id)->count()],
             ['name' => 'QDS Forms:', 'value' => FormQds::where('administrator_id', $user->id)->count()],
