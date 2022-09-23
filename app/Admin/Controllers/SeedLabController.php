@@ -289,8 +289,20 @@ class SeedLabController extends AdminController
                 $form->display('applicant', 'Applicant')
                     ->default($model->user->name);
 
-                $form->display('applicant', 'Crop variety')
-                    ->default($model->name);
+                // $form->display('crop_variety', 'Crop variety')
+                //     ->default($model->crop_variety);
+
+
+                    
+                // $form->display('crop_variety_id', __('Crop variety id'))
+                // ->display(function ($user) {
+                //     $_user = CropVariety::find($user);
+                //     if (!$_user) {
+                //         return "-";
+                //     }
+                //     return $_user->name . ", " . $_user->name;
+                // });
+
 
                 $form->display('collection_date', 'Collection date')
                     ->default($model->user->collection_date);
@@ -525,8 +537,8 @@ class SeedLabController extends AdminController
                     ->readonly()
                     ->disable();
 
-                $form->display('applicant', 'Crop variety')
-                    ->default($model->name);
+                // $form->display('crop_variety_id', 'Crop variety')
+                //     ->default($model->crop_variety_id->name);
 
                 $form->display('collection_date', 'Collection date')
                     ->default($model->user->collection_date);
