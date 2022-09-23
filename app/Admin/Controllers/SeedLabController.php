@@ -538,7 +538,7 @@ class SeedLabController extends AdminController
                     ->disable();
 
                 // $form->display('crop_variety_id', 'Crop variety')
-                //     ->default($model->crop_variety_id->name);
+                //     ->default($model->crop_variety);
 
                 $form->display('collection_date', 'Collection date')
                     ->default($model->user->collection_date);
