@@ -431,22 +431,6 @@ class FormStockExaminationRequestController extends AdminController
 
             $form->textarea('remarks', __('Enter remarks'))->required();
 
-            /**
-             * During stock examination the system should automatically 
-             * generate the lot number with this format 
-             * (company initials/ year/crop variety/ random number)
-             * NM/2022/Beans/23232332
-             */
-
-            // $lot_number_company = "NM";
-            // $lot_number_Year = date("Y");
-            // $lot_number_cropVariety = "Beans";
-            $lot_number_randNum = rand(100000000,999999999);
-            $form->hidden('lot_number', __('Lot Number'))
-            // ->value($lot_number_company . "/" . $lot_number_Year . "/" . $lot_number_cropVariety . "/" . $lot_number_randNum);
-            // ->value($lot_number_company . $lot_number_Year . $lot_number_cropVariety . $lot_number_randNum);            
-            ->value($lot_number_randNum);
-
             $user = Auth::user();
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id); 
         }
@@ -546,6 +530,26 @@ class FormStockExaminationRequestController extends AdminController
                     'Certified seed' => 'Certified seed',
                 ])
                 ->required();
+
+            
+
+            /**
+             * During stock examination the system should automatically 
+             * generate the lot number with this format 
+             * (company initials/ year/crop variety/ random number)
+             * NM/2022/Beans/23232332
+            */
+
+            // $lot_number_company = "NM";
+            // $lot_number_Year = date("Y");
+            // $lot_number_cropVariety = "Beans";
+            $lot_number_randNum = rand(100000000,999999999);
+            $form->text('lot_number', __('Lot Number'))->readonly()
+            // ->value($lot_number_company . "/" . $lot_number_Year . "/" . $lot_number_cropVariety . "/" . $lot_number_randNum);
+            // ->value($lot_number_company . $lot_number_Year . $lot_number_cropVariety . $lot_number_randNum);            
+            ->value($lot_number_randNum);
+
+
             $form->text('field_size', __('Enter field size (in Acres)'));
             $form->date('date', __('Stock Examination Date'));
 
