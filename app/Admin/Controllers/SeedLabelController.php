@@ -131,27 +131,24 @@ class SeedLabelController extends AdminController
             return $value->package_size . " Kgs @ " . $value->package_price . " UGX";
         })->sortable();
 
+        # -------
         $grid->column('quantity', __('Quantity'))->display(function ($var) {
             return number_format($var);
         });
 
-        /**
-         * NO. OF LABELS   -- QTY / LABEL SIZE(size selected)   (qty enteredd during seed label application, and size selected)
-         * AMOUNT  -- No. of labels * amount of the label size
-        */
+        // /**
+        //  * NO. OF LABELS   -- QTY / LABEL SIZE(size selected)   (qty enteredd during seed label application, and size selected)
+        //  * AMOUNT  -- No. of labels * amount of the label size
+        // */
+        // $grid->column('quantity', __('No. of Labels'))
+        //     ->display(function ($id) {
+        //         return number_of_labels($id) . " KGs";
+        //     })->sortable();
 
-        // // $seed_labell = SeedLabel::where("status", "14")->first();
-        // $seed_labell = SeedLabel::where('status', "14")->get();
-        // // $label_size = $seed_labell->quantity;
-        // // $label_size = $seed_labell->quantity;
-        // // $amountt = [];
-        // // // $grid->column('quantity', __('No. of Labels'))->display(function ($var) {
-        // // //     $grid->
-        // // //     return number_format($var);
-        // // // });
-        // dd($seed_labell);
-
-        // $grid->column('quantity'*"quantity", __('Amount'));
+        // $grid->column('total_price', __('Amount'))
+        //     ->display(function ($id) {
+        //         return "UGX. " . number_format($id);
+        //     })->sortable();
 
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
