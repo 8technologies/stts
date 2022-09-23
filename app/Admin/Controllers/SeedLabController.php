@@ -259,13 +259,13 @@ class SeedLabController extends AdminController
 
             $stocks = [];
             
-            foreach (CropVariety::all() as $key => $crop_variety) {
+            foreach (StockRecord::all() as $key => $stock_record) {
                 $u = Admin::user();
-                $tot = Utils::get_stock_balance($u->id, $crop_variety->id);
+                $tot = Utils::get_stock_balance($u->id, $stock_record->id);
                 if ($tot > 0) {
                     continue;
                 }
-                $stocks[$crop_variety->id] = "Crop: " . $crop_variety->crop->name . ", Varity: " . $crop_variety->name . ", Balence: {$tot}";
+                $stocks[$stock_record->id] = "LOT: " . $stock_record->lot_number . ", Quantity: " . $stock_record->quantity;
             }
 
             $form->setWidth(8, 4);
