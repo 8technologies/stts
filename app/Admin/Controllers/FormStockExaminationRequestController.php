@@ -300,7 +300,6 @@ class FormStockExaminationRequestController extends AdminController
                 }
             }
 
-
             foreach ($_import_permits as $key => $value) {
                 if ($value->import_export_permits_has_crops != null) {
                     foreach ($value->import_export_permits_has_crops as $key => $val) {
@@ -308,7 +307,6 @@ class FormStockExaminationRequestController extends AdminController
                     }
                 }
             }
-
 
             // if (
             //     (count($all_vars) < 1)
@@ -326,11 +324,12 @@ class FormStockExaminationRequestController extends AdminController
                     '3' => 'QDs',
                 ])
                 ->when('1', function (Form $form) {
-
                     $all_import_permits =  ImportExportPermit::where([
                         'administrator_id' => Admin::user()->id,
                         'is_import' => 1
                     ])->get();
+
+                    $import_permits = [];
                     foreach ($all_import_permits as $key => $value) {
                         if ($value->status == 5) {
                             $min_date = Carbon::parse($value->valid_until);
@@ -342,14 +341,26 @@ class FormStockExaminationRequestController extends AdminController
                                 $import_permits[$value->id] = $value->id;
                             }
                         }
+ 
+                    // if (count($all_import_permits) >= 1) {
+                    //     // $form->select('import_export_permit_id', __('Import permit number'))
+                    //     //     ->rules('required')
+                    //     //     ->options($import_permits);
+                    //     echo "fooooo";
+                    // }
+
                     }
 
-                    // if (count($import_permits) >= 1) {
-                    //     $form->select('import_export_permit_id', __('Import permit number'))
-                    //         ->rules('required')
-                    //         ->options($import_permits);
-                    // }
-                })
+                    if (count($all_import_permits) >= 1) {
+                        $form->select('import_export_permit_id', __('Select Import Permit'))
+                        ->rules('required')
+                        ->options($import_permits);
+                    }
+                
+
+
+                })    // end when 1
+
                 ->when('2', function (Form $form) {
 
 
