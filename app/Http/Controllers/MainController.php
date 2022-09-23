@@ -13,6 +13,8 @@ use App\Models\ProductReview;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\Utils;
+
 
 class MainController extends Controller
 {
@@ -80,9 +82,9 @@ class MainController extends Controller
 
     public function login(Request  $request)
     {
-        if (isset($_POST['phone_number'])) {
+        if (isset($_POST['email'])) {
 
-            $u['email'] = $_POST['phone_number'];
+            $u['email'] = $_POST['email'];
             $u['password'] = $_POST['password'];
 
             if (Auth::attempt($u)) {
@@ -101,36 +103,73 @@ class MainController extends Controller
         // return view('main.login');
     }
 
-    //   /**
-    //  * Get a validator for an incoming registration request.
-    //  *
-    //  * @param  array  $data
-    //  * @return \Illuminate\Contracts\Validation\Validator
-    //  */
-    // protected function validator(array $data)
-    // {
-    //     return Validator::make($data, [
-    //         'first_name' => 'required|max:24|min:2',
-    //         'last_name' => 'required|max:24|min:2',
-    //         'email' => 'required|unique::admin_users',
-    //         'password' => 'required|confirmed|max:100|min:3',
-    //     ]);
-    // }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'first_name' => 'required|string|max:24|min:2',
+            'last_name' => 'required|string|max:24|min:2',
+            'email' => 'required|string|email|max:255|unique:admin_users',
+            'password' => 'required|confirmed|max:100|min:3',
+        ]);
+    }
 
 
-    public function register(Request  $request)
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * 
+     */
+    protected function registers(array $data, Request $request)
+    {
+        $user = Administrator::create([
+            'first_name' => $data['first_name'],
+            'name' => $data['name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'username' => $data['username'],
+            'password' => Hash::make($data['password']),
+        ]);
+
+        if ($user->save()) {
+            DB::table('admin_role_users')->insert([
+                'role_id' => 3,
+                'user_id' => $user->id
+            ]);
+        }
+
+        $u['email'] = $data['email'];
+        $u['password'] = $data['password'];
+
+        if (Admin::guard()->attempt($u)) {
+            admin_toastr(trans('admin.login_successful'));
+            $data[session()]->regenerate();
+            return redirect()->intended('admin');
+        }
+
+        return back()->with(["status" => "success", "message" => "User Created!"]);
+    }
+
+
+    public function register2(Request  $request)
     {
         $this->validate($request, [
             'first_name' => 'required|max:24|min:2',
             'last_name' => 'required|max:24|min:2',
-            'email' => 'required|unique::admin_users',
+            'email' => 'required|email|unique::admin_users',
             'password' => 'required|confirmed|max:100|min:3',
         ]);
 
         $user = Administrator::create([
             'first_name' => $request->first_name,
-            'name' => $request->first_name . " " . $request->last_name,
             'last_name' => $request->last_name,
+            'name' => $request->first_name . " " . $request->last_name,
             'email' => $request->email,
             'username' => $request->email,
             'password' => Hash::make($request->password),
@@ -150,7 +189,7 @@ class MainController extends Controller
 
         // event(new Registered($u));
 
-        if (Admin::guard()->attempt($u, $remember)) {
+        if (Admin::guard()->attempt($u)) {
             admin_toastr(trans('admin.login_successful'));
             $request->session()->regenerate();
             return redirect()->intended('admin');
@@ -160,5 +199,64 @@ class MainController extends Controller
 
         return back()->with(["status" => "success", "message" => "User Created!"]);
         // Accessible on the frontend via `session()->get("message", "");`
+    }
+
+    
+    public function register(Request  $request)
+    {
+        if (Auth::guard()->check()) {
+            return redirect("/admin");
+        }
+        Utils::start_session();
+
+        if (isset($_POST['password']) && isset($_POST['password_confirmation']) && isset($_POST['email'])) 
+        {
+            if ($request->input('password') !=  $request->input('password_confirmation')) {
+                $errors['password_confirmation'] = "Passwords don't match";
+                return redirect('register')
+                    ->withErrors($errors)
+                    ->withInput();
+            }
+
+            if (strlen($request->input('password')) < 6) {
+                $errors['password_confirmation'] = "Password too short.";
+                return redirect('register')
+                    ->withErrors($errors)
+                    ->withInput();
+            }
+
+            $u['name'] = $request->first_name . " " . $request->last_name;
+            $u['email'] = $request->email;
+
+            $old_user = Administrator::where('email', $u['email'])->first();
+            if ($old_user) {
+                $errors['email'] = "User with same email already exists.";
+                return redirect('register')
+                    ->withErrors($errors)
+                    ->withInput();
+                die();
+            }
+
+            $u['password'] = Hash::make($request->input("password"));
+            $users = Administrator::create($u);
+            // $pro = new Administrator();
+            // $pro->status = 0;
+            // $pro->user_id = $users->id;
+            $users->save();
+
+
+            $credentials['email'] = $u['email'];
+            $credentials['password'] = $request->input("password");
+
+
+            if (Auth::attempt($credentials, true)) {
+                $request->session()->regenerate();
+                $_SESSION['credentials'] = $credentials;
+                return redirect()->intended(admin_url('/auth/login'));
+            } else {
+                return redirect()->intended('login');
+            }
+        }
+        return view('main.register');
     }
 }

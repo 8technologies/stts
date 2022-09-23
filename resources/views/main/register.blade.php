@@ -88,13 +88,9 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group has-feedback {!! !$errors->has('first_name') ?: 'has-error' !!}">
-            
+                <input type="text" class="form-control"  placeholder="{{ trans('admin.first_name') }}" name="first_name" value="{{ old('first_name') }}"></div>
+          </div>
 
-                <input type="text" class="form-control"  placeholder="{{ trans('admin.first_name') }}" name="first_name" value="{{ old('first_name') }}">
-              
-          
-              </div>
-        </div>
         <div class="col-md-6">
             <div class="form-group has-feedback {!! !$errors->has('last_name') ?: 'has-error' !!}">
                
@@ -104,10 +100,10 @@
     </div>
     
     
-      <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
+      <div class="form-group has-feedback {!! !$errors->has('email') ?: 'has-error' !!}">
       
 
-        <input type="email" class="form-control" placeholder="Email address"   name="username" value="{{ old('username') }}">
+        <input type="email" class="form-control" placeholder="Email address"   name="email" value="{{ old('email') }}">
       
         
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -132,7 +128,7 @@
           @if(config('admin.auth.remember'))
           <div class="checkbox icheck">
             <label>
-              <input type="checkbox"  name="remember" value="1" {{ (!old('username') || old('remember')) ? 'checked' : '' }}>
+              <input type="checkbox"  name="remember" value="1" {{ (!old('email') || old('remember')) ? 'checked' : '' }}>
               Agree to <a href="#">Terms of use</a>
             </label>
           </div>

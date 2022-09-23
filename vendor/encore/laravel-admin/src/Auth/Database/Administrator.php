@@ -24,7 +24,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 // class Administrator extends Model implements AuthenticatableContract, JWTSubject, MustVerifyEmail
 class Administrator extends Model implements AuthenticatableContract, JWTSubject
 {
-    use Authenticatable, 
+    use 
+    Authenticatable, 
     HasPermissions, 
     DefaultDatetimeFormat, 
     Notifiable,
@@ -33,7 +34,16 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
     // HasApiTokens
     ;
 
-    protected $fillable = ['username', 'first_name', 'last_name', 'email', 'name', 'remember_token', 'password', 'avatar'];
+    protected $fillable = [
+        'first_name', 
+        'last_name', 
+        'name', 
+        'email',  
+        'username',
+        // 'remember_token', 
+        'password', 
+        // 'avatar'
+    ];
     
     /**
      * Create a new Eloquent model instance.

@@ -88,17 +88,17 @@ class ProductController extends AdminController
         }
 
         $grid = new Grid(new Product());
-        $grid->column('id', __('Id'));
-        $grid->column('created_at', __('Created at'));
+        $grid->column('id', __('Id'))->sortable();
+        $grid->column('created_at', __('Created at'))->sortable();
         $grid->column('updated_at', __('Updated at'));
-        $grid->column('administrator_id', __('Administrator id'));
+        $grid->column('administrator_id', __('Administrator id'))->sortable();
         $grid->column('crop_variety_id', __('Crop variety id'));
         $grid->column('seed_label_id', __('Seed label id'));
         $grid->column('quantity', __('Quantity'));
         $grid->column('lab_test_number', __('Lab test number'));
         $grid->column('lot_number', __('Lot number'));
         $grid->column('seed_class', __('Seed class'));
-        $grid->column('price', __('Price'));
+        $grid->column('price', __('Price'))->sortable();
         $grid->column('wholesale_price', __('Wholesale price'));
         $grid->column('image', __('Image'));
         $grid->column('images', __('Images'));
