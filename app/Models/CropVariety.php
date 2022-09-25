@@ -21,7 +21,7 @@ class CropVariety extends Model
             $this->crop_id = 1;
             $this->save();
         }
-        return $this->belongsTo(Crop::class, 'crop_id');
+        return $this->belongsTo(Crop::class, 'crop_id', 'id');
     }
 
     public function getNameAttribute($name)
