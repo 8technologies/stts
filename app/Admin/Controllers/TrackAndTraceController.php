@@ -193,11 +193,10 @@ class TrackAndTraceController extends AdminController
                     'Id', 
                     'Mother lot', 
                     'Lot number', 
-                    'Form Stock Examination Request Id', 
-                    // 'Company Name', 
-                    // 'Crop Variety', 
-                    // 'Year', 
-                    // 'Original Quantity'
+                    'Company Name', 
+                    'Crop Variety', 
+                    'Year', 
+                    'Original Quantity'
                 ];
 
                 $rows = [];
@@ -206,11 +205,10 @@ class TrackAndTraceController extends AdminController
                     $row['id'] = $trace_value->id;
                     $row['mother_lot'] = $trace_value->mother_lot;
                     $row['lot_number'] = $trace_value->lot_number;
-                    $row['form_stock_examination_request_id'] = $trace_value->form_stock_examination_request_id;
-                    $row['form_stock_examination_request_id'] = $trace_value->form_stock_examination_request_id;
-                    // $row['id'] = $trace_value->id;
-                    // $row['id'] = $trace_value->id;
-                    // $row['id'] = $trace_value->id;
+                    $row['company_name'] = $trace_value->form_sr4s->company_initials;
+                    $row['crop_variety'] = $trace_value->crop_variety->name;
+                    $row['year'] = $trace_value->id;
+                    $row['Original Quantity'] = $trace_value->quantity;
                     $rows[] = $row;
                 }
 

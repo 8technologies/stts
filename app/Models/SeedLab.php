@@ -34,6 +34,11 @@ class SeedLab extends Model
         return $this->belongsTo(Administrator::class, 'administrator_id');
     }
 
+    public function form_sr4s()
+    {
+        return $this->belongsTo(FormSr4::class, 'administrator_id', 'id');
+    }
+
     use ModelTree, AdminBuilder;
 
     protected $table = 'seed_labs';
