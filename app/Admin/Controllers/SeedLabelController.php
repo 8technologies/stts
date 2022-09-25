@@ -16,6 +16,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
+
 class SeedLabelController extends AdminController
 {
     /**
@@ -61,6 +62,9 @@ class SeedLabelController extends AdminController
                 if ($status == 0) {
                     $status = 1;
                 }
+                if ($status == 13) {
+                    $actions->disableEdit();
+                }
                 if (
                     $status != 1 &&
                     $status != 3
@@ -98,14 +102,11 @@ class SeedLabelController extends AdminController
             });
         }
 
-
         $grid->column('created_at', __('Created'))
             ->display(function ($item) {
-                if (!$item) {
-                    return "-";
-                }
-                return Carbon::parse($item)->toFormattedDateString();
+                return Carbon::parse($item)->diffForHumans();
             })->sortable();
+
         $grid->column('administrator_id', __('Crated by'))->display(function ($user) {
             $_user = Administrator::find($user);
             if (!$_user) {
@@ -282,6 +283,7 @@ class SeedLabelController extends AdminController
             $form->display('applicant_remarks', __('Remarks'));
 
             $form->radio('status', __('Inspection decision'))
+            ->help("When 'Accepted', USTA takes it from here")
                 ->options([
                     '3' => 'Halt',
                     '13' => 'Accepted',

@@ -37,10 +37,11 @@ class SeedLabController extends AdminController
         $grid = new Grid(new SeedLab());
 
         $grid->column('id', __('Id'));
-        $grid->column('created_at', __('Created at'))
-            ->display(function ($item) {
-                return Carbon::parse($item)->toFormattedDateString();
-            })->sortable();
+
+        $grid->column('created_at', __('Created'))
+        ->display(function ($item) {
+            return Carbon::parse($item)->diffForHumans();
+        })->sortable();
 
         $grid->column('administrator_id', __('Applicant'))->display(function ($user) {
             $_user = Administrator::find($user);
