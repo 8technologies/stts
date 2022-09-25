@@ -49,7 +49,7 @@ class SeedLabController extends AdminController
             }
             return $_user->name;
         })->sortable();
-        $grid->column('crop_variety_id', __('Crop variety id'))->display(function ($user) {
+        $grid->column('crop_variety_id', __('Crop Variety'))->display(function ($user) {
             $_user = CropVariety::find($user);
             if (!$_user) {
                 return "-";
