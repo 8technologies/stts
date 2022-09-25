@@ -11,6 +11,10 @@ use phpDocumentor\Reflection\Types\This;
 
 class SeedLab extends Model
 {
+
+    use ModelTree, AdminBuilder;
+
+    protected $table = 'seed_labs';
     
     protected $appends = [
         'crop_variety_text'
@@ -24,25 +28,6 @@ class SeedLab extends Model
         'applicant_remarks' 
     ];
 
-    public function getCropVarietyTextAttribute()
-    {
-        return $this->crop_variety->name;
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(Administrator::class, 'administrator_id');
-    }
-
-    public function form_sr4s()
-    {
-        return $this->belongsTo(FormSr4::class, 'administrator_id', 'id');
-    }
-
-    use ModelTree, AdminBuilder;
-
-    protected $table = 'seed_labs';
-
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -52,6 +37,18 @@ class SeedLab extends Model
         $this->setTitleColumn('mother_lot');
     }
 
+
+
+
+    public function getCropVarietyTextAttribute()
+    {
+        return $this->crop_variety->name;
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(Administrator::class, 'administrator_id');
+    }
 
 
     public static function boot()

@@ -51,13 +51,6 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
     ];
 
 
-    
-    public function seedlabs()
-    {
-        return $this->hasMany(SeedLab::class, 'id');
-    }
-
-
     public static function boot()
     {
         parent::boot();

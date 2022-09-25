@@ -69,7 +69,7 @@ class TrackAndTraceController extends AdminController
 
                             $lot_number = trim($_GET['lot_number']);
                             $lab = SeedLab::where([
-                                'mother_lot' => $lot_number,
+                                'lot_number' => $lot_number,
                                 'parent_id' => 0,
                             ])
                                 ->first();
@@ -77,7 +77,7 @@ class TrackAndTraceController extends AdminController
                             if ($lab == null) {
 
                                 $lab_temp = SeedLab::where([
-                                    'mother_lot' => $lot_number,
+                                    'lot_number' => $lot_number,
                                 ])
                                     ->first();
                                 if ($lab_temp != null) {
@@ -145,7 +145,8 @@ class TrackAndTraceController extends AdminController
                         if (!$lab) {
                             return $ord . " N/A";
                         }
-                        return $lab->mother_lot . " => " . $lab->id;
+                        // return "Id:(" . $lab->id . ') ' . "Mother Lot: " . ($lab->mother_lot?$lab->mother_lot:"?") . " => " . "Lot Number: " . ($lab->lot_number?$lab->lot_number:"?");
+                        return "Mother Lot: " . ($lab->mother_lot?$lab->mother_lot:"?") . " => " . "Lot Number: " . ($lab->lot_number?$lab->lot_number:"?");
 
                         return ($branch['mother_lot']);
 
@@ -168,7 +169,8 @@ class TrackAndTraceController extends AdminController
                 $temp_lot_number = $lot_number;
 
                 $trace_lab = SeedLab::where([
-                    'mother_lot' => $temp_lot_number,
+                    // 'mother_lot' => $temp_lot_number,
+                    'lot_number' => $temp_lot_number,
                 ])
                     ->first();
 
@@ -193,7 +195,7 @@ class TrackAndTraceController extends AdminController
                     'Id', 
                     'Mother lot', 
                     'Lot number', 
-                    'Company Name', 
+                    // 'Company Name', 
                     'Crop Variety', 
                     'Year', 
                     'Original Quantity'
@@ -205,9 +207,12 @@ class TrackAndTraceController extends AdminController
                     $row['id'] = $trace_value->id;
                     $row['mother_lot'] = $trace_value->mother_lot;
                     $row['lot_number'] = $trace_value->lot_number;
-                    $row['company_name'] = $trace_value->form_sr4s->company_initials;
+                    // $row['company_name'] = $trace_value->company_initials;
                     $row['crop_variety'] = $trace_value->crop_variety->name;
-                    $row['year'] = $trace_value->id;
+                    
+                    $year = Carbon::createFromFormat('Y-m-d', $trace_value->collection_date)->year;
+                    $row['year'] = $year;
+                    
                     $row['Original Quantity'] = $trace_value->quantity;
                     $rows[] = $row;
                 }
@@ -234,7 +239,7 @@ class TrackAndTraceController extends AdminController
 
         $form->text('mother_lot')->rules('required');
 
-        //$form->image('logo');
+        // $form->image('logo');
 
 
         return $form;
