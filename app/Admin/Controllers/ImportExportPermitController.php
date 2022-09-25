@@ -508,7 +508,6 @@ class ImportExportPermitController extends AdminController
                 $form->select('crop_variety_id', 'Add Crop Variety')->options($_items)
                     ->required();
                 $form->hidden('category', __('Category'))->default("")->value($item->name);
-                // $form->hidden('category', __('Category'))->default("33333");
                 $form->text('weight', __('Weight (in KGs)'))->attribute('type', 'number')->required();
             });
 

@@ -165,15 +165,15 @@ class ImportExportPermitController2 extends AdminController
                     return "None";
                 }
 
-                $headers = ['Crop', 'Variety', 'Category', 'weight'];
+                $headers = ['Crop', 'Variety', 'Variety/ Category', 'weight'];
                 $rows = array();
                 foreach ($this->import_export_permits_has_crops as $key => $val) {
                     $var = CropVariety::find($val->crop_variety_id);
 
                     $row['crop'] = $var->crop->name;
                     $row['variety'] = $var->name;
-                    $row['ha'] = $val->category;
-                    $row['origin'] = $val->weight;
+                    $row['category'] = $val->category;
+                    $row['weight'] = $val->weight;
                     $rows[] = $row;
                 }
 
@@ -437,7 +437,8 @@ class ImportExportPermitController2 extends AdminController
                 $form->select('crop_variety_id', 'Add Crop Variety')->options($_items)->required();
 
                 
-                $form->hidden('category', __('Category'))->default("")->value("");
+                // $form->hidden('category', __('Category'))->default("")->value("");
+                $form->hidden('category', __('Category'))->default("")->value($item->name);
                 $form->text('weight', __('Weight (in KGs)'))->attribute('type', 'number')->required();
             });
         }
