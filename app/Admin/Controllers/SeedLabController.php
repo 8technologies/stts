@@ -260,13 +260,15 @@ class SeedLabController extends AdminController
 
             $stocks = [];
             
-            foreach (StockRecord::all() as $key => $stock_record) {
+            // foreach (StockRecord::all() as $key => $stock_record) {
+            foreach (StockRecord::where("administrator_id", Admin::user()->id) as $key => $stock_record) {
                 $u = Admin::user();
                 $tot = Utils::get_stock_balance($u->id, $stock_record->id);
                 if ($tot > 0) {
                     continue;
                 }
-                $stocks[$stock_record->id] = "LOT: " . $stock_record->lot_number . ", Quantity: " . $stock_record->quantity;
+                // $stocks[$stock_record->id] = "LOT: " . $stock_record->lot_number . ", Quantity: " . $stock_record->quantity;
+                $stocks[$stock_record->id] = "LOT: " . $stock_record->lot_number;
             }
 
             $form->setWidth(8, 4);
@@ -452,7 +454,7 @@ class SeedLabController extends AdminController
                     ->default("")
                     ->attribute([
                         'type' => 'number',
-                        'value' => $records->crop_variety->quantity,
+                        'value' => $value->quantity,
                     ])->readonly();
 
                 $form->text('packaging', __('Packaging'))->required();
