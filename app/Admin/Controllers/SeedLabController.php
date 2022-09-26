@@ -398,11 +398,12 @@ class SeedLabController extends AdminController
 
 
                     if ($quantity > $tot) {
-                        return   admin_error("Warning", "There is insufitient quantity stock of this crop vareity. You tried to 
-                        enter quantity " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
+                        return   admin_error("Warning", "There is insufficient quantity stock of this crop variety.
+                        You tried to enter quantity " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
                         return redirect(admin_url('seed-labs'));
                     }
 
+                    // dd($tot);
 
                     $mother = SeedLab::where('lot_number', $form->mother_lot)->first();
                     $form->parent_id = 0;
@@ -446,12 +447,14 @@ class SeedLabController extends AdminController
                 $form->text('sample_weight', __('Enter weight of Sample (in KGs)'))
                     ->required()
                     ->attribute('type', 'number');
-                $form->text('quantity', __('Enter the quantity represented (in Metric Tonnes)'))
-                    ->default(1000)
+
+                $form->text('quantity', __('Quantity represented (in Metric Tonnes)'))
+                    ->default("")
                     ->attribute([
                         'type' => 'number',
-                        'value' => $tot,
-                    ])->required();
+                        'value' => $records->crop_variety->quantity,
+                    ])->readonly();
+
                 $form->text('packaging', __('Packaging'))->required();
                 $form->text('number_of_units', __('Number of units'))->default(15);
 
@@ -619,7 +622,7 @@ class SeedLabController extends AdminController
                         $form->textarea('receptionist_remarks', __('Additional remarks'));
                     });
 
-                $form->html('<small>NOTE: You cannot reverse this process once is done.</small>');
+                $form->html("<small>NOTE: You cannot reverse this process once it's done.</small>");
             }
         }
 
@@ -785,7 +788,7 @@ class SeedLabController extends AdminController
                 //     })->when(3, function ($form) {
                 //         $form->textarea('receptionist_remarks', __('Additional remarks'));
                 //     });
-                $form->html('<small>NOTE: You cannot reverse this process once is done.</small>');
+                $form->html("<small>NOTE: You can not reverse this process once it's done.</small>");
             }
         }
 
