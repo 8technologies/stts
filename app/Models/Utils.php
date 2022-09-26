@@ -38,14 +38,12 @@ class Utils
         }
     }
 
-    public static function get_stock_balance($user_id, $crop_id)
-    {
-        $records = StockRecord::where([
+    public static function get_stock_balance($user_id, $crop_id){
+        $records = FormStockExaminationRequest::where([
             'administrator_id' => $user_id,
-            'crop_variety_id' => $crop_id
+            'import_export_permit_id' => $crop_id
         ])->get();
         $tot = 0;
-        
         foreach ($records as $key => $value) {
             $tot += $value->quantity;
         }

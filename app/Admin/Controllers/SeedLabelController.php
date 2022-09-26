@@ -206,11 +206,12 @@ class SeedLabelController extends AdminController
                     continue;
                 } 
                 // $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name . " - " . $sl->crop_variety->name . ", QTY: " . $sl->quantity . " KGs";
-                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number;
+                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lab_test_number;
             }
 
+            // dd($seed_labs);
   
-            if (count($seed_labs) < 1) {
+            if (!isset($seed_labs)) {
                 admin_error("Warning", "You don't have any  valid LAB TEST NUMBER. Apply for seed lap to aquire a LAB TEST NUMBER.");
                 return redirect(admin_url('seed-labels'));
             }
@@ -252,7 +253,7 @@ class SeedLabelController extends AdminController
             $form->saving(function ($form) {
                 $form->status = 1;
             });
-            $form->select('seed_lab_id', __('Select lab test number'))
+            $form->select('seed_lab_id', __('Select Marketable Stock'))
                 ->options($seed_labs)
                 ->required();
                 //->load('seed_label_package_id', url('/api/seed_label_packages_by_seed_lab'))

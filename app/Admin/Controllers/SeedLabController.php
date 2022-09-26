@@ -258,22 +258,19 @@ class SeedLabController extends AdminController
             }
             $form->hidden('crop_variety_id', __('Crop variety id'));
 
-            $stocks = [];
-            
-            // foreach (StockRecord::all() as $key => $stock_record) {
-            foreach (StockRecord::where("administrator_id", Admin::user()->id) as $key => $stock_record) {
-                $u = Admin::user();
-                $tot = Utils::get_stock_balance($u->id, $stock_record->id);
-                if ($tot > 0) {
-                    continue;
-                }
-                // $stocks[$stock_record->id] = "LOT: " . $stock_record->lot_number . ", Quantity: " . $stock_record->quantity;
-                $stocks[$stock_record->id] = "LOT: " . $stock_record->lot_number;
+            $items_in_table = FormStockExaminationRequest::where('administrator_id', $user->id)->get();
+            $names = [];
+            foreach($items_in_table as $stock_exm_rec) {
+               $names[] = "Lot Number: " . $stock_exm_rec->lot_number;
             }
+            
+            // dd($names);
 
             $form->setWidth(8, 4);
             $form->select('form_stock_examination_request_id', __('Select Stock examination form'))
-                ->options($stocks);
+                ->default("")
+                ->options($names)
+                ;
             $form->date('collection_date', __('Collection date'))->default(date('Y-m-d'))->required();
             $form->file('payment_receipt', __('Attach Payment receipt'))->required();
             $form->hidden('crop_variety_id', __('crop_variety_id'));
