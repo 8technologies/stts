@@ -99,9 +99,13 @@
       <hr>
       <div class="row">
         <div class="col-xs-12">
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <div class="custom-control custom-checkbox">Don't have an account? <a
                         href="{{ route('register') }}">Register</a> </div>
+            </div> -->
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">Don't have an account? <a
+                        href="#">Register</a> </div>
             </div>
         </div>
       </div>

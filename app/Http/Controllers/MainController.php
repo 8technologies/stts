@@ -157,7 +157,7 @@ class MainController extends Controller
     }
 
 
-    public function register2(Request  $request)
+    public function register(Request  $request)
     {
         $this->validate($request, [
             'first_name' => 'required|max:24|min:2',
@@ -202,7 +202,7 @@ class MainController extends Controller
     }
 
     
-    public function register(Request  $request)
+    public function register111(Request  $request)
     {
         if (Auth::guard()->check()) {
             return redirect("/admin");
@@ -227,6 +227,7 @@ class MainController extends Controller
 
             $u['name'] = $request->first_name . " " . $request->last_name;
             $u['email'] = $request->email;
+            $u['username'] = $request->email;
 
             $old_user = Administrator::where('email', $u['email'])->first();
             if ($old_user) {
@@ -236,6 +237,15 @@ class MainController extends Controller
                     ->withInput();
                 die();
             }
+
+            
+            if ($u->save()) {
+                DB::table('admin_role_users')->insert([
+                    'role_id' => 3,
+                    'user_id' => $u->id
+                ]);
+            }
+
 
             $u['password'] = Hash::make($request->input("password"));
             $users = Administrator::create($u);
