@@ -290,9 +290,9 @@ class Utils
     {
         $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
         
-        if (count($recs) == 0) {    // if no sr4 belongs to current user
-            return false;
-        }
+        // if (count($recs) == 0) {    // if no sr4 belongs to current user
+        //     return false;
+        // }
         // dd(count($recs));
 
         foreach ($recs as $key => $value) {

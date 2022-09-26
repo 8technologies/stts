@@ -44,6 +44,10 @@ class FormSr4Controller extends AdminController
             if (!Utils::can_create_sr4()) {
                 $grid->disableCreateButton();
             }
+            
+            // if (!Utils::can_create_sr4()) {
+            //     $grid->disableCreateButton();
+            // }
 
             $grid->actions(function ($actions) {
 
