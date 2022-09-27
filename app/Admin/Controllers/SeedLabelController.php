@@ -16,7 +16,6 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
-
 class SeedLabelController extends AdminController
 {
     /**
@@ -62,9 +61,6 @@ class SeedLabelController extends AdminController
                 if ($status == 0) {
                     $status = 1;
                 }
-                if ($status == 13) {
-                    $actions->disableEdit();
-                }
                 if (
                     $status != 1 &&
                     $status != 3
@@ -102,11 +98,14 @@ class SeedLabelController extends AdminController
             });
         }
 
+
         $grid->column('created_at', __('Created'))
             ->display(function ($item) {
-                return Carbon::parse($item)->diffForHumans();
+                if (!$item) {
+                    return "-";
+                }
+                return Carbon::parse($item)->toFormattedDateString();
             })->sortable();
-
         $grid->column('administrator_id', __('Crated by'))->display(function ($user) {
             $_user = Administrator::find($user);
             if (!$_user) {
@@ -197,21 +196,19 @@ class SeedLabelController extends AdminController
             $form->hidden('administrator_id', __('Administrator id'))
                 ->default($user->id);
 
-            $res = MarketableSeed::where([
+            $res = SeedLab::where([
                 'administrator_id' => $user->id,
-                // 'status' => 5
+                'status' => 5
             ])->get();
             foreach ($res as $key => $sl) { 
                 if ($sl->quantity < 1) {
                     continue;
                 } 
-                // $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name . " - " . $sl->crop_variety->name . ", QTY: " . $sl->quantity . " KGs";
-                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lab_test_number;
+                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name . " - " . $sl->crop_variety->name . ", QTY: " . $sl->quantity . " KGs";
             }
 
-            // dd($seed_labs);
   
-            if (!isset($seed_labs)) {
+            if (count($seed_labs) < 1) {
                 admin_error("Warning", "You don't have any  valid LAB TEST NUMBER. Apply for seed lap to aquire a LAB TEST NUMBER.");
                 return redirect(admin_url('seed-labels'));
             }
@@ -235,15 +232,14 @@ class SeedLabelController extends AdminController
             $id = request()->route()->parameters['seed_label'];
             $model = $form->model()->find($id);
 
-            foreach (MarketableSeed::where([
+            foreach (SeedLab::where([
                 'administrator_id' => $model->administrator_id,
-                // 'status' => 5
+                'status' => 5
             ])->get() as $key => $sl) {
                 if ($sl->quantity < 1) {
                     continue;
                 }
-                // $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name.", QTY: " . $sl->quantity . " KGs";
-                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number;
+                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name.", QTY: " . $sl->quantity . " KGs";
             }
         }
 
@@ -253,7 +249,7 @@ class SeedLabelController extends AdminController
             $form->saving(function ($form) {
                 $form->status = 1;
             });
-            $form->select('seed_lab_id', __('Select Marketable Stock'))
+            $form->select('seed_lab_id', __('Select lab test number'))
                 ->options($seed_labs)
                 ->required();
                 //->load('seed_label_package_id', url('/api/seed_label_packages_by_seed_lab'))
@@ -284,7 +280,6 @@ class SeedLabelController extends AdminController
             $form->display('applicant_remarks', __('Remarks'));
 
             $form->radio('status', __('Inspection decision'))
-            ->help("When 'Accepted', USTA takes it from here")
                 ->options([
                     '3' => 'Halt',
                     '13' => 'Accepted',
