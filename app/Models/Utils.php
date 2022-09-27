@@ -362,7 +362,7 @@ class Utils
         if ($status == 13)
             return '<span class="badge badge-warning">Pending for labeling</span>';
         if ($status == 14)
-            return '<span class="badge badge-success">Lables Printed</span>';
+            return '<span class="badge badge-success">Labels Printed</span>';
         if ($status == 15)
             return '<span class="badge badge-danger">Declined</span>';
         if ($status == 16)
