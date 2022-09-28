@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Crop;
 use App\Models\CropVariety;
+use App\Models\FormSr4;
 use Encore\Admin\Controllers\AdminController;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
@@ -56,6 +57,26 @@ class ImportPermitApiController extends AdminController
     public function import_permits_create(Request $request): \Illuminate\Http\JsonResponse
     {
         $user = Auth::user();
+        $sr4 =  FormSr4::where([
+            'administrator_id' => $user->id
+        ])->first();
+
+        $seed_board_registration_number = null;
+        if ($sr4 != null) {
+            if ($sr4->seed_board_registration_number != null) {
+                if (strlen($sr4->seed_board_registration_number) > 1) {
+                    $seed_board_registration_number = $sr4->seed_board_registration_number;
+                }
+            }
+        }
+
+        if ($seed_board_registration_number == null) {
+            return $this->errorResponse("You don't have a valid SR4. Apply for SR4 first so we can get your seed board registration number.", 200);
+        }
+
+
+        //die("romina => $seed_board_registration_number");
+        //national_seed_board_reg_num;
 
         $data = $request->only(
             // 'name',
@@ -101,6 +122,7 @@ class ImportPermitApiController extends AdminController
         $form = ImportExportPermit::create([
             'administrator_id' => $user->id,
             'name' => $user->name,
+            'national_seed_board_reg_num' => $seed_board_registration_number,
             'address' => $request->input('address'),
             'telephone' => $request->input('telephone'),
             'type' => $request->input('type'),
@@ -108,6 +130,7 @@ class ImportPermitApiController extends AdminController
             'quantiry_of_seed' => $request->input('quantiry_of_seed'),
             'name_address_of_origin' => $request->input('name_address_of_origin'),
             'ista_certificate' => $request->input('ista_certificate'),
+            'other_varieties' => $request->input('other_varieties'),
             'phytosanitary_certificate' => $request->input('phytosanitary_certificate'),
             'crop_category' => $request->input('crop_category'),
             'is_import' => (int) ($request->input('is_import')),
