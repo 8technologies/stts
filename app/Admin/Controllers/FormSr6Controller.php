@@ -43,7 +43,6 @@ class FormSr6Controller extends AdminController
             $grid->disableCreateButton();
         }
 
-
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
             
@@ -58,7 +57,8 @@ class FormSr6Controller extends AdminController
                     $actions->disableDelete();
                 }
             });
-        } 
+        }
+
         else if (Admin::user()->isRole('inspector')) {
             $grid->model()->where('inspector', '=', Admin::user()->id);
             // $grid->disableCreateButton();
@@ -232,7 +232,7 @@ class FormSr6Controller extends AdminController
         return $show;
     }
 
-    
+
     /**
      * Make a form builder.
      *
