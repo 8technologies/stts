@@ -288,9 +288,9 @@ class Utils
     {
         $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
         
-        // if (count($recs) == 0) {    // if no sr4 belongs to current user
-        //     return false;
-        // }
+        if (count($recs) == 0) {    // if no sr4 belongs to current user
+            return false;
+        }
         // dd(count($recs));
 
         foreach ($recs as $key => $value) {
@@ -346,7 +346,7 @@ class Utils
         if ($status == 5)
             return '<span class="badge badge-success">Accepted</span>';
         if ($status == 6)
-            return '<span class="badge badge-danger">expired</span>';
+            return '<span class="badge badge-danger">Expired</span>';
         if ($status == 7)
             return '<span class="badge badge-warning">Provisional</span>';
         if ($status == 8)

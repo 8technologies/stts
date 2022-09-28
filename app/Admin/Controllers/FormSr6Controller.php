@@ -39,38 +39,40 @@ class FormSr6Controller extends AdminController
         
         $grid = new Grid(new FormSr6());
 
-        if (!Admin::user()->isRole('basic-user')) {
+        if (!Admin::user()->isRole('basic-user')) {   // only basic user can create sr4
             $grid->disableCreateButton();
         }
 
 
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
- 
-           
+            
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
                 if (
-                    $status == 2 ||
-                    $status == 5 ||
-                    $status == 6
+                    $status == 2 ||  // Inspection assigned
+                    $status == 5 ||  // Accepted
+                    $status == 6     // Expired
                 ) {
                     $actions->disableEdit();
                     $actions->disableDelete();
                 }
             });
-        } else if (Admin::user()->isRole('inspector')) {
+        } 
+        else if (Admin::user()->isRole('inspector')) {
             $grid->model()->where('inspector', '=', Admin::user()->id);
-            $grid->disableCreateButton();
+            // $grid->disableCreateButton();
 
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
                 $actions->disableDelete();
                 //$actions->disableEdit();
             });
-        } else {
-           // $grid->disableCreateButton();
-        }
+        } 
+        
+        // else {
+        //    // $grid->disableCreateButton();
+        // }
 
         $grid->column('id', __('Id'))->sortable();
 
@@ -100,10 +102,8 @@ class FormSr6Controller extends AdminController
             return $u->name;
         })->sortable(); 
         
-
         $grid->column('address', __('Address'))->sortable();
         $grid->column('type', __('Category'))->sortable();
-
 
         $grid->column('inspector', __('Inspector'))->display(function ($userId) {
             if (Admin::user()->isRole('basic-user')) {
@@ -232,6 +232,7 @@ class FormSr6Controller extends AdminController
         return $show;
     }
 
+    
     /**
      * Make a form builder.
      *
