@@ -308,7 +308,7 @@ class FormSr4Controller extends AdminController
             // ->creationRules(["required", "unique:form_sr4s"])
             ->rules('required');
 
-            $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required();
+            $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->required();
             $form->text('company_initials', __('Company initials'))->required();
             $form->text('premises_location', __('Premises location'))->required();
