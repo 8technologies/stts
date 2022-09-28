@@ -235,6 +235,10 @@ class SeedLabController extends AdminController
      */
     protected function form()
     {
+        $m = SeedLab::find(81);
+        $m->broken_germs = rand(100,10000);
+        $m->status = 11;
+        $m->save();
         $form = new Form(new SeedLab());
 
         $user = Admin::user();
@@ -600,7 +604,7 @@ class SeedLabController extends AdminController
         }
 
 
-        if (Admin::user()->isRole('lab-technician')) {
+        if (Admin::user()->isRole('lab-technician')) { 
 
             if ($form->isEditing()) {
 
