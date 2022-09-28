@@ -237,19 +237,13 @@ class Utils
 
 
         $sr4 =  FormSr4::where([
-            'administrator_id' => Admin::user()->id
+            'administrator_id' => Admin::user()->id,
+            'status' => 5
         ])->first();
 
-        $seed_board_registration_number = null;
-        if ($sr4 != null) {
-            if ($sr4->seed_board_registration_number != null) {
-                if (strlen($sr4->seed_board_registration_number) > 1) {
-                    $seed_board_registration_number = $sr4->seed_board_registration_number;
-                }
-            }
-        }
 
-        if ($seed_board_registration_number == null) {
+
+        if ($sr4 == null) {
             return false;
         }
 
