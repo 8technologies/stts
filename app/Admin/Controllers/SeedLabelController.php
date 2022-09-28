@@ -204,7 +204,8 @@ class SeedLabelController extends AdminController
                 if ($sl->quantity < 1) {
                     continue;
                 } 
-                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name . " - " . $sl->crop_variety->name . ", QTY: " . $sl->quantity . " KGs";
+                // $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name . " - " . $sl->crop_variety->name . ", QTY: " . $sl->quantity . " KGs";
+                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lab_test_number;
             }
 
   
@@ -240,6 +241,7 @@ class SeedLabelController extends AdminController
                     continue;
                 }
                 $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name.", QTY: " . $sl->quantity . " KGs";
+
             }
         }
 
@@ -255,10 +257,12 @@ class SeedLabelController extends AdminController
                 //->load('seed_label_package_id', url('/api/seed_label_packages_by_seed_lab'))
 
             $_lables = SeedLabelPackage::all();
+
             $lables = [];
             foreach ($_lables as $key => $val) {
                 $lables[$val->id] = "Package Size: {$val->package_size} Kgs @ : {$val->package_price} UGX";
             }
+
             $form->select('seed_label_package_id', __('Select Seed label package'))
             ->options($lables)
             ->required();

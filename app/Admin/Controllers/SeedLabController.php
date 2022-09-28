@@ -45,10 +45,10 @@ class SeedLabController extends AdminController
 
         
         // $grid->column('id', __('Id'))->sortable();
-        // $grid->column('created_at', __('Created'))
-        //     ->display(function ($item) {
-        //         return Carbon::parse($item)->diffForHumans();
-        //     })->sortable();
+        $grid->column('created_at', __('Created'))
+            ->display(function ($item) {
+                return Carbon::parse($item)->diffForHumans();
+            })->sortable();
 
         // $grid->column('administrator_id', __('Applicant'))->display(function ($user) {
         //     $_user = Administrator::find($user);
@@ -340,8 +340,6 @@ class SeedLabController extends AdminController
         }
 
         if (Admin::user()->isRole('inspector')) {
-
-
             $form->hidden('parent_id');
             $form->hidden('order');
             $form->hidden('title');
@@ -351,9 +349,11 @@ class SeedLabController extends AdminController
 
                 $id = request()->route()->parameters['seed_lab'];
                 $model = $form->model()->find($id);
+
                 if (!$model) {
                     die("Form not found");
                 }
+
                 if ($model->inspector_is_done == 1) {
                     admin_error("You cannot inspect this form more than once. Request adminstrator to re-activate this form.");
                     $form->disableEditingCheck();
@@ -378,17 +378,15 @@ class SeedLabController extends AdminController
 
                     $form->quantity = $quantity;
 
-
-
                     $records = StockRecord::where([
                         'administrator_id' => $model->user->id,
                         'crop_variety_id' => $model->crop_variety_id
                     ])->get();
                     $tot = 0;
+
                     foreach ($records as $key => $value) {
                         $tot += ((int)($value->quantity));
                     }
-
 
                     if ($quantity > $tot) {
                         admin_error("Warning", "There is insufitient quantity stock of this crop vareity. You tried to 
@@ -396,15 +394,16 @@ class SeedLabController extends AdminController
                         return redirect(admin_url('seed-labs'));
                     }
 
-
                     $mother = SeedLab::where('lot_number', $form->mother_lot)->first();
                     $form->parent_id = 0;
+
                     if ($mother != null) {
                         if ($mother->crop_variety_id != $model->crop_variety_id) {
                             admin_error('Invalid lot number', 'Crop varity of Mother lot number 
                             doesn\' match with current crop variety.');
                             return redirect(admin_url('seed-labs/' . $model->id . "/edit"))->withInput();
                         }
+
                         $form->parent_id = $mother->id;
                         $form->title = $form->lot_number;
                         $form->order = $model->id;
@@ -419,15 +418,14 @@ class SeedLabController extends AdminController
                     'crop_variety_id' => $model->crop_variety_id
                 ])->get();
                 $tot = 0;
+
                 foreach ($records as $key => $value) {
                     $tot += ((int)($value->quantity));
                 }
 
-
                 $form->setWidth(8, 4);
                 $form->display('applicant', 'Applicant')
                     ->default($model->user->name);
-
 
                 $form->display('collection_date', 'Collection date')
                     ->default($model->user->collection_date);
@@ -439,12 +437,14 @@ class SeedLabController extends AdminController
                 $form->text('sample_weight', __('Enter weight of Sample (in KGs)'))
                     ->required()
                     ->attribute('type', 'number');
+
                 $form->text('quantity', __('Enter the quantity represented (in Metric Tonnes)'))
                     ->default(1000)
                     ->attribute([
                         'type' => 'number',
                         'value' => $tot,
                     ])->required();
+
                 $form->text('packaging', __('Packaging'))->required();
                 $form->text('number_of_units', __('Number of units'))->default(15);
                 $form->text('mother_lot', __('Mother lot'))->attribute('type', 'number')->required();
@@ -460,7 +460,6 @@ class SeedLabController extends AdminController
                         'Conditioned seed' => 'Conditioned seed',
                         'Other' => 'Other',
                     ]);
-
 
                 $form->tags('tests_required', __('Tests required'))
                     ->required()
@@ -479,6 +478,7 @@ class SeedLabController extends AdminController
             }
         }
 
+
         if (Admin::user()->isRole('lab-reception')) {
 
             if ($form->isEditing()) {
@@ -493,7 +493,6 @@ class SeedLabController extends AdminController
                 $form->saving(function ($form) {
                     $id = request()->route()->parameters['seed_lab'];
                     $model = $form->model()->find($id);
-
 
                     $records = StockRecord::where([
                         'administrator_id' => $model->user->id,
