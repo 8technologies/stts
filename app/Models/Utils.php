@@ -246,16 +246,6 @@ class Utils
         if ($sr4 == null) {
             return false;
         }
-<<<<<<< HEAD
-        
-        foreach ($recs_sr4 as $key => $value_sr4) {
-            if (!($value_sr4->status == 5)) {
-                return false;
-            }
-
-        }
-=======
->>>>>>> 526b23702a648cce09e524dfa5065dbae288a780
 
         return true;
     }
