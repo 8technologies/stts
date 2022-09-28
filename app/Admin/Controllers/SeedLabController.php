@@ -235,7 +235,6 @@ class SeedLabController extends AdminController
      */
     protected function form()
     {
-
         $form = new Form(new SeedLab());
 
         $user = Admin::user();
