@@ -5,3 +5,4 @@ storage/logs/laravel.log
 .vscode
 hacks.txt
 public/storage/
+statuses.php
