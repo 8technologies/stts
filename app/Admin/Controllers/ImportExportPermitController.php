@@ -29,7 +29,7 @@ class ImportExportPermitController extends AdminController
      * @var string
      */
     protected $title = 'Import Permit';
- 
+
 
     /**
      * Make a grid builder.
@@ -41,7 +41,7 @@ class ImportExportPermitController extends AdminController
         $grid = new Grid(new ImportExportPermit());
         // $grid->disableFilter();
         $grid->disableExport();
-        $grid->model()->where('is_import', '=', 1); 
+        $grid->model()->where('is_import', '=', 1);
 
 
         if (Admin::user()->isRole('basic-user')) {
@@ -62,9 +62,7 @@ class ImportExportPermitController extends AdminController
                     $actions->disableDelete();
                 }
             });
-        } 
-        
-        else if (Admin::user()->isRole('inspector')) {
+        } else if (Admin::user()->isRole('inspector')) {
             $grid->model()->where('inspector', '=', Admin::user()->id);
             $grid->disableCreateButton();
 
@@ -84,19 +82,15 @@ class ImportExportPermitController extends AdminController
                     $actions->disableDelete();
                 }
             });
-        } 
-        
-        elseif (Admin::user()->isRole('admin')) {
+        } elseif (Admin::user()->isRole('admin')) {
             $grid->disableCreateButton();
 
-            $grid->filter(function($search_param){
+            $grid->filter(function ($search_param) {
                 $search_param->disableIdfilter();
                 $search_param->like('name', __("Search by Name"));
                 $search_param->like('status', __("Search by Status"));
             });
-        }
-        
-        else {
+        } else {
             $grid->disableCreateButton();
         }
 
@@ -110,8 +104,8 @@ class ImportExportPermitController extends AdminController
         $grid->column('telephone', __('Telephone'));
         $grid->column('quantiry_of_seed', __('Quantity of seed'));
         $grid->column('ista_certificate', __('Type Of Certificate'))->sortable();
-        
-        
+
+
         // $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
         //     $u = Administrator::find($userId);
         //     if (!$u)
@@ -224,7 +218,7 @@ class ImportExportPermitController extends AdminController
                 // return redirect(admin_url('import-export-permits'));
             }
         }
-            
+
         if ($form->isCreating()) {
             if (!Utils::previous_import_form_not_accepted()) {
                 return admin_info("Information", "You can not apply for a new Import Permit while your last application hasn't been accepted yet! <br>If status isn't 'Pending', please check the Inspector's comment(s) to correct your application and submit again.");
@@ -294,7 +288,7 @@ class ImportExportPermitController extends AdminController
             //     'Researchers' => 'Researchers',
             // ];
 
-    /*
+            /*
             $form->radio('type', __('Application category?'))
                 ->options([
                     'Seed Merchant' => 'Seed Merchant',
@@ -473,7 +467,7 @@ class ImportExportPermitController extends AdminController
             */
 
 
-            
+
             $form->radio('type', __('Application Category?'))
                 ->options([
                     'Seed Merchant' => 'Seed Merchant',
@@ -591,10 +585,11 @@ class ImportExportPermitController extends AdminController
             )
                 ->required();
 
+
             // ------------------------------------------------------------------
             $form->tags('ista_certificate', __('Type Of Certificate'))
-            ->required()
-            ->options(['ISTA certificate', 'Phytosanitary certificate']);
+                ->required()
+                ->options(['ISTA certificate', 'Phytosanitary certificate']);
             // ------------------------------------------------------------------
 
             $form->html('<h3>I or We wish to apply for a license to import seed as indicated below:</h3>');
@@ -621,6 +616,11 @@ class ImportExportPermitController extends AdminController
                 $form->text('weight', __('Weight (in KGs)'))->attribute('type', 'number')->required();
             });
 
+            $form->text(
+                'other_varieties',
+                __('Specify other varieties.')
+            )
+                ->help('If varieties you are applying for were not listed');
         }
 
         if (Admin::user()->isRole('admin')) {
@@ -667,6 +667,7 @@ class ImportExportPermitController extends AdminController
             $form->text('telephone', __('Telephone'))->readonly();
             $form->text('address', __('Address'))->readonly();
             $form->text('store_location', __('Store location'))->readonly();
+            $form->text('other_varieties', __('Other varieties'))->readonly();
             $form->divider();
 
             $form->radio('status', __('Status'))
