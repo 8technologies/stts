@@ -616,6 +616,7 @@ class ImportExportPermitController extends AdminController
                 $form->text('weight', __('Weight (in KGs)'))->attribute('type', 'number')->required();
             });
 
+            //Specify other varieties
             $form->text(
                 'other_varieties',
                 __('Specify other varieties.')
