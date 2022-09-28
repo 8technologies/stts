@@ -38,7 +38,8 @@ class Utils
         }
     }
 
-    public static function get_stock_balance($user_id, $crop_id){
+    public static function get_stock_balance($user_id, $crop_id)
+    {
         $records = FormStockExaminationRequest::where([
             'administrator_id' => $user_id,
             'import_export_permit_id' => $crop_id
@@ -230,55 +231,26 @@ class Utils
     // }
 
 
-    
+
     public static function can_create_import_form()
     {
 
-        $recs = ImportExportPermit::where('administrator_id', '=',  Admin::user()->id)
-        ->where('is_import', '=', 1)
-        ->get();
 
-        foreach ($recs as $key => $value) {
+        $sr4 =  FormSr4::where([
+            'administrator_id' => Admin::user()->id
+        ])->first();
 
-            if ($value->status == 4) {
-                continue;
-            }
-
-            if (!$value->valid_from) {
-                return false;
-            }
-            if (!$value->valid_until) {
-                return false;
-            }
-
-            $now = time();   // today
-            $then = strtotime($value->valid_until);  // expiry date
-
-            if ($now < $then) {
-                return true;   // valid
-            } else {
-                return false;   // not expired
+        $seed_board_registration_number = null;
+        if ($sr4 != null) {
+            if ($sr4->seed_board_registration_number != null) {
+                if (strlen($sr4->seed_board_registration_number) > 1) {
+                    $seed_board_registration_number = $sr4->seed_board_registration_number;
+                }
             }
         }
 
-        $recs_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->get();
-        
-        if (count($recs_sr4) == 0) {    // if no sr4 belongs to current user
+        if ($seed_board_registration_number == null) {
             return false;
-        }
-        
-        foreach ($recs_sr4 as $key => $value_sr4) {
-            if (!($value_sr4->status == 5)) {
-                return false;
-            }
-
-            if (!$value->valid_from) {
-                return false;
-            }
-            if (!$value->valid_until) {
-                return false;
-            }
-
         }
 
         return true;
@@ -288,9 +260,9 @@ class Utils
     public static function can_create_export_form()
     {
         $recs = ImportExportPermit::where('administrator_id', '=',  Admin::user()->id)
-        ->where('is_import', '!=', 1)
-        ->get();
-        
+            ->where('is_import', '!=', 1)
+            ->get();
+
         foreach ($recs as $key => $value) {
 
             if ($value->status == 4) {  // if rejected, you cant apply again
@@ -300,7 +272,7 @@ class Utils
             if (!$value->valid_from) {
                 return false;
             }
-            
+
             if (!$value->valid_until) {
                 return false;
             }
@@ -315,11 +287,11 @@ class Utils
         }
 
         $recs_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->get();
-        
+
         if (count($recs_sr4) == 0) {    // if no sr4 belongs to current user
             return false;
         }
-        
+
         foreach ($recs_sr4 as $key => $value_sr4) {
             if (!($value_sr4->status == 5)) {
                 return false;
@@ -333,7 +305,7 @@ class Utils
 
 
 
-/*
+    /*
     public static function can_create_export_form_old()
     {
         
@@ -395,8 +367,8 @@ class Utils
     public static function previous_import_form_not_accepted()
     {
         $recs = ImportExportPermit::where('administrator_id', '=',  Admin::user()->id)
-        ->where('is_import', '=', 1)
-        ->get();
+            ->where('is_import', '=', 1)
+            ->get();
 
         foreach ($recs as $key => $value) {
             if (!$value->status == 5) {   // if status is not 'Accepted'
@@ -412,8 +384,8 @@ class Utils
     public static function previous_export_form_not_accepted()
     {
         $recs = ImportExportPermit::where('administrator_id', '=',  Admin::user()->id)
-        ->where('is_import', '!=', 1)
-        ->get();
+            ->where('is_import', '!=', 1)
+            ->get();
 
         foreach ($recs as $key => $value) {
             if (!$value->status == 5) {
@@ -424,7 +396,7 @@ class Utils
         return true;
     }
 
-    
+
 
     public static function can_create_sr6()
     {
@@ -456,7 +428,7 @@ class Utils
     public static function can_create_sr4()
     {
         $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
-        
+
         // if (count($recs) == 0) {    // if no sr4 belongs to current user
         //     return false;
         // }
@@ -690,7 +662,7 @@ class Utils
         $uploaded_images = array();
         foreach ($files as $file) {
 
-            if ( 
+            if (
                 isset($file['name']) &&
                 isset($file['type']) &&
                 isset($file['tmp_name']) &&
