@@ -198,43 +198,162 @@ class Utils
         return true;
     }
 
-    public static function can_create_export_form()
-    {
-        $recs = ImportExportPermit::where('administrator_id',  Admin::user()->id)->get();
-        foreach ($recs as $key => $value) {
-            if ($value->is_import) {
-                continue;
-            }
+    // public static function can_create_export_form_old()
+    // {
+    //     $recs = ImportExportPermit::where('administrator_id',  Admin::user()->id)->get();
+    //     foreach ($recs as $key => $value) {
+    //         if ($value->is_import) {
+    //             continue;
+    //         }
 
-            if ($value->status == 4) {
-                continue;
-            }
+    //         if ($value->status == 4) {
+    //             continue;
+    //         }
 
-            if (!$value->valid_from) {
-                return false;
-            }
-            if (!$value->valid_until) {
-                return false;
-            }
+    //         if (!$value->valid_from) {
+    //             return false;
+    //         }
+    //         if (!$value->valid_until) {
+    //             return false;
+    //         }
 
-            $now = time();
-            $then = strtotime($value->valid_until);
-            if ($now < $then) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+    //         $now = time();
+    //         $then = strtotime($value->valid_until);
+    //         if ($now < $then) {
+    //             return true;
+    //         } else {
+    //             return false;
+    //         }
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
+
+    
     public static function can_create_import_form()
     {
-        $recs = ImportExportPermit::where('administrator_id',  Admin::user()->id)->get();
+
+        $recs = ImportExportPermit::where('administrator_id', '=',  Admin::user()->id)
+        ->where('is_import', '=', 1)
+        ->get();
+
         foreach ($recs as $key => $value) {
 
             if ($value->status == 4) {
+                continue;
+            }
+
+            if (!$value->valid_from) {
+                return false;
+            }
+            if (!$value->valid_until) {
+                return false;
+            }
+
+            $now = time();   // today
+            $then = strtotime($value->valid_until);  // expiry date
+
+            if ($now < $then) {
+                return true;   // valid
+            } else {
+                return false;   // not expired
+            }
+        }
+
+        $recs_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+        
+        if (count($recs_sr4) == 0) {    // if no sr4 belongs to current user
+            return false;
+        }
+        
+        foreach ($recs_sr4 as $key => $value_sr4) {
+            if (!($value_sr4->status == 5)) {
+                return false;
+            }
+
+            if (!$value->valid_from) {
+                return false;
+            }
+            if (!$value->valid_until) {
+                return false;
+            }
+
+        }
+
+        return true;
+    }
+
+
+    public static function can_create_export_form()
+    {
+        $recs = ImportExportPermit::where('administrator_id', '=',  Admin::user()->id)
+        ->where('is_import', '!=', 1)
+        ->get();
+        
+        foreach ($recs as $key => $value) {
+
+            if ($value->status == 4) {  // if rejected, you cant apply again
+                continue;
+            }
+
+            if (!$value->valid_from) {
+                return false;
+            }
+            
+            if (!$value->valid_until) {
+                return false;
+            }
+
+            $now = time();
+            $then = strtotime($value->valid_until);
+            if ($now < $then) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        $recs_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+        
+        if (count($recs_sr4) == 0) {    // if no sr4 belongs to current user
+            return false;
+        }
+        
+        foreach ($recs_sr4 as $key => $value_sr4) {
+            if (!($value_sr4->status == 5)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
+
+
+/*
+    public static function can_create_export_form_old()
+    {
+        
+        // $recs2 = ImportExportPermit::where('administrator_id', '=',  Admin::user()->id)
+        // ->whereNull('is_import');
+
+        // $recs = ImportExportPermit::where('administrator_id', '=',  Admin::user()->id)
+        // ->where('is_import', '!=', 1)
+        // ->union($recs2)
+        // ->get();
+        
+
+
+        $recs = ImportExportPermit::where('administrator_id', '=',  Admin::user()->id)
+        ->where('is_import', '!=', 1)
+        ->get();
+
+        foreach ($recs as $key => $value) {
+
+            if (!$value->status == 4) {
                 continue;
             }
 
@@ -254,8 +373,58 @@ class Utils
             }
         }
 
+        $recs_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+        
+        if (count($recs_sr4) == 0) {    // if no sr4 belongs to current user
+            return false;
+        }
+        
+        foreach ($recs_sr4 as $key => $value_sr4) {
+            if (!($value_sr4->status == 5)) {   // if sr4 is not accepted
+                return false;
+            }
+        }
+
         return true;
     }
+
+    */
+
+
+
+    public static function previous_import_form_not_accepted()
+    {
+        $recs = ImportExportPermit::where('administrator_id', '=',  Admin::user()->id)
+        ->where('is_import', '=', 1)
+        ->get();
+
+        foreach ($recs as $key => $value) {
+            if (!$value->status == 5) {   // if status is not 'Accepted'
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
+    public static function previous_export_form_not_accepted()
+    {
+        $recs = ImportExportPermit::where('administrator_id', '=',  Admin::user()->id)
+        ->where('is_import', '!=', 1)
+        ->get();
+
+        foreach ($recs as $key => $value) {
+            if (!$value->status == 5) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    
 
     public static function can_create_sr6()
     {
@@ -288,10 +457,10 @@ class Utils
     {
         $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
         
-        if (count($recs) == 0) {    // if no sr4 belongs to current user
-            return false;
-        }
-        // dd(count($recs));
+        // if (count($recs) == 0) {    // if no sr4 belongs to current user
+        //     return false;
+        // }
+        // // dd(count($recs));
 
         foreach ($recs as $key => $value) {
 
