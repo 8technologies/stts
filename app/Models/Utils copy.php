@@ -233,7 +233,6 @@ class Utils
     
     public static function can_create_import_form()
     {
-
         $recs = ImportExportPermit::where('administrator_id', '=',  Admin::user()->id)
         ->where('is_import', '=', 1)
         ->get();
@@ -261,18 +260,24 @@ class Utils
             }
         }
 
-        $recs_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+        $recs_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->first();
         
-        if (count($recs_sr4) == 0) {    // if no sr4 belongs to current user
+        // if ($recs_sr4 &&count($recs_sr4) == 0) {    // if no sr4 belongs to current user
+        if (!isset($recs_sr4)) {    // if no sr4 belongs to current user
             return false;
         }
+        // $fffffff = FormSr4::where('administrator_id',  Admin::user()->id)->first();
+        // if (isset($fffffff->status)) {    // if no sr4 belongs to current user
         
-        foreach ($recs_sr4 as $key => $value_sr4) {
-            if (!($value_sr4->status == 5)) {
-                return false;
+            foreach ($recs_sr4 as $key => $value_sr4) {
+                if (!($value_sr4->status == 5)) {
+                    return false;
+                }
             }
-
-        }
+        // }
+        // else{
+        //     return false;
+        // }
 
         return true;
     }
@@ -307,9 +312,11 @@ class Utils
             }
         }
 
-        $recs_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+        $recs_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->first();
         
-        if (count($recs_sr4) == 0) {    // if no sr4 belongs to current user
+        // if (count($recs_sr4) == 0) {    // if no sr4 belongs to current user
+        if (!isset($recs_sr4)) {    // if no sr4 belongs to current user
+
             return false;
         }
         
@@ -392,7 +399,7 @@ class Utils
         ->get();
 
         foreach ($recs as $key => $value) {
-            if (!$value->status == 5) {   // if status is not 'Accepted'
+            if ($value->status != 5) {   // if status is not 'Accepted'
                 return false;
             }
         }
@@ -409,7 +416,7 @@ class Utils
         ->get();
 
         foreach ($recs as $key => $value) {
-            if (!$value->status == 5) {
+            if ($value->status != 5) {
                 return false;
             }
         }
