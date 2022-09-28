@@ -51,7 +51,7 @@ class MarketableSeedController extends AdminController
         if (!Admin::user()->isRole('admin')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
         }
-        if (Admin::user()->isRole('basic-user')) {
+        if (!Admin::user()->isRole('basic-user')) {
             $grid->disableCreateButton();
         }
 
@@ -61,13 +61,11 @@ class MarketableSeedController extends AdminController
         });
 
 
+        $grid->column('id', __('Id'))->sortable();
         $grid->column('created_at', __('Created'))
             ->display(function ($item) {
-                return Carbon::parse($item)->toFormattedDateString();
-            })->sortable()
-            ->totalRow(function ($amount) {
-                return "<b>TOTAL</b>";
-            });
+                return Carbon::parse($item)->diffForHumans();
+            })->sortable();
 
 
 
@@ -87,7 +85,6 @@ class MarketableSeedController extends AdminController
                 }
                 return $var->crop->name . ", " . $var->name;
             })->sortable();
-            
         $grid->column('lab_test_number', __('Lab test no.'))->sortable();
         $grid->column('lot_number', __('Lot number'))->sortable();
         //$grid->column('source', __('Source'));
@@ -160,14 +157,14 @@ class MarketableSeedController extends AdminController
 
         if ($form->isCreating()) {
             if (!$user->isRole('basic-user')) {
-                return  admin_error("Warning", "You need to be a basic user to create a custom marketable seed record.");
+                admin_error("Warning", "You need to be a basic user to create a custom marketable seed record.");
                 return redirect(admin_url('marketable-seeds'));
             } else {
                 if ($form->saving(function ($form) {
 
                     $models = MarketableSeed::where('lab_test_number', $form->lab_test_number)->get();
                     if (count($models) < 1) {
-                        return   admin_error("Warning", "Marketable seed with provided lab test number not found");
+                        admin_error("Warning", "Marketable seed with provided lab test number not found");
                         return redirect(admin_url('marketable-seeds/create'))
                             ->withInput();
                     }
@@ -179,7 +176,7 @@ class MarketableSeedController extends AdminController
 
                     if ($quantity < 1) {
 
-                        return  admin_error("Warning", "You have insufitient Marketable seed in stock.");
+                        admin_error("Warning", "You have insufitient Marketable seed in stock.");
                         return redirect(admin_url('marketable-seeds/create'))
                             ->withInput();
                     }

@@ -4,3 +4,4 @@ storage/logs/laravel.log
 .idea
 .vscode
 hacks.txt
+public/storage/

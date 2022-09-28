@@ -61,7 +61,10 @@ class SeedLabelController extends AdminController
                 if ($status == 0) {
                     $status = 1;
                 }
-                if ($status != 1 && $status != 3) {
+                if (
+                    $status != 1 &&
+                    $status != 3
+                ) {
                     //$actions->disableEdit();
                     $actions->disableDelete();
                 }
@@ -115,11 +118,7 @@ class SeedLabelController extends AdminController
         //     return $this->seed_lab->lot_number;
         // })->sortable();
 
-        $grid->column('crop_variety_id', __('Crop variety ID'))->display(function () {
-            return $this->crop_variety->id;
-        })->sortable();
-
-        $grid->column('crop_variety', __('Crop variety'))->display(function () {
+        $grid->column('crop_variety_id', __('Crop variety'))->display(function () {
             return $this->crop_variety->name;
         })->sortable();
 
@@ -128,24 +127,9 @@ class SeedLabelController extends AdminController
             return $value->package_size . " Kgs @ " . $value->package_price . " UGX";
         })->sortable();
 
-        # -------
         $grid->column('quantity', __('Quantity'))->display(function ($var) {
             return number_format($var);
         });
-
-        // /**
-        //  * NO. OF LABELS   -- QTY / LABEL SIZE(size selected)   (qty enteredd during seed label application, and size selected)
-        //  * AMOUNT  -- No. of labels * amount of the label size
-        // */
-        // $grid->column('quantity', __('No. of Labels'))
-        //     ->display(function ($id) {
-        //         return number_of_labels($id) . " KGs";
-        //     })->sortable();
-
-        // $grid->column('total_price', __('Amount'))
-        //     ->display(function ($id) {
-        //         return "UGX. " . number_format($id);
-        //     })->sortable();
 
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
@@ -206,7 +190,7 @@ class SeedLabelController extends AdminController
         if ($form->isCreating()) {
             
             if (!Admin::user()->isRole('basic-user')) {
-                return admin_error("Warning", "You don't have previleges to create this form.");
+                admin_error("Warning", "You don't have previleges to create this form.");
                 return redirect(admin_url('seed-labels'));
             }
             $form->hidden('administrator_id', __('Administrator id'))
@@ -220,13 +204,12 @@ class SeedLabelController extends AdminController
                 if ($sl->quantity < 1) {
                     continue;
                 } 
-                // $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name . " - " . $sl->crop_variety->name . ", QTY: " . $sl->quantity . " KGs";
-                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number;
+                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name . " - " . $sl->crop_variety->name . ", QTY: " . $sl->quantity . " KGs";
             }
 
   
             if (count($seed_labs) < 1) {
-                return  admin_error("Warning", "You don't have any  valid LAB TEST NUMBER. Apply for seed lap to aquire a LAB TEST NUMBER.");
+                admin_error("Warning", "You don't have any  valid LAB TEST NUMBER. Apply for seed lap to aquire a LAB TEST NUMBER.");
                 return redirect(admin_url('seed-labels'));
             }
             $form->hidden('administrator_id')->default($user->id);
@@ -236,7 +219,7 @@ class SeedLabelController extends AdminController
                     dd("seed_label not found");
                 }
                 if ($form->quantity > $seed_lab->quantity) {
-                    return admin_error("Warning", "You have insufitient amount of this variety than what you have requested for..");
+                    admin_error("Warning", "You have insufitient amount of this variety than what you have requested for..");
                     return redirect(admin_url('seed-labels/create'));
                 }
                 $form->crop_variety_id = $seed_lab->crop_variety->id;
@@ -256,8 +239,7 @@ class SeedLabelController extends AdminController
                 if ($sl->quantity < 1) {
                     continue;
                 }
-                // $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name.", QTY: " . $sl->quantity . " KGs";
-                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number;
+                $seed_labs[$sl->id] = "Lab Test Number: " . $sl->lot_number . ", CROP: " . $sl->crop_variety->name.", QTY: " . $sl->quantity . " KGs";
             }
         }
 
@@ -322,7 +304,7 @@ class SeedLabelController extends AdminController
                     dd("Seed lab not found");
                 }
                 if ($model->quantity > $model->seed_lab->quantity) {
-                    return  admin_error("Warning", "There is insufitient amount of this variety in seedlab for this applicant.");
+                    admin_error("Warning", "There is insufitient amount of this variety in seedlab for this applicant.");
                     return redirect(admin_url('seed-labels'));
                 }
 
@@ -344,7 +326,7 @@ class SeedLabelController extends AdminController
                         $model->is_processed = 1;
                         $model->status = 14;
                         if ($model->save()) {
-                            return   admin_success("Success!", "Label priting was successfully processed.");
+                            admin_success("Success!", "Label priting was successfully processed.");
                             return redirect(admin_url('seed-labels'));
                         }
                     }

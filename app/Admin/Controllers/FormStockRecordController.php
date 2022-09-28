@@ -31,11 +31,11 @@ class FormStockRecordController extends AdminController
      */
     protected function grid()
     {
-        // $stocks = StockRecord::where('lot_number', '-')->get();
-        // foreach ($stocks as $key => $value) {
-        //     $value->lot_number = rand(10000000, 1000000000);
-        //     $value->save();
-        // }
+        $stocks = StockRecord::where('lot_number', '-')->get();
+        foreach ($stocks as $key => $value) {
+            $value->lot_number = rand(10000000, 1000000000);
+            $value->save();
+        }
 
         $grid = new Grid(new StockRecord());
 
@@ -63,7 +63,6 @@ class FormStockRecordController extends AdminController
 
         if (!Admin::user()->isRole('admin')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
-            $grid->disableCreateButton();
         } else {
             $grid->disableCreateButton();
         }
@@ -166,7 +165,7 @@ class FormStockRecordController extends AdminController
             }
 
             if ($quantity > $tot) {
-                return  admin_error("Warning", "You have insufitient quantity stock of crop vareity {$varity->name}. You tried to 
+                admin_error("Warning", "You have insufitient quantity stock of crop vareity {$varity->name}. You tried to 
                 transfer " . number_format($quantity) . " from " . number_format($tot) . " (Metric Tonnes).");
                 return redirect(admin_url('stock-records/create'));
             }
@@ -175,7 +174,7 @@ class FormStockRecordController extends AdminController
                 $receiver_id = ((int)($form->seed_class));
 
                 if ($receiver_id < 0) {
-                    return  admin_error("Warning", "You did not select Receiver.");
+                    admin_error("Warning", "You did not select Receiver.");
                     return redirect(admin_url('stock-records/create'));
                 }
                 
