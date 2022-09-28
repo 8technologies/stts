@@ -58,23 +58,20 @@ class ImportPermitApiController extends AdminController
     {
         $user = Auth::user();
         $sr4 =  FormSr4::where([
-            'administrator_id' => $user->id
+            'administrator_id' => $user->id,
+            'status' => 5
         ])->first();
 
-        $seed_board_registration_number = null;
-        if ($sr4 != null) {
-            if ($sr4->seed_board_registration_number != null) {
-                if (strlen($sr4->seed_board_registration_number) > 1) {
-                    $seed_board_registration_number = $sr4->seed_board_registration_number;
-                }
-            }
-        }
-
-        if ($seed_board_registration_number == null) {
+        $seed_board_registration_number = '';
+        if ($sr4 == null) {
             return $this->errorResponse("You don't have a valid SR4. Apply for SR4 first so we can get your seed board registration number.", 200);
         }
 
 
+        $seed_board_registration_number = $sr4->seed_board_registration_number;
+        if ($seed_board_registration_number == null) {
+            $seed_board_registration_number = $sr4->id;
+        }
         //die("romina => $seed_board_registration_number");
         //national_seed_board_reg_num;
 
