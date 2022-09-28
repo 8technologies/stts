@@ -44,19 +44,19 @@ class SeedLabController extends AdminController
         $grid = new Grid(new SeedLab());
 
         
-        $grid->column('id', __('Id'))->sortable();
-        $grid->column('created_at', __('Created'))
-            ->display(function ($item) {
-                return Carbon::parse($item)->diffForHumans();
-            })->sortable();
+        // $grid->column('id', __('Id'))->sortable();
+        // $grid->column('created_at', __('Created'))
+        //     ->display(function ($item) {
+        //         return Carbon::parse($item)->diffForHumans();
+        //     })->sortable();
 
-        $grid->column('administrator_id', __('Applicant'))->display(function ($user) {
-            $_user = Administrator::find($user);
-            if (!$_user) {
-                return "-";
-            }
-            return $_user->name;
-        })->sortable();
+        // $grid->column('administrator_id', __('Applicant'))->display(function ($user) {
+        //     $_user = Administrator::find($user);
+        //     if (!$_user) {
+        //         return "-";
+        //     }
+        //     return $_user->name;
+        // })->sortable();
         $grid->column('crop_variety_id', __('Crop variety id'))->display(function ($user) {
             $_user = CropVariety::find($user);
             if (!$_user) {
@@ -64,8 +64,9 @@ class SeedLabController extends AdminController
             }
             return $_user->name . ", " . $_user->name;
         })->sortable();
-        $grid->column('mother_lot', __('Mother lot'));
+        // $grid->column('mother_lot', __('Mother lot'));
         $grid->column('lot_number', __('Lot number'));
+        $grid->column('lab_test_number', __('Lab test number'));
         $grid->column('collection_date', __('Collection date'));
 
 
