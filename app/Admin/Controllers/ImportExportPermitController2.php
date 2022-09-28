@@ -189,25 +189,25 @@ class ImportExportPermitController2 extends AdminController
     protected function form()
     {
         $form = new Form(new ImportExportPermit());
-
+        
         if ($form->isCreating()) {
 
-            if (!Utils::can_create_sr4()) {
-                return admin_warning("Warning", "You must apply for SR4 and be 'accepted' or have an 'accepted' SR4 to apply for an Export permit");
-                return redirect(admin_url('form-sr4s'));
-            }
-
-            // elseif (!Utils::can_create_sr4()) {
-            //     return admin_warning("Warning", "You must apply for SR4 and be 'accepted' or have an 'accepted' SR4 to apply for an Export permit");
-            //     return redirect(admin_url('form-sr4s'));
-            // }
-
-            elseif (!Utils::can_create_qds()) {
-                return admin_warning("Warning", "You're not an approved QDS Producer");
-                return redirect(admin_url('form-qds'));
+            if (!Utils::can_create_export_form()) {
+                return admin_info("Information", "You must apply for SR4 and be 'Accepted' or have an 'Accepted' SR4 to apply for a new Export permit.");
+                // return redirect(admin_url('import-export-permits-2'));
+            }  
+            
+        }
+            
+        if ($form->isCreating()) {
+            if (!Utils::previous_export_form_not_accepted()) {
+                return admin_info("Information", "You can not apply for a new Export Permit while your last application hasn't been accepted yet! <br>If status isn't 'Pending', please check the Inspector's comment(s) to correct your application.");
+                // return redirect(admin_url('import-export-permits-2'));
             }
         }
  
+ 
+
         $form->setWidth(8, 4);
         $form->disableCreatingCheck();
         $form->tools(function (Form\Tools $tools) {
@@ -227,9 +227,12 @@ class ImportExportPermitController2 extends AdminController
 
         if ($form->isCreating()) {
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
-        } else {
+        } 
+        
+        else {
             $form->hidden('administrator_id', __('Administrator id'));
         }
+
         if (Admin::user()->isRole('basic-user')) {
             // $form->submitted(function (Form $form) {
 
@@ -242,9 +245,9 @@ class ImportExportPermitController2 extends AdminController
             //     }
             // });
 
-            $form->text('name', __('Name'))->default($user->name)->required();
+            $form->text('name', __('Applicant Name'))->default($user->name)->readonly();
             $form->text('address', __('Postal Address'))->required();
-            $form->text('telephone', __('Phone number'))->required();
+            $form->text('telephone', __('Phone Number'))->required();
 
             // $application_cats = [
             //     'Seed Merchant' => 'Seed Merchant',
@@ -257,7 +260,7 @@ class ImportExportPermitController2 extends AdminController
             // ];
 
 
-            $form->radio('type', __('Application category?'))
+            $form->radio('type', __('Application Category?'))
                 ->options([
                     'Seed Merchant' => 'Seed Merchant',
                     'Seed Producer' => 'Seed Producer',
@@ -282,7 +285,7 @@ class ImportExportPermitController2 extends AdminController
                     if ($sr4 != null) {
                         if ($sr4->seed_board_registration_number != null) {
                             $seed_board_registration_number = $sr4->seed_board_registration_number;
-                            $form->text("", __('National seed board registration number'))
+                            $form->text("", __('National Seed Board Registration Number'))
                                 ->default($seed_board_registration_number)
                                 ->readonly();
                         }
@@ -295,7 +298,7 @@ class ImportExportPermitController2 extends AdminController
                     if ($sr4 != null) {
                         if ($sr4->seed_board_registration_number != null) {
                             $seed_board_registration_number = $sr4->seed_board_registration_number;
-                            $form->text("", __('National seed board registration number'))
+                            $form->text("", __('National Seed Board Registration Number'))
                                 ->default($seed_board_registration_number)
                                 ->readonly();
                         }
@@ -309,7 +312,7 @@ class ImportExportPermitController2 extends AdminController
                     if ($sr4 != null) {
                         if ($sr4->seed_board_registration_number != null) {
                             $seed_board_registration_number = $sr4->seed_board_registration_number;
-                            $form->text("", __('National seed board registration number'))
+                            $form->text("", __('National Seed Board Registration Number'))
                                 ->default($seed_board_registration_number)
                                 ->readonly();
                         }
@@ -323,7 +326,7 @@ class ImportExportPermitController2 extends AdminController
                     if ($sr4 != null) {
                         if ($sr4->seed_board_registration_number != null) {
                             $seed_board_registration_number = $sr4->seed_board_registration_number;
-                            $form->text("", __('National seed board registration number'))
+                            $form->text("", __('National Seed Board Registration Number'))
                                 ->default($seed_board_registration_number)
                                 ->readonly();
                         }
@@ -337,7 +340,7 @@ class ImportExportPermitController2 extends AdminController
                     if ($sr4 != null) {
                         if ($sr4->seed_board_registration_number != null) {
                             $seed_board_registration_number = $sr4->seed_board_registration_number;
-                            $form->text("", __('National seed board registration number'))
+                            $form->text("", __('National Seed Board Registration Number'))
                                 ->default($seed_board_registration_number)
                                 ->readonly();
                         }
@@ -351,7 +354,7 @@ class ImportExportPermitController2 extends AdminController
                     if ($sr4 != null) {
                         if ($sr4->seed_board_registration_number != null) {
                             $seed_board_registration_number = $sr4->seed_board_registration_number;
-                            $form->text("", __('National seed board registration number'))
+                            $form->text("", __('National Seed Board Registration Number'))
                                 ->default($seed_board_registration_number)
                                 ->readonly();
                         }
@@ -381,7 +384,7 @@ class ImportExportPermitController2 extends AdminController
             //             $seed_board_registration_number = $sr4->seed_board_registration_number;
             //             // echo $seed_board_registration_number;
 
-            //             $form->text("", __('National seed board registration number'))
+            //             $form->text("", __('National Seed Board Registration Number'))
             //             ->default($seed_board_registration_number)
             //             ->readonly();
             //         // }
@@ -391,26 +394,25 @@ class ImportExportPermitController2 extends AdminController
             // if (!$form->radio('type') == 'Researchers') {
             // $form->text(
             //     'national_seed_board_reg_num',
-            //     __('National seed board registration number')
+            //     __('National Seed Board Registration Number')
             // )
             //     ->readonly()
             //     ->value($seed_board_registration_number);
             // }
 
 
-            $form->text('store_location', __('Location of the store'))->required();
-            $form->text(
-                'quantiry_of_seed',
-                __('Quantity of seed of the same variety held in stock')
-            )
+            $form->text('store_location', __('Location of the Store'))->required();
+
+            $form->text('quantiry_of_seed', __('Quantity of seed of the same variety held in stock'))
                 ->help("(metric tons)")
                 ->attribute(['type' => 'number'])
                 ->required();
-            $form->text(
-                'name_address_of_origin',
-                __('Name and address of origin')
+
+            $form->text('name_address_of_origin', __('Name and Address of Export Origin')
             )
-                ->required();
+            ->required();
+
+
             // ------------------------------------------------------------------
             $form->tags('ista_certificate', __('Type Of Certificate'))
             ->required()
@@ -434,7 +436,7 @@ class ImportExportPermitController2 extends AdminController
                 foreach (CropVariety::all() as $key => $item) {
                     $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
                 }
-                $form->select('crop_variety_id', 'Add Crop Variety')->options($_items)->required();
+                $form->select('crop_variety_id', 'Select Crop Variety')->options($_items)->required();
 
                 
                 // $form->hidden('category', __('Category'))->default("")->value("");
@@ -502,14 +504,16 @@ class ImportExportPermitController2 extends AdminController
                         if (!Utils::has_role($item, "inspector")) {
                             continue;
                         }
-                        $_items[$item->id] = $item->name . " - " . $item->id;
+                        // $_items[$item->id] = $item->name . " - " . $item->id;
+                        $_items[$item->id] = $item->name;
                     }
+
                     $form->select('inspector', __('Inspector'))
                         ->options($_items)
                         ->readonly()
-                        ->help('Please select inspector')
                         ->rules('required');
                 })
+
                 ->when('in', [3, 4], function (Form $form) {
                     $form->textarea('status_comment', 'Enter status comment (Remarks)')
                         ->help("Please specify with a comment");
@@ -518,8 +522,10 @@ class ImportExportPermitController2 extends AdminController
                     $form->text('permit_number', __('Permit number'))
                         ->help("Please Enter Permit number")
                         ->default(rand(10000, 1000000));
-                    $form->date('valid_from', 'Valid from date?')->readonly();
-                    $form->date('valid_until', 'Valid until date?')->readonly();
+                    // $form->date('valid_from', 'Valid from date?')->readonly();
+                    // $form->date('valid_from', 'Valid from date?')->readonly();
+                    $form->date('valid_until', 'Valid until date?');
+                    $form->date('valid_until', 'Valid until date?');
                 });
 
 
