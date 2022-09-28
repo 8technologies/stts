@@ -335,7 +335,7 @@ class FormStockExaminationRequestController extends AdminController
                             $min_date = Carbon::parse($value->valid_until);
                             if (!$min_date->isToday()) {
                                 if (!$min_date->isPast()) {
-                                    $import_permits[$value->id] = "Permit number: " . $value->permit_number;
+                                    $import_permits[$value->id] = "Import Permit Number: " . $value->permit_number;
                                 }
                             } else {
                                 $import_permits[$value->id] = $value->id;

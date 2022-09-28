@@ -617,11 +617,11 @@ class ImportExportPermitController extends AdminController
             });
 
             //Specify other varieties
-            $form->text(
+            $form->textarea(
                 'other_varieties',
                 __('Specify other varieties.')
             )
-                ->help('If varieties you are applying for were not listed');
+            ->help('If varieties you are applying for were not listed');
         }
 
         if (Admin::user()->isRole('admin')) {
