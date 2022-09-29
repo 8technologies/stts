@@ -101,11 +101,11 @@ class SeedLabelController extends AdminController
 
         $grid->column('created_at', __('Created'))
             ->display(function ($item) {
-                if (!$item) {
-                    return "-";
-                }
-                return Carbon::parse($item)->toFormattedDateString();
+                return Carbon::parse($item)->diffForHumans();
             })->sortable();
+        
+        
+
         $grid->column('administrator_id', __('Crated by'))->display(function ($user) {
             $_user = Administrator::find($user);
             if (!$_user) {
