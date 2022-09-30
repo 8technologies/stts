@@ -88,7 +88,9 @@ class SeedLabelController extends AdminController
                 $actions->disableDelete();
                 $status = ((int)(($actions->row['status'])));
             });
-        } else if (Admin::user()->isRole('lab-technician')) {
+        }
+        
+        else if (Admin::user()->isRole('lab-technician')) {
             $grid->disableCreateButton();
             $grid->disableExport();
             $grid->model()->where('status', 10);

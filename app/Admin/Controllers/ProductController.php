@@ -10,6 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Request;
 use App\Admin\Extensions\Tools\GridView;
+use Carbon\Carbon;
 
 
 class ProductController extends AdminController
@@ -21,7 +22,7 @@ class ProductController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Product';
+    protected $title = 'Marketplace';
 
     /**
      * Make a grid builder.
@@ -88,19 +89,29 @@ class ProductController extends AdminController
         }
 
         $grid = new Grid(new Product());
-        $grid->column('id', __('Id'))->sortable();
-        $grid->column('created_at', __('Created at'))->sortable();
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('administrator_id', __('Administrator id'))->sortable();
+        // $grid->column('id', __('Id'))->sortable();
+        
+        $grid->column('created_at', __('Created'))
+            ->display(function ($item) {
+                return Carbon::parse($item)->diffForHumans();
+            })->sortable();
+
+        // $grid->column('updated_at', __('Updated at'));
+        // $grid->column("administrator_id"->name, __('Owner'))->sortable();
+        // $grid->column('administrator_id', __('Administrator id'))->sortable();
         $grid->column('crop_variety_id', __('Crop variety id'));
         $grid->column('seed_label_id', __('Seed label id'));
         $grid->column('quantity', __('Quantity'));
-        $grid->column('lab_test_number', __('Lab test number'));
-        $grid->column('lot_number', __('Lot number'));
+        // $grid->column('lab_test_number', __('Lab test number'));
+        // $grid->column('lot_number', __('Lot number'));
         $grid->column('seed_class', __('Seed class'));
         $grid->column('price', __('Price'))->sortable();
         $grid->column('wholesale_price', __('Wholesale price'));
-        $grid->column('image', __('Image'));
+        // $grid->column('image', __('image'));
+
+        $grid->column("image", __("Image"))->image('','60','60');
+
+
         $grid->column('images', __('Images'));
         $grid->column('source', __('Source'));
         $grid->column('detail', __('Detail'));
@@ -113,9 +124,9 @@ class ProductController extends AdminController
         $grid->disableExport();
 
 
-        if (Request::get('view') !== 'table') {
-            $grid->setView('admin.grid.card');
-        }
+        // if (Request::get('view') !== 'table') {
+        //     $grid->setView('admin.grid.card');
+        // }
 
 
         return $grid;

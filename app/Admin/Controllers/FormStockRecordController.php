@@ -31,11 +31,11 @@ class FormStockRecordController extends AdminController
      */
     protected function grid()
     {
-        $stocks = StockRecord::where('lot_number', '-')->get();
-        foreach ($stocks as $key => $value) {
-            $value->lot_number = rand(10000000, 1000000000);
-            $value->save();
-        }
+        // $stocks = StockRecord::where('lot_number', '-')->get();
+        // foreach ($stocks as $key => $value) {
+        //     $value->lot_number = rand(10000000, 1000000000);
+        //     $value->save();
+        // }
 
         $grid = new Grid(new StockRecord());
 
@@ -67,6 +67,7 @@ class FormStockRecordController extends AdminController
             $grid->disableCreateButton();
         }
 
+        $grid->disableCreateButton();
 
         $grid->column('id', __('Id'))->sortable();
         $grid->column('created_at', __('Created'))
@@ -208,6 +209,9 @@ class FormStockRecordController extends AdminController
             }
             admin_success("Success!", "Stock record was created successfully!");
             return redirect(admin_url('stock-records'));
+
+
+            
         });
 
         $user = Admin::user();

@@ -59,14 +59,11 @@ class MarketableSeedController extends AdminController
             $actions->disableEdit();
             $actions->disableDelete();
         });
-
-
-        $grid->column('id', __('Id'))->sortable();
+        
         $grid->column('created_at', __('Created'))
-            ->display(function ($item) {
-                return Carbon::parse($item)->diffForHumans();
-            })->sortable();
-
+        ->display(function ($item) {
+            return Carbon::parse($item)->diffForHumans();
+        })->sortable();
 
 
         $grid->column('administrator_id', __('Belongs to'))->display(function ($user) {

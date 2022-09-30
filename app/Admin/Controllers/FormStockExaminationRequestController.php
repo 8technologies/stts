@@ -331,14 +331,16 @@ class FormStockExaminationRequestController extends AdminController
 
                     $import_permits = [];
                     foreach ($all_import_permits as $key => $value) {
-                        if ($value->status == 5) {
+                        if ($value->status == 5) {  // if accepted
                             $min_date = Carbon::parse($value->valid_until);
-                            if (!$min_date->isToday()) {
-                                if (!$min_date->isPast()) {
+                            if (!$min_date->isToday()) {  // if expiry date is not today
+                                if (!$min_date->isPast()) {  // if expiry date is valid
                                     $import_permits[$value->id] = "Import Permit Number: " . $value->permit_number;
                                 }
                             } else {
-                                $import_permits[$value->id] = $value->id;
+                                // $import_permits[$value->id] = $value->id;
+                                $import_permits[$value->id] = "Import Permit Number: " . $value->permit_number;
+
                             }
                         }
  
@@ -471,6 +473,7 @@ class FormStockExaminationRequestController extends AdminController
                         }
                         $_items[$item->id] = $item->name . " - " . $item->id;
                     }
+
                     $form->select('inspector', __('Inspector'))
                         ->options($_items)
                         ->help('Please select inspector')
@@ -540,15 +543,41 @@ class FormStockExaminationRequestController extends AdminController
              * NM/2022/Beans/23232332
             */
 
-            // $lot_number_company = "NM";
-            // $lot_number_Year = date("Y");
-            // $lot_number_cropVariety = "Beans";
-            $lot_number_randNum = rand(100000000,999999999);
+            /*
+            $lot_number_company = "NM";
+            $lot_number_Year = date("Y");
+            $lot_number_cropVariety = "Beans";
             $form->text('lot_number', __('Lot Number'))->readonly()
-            // ->value($lot_number_company . "/" . $lot_number_Year . "/" . $lot_number_cropVariety . "/" . $lot_number_randNum);
-            // ->value($lot_number_company . $lot_number_Year . $lot_number_cropVariety . $lot_number_randNum);            
-            ->value($lot_number_randNum);
+            ->value($lot_number_company . "/" . $lot_number_Year . "/" . $lot_number_cropVariety . "/" . $lot_number_randNum);
+            ->value($lot_number_company . $lot_number_Year . $lot_number_cropVariety . $lot_number_randNum);            
+*/
 
+            // $form->text('lot_number', __('Lot Number'))->default(rand(1000000, 999999999));
+
+    
+
+            // $form->text('lot_number', __('Lot Number'))
+            // ->default("0000")
+            // ->value($model->id . rand(1000000, 999999999))
+            // ->readonly();
+            // dd($model->id . rand(1000000, 999999999));
+
+
+            // $form->text('lot_number', __('Lot Number'))
+            // ->required()
+            // ->help("Enter a 9-digit lot number here")
+            // ->attribute([
+            //     'value' => rand(1000000, 999999999),
+            // ])
+            // ->help("Enter a 9-digit lot number here");
+
+
+            $form->text('lot_number', __('Lot Number'))->required()
+            ->attribute([
+                'value' => $model->id . rand(1000000, 999999999),
+            ]);
+
+    
 
             $form->text('field_size', __('Enter field size (in Acres)'));
             $form->date('date', __('Stock Examination Date'));
