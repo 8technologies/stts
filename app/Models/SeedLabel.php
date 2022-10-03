@@ -13,7 +13,8 @@ class SeedLabel extends Model
     {
         return $this->belongsTo(SeedLab::class);
     }
-  
+
+
     public function crop_variety(){
         $var = CropVariety::find($this->crop_variety_id);
         
@@ -24,6 +25,7 @@ class SeedLabel extends Model
         }
         return $this->belongsTo(CropVariety::class);
     }
+
 
     public function seed_label_package()
     {

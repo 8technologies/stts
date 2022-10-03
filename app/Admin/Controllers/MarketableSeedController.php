@@ -59,7 +59,7 @@ class MarketableSeedController extends AdminController
             $actions->disableEdit();
             $actions->disableDelete();
         });
-        
+
         $grid->column('created_at', __('Created'))
         ->display(function ($item) {
             return Carbon::parse($item)->diffForHumans();
@@ -82,6 +82,7 @@ class MarketableSeedController extends AdminController
                 }
                 return $var->crop->name . ", " . $var->name;
             })->sortable();
+
         $grid->column('lab_test_number', __('Lab test no.'))->sortable();
         $grid->column('lot_number', __('Lot number'))->sortable();
         //$grid->column('source', __('Source'));
@@ -103,6 +104,7 @@ class MarketableSeedController extends AdminController
                 }
                 return $value->package_size . " Kgs @ " . $value->package_price . " UGX";
             })->sortable();
+
         $grid->column('quantity', __('Quantity'))->display(function ($item) {
             return number_format($item);
         })->sortable()
@@ -110,9 +112,9 @@ class MarketableSeedController extends AdminController
                 return "<b>" . number_format($amount) . " KGs" . "</b>";
             });
 
-
         return $grid;
     }
+
 
     /**
      * Make a show builder.
@@ -172,7 +174,6 @@ class MarketableSeedController extends AdminController
                     $quantity = (int)($form->quantity);
 
                     if ($quantity < 1) {
-
                         admin_error("Warning", "You have insufitient Marketable seed in stock.");
                         return redirect(admin_url('marketable-seeds/create'))
                             ->withInput();
@@ -184,8 +185,6 @@ class MarketableSeedController extends AdminController
                             ->withInput();
                     }
                     $model = $models[0];
-
-
 
                     $stock_out = new MarketableSeed();
                     $stock_out->administrator_id = $model->administrator_id;
@@ -204,7 +203,8 @@ class MarketableSeedController extends AdminController
                         admin_success("Success", "Market record created successfully.");
                         return redirect(admin_url('marketable-seeds'))
                             ->withInput();
-                    } else {
+                    }
+                    else {
                         admin_error("Warning", "Market record was not created successfully.");
                         return redirect(admin_url('marketable-seeds/create'))
                             ->withInput();
@@ -220,6 +220,7 @@ class MarketableSeedController extends AdminController
         $marketable_seeds = MarketableSeed::WHERE([
             'administrator_id' => $user->id
         ])->get();
+        
         foreach ($marketable_seeds as $key => $value) { 
             $stock[$value->lab_test_number][] = $value;
             if (!isset($stock_ids[$value->lab_test_number])) {
