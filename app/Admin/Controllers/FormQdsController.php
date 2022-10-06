@@ -440,7 +440,7 @@ class FormQdsController extends AdminController
  
 
 
-            $form->select(
+            $form->radio(
                 'aware_of_minimum_standards',
                 __('Are you aware that only seed that meets the minimum standards shall be accepted as certified seed?')
             )
