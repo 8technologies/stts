@@ -413,7 +413,7 @@ class FormStockExaminationRequestController extends AdminController
                     foreach ($all_qds as $key => $value) {
                         if ($value->status == 5) {
                             if (!$value->is_not_used) {
-                                $my_qds[$value->id] = "QDS number: " . $value->id;
+                                $my_qds[$value->id] = "QDS Crop Inspection Id: " . $value->id;
                             }
                         }
                     }

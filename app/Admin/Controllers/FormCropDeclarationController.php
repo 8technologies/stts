@@ -286,29 +286,31 @@ class FormCropDeclarationController extends AdminController
 
             $form->radio('status', __('Status'))
                 ->options([
-                    '3' => 'Halted',
-                    '4' => 'Rejected',
-                    '5' => 'Accepted',
+                    // '3' => 'Halted',
+                    // '4' => 'Rejected',
+                    // '5' => 'Accepted',
+                    '16' => 'Initialized',
                 ])
                 ->required()
-                ->when('2', function (Form $form) {
-                    $items = Administrator::all();
-                    $_items = [];
-                    foreach ($items as $key => $item) {
-                        if (!Utils::has_role($item, "inspector")) {
-                            continue;
-                        } 
-                        $_items[$item->id] = $item->name . " - " . $item->id;
-                    }
-                })
-                ->when('in', [5], function (Form $form) {
+                // ->when('2', function (Form $form) {
+                //     $items = Administrator::all();
+                //     $_items = [];
+                //     foreach ($items as $key => $item) {
+                //         if (!Utils::has_role($item, "inspector")) {
+                //             continue;
+                //         } 
+                //         $_items[$item->id] = $item->name . " - " . $item->id;
+                //     }
+                // })
+                ->when('in', [16], function (Form $form) {
                     $form->date('valid_from', 'Valid from date?');
                     $form->date('valid_until', 'Valid until date?');
                 })
-                ->when('in', [3, 4], function (Form $form) {
-                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                        ->help("Please specify with a comment");
-                });
+                // ->when('in', [3, 4], function (Form $form) {
+                //     $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                //         ->help("Please specify with a comment");
+                // })
+                ;
         }
 
 
