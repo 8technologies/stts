@@ -350,7 +350,7 @@ class FormQdsController extends AdminController
                 foreach (Crop::all() as $key => $item) { 
                     $_items[$item->id] = $item->name . " - " . $item->id;
                 }
-                $form->select('crop_id','S Crop')->options( Crop::all()->pluck('name','id') )
+                $form->select('crop_id','Select Crop')->options( Crop::all()->pluck('name','id') )
                 ->required();
             });
 
