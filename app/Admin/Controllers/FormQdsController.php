@@ -293,7 +293,9 @@ class FormQdsController extends AdminController
 
 
         if (Admin::user()->isRole('basic-user')) {
-            $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required()->required();
+            $form->text('name_of_applicant', __('Name of applicant'))
+            ->default($user->name)->required()->readonly();
+
             $form->text('address', __('Address'))->required();
             $form->text('premises_location', __('Premises location'))->required();
             $form->text('years_of_expirience', __('Enter Applicant years of experience as a quality declared seed (QDS) grower'))
