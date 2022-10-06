@@ -437,11 +437,13 @@ class FormSr6Controller extends AdminController
                         ->help("Please Enter grower number");
                     $form->date('valid_from', 'Valid from date');
                     $form->date('valid_until', 'Valid until date');
-                });
+
+                    
 
                 $form->text('registration_number', __('Enter Seed Board Registration number'))
                 ->help("Please Enter seed board registration number")
                 ->default(rand(1000000, 9999999));
+                });
 
             // $form->datetime('valid_from', __('Valid from'))->default(date('Y-m-d H:i:s'));
             // $form->datetime('valid_until', __('Valid until'))->default(date('Y-m-d H:i:s'));
