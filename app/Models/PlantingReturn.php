@@ -27,13 +27,13 @@ class PlantingReturn extends Model
 
     public static function import_sub_growers($m)
     {
-
-
         $file = null;
         if ($m != null) {
             if (strlen($m->sub_growers_file) > 3) {
-                if (file_exists('./public/storage/' . $m->sub_growers_file)) {
-                    $file = './public/storage/' . $m->sub_growers_file;
+                // if (file_exists('./public/storage/uploads/files/' . strval($m->sub_growers_file))) {
+                //     $file = './public/storage/uploads/files/' . strval($m->sub_growers_file);
+                if (file_exists('./public/storage/uploads/files/SubGrowerList.xlsx')) {
+                    $file = './public/storage/uploads/files/SubGrowerList.xlsx';
                 }
             }
         }
@@ -182,8 +182,10 @@ class PlantingReturn extends Model
             $file = null;
             if ($m != null) {
                 if (strlen($m->sub_growers_file) > 3) {
-                    if (file_exists('./public/storage/' . $m->sub_growers_file)) {
-                        $file = './public/storage/' . $m->sub_growers_file;
+                    // if (file_exists('./public/storage/uploads/files/' . strval($m->sub_growers_file))) {
+                    //     $file = './public/storage/uploads/files/' . strval($m->sub_growers_file);
+                if (file_exists('./public/storage/uploads/files/SubGrowerList.xlsx')) {
+                    $file = './public/storage/uploads/files/SubGrowerList.xlsx';
                     } else {
                         $m->sub_growers_file = null;
                         $m->save();
@@ -214,8 +216,10 @@ class PlantingReturn extends Model
             $file = null;
             if ($m != null) {
                 if (strlen($m->sub_growers_file) > 3) {
-                    if (file_exists('./public/storage/' . $m->sub_growers_file)) {
-                        $file = './public/storage/' . $m->sub_growers_file;
+                    // if (file_exists('./public/storage/uploads/files/' . strval($m->sub_growers_file))) {
+                    //     $file = './public/storage/uploads/files/' . strval($m->sub_growers_file);
+                if (file_exists('./public/storage/uploads/files/SubGrowerList.xlsx')) {
+                    $file = './public/storage/uploads/files/SubGrowerList.xlsx';
                     } else {
                         $m->sub_growers_file = null;
                         $m->save();

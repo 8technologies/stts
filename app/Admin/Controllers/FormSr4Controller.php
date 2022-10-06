@@ -311,7 +311,7 @@ class FormSr4Controller extends AdminController
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->required();
             $form->text('company_initials', __('Company initials'))->required();
-            $form->text('premises_location', __('Premises location'))->required();
+            $form->text('premises_location', __('Premises location'));
 
             $form->text('years_of_expirience', __('Years of experience'))
                 ->rules('min:1')
@@ -336,7 +336,8 @@ class FormSr4Controller extends AdminController
                 ->options([
                     'Agricultural crops' => 'Agricultural crops',
                     'Horticultural crops' => 'Horticultural crops',
-                    'Other' => 'Other'
+                    'Other' => 'Other',
+                    'NA' => 'NA'
                 ])
                 ->required()
                 ->when('Other', function (Form $form) {
@@ -362,7 +363,8 @@ class FormSr4Controller extends AdminController
                 ->options([
                     'Agricultural crops' => 'Agricultural crops',
                     'Horticultural crops' => 'Horticultural crops',
-                    'Other' => 'Other'
+                    'Other' => 'Other',
+                    'NA' => 'NA'
                 ])
                 ->required()
                 ->when('Other', function (Form $form) {
@@ -375,6 +377,7 @@ class FormSr4Controller extends AdminController
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])->required()
                 ->when('1', function (Form $form) {
                     $form->text('land_size', 'Specify Land size. (in Acres)')
@@ -388,12 +391,14 @@ class FormSr4Controller extends AdminController
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])->required();
 
             $form->radio('have_adequate_equipment', 'Do you have adequate equipment to handle basic seed?')
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])->required()
                 ->when('1', function (Form $form) {
                     $form->text('eqipment', 'specify the equipment')
@@ -405,6 +410,7 @@ class FormSr4Controller extends AdminController
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])
                 ->required();
 
@@ -412,6 +418,7 @@ class FormSr4Controller extends AdminController
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])
                 ->required();
 
@@ -422,6 +429,7 @@ class FormSr4Controller extends AdminController
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])
                 ->required();
 
@@ -448,6 +456,7 @@ class FormSr4Controller extends AdminController
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])
                 ->required();
 
@@ -458,10 +467,11 @@ class FormSr4Controller extends AdminController
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])
                 ->required();
 
-            $form->file('receipt', __('Receipt'));
+            $form->file('receipt', __('Receipt'))->required();
             $form->textarea('status_comment', __('Inspector\'s remarks.'))->readonly();
 
             $form->divider();

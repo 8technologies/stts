@@ -431,24 +431,30 @@ class Utils
 
         foreach ($recs as $key => $value) {
 
+            // if (!$value->status == 1) {
+            //     return false;
+            // }
+
             if (!$value->valid_from) {
                 return false;
             }
+
             if (!$value->valid_until) {
                 return false;
             }
 
             $now = time();
             $then = strtotime($value->valid_until);
+
             if ($now < $then) {
                 return true;
             } else {
                 return false;
             }
         }
+
         return true;
     }
-
 
 
     public static function tell_order_status($status)
