@@ -419,7 +419,7 @@ class FormStockExaminationRequestController extends AdminController
                     }
 
                     if (count($my_qds) >= 1) {
-                        $form->select('form_qds_id', __('Select QDS'))
+                        $form->select('form_qds_id', __('Select Approved QDS Crop Inspection'))
                             ->rules('required')
                             ->options($my_qds);
                     }
