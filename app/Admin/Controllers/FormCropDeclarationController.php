@@ -138,7 +138,7 @@ class FormCropDeclarationController extends AdminController
         $show->field('updated_at', __('Updated at'));
         $show->field('administrator_id', __('Administrator id'));
         $show->field('planting_return_id', __('Planting return id'));
-        $show->field('crop_variety_id', __('Crop variety id'));
+        $show->field('crop_variety_id', __('Crop variety'));
         $show->field('source_of_seed', __('Source of seed'));
         $show->field('field_size', __('Field size'));
         $show->field('seed_rate', __('Seed rate'));
@@ -220,7 +220,7 @@ class FormCropDeclarationController extends AdminController
                 foreach (CropVariety::all() as $key => $value) {
                     $varieties[$value->id] =  $value->name . " of " . $value->crop->name;
                 }
-                $form->select('crop_variety_id', __('Crop variety id'))->options($varieties);
+                $form->select('crop_variety_id', __('Select Crop Variety'))->options($varieties);
             });
             $form->divider();
             $form->text('amount', __('Enter the amount enclosed'))->attribute('type', 'number')->required();
