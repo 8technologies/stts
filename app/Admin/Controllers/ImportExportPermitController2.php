@@ -193,7 +193,7 @@ class ImportExportPermitController2 extends AdminController
         if ($form->isCreating()) {
 
             if (!Utils::can_create_export_form()) {
-                return admin_info("Information", "You must apply for SR4 and be 'Accepted' or have an 'Accepted' SR4 to apply for a new Export permit.");
+                return admin_error("Alert", "You must apply for SR4 and be 'Accepted' or have an 'Accepted' SR4 to apply for a new Export permit.");
                 // return redirect(admin_url('import-export-permits-2'));
             }  
             
@@ -201,7 +201,7 @@ class ImportExportPermitController2 extends AdminController
             
         if ($form->isCreating()) {
             if (!Utils::previous_export_form_not_accepted()) {
-                return admin_info("Information", "You can not apply for a new Export Permit while your last application hasn't been accepted yet! <br>If status isn't 'Pending', please check the Inspector's comment(s) to correct your application.");
+                return admin_error("Alert", "You can not apply for a new Export Permit while your last application hasn't been accepted yet! <br>If status isn't 'Pending', please check the Inspector's comment(s) to correct your application.");
                 // return redirect(admin_url('import-export-permits-2'));
             }
         }

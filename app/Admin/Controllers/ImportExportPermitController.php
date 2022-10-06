@@ -214,14 +214,14 @@ class ImportExportPermitController extends AdminController
 
         if ($form->isCreating()) {
             if (!Utils::can_create_import_form()) {
-                return admin_info("Information", "You must apply for SR4 and be 'Accepted' or have an 'accepted' SR4 to apply for a new Import Permit");
+                return admin_error("Alert", "You must apply for SR4 and be 'Accepted' or have an 'accepted' SR4 to apply for a new Import Permit");
                 // return redirect(admin_url('import-export-permits'));
             }
         }
 
         if ($form->isCreating()) {
             if (!Utils::previous_import_form_not_accepted()) {
-                return admin_info("Information", "You can not apply for a new Import Permit while your last application hasn't been accepted yet! <br>If status isn't 'Pending', please check the Inspector's comment(s) to correct your application and submit again.");
+                return admin_error("Alert", "You can not apply for a new Import Permit while your last application hasn't been accepted yet! <br>If status isn't 'Pending', please check the Inspector's comment(s) to correct your application and submit again.");
                 // return redirect(admin_url('import-export-permits'));
             }
         }

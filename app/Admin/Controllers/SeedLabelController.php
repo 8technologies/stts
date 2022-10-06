@@ -210,7 +210,7 @@ class SeedLabelController extends AdminController
             }
 
             if (count($seed_labs) < 1) {
-                return admin_info("Information", "You don't have any  valid LAB TEST NUMBER. Apply for seed lab to aquire a LAB TEST NUMBER.");
+                return admin_error("Alert", "You don't have any  valid LAB TEST NUMBER. Apply for seed lab to aquire a LAB TEST NUMBER.");
                 // return redirect(admin_url('seed-labels'));
             }
 

@@ -269,7 +269,7 @@ class SeedLabController extends AdminController
 
 
             if (count($exams_list) < 1) {
-                return admin_info("Information", "You don't have any valid stock examination request. <br>First apply for Stock Examination, wait till your application is accepted, and then return here.");
+                return admin_error("Alert", "You don't have any valid stock examination request. <br>First apply for Stock Examination, wait till your application is accepted, and then return here.");
                 // return redirect(admin_url('seed-labs'));
             }
             $form->hidden('crop_variety_id', __('Crop variety id'));
@@ -358,7 +358,7 @@ class SeedLabController extends AdminController
             
             if ($form->isEditing()) {
                 if ((($form->packaging * $form->number_of_units) > ($form->quantity)) || ($form->sample_weight > $form->quantity)) {
-                    return admin_info("Information", "You're attempting to test a sample that is more than what the applicant has in stock.
+                    return admin_error("Alert", "You're attempting to test a sample that is more than what the applicant has in stock.
                     <br>Please reduce your sample size and the packaging size as well.");
                 }
             }

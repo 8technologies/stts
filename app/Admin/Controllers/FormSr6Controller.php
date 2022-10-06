@@ -338,7 +338,7 @@ class FormSr6Controller extends AdminController
                 '0' => 'No',
             ])->required(); 
 
-            $form->select(
+            $form->radio(
                 'have_adequate_isolation',
                 __('Do you have adequate isolation?')
             )
@@ -347,7 +347,8 @@ class FormSr6Controller extends AdminController
                     '0' => 'No',
                 ])
                 ->required();
-            $form->select(
+
+            $form->radio(
                 'have_adequate_labor',
                 __('Do you have adequate labor to carry out all farm operations in a timely manner?')
             )
@@ -356,7 +357,8 @@ class FormSr6Controller extends AdminController
                     '0' => 'No',
                 ])
                 ->required();
-            $form->select(
+
+            $form->radio(
                 'aware_of_minimum_standards',
                 __('Are you aware that only seed that meets the minimum standards shall be accepted as certified seed?')
             )
@@ -365,7 +367,8 @@ class FormSr6Controller extends AdminController
                     '0' => 'No',
                 ])
                 ->required();
-            $form->file('signature_of_applicant', __('Attach receipt'));
+
+            $form->file('signature_of_applicant', __('Attach receipt'))->required();
         }
 
         if (Admin::user()->isRole('admin')) {
@@ -419,20 +422,7 @@ class FormSr6Controller extends AdminController
                     '5' => 'Accepted', 
                 ])
                 ->required()
-                ->when('2', function (Form $form) {
-                    $items = Administrator::all();
-                    $_items = [];
-                    foreach ($items as $key => $item) {
-                        if (!Utils::has_role($item, "inspector")) {
-                            continue;
-                        }
-                        $_items[$item->id] = $item->name . " - " . $item->id;
-                    }
-                    $form->select('inspector', __('Inspector'))
-                        ->options($_items)
-                        ->help('Please select inspector')
-                        ->rules('required');
-                })
+                
                 ->when('in', [3, 4], function (Form $form) {
                     $form->textarea('status_comment', 'Enter status comment (Remarks)')
                         ->help("Please specify with a comment");
@@ -441,8 +431,8 @@ class FormSr6Controller extends AdminController
 
                     $form->text('grower_number', __('Grower number'))
                         ->help("Please Enter grower number");
-                    $form->date('valid_from', 'Valid from date?');
-                    $form->date('valid_until', 'Valid until date?');
+                    $form->date('valid_from', 'Valid from date');
+                    $form->date('valid_until', 'Valid until date');
                 });
 
                 $form->text('registration_number', __('Enter Seed Board Registration number'))
