@@ -23,7 +23,7 @@ class FormSr6Controller extends AdminController
      *
      * @var string
      */
-    protected $title = 'Form SR6 - Seed Grower'; 
+    protected $title = 'Form SR6 - Seed Growers'; 
 
     /**
      * Make a grid builder.
@@ -39,6 +39,10 @@ class FormSr6Controller extends AdminController
         
         $grid = new Grid(new FormSr6());
 
+
+        $grid->disableFilter();
+        $grid->disableColumnSelector();
+        
         if (!Admin::user()->isRole('basic-user')) {   // only basic user can create sr4
             $grid->disableCreateButton();
         }

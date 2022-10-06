@@ -23,7 +23,7 @@ class FormQdsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'QDS R1 - Quality Declared Seed Producer';  
+    protected $title = 'Quality Declared Seed (QDS) Producers';  
 
     /**
      * Make a grid builder.
@@ -34,6 +34,8 @@ class FormQdsController extends AdminController
     {
         $grid = new Grid(new FormQds());
 
+        $grid->disableFilter();
+        $grid->disableColumnSelector();
 
 
         if (Admin::user()->isRole('basic-user')) {

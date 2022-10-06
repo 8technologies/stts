@@ -39,8 +39,11 @@ class ImportExportPermitController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new ImportExportPermit());
-        // $grid->disableFilter();
+
+        $grid->disableFilter();
         $grid->disableExport();
+
+
         $grid->model()->where('is_import', '=', 1);
 
 

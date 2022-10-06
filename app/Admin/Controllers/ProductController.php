@@ -33,6 +33,7 @@ class ProductController extends AdminController
     {
 
         $market_records = MarketableSeed::where('is_counted', 0)->get();
+
         foreach ($market_records as $key => $market_rec) {
             $pro = null;
             $pro = Product::where('lab_test_number', $market_rec->lab_test_number)->first();
@@ -91,6 +92,13 @@ class ProductController extends AdminController
         $grid = new Grid(new Product());
         // $grid->column('id', __('Id'))->sortable();
         
+        
+
+        $grid->disableFilter();
+        $grid->disableCreateButton();
+        $grid->disableColumnSelector();
+        // $grid->disableExport();
+
         $grid->column('created_at', __('Created'))
             ->display(function ($item) {
                 return Carbon::parse($item)->diffForHumans();
@@ -124,9 +132,9 @@ class ProductController extends AdminController
         $grid->disableExport();
 
 
-        // if (Request::get('view') !== 'table') {
-        //     $grid->setView('admin.grid.card');
-        // }
+        if (Request::get('view') !== 'table') {
+            $grid->setView('admin.grid.card');
+        }
 
 
         return $grid;

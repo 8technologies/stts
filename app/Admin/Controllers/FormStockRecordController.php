@@ -39,6 +39,9 @@ class FormStockRecordController extends AdminController
 
         $grid = new Grid(new StockRecord());
 
+        $grid->disableFilter();
+        // $grid->disableExport();
+        
         //$as = FormStockExaminationRequest::all();
         //$a = $as->first();
 
