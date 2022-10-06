@@ -34,6 +34,8 @@ class FormCropDeclarationController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new FormCropDeclaration());
+        $grid->disableFilter();
+        // $grid->disableRowSelector();
 
         $grid->column('id', __('Id'))->sortable();
         

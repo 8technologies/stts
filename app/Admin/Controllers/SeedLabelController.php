@@ -35,6 +35,8 @@ class SeedLabelController extends AdminController
         $grid = new Grid(new SeedLabel());
 
 
+        $grid->disableFilter();
+        // $grid->disableRowSelector();
 
         if (Admin::user()->isRole('usta')) {
             $grid->disableCreateButton();

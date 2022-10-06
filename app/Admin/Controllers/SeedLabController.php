@@ -45,6 +45,8 @@ class SeedLabController extends AdminController
         // die("done");
         $grid = new Grid(new SeedLab());
 
+        $grid->disableFilter();
+        // $grid->disableRowSelector();
         
         $grid->column('id', __('Id'))->sortable();
         $grid->column('created_at', __('Created'))
