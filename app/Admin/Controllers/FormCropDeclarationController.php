@@ -24,7 +24,7 @@ class FormCropDeclarationController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Crop Declaration Form';
+    protected $title = 'QDS - Crop Declarations';
 
     /**
      * Make a grid builder.
