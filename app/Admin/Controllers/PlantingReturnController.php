@@ -147,7 +147,7 @@ class PlantingReturnController extends AdminController
         $grid->column('name', __('Company Name'));
         $grid->column('address', __('Address'));
         $grid->column('amount_enclosed', __('Amount enclosed'));
-        $grid->column('registerd_dealer', __('Registerd dealer'));
+        $grid->column('registerd_dealer', __('Registered dealer'));
     
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
@@ -192,7 +192,7 @@ class PlantingReturnController extends AdminController
         $show->field('address', __('Address'));
         $show->field('telephone', __('Telephone'));
         $show->field('seed_rate', __('Seed rate'));
-        $show->field('registerd_dealer', __('Registerd dealer'));
+        $show->field('registerd_dealer', __('Registered dealer'));
         // $show->field('longitude', __('Longitude'));
         // $show->field('latitude', __('Latitude'));
 
@@ -322,7 +322,9 @@ class PlantingReturnController extends AdminController
             //     }
             // }
 
-            $form->text('address', __('Company Address'))->default($sr6->address)->readonly();
+            $form->text('address', __('Company Address'))->default($sr6->address)
+            ->help("Provided during Form SR6 Seed Grower Application")
+            ->readonly();
             // $telephone_of_applying_basic_user = Administrator::where(Admin::user()->isRole('admin'), 'basic-user')->phone_number;
             // $form->text('telephone', __('Company Telephone'))->default($telephone_of_applying_basic_user)->readonly();
 
