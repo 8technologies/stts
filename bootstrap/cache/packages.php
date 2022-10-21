@@ -1,4 +1,6 @@
-<?php return array (
+<?php
+
+return array (
   'barryvdh/laravel-dompdf' => 
   array (
     'providers' => 

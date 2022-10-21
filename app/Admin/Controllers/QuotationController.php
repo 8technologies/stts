@@ -26,7 +26,7 @@ class QuotationController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Quotation';
+    protected $title = 'Quotations';
 
     /**
      * Make a grid builder.
@@ -37,6 +37,10 @@ class QuotationController extends AdminController
     {
         $grid = new Grid(new Quotation());
 
+
+        $grid->disableFilter();
+        $grid->disableColumnSelector();
+        
 
         $grid->model()
             ->where([

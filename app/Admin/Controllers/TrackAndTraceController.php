@@ -35,7 +35,7 @@ class TrackAndTraceController extends AdminController
                 if (strlen(trim($_GET['lot_number'])) > 0) {
                     $lot_is_set = true;
                     $lot_number = trim($_GET['lot_number']);
-                    $title = "LOT NUMBER: " . $lot_number;
+                    $title = "LOT NUMBER (Import Permit): " . $lot_number;
                 }
             }
 
@@ -192,7 +192,7 @@ class TrackAndTraceController extends AdminController
                 }
 
                 $headers = [
-                    'Id', 
+                    // 'Id', 
                     'Mother lot', 
                     'Lot number', 
                     // 'Company Name', 
@@ -204,7 +204,7 @@ class TrackAndTraceController extends AdminController
                 $rows = [];
 
                 foreach ($traces as $key => $trace_value) {
-                    $row['id'] = $trace_value->id;
+                    // $row['id'] = $trace_value->id;
                     $row['mother_lot'] = $trace_value->mother_lot;
                     $row['lot_number'] = $trace_value->lot_number;
                     // $row['company_name'] = $trace_value->company_initials;

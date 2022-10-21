@@ -1,4 +1,3 @@
-
 function selectCropVariety(){
 
     var y = document.getElementById("optionsSelect").value;

@@ -24,7 +24,7 @@ class FormCropDeclarationController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Crop Declaration Form';
+    protected $title = 'QDS - Crop Declarations';
 
     /**
      * Make a grid builder.
@@ -34,6 +34,8 @@ class FormCropDeclarationController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new FormCropDeclaration());
+        $grid->disableFilter();
+        // $grid->disableRowSelector();
 
         $grid->column('id', __('Id'))->sortable();
         
@@ -136,7 +138,7 @@ class FormCropDeclarationController extends AdminController
         $show->field('updated_at', __('Updated at'));
         $show->field('administrator_id', __('Administrator id'));
         $show->field('planting_return_id', __('Planting return id'));
-        $show->field('crop_variety_id', __('Crop variety id'));
+        $show->field('crop_variety_id', __('Crop variety'));
         $show->field('source_of_seed', __('Source of seed'));
         $show->field('field_size', __('Field size'));
         $show->field('seed_rate', __('Seed rate'));
@@ -218,7 +220,7 @@ class FormCropDeclarationController extends AdminController
                 foreach (CropVariety::all() as $key => $value) {
                     $varieties[$value->id] =  $value->name . " of " . $value->crop->name;
                 }
-                $form->select('crop_variety_id', __('Crop variety id'))->options($varieties);
+                $form->select('crop_variety_id', __('Select Crop Variety'))->options($varieties);
             });
             $form->divider();
             $form->text('amount', __('Enter the amount enclosed'))->attribute('type', 'number')->required();
@@ -284,29 +286,31 @@ class FormCropDeclarationController extends AdminController
 
             $form->radio('status', __('Status'))
                 ->options([
-                    '3' => 'Halted',
-                    '4' => 'Rejected',
-                    '5' => 'Accepted',
+                    // '3' => 'Halted',
+                    // '4' => 'Rejected',
+                    // '5' => 'Accepted',
+                    '16' => 'Initialized',
                 ])
                 ->required()
-                ->when('2', function (Form $form) {
-                    $items = Administrator::all();
-                    $_items = [];
-                    foreach ($items as $key => $item) {
-                        if (!Utils::has_role($item, "inspector")) {
-                            continue;
-                        } 
-                        $_items[$item->id] = $item->name . " - " . $item->id;
-                    }
-                })
-                ->when('in', [5], function (Form $form) {
+                // ->when('2', function (Form $form) {
+                //     $items = Administrator::all();
+                //     $_items = [];
+                //     foreach ($items as $key => $item) {
+                //         if (!Utils::has_role($item, "inspector")) {
+                //             continue;
+                //         } 
+                //         $_items[$item->id] = $item->name . " - " . $item->id;
+                //     }
+                // })
+                ->when('in', [16], function (Form $form) {
                     $form->date('valid_from', 'Valid from date?');
                     $form->date('valid_until', 'Valid until date?');
                 })
-                ->when('in', [3, 4], function (Form $form) {
-                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                        ->help("Please specify with a comment");
-                });
+                // ->when('in', [3, 4], function (Form $form) {
+                //     $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                //         ->help("Please specify with a comment");
+                // })
+                ;
         }
 
 

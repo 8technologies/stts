@@ -85,9 +85,9 @@ class PlantingReturnController extends AdminController
         die($file);*/
 
 
-        $grid->disableExport();
+        // $grid->disableExport();
         $grid->disableFilter();
-        $grid->disableRowSelector();
+        // $grid->disableRowSelector();
 
 
         if (Admin::user()->isRole('basic-user')) {
@@ -138,24 +138,21 @@ class PlantingReturnController extends AdminController
             });
         }
 
-        $grid->column('id', __('Id'))->sortable();
+        $grid->column('id', __('Id'));
+        $grid->column('created_at', __('Created'))
+            ->display(function ($item) {
+                return Carbon::parse($item)->diffForHumans();
+            })->sortable();
+
         $grid->column('name', __('Company Name'));
         $grid->column('address', __('Address'));
         $grid->column('amount_enclosed', __('Amount enclosed'));
-        $grid->column('registerd_dealer', __('Registerd dealer'));
-         
-        $grid->column('created_at', __('Created'))
-            ->display(function ($item) {
-                if (!$item) {
-                    return "-"; 
-                }
-                return Carbon::parse($item)->toDateString();
-            });
-
-
+        $grid->column('registerd_dealer', __('Registered dealer'));
+    
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
         })->sortable();
+
         return $grid;
     }
 
@@ -195,7 +192,7 @@ class PlantingReturnController extends AdminController
         $show->field('address', __('Address'));
         $show->field('telephone', __('Telephone'));
         $show->field('seed_rate', __('Seed rate'));
-        $show->field('registerd_dealer', __('Registerd dealer'));
+        $show->field('registerd_dealer', __('Registered dealer'));
         // $show->field('longitude', __('Longitude'));
         // $show->field('latitude', __('Latitude'));
 
@@ -219,8 +216,8 @@ class PlantingReturnController extends AdminController
         $sr4 = Utils::has_valid_sr6();
         if ($form->isCreating()) {
             if (!$sr4) {
-                return admin_warning("Alert", "You need to be a registered and approved seed grower to apply for field inspection.");
-                return redirect(admin_url('planting-returns'));
+                return admin_error("Alert", "You need to be a registered and approved seed grower to apply for field inspection.");
+                // return redirect(admin_url('planting-returns'));
             }
         }
 
@@ -325,7 +322,9 @@ class PlantingReturnController extends AdminController
             //     }
             // }
 
-            $form->text('address', __('Company Address'))->default($sr6->address)->readonly();
+            $form->text('address', __('Company Address'))->default($sr6->address)
+            ->help("Provided during Form SR6 Seed Grower Application")
+            ->readonly();
             // $telephone_of_applying_basic_user = Administrator::where(Admin::user()->isRole('admin'), 'basic-user')->phone_number;
             // $form->text('telephone', __('Company Telephone'))->default($telephone_of_applying_basic_user)->readonly();
 
@@ -339,7 +338,9 @@ class PlantingReturnController extends AdminController
             style="border: solid green 2px;"
             target="_blank"
             >DOWNLOAD TEMPLATE</a></h3>');
-            $form->file('sub_growers_file','Sub-growers excel file')->required();
+            $form->file('sub_growers_file','Sub-growers excel file')
+            ->help("To upload many subgrowers, attach an Excel file of multiple Sub-growers here.")
+            ->required();
  
         }
 

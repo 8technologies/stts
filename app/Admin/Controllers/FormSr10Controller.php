@@ -45,6 +45,9 @@ class FormSr10Controller extends AdminController
         // dd("here");
 
         $grid = new Grid(new FormSr10());
+        $grid->disableFilter();
+        // $grid->disableRowSelector();
+
         if (Admin::user()->isRole('basic-user')) {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
             $grid->actions(function ($actions) {
@@ -82,8 +85,12 @@ class FormSr10Controller extends AdminController
 
         // } 
 
-
         $grid->column('id', __('Id'));
+        $grid->column('created_at', __('Created'))
+            ->display(function ($item) {
+                return Carbon::parse($item)->diffForHumans();
+            })->sortable();
+
         $grid->column('stage', __('Stage'));
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);

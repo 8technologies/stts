@@ -177,14 +177,12 @@ class SubGrowerController extends AdminController
 
 
 
+
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('created_at', __('Created'))
-            ->display(function ($item) {
-                if (!$item) {
-                    return "-";
-                }
-                return Carbon::parse($item)->toDateString();
-            })->sortable();
+
+        $grid->column('created_at', __('Created'))->display(function ($item) {
+            return Carbon::parse($item)->diffForHumans();
+        })->sortable();
 
 
         $grid->column('administrator_id', __('Applicant'))->display(function ($user) {
@@ -282,7 +280,7 @@ class SubGrowerController extends AdminController
 
         if (Admin::user()->isRole('basic-user')) {
 
-            $form->text('name', __('Name'))->default($user->name)->required();
+            $form->text('name', __('Name'))->default($user->name)->readonly();
             $form->text('size', __('Garden Size (in Accre)'))->required();
 
             // $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'name'))

@@ -23,7 +23,7 @@ class FormQdsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'QDS R1 - Quality Declared Seed Producer';  
+    protected $title = 'Quality Declared Seed (QDS) Producers';  
 
     /**
      * Make a grid builder.
@@ -34,6 +34,8 @@ class FormQdsController extends AdminController
     {
         $grid = new Grid(new FormQds());
 
+        $grid->disableFilter();
+        $grid->disableColumnSelector();
 
 
         if (Admin::user()->isRole('basic-user')) {
@@ -291,7 +293,9 @@ class FormQdsController extends AdminController
 
 
         if (Admin::user()->isRole('basic-user')) {
-            $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required()->required();
+            $form->text('name_of_applicant', __('Name of applicant'))
+            ->default($user->name)->required()->readonly();
+
             $form->text('address', __('Address'))->required();
             $form->text('premises_location', __('Premises location'))->required();
             $form->text('years_of_expirience', __('Enter Applicant years of experience as a quality declared seed (QDS) grower'))
@@ -346,7 +350,7 @@ class FormQdsController extends AdminController
                 foreach (Crop::all() as $key => $item) { 
                     $_items[$item->id] = $item->name . " - " . $item->id;
                 }
-                $form->select('crop_id','S Crop')->options( Crop::all()->pluck('name','id') )
+                $form->select('crop_id','Select Crop')->options( Crop::all()->pluck('name','id') )
                 ->required();
             });
 
@@ -440,7 +444,7 @@ class FormQdsController extends AdminController
  
 
 
-            $form->select(
+            $form->radio(
                 'aware_of_minimum_standards',
                 __('Are you aware that only seed that meets the minimum standards shall be accepted as certified seed?')
             )

@@ -5,14 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Excel;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Auth;
-
 
 class PlantingReturn extends Model
 {
     use HasFactory;
- 
+
     protected $fillable = [
         'administrator_id',
         'name',
@@ -32,8 +29,8 @@ class PlantingReturn extends Model
         $file = null;
         if ($m != null) {
             if (strlen($m->sub_growers_file) > 3) {
-                if (file_exists('./public/storage/' . $m->sub_growers_file)) {
-                    $file = './public/storage/' . $m->sub_growers_file;
+                if (file_exists('./public/storage/uploads/' . $m->sub_growers_file)) {
+                    $file = './public/storage/uploads/' . $m->sub_growers_file;
                 }
             }
         }
@@ -41,7 +38,6 @@ class PlantingReturn extends Model
         if ($file == null) {
             return;
         }
-
 
 
         if ($file != null) {
@@ -175,6 +171,7 @@ class PlantingReturn extends Model
     {
         parent::boot();
 
+
         self::creating(function ($m) {
         });
 
@@ -182,8 +179,8 @@ class PlantingReturn extends Model
             $file = null;
             if ($m != null) {
                 if (strlen($m->sub_growers_file) > 3) {
-                    if (file_exists('./public/storage/' . $m->sub_growers_file)) {
-                        $file = './public/storage/' . $m->sub_growers_file;
+                    if (file_exists('./public/storage/uploads/' . $m->sub_growers_file)) {
+                        $file = './public/storage/uploads/' . $m->sub_growers_file;
                     } else {
                         $m->sub_growers_file = null;
                         $m->save();
@@ -199,9 +196,7 @@ class PlantingReturn extends Model
             if ($file == null) {
                 return $m;
             }
-            
             self::import_sub_growers($m);
-        
             return $m;
             //created
         });
@@ -214,8 +209,8 @@ class PlantingReturn extends Model
             $file = null;
             if ($m != null) {
                 if (strlen($m->sub_growers_file) > 3) {
-                    if (file_exists('./public/storage/' . $m->sub_growers_file)) {
-                        $file = './public/storage/' . $m->sub_growers_file;
+                    if (file_exists('./public/storage/uploads/' . $m->sub_growers_file)) {
+                        $file = './public/storage/uploads/' . $m->sub_growers_file;
                     } else {
                         $m->sub_growers_file = null;
                         $m->save();
@@ -243,8 +238,6 @@ class PlantingReturn extends Model
             // ... code here
         });
     }
-
-
 
     public function form_sr10s()
     {

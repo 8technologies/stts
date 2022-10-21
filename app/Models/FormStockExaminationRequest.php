@@ -79,10 +79,13 @@ class FormStockExaminationRequest extends Model
         });
 
         self::updating(function ($model) {
-            if(strlen($model->lot_number)<2){
-                $model->lot_number = rand(10000000,1000000000);
-            }
-            return $model;
+            
+            // if (!Admin::user()->isRole('inspector')) {
+            //     // change if inspector
+            //     // if(strlen($model->lot_number)<2){
+            //         $model->lot_number = rand(10000000,1000000000);
+            //     // }
+            // }
         });
 
         self::updated(function ($model) {
@@ -94,6 +97,7 @@ class FormStockExaminationRequest extends Model
                     $stock->crop_variety_id = $model->crop_variety_id;
                     $stock->detail = 'From stock exanination ID: ' . $model->id;
                     $stock->is_deposit = 1;
+                    $stock->lot_number = $model->lot_number;
                     $stock->quantity = $model->yield;
                     $stock->seed_class = $model->seed_class;
                     $stock->source = 'Stock examination';

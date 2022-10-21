@@ -35,6 +35,7 @@ Route::group([
     $router->resource('form-sr10s', FormSr10Controller::class);
     $router->resource('form-qds-inspection', FormQDSInspectionController::class);
     $router->resource('form-crop-declarations', FormCropDeclarationController::class);
+    $router->resource('qds-crop-inspection-2', FormCropInspectionController::class);
     $router->resource('form-stock-examination-requests', FormStockExaminationRequestController::class);
     $router->resource('stock-records', FormStockRecordController::class);
     $router->resource('seed-labs', SeedLabController::class);
