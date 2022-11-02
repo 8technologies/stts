@@ -1,6 +1,4 @@
-<?php
-
-return array (
+<?php return array (
   'providers' => 
   array (
     0 => 'Illuminate\\Auth\\AuthServiceProvider',

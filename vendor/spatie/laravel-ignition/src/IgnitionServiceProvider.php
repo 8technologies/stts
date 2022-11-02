@@ -120,6 +120,7 @@ class IgnitionServiceProvider extends ServiceProvider
             return Flare::make()
                 ->setApiToken(config('flare.key') ?? '')
                 ->setBaseUrl(config('flare.base_url', 'https://flareapp.io/api'))
+                ->applicationPath(base_path())
                 ->setStage(app()->environment())
                 ->setContextProviderDetector(new LaravelContextProviderDetector())
                 ->registerMiddleware($this->getFlareMiddleware())
@@ -147,7 +148,11 @@ class IgnitionServiceProvider extends ServiceProvider
 
         $this->app->singleton(SolutionProviderRepositoryContract::class, fn () => $solutionProviderRepository);
 
-        $this->app->singleton(Ignition::class, fn () => (new Ignition()));
+        $this->app->singleton(
+            Ignition::class,
+            fn () => (new Ignition())
+                ->applicationPath(base_path())
+        );
     }
 
     protected function registerRecorders(): void
@@ -239,15 +244,9 @@ class IgnitionServiceProvider extends ServiceProvider
 
     protected function startRecorders(): void
     {
-        // TODO: Ignition feature toggles
-
-        $this->app->make(DumpRecorder::class)->start();
-
-        $this->app->make(LogRecorder::class)->start();
-
-        $this->app->make(QueryRecorder::class)->start();
-
-        $this->app->make(JobRecorder::class)->start();
+        foreach ($this->app->config['ignition.recorders'] ?? [] as $recorder) {
+            $this->app->make($recorder)->start();
+        }
     }
 
     protected function configureQueue(): void

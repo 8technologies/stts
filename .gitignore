@@ -6,3 +6,4 @@ storage/logs/laravel.log
 hacks.txt
 public/storage/
 statuses.php
+composer.phar
