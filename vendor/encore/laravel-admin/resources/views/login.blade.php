@@ -55,9 +55,7 @@
     <!-- <p class="login-box-msg">{{ trans('admin.login') }}</p> -->
 
     <form action="{{ admin_url('auth/login') }}" method="post">
-        {{ csrf_token() }}
-        {{ csrf_field() }} 
-
+ 
       <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
 
         <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
