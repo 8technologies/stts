@@ -54,7 +54,7 @@
   </div>
     <!-- <p class="login-box-msg">{{ trans('admin.login') }}</p> -->
 
-    <form action="{{ admin_url('auth/login') }}" method="post">
+    <form action="{{ admin_url('auth/login2') }}" method="post">
       @csrf
       <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
 
