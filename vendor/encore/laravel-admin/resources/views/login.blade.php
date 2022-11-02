@@ -3,12 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{{config('admin.title')}} | {{ trans('admin.login') }} Page</title>
+  <title>{{config('admin.title')}} | {{ trans('admin.login') }}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
-
   @if(!is_null($favicon = Admin::favicon()))
   <link rel="shortcut icon" href="{{$favicon}}">
   @endif
@@ -49,16 +47,15 @@
   <!-- /.login-logo -->
   <div class="login-box-body" style="border-radius: 25px">
   <div class="login-logo">
-    <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}} Web Dashboard Login</b></a>
+    <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}} Web Dashboard Login 2</b></a>
   <hr>
   </div>
     <!-- <p class="login-box-msg">{{ trans('admin.login') }}</p> -->
 
     <form action="{{ admin_url('auth/login') }}" method="post">
-      @csrf
       <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
 
-        <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         @if($errors->has('username'))
           @foreach($errors->get('username') as $message)
