@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{{config('admin.title')}} | {{ trans('admin.login') }}</title>
+  <title>{{config('admin.title')}} | {{ trans('admin.login') }} Page</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   
@@ -54,7 +54,7 @@
   </div>
     <!-- <p class="login-box-msg">{{ trans('admin.login') }}</p> -->
 
-    <form action="{{ admin_url('auth/login2') }}" method="post">
+    <form action="{{ admin_url('auth/login') }}" method="post">
       @csrf
       <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
 
