@@ -56,7 +56,7 @@
       @csrf
       <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
 
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
 
         @if($errors->has('username'))
           @foreach($errors->get('username') as $message)
