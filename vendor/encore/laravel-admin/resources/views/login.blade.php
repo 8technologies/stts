@@ -47,15 +47,17 @@
   <!-- /.login-logo -->
   <div class="login-box-body" style="border-radius: 25px">
   <div class="login-logo">
-    <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}} Web Dashboard Login 2</b></a>
+    <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}} Web Dashboard Login</b></a>
   <hr>
   </div>
     <!-- <p class="login-box-msg">{{ trans('admin.login') }}</p> -->
 
     <form action="{{ admin_url('auth/login') }}" method="post">
+      
       <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
 
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
+        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
         @if($errors->has('username'))
           @foreach($errors->get('username') as $message)
