@@ -6,8 +6,7 @@
   <title>{{config('admin.title')}} | {{ trans('admin.login') }}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-  
+ 
   
   @if(!is_null($favicon = Admin::favicon()))
   <link rel="shortcut icon" href="{{$favicon}}">
@@ -55,10 +54,9 @@
     <!-- <p class="login-box-msg">{{ trans('admin.login') }}</p> -->
 
     <form action="{{ admin_url('auth/login') }}" method="post">
- 
       <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
 
-        <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         @if($errors->has('username'))
           @foreach($errors->get('username') as $message)
