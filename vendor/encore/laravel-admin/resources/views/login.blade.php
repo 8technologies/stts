@@ -6,6 +6,8 @@
   <title>{{config('admin.title')}} | {{ trans('admin.login') }}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   
   @if(!is_null($favicon = Admin::favicon()))
   <link rel="shortcut icon" href="{{$favicon}}">
@@ -53,11 +55,9 @@
     <!-- <p class="login-box-msg">{{ trans('admin.login') }}</p> -->
 
     <form action="{{ admin_url('auth/login') }}" method="post">
-      
       <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
 
-        <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
-        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         @if($errors->has('username'))
           @foreach($errors->get('username') as $message)
@@ -120,7 +120,14 @@
 <script src="{{ admin_asset('vendor/laravel-admin/AdminLTE/bootstrap/js/bootstrap.min.js')}}"></script>
 <!-- iCheck -->
 <script src="{{ admin_asset('vendor/laravel-admin/AdminLTE/plugins/iCheck/icheck.min.js')}}"></script>
+
 <script>
+    $.ajaxSetup({
+      headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    
   $(function () {
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
