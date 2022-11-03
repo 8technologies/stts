@@ -17,7 +17,7 @@ return [
     'paths' => [
         'api/*',
         'sanctum/csrf-cookie',
-        'login', // this will enable us not to create any new endpoints when working with airlock.  that way we will be able to use the original login,logout routes as our endpoints for now
+        // 'login', // this will enable us not to create any new endpoints when working with airlock.  that way we will be able to use the original login,logout routes as our endpoints for now
         // 'logout',
         // 'airlock/csrf-cookie',
         // '/token'
