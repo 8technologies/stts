@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PrintController2;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Middleware\Authenticate;
 use App\Admin\Controllers\Charts\QualityAssurance\BarGraphTotalsController;
 use App\Admin\Controllers\Charts\QualityAssurance\PieChartTotalsController;
@@ -65,3 +66,9 @@ Route::get('/notify', [FormSr4Controller::class, 'notify'])->name("notify")->mid
 Route::get('/email/verify', 'EmailVerificationController@show')->name('verification.notice');
 Route::get('/email/verify/{id}/{hash}', 'EmailVerificationController@verify')->name('verification.verify')->middleware(['signed']);
 Route::post('/email/resend', 'EmailVerificationController@resend')->name('verification.resend');
+
+
+Route::get('password/reset', [PasswordResetController::class, 'showForgetPasswordForm'])->name('password.reset');
+Route::post('password/reset', [PasswordResetController::class, 'submitForgetPasswordForm']); 
+Route::get('reset/password', [PasswordResetController::class, 'showResetPasswordForm'])->name('password.get');
+Route::post('resets/password', [PasswordResetController::class, 'submitResetPasswordForm']);

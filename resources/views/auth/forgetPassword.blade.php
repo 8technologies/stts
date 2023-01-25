@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,72 +45,53 @@
 </head>
 <body class="hold-transition login-page" style="background: url({{ asset('/assets/images/bg/background2.jpg') }}) no-repeat;background-size: cover;">
 <div class="login-box">
+   
 
   <!-- /.login-logo -->
   <div class="login-box-body" style="border-radius: 25px">
   <div class="login-logo">
-    <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}} Web Dashboard Login</b></a>
+    <a href="{{ admin_url('/') }}"><b>{{config('admin.name')}} Reset Password</b></a>
   <hr>
   </div>
+  @if(session()->has('message'))
+  <div class="alert alert-success">
+      {{ session()->get('message') }}
+  </div>
+  @elseif(session()->has('error'))
+  <div class="alert alert-success">
+      {{ session()->get('error') }}
+  </div>
+    @endif
     <!-- <p class="login-box-msg">{{ trans('admin.login') }}</p> -->
 
-    <form action="{{ admin_url('auth/login') }}" method="post">
-      <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
+    <form method="POST" action="{{ url('password/reset') }}">
+        @csrf
 
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <div class="row mb-3">
+            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
-        @if($errors->has('username'))
-          @foreach($errors->get('username') as $message)
-            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
-          @endforeach
-        @endif
+            <div class="col-md-6">
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-        <input type="text" class="form-control" placeholder="{{ trans('admin.username') }}" name="username" value="{{ old('username') }}" required>
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback {!! !$errors->has('password') ?: 'has-error' !!}">
-
-        @if($errors->has('password'))
-          @foreach($errors->get('password') as $message)
-            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
-          @endforeach
-        @endif
-
-        <input type="password" class="form-control" placeholder="{{ trans('admin.password') }}" name="password" required>
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="row">
-        <div class="col-xs-8">
-          @if(config('admin.auth.remember'))
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox" name="remember" value="1" {{ (!old('username') || old('remember')) ? 'checked' : '' }}>
-              {{ trans('admin.remember_me') }}
-            </label>
-          </div>
-          @endif
-        </div>
-
-        <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat" style="border-radius: 5px;">{{ trans('admin.login') }}</button>
-        </div>
-        <!-- /.col -->
-      </div> 
-      
-      <!-- <hr>
-      <div class="row">
-        <div class="col-xs-12">
-            <div class="form-group">
-                <div class="custom-control custom-checkbox">Don't have an account? <a
-                        href="{{ route('register') }}">Register</a> </div>
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
         </div>
-      </div> -->
+
+        <div class="row mb-0">
+            <div class="col-md-6 offset-md-4" style="text-align:center">
+                <button type="submit" class="btn btn-primary" >
+                    {{ __('Send Password Reset Link') }}
+                </button>
+            </div>
+        </div>
     </form>
-    <div>
-      <a href="{{ route('password.reset') }}">Forgot Password?</a>
-      </div>
+    <div class="form-group text-end">
+        <a href="{{ url('admin/auth/login') }}" class="nav-link"> Back to Login</a>
+    </div>
 
   </div>
   <!-- /.login-box-body -->
@@ -136,3 +118,4 @@
 </script>
 </body>
 </html>
+
