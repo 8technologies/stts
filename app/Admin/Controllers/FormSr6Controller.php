@@ -15,6 +15,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Support\Facades\Auth;
+use App\Admin\Actions\Post\Renew;
 
 class FormSr6Controller extends AdminController
 {
@@ -60,6 +61,10 @@ class FormSr6Controller extends AdminController
                     $actions->disableEdit();
                     $actions->disableDelete();
                 }
+                if(Utils::check_expiration_date6($this->getKey())){
+                    $actions->add(new Renew);
+                
+            }
             });
         }
 
@@ -85,19 +90,26 @@ class FormSr6Controller extends AdminController
         })->sortable();
 
         $grid->column('status', __('Status'))->display(function ($status) {
-            return Utils::tell_status($status);
+            //check expiration date
+            if (Utils::check_expiration_date6($this->getKey())) {
+                return Utils::tell_status(6);
+            } else{
+                return Utils::tell_status($status);
+            }
         })->sortable();
 
-        $grid->column('valid_from', __('Starts'))->display(function ($item) {
-            if($item ==null){
-                return "-";
-            }
-            return Carbon::parse($item)->diffForHumans();
-        })->sortable();
+        // $grid->column('valid_from', __('Starts'))->display(function ($item) {
+        //     return Carbon::parse($item)->diffForHumans();
+        // })->sortable();
         
-        $grid->column('valid_until', __('Exipires'))->display(function ($item) {
-            return Carbon::parse($item)->diffForHumans();
-        })->sortable();
+        // $grid->column('valid_until', __('Exipires'))->display(function ($item) {
+        //     return Carbon::parse($item)->diffForHumans();
+        // })->sortable();
+
+        if(Utils::is_form_accepted()){
+            $grid->column('valid_from', __("Starts"))->sortable();
+            $grid->column('valid_until', __("Expires"))->sortable();
+            };
 
         $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
             $u = Administrator::find($userId);
@@ -183,7 +195,7 @@ class FormSr6Controller extends AdminController
                 return $table;
             });
         $show->field('previous_grower_number', __('Previous grower number'));
-        $show->field('cropping_histroy', __('Cropping histroy'));
+        $show->field('cropping_histroy', __('Land histroy'));
         $show->field('have_adequate_isolation', __('Have adequate isolation'))
             ->as(function ($item) {
                 if ($item) {
@@ -248,6 +260,11 @@ class FormSr6Controller extends AdminController
         if ($form->isCreating()) {
             if (!Utils::can_create_sr6()) {
                 return admin_warning("Warning", "You cannot create a new SR6 form with a while still having another active one.");
+                return redirect(admin_url('form-sr6s'));
+            }
+
+            if (Utils::can_renew_form6()) {
+                return admin_warning("Warning", "You cannot create a new SR6 form  while still having a valid one.");
                 return redirect(admin_url('form-sr6s'));
             }
         }

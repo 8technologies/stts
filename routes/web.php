@@ -11,6 +11,9 @@ use App\Admin\Controllers\Charts\QualityAssurance\BarGraphTotalsController;
 use App\Admin\Controllers\Charts\QualityAssurance\PieChartTotalsController;
 use App\Admin\Controllers\FormSr6CropQueryController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Models\User;
+use App\Notifications\SR4FormAddedNotification;
+use Illuminate\Support\Facades\Notification;
 
 
 Route::get('/dd', [BarGraphTotalsController::class, 'index']);
@@ -54,8 +57,7 @@ Route::match(['get', 'post'], '/print', [PrintController2::class, 'index']);
     return view('welcome');
 });*/
 
-//always the last.
-Route::match(['get', 'post'], '/{id}', [MainController::class, 'slugSwitcher']);
+
 
 
 // send emails
@@ -67,8 +69,26 @@ Route::get('/email/verify', 'EmailVerificationController@show')->name('verificat
 Route::get('/email/verify/{id}/{hash}', 'EmailVerificationController@verify')->name('verification.verify')->middleware(['signed']);
 Route::post('/email/resend', 'EmailVerificationController@resend')->name('verification.resend');
 
-
+//Password Reset Routes
 Route::get('password/reset', [PasswordResetController::class, 'showForgetPasswordForm'])->name('password.reset');
 Route::post('password/reset', [PasswordResetController::class, 'submitForgetPasswordForm']); 
 Route::get('reset/password', [PasswordResetController::class, 'showResetPasswordForm'])->name('password.get');
 Route::post('resets/password', [PasswordResetController::class, 'submitResetPasswordForm']);
+
+//Notifications Routes
+Route::get('form/notify', function(){
+    // Notification::send(User::first(), new SR4FormAddedNotification);
+    $sql = "SELECT * FROM admin_role_users,admin_users 
+                where admin_role_users.user_id = admin_users.id
+               AND admin_role_users.role_id = 2";
+        $commissioners = DB::select($sql);
+        $collection = collect($commissioners);
+        $collection->each(function(User $user) use($formSr4){
+            dd($user);
+        $user->notify(new SR4FormAddedNotification($formSr4));
+
+});
+});
+
+//always the last.
+Route::match(['get', 'post'], '/{id}', [MainController::class, 'slugSwitcher']);

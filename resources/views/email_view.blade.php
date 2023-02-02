@@ -1,0 +1,3 @@
+{{ $msg }}
+Click on the link..... 
+{{ $link }}

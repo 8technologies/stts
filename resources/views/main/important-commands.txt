@@ -11,6 +11,7 @@ php artisan make:migration create_crops_table
 php artisan make:migration create_crop_varieties_table
 php artisan make:migration create_import_export_permits_has_crops_table
 php artisan make:migration create_qds_has_crops_table 
+php artisan make:migration create_my_notifications_table 
 
 php artisan make:migration create_import_export_permits_table
 
@@ -32,6 +33,7 @@ php artisan make:model FormSr4
 php artisan make:model QdsHasCrop
 php artisan make:model FormSr6
 php artisan make:model FormQds
+php artisan make:model MyNotification
 php artisan make:model CropVariety
 php artisan make:model ImportExportPermit
 php artisan make:model ImportExportPermitsHasCrops

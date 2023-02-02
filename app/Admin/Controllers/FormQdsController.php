@@ -251,6 +251,10 @@ class FormQdsController extends AdminController
                 return admin_warning("Warning", "You cannot create a new QDS form while still having another active one.");
                 return redirect(admin_url('form-qds'));
             }
+            if (!Utils::can_renew_QDs()) {
+                return admin_warning("Warning", "You cannot create a new QDs form  while still having a valid one.");
+                return redirect(admin_url('form-sr6s'));
+            }
         } 
 
         session_start();

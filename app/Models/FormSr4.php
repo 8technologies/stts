@@ -14,6 +14,10 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use App\Observers\NotificationObserver;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\SR4FormAddedNotification;
+use DB;
 
 
 class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
@@ -55,8 +59,12 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
     {
         parent::boot();
 
+
         self::creating(function($model){
+           
         });
+
+
  
         self::updating(function($model){
             if(
@@ -79,13 +87,27 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
                     }
                 }
             }
+            
 
         });
 
         self::created(function ($model) {
+            $not = new MyNotification();
+            $not->role_id = 2; 
+            $not->message = '..... has applird for whatever form. You are requested ..... '; 
+            $not->link = admin_url("form-sr4s/{$model->id}/edit"); 
+            $not->status = 'Unread'; 
+            $not->model = 'FormSr4';
+            $not->model_id = $model->id; 
+            $not->group_type = 'Group'; 
+            $not->action_status_to_make_done = '[]'; 
+            $not->save();  
         });
 
         self::updated(function ($model) {
+           
+           
+  
         });
 
         self::deleting(function ($model) {

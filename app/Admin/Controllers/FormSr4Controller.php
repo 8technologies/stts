@@ -12,6 +12,9 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use Encore\Admin\Actions\RowAction;
+use App\Admin\Actions\Post\Replicate;
 
 
 class FormSr4Controller extends AdminController
@@ -32,6 +35,11 @@ class FormSr4Controller extends AdminController
     {
         $grid = new Grid(new FormSr4());
 
+  /*       $m = FormSr4::find(185);
+        $m->premises_location .=  rand(200,200000);
+        $m->save(); 
+        dd("done");
+ */
 
         /*s = FormSr4::all()->first();
         $s->status_comment .= rand(100,1000000);
@@ -60,7 +68,12 @@ class FormSr4Controller extends AdminController
                     $actions->disableEdit();
                     $actions->disableDelete();
                 }
-            });
+
+                    if(Utils::check_expiration_date($this->getKey())){
+                        $actions->add(new Replicate);
+                    
+                }
+             });
         } 
         
         else if (Admin::user()->isRole('inspector')) { 
@@ -91,11 +104,19 @@ class FormSr4Controller extends AdminController
         })->sortable();
 
         $grid->column('status', __('Status'))->display(function ($status) {
-            return Utils::tell_status($status);
+            //check expiration date
+            if (Utils::check_expiration_date($this->getKey())) {
+                return Utils::tell_status(6);
+            } else{
+                return Utils::tell_status($status);
+            }
         })->sortable();
-
+        
+        if(Utils::is_form_accepted6()){
         $grid->column('valid_from', __("Starts"))->sortable();
         $grid->column('valid_until', __("Expires"))->sortable();
+        };
+       
 
         // $grid->column('valid_from', __('Starts'))->display(function ($item) {
         //     // return Carbon::parse($item)->diffForHumans();
@@ -269,8 +290,13 @@ class FormSr4Controller extends AdminController
         if ($form->isCreating()) {
 
             if (!Utils::can_create_sr4()) {
-                return admin_warning("Warning", "You cannot create a new SR4 form with a while still having another PENDING one.");
-                return redirect(admin_url('form-sr6s'));
+                return admin_warning("Warning", "You cannot create a new SR4 form  while still having another PENDING one.");
+                return redirect(admin_url('form-sr4s'));
+            }
+
+            if (Utils::can_renew_form()) {
+                return admin_warning("Warning", "You cannot create a new SR4 form  while still having a valid one.");
+                return redirect(admin_url('form-sr4s'));
             }
         }
 
@@ -472,7 +498,10 @@ class FormSr4Controller extends AdminController
                 ->required();
 
             $form->file('receipt', __('Receipt'))->required();
+
+            if(Utils::check_inspector_remarks()){
             $form->textarea('status_comment', __('Inspector\'s remarks.'))->readonly();
+            }
 
             $form->divider();
             $form->html('<h4>Declaration:</h4>
@@ -593,6 +622,9 @@ class FormSr4Controller extends AdminController
             // disable `Continue Creating` checkbox
             $footer->disableCreatingCheck();
         });
+
+        
+    
         return $form;
     }
 }

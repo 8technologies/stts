@@ -17,6 +17,14 @@ use Encore\Admin\Facades\Admin;
 class Utils
 {
 
+    public static function get_users_by_role($role_id){
+        $sql = "SELECT * FROM admin_role_users,admin_users 
+            where admin_role_users.user_id = admin_users.id
+            AND admin_role_users.role_id = {$role_id}";
+            return DB::select($sql);
+
+    }
+
     public static function create_default_tables()
     {
         $crop = Crop::find(1);
@@ -456,6 +464,138 @@ class Utils
         return true;
     }
 
+    //renew an Sr4 form after it has expired
+    public static function can_renew_form(){
+        $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+
+        foreach ($recs as $key => $value) {
+
+            if ($value->status == 5) {
+        
+            $now = time();
+            $then = strtotime($value->valid_until);
+
+                if ($now < $then) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        return true;
+    }
+}  
+
+
+    //renew an Sr6 form after it has expired
+    public static function can_renew_form6(){
+        $recs = FormSr6::where('administrator_id',  Admin::user()->id)->get();
+
+        foreach ($recs as $key => $value) {
+
+            if ($value->status == 5) {
+        
+            $now = time();
+            $then = strtotime($value->valid_until);
+
+                if ($now < $then) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        return true;
+    }
+}  
+
+
+//     //renew an QDs form after it has expired
+//     public static function can_renew_QDs(){
+//         $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+
+//         foreach ($recs as $key => $value) {
+
+//             if ($value->status == 5) {
+        
+//             $now = time();
+//             $then = strtotime($value->valid_until);
+
+//                 if ($now < $then) {
+//                     return true;
+//                 } else {
+//                     return false;
+//                 }
+//             }
+//         return true;
+//     }
+// }  
+    //check expiration date
+    public static function check_expiration_date($id){
+        $form= FormSr4::find($id);
+            if ($form->status == 5){
+
+                if ($form->valid_until != null && $form->valid_from != null ) {
+        
+                $now = time();
+                $then = strtotime($form->valid_until);
+
+                if ($now < $then) {
+                        return false;
+                } 
+                else {
+                    return true;
+                }
+            }
+        }
+    return false; 
+}
+
+//check expiration date
+public static function check_expiration_date6($id){
+    $form= FormSr6::find($id);
+        if ($form->status == 5){
+
+            if ($form->valid_until != null && $form->valid_from != null ) {
+    
+            $now = time();
+            $then = strtotime($form->valid_until);
+
+            if ($now < $then) {
+                    return false;
+            } 
+            else {
+                return true;
+            }
+        }
+    }
+return false; 
+}
+
+//is form accepted
+public static function is_form_accepted(){
+    $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+    foreach ($recs as $key => $value) {
+        return $value->status == 5;
+    }
+}
+
+
+//is form accepted
+public static function is_form_accepted6(){
+    $recs = FormSr6::where('administrator_id',  Admin::user()->id)->get();
+    foreach ($recs as $key => $value) {
+        return $value->status == 5;
+    }
+}
+
+//check if inspector remarks exist
+public static function check_inspector_remarks(){
+    $recs = FormSr6::where('administrator_id',  Admin::user()->id)->get();
+    foreach ($recs as $key => $value){ 
+        if ($value->inspector_remarks != null) {
+            return true;
+        }
+    }
+}
 
     public static function tell_order_status($status)
     {

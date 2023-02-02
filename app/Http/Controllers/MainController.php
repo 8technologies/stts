@@ -20,6 +20,8 @@ class MainController extends Controller
 {
     public function slugSwitcher(Request  $request)
     {
+    
+
         //echo "<pre>"; 
         //dd($request);
         //die();
@@ -64,7 +66,7 @@ class MainController extends Controller
             return view('main.display-ad');
             return;
         }
-        return view('main.index');
+        return 'die page not found.';
     }
 
 

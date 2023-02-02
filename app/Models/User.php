@@ -13,6 +13,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'admin_users';
+
     public function account_status()
     {
         if (!$this->profile) {
@@ -57,6 +59,8 @@ class User extends Authenticatable
         self::deleted(function ($model) {
             // ... code here
         });
+
+    
     }
 
 

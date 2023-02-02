@@ -26,7 +26,10 @@ Admin::css('./assets/css/custom/admin.css');
 
 Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
     $navbar->left(view('search-bar'));
+    $navbar->right(view('notification-bell'));
     $navbar->right(new \App\Admin\Extensions\Nav\Links());
+   
+
 });
 
 // https://laravel-admin.org/docs/en/custom-chart

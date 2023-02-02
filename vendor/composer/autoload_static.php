@@ -564,8 +564,8 @@ class ComposerStaticInitd3fad8ea048b06fe5a0bdeeb2c192750
         ),
         'League\\Uri\\' => 
         array (
-            0 => __DIR__ . '/..' . '/league/uri-interfaces/src',
-            1 => __DIR__ . '/..' . '/league/uri/src',
+            0 => __DIR__ . '/..' . '/league/uri/src',
+            1 => __DIR__ . '/..' . '/league/uri-interfaces/src',
         ),
         'League\\OAuth2\\Server\\' => 
         array (
@@ -950,6 +950,8 @@ class ComposerStaticInitd3fad8ea048b06fe5a0bdeeb2c192750
         'App\\Http\\Controllers\\Dashboard' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard.php',
         'App\\Http\\Controllers\\EmailVerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmailVerificationController.php',
         'App\\Http\\Controllers\\MainController' => __DIR__ . '/../..' . '/app/Http/Controllers/MainController.php',
+        'App\\Http\\Controllers\\NotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificationController.php',
+        'App\\Http\\Controllers\\PasswordResetController' => __DIR__ . '/../..' . '/app/Http/Controllers/PasswordResetController.php',
         'App\\Http\\Controllers\\PrintController2' => __DIR__ . '/../..' . '/app/Http/Controllers/PrintController2.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -984,6 +986,7 @@ class ComposerStaticInitd3fad8ea048b06fe5a0bdeeb2c192750
         'App\\Mail\\SR6FormAdded' => __DIR__ . '/../..' . '/app/Mail/SR6FormAdded.php',
         'App\\Mail\\SR6FormDeleted' => __DIR__ . '/../..' . '/app/Mail/SR6FormDeleted.php',
         'App\\Mail\\SR6FormUpdated' => __DIR__ . '/../..' . '/app/Mail/SR6FormUpdated.php',
+        'App\\Mail\\SendCodeResetPassword' => __DIR__ . '/../..' . '/app/Mail/SendCodeResetPassword.php',
         'App\\Mail\\SendMailreset' => __DIR__ . '/../..' . '/app/Mail/SendMailreset.php',
         'App\\Models\\AdminRoleUser' => __DIR__ . '/../..' . '/app/Models/AdminRoleUser.php',
         'App\\Models\\Attribute' => __DIR__ . '/../..' . '/app/Models/Attribute.php',
@@ -1008,6 +1011,7 @@ class ComposerStaticInitd3fad8ea048b06fe5a0bdeeb2c192750
         'App\\Models\\ImportExportPermitsHasCrops' => __DIR__ . '/../..' . '/app/Models/ImportExportPermitsHasCrops.php',
         'App\\Models\\MarketableSeed' => __DIR__ . '/../..' . '/app/Models/MarketableSeed.php',
         'App\\Models\\Order' => __DIR__ . '/../..' . '/app/Models/Order.php',
+        'App\\Models\\PasswordReset' => __DIR__ . '/../..' . '/app/Models/PasswordReset.php',
         'App\\Models\\PlantingReturn' => __DIR__ . '/../..' . '/app/Models/PlantingReturn.php',
         'App\\Models\\PlantingReturnCrop' => __DIR__ . '/../..' . '/app/Models/PlantingReturnCrop.php',
         'App\\Models\\PreOrder' => __DIR__ . '/../..' . '/app/Models/PreOrder.php',
@@ -1027,7 +1031,11 @@ class ComposerStaticInitd3fad8ea048b06fe5a0bdeeb2c192750
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\Utils' => __DIR__ . '/../..' . '/app/Models/Utils.php',
         'App\\Models\\category' => __DIR__ . '/../..' . '/app/Models/category.php',
+        'App\\Notifications\\QDFormAddedNotification' => __DIR__ . '/../..' . '/app/Notifications/QDFormAddedNotification.php',
+        'App\\Notifications\\SR10FormAddedNotification' => __DIR__ . '/../..' . '/app/Notifications/SR10FormAddedNotification.php',
+        'App\\Notifications\\SR4FormAddedNotification' => __DIR__ . '/../..' . '/app/Notifications/SR4FormAddedNotification.php',
         'App\\Notifications\\SR6FormAddedNotification' => __DIR__ . '/../..' . '/app/Notifications/SR6FormAddedNotification.php',
+        'App\\Observers\\NotificationObserver' => __DIR__ . '/../..' . '/app/Observers/NotificationObserver.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
