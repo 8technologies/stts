@@ -34,14 +34,15 @@ class FormSr4Controller extends AdminController
     protected function grid()
     {
         $grid = new Grid(new FormSr4());
-
-  /*       $m = FormSr4::find(185);
+/*
+        $m = FormSr4::find(201);
         $m->premises_location .=  rand(200,200000);
+        $m->status = 3; 
         $m->save(); 
         dd("done");
- */
+  
 
-        /*s = FormSr4::all()->first();
+        s = FormSr4::all()->first();
         $s->status_comment .= rand(100,1000000);
         $s->save();*/
 
@@ -162,7 +163,13 @@ class FormSr4Controller extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(FormSr4::findOrFail($id));
+        $form_sr4 = FormSr4::findOrFail($id);
+        if(Admin::user()->isRole('basic-user') ){
+            if($form_sr4->status == 3 || $form_sr4->status == 4 || $form_sr4->status == 5){
+                \App\Models\MyNotification::where(['receiver_id' => Admin::user()->id, 'model_id' => $id, 'model' => 'FormSr4'])->delete();
+            }
+        }
+        $show = new Show($form_sr4);
         $show->panel()
             ->tools(function ($tools) {
                 $tools->disableEdit();

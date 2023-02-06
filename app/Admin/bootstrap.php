@@ -18,7 +18,9 @@
  *
  */
 
+use App\Models\Utils;
 use Encore\Admin\Facades\Admin;
+use Illuminate\Support\Facades\Auth;
 
 Encore\Admin\Form::forget(['map', 'editor']);
 Admin::css('./assets/css/custom/admin.css');
@@ -26,7 +28,15 @@ Admin::css('./assets/css/custom/admin.css');
 
 Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
     $navbar->left(view('search-bar'));
-    $navbar->right(view('notification-bell'));
+
+    $notifications = [];
+    $u =  Auth::user();
+    if($u!=null){
+        $notifications = Utils::get_notifications($u);
+    } 
+ 
+
+    $navbar->right(view('notification-bell',['notifications' => $notifications]));
     $navbar->right(new \App\Admin\Extensions\Nav\Links());
    
 

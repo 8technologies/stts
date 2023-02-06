@@ -24,25 +24,10 @@ class MyNotification extends Model
                   
                 Mail::send('email_view',['msg' => $m->message,'link' => $m->link], function ($m) use ($emails) {
                     $m->from("info@8technologies.store", 'MAII..');
-                    $m->to($emails)->subject('STTS ...');
+                    $m->to($emails)->subject('FORM SR4 STATUS UPDATE ');
                 }); 
             } 
         });
 
-    }
-//mark as unread notifications
-    public function markAsUnread()
-    {
-        $this->action_status_to_make_done = null;
-        $this->save();
-    }
-    public function markAsRead()
-    {
-        $this->action_status_to_make_done = now();
-        $this->save();
-    }
-
-    public function receiver(){
-        $this->belongsTo(AdminModel::class);
     }
 }

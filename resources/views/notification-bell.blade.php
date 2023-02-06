@@ -1,22 +1,29 @@
 <li class="dropdown notifications-menu">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
   <i class="fa fa-bell-o"></i>
-  
-  <span class="label label-warning">10</span>
+  @if (count($notifications) > 0)
+  <span class="label label-danger" style="padding-bottom: 3px;  ">{{ count($notifications) }}</span>
+  @endif
 </a>
 <ul class="dropdown-menu">
-  <li class="header">You have 10 notifications</li>
+  <li class="header">You have {{ count($notifications) }} pending tasks.</li>
   <li>
     <!-- inner menu: contains the actual data -->
     <ul class="menu">
+       
+      @foreach ($notifications as $n) 
       <li>
-        <a href="#">
-          <i class="fa fa-users text-aqua"></i> 5 new members joined today
+        <a id="notify" href="{{ $n->link }}" title="{{ $n->message }}">
+          @if ($n->receiver_id == null)
+          <i class="fa fa-users text-success"></i> 
+          @else
+          <i class="fa fa-user text-success"></i> 
+          @endif
+          {{ $n->message }}
         </a>
       </li>
-     
+      @endforeach
     </ul>
   </li>
-  <li class="footer"><a href="#">View all</a></li>
 </ul>
 </li>

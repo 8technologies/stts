@@ -17,6 +17,25 @@ use Encore\Admin\Facades\Admin;
 class Utils
 {
 
+    public static function get_notifications($u){
+        if($u == null){
+            return [];
+        }
+        $data1 = MyNotification::where('receiver_id',$u->id)->where('status','Unread')
+        ->orderBy('id','desc')
+        ->get();
+        foreach($u->roles as $r){
+            $data2 = MyNotification::where('role_id',$r->id)->where('status','Unread')
+            ->orderBy('id','desc')
+            ->get();
+            foreach($data2 as $d){
+                $data1[] = $d;
+            } 
+
+        }
+        return $data1; 
+    }
+
     public static function get_users_by_role($role_id){
         $sql = "SELECT * FROM admin_role_users,admin_users 
             where admin_role_users.user_id = admin_users.id
