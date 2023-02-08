@@ -117,7 +117,7 @@ class ProductController extends AdminController
         $grid->column('wholesale_price', __('Wholesale price'));
         // $grid->column('image', __('image'));
 
-        $grid->column("image", __("Image"))->image('','60','60');
+        $grid->column("image_url", __("Image"));
 
 
         $grid->column('images', __('Images'));
@@ -162,7 +162,7 @@ class ProductController extends AdminController
         $show->field('seed_class', __('Seed class'));
         $show->field('price', __('Price'));
         $show->field('wholesale_price', __('Wholesale price'));
-        $show->field('image', __('Image'));
+        $show->field('image_url', __('Image'));
         $show->field('images', __('Images'));
         $show->field('source', __('Source'));
         $show->field('detail', __('Detail'));
@@ -193,13 +193,8 @@ class ProductController extends AdminController
             'type' => 'number'
         ]);
         $form->textarea('detail', __('Detail'))->required();
-        $form->image('image', __('Thumbnail Image'))->required();
+        $form->image('image_url', __('Thumbnail Image'));
         //$form->multipleImage('images', __('Gallery photos'));
-
-        
-
-    
-         
         
         return $form;
     }

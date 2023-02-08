@@ -12,6 +12,7 @@
         "encore/laravel-admin": "1.*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "intervention/image": "^2.7",
         "iwasherefirst2/laravel-multimail": "^1.3",
         "juststeveking/laravel-redoc": "*",
         "laravel-admin-ext/api-tester": "^1.0",
@@ -39,6 +40,7 @@
         "symfony/postmark-mailer": "^6.1",
         "tymon/jwt-auth": "^1.0",
         "yajra/laravel-datatables": "1.5"
+        
     },
     "require-dev": {
         "spatie/laravel-ignition": "^1.0",

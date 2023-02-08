@@ -34,13 +34,14 @@ use Encore\Admin\Facades\Admin;
 
             <li>
                 @php
-                $img = Utils::get_file_url($row->column('image'));
+                $img = Utils::get_file_url($row->column('image_url'));
                 @endphp
 
                 <a href="{{$link}}">
                     <span class="mailbox-attachment-icon has-img">
-                        <img src="{!! $img !!}" alt="Image">
+                        <img  src="{!! $img !!}"/>
                     </span>
+                 
                     <div class="mailbox-attachment-info">
                         <h2 class="product-price" style="font-size: 22px!important">
                             UGX {!! $row->column('price') !!}

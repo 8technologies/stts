@@ -106,7 +106,6 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
 
         self::updated(function ($m) {
 
-           
         
             $notifications = MyNotification::where('model', 'FormSr4')
             ->where('model_id', $m->id) 

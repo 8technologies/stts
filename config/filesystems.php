@@ -92,7 +92,7 @@ return [
        'uploads' => [
             'driver' => 'local',
             'root' => public_path('uploads'),
-            'url' => env('APP_URL').'uploads',
+            'url' => env('APP_URL').'/storage/uploads',
             'visibility' => 'public',
         ],
 
@@ -100,7 +100,7 @@ return [
         'admin' => [
             'driver' => 'local',
             'root' => public_path('storage/uploads'),
-            'url' => env('APP_URL').'storage/uploads',
+            'url' => env('APP_URL').'/storage/uploads',
             'visibility' => 'public',
         ],
 

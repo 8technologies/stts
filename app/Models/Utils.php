@@ -783,16 +783,20 @@ public static function check_inspector_remarks(){
 
     public static function get_file_url($name)
     {
-        $url = url("storage/uploads");
+        // $url = url("storage/uploads");
         if ($name == null || (strlen($name) < 2)) {
-            $url .= '/default.png';
-        } else if (file_exists(public_path('storage/uploads' . $name))) {
-            $url = url("storage/uploads/" . $name);
+            $url = url('storage/uploads/default.png');
+        // } else if (file_exists(public_path('storage/uploads' . $name))) {
+        //     $url = url("storage/uploads/" . $name);
         } else {
             $url = url("storage/uploads/" . $name);
         }
         return $url;
     }
+
+    //function to get and display the uploaded file
+
+
 
     public static function make_slug($str)
     {
@@ -970,7 +974,7 @@ public static function check_inspector_remarks(){
         }
 
 
-        if (!$image->resize($width, $heigt, ZEBRA_IMAGE_CROP_CENTER)) {
+        if (!$image->resize($width, $heigt, ZEBRA_IMAGE_CROP_CENTER)) { 
             return $image->source_path;
         } else {
             return $image->target_path;
