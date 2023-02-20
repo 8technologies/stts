@@ -48,8 +48,23 @@ Route::group([
     $router->resource('quotations', QuotationController::class);
     $router->resource('track-and-trace', TrackAndTraceController::class);
     $router->resource('sub-growers', SubGrowerController::class);
+    
 
     $router->resource('test-trees', TestTreeController::class);
         
     $router->resource('test1s', Test1Controller::class);
+
+    Route::get('{any}', function() {
+        return view('errors.404');
+    })->where('any', '.*');
+
+    Route::get('{any}', function() {
+        return view('errors.405');
+    })->where('any', '.*');
+
+    Route::get('{any}', function() {
+        return view('errors.500');
+    })->where('any', '.*');
+    
+    
 });

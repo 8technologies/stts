@@ -14,6 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Encore\Admin\Auth\Database\Administrator;
 
 
 class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
@@ -54,10 +55,10 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
         self::created(function ($model) {
             $not = new MyNotification();
             $not->role_id = 2; 
-            $not->message = 'New SR4 form has been added by '.Admin::user()->name.' '; 
-            $not->link = admin_url("form-sr4s/{$model->id}/edit"); 
+            $not->message = 'New SR6 form has been added by '.Admin::user()->name.' '; 
+            $not->link = admin_url("form-sr6s/{$model->id}/edit"); 
             $not->status = 'Unread'; 
-            $not->model = 'FormSr4';
+            $not->model = 'FormSr6';
             $not->model_id = $model->id; 
             $not->group_type = 'Group'; 
             $not->action_status_to_make_done = '[]'; 
@@ -77,7 +78,7 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
 
 
         self::updated(function ($m) {
-            $notifications = MyNotification::where('model', 'FormSr4')
+            $notifications = MyNotification::where('model', 'FormSr6')
             ->where('model_id', $m->id) 
             ->get();
             foreach($notifications as $n){ 
@@ -90,10 +91,10 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
                 if($inspector != null){
                     $not = new MyNotification();
                     $not->receiver_id = $inspector->id; 
-                    $not->message = "Dear {$inspector->name}, you have been assigned to inspect SR4 form #{$m->id}."; 
-                    $not->link = admin_url("form-sr4s/{$m->id}/edit"); 
+                    $not->message = "Dear {$inspector->name}, you have been assigned to inspect SR6 form #{$m->id}."; 
+                    $not->link = admin_url("form-sr6s/{$m->id}/edit"); 
                     $not->status = 'Unread'; 
-                    $not->model = 'FormSr4';
+                    $not->model = 'FormSr6';
                     $not->model_id = $m->id; 
                     $not->group_type = 'Individual'; 
                     $not->action_status_to_make_done = '[]'; 
@@ -103,10 +104,10 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
                 if($farmer != null){
                     $not = new MyNotification();
                     $not->receiver_id = $farmer->id; 
-                    $not->message = "Dear {$farmer->name}, your SR4 form #{$m->id} is now under inspection."; 
-                    $not->link = admin_url("form-sr4s/{$m->id}"); 
+                    $not->message = "Dear {$farmer->name}, your SR6 form #{$m->id} is now under inspection."; 
+                    $not->link = admin_url("form-sr6s/{$m->id}"); 
                     $not->status = 'Unread'; 
-                    $not->model = 'FormSr4';
+                    $not->model = 'FormSr6';
                     $not->model_id = $m->id; 
                     $not->group_type = 'Individual'; 
                     $not->action_status_to_make_done = '[]'; 
@@ -120,10 +121,10 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
                 if($farmer != null){
                     $not = new MyNotification();
                     $not->receiver_id = $farmer->id; 
-                    $not->message = "Dear {$farmer->name}, your SR4 form #{$m->id} has been halted by the inspector."; 
-                    $not->link = admin_url("form-sr4s/{$m->id}"); 
+                    $not->message = "Dear {$farmer->name}, your SR6 form #{$m->id} has been halted by the inspector."; 
+                    $not->link = admin_url("form-sr6s/{$m->id}"); 
                     $not->status = 'Unread'; 
-                    $not->model = 'FormSr4';
+                    $not->model = 'FormSr6';
                     $not->model_id = $m->id; 
                     $not->group_type = 'Individual'; 
                     $not->action_status_to_make_done = '[]'; 
@@ -132,15 +133,15 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
             }
 
             //rejected status for farmer
-            if($m->status == 4){
+            if($m->status == 6){
                 $farmer  = Administrator::find($m->administrator_id);
                 if($farmer != null){
                     $not = new MyNotification();
                     $not->receiver_id = $farmer->id; 
-                    $not->message = "Dear {$farmer->name}, your SR4 form #{$m->id} has been rejected by the inspector."; 
-                    $not->link = admin_url("form-sr4s/{$m->id}"); 
+                    $not->message = "Dear {$farmer->name}, your SR6 form #{$m->id} has been rejected by the inspector."; 
+                    $not->link = admin_url("form-sr6s/{$m->id}"); 
                     $not->status = 'Unread'; 
-                    $not->model = 'FormSr4';
+                    $not->model = 'FormSr6';
                     $not->model_id = $m->id; 
                     $not->group_type = 'Individual'; 
                     $not->action_status_to_make_done = '[]'; 
@@ -154,10 +155,10 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
                 if($farmer != null){
                     $not = new MyNotification();
                     $not->receiver_id = $farmer->id; 
-                    $not->message = "Dear {$farmer->name}, your SR4 form #{$m->id}/n has been approved by the inspector."; 
-                    $not->link = admin_url("form-sr4s/{$m->id}"); 
+                    $not->message = "Dear {$farmer->name}, your SR6 form #{$m->id}/n has been approved by the inspector."; 
+                    $not->link = admin_url("form-sr6s/{$m->id}"); 
                     $not->status = 'Unread'; 
-                    $not->model = 'FormSr4';
+                    $not->model = 'FormSr6';
                     $not->model_id = $m->id; 
                     $not->group_type = 'Individual'; 
                     $not->action_status_to_make_done = '[]'; 

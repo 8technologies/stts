@@ -15,6 +15,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Support\Facades\Auth;
+use App\Admin\Actions\Post\Renew;
 
 class FormQdsController extends AdminController
 {
@@ -42,7 +43,7 @@ class FormQdsController extends AdminController
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
 
 
-            if (!Utils::can_create_sr6()) {
+            if (!Utils::can_create_qds()) {
                 $grid->disableCreateButton();
             }
 
@@ -55,9 +56,20 @@ class FormQdsController extends AdminController
                     $status == 6
                 ) {
                     $actions->disableEdit();
+                    $actions->disableDelete();
                 }
-            });
-        } else if (Admin::user()->isRole('inspector')) {
+              
+                //add a renewal button
+              
+                    if(Utils::check_expiration_date('FormQds',$this->getKey())){
+                        
+                        $actions->add(new Renew(request()->segment(count(request()->segments()))));
+                    
+                };
+             });
+        } 
+        
+        else if (Admin::user()->isRole('inspector')) {
             $grid->model()->where('inspector', '=', Admin::user()->id);
             $grid->disableCreateButton();
 
@@ -81,15 +93,26 @@ class FormQdsController extends AdminController
         })->sortable();
 
         $grid->column('status', __('Status'))->display(function ($status) {
-            return Utils::tell_status($status);
+            //check expiration date
+            if (Utils::check_expiration_date('FormQds',$this->getKey())) {
+                return Utils::tell_status(6);
+            } else{
+                return Utils::tell_status($status);
+            }
         })->sortable();
 
-        $grid->column('valid_from', __('Starts'))->display(function ($item) {
-            return Carbon::parse($item)->diffForHumans();
-        })->sortable();
-        $grid->column('valid_until', __('Exipires'))->display(function ($item) {
-            return Carbon::parse($item)->diffForHumans();
-        })->sortable();
+        // $grid->column('valid_from', __('Starts'))->display(function ($item) {
+        //     return Carbon::parse($item)->diffForHumans();
+        // })->sortable();
+        // $grid->column('valid_until', __('Exipires'))->display(function ($item) {
+        //     return Carbon::parse($item)->diffForHumans();
+        // })->sortable();
+
+        if(Utils::is_form_accepted('FormQds')){
+            $grid->column('valid_from', __("Starts"))->sortable();
+            $grid->column('valid_until', __("Expires"))->sortable();
+            };
+
 
         $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
             $u = Administrator::find($userId);
@@ -246,14 +269,54 @@ class FormQdsController extends AdminController
     protected function form()
     {
         $form = new Form(new FormQds());
+         //check the id of the user before editing the form
+         if ($form->isEditing()) {
+            if (Admin::user()->isRole('basic-user')){
+
+                //get request id
+                $id = request()->route()->parameters()['form_qds'];
+                //get the form
+                $formQds = FormQds::find($id);
+                //get the user
+                $user = Auth::user();
+                if ($user->id != $formQds->administrator_id) {
+                    $form->html('<div class="alert alert-danger">You cannot edit this form </div>');
+                    $form->footer(function ($footer) {
+
+                        // disable reset btn
+                        $footer->disableReset();
+
+                        // disable submit btn
+                        $footer->disableSubmit();
+
+                        // disable `View` checkbox
+                        $footer->disableViewCheck();
+
+                        // disable `Continue editing` checkbox
+                        $footer->disableEditingCheck();
+
+                        // disable `Continue Creating` checkbox
+                        $footer->disableCreatingCheck();
+
+                    });
+                }
+                else {
+                    $this->show_fields($form);
+                }
+            }
+            else {
+                $this->show_fields($form);
+            }
+        }
+
         if ($form->isCreating()) {
             if (!Utils::can_create_qds()) {
                 return admin_warning("Warning", "You cannot create a new QDS form while still having another active one.");
                 return redirect(admin_url('form-qds'));
             }
-            if (!Utils::can_renew_QDs()) {
+            if (Utils::can_renew_form('FormQds')) {
                 return admin_warning("Warning", "You cannot create a new QDs form  while still having a valid one.");
-                return redirect(admin_url('form-sr6s'));
+            
             }
         } 
 

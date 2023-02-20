@@ -328,7 +328,10 @@ class FormStockExaminationRequestController extends AdminController
                         'administrator_id' => Admin::user()->id,
                         'is_import' => 1
                     ])->get();
-
+                    
+                    if($all_import_permits->isEmpty()){
+                         $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have a valid Import permit </div>');
+                    }else{
                     $import_permits = [];
                     foreach ($all_import_permits as $key => $value) {
                         if ($value->status == 5) {  // if accepted
@@ -359,19 +362,20 @@ class FormStockExaminationRequestController extends AdminController
                         ->options($import_permits);
                     }
                 
-
+                }
 
                 })    // end when 1
 
                 ->when('2', function (Form $form) {
 
-
-
-
                     $SubGrowers =  SubGrower::where([
                         'administrator_id' => Admin::user()->id
                     ])->get();
+                
 
+                    if($SubGrowers->isEmpty()){
+                        $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have an approved SR10 </div>');
+                    }else{
 
                     $sr10s = [];
                     $planting_returnings = [];
@@ -402,11 +406,18 @@ class FormStockExaminationRequestController extends AdminController
                 $form->select('planting_return_id', __('Select approved SR10'))
                         ->rules('required')
                         ->options($planting_returnings);
+                }
                 })
+
+
                 ->when('3', function (Form $form) {
                     $all_qds =  FormCropDeclaration::where([
                         'administrator_id' => Admin::user()->id
                     ])->get();
+
+                    if($all_qds->isEmpty()){
+                        $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have a valid QDS </div>');
+                    }else{
 
                     $my_qds = [];
 
@@ -423,6 +434,7 @@ class FormStockExaminationRequestController extends AdminController
                             ->rules('required')
                             ->options($my_qds);
                     }
+                }
                 })->required();
 
             $_items = [];
@@ -437,6 +449,7 @@ class FormStockExaminationRequestController extends AdminController
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id); 
         }
 
+//Admin form functionalities
         if (Admin::user()->isRole('admin') && $form->isEditing()) {
             $form->setTitle("Assigning an inspector");
 
@@ -488,6 +501,8 @@ class FormStockExaminationRequestController extends AdminController
                     $form->date('valid_until', 'Valid until date?');
                 });
         }
+
+    //Inspector form functionalities
 
         if (Admin::user()->isRole('inspector')) {
 

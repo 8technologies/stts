@@ -14,7 +14,7 @@ use Encore\Admin\Show;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Encore\Admin\Actions\RowAction;
-use App\Admin\Actions\Post\Replicate;
+use App\Admin\Actions\Post\Renew;
 
 
 class FormSr4Controller extends AdminController
@@ -34,6 +34,7 @@ class FormSr4Controller extends AdminController
     protected function grid()
     {
         $grid = new Grid(new FormSr4());
+    
 /*
         $m = FormSr4::find(201);
         $m->premises_location .=  rand(200,200000);
@@ -54,9 +55,7 @@ class FormSr4Controller extends AdminController
                 $grid->disableCreateButton();
             }
             
-            // if (!Utils::can_create_sr4()) {
-            //     $grid->disableCreateButton();
-            // }
+            
 
             $grid->actions(function ($actions) {
 
@@ -69,11 +68,13 @@ class FormSr4Controller extends AdminController
                     $actions->disableEdit();
                     $actions->disableDelete();
                 }
-
-                    if(Utils::check_expiration_date($this->getKey())){
-                        $actions->add(new Replicate);
+                //get last parameter from url
+                
+                    if(Utils::check_expiration_date('FormSr4',$this->getKey())){
+                        
+                        $actions->add(new Renew(request()->segment(count(request()->segments()))));
                     
-                }
+                };
              });
         } 
         
@@ -105,15 +106,15 @@ class FormSr4Controller extends AdminController
         })->sortable();
 
         $grid->column('status', __('Status'))->display(function ($status) {
-            //check expiration date
-            if (Utils::check_expiration_date($this->getKey())) {
+           // check expiration date
+            if (Utils::check_expiration_date('FormSr4',$this->getKey())) {
                 return Utils::tell_status(6);
             } else{
                 return Utils::tell_status($status);
             }
         })->sortable();
         
-        if(Utils::is_form_accepted6()){
+        if(Utils::is_form_accepted('FormSr4')){
         $grid->column('valid_from', __("Starts"))->sortable();
         $grid->column('valid_until', __("Expires"))->sortable();
         };
@@ -163,6 +164,7 @@ class FormSr4Controller extends AdminController
      */
     protected function detail($id)
     {
+        $form = new Form(new FormSr4());
         $form_sr4 = FormSr4::findOrFail($id);
         if(Admin::user()->isRole('basic-user') ){
             if($form_sr4->status == 3 || $form_sr4->status == 4 || $form_sr4->status == 5){
@@ -281,7 +283,6 @@ class FormSr4Controller extends AdminController
         });
         $show->field('status_comment', __('Status comment'));
 
-
         return $show;
     }
 
@@ -292,21 +293,70 @@ class FormSr4Controller extends AdminController
      */
     protected function form()
     {
-
         $form = new Form(new FormSr4());
+
+        //check the id of the user before editing the form
+        if ($form->isEditing()) {
+            if (Admin::user()->isRole('basic-user')){
+            //checking the user before accessing the form
+                //get request id
+                $id = request()->route()->parameters()['form_sr4'];
+                //get the form
+                $formSr4 = FormSr4::find($id);
+                //get the user
+                $user = Auth::user();
+                if ($user->id != $formSr4->administrator_id) {
+                    $form->html('<div class="alert alert-danger">You cannot edit this form </div>');
+                    $form->footer(function ($footer) {
+
+                        // disable reset btn
+                        $footer->disableReset();
+
+                        // disable submit btn
+                        $footer->disableSubmit();
+
+                        // disable `View` checkbox
+                        $footer->disableViewCheck();
+
+                        // disable `Continue editing` checkbox
+                        $footer->disableEditingCheck();
+
+                        // disable `Continue Creating` checkbox
+                        $footer->disableCreatingCheck();
+
+                    });
+                }
+                else {
+                    $this->show_fields($form);
+                }
+            }
+            else {
+                $this->show_fields($form);
+            }
+        }
+
+
         if ($form->isCreating()) {
 
             if (!Utils::can_create_sr4()) {
                 return admin_warning("Warning", "You cannot create a new SR4 form  while still having another PENDING one.");
-                return redirect(admin_url('form-sr4s'));
+                
             }
 
-            if (Utils::can_renew_form()) {
+            if (Utils::can_renew_form('FormSr4')) {
                 return admin_warning("Warning", "You cannot create a new SR4 form  while still having a valid one.");
-                return redirect(admin_url('form-sr4s'));
+            
             }
+            $this->show_fields($form);
         }
 
+
+    
+        return $form;
+    }
+
+    public function show_fields($form){
+        
 
         $form->disableCreatingCheck();
         $form->tools(function (Form\Tools $tools) {
@@ -631,7 +681,6 @@ class FormSr4Controller extends AdminController
         });
 
         
-    
-        return $form;
+
     }
 }

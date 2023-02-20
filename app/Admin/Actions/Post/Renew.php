@@ -7,18 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Renew extends RowAction
 {
-    public $name = 'Renew';
-
-    public function handle(Model $model)
+    private $entity;
+    //create constructor with parameter entity
+    public function __construct($entity)
     {
-        // $model ...
-
-        return $this->response()->success('Success message.')->refresh();
+        $this->entity = $entity;
     }
+    public $name = 'renew';
 
+     public function handle(Model $model)
+     {
+         $model->replicate();
+        
+    }
     public function href()
     {
-        return "/admin/form-sr6s/{$this->getKey()}/edit";
+        return "/admin/{$this->entity}/{$this->getKey()}/edit";
     }
 
 }

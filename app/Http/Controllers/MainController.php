@@ -58,16 +58,17 @@ class MainController extends Controller
         $profile = Profile::where('username', $seg)->first();
         if ($profile) {
             return view('main.display-profile');
-            return;
         }
 
         $pro = Product::where('slug', $seg)->first();
         if ($pro) {
             return view('main.display-ad');
-            return;
         }
-        return 'die page not found.';
+
+        // return ('page not found');
+         return view('errors.404');
     }
+    
 
 
     public function index()

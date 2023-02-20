@@ -192,10 +192,9 @@ class ImportExportPermitController2 extends AdminController
         $form = new Form(new ImportExportPermit());
         
         if ($form->isCreating()) {
-
             if (!Utils::can_create_export_form()) {
-                return admin_error("Alert", "You must apply for SR4 and be 'Accepted' or have an 'Accepted' SR4 to apply for a new Export permit.");
-                // return redirect(admin_url('import-export-permits-2'));
+                admin_error("Alert", "You must apply for SR4 and be 'Accepted' or have an 'Accepted' SR4 to apply for a new Export permit.");
+                return redirect(admin_url('form-sr4s/create'));
             }  
             
         }

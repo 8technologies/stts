@@ -15,7 +15,6 @@ use App\Models\User;
 use App\Notifications\SR4FormAddedNotification;
 use Illuminate\Support\Facades\Notification;
 
-
 Route::get('/dd', [BarGraphTotalsController::class, 'index']);
 Route::get('/dddd', [PieChartTotalsController::class, 'index']);
 
@@ -75,6 +74,7 @@ Route::post('password/reset', [PasswordResetController::class, 'submitForgetPass
 Route::get('reset/password', [PasswordResetController::class, 'showResetPasswordForm'])->name('password.get');
 Route::post('resets/password', [PasswordResetController::class, 'submitResetPasswordForm']);
 
+Route::view('/error', 'errors.404')->name('404');
 //Notifications Routes
 Route::get('form/notify', function(){
     // Notification::send(User::first(), new SR4FormAddedNotification);
@@ -91,4 +91,5 @@ Route::get('form/notify', function(){
 });
 
 //always the last.
-Route::match(['get', 'post'], '/{id}', [MainController::class, 'slugSwitcher']);
+ Route::match(['get', 'post'], '/{id}', [MainController::class, 'slugSwitcher']);
+

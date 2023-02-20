@@ -11,6 +11,7 @@ use Encore\Admin\Show;
 use Illuminate\Support\Facades\Request;
 use App\Admin\Extensions\Tools\GridView;
 use Carbon\Carbon;
+use Intervention\Image\Facades\Image;
 
 
 class ProductController extends AdminController
@@ -115,9 +116,13 @@ class ProductController extends AdminController
         $grid->column('seed_class', __('Seed class'));
         $grid->column('price', __('Price'))->sortable();
         $grid->column('wholesale_price', __('Wholesale price'));
-        // $grid->column('image', __('image'));
-
         $grid->column("image_url", __("Image"));
+
+
+        // $grid->column("image_url", __("Image"))->display(function ($image_url) {
+        //     $image = Image::make($image_url)->resize(200, 200);
+        //     return '<img src="'. $image->encode('data-url') .'"/>';
+        // });;
 
 
         $grid->column('images', __('Images'));
@@ -193,7 +198,12 @@ class ProductController extends AdminController
             'type' => 'number'
         ]);
         $form->textarea('detail', __('Detail'))->required();
-        $form->image('image_url', __('Thumbnail Image'));
+        // $form->image('image_url', __('Thumbnail Image'));
+
+        $form->image('image_url', __('ThumbnailImage'))->rules('required')->thumbnail(function ($image) {
+            $image->resize(200, 200);
+        })->move('images/')->uniqueName()->removable();
+        
         //$form->multipleImage('images', __('Gallery photos'));
         
         return $form;

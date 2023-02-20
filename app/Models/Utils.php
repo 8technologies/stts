@@ -483,73 +483,33 @@ class Utils
         return true;
     }
 
-    //renew an Sr4 form after it has expired
-    public static function can_renew_form(){
-        $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
 
-        foreach ($recs as $key => $value) {
+//renew or create a new form after its expired
+public static function can_renew_form($model_name){
+    $model = "App\\Models\\" . ucfirst($model_name);
+    $recs = $model::where('administrator_id',  Admin::user()->id)->get();
 
-            if ($value->status == 5) {
-        
-            $now = time();
-            $then = strtotime($value->valid_until);
+    foreach ($recs as $key => $value) {
 
-                if ($now < $then) {
-                    return true;
-                } else {
-                    return false;
-                }
+        if ($value->status == 5) {
+    
+        $now = time();
+        $then = strtotime($value->valid_until);
+
+            if ($now < $then) {
+                return true;
+            } else {
+                return false;
             }
-        return true;
-    }
-}  
+        }
+    return true;
+}
+}
 
-
-    //renew an Sr6 form after it has expired
-    public static function can_renew_form6(){
-        $recs = FormSr6::where('administrator_id',  Admin::user()->id)->get();
-
-        foreach ($recs as $key => $value) {
-
-            if ($value->status == 5) {
-        
-            $now = time();
-            $then = strtotime($value->valid_until);
-
-                if ($now < $then) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        return true;
-    }
-}  
-
-
-//     //renew an QDs form after it has expired
-//     public static function can_renew_QDs(){
-//         $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
-
-//         foreach ($recs as $key => $value) {
-
-//             if ($value->status == 5) {
-        
-//             $now = time();
-//             $then = strtotime($value->valid_until);
-
-//                 if ($now < $then) {
-//                     return true;
-//                 } else {
-//                     return false;
-//                 }
-//             }
-//         return true;
-//     }
-// }  
-    //check expiration date
-    public static function check_expiration_date($id){
-        $form= FormSr4::find($id);
+ //check expiration date for all Forms
+    public static function check_expiration_date($model_name,$id){
+        $model = "App\\Models\\" . ucfirst($model_name);
+        $form= $model::find($id);
             if ($form->status == 5){
 
                 if ($form->valid_until != null && $form->valid_from != null ) {
@@ -568,43 +528,16 @@ class Utils
     return false; 
 }
 
-//check expiration date
-public static function check_expiration_date6($id){
-    $form= FormSr6::find($id);
-        if ($form->status == 5){
 
-            if ($form->valid_until != null && $form->valid_from != null ) {
-    
-            $now = time();
-            $then = strtotime($form->valid_until);
-
-            if ($now < $then) {
-                    return false;
-            } 
-            else {
-                return true;
-            }
-        }
-    }
-return false; 
-}
-
-//is form accepted
-public static function is_form_accepted(){
-    $recs = FormSr4::where('administrator_id',  Admin::user()->id)->get();
+//check is form accepted
+public static function is_form_accepted($model_name){
+    $model = "App\\Models\\" . ucfirst($model_name);
+    $recs = $model::where('administrator_id',  Admin::user()->id)->get();
     foreach ($recs as $key => $value) {
         return $value->status == 5;
     }
 }
 
-
-//is form accepted
-public static function is_form_accepted6(){
-    $recs = FormSr6::where('administrator_id',  Admin::user()->id)->get();
-    foreach ($recs as $key => $value) {
-        return $value->status == 5;
-    }
-}
 
 //check if inspector remarks exist
 public static function check_inspector_remarks(){

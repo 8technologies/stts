@@ -61,8 +61,8 @@ class FormSr6Controller extends AdminController
                     $actions->disableEdit();
                     $actions->disableDelete();
                 }
-                if(Utils::check_expiration_date6($this->getKey())){
-                    $actions->add(new Renew);
+                if(Utils::check_expiration_date('FormSr6',$this->getKey())){
+                    $actions->add(new Renew(request()->segment(count(request()->segments()))));
                 
             }
             });
@@ -91,7 +91,7 @@ class FormSr6Controller extends AdminController
 
         $grid->column('status', __('Status'))->display(function ($status) {
             //check expiration date
-            if (Utils::check_expiration_date6($this->getKey())) {
+            if (Utils::check_expiration_date('FormSr6',$this->getKey())) {
                 return Utils::tell_status(6);
             } else{
                 return Utils::tell_status($status);
@@ -106,7 +106,7 @@ class FormSr6Controller extends AdminController
         //     return Carbon::parse($item)->diffForHumans();
         // })->sortable();
 
-        if(Utils::is_form_accepted()){
+        if(Utils::is_form_accepted('FormSr6')){
             $grid->column('valid_from', __("Starts"))->sortable();
             $grid->column('valid_until', __("Expires"))->sortable();
             };
@@ -257,13 +257,54 @@ class FormSr6Controller extends AdminController
     protected function form()
     {
         $form = new Form(new FormSr6());
+
+         //check the id of the user before editing the form
+         if ($form->isEditing()) {
+            if (Admin::user()->isRole('basic-user')){
+
+                //get request id
+                $id = request()->route()->parameters()['form_sr6'];
+                //get the form
+                $formSr6 = FormSr6::find($id);
+                //get the user
+                $user = Auth::user();
+                if ($user->id != $formSr6->administrator_id) {
+                    $form->html('<div class="alert alert-danger">You cannot edit this form </div>');
+                    $form->footer(function ($footer) {
+
+                        // disable reset btn
+                        $footer->disableReset();
+
+                        // disable submit btn
+                        $footer->disableSubmit();
+
+                        // disable `View` checkbox
+                        $footer->disableViewCheck();
+
+                        // disable `Continue editing` checkbox
+                        $footer->disableEditingCheck();
+
+                        // disable `Continue Creating` checkbox
+                        $footer->disableCreatingCheck();
+
+                    });
+                }
+                else {
+                    $this->show_fields($form);
+                }
+            }
+            else {
+                $this->show_fields($form);
+            }
+        }
+
         if ($form->isCreating()) {
             if (!Utils::can_create_sr6()) {
                 return admin_warning("Warning", "You cannot create a new SR6 form with a while still having another active one.");
                 return redirect(admin_url('form-sr6s'));
             }
 
-            if (Utils::can_renew_form6()) {
+            if (Utils::can_renew_form('FormSr6')) {
                 return admin_warning("Warning", "You cannot create a new SR6 form  while still having a valid one.");
                 return redirect(admin_url('form-sr6s'));
             }
