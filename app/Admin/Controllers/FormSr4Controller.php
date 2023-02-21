@@ -85,6 +85,7 @@ class FormSr4Controller extends AdminController
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
                 $actions->disableDelete();
+                $actions->disableEdit();
                 // if (
                 //     $status != 2
                 // ) {
@@ -166,6 +167,8 @@ class FormSr4Controller extends AdminController
     {
         $form = new Form(new FormSr4());
         $form_sr4 = FormSr4::findOrFail($id);
+
+       
         if(Admin::user()->isRole('basic-user') ){
             if($form_sr4->status == 3 || $form_sr4->status == 4 || $form_sr4->status == 5){
                 \App\Models\MyNotification::where(['receiver_id' => Admin::user()->id, 'model_id' => $id, 'model' => 'FormSr4'])->delete();
@@ -173,10 +176,13 @@ class FormSr4Controller extends AdminController
         }
         $show = new Show($form_sr4);
         $show->panel()
-            ->tools(function ($tools) {
+            ->tools(function ($tools) use($id) {
                 $tools->disableEdit();
                 $tools->disableDelete();
+                // $tools->append('<a href="/admin/form-sr4s-details/' . $id . '/edit" class="btn btn-primary">Show Details</a>');
             });;
+
+            
 
         $show->field('type', __('Application Category'));
         $show->field('created_at', __('Created on'));
@@ -276,12 +282,19 @@ class FormSr4Controller extends AdminController
                 return "No";
             }
         });
+        if (!Admin::user()->isRole('inspector')) {
         $show->field('valid_from', __('Valid from'));
         $show->field('valid_until', __('Valid until'));
         $show->field('status', __('Status'))->unescape()->as(function ($status) {
             return Utils::tell_status($status);
         });
         $show->field('status_comment', __('Status comment'));
+    }
+
+        //button link to the show-details form
+        $show->field('id','Action')->unescape()->as(function ($id) {
+            return "<a href='/admin/form-sr4s/$id/edit' class='btn btn-primary'>Take Action</a>";
+        });
 
         return $show;
     }
@@ -608,34 +621,12 @@ class FormSr4Controller extends AdminController
 
 
         if (Admin::user()->isRole('inspector')) {
-            $form->text('type', __('Applicant type'))->readonly();
-            $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
-            $form->text('seed_board_registration_number', __('Seed board registration number'))->readonly();
-            $form->text('address', __('Address'))->readonly();
-            $form->text('company_initials', __('Company initials'))->readonly();
-            $form->text('premises_location', __('Premises location'))->readonly();
-            $form->text('years_of_expirience', __('Years of Experience'))->readonly();
-            $form->text('dealers_in', __('Dealers in'))->readonly();
-            $form->text('processing_of', __('Processing of'))->readonly();
-            $form->text('marketing_of', __('Marketing of'))->readonly();
-            $form->text('have_adequate_land', __('Have adequate land'))->readonly();
-            $form->text('land_size', __('Land size'))->readonly();
-            $form->text('eqipment', __('Equipment'))->readonly();
-            $form->text('have_adequate_equipment', __('Have adequate equipment'))->readonly();
-            $form->text('have_contractual_agreement', __('Have contractual agreement'))->readonly();
-            $form->text('have_adequate_field_officers', __('Have adequate field officers'))->readonly();
-            $form->text('have_conversant_seed_matters', __('Have conversant seed matters '))->readonly();
-            $form->text('source_of_seed', __('Source of seed'))->readonly();
-            $form->text('have_adequate_land_for_production', __('Have adequate land for production'))->default(function ($item) {
-                if ($item) {
-                    return "Yes";
-                } else {
-                    return "No";
-                }
-            })->readonly();
-            $form->text('have_internal_quality_program', __('Have internal quality program'))->readonly();
-            $form->file('receipt', __('Receipt'))->readonly();
-            $form->text('accept_declaration', __('Accespted declaration')) ->readonly();
+            // $form->text('type', __('Applicant type'))->readonly();
+            // $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
+            // $form->text('address', __('Address'))->readonly();
+            // $form->text('company_initials', __('Company initials'))->readonly();
+            // $form->text('premises_location', __('Premises location'))->readonly();
+            // $form->file('receipt', __('Receipt'))->readonly(); 
 
             $form->radio('status', __('Status'))
                 ->options([ 
