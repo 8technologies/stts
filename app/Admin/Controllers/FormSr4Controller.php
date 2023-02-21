@@ -301,7 +301,7 @@ class FormSr4Controller extends AdminController
             //checking the user before accessing the form
                 //get request id
                 $id = request()->route()->parameters()['form_sr4'];
-                //get the form
+               //get the form
                 $formSr4 = FormSr4::find($id);
                 //get the user
                 $user = Auth::user();
@@ -610,10 +610,32 @@ class FormSr4Controller extends AdminController
         if (Admin::user()->isRole('inspector')) {
             $form->text('type', __('Applicant type'))->readonly();
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
+            $form->text('seed_board_registration_number', __('Seed board registration number'))->readonly();
             $form->text('address', __('Address'))->readonly();
             $form->text('company_initials', __('Company initials'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
-            $form->file('receipt', __('Receipt'))->readonly(); 
+            $form->text('years_of_expirience', __('Years of Experience'))->readonly();
+            $form->text('dealers_in', __('Dealers in'))->readonly();
+            $form->text('processing_of', __('Processing of'))->readonly();
+            $form->text('marketing_of', __('Marketing of'))->readonly();
+            $form->text('have_adequate_land', __('Have adequate land'))->readonly();
+            $form->text('land_size', __('Land size'))->readonly();
+            $form->text('eqipment', __('Equipment'))->readonly();
+            $form->text('have_adequate_equipment', __('Have adequate equipment'))->readonly();
+            $form->text('have_contractual_agreement', __('Have contractual agreement'))->readonly();
+            $form->text('have_adequate_field_officers', __('Have adequate field officers'))->readonly();
+            $form->text('have_conversant_seed_matters', __('Have conversant seed matters '))->readonly();
+            $form->text('source_of_seed', __('Source of seed'))->readonly();
+            $form->text('have_adequate_land_for_production', __('Have adequate land for production'))->default(function ($item) {
+                if ($item) {
+                    return "Yes";
+                } else {
+                    return "No";
+                }
+            })->readonly();
+            $form->text('have_internal_quality_program', __('Have internal quality program'))->readonly();
+            $form->file('receipt', __('Receipt'))->readonly();
+            $form->text('accept_declaration', __('Accespted declaration')) ->readonly();
 
             $form->radio('status', __('Status'))
                 ->options([ 
