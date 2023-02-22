@@ -7,3 +7,4 @@ hacks.txt
 public/storage/
 statuses.php
 composer.phar
+/storage/*key
