@@ -1197,7 +1197,7 @@
     'cookie' => 'laravel_session',
     'path' => '/',
     'domain' => NULL,
-    'secure' => NULL,
+    'secure' => false,
     'http_only' => true,
     'same_site' => 'lax',
   ),
