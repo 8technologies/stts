@@ -30,7 +30,6 @@ return array(
     'AWS\\CRT\\OptionValue' => $vendorDir . '/aws/aws-crt-php/src/AWS/CRT/Options.php',
     'AWS\\CRT\\Options' => $vendorDir . '/aws/aws-crt-php/src/AWS/CRT/Options.php',
     'App\\Admin\\Actions\\Post\\Renew' => $baseDir . '/app/Admin/Actions/Post/Renew.php',
-    'App\\Admin\\Actions\\Post\\Replicate' => $baseDir . '/app/Admin/Actions/Post/Replicate.php',
     'App\\Admin\\Actions\\SubGrower\\BatchReplicate' => $baseDir . '/app/Admin/Actions/SubGrower/BatchReplicate.php',
     'App\\Admin\\Controllers\\AttributeController' => $baseDir . '/app/Admin/Controllers/AttributeController.php',
     'App\\Admin\\Controllers\\AuthController' => $baseDir . '/app/Admin/Controllers/AuthController.php',
