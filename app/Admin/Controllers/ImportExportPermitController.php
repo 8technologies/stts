@@ -144,6 +144,12 @@ class ImportExportPermitController extends AdminController
      */
     protected function detail($id)
     {
+        $import_permit = ImportExportPermit::findOrFail($id);
+        if(Admin::user()->isRole('basic-user') ){
+            if($import_permit->status == 3 || $import_permit->status == 4 || $import_permit->status == 5){
+                \App\Models\MyNotification::where(['receiver_id' => Admin::user()->id, 'model_id' => $id, 'model' => 'ImportExportPermit'])->delete();
+            }
+        }
         $show = new Show(ImportExportPermit::findOrFail($id));
         // $show->setWidth(8, 4);
         $show->panel()
@@ -202,6 +208,12 @@ class ImportExportPermitController extends AdminController
         $show->field('ista_certificate', __('Ista certificate'));
         $show->field('permit_number', __('Permit number'));
 
+        if (!Admin::user()->isRole('basic-user')){
+        //button link to the show-details form
+        $show->field('id','Action')->unescape()->as(function ($id) {
+            return "<a href='/admin/import-export-permits/$id/edit' class='btn btn-primary'>Take Action</a>";
+        });
+        }
         return $show;
     }
 
@@ -217,8 +229,9 @@ class ImportExportPermitController extends AdminController
 
         if ($form->isCreating()) {
             if (!Utils::can_create_import_form()) {
-                admin_error("Alert", "You must apply for SR4 and be 'Accepted' or have an 'accepted' SR4 to apply for a new Import Permit");
-                return redirect(admin_url('import-export-permits'));
+                return admin_error("You must apply for SR4 and be 'Accepted' or have an 'accepted' SR4 to apply for a new Import Permit");
+            //    session(['no_import_permit' => "You must apply for SR4 and be 'Accepted' or have an 'accepted' SR4 to apply for a new Import Permit"]);
+            //    return redirect(admin_url('form-sr4s/create'));
             }
         }
 
@@ -230,7 +243,6 @@ class ImportExportPermitController extends AdminController
         }
 
         // dd(Utils::previous_import_form_not_accepted());
-
 
         $form->setWidth(8, 4);
         $form->disableCreatingCheck();

@@ -143,6 +143,12 @@ class FormSr6Controller extends AdminController
      */
     protected function detail($id)
     {
+        $form_sr6 = FormSr6::findOrFail($id);
+        if(Admin::user()->isRole('basic-user') ){
+            if($form_sr6->status == 3 || $form_sr6->status == 4 || $form_sr6->status == 5){
+                \App\Models\MyNotification::where(['receiver_id' => Admin::user()->id, 'model_id' => $id, 'model' => 'FormSr6'])->delete();
+            }
+        }
         $show = new Show(FormSr6::findOrFail($id));
         $show->panel()
             ->tools(function ($tools) {
@@ -244,6 +250,13 @@ class FormSr6Controller extends AdminController
                 return Utils::tell_status($status);
             });
         $show->field('status_comment', __('Status comment'));
+
+        if (!Admin::user()->isRole('basic-user')){
+            //button link to the show-details form
+            $show->field('id','Action')->unescape()->as(function ($id) {
+                return "<a href='/admin/form-sr6s/$id/edit' class='btn btn-primary'>Take Action</a>";
+            });
+        }
 
         return $show;
     }

@@ -130,6 +130,12 @@ class ImportExportPermitController2 extends AdminController
      */
     protected function detail($id)
     {
+        $import_permit = ImportExportPermit::findOrFail($id);
+        if(Admin::user()->isRole('basic-user') ){
+            if($import_permit->status == 3 || $import_permit->status == 4 || $import_permit->status == 5){
+                \App\Models\MyNotification::where(['receiver_id' => Admin::user()->id, 'model_id' => $id, 'model' => 'ImportExportPermit'])->delete();
+            }
+        }
         $show = new Show(ImportExportPermit::findOrFail($id));
         $show->panel()
             ->tools(function ($tools) {
@@ -183,6 +189,13 @@ class ImportExportPermitController2 extends AdminController
             });
         $show->field('ista_certificate', __('Ista certificate'));
         $show->field('permit_number', __('Permit number'));
+
+        if (!Admin::user()->isRole('basic-user')){
+            //button link to the show-details form
+            $show->field('id','Action')->unescape()->as(function ($id) {
+                return "<a href='/admin/import-export-permits-2/$id/edit' class='btn btn-primary'>Take Action</a>";
+            });
+            }
 
         return $show;
     }

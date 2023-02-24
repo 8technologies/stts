@@ -290,12 +290,12 @@ class FormSr4Controller extends AdminController
         });
         $show->field('status_comment', __('Status comment'));
     }
-
+    if (!Admin::user()->isRole('basic-user')){
         //button link to the show-details form
         $show->field('id','Action')->unescape()->as(function ($id) {
             return "<a href='/admin/form-sr4s/$id/edit' class='btn btn-primary'>Take Action</a>";
         });
-
+    }
         return $show;
     }
 
@@ -350,6 +350,29 @@ class FormSr4Controller extends AdminController
 
 
         if ($form->isCreating()) {
+            // //check for session no import permit
+            // if(session('no_import_permit')){
+            //     // admin_warning("Warning", session('no_import_permit'));
+            //     $form->html('<div class="alert alert-danger">'.session()->pull('no_import_permit').'</div>');
+            //     $form->footer(function ($footer) {
+
+            //         // disable reset btn
+            //         $footer->disableReset();
+
+            //         // disable submit btn
+            //         $footer->disableSubmit();
+
+            //         // disable `View` checkbox
+            //         $footer->disableViewCheck();
+
+            //         // disable `Continue editing` checkbox
+            //         $footer->disableEditingCheck();
+
+            //         // disable `Continue Creating` checkbox
+            //         $footer->disableCreatingCheck();
+
+            //     });
+            // }
 
             if (!Utils::can_create_sr4()) {
                 return admin_warning("Warning", "You cannot create a new SR4 form  while still having another PENDING one.");
