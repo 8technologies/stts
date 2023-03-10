@@ -8,3 +8,7 @@ public/storage/
 statuses.php
 composer.phar
 /storage/*key
+/storage/public
+/storage/framework/cache
+/storage/framework/views
+/storage/framework/sessions

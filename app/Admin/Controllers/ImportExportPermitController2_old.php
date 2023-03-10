@@ -194,7 +194,7 @@ class ImportExportPermitController2 extends AdminController
 
             if (!Utils::can_create_sr4()) {
                 return admin_warning("Warning", "You must apply for SR4 and be 'accepted' or have an 'accepted' SR4 to apply for an Export permit");
-                return redirect(admin_url('form-sr4s'));
+            
             }
 
             // elseif (!Utils::can_create_sr4()) {

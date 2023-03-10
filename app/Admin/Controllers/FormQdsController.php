@@ -156,8 +156,11 @@ class FormQdsController extends AdminController
     protected function detail($id)
     {
         $form_qds = FormQds::findOrFail($id);
+<<<<<<< HEAD
 
        
+=======
+>>>>>>> 2093fae2dcc7263b0de63823cffffe0d0444d354
         if(Admin::user()->isRole('basic-user') ){
             if($form_qds->status == 3 || $form_qds->status == 4 || $form_qds->status == 5){
                 \App\Models\MyNotification::where(['receiver_id' => Admin::user()->id, 'model_id' => $id, 'model' => 'FormQds'])->delete();
@@ -265,6 +268,13 @@ class FormQdsController extends AdminController
                 return Utils::tell_status($status);
             });
         $show->field('status_comment', __('Status comment'));
+
+        if (!Admin::user()->isRole('basic-user')){
+            //button link to the show-details form
+            $show->field('id','Action')->unescape()->as(function ($id) {
+                return "<a href='/admin/form-Qds/$id/edit' class='btn btn-primary'>Take Action</a>";
+            });
+        }
 
         return $show;
     }

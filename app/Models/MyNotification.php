@@ -10,6 +10,13 @@ class MyNotification extends Model
 {
     use HasFactory;
 
+    private $entity;
+    //create constructor with parameter entity
+    public function __construct($entity = null)
+    {
+        $this->entity = $entity;
+    }
+
     public static function boot()
     {
         parent::boot(); 
