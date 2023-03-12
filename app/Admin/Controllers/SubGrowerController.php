@@ -288,7 +288,7 @@ class SubGrowerController extends AdminController
 
             $form->select('variety', 'Crop Variety')->options(CropVariety::all()->pluck('name', 'name'))
                 ->required();
-            $form->text('filed_name', __('Filed name'))->required();
+            $form->text('field_name', __('Field name'))->required();
             $form->text('district', __('District'))->required();
             $form->text('subcourty', __('Subcourty'))->required();
             $form->text('village', __('Village'))->required();
@@ -303,8 +303,6 @@ class SubGrowerController extends AdminController
 
         if (Admin::user()->isRole('inspector')) {
 
-
-
             $id = request()->route()->parameters['sub_grower'];
             $model = $form->model()->find($id);
             $u = Administrator::find($model->administrator_id);
@@ -316,7 +314,7 @@ class SubGrowerController extends AdminController
 
             $form->display('', __('Applicant'))->default($u->name)->readonly();
             $form->display('', __('Person responsible'))->default($model->name)->readonly();
-            $form->display('', __('Field name'))->default($model->filed_name)->readonly();
+            $form->display('', __('Field name'))->default($model->field_name)->readonly();
             $form->display('', __('District'))->default($model->district)->readonly();
             $form->display('', __('Subcourty'))->default($model->subcourty)->readonly();
             $form->display('', __('Village'))->default($model->village)->readonly();
@@ -353,14 +351,8 @@ class SubGrowerController extends AdminController
                 ->required();
 
             /*
-            "filed_name" => "Jesus"
-            "district" => "Kasese"
-            "subcourty" => "Bwera"
-            "village" => "Nyambambuka"
-
-            "crop" => "Climbing Beans"
-            "variety" => "NABE2"
-            "seed_class" => null
+           
+            => null
             "id" => 5
             "created_at" => "2022-03-21 10:20:20"
             "updated_at" => "2022-03-21 11:06:55"
