@@ -99,7 +99,7 @@ class ImportExportPermit extends Model
                 if($inspector != null){
                     $not = new MyNotification($model_url);
                     $not->receiver_id = $inspector->id; 
-                    $not->message = "Dear {$inspector->name}, you have been assigned to inspect import form #{$m->id}."; 
+                    $not->message = "Dear {$inspector->name}, you have been assigned to inspect import/export form #{$m->id}."; 
                     $not->link = admin_url("{$model_url}/{$m->id}"); 
                     $not->status = 'Unread'; 
                     $not->model = 'ImportExportPermit';
@@ -112,7 +112,7 @@ class ImportExportPermit extends Model
                 if($farmer != null){
                     $not = new MyNotification($model_url);
                     $not->receiver_id = $farmer->id; 
-                    $not->message = "Dear {$farmer->name}, your import form #{$m->id} is now under inspection."; 
+                    $not->message = "Dear {$farmer->name}, your import/export form #{$m->id} is now under inspection."; 
                     $not->link = admin_url("{$model_url}/{$m->id}"); 
                     $not->status = 'Unread'; 
                     $not->model = 'ImportExportPermit';
@@ -129,7 +129,7 @@ class ImportExportPermit extends Model
                 if($farmer != null){
                     $not = new MyNotification($model_url);
                     $not->receiver_id = $farmer->id; 
-                    $not->message = "Dear {$farmer->name}, your import form #{$m->id} has been halted by the inspector."; 
+                    $not->message = "Dear {$farmer->name}, your import/export form #{$m->id} has been halted by the inspector."; 
                     $not->link = admin_url("{$model_url}/{$m->id}"); 
                     $not->status = 'Unread'; 
                     $not->model = 'ImportExportPermit';
@@ -146,7 +146,7 @@ class ImportExportPermit extends Model
                 if($farmer != null){
                     $not = new MyNotification($model_url);
                     $not->receiver_id = $farmer->id; 
-                    $not->message = "Dear {$farmer->name}, your import form #{$m->id} has been rejected by the inspector."; 
+                    $not->message = "Dear {$farmer->name}, your import/export form #{$m->id} has been rejected by the inspector."; 
                     $not->link = admin_url("{$model_url}/{$m->id}"); 
                     $not->status = 'Unread'; 
                     $not->model = 'ImportExportPermit';
@@ -163,7 +163,7 @@ class ImportExportPermit extends Model
                 if($farmer != null){
                     $not = new MyNotification($model_url);
                     $not->receiver_id = $farmer->id; 
-                    $not->message = "Dear {$farmer->name}, your import form #{$m->id}/n has been approved by the inspector."; 
+                    $not->message = "Dear {$farmer->name}, your import/export form #{$m->id}/n has been approved by the inspector."; 
                     $not->link = admin_url("{$model_url}/{$m->id}"); 
                     $not->status = 'Unread'; 
                     $not->model = 'ImportExportPermit';

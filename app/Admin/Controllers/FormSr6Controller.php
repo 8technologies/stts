@@ -302,13 +302,9 @@ class FormSr6Controller extends AdminController
 
                     });
                 }
-                else {
-                    $this->show_fields($form);
-                }
+               
             }
-            else {
-                $this->show_fields($form);
-            }
+           
         }
 
         if ($form->isCreating()) {

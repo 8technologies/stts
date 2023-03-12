@@ -95,7 +95,7 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
             $not = new MyNotification();
             $not->role_id = 2; 
             $not->message = 'New SR4 form has been added by '.Admin::user()->name.' '; 
-            $not->link = admin_url("form-sr4s/{$model->id}/edit"); 
+            $not->link = admin_url("form-sr4s/{$model->id}"); 
             $not->status = 'Unread'; 
             $not->model = 'FormSr4';
             $not->model_id = $model->id; 
@@ -121,7 +121,7 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
                     $not = new MyNotification();
                     $not->receiver_id = $inspector->id; 
                     $not->message = "Dear {$inspector->name}, you have been assigned to inspect SR4 form #{$m->id}."; 
-                    $not->link = admin_url("form-sr4s/{$m->id}/edit"); 
+                    $not->link = admin_url("form-sr4s/{$m->id}"); 
                     $not->status = 'Unread'; 
                     $not->model = 'FormSr4';
                     $not->model_id = $m->id; 

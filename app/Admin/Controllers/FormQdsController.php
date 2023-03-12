@@ -136,12 +136,12 @@ class FormQdsController extends AdminController
         })->sortable();
 
         
-        if ( (Admin::user()->isRole('basic-user'))){
-            $grid->actions(function ($actions) {
-                $actions->disableEdit();
-                $actions->disableDelete();
-            });  
-        }
+        // if ( (Admin::user()->isRole('basic-user'))){
+        //     $grid->actions(function ($actions) {
+        //         $actions->disableEdit();
+        //         $actions->disableDelete();
+        //     });  
+        // }
 
 
         return $grid;
@@ -267,7 +267,7 @@ class FormQdsController extends AdminController
         if (!Admin::user()->isRole('basic-user')){
             //button link to the show-details form
             $show->field('id','Action')->unescape()->as(function ($id) {
-                return "<a href='/admin/form-Qds/$id/edit' class='btn btn-primary'>Take Action</a>";
+                return "<a href='/admin/form-qds/$id/edit' class='btn btn-primary'>Take Action</a>";
             });
         }
 
@@ -282,45 +282,39 @@ class FormQdsController extends AdminController
     protected function form()
     {
         $form = new Form(new FormQds());
-         //check the id of the user before editing the form
-         if ($form->isEditing()) {
-            if (Admin::user()->isRole('basic-user')){
+        //  //check the id of the user before editing the form
+        //  if ($form->isEditing()) {
+        //     if (Admin::user()->isRole('basic-user')){
 
-                //get request id
-                $id = request()->route()->parameters()['form_qds'];
-                //get the form
-                $formQds = FormQds::find($id);
-                //get the user
-                $user = Auth::user();
-                if ($user->id != $formQds->administrator_id) {
-                    $form->html('<div class="alert alert-danger">You cannot edit this form </div>');
-                    $form->footer(function ($footer) {
+        //         //get request id
+        //         $id = request()->route()->parameters()['form_qds'];
+        //         //get the form
+        //         $formQds = FormQds::find($id);
+        //         //get the user
+        //         $user = Auth::user();
+        //         if ($user->id != $formQds->administrator_id) {
+        //             $form->html('<div class="alert alert-danger">You cannot edit this form </div>');
+        //             $form->footer(function ($footer) {
 
-                        // disable reset btn
-                        $footer->disableReset();
+        //                 // disable reset btn
+        //                 $footer->disableReset();
 
-                        // disable submit btn
-                        $footer->disableSubmit();
+        //                 // disable submit btn
+        //                 $footer->disableSubmit();
 
-                        // disable `View` checkbox
-                        $footer->disableViewCheck();
+        //                 // disable `View` checkbox
+        //                 $footer->disableViewCheck();
 
-                        // disable `Continue editing` checkbox
-                        $footer->disableEditingCheck();
+        //                 // disable `Continue editing` checkbox
+        //                 $footer->disableEditingCheck();
 
-                        // disable `Continue Creating` checkbox
-                        $footer->disableCreatingCheck();
+        //                 // disable `Continue Creating` checkbox
+        //                 $footer->disableCreatingCheck();
 
-                    });
-                }
-                else {
-                    $this->show_fields($form);
-                }
-            }
-            else {
-                $this->show_fields($form);
-            }
-        }
+        //             });
+        //         }
+                
+        // }
 
         if ($form->isCreating()) {
             if (!Utils::can_create_qds()) {
@@ -386,7 +380,33 @@ class FormQdsController extends AdminController
             $repeat = "";
 
             if ($form->isEditing()) {
+                //check if the form is being edited by the user who created it
                 $sec  = ((int)(request()->segment(3)));
+                $formQds = FormQds::find($sec);
+
+                if ($user->id != $formQds->administrator_id) {
+                    $form->html('<div class="alert alert-danger">You cannot edit this form </div>');
+                    $form->footer(function ($footer) {
+
+                        // disable reset btn
+                        $footer->disableReset();
+
+                        // disable submit btn
+                        $footer->disableSubmit();
+
+                        // disable `View` checkbox
+                        $footer->disableViewCheck();
+
+                        // disable `Continue editing` checkbox
+                        $footer->disableEditingCheck();
+
+                        // disable `Continue Creating` checkbox
+                        $footer->disableCreatingCheck();
+
+                    });
+                } 
+              
+               
                 if ($sec > 0) {
                     $da = FormQds::findOrFail($sec);
                     if ($da) {
@@ -634,9 +654,11 @@ class FormQdsController extends AdminController
             // $form->text('status', __('Status'));
             // $form->number('inspector', __('Inspector'));
             // $form->textarea('status_comment', __('Status comment'));
+            
         }
 
 
         return $form;
-    }
+    
+}
 }

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Encore\Admin\Auth\Database\Administrator;
 
 
 class SubGrower extends Model
@@ -66,6 +67,17 @@ class SubGrower extends Model
         parent::boot();
 
         self::creating(function ($m) {
+            $not = new MyNotification();
+            $not->role_id = 2; 
+            $not->message = 'New Sub-grower form has been added by '.Admin::user()->name.' '; 
+            $not->link = admin_url("sub-growers/{$m->id}"); 
+            $not->status = 'Unread'; 
+            $not->model = 'SubGrower';
+            $not->model_id = $m->id; 
+            $not->group_type = 'Group'; 
+            $not->action_status_to_make_done = '[]'; 
+            $not->save();
+
             $sub = SubGrower::where('field_name', $m->field_name)
                 ->where('name', $m->name)->first();
 
@@ -88,7 +100,95 @@ class SubGrower extends Model
         });
 
         self::updated(function ($sr10) {
+
             // ... code here
+            $notifications = MyNotification::where('model', 'SubGrower')
+            ->where('model_id', $sr10->id) 
+            ->get();
+            foreach($notifications as $n){ 
+                $n->delete();
+            }
+ 
+            //assigned status
+            if($sr10->status == 2){
+                $inspector  = Administrator::find($sr10->inspector);
+                if($inspector != null){
+                    $not = new MyNotification();
+                    $not->receiver_id = $inspector->id; 
+                    $not->message = "Dear {$inspector->name}, you have been assigned to inspect Sub-grower form #{$sr10->id}."; 
+                    $not->link = admin_url("sub-growers/{$sr10->id}"); 
+                    $not->status = 'Unread'; 
+                    $not->model = 'SubGrower';
+                    $not->model_id = $sr10->id; 
+                    $not->group_type = 'Individual'; 
+                    $not->action_status_to_make_done = '[]'; 
+                    $not->save();  
+                } 
+                $farmer  = Administrator::find($sr10->administrator_id);
+                if($farmer != null){
+                    $not = new MyNotification();
+                    $not->receiver_id = $farmer->id; 
+                    $not->message = "Dear {$farmer->name}, your Sub-grower form #{$sr10->id} is now under inspection."; 
+                    $not->link = admin_url("sub-growers/{$sr10->id}"); 
+                    $not->status = 'Unread'; 
+                    $not->model = 'SubGrower';
+                    $not->model_id = $sr10->id; 
+                    $not->group_type = 'Individual'; 
+                    $not->action_status_to_make_done = '[]'; 
+                    $not->save();  
+                }
+            }
+
+            //halted status for farmer
+            if($sr10->status == 3){
+                $farmer  = Administrator::find($sr10->administrator_id);
+                if($farmer != null){
+                    $not = new MyNotification();
+                    $not->receiver_id = $farmer->id; 
+                    $not->message = "Dear {$farmer->name}, your Sub-grower form #{$sr10->id} has been halted by the inspector."; 
+                    $not->link = admin_url("sub-growers/{$sr10->id}"); 
+                    $not->status = 'Unread'; 
+                    $not->model = 'SubGrower';
+                    $not->model_id = $sr10->id; 
+                    $not->group_type = 'Individual'; 
+                    $not->action_status_to_make_done = '[]'; 
+                    $not->save();  
+                }
+            }
+
+            //rejected status for farmer
+            if($sr10->status == 4){
+                $farmer  = Administrator::find($sr10->administrator_id);
+                if($farmer != null){
+                    $not = new MyNotification();
+                    $not->receiver_id = $farmer->id; 
+                    $not->message = "Dear {$farmer->name}, your Sub-grower form #{$sr10->id} has been rejected by the inspector."; 
+                    $not->link = admin_url("sub-growers/{$sr10->id}"); 
+                    $not->status = 'Unread'; 
+                    $not->model = 'SubGrower';
+                    $not->model_id = $sr10->id; 
+                    $not->group_type = 'Individual'; 
+                    $not->action_status_to_make_done = '[]'; 
+                    $not->save();  
+                }
+            }
+
+            //approved status for farmer
+            if($sr10->status == 5){
+                $farmer  = Administrator::find($sr10->administrator_id);
+                if($farmer != null){
+                    $not = new MyNotification();
+                    $not->receiver_id = $farmer->id; 
+                    $not->message = "Dear {$farmer->name}, your Sub-grower form #{$sr10->id}/n has been approved by the inspector."; 
+                    $not->link = admin_url("sub-growers/{$sr10->id}"); 
+                    $not->status = 'Unread'; 
+                    $not->model = 'SubGrower';
+                    $not->model_id = $sr10->id; 
+                    $not->group_type = 'Individual'; 
+                    $not->action_status_to_make_done = '[]'; 
+                    $not->save();  
+                }
+            }
 
 
             if (Admin::user()->isRole('inspector')) {

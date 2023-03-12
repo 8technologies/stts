@@ -54,7 +54,7 @@ class FormQds extends Model
             $not = new MyNotification();
             $not->role_id = 2; 
             $not->message = 'New Qds form has been added by '.Admin::user()->name.' '; 
-            $not->link = admin_url("form-sr6s/{$model->id}/edit"); 
+            $not->link = admin_url("form-sr6s/{$model->id}"); 
             $not->status = 'Unread'; 
             $not->model = 'FormQds';
             $not->model_id = $model->id; 
@@ -80,7 +80,7 @@ class FormQds extends Model
                     $not = new MyNotification();
                     $not->receiver_id = $inspector->id; 
                     $not->message = "Dear {$inspector->name}, you have been assigned to inspect Qds form #{$m->id}."; 
-                    $not->link = admin_url("form-qds/{$m->id}/edit"); 
+                    $not->link = admin_url("form-qds/{$m->id}"); 
                     $not->status = 'Unread'; 
                     $not->model = 'FormQds';
                     $not->model_id = $m->id; 
