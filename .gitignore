@@ -1,16 +1,1 @@
 .env
-.env_remote
-storage/logs/laravel.log
-.idea
-.vscode
-hacks.txt
-public/storage/
-statuses.php
-composer.phar
-/storage/*key
-/storage/public
-/storage/framework/cache
-/storage/framework/views
-/storage/framework/sessions
-/app/Models/PlantingReturn.php
-.gitignore
