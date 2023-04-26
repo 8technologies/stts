@@ -29,7 +29,7 @@ class PlantingReturnController extends AdminController
      *
      * @var string
      */  
-    protected $title = 'Planting Return - Company';
+    protected $title = 'Planting Return - Company/ Breeders';
 
     /**
      * Make a grid builder.
@@ -83,11 +83,21 @@ class PlantingReturnController extends AdminController
         }
 
         die($file);*/
+  //check if the role is an inspector and has been assigned that form
+  if (Admin::user()->isRole('inspector')) {
+    $grid->model()->where('inspector', '=', Admin::user()->id);
+    //return an empty table if the inspector has not been assigned any forms
+    if (PlantingReturn::where('inspector', '=', Admin::user()->id)->count() == 0) { 
+        //return an empty table if the inspector has not been assigned an
+        $grid->model(0);
+           
+}
+}
 
 
-        $grid->disableExport();
+        // $grid->disableExport();
         $grid->disableFilter();
-        $grid->disableRowSelector();
+        // $grid->disableRowSelector();
 
 
         if (Admin::user()->isRole('basic-user')) {
@@ -106,22 +116,22 @@ class PlantingReturnController extends AdminController
                     $actions->disableEdit();
                 }
             });
-        } else if (Admin::user()->isRole('inspector')) {
-            $grid->actions(function ($actions) {
-
-                $status = ((int)(($actions->row['status'])));
-                if($status == 4){
-                    $actions->disableDelete();
-                    $actions->disableEdit();
-                }
-                if (
-                    $status != 1
-                ) {
-                    $actions->disableDelete();
-                    //$actions->disableEdit();
-                }
-            });
-        } else if (Admin::user()->isRole('basic-user'))  {
+        }  else if (Admin::user()->isRole('inspector')|| Admin::user()->isRole('admin') ) { 
+            // $grid->model()->where('inspector', '=', Admin::user()->id);
+             $grid->disableCreateButton();
+ 
+             $grid->actions(function ($actions) {
+                 $status = ((int)(($actions->row['status'])));
+                 $actions->disableDelete();
+                 $actions->disableEdit();
+                 // if (
+                 //     $status != 2
+                 // ) {
+                 //     $actions->disableEdit();
+                 // }
+             });
+         } 
+         else if (Admin::user()->isRole('basic-user'))  {
             $grid->actions(function ($actions) {
 
                 $status = ((int)(($actions->row['status'])));
@@ -138,24 +148,28 @@ class PlantingReturnController extends AdminController
             });
         }
 
-        $grid->column('id', __('Id'))->sortable();
-        $grid->column('name', __('Company Name'));
-        $grid->column('address', __('Address'));
-        $grid->column('amount_enclosed', __('Amount enclosed'));
-        $grid->column('registerd_dealer', __('Registerd dealer'));
-         
+        $grid->column('id', __('Id'));
         $grid->column('created_at', __('Created'))
             ->display(function ($item) {
-                if (!$item) {
-                    return "-"; 
-                }
-                return Carbon::parse($item)->toDateString();
-            });
+                return Carbon::parse($item)->diffForHumans();
+            })->sortable();
 
-
+        $grid->column('name', __('Company Name'));
+        $grid->column('address', __('Address'));
+        // $grid->column('sub_growers_file', __('Sub growers file'))
+        //     ->display(function ($item) {
+        //         if (!$item) {
+        //             return "-";
+        //         }
+        //         return "<a href='/uploads/$item' target='_blank'>Download</a>";
+        //     });
+        $grid->column('amount_enclosed', __('Amount enclosed'));
+        $grid->column('registerd_dealer', __('Registered dealer'));
+    
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
         })->sortable();
+
         return $grid;
     }
 
@@ -170,11 +184,19 @@ class PlantingReturnController extends AdminController
     protected function detail($id)
     {
         $show = new Show(PlantingReturn::findOrFail($id));
+
+        //deleting notifications once they are viewed
+        $planting_return = PlantingReturn::findOrFail($id);
+        if(Admin::user()->isRole('basic-user') ){
+            if($planting_return->status == 2 || $planting_return->status == 3 || $planting_return->status == 4 || $planting_return->status == 16){
+                \App\Models\MyNotification::where(['receiver_id' => Admin::user()->id, 'model_id' => $id, 'model' => ''])->delete();
+            }
+        }
         $show->panel()
             ->tools(function ($tools) {
                 $tools->disableEdit();
                 $tools->disableDelete();
-            });;
+            });
 
         $show->field('id', __('Id'));
         $show->field('created_at', __('Created'))
@@ -195,12 +217,17 @@ class PlantingReturnController extends AdminController
         $show->field('address', __('Address'));
         $show->field('telephone', __('Telephone'));
         $show->field('seed_rate', __('Seed rate'));
-        $show->field('registerd_dealer', __('Registerd dealer'));
+        $show->field('registerd_dealer', __('Registered dealer'));
         // $show->field('longitude', __('Longitude'));
         // $show->field('latitude', __('Latitude'));
 
         $show->field('Location of the land')->latlong('latitude', 'longitude', $height = 400, $zoom = 16);
-
+        if (!Admin::user()->isRole('basic-user')){
+            //button link to the show-details form
+            $show->field('id','Action')->unescape()->as(function ($id) {
+                return "<a href='/admin/planting-returns/$id/edit' class='btn btn-primary'>Take Action</a>";
+            });
+        }
 
 
         return $show;
@@ -213,23 +240,22 @@ class PlantingReturnController extends AdminController
      */
     protected function form()
     {
-
         // $now Carbon::parse($item)->diffForHumans();
-
         $form = new Form(new PlantingReturn());
 
-
-  
-        
         $sr4 = Utils::has_valid_sr6();
         if ($form->isCreating()) {
             if (!$sr4) {
-                admin_error("Alert", "You need to be a registred and approved seed grower to apply for field inspection.");
-                return redirect(admin_url('planting-returns'));
+                return admin_error("Alert", "You need to be a registered and approved seed grower to apply for field inspection.");
+                // return redirect(admin_url('planting-returns'));
             }
         }
 
-
+        //callback after save to return to the table
+        $form->saved(function (Form $form) {
+            return redirect(admin_url('planting-returns'));
+        });
+        
         $form->saving(function (Form $form) {
             $is_active_made = false;
             if (Admin::user()->isRole('admin')) {
@@ -280,7 +306,6 @@ class PlantingReturnController extends AdminController
             $tools->disableView();
         });
 
-
         $user = Auth::user();
         if ($form->isCreating()) {
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
@@ -305,19 +330,53 @@ class PlantingReturnController extends AdminController
                 }
             } 
 
-            $form->text('name', __('Company Name'))->default($name_of_applicant)->required(); 
-            $form->text('address', __('Company Address'))->required()->default($address);
-            $form->text('telephone', __('Company Telephone'))->required();
+
+            $sr6 = Utils::has_valid_sr6();
+            // dd($sr6);
+            $form->text('name', __('Company Name'))->default($sr6->name_of_applicant)->readonly();
+
+            // // if basic-user has an active sr6 form (if their sr6 form application has been accepted)
+            // if ($sr6 != null) {
+            //     if ($sr6->name_of_applicant != null) {
+            //             $name_of_applicant = $sr6->name_of_applicant;
+            //             $form->text("name_of_applicant", __('Company Name'))
+            //             ->default($name_of_applicant)
+            //             ->readonly();
+            //     }
+            //     if ($sr6->address != null) {
+            //             $address = $sr6->address;
+            //             $form->text("address", __('Company Address'))
+            //             ->default($address)
+            //             ->readonly();
+            //     }
+            //     if ($sr6->telephone != null) {
+            //             $telephone = $sr6->telephone;
+            //             $form->text("telephone", __('Company Telephone'))
+            //             ->default($sr6->telephone)
+            //             ->readonly();
+            //     }
+            // }
+
+            $form->text('address', __('Company Address'))->default($sr6->address)
+            ->help("Provided during Form SR6 Seed Grower Application")
+            ->readonly();
+            // $telephone_of_applying_basic_user = Administrator::where(Admin::user()->isRole('admin'), 'basic-user')->phone_number;
+            // $form->text('telephone', __('Company Telephone'))->default($telephone_of_applying_basic_user)->readonly();
+
+
             $form->text('amount_enclosed', __('Amount enclosed for application'))->attribute('type', 'number')->required();
             $form->file('payment_receipt', __('Payment receipt'))->required();
             $form->text('registerd_dealer', __('Registerd seed merchant/dealer to whome the entire seed stock will be sold'));
 
-            $link = url('/public/assets/files/sub-growsers-template.xlsx');
+            $link = url('/assets/files/sub-growsers-template.xlsx');
             $form->html('<h3>Download sub-growers template file (Excel) ... <a href="'.$link.'" clast="btn btn-primary"
             style="border: solid green 2px;"
             target="_blank"
             >DOWNLOAD TEMPLATE</a></h3>');
-            $form->file('sub_growers_file','Sub-growers excel file')->required();
+            $form->file('sub_growers_file', __('Sub-growers excel file'))
+            ->help("To upload many planting_returns, attach an Excel file of multiple Sub-growers here.")
+            ->required();
+            
  
         }
 
@@ -395,8 +454,6 @@ class PlantingReturnController extends AdminController
                     // });
             }
         }
-
-
 
         return $form;
     }

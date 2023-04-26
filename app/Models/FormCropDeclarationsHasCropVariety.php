@@ -16,6 +16,7 @@ class FormCropDeclarationsHasCropVariety extends Model
         return $this->belongsTo(CropVariety::class);
     }
 
+
     protected $fillable = [
         'form_crop_declaration_id',
         'crop_variety_id',

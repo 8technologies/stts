@@ -15,14 +15,14 @@
     --yellow: #ffc107;
     --green: #28a745;
     --teal: #20c997;
-    --cyan: #17a2b8;
+    --cyan: #ffc107;
     --white: #fff;
     --gray: #6c757d;
     --gray-dark: #343a40;
     --primary: #007bff;
     --secondary: #6c757d;
     --success: #28a745;
-    --info: #17a2b8;
+    --info: #ffc107;
     --warning: #ffc107;
     --danger: #dc3545;
     --light: #f8f9fa;
@@ -2578,8 +2578,8 @@ fieldset:disabled a.btn {
 
 .btn-info {
     color: #fff;
-    background-color: #17a2b8;
-    border-color: #17a2b8
+    background-color: #ffc107;
+    border-color: #ffc107
 }
 
 .btn-info:hover {
@@ -2596,8 +2596,8 @@ fieldset:disabled a.btn {
 .btn-info.disabled,
 .btn-info:disabled {
     color: #fff;
-    background-color: #17a2b8;
-    border-color: #17a2b8
+    background-color: #ffc107;
+    border-color: #ffc107
 }
 
 .btn-info:not(:disabled):not(.disabled).active,
@@ -2881,16 +2881,16 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-info {
-    color: #17a2b8;
+    color: #ffc107;
     background-color: transparent;
     background-image: none;
-    border-color: #17a2b8
+    border-color: #ffc107
 }
 
 .btn-outline-info:hover {
     color: #fff;
-    background-color: #17a2b8;
-    border-color: #17a2b8
+    background-color: #ffc107;
+    border-color: #ffc107
 }
 
 .btn-outline-info.focus,
@@ -2900,7 +2900,7 @@ fieldset:disabled a.btn {
 
 .btn-outline-info.disabled,
 .btn-outline-info:disabled {
-    color: #17a2b8;
+    color: #ffc107;
     background-color: transparent
 }
 
@@ -2908,8 +2908,8 @@ fieldset:disabled a.btn {
 .btn-outline-info:not(:disabled):not(.disabled):active,
 .show>.btn-outline-info.dropdown-toggle {
     color: #fff;
-    background-color: #17a2b8;
-    border-color: #17a2b8
+    background-color: #ffc107;
+    border-color: #ffc107
 }
 
 .btn-outline-info:not(:disabled):not(.disabled).active:focus,
@@ -5046,7 +5046,7 @@ input[type=submit].btn-block {
 
 .badge-info {
     color: #fff;
-    background-color: #17a2b8
+    background-color: #ffc107
 }
 
 .badge-info[href]:focus,
@@ -6372,7 +6372,7 @@ button.bg-success:hover {
 }
 
 .bg-info {
-    background-color: #17a2b8!important
+    background-color: #ffc107!important
 }
 
 a.bg-info:focus,
@@ -6487,7 +6487,7 @@ button.bg-dark:hover {
 }
 
 .border-info {
-    border-color: #17a2b8!important
+    border-color: #ffc107!important
 }
 
 .border-warning {

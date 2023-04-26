@@ -1,9 +1,11 @@
 <canvas id="bar-line" style="width: 100%;"></canvas>
+
+
 <script>
 $(function () {
 
     function randomScalingFactor() {
-        return Math.floor(Math.random() * 100)
+        return Math.floor(Math.random() * 1000)
     }
 
     window.chartColors = {
@@ -17,7 +19,16 @@ $(function () {
     };
 
     var chartData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: [
+            'Import Permits',
+            'Export Permits',
+            'Planting Returns Company',
+            'Planting Returns Grower',
+            'Form SR10s',
+            'Form QDS',
+            'Total Seed Labs',
+            'Seed Labels',
+        ],
         datasets: [{
             type: 'line',
             label: 'Dataset 1',
@@ -70,6 +81,12 @@ $(function () {
         type: 'bar',
         data: chartData,
         options: {
+            plugins: {
+                legend: {
+                    display: false,
+                    position: 'left',
+                }
+            },
             responsive: true,
             title: {
                 display: true,

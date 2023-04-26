@@ -31,26 +31,15 @@ class FormStockRecordController extends AdminController
      */
     protected function grid()
     {
-        $stocks = StockRecord::where('lot_number', '-')->get();
-        foreach ($stocks as $key => $value) {
-            $value->lot_number = rand(10000000, 1000000000);
-            $value->save();
-        }
-
+       
         $grid = new Grid(new StockRecord());
 
-        //$as = FormStockExaminationRequest::all();
-        //$a = $as->first();
+        $grid->disableFilter();
+        $grid->filter(function ($filter) 
+        {
 
-        //$a->lot_number = rand(1,9);
-        //$a->save();
-
-
-        //die("done ====> {$a->id} ==> {$a->lot_number}"); 
-
-        $grid->filter(function ($filter) {
-
-            if (Admin::user()->isRole('admin')) {
+            if (Admin::user()->isRole('admin')) 
+            {
                 $filter->equal('administrator_id', "Filter by user")->select(Administrator::all()->pluck('name', 'id'));
             }
             $filter->equal('crop_variety_id', "Filter by crop variety")->select(CropVariety::all()->pluck('name', 'id'));
@@ -61,43 +50,42 @@ class FormStockRecordController extends AdminController
         });
 
 
-        if (!Admin::user()->isRole('admin')) {
+        if (!Admin::user()->isRole('admin')) 
+        {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
         } else {
             $grid->disableCreateButton();
         }
 
+        $grid->disableCreateButton();
 
-        $grid->column('id', __('Id'))->sortable();
-        $grid->column('created_at', __('Created'))
+        $grid->column('administrator_id', __('Owner'))->display(function ($item) 
+        {
+            return Administrator::find($item)->name;
+        })->sortable();
+        $grid->column('created_at', __('Created at'))
             ->display(function ($item) {
                 return Carbon::parse($item)->diffForHumans();
             })->sortable();
-        // $grid->column('crop_variety_id', __('Crop variety'))
-        //     ->display(function ($item) {
-        //         $var = CropVariety::find($item);
-        //         return $var->crop->name . ", " . $var->name;
-        //     })->sortable();
-
         $grid->column('lot_number', __('Lot number'));
         $grid->column('detail', __('Reason'));
-        $grid->column('detail', __('Reason'));
-        $grid->column('is_deposit', __('Type'))
-            ->display(function ($item) {
+        $grid->column('is_deposit', __('Type'))->display(function ($item)
+            {
                 if ($item) {
                     return '<span class="badge">Stock in</span>';
                 } else {
                     return '<span class="badge">Stock out</span>';
                 }
             })->sortable();
-        $grid->column('quantity', __('Quantity (M. Tonnes)'))->display(function ($q) {
+        $grid->column('quantity', __('Quantity (M. Tonnes)'))->display(function ($q) 
+        {
             return number_format($q);
-        })->sortable()
-            ->totalRow(function ($amount) {
-                return number_format($amount);
-            });
-
-
+        })->sortable();
+    
+            // ->totalRow(function ($amount) 
+            // {
+            //     return number_format($amount);
+            // });
 
         $grid->disableActions();
         $grid->disableRowSelector();
@@ -208,6 +196,9 @@ class FormStockRecordController extends AdminController
             }
             admin_success("Success!", "Stock record was created successfully!");
             return redirect(admin_url('stock-records'));
+
+
+            
         });
 
         $user = Admin::user();

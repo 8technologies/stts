@@ -8,20 +8,43 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
+// use Laravel\Passport\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-/**
- * Class Administrator.
- *
+
+/** Class Administrator.
+ * 
  * @property Role[] $roles
  */
-class Administrator extends Model implements AuthenticatableContract
+// class Administrator extends Model implements AuthenticatableContract, JWTSubject, MustVerifyEmail
+class Administrator extends Model implements AuthenticatableContract, JWTSubject
 {
-    use Authenticatable;
-    use HasPermissions;
-    use DefaultDatetimeFormat;
+    use 
+    Authenticatable, 
+    HasPermissions, 
+    DefaultDatetimeFormat, 
+    Notifiable,
+    HasFactory
+    // HasRoles
+    // HasApiTokens
+    ;
 
-    protected $fillable = ['username', 'password', 'name', 'avatar'];
-
+    protected $fillable = [
+        'first_name', 
+        'last_name', 
+        'name', 
+        'email',  
+        'username',
+        // 'remember_token', 
+        'password', 
+        // 'avatar'
+    ];
+    
     /**
      * Create a new Eloquent model instance.
      *
@@ -57,11 +80,11 @@ class Administrator extends Model implements AuthenticatableContract
             return Storage::disk(config('admin.upload.disk'))->url($avatar);
         }
 
-        $default = config('admin.default_avatar') ?: '/vendor/laravel-admin/AdminLTE/dist/img/user2-160x160.jpg';
+        $default = config('admin.default_avatar') ?: '/vendor/laravel-admin/AdminLTE/dist/img/default_profile.png';
 
         return admin_asset($default);
     }
-
+    
     /**
      * A user has and belongs to many roles.
      *
@@ -89,4 +112,31 @@ class Administrator extends Model implements AuthenticatableContract
 
         return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'permission_id');
     }
+
+
+    // the jwt auth to map this model to the jwt rest api token authentication 
+     /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+
+  
+
 }

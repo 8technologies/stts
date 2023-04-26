@@ -20,6 +20,9 @@ class CreateImportExportPermitsHasCropsTable extends Migration
             $table->timestamps();
             $table->foreignIdFor(ImportExportPermit::class);
             $table->foreignIdFor(Crop::class);
+            $table->text('measure');
+            $table->integer('weight');
+            $table->text('category');
             $table->text('varieties');
         });
     }

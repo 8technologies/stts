@@ -9,6 +9,7 @@ use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Platforms\PostgreSQL100Platform;
 use Doctrine\DBAL\Platforms\PostgreSQL94Platform;
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Schema\PostgreSQLSchemaManager;
 use Doctrine\DBAL\VersionAwarePlatformDriver;
 use Doctrine\Deprecations\Deprecation;
@@ -30,7 +31,7 @@ abstract class AbstractPostgreSQLDriver implements VersionAwarePlatformDriver
         if (preg_match('/^(?P<major>\d+)(?:\.(?P<minor>\d+)(?:\.(?P<patch>\d+))?)?/', $version, $versionParts) === 0) {
             throw Exception::invalidPlatformVersionSpecified(
                 $version,
-                '<major_version>.<minor_version>.<patch_version>'
+                '<major_version>.<minor_version>.<patch_version>',
             );
         }
 
@@ -47,7 +48,7 @@ abstract class AbstractPostgreSQLDriver implements VersionAwarePlatformDriver
             'doctrine/dbal',
             'https://github.com/doctrine/dbal/pull/5060',
             'PostgreSQL 9 support is deprecated and will be removed in DBAL 4.'
-                . ' Consider upgrading to Postgres 10 or later.'
+                . ' Consider upgrading to Postgres 10 or later.',
         );
 
         return new PostgreSQL94Platform();
@@ -63,10 +64,19 @@ abstract class AbstractPostgreSQLDriver implements VersionAwarePlatformDriver
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated Use {@link PostgreSQLPlatform::createSchemaManager()} instead.
      */
     public function getSchemaManager(Connection $conn, AbstractPlatform $platform)
     {
-        assert($platform instanceof PostgreSQL94Platform);
+        Deprecation::triggerIfCalledFromOutside(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/pull/5458',
+            'AbstractPostgreSQLDriver::getSchemaManager() is deprecated.'
+                . ' Use PostgreSQLPlatform::createSchemaManager() instead.',
+        );
+
+        assert($platform instanceof PostgreSQLPlatform);
 
         return new PostgreSQLSchemaManager($conn, $platform);
     }

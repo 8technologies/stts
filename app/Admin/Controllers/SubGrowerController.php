@@ -37,6 +37,7 @@ class SubGrowerController extends AdminController
     protected function grid()
     {
  
+        
         // $s = SubGrower::find(3);
         // $s->crop = 9;
         // $s->size = rand(10000,1000000000);
@@ -44,9 +45,28 @@ class SubGrowerController extends AdminController
         // dd("done");
         $grid = new Grid(new SubGrower());
 
+        //as an inspector, view only subgrowers assigned to you
+          //check if the role is an inspector and has been assigned that form
+          if (Admin::user()->isRole('inspector'))  
+          {
+              $grid->model()->where('inspector', '=', Admin::user()->id);
+              //return an empty table if the inspector has not been assigned any forms
+              if (Subgrower::where('inspector', '=', Admin::user()->id)->count() == 0) 
+              { 
+                  //return an empty table if the inspector has not been assigned an
+                  $grid->model(0);       
+              }
+          }
+      
+
         if (Admin::user()->isRole('admin')) {
             $grid->batchActions(function ($batch) {
                 $batch->add(new BatchReplicate()); 
+            });
+            $grid->actions(function ($actions) {
+                    $actions->disableDelete();
+                    $actions->disableEdit();    
+        
             });
             $grid->disableCreateButton();
         }
@@ -55,6 +75,8 @@ class SubGrowerController extends AdminController
             $grid->disableCreateButton();
             $grid->disableBatchActions();
         }
+        
+        /*
 
  
         $grid->filter(function ($filter) {
@@ -72,7 +94,7 @@ class SubGrowerController extends AdminController
         });
 
 
-
+  return $grid;*/
 
         /*
         
@@ -140,22 +162,14 @@ class SubGrowerController extends AdminController
                     $actions->disableEdit();
                 }
             });
-        } else if (Admin::user()->isRole('inspector')) {
-            $grid->model()->where('inspector', '=', Admin::user()->id);
-
-
-            
-            
-
+        } else if (Admin::user()->isRole('inspector') || Admin::user()->isRole('admin')) {
+           // $grid->model()->where('inspector', '=', Admin::user()->id);
             $grid->actions(function ($actions) {
-
-        
-
                 $status = ((int)(($actions->row['status'])));
-                if ($status == 16) {
+            
                     $actions->disableDelete();
                     $actions->disableEdit();
-                }
+                
 
             }); 
         } else if (Admin::user()->isRole('basic-user')) {
@@ -173,18 +187,16 @@ class SubGrowerController extends AdminController
                     $actions->disableEdit();
                 }
             });
-        }
+        }  
+
 
 
 
         $grid->column('id', __('Id'))->sortable();
-        $grid->column('created_at', __('Created'))
-            ->display(function ($item) {
-                if (!$item) {
-                    return "-";
-                }
-                return Carbon::parse($item)->toDateString();
-            })->sortable();
+
+        $grid->column('created_at', __('Created'))->display(function ($item) {
+            return Carbon::parse($item)->diffForHumans();
+        })->sortable();
 
 
         $grid->column('administrator_id', __('Applicant'))->display(function ($user) {
@@ -194,8 +206,10 @@ class SubGrowerController extends AdminController
             }
             return $_user->name;
         });
+        
+        
 
-        $grid->column('filed_name', __('Field Name'))->sortable();
+        $grid->column('field_name', __('Field Name'))->sortable();
         $grid->column('name', __('Person responisble'))->sortable();
         $grid->column('size', __('Size'))->sortable();
         $grid->column('crop', __('Crop'))->display(function(){
@@ -241,11 +255,30 @@ class SubGrowerController extends AdminController
     protected function detail($id)
     {
         $show = new Show(SubGrower::findOrFail($id));
-
-        $show->field('id', __('Id'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('administrator_id', __('Administrator id'));
+        //remove delete from show panels
+        $show->panel()
+            ->tools(function ($tools) use($id) 
+            {
+            
+                $tools->disableDelete();
+            
+            });
+        $subgrower = SubGrower::findOrFail($id);
+        if(Admin::user()->isRole('basic-user') ){
+            if($subgrower->status == 2 || $subgrower->status == 3 || $subgrower->status == 4 || $subgrower->status == 16){
+                \App\Models\MyNotification::where(['receiver_id' => Admin::user()->id, 'model_id' => $id, 'model' => 'SubGrower'])->delete();
+            }
+        }
+        $show->field('created_at', __('Created at'))->as(function ($item) {
+            return Carbon::parse($item)->diffForHumans();
+        })->sortable();
+        $show->field('administrator_id', __('Created by'))->as(function ($user) {
+            $_user = Administrator::find($user);
+            if (!$_user) {
+                return "-";
+            }
+            return $_user->name;
+        });
         $show->field('name', __('Name'));
         $show->field('size', __('Size'));
         $show->field('crop', __('Crop'));
@@ -259,10 +292,27 @@ class SubGrowerController extends AdminController
         $show->field('gps_latitude', __('Gps latitude'));
         $show->field('gps_longitude', __('Gps longitude'));
         $show->field('detail', __('Detail'));
-        $show->field('status', __('Status'));
-        $show->field('inspector', __('Inspector'));
-        $show->field('status_comment', __('Status comment'));
+        $show->field('status', __('Status'))->unescape()->as(function ($status) {
+            return Utils::tell_status($status);
+        });
+        $show->field('inspector', __('Inspector'))->as(function ($userId) {
+            if (Admin::user()->isRole('basic-user')) {
+                return "-";
+            }
+            $u = Administrator::find($userId);
+            if (!$u)
+                return "Not assigned";
+            return $u->name;
+        });
 
+        $show->field('status_comment', __('Status comment'));
+ 
+        if (!Admin::user()->isRole('basic-user')){
+            //button link to the show-details form
+            $show->field('id','Action')->unescape()->as(function ($id) {
+                return "<a href='/admin/sub-growers/$id/edit' class='btn btn-primary'>Take Action</a>";
+            });
+        }
         return $show;
     }
 
@@ -274,7 +324,25 @@ class SubGrowerController extends AdminController
     protected function form()
     {
         $form = new Form(new SubGrower());
+
+        //disable delete button
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableDelete();
+        });
+
         $user = Admin::user();
+        $sr4 = Utils::has_valid_sr6();
+        if ($form->isCreating()) {
+            if (!$sr4) {
+                return admin_error("Alert", "You need to be a registered and approved seed grower to apply for field inspection.");
+                // return redirect(admin_url('planting-returns'));
+            }
+        }
+
+        //callback to return to table after form has been saved
+        $form->saved(function (Form $form) {
+            return redirect(admin_url('sub-growers'));
+        });
 
         if ($form->isCreating()) {
             $form->hidden('administrator_id')->default($user->id);
@@ -282,19 +350,19 @@ class SubGrowerController extends AdminController
 
         if (Admin::user()->isRole('basic-user')) {
 
-            $form->text('name', __('Name'))->default($user->name)->required();
+            $form->text('name', __('Name'))->default($user->name)->readonly();
             $form->text('size', __('Garden Size (in Accre)'))->required();
 
-            $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'name'))
-                ->required();
+            // $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'name'))
+            //     ->required();
 
-            $form->select('variety', 'Variety')->options(CropVariety::all()->pluck('name', 'name'))
+            $form->select('variety', 'Crop Variety')->options(CropVariety::all()->pluck('name', 'name'))
                 ->required();
-            $form->text('filed_name', __('Filed name'))->required();
+            $form->text('field_name', __('Field name'))->required();
             $form->text('district', __('District'))->required();
             $form->text('subcourty', __('Subcourty'))->required();
             $form->text('village', __('Village'))->required();
-            $form->date('planting_date', __('Planting date'))->required();
+            $form->text('planting_date', __('Planting date'))->required();
             $form->text('quantity_planted', __('Quantity planted'));
             $form->text('expected_yield', __('Expected yield'));
             $form->text('phone_number', __('Phone number'))->required();
@@ -304,8 +372,6 @@ class SubGrowerController extends AdminController
         }
 
         if (Admin::user()->isRole('inspector')) {
-
-
 
             $id = request()->route()->parameters['sub_grower'];
             $model = $form->model()->find($id);
@@ -318,7 +384,7 @@ class SubGrowerController extends AdminController
 
             $form->display('', __('Applicant'))->default($u->name)->readonly();
             $form->display('', __('Person responsible'))->default($model->name)->readonly();
-            $form->display('', __('Field name'))->default($model->filed_name)->readonly();
+            $form->display('', __('Field name'))->default($model->field_name)->readonly();
             $form->display('', __('District'))->default($model->district)->readonly();
             $form->display('', __('Subcourty'))->default($model->subcourty)->readonly();
             $form->display('', __('Village'))->default($model->village)->readonly();
@@ -355,14 +421,8 @@ class SubGrowerController extends AdminController
                 ->required();
 
             /*
-            "filed_name" => "Jesus"
-            "district" => "Kasese"
-            "subcourty" => "Bwera"
-            "village" => "Nyambambuka"
-
-            "crop" => "Climbing Beans"
-            "variety" => "NABE2"
-            "seed_class" => null
+           
+            => null
             "id" => 5
             "created_at" => "2022-03-21 10:20:20"
             "updated_at" => "2022-03-21 11:06:55"

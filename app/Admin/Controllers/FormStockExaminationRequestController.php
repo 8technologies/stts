@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\CropVariety;
 use App\Models\FormCropDeclaration;
+use App\Models\ImportExportPermitsHasCrops;
 use App\Models\FormSr10;
 use App\Models\FormStockExaminationRequest;
 use App\Models\ImportExportPermit;
@@ -18,7 +19,9 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class FormStockExaminationRequestController extends AdminController
 {
@@ -37,17 +40,15 @@ class FormStockExaminationRequestController extends AdminController
     protected function grid()
     {
 
-        /*$ms = FormStockExaminationRequest::all();
-        $m = $ms->first();
-        $m->germination = rand(1000000000,100000000000);
-        $m->status = 5;
-        $m->save();
-        dd($m->id."");
-        die();*/
-
+       
         $grid = new Grid(new FormStockExaminationRequest());
 
-        if (Admin::user()->isRole('basic-user')) {
+        //organize the grid in descending order of created_at
+        $grid->model()->orderBy('created_at', 'desc');
+
+
+        if (Admin::user()->isRole('basic-user')) 
+        {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
@@ -62,25 +63,24 @@ class FormStockExaminationRequestController extends AdminController
                     $actions->disableEdit();
                 }
             });
-        } else if (Admin::user()->isRole('inspector')) {
+        } 
+        else if (Admin::user()->isRole('inspector')) 
+        {
             $grid->model()->where('inspector', '=', Admin::user()->id);
             $grid->disableCreateButton();
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
                 $actions->disableDelete();
-                if (
-                    $status == 1
-                ) {
-                    //$actions->disableEdit();
-                }
+                
             });
-        } else {
+        } 
+        else {
             $grid->disableCreateButton();
         }
 
 
-        $grid->column('id', __('Id'));
-        $grid->column('created_at', __('Created'))->display(function ($item) {
+        // $grid->column('id', __('Id'));
+        $grid->column('created_at', __('Created On'))->display(function ($item) {
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
         $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
@@ -101,13 +101,11 @@ class FormStockExaminationRequestController extends AdminController
             return $cat;
         })->sortable();
 
-
-
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
         })->sortable();
 
-
+        $grid->column('lot_number', __('Lot Number'));
 
         $grid->column('inspector', __('Inspector'))->display(function ($userId) {
             if (Admin::user()->isRole('basic-user')) {
@@ -118,11 +116,24 @@ class FormStockExaminationRequestController extends AdminController
                 return "Not assigned";
             return $u->name;
         })->sortable();
+        
 
+        if (Admin::user()->isRole('admin')) {
+            $grid->filter(function($search_param){
+                $search_param->disableIdfilter();
+
+                $search_param->like('examination_category', __("Search by Category"));
+                $search_param->like('status', __("Search by Status"));
+            });  
+        }
+        else{
+            $grid->disableFilter();
+        }
 
         return $grid;
     }
 
+    
     /**
      * Make a show builder.
      *
@@ -132,21 +143,38 @@ class FormStockExaminationRequestController extends AdminController
     protected function detail($id)
     {
         $show = new Show(FormStockExaminationRequest::findOrFail($id));
+        //delete notification after user has viewed it
+        $stockexam = FormStockExaminationRequest::findOrFail($id);
+        if(Admin::user()->isRole('basic-user') ){
+            if($stockexam->status == 2 || $stockexam->status == 3 || $stockexam->status == 4 ||$stockexam->status == 5 || $stockexam->status == 16){
+                \App\Models\MyNotification::where(['receiver_id' => Admin::user()->id, 'model_id' => $id, 'model' => 'FormStockExaminationRequest'])->delete();
+            }
+        }
         $show->panel()
             ->tools(function ($tools) {
                 $tools->disableEdit();
                 $tools->disableDelete();
-            });;
+            });
 
-        $show->field('id', __('Id'));
+        
         $show->field('created_at', __('Created'))
             ->display(function ($item) {
                 return Carbon::parse($item)->diffForHumans();
             })->sortable();
+        $show->field('lot_number', __('Lot Number'));
+        if($stockexam->import_export_permit_id != null){
         $show->field('import_export_permit_id', __('Import export permit id'));
+        }
+        if($stockexam->planting_export_id != null){
         $show->field('planting_return_id', __('Planting return id'));
+        }
         $show->field('form_qds_id', __('Form qds id'));
-        $show->field('field_size', __('Field size'));
+       // $show->field('field_size', __('Field size'));
+        if ($stockexam->import_export_permit_id == null) 
+        {
+            $show->text('field_size', __('Enter field size (in Acres)'));
+            
+        }
         $show->field('yield', __('Yield'));
         $show->field('date', __('Date'));
         $show->field('purity', __('Purity'));
@@ -156,9 +184,28 @@ class FormStockExaminationRequestController extends AdminController
         $show->field('moldiness', __('Moldiness'));
         $show->field('noxious_weeds', __('Noxious weeds'));
         $show->field('recommendation', __('Recommendation'));
-        $show->field('status', __('status'));
-        $show->field('inspector', __('Inspector'));
+        $show->field('status', __('Status'))
+            ->unescape()
+            ->as(function ($status) {
+                return Utils::tell_status($status);
+            });
+        //$show->field('inspector', __('Inspector'));
         $show->field('status_comment', __('Status comment'));
+
+        if (!Admin::user()->isRole('basic-user'))
+        {
+            //button link to the show-details form
+            //check the status of the form being shown
+            if($stockexam->status == 1 || $stockexam->status == 2 || $stockexam->status == null)
+            {
+                $show->field('id','Action')->unescape()->as(function ($id) 
+                {
+                    return "<a href='/admin/form-stock-examination-requests/$id/edit' class='btn btn-primary'>Take Action</a>";
+                });
+            }
+        }
+    
+          
 
         return $show;
     }
@@ -171,12 +218,14 @@ class FormStockExaminationRequestController extends AdminController
     protected function form()
     {
         $form = new Form(new FormStockExaminationRequest());
-
-        if ($form->isEditing()) {
+        $form->setWidth(8, 4);
+       //block editing of the form if the status is 5
+        if ($form->isEditing()) 
+        {
             $id = request()->route()->parameters['form_stock_examination_request'];
             $model = $form->model()->find($id);
             if ($model->status == 5) {
-                admin_warning("Warning", "This form has been accepted already. You cannot reverse the accept decision.");
+                admin_error("Error", "This form has been accepted already. You cannot reverse the accept decision.");
                 $form->tools(function (Form\Tools $tools) {
                     $tools->disableDelete();
                 });
@@ -187,125 +236,37 @@ class FormStockExaminationRequestController extends AdminController
                     $footer->disableCreatingCheck();
                     $footer->disableSubmit();
                 });
-                return $form;
+               // return $form;
             }
         }
 
-
-        $import_permits = [];
-        $planting_returnings = [];
-        $all_planting_returning = [];
-        $my_qds = [];
-        $all_qds = [];
-
-        $form->setWidth(8, 4);
-        if ($form->isCreating()) {
-            if (!Admin::user()->isRole('basic-user')) {
-                admin_warning("Warning", "You cannot create a new Stock examination requests.");
-                return redirect(admin_url('form-stock-examination-requests'));
-            }
-        }
-
-
-        if (Admin::user()->isRole('basic-user')) {
-
-            $all_qds =  FormCropDeclaration::where([
-                'administrator_id' => Admin::user()->id
-            ])->get();
-            $_my_qds = [];
-            $all_vars = [];
-
-            foreach ($all_qds as $key => $value) {
-                if ($value->status == 5) {
-                    if (!$value->is_not_used) {
-                        $min_date = Carbon::parse($value->valid_until);
-                        if (!$min_date->isToday()) {
-                            if (!$min_date->isPast()) {
-                                $my_qds[$value->id] = "QDS number: " . $value->id;
-                                $_my_qds[] =  $value;
-                            }
-                        } else {
-                            $my_qds[$value->id] = "QDS number: " . $value->id;
-                            $_my_qds[] =  $value;
-                        }
-                    }
+        // callback after save to return to the table view
+        $form->saved(function (Form $form) 
+        {
+          //return to table view controller after saving the form data 
+              return redirect(admin_url('form-stock-examination-requests'));
+        });
+    
+      
+        if (Admin::user()->isRole('basic-user')) 
+        {
+            //get crop variety from the import permit id when form is saving
+            $form->saving(function (Form $form)
+            {
+                if ($form->planting_return_id != null) 
+                {
+                    
+                    $has_crop = FormSr10::where('id',$form->planting_return_id)->first();
+                    $form->crop_variety_id = $has_crop->crop_variety_id;
                 }
-            }
-
-            foreach ($_my_qds as $key => $value) {
-                if ($value->form_crop_declarations_has_crop_varieties != null) {
-                    foreach ($value->form_crop_declarations_has_crop_varieties as $key => $val) {
-                        $all_vars[$val->crop_variety->id] = "CROP: " . $val->crop_variety->crop->name . ", VARIETY: " . $val->crop_variety->name;
-                    }
+                elseif($form->form_qds_id != null)
+                {
+                    $qds_has_crop = FormSr10::where('id',$form->form_qds_id)->first();
+                    $form->crop_variety_id = $qds_has_crop->crop_variety_id;
                 }
-            }
-
-
-            $_planting_returnings = [];
-            $all_planting_returning =  PlantingReturn::where([
-                'administrator_id' => Admin::user()->id
-            ])->get();
-            foreach ($all_planting_returning as $key => $value) {
-                $min_date = Carbon::parse($value->valid_until);
-                if (!$min_date->isToday()) {
-                    if (!$min_date->isPast()) {
-                        $planting_returnings[$value->id] = "SR8 number: " . $value->id;
-                        $_planting_returnings[] = $value;
-                    }
-                } else {
-                    $_planting_returnings[] = $value;
-                    $planting_returnings[$value->id] = "SR8 number: " . $value->id;
-                }
-            }
-
-
-            foreach ($_planting_returnings as $key => $value) {
-                if ($value->planting_return_crops != null) {
-                    foreach ($value->planting_return_crops as $key => $val) {
-                        $all_vars[$val->crop_variety->id] = "CROP: " . $val->crop_variety->crop->name . ", VARIETY: " . $val->crop_variety->name;
-                    }
-                }
-            }
-
-            $all_import_permits =  ImportExportPermit::where([
-                'administrator_id' => Admin::user()->id,
-                'is_import' => 1
-            ])->get();
-
-            $_import_permits = [];
-            foreach ($all_import_permits as $key => $value) {
-                if ($value->status == 5) {
-                    $min_date = Carbon::parse($value->valid_until);
-                    if (!$min_date->isToday()) {
-                        if (!$min_date->isPast()) {
-                            $_import_permits[] = $value;
-                            $import_permits[$value->id] = "Permit number: " . $value->permit_number;
-                        }
-                    } else {
-                        $_import_permits[] = $value;
-                        $import_permits[$value->id] = $value->id;
-                    }
-                }
-            }
-
-
-            foreach ($_import_permits as $key => $value) {
-                if ($value->import_export_permits_has_crops != null) {
-                    foreach ($value->import_export_permits_has_crops as $key => $val) {
-                        $all_vars[$val->id] = "CROP: " . $val->name . ", VARIETY: " . $val->name;
-                    }
-                }
-            }
-
-
-            // if (
-            //     (count($all_vars) < 1)
-            // ) {
-            //     admin_warning("Warning", "You cannot create a new Stock examination requests if don't have
-            // either valid Import permit or SR8 or QDS.");
-            //     return redirect(admin_url('form-stock-examination-requests'));
-            // }
-
+                
+            });
+    
 
             $form->radio('examination_category', __('Select examination category'))
                 ->options([
@@ -313,134 +274,183 @@ class FormStockExaminationRequestController extends AdminController
                     '2' => 'Grower seed',
                     '3' => 'QDs',
                 ])
-                ->when('1', function (Form $form) {
-
-                    $all_import_permits =  ImportExportPermit::where([
-                        'administrator_id' => Admin::user()->id,
-                        'is_import' => 1
-                    ])->get();
-                    foreach ($all_import_permits as $key => $value) {
-                        if ($value->status == 5) {
-                            $min_date = Carbon::parse($value->valid_until);
-                            if (!$min_date->isToday()) {
-                                if (!$min_date->isPast()) {
-                                    $import_permits[$value->id] = "Permit number: " . $value->permit_number;
-                                }
-                            } else {
-                                $import_permits[$value->id] = $value->id;
-                            }
-                        }
-                    }
-
-                    // if (count($import_permits) >= 1) {
-                    //     $form->select('import_export_permit_id', __('Import permit number'))
-                    //         ->rules('required')
-                    //         ->options($import_permits);
-                    // }
-                })
-                ->when('2', function (Form $form) {
-
-
-
-
-                    $SubGrowers =  SubGrower::where([
-                        'administrator_id' => Admin::user()->id
-                    ])->get();
-
-
-                    $sr10s = [];
-                    $planting_returnings = [];
-                    $verified_isnpections = [];
-                    foreach ($SubGrowers as $SubGrower) {
-                        $_sr10s = FormSr10::where(['planting_return_id' => $SubGrower->id])->get();
-                        foreach ($_sr10s as $_sr10) {
-                            $sr10s[] = $_sr10;
-                        }
-                    }
-                    foreach ($sr10s as $key => $sr10) {
-                        if ($sr10->is_final) {
-                            if ($sr10->status == 5) {
-                                $verified_isnpections[] = $sr10;
-                            }
-                        }
-                    }
-
-                    foreach ($verified_isnpections as $key => $value) {
-                        if ($value->status == 5) {
-                            if (!$value->is_not_used) {
-                                $planting_returnings[$value->id] = "SR10 number: " . $value->sr10_number;
-                            }
-                        }
-                    }
-
                 
-                $form->select('planting_return_id', __('Select approved SR10'))
-                        ->rules('required')
-                        ->options($planting_returnings);
-                })
-                ->when('3', function (Form $form) {
-                    $all_qds =  FormCropDeclaration::where([
-                        'administrator_id' => Admin::user()->id
-                    ])->get();
+            ->when('1', function (Form $form) 
+            {
+              //accessing the accepted import permits
+                $all_import_permits =  ImportExportPermit::where([
+                    'administrator_id' => Admin::user()->id,
+                    'is_import' => 1
+                ])->get();
+                
+                if($all_import_permits->isEmpty())
+                {
+                        $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have a valid Import permit </div>');
+                }
+                else
+                {
+                    $import_permits = [];
+                    foreach ($all_import_permits as $key => $value) 
+                    {
+                        if ($value->status == 5)
+                        { 
+                            $min_date = Carbon::parse($value->valid_until);
+                            if (!$min_date->isToday() && !$min_date->isPast()) 
+                            {  
+                                $import_permits[$value->id] = "Import Permit Number: " . $value->permit_number;
+                                
+                            } else 
+                            {
+                                $form->html('<div class="alert alert-danger">Sorry! it looks like your import permit is expired , Please re-apply for one.</div>');
 
-                    $my_qds = [];
-
-                    foreach ($all_qds as $key => $value) {
-                        if ($value->status == 5) {
-                            if (!$value->is_not_used) {
-                                $my_qds[$value->id] = "QDS number: " . $value->id;
                             }
                         }
                     }
 
-                    if (count($my_qds) >= 1) {
-                        $form->select('form_qds_id', __('Select QDS'))
-                            ->rules('required')
-                            ->options($my_qds);
+                    if (count($import_permits) >= 1) 
+                    {
+                       
+                        $form->select('import_export_permit_id', __('Select Import Permit'))
+                        ->options($import_permits)
+                        ->attribute('id', 'import-permit-select');
+                        $form->select('crop_variety_id', __('Crop variety'))
+                       ->attribute('id', 'crop-variety-select');
+                       $form->textarea('remarks', __('Enter remarks'));
+                    
+                        
+                    }  else{
+                        $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if you don\'t have a fully verified import permit </div>');
                     }
-                })->required();
+                    Admin::script('
+                    $(document).ready(function() {
+                        $("#import-permit-select").change(function() {
+                            var permitId = $(this).val();
+                            
+                            $.ajax({
+                                url: "/crop_varieties/" + permitId,
+                                method: "GET",
+                                success: function(data) {
+                                    var cropVarieties = $("#crop-variety-select");
+                                    
+                                    cropVarieties.empty();
+                                    
+                                    for (var i = 0; i < data.length; i++) {
+                                        cropVarieties.append("<option value=\'" + data[i].id + "\'>" + data[i].text + "</option>");
+                                    }
+                                }
+                            });
+                        });
+                    });
+                    ');
+                    
+                    
+                }
 
-            $_items = [];
-            foreach (CropVariety::all() as $key => $item) {
-                $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
-            }
+            })    // end when 1
+
+            ->when('2', function (Form $form) 
+            {
+
+                $SubGrowers =  SubGrower::where
+                ([
+                    'administrator_id' => Admin::user()->id
+                ])->get();
+            
+
+                if($SubGrowers->isEmpty())
+                {
+                    $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have an approved SR10 </div>');
+                }
+                else
+                {
+
+                    $verified_seed_growers = FormSr10::where('administrator_id', Auth::user()->id)
+                                            ->where('status', '=', 5)
+                                            ->where('is_final', '=', 1)
+                                            ->where('planting_return_id', '!=', null)
+                                            ->get();
+                    $verified_seed_grower =[];
+                    foreach ($verified_seed_growers as $key => $value)
+                    {
+                        
+                            $verified_seed_grower[$value->id] = "SR10 number: " . $value->sr10_number;
+                        
+                    }
+                
+                        if (count($verified_seed_grower) >= 1) 
+                        {
+                            $form->select('planting_return_id', __('Select approved SR10'))
+                            ->options($verified_seed_grower);
+                            $form->hidden('crop_variety_id', __('Crop variety'));
+                            $form->textarea('remarks', __('Enter remarks'));
+                        }
+                        else{
+                            $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if you don\'t have a fully verified planting return </div>');
+                        }
+                }
+            })
 
 
-            $form->textarea('remarks', __('Enter remarks'))->required();
+            ->when('3', function (Form $form) 
+            {
+                $all_qds =  FormCropDeclaration::where([
+                    'administrator_id' => Admin::user()->id
+                ])->get();
+
+                if($all_qds->isEmpty())
+                {
+                    $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have a valid QDS </div>');
+                }else
+                {
+
+                    $verified_qds_growers = FormSr10::where('administrator_id', Auth::user()->id)
+                    ->where('status', '=', 5)
+                    ->where('is_final', '=', 1)
+                    ->where('qds_declaration_id', '!=', null)
+                    ->get();
+                        $verified_qds_grower =[];
+                        foreach ($verified_qds_growers as $key => $value)
+                        {
+
+                            $verified_qds_grower[$value->id] = "SR10 number: " . $value->sr10_number;
+
+                        }
+
+                        if (count($verified_qds_grower) >= 1) 
+                        {
+                            $form->select('form_qds_id', __('Select approved QDS'))
+                            ->options($verified_qds_grower);
+                            $form->hidden('crop_variety_id', __('Crop variety'));
+                            $form->textarea('remarks', __('Enter remarks'));
+                        }
+                        else{
+                            $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if you don\'t have a fully verified QDS </div>');
+                        }
+                }
+            })->required();
 
             $user = Auth::user();
-            $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
+            $form->hidden('administrator_id', __('Administrator id'))->value($user->id); 
+        
         }
 
-        if (Admin::user()->isRole('admin') && $form->isEditing()) {
-
+     //Admin form functionalities
+        if (Admin::user()->isRole('admin') && $form->isEditing()) 
+        {
             $form->setTitle("Assigning an inspector");
-
             $id = request()->route()->parameters['form_stock_examination_request'];
             $model = $form->model()->find($id);
             $u = Administrator::where('id', $model->administrator_id)->firstOrFail();
-
-
-            $cat = "";
-            if ($model->examination_category == 1) {
-                $cat =  'Imported seed';
-            } else if ($cat == 2) {
-                $cat =  'Grower seed';
-            } else if ($cat == 3) {
-                $cat =  'QDs';
-            }
             $form->display('name', __('Name of applicant'))
                 ->default($u->name);
-        
-
             $form->divider();
             $form->radio('status', __('Status'))
                 ->options([
-                    '1' => 'Pending',
-                    '2' => 'Under inspection',
+                    '2' => 'Assign Inspector',
                 ])
                 ->required()
-                ->when('2', function (Form $form) {
+                ->when('2', function (Form $form) 
+                {
                     $items = Administrator::all();
                     $_items = [];
                     foreach ($items as $key => $item) {
@@ -449,58 +459,49 @@ class FormStockExaminationRequestController extends AdminController
                         }
                         $_items[$item->id] = $item->name . " - " . $item->id;
                     }
+
                     $form->select('inspector', __('Inspector'))
                         ->options($_items)
                         ->help('Please select inspector')
                         ->rules('required');
-                })
-                ->when('in', [3, 4], function (Form $form) {
-                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                        ->help("Please specify with a comment");
-                })
-                ->when('in', [5, 6], function (Form $form) {
-                    $form->date('valid_from', 'Valid from date?');
-                    $form->date('valid_until', 'Valid until date?');
                 });
+               
         }
 
-        if (Admin::user()->isRole('inspector')) {
+       //Inspector form functionalities
 
+        if (Admin::user()->isRole('inspector')) 
+        {
+            
+            //get the request id from the url
+            $id = request()->route()->parameters['form_stock_examination_request'];
+            //get the form
+            $stockexam = FormStockexaminationRequest::find($id);
+            $model = $form->model()->find($id);
+            
             $form->setTitle("Updating examination");
 
-            $_items = [];
-            foreach (CropVariety::all() as $key => $item) {
-                $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
-            }
+          //get the crop variety
+            $has_crop = ImportExportPermitsHasCrops::where('import_export_permit_id', $stockexam->import_export_permit_id)->first();
+            
+            if($has_crop != null)
+            {
+    
+               $variety = CropVariety::where('id', $has_crop->crop_variety_id)->first();
 
-            $id = request()->route()->parameters['form_stock_examination_request'];
-            $model = $form->model()->find($id);
-
-            foreach (CropVariety::all() as $key => $item) {
-                $variety = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
-            }
-
-            $form->display('display', 'Crop Variety')
-                ->default($variety)
+                $form->display('display', 'Crop')
+                ->default($variety->crop->name)
                 ->required();
-
+                $form->display('display', 'Crop Variety')
+                ->default($variety->name);
+            }
+            
             $u = Administrator::where('id', $model->administrator_id)->firstOrFail();
 
-            $cat = "";
-            if ($model->examination_category == 1) {
-                $cat =  'Imported seed';
-            } else if ($cat == 2) {
-                $cat =  'Grower seed';
-            } else if ($cat == 3) {
-                $cat =  'QDs';
-            }
             $form->display('name', __('Name of applicant'))
                 ->default($u->name);
   
-
-            $form->text('yield', __('Enter Yield/Seed quantity (in Metric tonnes)'))
-                ->attribute('type', 'number')
-                ->required();
+           
             $form->select('seed_class', __('seed_class'))
                 ->options([
                     'Pre-Basic seed' => 'Pre-Basic seed',
@@ -508,17 +509,42 @@ class FormStockExaminationRequestController extends AdminController
                     'Certified seed' => 'Certified seed',
                 ])
                 ->required();
-            $form->text('field_size', __('Enter field size (in Acres)'));
-            $form->date('date', __('Selected date sample was collected'));
+            $form->text('lot_number', __('Lot Number'))->required()
+            ->attribute([
+                'value' => $model->id . rand(1000000, 9999999),
+            ])->readOnly();
+
+         //check if its an imported seed, if no, then show the field size
+            if ($stockexam->import_export_permit_id == null){
+               $form->text('field_size', __('Enter field size (in Acres)'));
+            } 
+            //field to capture the quantity collected
+            $form->text('yield', __('Enter quantity collected (in M.tons)'))
+            ->attribute([
+                'type' => 'number', 
+            ]);
+            $form->date('date', __('Stock Examination Date'));
 
             $form->divider();
             $form->html('<h3>Analysis results</h3>');
-            $form->text('purity', __('Enter purity'));
-            $form->text('germination', __('Enter Germination'));
-            $form->text('moisture_content', __('Enter moisture content'));
-            $form->text('insect_damage', __('Insect damage'));
-            $form->text('moldiness', __('Moldiness'));
-            $form->text('noxious_weeds', __('Noxious weeds'));
+            $form->text('purity', __('Enter purity'))->attribute([
+                'type' => 'number', 
+            ]);
+            $form->text('germination', __('Enter Germination'))->attribute([
+                'type' => 'number', 
+            ]);
+            $form->text('moisture_content', __('Enter moisture content'))->attribute([
+                'type' => 'number', 
+            ]);
+            $form->text('insect_damage', __('Insect damage'))->attribute([
+                'type' => 'number', 
+            ]);
+            $form->text('moldiness', __('Moldiness'))->attribute([
+                'type' => 'number', 
+            ]);
+            $form->text('noxious_weeds', __('Noxious weeds'))->attribute([
+                'type' => 'number', 
+            ]);
 
             $form->radio('status', __('Examination decision'))
                 ->help("NOTE: You cannot reverse this decision once submited.")
@@ -533,11 +559,13 @@ class FormStockExaminationRequestController extends AdminController
                 });
         }
 
-        $form->tools(function (Form\Tools $tools) {
+        $form->tools(function (Form\Tools $tools) 
+        {
             $tools->disableList();
             $tools->disableDelete();
         });
-        $form->footer(function ($footer) {
+        $form->footer(function ($footer) 
+        {
             $footer->disableReset();
             $footer->disableViewCheck();
             $footer->disableEditingCheck();
@@ -545,4 +573,28 @@ class FormStockExaminationRequestController extends AdminController
         });
         return $form;
     }
+
+    public function crop_varieties($permitId)
+    {
+        // Retrieve the crop varieties based on the selected import permit
+        
+        $has_crops = ImportExportPermitsHasCrops::where('import_export_permit_id', $permitId)->get();
+        $crop_varieties = [];
+        
+        foreach ($has_crops as $crop) {
+            $crop_varieties[] = ['id' => $crop->crop_variety_id, 'text' => CropVariety::where('id', $crop->crop_variety_id)->first()->name];
+        }
+        
+        return response()->json($crop_varieties);
+    }
+    
+    
+
+
+    
+    
+
+  
+    
+
 }

@@ -12,6 +12,10 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use Encore\Admin\Actions\RowAction;
+use App\Admin\Actions\Post\Renew;
+
 
 class FormSr4Controller extends AdminController
 {
@@ -30,67 +34,99 @@ class FormSr4Controller extends AdminController
     protected function grid()
     {
         $grid = new Grid(new FormSr4());
+        //organize the grid in descending order of created_at
+        $grid->model()->orderBy('created_at', 'desc');
 
+        //disable batch delete
+        $grid->batchActions(function ($batch) 
+        {
+            $batch->disableDelete();
+        });
 
-        /*s = FormSr4::all()->first();
-        $s->status_comment .= rand(100,1000000);
-        $s->save();*/
-
-        if (Admin::user()->isRole('basic-user')) {
+        //check if the role is an inspector and has been assigned that form
+        //return an empty table if the inspector has not been assigned any forms
+        if (Admin::user()->isRole('inspector'))  
+        {
+            $grid->model()->where('inspector', '=', Admin::user()->id);
+               
+        }
+       
+        if (Admin::user()->isRole('basic-user')) 
+        {
             $grid->model()->where('administrator_id', '=', Admin::user()->id);
-
-
-            if (!Utils::can_create_sr4()) {
-                $grid->disableCreateButton();
-            }
-
-            $grid->actions(function ($actions) {
-
+           
+            $grid->actions(function ($actions) 
+            {
                 $status = ((int)(($actions->row['status'])));
                 if (
                     $status == 2 ||
                     $status == 5 ||
                     $status == 6
-                ) {
+                ) 
+                {
                     $actions->disableEdit();
                     $actions->disableDelete();
                 }
+                if (
+                    $status == 3 ||
+                    $status == 4
+                ) 
+                {
+                    $actions->disableDelete();
+                }
+                //get last parameter from url
+                if(Utils::check_expiration_date('FormSr4',$this->getKey()))
+                {  
+                    $actions->add(new Renew(request()->segment(count(request()->segments()))));
+                    
+                };
             });
-        } else if (Admin::user()->isRole('inspector')) {
-            $grid->model()->where('inspector', '=', Admin::user()->id);
+        } 
+        
+        else if (Admin::user()->isRole('inspector')|| Admin::user()->isRole('admin') ) 
+        { 
             $grid->disableCreateButton();
-
-            $grid->actions(function ($actions) {
-                $status = ((int)(($actions->row['status'])));
+            $grid->actions(function ($actions) 
+            {
                 $actions->disableDelete();
-                // if (
-                //     $status != 2
-                // ) {
-                //     $actions->disableEdit();
-                // }
+                $actions->disableEdit();
+                
             });
-        } else {
+        } 
+        else 
+        {
             $grid->disableCreateButton();
         }
+        
+        $grid->column('name_of_applicant', __("Search by Name of Applicant"))->sortable();
 
-        $grid->column('id', __('Id'))->sortable();
-
-        $grid->column('created_at', __('Created'))->display(function ($item) {
+        $grid->column('created_at', __('Created'))->display(function ($item) 
+        {
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
 
-        $grid->column('status', __('Status'))->display(function ($status) {
-            return Utils::tell_status($status);
-        })->sortable();
+        $grid->column('type', __('Application Category'))->sortable();
 
-        $grid->column('valid_from', __('Starts'))->display(function ($item) {
-            return Carbon::parse($item)->diffForHumans();
+        $grid->column('status', __('Status'))->display(function ($status) 
+        {
+           // check expiration date
+            if (Utils::check_expiration_date('FormSr4',$this->getKey())) 
+            {
+                return Utils::tell_status(6);
+            } else
+            {
+                return Utils::tell_status($status);
+            }
         })->sortable();
-        $grid->column('valid_until', __('Exipires'))->display(function ($item) {
-            return Carbon::parse($item)->diffForHumans();
-        })->sortable();
+        
+        if(Utils::is_form_accepted('FormSr4'))
+        {
+        $grid->column('valid_from', __("Starts"))->sortable();
+        $grid->column('valid_until', __("Expires"))->sortable();
+        };
 
-        $grid->column('administrator_id', __('Created by'))->display(function ($userId) {
+        $grid->column('administrator_id', __('Created by'))->display(function ($userId) 
+        {
             $u = Administrator::find($userId);
             if (!$u)
                 return "-";
@@ -98,9 +134,8 @@ class FormSr4Controller extends AdminController
         })->sortable();
 
         $grid->column('address', __('Address'))->sortable();
-
-
-        $grid->column('inspector', __('Inspector'))->display(function ($userId) {
+        $grid->column('inspector', __('Inspector'))->display(function ($userId) 
+        {
             if (Admin::user()->isRole('basic-user')) {
                 return "-";
             }
@@ -109,6 +144,12 @@ class FormSr4Controller extends AdminController
                 return "Not assigned";
             return $u->name;
         })->sortable();
+
+        $grid->filter(function($search_param)
+        {
+            $search_param->disableIdfilter();
+            $search_param->like('name_of_applicant', __("Search by Name of Applicant"));
+        });
 
         return $grid;
     }
@@ -121,96 +162,160 @@ class FormSr4Controller extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(FormSr4::findOrFail($id));
+        $form_sr4 = FormSr4::findOrFail($id);
+       
+        //delete the notification once a user has viewed the form
+        if(Admin::user()->isRole('basic-user') )
+        {
+            if($form_sr4->status == 2 || $form_sr4->status == 3 || $form_sr4->status == 4 || $form_sr4->status == 5)
+            {
+                \App\Models\MyNotification::where(['receiver_id' => Admin::user()->id, 'model_id' => $id, 'model' => 'FormSr4'])->delete();
+            }
+        }
+
+        $show = new Show($form_sr4);
         $show->panel()
-            ->tools(function ($tools) {
+            ->tools(function ($tools) use($id) 
+            {
                 $tools->disableEdit();
                 $tools->disableDelete();
-            });;
+            
+            });
 
-        $show->field('id', __('Id'));
-        $show->field('created_at', __('Created on'));
-        $show->field('seed_board_registration_number', __('Seed board registration number'));
-        $show->field('administrator_id', __('Created by'))->as(function ($userId) {
-            $u = Administrator::find($userId);
-            if (!$u)
-                return "-";
-            return $u->name;
-        });
+        $show->field('type', __('Application Category'));
+
+        //check if seed board registration number is empty,if it is then dont show it
+        if ($form_sr4->seed_board_registration_number != null) 
+        {
+            $show->field('seed_board_registration_number', __('Seed board registration number'));
+        }
         $show->field('name_of_applicant', __('Name of applicant'));
         $show->field('address', __('Address'));
         $show->field('company_initials', __('Company initials'));
         $show->field('premises_location', __('Premises location'));
-        $show->field('years_of_expirience', __('Experience in'));
-        $show->field('expirience_in', __('Years of experience'))->as(function ($item) {
+        $show->field('expirience_in', __('Experience in'));
+        $show->field('years_of_expirience', __('Years of experience'))->as(function ($item)
+        {
             return $item . " Years";
         });
-        $show->field('dealers_in', __('Dealers in'));
-        $show->field('processing_of', __('Processing of'));
-        $show->field('marketing_of', __('Marketing of'))->as(function ($item) {
+        $show->field('dealers_in', __('Dealers in'))->as (function($item)
+        {
+            if($item == "Other"){
+                return $this->dealers_in_other ;
+            }
+            return $item;
+        });
+    
+      
+        $show->field('marketing_of', __('Marketing of'))->as(function ($item) 
+        {
             if ($item == "Other") {
-                return $this->marketing_of_other . " (Other)";
+                return $this->marketing_of_other ;
             }
             return $item;
         });
-        $show->field('have_adequate_land', __('Have adequate land'))->as(function ($item) {
-            if ($item) {
+        $show->field('have_adequate_land', __('Have adequate land'))->as(function ($item) 
+        {
+            if ($item) 
+            {
+                return "Yes";
+            } else
+            {
+                return "No";
+            }
+            return $item;
+        });
+        $show->field('have_adequate_storage', __('Have adequate storage'))->as(function ($item) 
+        {
+            if ($item) 
+            {
+                return "Yes";
+            } 
+            else  
+            {
+                return "No";
+            }
+            return $item;
+        });
+        //check if land_size has a value and if it has a value then show it and if not then dont show it
+        if ($form_sr4->land_size)
+        {
+            $show->field('land_size', __('Land size (In Acres)'));
+        }
+        //check if eqipment has a value and if it has a value then show it and if not then dont show it
+        if ($form_sr4->eqipment) 
+        {
+            $show->field('eqipment', __('Equipment'));
+        } 
+        
+        $show->field('have_adequate_equipment', __('Have adequate equipment'))->as(function ($item) 
+        {
+            if ($item) 
+            {
+                return "Yes";
+            } 
+            else 
+            {
+                return "No";
+            }
+            return $item;
+        });
+        $show->field('have_contractual_agreement', __('Have contractual agreement'))->as(function ($item) 
+        {
+            if ($item) 
+            {
+                return "Yes";
+            } 
+            else 
+            {
+                return "No";
+            }
+            return $item;
+        });
+        $show->field('have_adequate_field_officers', __('Have adequate field officers'))->as(function ($item)
+         {
+            if ($item) 
+            {
+                return "Yes";
+            } 
+            else 
+            {
+                return "No";
+            }
+            return $item;
+        });
+        $show->field('have_conversant_seed_matters', __('Have conversant seed matters'))->as(function ($item) 
+        {
+            if ($item) 
+            {
                 return "Yes";
             } else {
                 return "No";
             }
             return $item;
         });
-        $show->field('land_size', __('Land size (In Acres)'));
-        $show->field('eqipment', __('Equipment'));
-        $show->field('have_adequate_equipment', __('Have adequate equipment'))->as(function ($item) {
-            if ($item) {
-                return "Yes";
-            } else {
-                return "No";
-            }
-            return $item;
-        });
-        $show->field('have_contractual_agreement', __('Have contractual agreement'))->as(function ($item) {
-            if ($item) {
-                return "Yes";
-            } else {
-                return "No";
-            }
-            return $item;
-        });
-        $show->field('have_adequate_field_officers', __('Have adequate field officers'))->as(function ($item) {
-            if ($item) {
-                return "Yes";
-            } else {
-                return "No";
-            }
-            return $item;
-        });
-        $show->field('have_conversant_seed_matters', __('Have conversant seed matters'))->as(function ($item) {
-            if ($item) {
-                return "Yes";
-            } else {
-                return "No";
-            }
-            return $item;
-        });
-        $show->field('souce_of_seed', __('Souce of seed'))->as(function ($userId) {
+        $show->field('souce_of_seed', __('Souce of seed'))->as(function ($userId)
+        {
             $u = Administrator::find($userId);
             if (!$u)
                 return $userId;
             return $u->name . " - ID: " . $u->id;
         });
-        $show->field('have_adequate_land_for_production', __('Have adequate land for production'))->as(function ($item) {
-            if ($item) {
+        $show->field('have_adequate_land_for_production', __('Have adequate land for production'))->as(function ($item) 
+        {
+            if ($item) 
+            {
                 return "Yes";
-            } else {
+            } else 
+            {
                 return "No";
             }
             return $item;
         });
-        $show->field('have_internal_quality_program', __('Have internal quality program'))->as(function ($item) {
-            if ($item) {
+        $show->field('have_internal_quality_program', __('Have internal quality program'))->as(function ($item) 
+        {
+            if ($item) 
+            {
                 return "Yes";
             } else {
                 return "No";
@@ -219,22 +324,69 @@ class FormSr4Controller extends AdminController
         });
         $show->field('receipt', __('Receipt'))->file();
 
-        $show->field('accept_declaration', __('Accepted declaration'))->as(function ($item) {
-            if ($item) {
+        $show->field('accept_declaration', __('Accepted declaration'))->as(function ($item) 
+        {
+            if ($item) 
+            {
                 return "Yes";
-            } else {
+            } else 
+            {
                 return "No";
             }
         });
-        $show->field('valid_from', __('Valid from'));
-        $show->field('valid_until', __('Valid until'));
-        $show->field('status', __('Status'))->unescape()->as(function ($status) {
+        //check if valid_from , valid_until are empty,if they are then dont show them
+        if ($form_sr4->valid_from != null) 
+        {
+            $show->field('valid_from', __('Valid from'));
+        }
+        if ($form_sr4->valid_until != null) 
+        {
+            $show->field('valid_until', __('Valid until'));
+        }
+        $show->field('status', __('Status'))->unescape()->as(function ($status) 
+        {
             return Utils::tell_status($status);
         });
-        $show->field('status_comment', __('Status comment'));
 
+       //check if the status comment is null
+       if($form_sr4->status_comment != null)
+       {
+           $show->field('status_comment', __('Status comment'));
+       }
+       else
+       {
+           $show->field('status_comment', __('Status comment'))->as(function ($status) 
+           {
+               return "No comment";
+           });
+       }
+    
 
-        return $show;
+        if (!Admin::user()->isRole('basic-user'))
+        {
+            //button link to the show-details form
+            //check the status of the form being shown
+            if($form_sr4->status == 1 || $form_sr4->status == 2 || $form_sr4->status == null)
+            {
+            $show->field('id','Action')->unescape()->as(function ($id) 
+            {
+                return "<a href='/admin/form-sr4s/$id/edit' class='btn btn-primary'>Take Action</a>";
+            });
+            }
+        }
+
+        if (Admin::user()->isRole('basic-user')) 
+        {
+            if($form_sr4->status == 3 || $form_sr4->status == 4)
+            {
+                $show->field('id','Action')->unescape()->as(function ($id) 
+                {
+                    return "<a href='/admin/form-sr4s/$id/edit' class='btn btn-primary'>Take Action</a>";
+                });
+            }
+        }
+        
+            return $show;
     }
 
     /**
@@ -244,250 +396,390 @@ class FormSr4Controller extends AdminController
      */
     protected function form()
     {
-
         $form = new Form(new FormSr4());
-        if ($form->isCreating()) {
+       
+        //check the id of the user before editing the form
+        if ($form->isEditing()) 
+        {
+             //get request id
+            $id = request()->route()->parameters()['form_sr4'];
+            //get the form
+             $formSr4 = FormSr4::find($id);
+             //get the user
+             $user = Auth::user();
 
-            if (!Utils::can_create_sr4()) {
-                admin_warning("Warning", "You cannot create a new SR4 form with a while still having another active one.");
-                return redirect(admin_url('form-sr6s'));
+             //checking the user before accessing the form to ensure the right user accesses the right form
+            if (Admin::user()->isRole('basic-user'))
+            {
+            
+                if ($user->id != $formSr4->administrator_id) 
+                {
+                    $form->html('<div class="alert alert-danger">You cannot edit this form </div>');
+                    $form->footer(function ($footer) 
+                    {
+
+                        // disable reset btn
+                        $footer->disableReset();
+
+                        // disable submit btn
+                        $footer->disableSubmit();
+
+                        // disable `View` checkbox
+                        $footer->disableViewCheck();
+
+                        // disable `Continue editing` checkbox
+                        $footer->disableEditingCheck();
+
+                        // disable `Continue Creating` checkbox
+                        $footer->disableCreatingCheck();
+
+                    });
+                }
+                else 
+                {
+                    $this->show_fields($form);
+                }
+            }
+            
+            //checking if the form has been inspected by the inspector if it is prevent him from editing it again
+            elseif(Admin::user()->isRole('inspector'))
+            {
+                 if($formSr4->status != 2)
+                {
+                    $form->html('<div class="alert alert-danger">You cannot edit this form, please commit the commissioner to make any changes. </div>');
+                    $form->footer(function ($footer) 
+                    {
+
+                        // disable reset btn
+                        $footer->disableReset();
+
+                        // disable submit btn
+                        $footer->disableSubmit();
+
+                        // disable `View` checkbox
+                        $footer->disableViewCheck();
+
+                        // disable `Continue editing` checkbox
+                        $footer->disableEditingCheck();
+
+                        // disable `Continue Creating` checkbox
+                        $footer->disableCreatingCheck();
+
+                    });
+                }
+                else 
+                {
+                $this->show_fields($form);
+                }
+            }
+
+            else 
+            {
+            $this->show_fields($form);
             }
         }
 
+        // callback after save to return to table view controller after saving the form data 
+        $form->saved(function (Form $form)
+        {
+            return redirect(admin_url('form-sr4s'));
+        });
 
+
+        if ($form->isCreating()) 
+        {
+    
+            $this->show_fields($form);
+        }
+        
+        //callback when saving to check if the type is already in the database
+        $form->saving(function (Form $form) 
+        {
+            $type = $form->type;
+            $user = Auth::user();
+            $form_sr4 = FormSr4::where('type', $type)->where('administrator_id', $user->id)->first();
+            if ($form_sr4) 
+            {
+                
+                    if($form->isEditing())
+                    {
+                        $form = request()->route()->parameters()['form_sr4'];
+                        $formSr4 = FormSr4::find($form);
+                      //count the number of forms with the same type
+                        $count = FormSr4::where('type', $type)->where('administrator_id', $user->id)->count();
+                        if($count > 1)
+                        {
+                           
+                        }
+                        elseif($count == 1)
+                        { 
+                            return  response(' <p class="alert alert-warning"> You cannot create a new SR4 form  while having PENDING one of the same category. <a href="/admin/form-sr4s"> Go Back </a></p> ');
+                            //check if what is being passed to the form is the same as the one in the database
+                            if($form_sr4->id == $formSr4->id)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+
+                                if(!Utils::can_create_form($form_sr4))
+                                {
+                                    return  response(' <p class="alert alert-warning"> You cannot create a new SR4 form  while having PENDING one of the same category. <a href="/admin/form-sr4s"> Go Back </a></p> ');
+                                }
+                                
+                                //check if its still valid
+                                if (Utils::can_renew_app_form($form_sr4)) 
+                                {
+                                    return  response(' <p class="alert alert-warning"> You cannot create a new SR4 form  while having VALID one of the same category. <a href="/admin/form-sr4s"> Go Back </a></p> ');   
+                                }
+                            }
+                        }
+                        else{
+                             return true;
+                        }
+
+                    }
+                    //check if the status of the form is pending, rejected,halted or accepted
+                    if(!Utils::can_create_form($form_sr4))
+                    {
+                        return  response(' <p class="alert alert-warning"> You cannot create a new SR4 form  while having PENDING one of the same category. <a href="/admin/form-sr4s/create"> Go Back </a></p> ');
+                    }
+                    
+                    //check if its still valid
+                    if (Utils::can_renew_app_form($form_sr4)) 
+                    {
+                        return  response(' <p class="alert alert-warning"> You cannot create a new SR4 form  while having VALID one of the same category. <a href="/admin/form-sr4s/create"> Go Back </a></p> ');   
+                    }
+                $form->accept_declaration = 1;
+            }
+                     
+        });
+
+        return $form;
+    
+    }
+
+
+    public function show_fields($form)
+    {
+    
         $form->disableCreatingCheck();
-        $form->tools(function (Form\Tools $tools) {
+        $form->tools(function (Form\Tools $tools) 
+        {
             $tools->disableDelete();
             $tools->disableView();
         });
 
-        $form->setWidth(8, 4);
+        $form->setWidth(8, 4);  
         Admin::style('.form-group  {margin-bottom: 25px;}');
+
         $user = Auth::user();
 
-        if ($form->isCreating()) {
+        if ($form->isCreating()) 
+        {
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
-        } else {
+        } else 
+        {
             $form->hidden('administrator_id', __('Administrator id'));
         }
 
-
-
-        if (Admin::user()->isRole('basic-user')) {
+        //basic-user form fields
+        if (Admin::user()->isRole('basic-user')) 
+        {
 
             $form->select('type', __('Application category?'))
-            ->options([
-                'Seed Merchant' => 'Seed Merchant',
+            ->options
+            ([
                 'Seed Producer' => 'Seed Producer',
                 'Seed Stockist' => 'Seed Stockist',
                 'Seed Importer' => 'Seed Importer',
                 'Seed Exporter' => 'Seed Exporter',
                 'Seed Processor' => 'Seed Processor',
             ])
-            ->help('Which SR4 type are tou applying for?')
+            ->help('Which SR4 type are you applying for?')
             ->rules('required');
 
-            $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required();
+            $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->required();
             $form->text('company_initials', __('Company initials'))->required();
-            $form->text('premises_location', __('Premises location'))->required();
-
-            $form->text('expirience_in', __('Years of experience'))
-                ->rules('min:1')
-                ->attribute('type', 'number')
+            $form->text('premises_location', __('Premises location'));
+            $form->text('years_of_expirience', __('Years of experience'))
                 ->required();
-            $form->select('years_of_expirience', __('Experience in?'))
-                ->options([
-                    'Seed Merchant' => 'Seed Merchant',
-                    'Seed Producer' => 'Seed Producer',
-                    'Seed Stockist' => 'Seed Stockist',
-                    'Seed Importer' => 'Seed Importer',
-                    'Seed Exporter' => 'Seed Exporter',
-                    'Seed Processor' => 'Seed Processor',
-                ])
-                ->help('What are you experienced in?')
-                ->rules('required');
-
+            $form->select('expirience_in', __('Experience in?'))
+                ->options
+            ([
+                'Seed Producer' => 'Seed Producer',
+                'Seed Stockist' => 'Seed Stockist',
+                'Seed Importer' => 'Seed Importer',
+                'Seed Exporter' => 'Seed Exporter',
+                'Seed Processor' => 'Seed Processor',
+            ])
+            ->help('What are you experienced in?')
+            ->rules('required');
 
             $form->html('<h3>I/We wish to apply for a certificate as a seed stockist.</h3>');
-
             $form->radio('dealers_in', __('Applicant is applying for production of?'))
-                ->options([
+                 ->options
+            ([
+                'Agricultural crops' => 'Agricultural crops',
+                'Horticultural crops' => 'Horticultural crops',
+                'Other' => 'Other',
+                'NA' => 'NA'
+            ])
+            ->required()
 
-                    'Agricultural crops' => 'Agricultural crops',
-                    'Horticultural crops' => 'Horticultural crops',
-                    'Other' => 'Other'
-                ])
-                ->required()
-                ->when('Other', function (Form $form) {
-                    $form->text('dealers_in_other', 'Applicant is applying for Other Production of?')
-                        ->help("Please specify Production that you are applying for");
-                });
-
-
-            $form->radio('processing_of', __('Applicant is applying for processing of?'))
-                ->options([
-                    'Agricultural crops' => 'Agricultural crops',
-                    'Horticultural crops' => 'Horticultural crops',
-                    'Other' => 'Other'
-                ])
-                ->required()
-                ->when('Other', function (Form $form) {
-                    $form->text('processing_of_other', __('Applicant is applying for Other processing of?'))
-                        ->help('Specify if you selected "Other" processing.');
-                });
-
+            ->when('Other', function (Form $form) 
+            {
+                $form->text('dealers_in_other', 'Applicant is applying for Other Production of?')
+                    ->help("Please specify Production that you are applying for");
+            });
 
             $form->radio('marketing_of', __('Applicant is applying for marketing of?'))
-                ->options([
+                ->options
+                ([
                     'Agricultural crops' => 'Agricultural crops',
                     'Horticultural crops' => 'Horticultural crops',
-                    'Other' => 'Other'
+                    'Other' => 'Other',
+                    'NA' => 'NA'
                 ])
                 ->required()
-                ->when('Other', function (Form $form) {
+
+                ->when('Other', function (Form $form) 
+                {
                     $form->text('marketing_of_other', __('Applicant is applying for Other marketing of?'))
                         ->help('Please Specify if you selected "Other" marketing.');
                 });
 
 
-
-
             $form->radio('have_adequate_land', 'Do you have adequate land to handle basic seed?')
-                ->options([
+                ->options
+                ([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])->required()
-                ->when('1', function (Form $form) {
+
+                ->when('1', function (Form $form) 
+                {
                     $form->text('land_size', 'Specify Land size. (in Acres)')
-                        ->attribute('type', 'number')
                         ->help("Please specify land (in Acres)")
                         ->attribute('min', 1);
                 });
 
 
             $form->radio('have_adequate_storage', 'I/We have adequate storage facilities to handle the resultant seed:')
-                ->options([
+                ->options
+                ([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])->required();
 
             $form->radio('have_adequate_equipment', 'Do you have adequate equipment to handle basic seed?')
-                ->options([
+                ->options
+                ([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])->required()
-                ->when('1', function (Form $form) {
+
+                ->when('1', function (Form $form) 
+                {
                     $form->text('eqipment', 'specify the equipment')
                         ->help("Please specify the equipment");
                 });
 
 
             $form->radio('have_contractual_agreement', 'Do you have contractual agreement with the growers you have recruited?')
-                ->options([
+                ->options
+                ([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])
                 ->required();
 
             $form->radio('have_adequate_field_officers', 'Do you have adequate field officers to supervise and advise growers on all operation of seed production?')
-                ->options([
+                ->options
+                ([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])
                 ->required();
 
             $form->radio(
                 'have_conversant_seed_matters',
-                __('Do you have adequate and knowledgeable personel who are conversant with seed matters?')
-            )
-                ->options([
+                __('Do you have adequate and knowledgeable personal who are conversant with seed matters?'))
+                ->options
+                ([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
+                ])
+                ->required();
+            
+            $form->text('souce_of_seed', __('What is your souce of seed?'))->required();
+    
+            $form->radio('have_adequate_land_for_production', __('Do you have adequate land for production of basic seed?'))
+                ->options
+                ([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                    '2' => 'NA'
                 ])
                 ->required();
 
-
-
-            $items = Administrator::all();
-            $_items = [];
-            foreach ($items as $key => $item) {
-                // if($item->parent>0){
-                //     continue;
-                // }
-                $_items[$item->id] = $item->name . " - " . $item->id;
-            }
-            $_items['Other'] = "Other";
-            $form->select(
-                'souce_of_seed',
-                __('What is your source of seed?')
-            )->options($_items)
-                ->help('Select "Other" if your supplier is not found on the list.')
-                ->required()
-                ->when('Other', function (Form $form) {
-                    $form->text('souce_of_seed_other', 'Specify your source of seed?')
-                        ->help("Please specify your source of seed?");
-                });
-
-
-            $form->radio(
-                'have_adequate_land_for_production',
-                __('Do you have adequate land for production of basic seed?')
-            )
-                ->options([
+            $form->radio('have_internal_quality_program', __('Do you have an internal quality program?') )
+                ->options
+                ([
                     '1' => 'Yes',
                     '0' => 'No',
+                    '2' => 'NA'
                 ])
                 ->required();
 
-            $form->radio(
-                'have_internal_quality_program',
-                __('Do you have an internal quality program?')
-            )
-                ->options([
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->required();
+            $form->file('receipt', __('Receipt'))->required();
 
-
-            $form->file('receipt', __('Receipt'));
+            if(Utils::check_inspector_remarks())
+            {
             $form->textarea('status_comment', __('Inspector\'s remarks.'))->readonly();
+            }
 
             $form->divider();
             $form->html('<h4>Declaration:</h4>
-                <p>I/WE* AT ANY TIME DURING OFFICIAL WORKING HOURS EVEN WITHOUT previous appointment will allow the inspectors entry to the seed stores and thereby provide them with the facilities necessary to carry out their inspection work as laid out in the seed and plant regulations, 2015.I/We further declare taht I/We am/are conversant with the Regulations. In addition I/We will send a list of all seed lots in our stores on a given date and or at such a date as can be mutually agreed upon between the National Seed Certification Service and ourselves.</p>
-        ');
+                <p>I/WE* AT ANY TIME DURING OFFICIAL WORKING HOURS EVEN WITHOUT previous appointment will allow the inspectors entry to the seed stores and thereby provide them with the facilities necessary to carry out their inspection work as laid
+                 out in the seed and plant regulations, 2015.I/We further declare taht I/We am/are conversant with the Regulations. In addition I/We will send a list of all seed lots in our stores on a given date and or at such a date as can be mutually agreed upon between the National Seed Certification Service and ourselves.</p> ');
 
-            $form->radio(
-                'accept_declaration',
-                __('Accept declaration')
-            )
-                ->options([
-                    '1' => 'I Accept',
-                ])
-                ->required();
+            $form->hidden('accept_declaration', __('Accept declaration') )->required();
+            $form->html('<input type="checkbox" name="accept_declaration" value="1" required>  I Accept');
+
+                
         }
-
-        if (Admin::user()->isRole('admin')) {
+        
+        // administrator form fields
+        if (Admin::user()->isRole('admin')) 
+        {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
-
-            $form->text('type', __('Applicant type'))->readonly();
-
+            $form->text('type', __('Applicant type'))->readonly(); 
             $form->divider();
-            $form->radio('status', __('Status'))
-                ->options([
-                    '1' => 'Pending',
-                    '2' => 'Under inspection',
+            $form->radio('status', __('Action'))
+                ->options
+                ([
+                    '2' => 'Assign Inspector',
                 ])
                 ->required()
-                ->when('2', function (Form $form) {
+
+                ->when('2', function (Form $form) 
+                {
                     $items = Administrator::all();
                     $_items = [];
-                    foreach ($items as $key => $item) {
-                        if (!Utils::has_role($item, "inspector")) {
+                    foreach ($items as $key => $item) 
+                    {
+                        if (!Utils::has_role($item, "inspector")) 
+                        {
                             continue;
                         }
                         $_items[$item->id] = $item->name . " - " . $item->id;
@@ -500,69 +792,50 @@ class FormSr4Controller extends AdminController
         }
 
 
-        if (Admin::user()->isRole('inspector')) {
+        // inspector form fields
+        if (Admin::user()->isRole('inspector')) 
+        {
             $form->text('type', __('Applicant type'))->readonly();
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
             $form->text('company_initials', __('Company initials'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
-
+            $form->file('receipt', __('Receipt'))->readonly(); 
             $form->radio('status', __('Status'))
-                ->options([
+                ->options
+                ([ 
                     '3' => 'Halted',
                     '4' => 'Rejected',
                     '5' => 'Accepted',
                 ])
                 ->required()
-                ->when('2', function (Form $form) {
-                    $items = Administrator::all();
-                    $_items = [];
-                    foreach ($items as $key => $item) {
-                        if (!Utils::has_role($item, "inspector")) {
-                            continue;
-                        }
-                        $_items[$item->id] = $item->name . " - " . $item->id;
-                    }
-                    $form->select('inspector', __('Inspector'))
-                        ->options($_items)
-                        ->readonly()
-                        ->help('Please select inspector')
-                        ->rules('required');
-                })
-                ->when('in', [3, 4], function (Form $form) {
+             
+                ->when('in', [3, 4], function (Form $form) 
+                {
                     $form->textarea('status_comment', 'Inspector\'s comment (Remarks)')
                         ->help("Please specify with a comment");
                 })
-                ->when('in', [5, 6], function (Form $form) {
 
-                    $today = Carbon::now();
-                    $_today = Carbon::now();
-                   /*  echo ($today);
-                    echo "<br>";
-                    $_today = $today->addYear();*/
-
- 
-
-                    $form->text('seed_board_registration_number', __('Enter seed board registration number'))
+                ->when('5', function (Form $form) 
+                {
+                    $form->text('seed_board_registration_number', __('Enter Seed Board Registration number'))
                         ->help("Please Enter seed board registration number")
-                        ->default(rand(10000, 10000));
-                    $form->date('valid_from', 'Valid from date?')->readonly();
-                    $form->date('valid_until', 'Valid until date?')->readonly();
+                        ->default("MAAIF" ."/". date('Y') ."/". "SC". "/". mt_rand(10000000, 99999999));
+                    $form->date('valid_from', 'Valid from date?');
+                    $form->date('valid_until', 'Valid until date?');
                 });
         }
 
 
-        $form->footer(function ($footer) {
+        $form->footer(function ($footer) 
+        {
 
-            // disable reset btn
             $footer->disableReset();
-
-            // disable `View` checkbox
             $footer->disableViewCheck();
-
-            // disable `Continue Creating` checkbox
             $footer->disableCreatingCheck();
         });
-        return $form;
+
+        
+
     }
 }

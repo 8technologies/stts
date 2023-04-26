@@ -2,333 +2,132 @@
 
 namespace App\Admin\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\AdminRoleUser;
-use App\Models\CropInspectionType;
-use App\Models\CropVariety;
-use App\Models\FormQds;
-use App\Models\FormSr4;
-use App\Models\FormSr6;
-use App\Models\ImportExportPermit;
-use App\Models\PlantingReturn;
-use Encore\Admin\Auth\Database\Administrator;
-use Encore\Admin\Controllers\Dashboard;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Layout\Column;
 use Encore\Admin\Layout\Content;
+use App\Http\Controllers\Controller;
 use Encore\Admin\Layout\Row;
+use Encore\Admin\Layout\Column;
+use Encore\Admin\Widgets;
 use Encore\Admin\Widgets\Box;
-use Encore\Admin\Widgets\Collapse;
-use Encore\Admin\Widgets\InfoBox;
-use Encore\Admin\Widgets\Tab;
-use Encore\Admin\Widgets\Table;
-use Illuminate\Support\Facades\Auth;
+use App\Admin\Controllers\Dashboard\HomeDashboardController2;
+use Encore\Admin\Facades\Admin;
+
 
 class HomeController extends Controller
 {
-    public function index(Content $content)
-    {
-
-        
-        // foreach (CropInspectionType::all() as $key => $v) {
-        //     echo "==> {$v->crop->name}<hr>";
-        // }
-        // dd();
-
-        $content->title('Main Dashboard');
-        //$content->description('Description...');
-
-        $content->row(function ($row) { 
-            if (
-                Admin::user()->isRole('admin') ||
-                Admin::user()->isRole('inspector') 
-            ) {
-                $box = new Box('Marketable seed', view('admin.dashboard.chart-marketable-seed'));
-                $box->removable();
-                $box->collapsable();
-                $box->style('success');
-                $box->solid();
-                $row->column(6, $box);
-
-                $box = new Box('Seed stock', view('admin.dashboard.chart-seed-stock'));
-                $box->removable();
-                $box->collapsable();
-                $box->style('success');
-                $box->solid();
-                $row->column(6, $box);
-            }
-
-
-            #======================= Users - Starts =========================#
-            if (
-                Admin::user()->isRole('admin') ||
-                Admin::user()->isRole('inspector') 
-            ) {
-                $row->column(4, new InfoBox(
-                    ''
-                        . AdminRoleUser::where('role_id', 2)->count() . " Admins, "
-                        . AdminRoleUser::where('role_id', 3)->count() . " Basic Users, "
-                        . AdminRoleUser::where('role_id', 4)->count() . " Inspectors "
-                        // . AdminRoleUser::where('role_id', 5)->count() . " Lab receptionists, "
-                        // . AdminRoleUser::where('role_id', 6)->count() . " Lab technicians, "
-                        // . AdminRoleUser::where('role_id', 1)->count() . " Super Admins, "
-                        // . AdminRoleUser::where('role_id', 7)->count() . " USTA users. ",
-                    ,'All users',
-                    'green',
-                    admin_url('/auth/users'),
-                    Administrator::count() . " - Users"
-                ));
-            }
-            #======================= Users - ends =========================#
-
-
-            #======================= Sr6s forms - Starts =========================#
-            if (
-                Admin::user()->isRole('admin') ||
-                Admin::user()->isRole('inspector') ||
-                Admin::user()->isRole('basic-user')
-
-            ) {
-                if (Admin::user()->isRole('admin')) {
-                    $count = FormSr6::count();
-                    $_count = FormSr6::where('status', "=", 1)->count();
-                } else if (Admin::user()->isRole('inspector')) {
-                    $count = FormSr6::where('inspector', Admin::user()->id)->count();
-                    $_count = FormSr6::where([
-                        'status' => 2,
-                        'inspector' => Admin::user()->id,
-                    ])->count();
-                } else if (Admin::user()->isRole('basic-user')) {
-                    $count = FormSr6::where('administrator_id', Admin::user()->id)->count();
-                    $_count = FormSr6::where([
-                        'status' => 1,
-                        'administrator_id' => Admin::user()->id,
-                    ])
-                        ->count();
-                    $_count += FormSr6::where([
-                        'status' => 3,
-                        'administrator_id' => Admin::user()->id,
-                    ])
-                        ->count();
-                }
-                $color = "green";
-                if ($_count > 0) {
-                    $color = "red";
-                }
-                $row->column(4, new InfoBox(
-                    "{$_count} Need(s) attention.",
-                    'wpforms',
-                    $color,
-                    admin_url('/import-export-permits'),
-                    $count . " - Sr6 Forms"
-                ));
-            }
-            #======================= Sr6s forms - Ends =========================#
-
-
-
-            #======================= FormSr4 forms - Starts =========================#
-            if (
-                Admin::user()->isRole('admin') ||
-                Admin::user()->isRole('inspector') ||
-                Admin::user()->isRole('basic-user')
-
-            ) {
-                if (Admin::user()->isRole('admin')) {
-                    $count = FormSr4::count();
-                    $_count = FormSr4::where('status', "=", 1)->count();
-                } else if (Admin::user()->isRole('inspector')) {
-                    $count = FormSr4::where('inspector', Admin::user()->id)->count();
-                    $_count = FormSr4::where([
-                        'status' => 2,
-                        'inspector' => Admin::user()->id,
-                    ])->count();
-                } else if (Admin::user()->isRole('basic-user')) {
-                    $count = FormSr4::where('administrator_id', Admin::user()->id)->count();
-                    $_count = FormSr4::where([
-                        'status' => 1,
-                        'administrator_id' => Admin::user()->id,
-                    ])
-                        ->count();
-                    $_count += FormSr4::where([
-                        'status' => 3,
-                        'administrator_id' => Admin::user()->id,
-                    ])
-                        ->count();
-                }
-                $color = "green";
-                if ($_count > 0) {
-                    $color = "red";
-                }
-                $row->column(4, new InfoBox(
-                    "{$_count} Need(s) attention.",
-                    'wpforms',
-                    $color,
-                    admin_url('/import-export-permits'),
-                    $count . " - Sr4 forms"
-                ));
-            }
-            #======================= FormSr4 forms - Ends =========================#
-
-
-            #======================= Import permits - Starts =========================#
-            if (
-                Admin::user()->isRole('admin') ||
-                Admin::user()->isRole('inspector') ||
-                Admin::user()->isRole('basic-user')
-
-            ) {
-                if (Admin::user()->isRole('admin')) {
-                    $count = ImportExportPermit::count();
-                    $_count = ImportExportPermit::where('status', "=", 1)->count();
-                } else if (Admin::user()->isRole('inspector')) {
-                    $count = ImportExportPermit::where('inspector', Admin::user()->id)->count();
-                    $_count = ImportExportPermit::where([
-                        'status' => 2,
-                        'inspector' => Admin::user()->id,
-                    ])->count();
-                } else if (Admin::user()->isRole('basic-user')) {
-                    $count = ImportExportPermit::where('administrator_id', Admin::user()->id)->count();
-                    $_count = ImportExportPermit::where([
-                        'status' => 1,
-                        'administrator_id' => Admin::user()->id,
-                    ])
-                        ->count();
-                    $_count += ImportExportPermit::where([
-                        'status' => 3,
-                        'administrator_id' => Admin::user()->id,
-                    ])
-                        ->count();
-                }
-                $color = "green";
-                if ($_count > 0) {
-                    $color = "red";
-                }
-                $row->column(4, new InfoBox(
-                    "{$_count} Need(s) attention.",
-                    'wpforms',
-                    $color,
-                    admin_url('/import-export-permits'),
-                    $count . " - Import/Exports"
-                ));
-            }
-            #======================= Import permits - Ends =========================#
-
-
-
-            #======================= QDS Producer - Starts =========================#
-            if (
-                Admin::user()->isRole('admin') ||
-                Admin::user()->isRole('inspector') ||
-                Admin::user()->isRole('basic-user')
-
-            ) {
-                if (Admin::user()->isRole('admin')) {
-                    $count = FormQds::count();
-                    $_count = FormQds::where('status', "=", 1)->count();
-                } else if (Admin::user()->isRole('inspector')) {
-                    $count = FormQds::where('inspector', Admin::user()->id)->count();
-                    $_count = FormQds::where([
-                        'status' => 2,
-                        'inspector' => Admin::user()->id,
-                    ])->count();
-                } else if (Admin::user()->isRole('basic-user')) {
-                    $count = FormQds::where('administrator_id', Admin::user()->id)->count();
-                    $_count = FormQds::where([
-                        'status' => 1,
-                        'administrator_id' => Admin::user()->id,
-                    ])
-                        ->count();
-                    $_count += FormQds::where([
-                        'status' => 3,
-                        'administrator_id' => Admin::user()->id,
-                    ])
-                        ->count();
-                }
-                $color = "green";
-                if ($_count > 0) {
-                    $color = "red";
-                }
-                $row->column(4, new InfoBox(
-                    "{$_count} Need(s) attention.",
-                    'wpforms',
-                    $color,
-                    admin_url('/form-qds'),
-                    $count . " - QDS forms"
-                ));
-            }
-            #======================= QDS Producer - Ends =========================#
-
-
-            #======================= Planting Return - Starts =========================#
-            if (
-                Admin::user()->isRole('admin') ||
-                Admin::user()->isRole('inspector') ||
-                Admin::user()->isRole('basic-user')
-
-            ) {
-                if (Admin::user()->isRole('admin')) {
-                    $count = PlantingReturn::count();
-                    $_count = PlantingReturn::where('status', "=", 1)->count();
-                } else if (Admin::user()->isRole('inspector')) {
-                    $count = PlantingReturn::where('inspector', Admin::user()->id)->count();
-                    $_count = PlantingReturn::where([
-                        'status' => 2,
-                        'inspector' => Admin::user()->id,
-                    ])->count();
-                } else if (Admin::user()->isRole('basic-user')) {
-                    $count = PlantingReturn::where('administrator_id', Admin::user()->id)->count();
-                    $_count = PlantingReturn::where([
-                        'status' => 1,
-                        'administrator_id' => Admin::user()->id,
-                    ])
-                        ->count();
-                    $_count += PlantingReturn::where([
-                        'status' => 3,
-                        'administrator_id' => Admin::user()->id,
-                    ])
-                        ->count();
-                }
-                $color = "green";
-                if ($_count > 0) {
-                    $color = "red";
-                }
-                $row->column(4, new InfoBox(
-                    "{$_count} Need(s) attention.",
-                    'wpforms',
-                    $color,
-                    admin_url('/planting-returns'),
-                    $count . "  - QDS forms"
-                ));
-            }
-            #======================= Planting Return - Ends =========================#
-
-
-
-
-
-        });
-        return $content;
-
-
+    public function myChart(Content $content) {            
         return $content
-            ->title('Dashboard')
-            ->description('Description...')
-            // ->row(Dashboard::title())
-            ->row(function (Row $row) {
+        ->title($title = Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')? 'The Admin Dashboard': 'Showing your Dashboard')
+    
+        ->row(function (Row $row) {
 
-                $row->column(4, function (Column $column) {
-                    $column->append("Main dashboard...");
-                    $column->append(Dashboard::environment());
-                });
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::extensions());
-                });
-
-                $row->column(4, function (Column $column) {
-                    $column->append(Dashboard::dependencies());
-                });
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box(
+                    Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')?"At a glance- (General activity)":"At a glance- (Your activity)", HomeDashboardController2::indexx());
+                $box->style('success');
+                $column->append($box);
             });
+
+            
+            // $bar = view('admin.chartjs.bar');
+            // $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
+
+            // $bar = view('admin.chartjs.line');
+            // $row->column(1/3, new Box('Marktet place Statistics\' Bar Graph', $bar));
+
+            // $bar = view('admin.chartjs.pie');
+            // $row->column(1/3, new Box('Quality Assurance Statistics\' Pie Chart', $bar));
+
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box('Marketplace Bar Graph', view('admin.chartjs.bar'));
+                $box->style('success');
+                $column->append($box);
+            });
+
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box('Seed Stock Line Graph', view('admin.chartjs.line'));
+                $box->style('success');
+                $column->append($box);
+            });
+
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box('Scatter Graph', view('admin.chartjs.scatter'));
+                $box->style('success');
+                $column->append($box);
+            });
+
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box('Combo Bar Graph', view('admin.chartjs.combo-bar-line'));
+                $box->style('success');
+                $column->append($box);
+            });
+
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box('Marketplace Pie Chart', view('admin.chartjs.pie'));
+                $box->style('success');
+                $column->append($box);
+            });
+
+            $row->column(1/3, function (Column $column) {
+                $box  = new Box('Radar Graph', view('admin.chartjs.radar'));
+                $box->style('success');
+                $column->append($box);
+            });
+
+            // $bar = view('admin::dashboard.dash');
+            // $row->column(11/12, new Box('Quality Assurance Statistics\' Pie Chart', $bar));
+        }); 
+    }
+
+
+    public function tab(Content $content)
+    {
+        $content->title('Your Dashboard')
+        ->row(function (Row $row) {
+            
+            $row->column(4, function (Column $column) {
+                // $column->append(HomeDashboardController2::indexx());
+            });
+        });
+
+        $this->showFormParameters($content);
+
+        $tab = new Widgets\Tab();
+
+        $box1 = new Widgets\Box('', HomeController::myChart($content)); // overview tab // original
+        // $box2 = new Widgets\Box('', HomeDashboardController2::indexx());  // the table
+        
+        
+        $box3 = new Widgets\Box('', view('admin.chartjs.pie'), 'For latest data, kindly refresh the page!');
+        $box4 = new Widgets\Box('', view('admin.chartjs.bar'), 'For latest data, kindly refresh the page!');
+        $box5 = new Widgets\Box('', view('admin.chartjs.line'), 'For latest data, kindly refresh the page!');            
+
+        $tab->add('Welcome tab', $box1);    // tab 1
+        $tab->add('Overview Table', $box2);    // tab 2
+        $tab->add('Quality Assurance', $box3);    // tab 3
+        $tab->add('Seed Stock', $box4);    // tab 4
+        $tab->add('Marketplace', $box5);    // tab 5
+        
+        $content->row($tab);
+        
+        return $content;
+    }
+
+    protected function showFormParameters($content)
+    {
+        $parameters = request()->except(['_pjax', '_token']);
+
+        if (!empty($parameters)) {
+
+            ob_start();
+
+            dump($parameters);
+
+            $contents = ob_get_contents();
+
+            ob_end_clean();
+
+            $content->row(new Widgets\Box('Form parameters', $contents));
+        }
     }
 }
+

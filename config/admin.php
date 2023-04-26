@@ -13,7 +13,9 @@ return [
     | login page.
     |
     */
-    'name' => 'The National Seed Tracking & Tracing System Uganda',
+    // 'name' => 'The National STTS',
+    'name' => 'STTS',
+    // 'name' => 'The National Seed Tracking & Tracing System Uganda',
 
     /*
     |--------------------------------------------------------------------------
@@ -24,7 +26,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<img width="100%" src="/assets/images/stts/logos/logo_top.png" alt="Admin logo">',
+    // 'logo' => '<img width="100%" src="\assets\images\stts\logos\logo_top.png" alt="Admin logo">',
 
     /*
     |--------------------------------------------------------------------------
@@ -158,7 +160,7 @@ return [
         'disk' => 'admin',
 
         // Image and file upload path under the disk above.
-        'directory' => [
+        'directory' => [ 
             'image' => '/',
             'file'  => 'files',
         ],
@@ -251,7 +253,7 @@ return [
     | Set a default avatar for newly created users.
     |
     */
-    'default_avatar' => 'vendor/laravel-admin/AdminLTE/dist/img/user2-160x160.jpg',
+    'default_avatar' => 'vendor/laravel-admin/AdminLTE/dist/img/default_profile.png',
 
     /*
     |--------------------------------------------------------------------------
@@ -291,7 +293,7 @@ return [
     | "sidebar-mini".
     |
     */
-    'layout' => ['fixed'],
+    'layout' => ['fixed', 'sidebar-mini'],
 
     /*
     |--------------------------------------------------------------------------
@@ -301,8 +303,8 @@ return [
     | This value is used to set the background image of login page.
     |
     */
-    'login_background_image' => url( '/assets/images/stts/bg/bg-1.jpg'), 
-    'login_background_image_2' =>  url('/assets/images/stts/bg/bg-2.jpeg'),
+    // 'login_background_image' => url( '/assets/images/stts/bg/bg-1.jpg'), 
+    // 'login_background_image_2' =>  url('/assets/images/stts/bg/bg-2.jpeg'),
 
     /*
     |--------------------------------------------------------------------------
@@ -323,7 +325,7 @@ return [
     | Whether to display the environment at the footer of each page
     |
     */
-    'show_environment' => true,
+    'show_environment' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -360,7 +362,7 @@ return [
     | Enable/Disable sidebar menu search
     |--------------------------------------------------------------------------
     */
-    'enable_menu_search' => false,
+    'enable_menu_search' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -377,7 +379,7 @@ return [
     | Alert message that will displayed on top of the page.
     |--------------------------------------------------------------------------
     */
-    'top_alert' => '',
+    'top_alert' => 'You are viewing a dash',
 
     /*
     |--------------------------------------------------------------------------

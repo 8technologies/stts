@@ -19,9 +19,9 @@ class CreateSeedLabsTable extends Migration
         Schema::create('seed_labs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignIdFor(Administrator::class)->default(1);
-            $table->foreignIdFor(CropVariety::class)->default(1);
-            $table->foreignIdFor(FormStockExaminationRequest::class)->default(1);
+            $table->foreignIdFor(Administrator::class)->nullable();
+            $table->foreignIdFor(CropVariety::class)->nullable();
+            $table->foreignIdFor(FormStockExaminationRequest::class)->nullable();
             $table->date("collection_date")->nullable();
             $table->text("payment_receipt")->nullable();
             $table->text("applicant_remarks")->nullable();

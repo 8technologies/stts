@@ -1,9 +1,12 @@
-<canvas id="bar" style="width: 100%;"></canvas>
-<script>
-$(function () {
+<div class="">
 
+<canvas id="bar" style="width: 100%;"></canvas>
+
+<script>
+
+$(function () {
     function randomScalingFactor() {
-        return Math.floor(Math.random() * 100)
+        return Math.floor(Math.random() * 1000)
     }
 
     window.chartColors = {
@@ -13,39 +16,41 @@ $(function () {
         green: 'rgb(75, 192, 192)',
         blue: 'rgb(54, 162, 235)',
         purple: 'rgb(153, 102, 255)',
-        grey: 'rgb(201, 203, 207)'
+        grey: 'rgb(201, 203, 207)',
+        ccc: '#318db4',
+        ggreen: '#008140'
     };
 
     var barChartData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [{
-            label: 'Dataset 1',
-            borderColor: window.chartColors.red,
-            borderWidth: 1,
-            data: [
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor()
-            ]
-        }, {
-            label: 'Dataset 2', 
-            borderColor: window.chartColors.blue,
-            borderWidth: 1,
-            data: [
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor()
-            ]
-        }]
+        labels: [
+            'Products', 
+            'Orders', 
+            'Pre-Orders', 
+            'Quotations',
+        ],
 
+        /**
+         * $auth_total_products
+$auth_total_orders
+$auth_total_pre_orders
+$auth_total_quotations
+         */
+        datasets: [{
+            label: 'Marketplace',
+            borderWidth: 1,
+            data: [
+                randomScalingFactor(),
+                randomScalingFactor(),
+                randomScalingFactor(),
+                randomScalingFactor()
+            ] ,
+                backgroundColor: [
+                    window.chartColors.ggreen,
+                    window.chartColors.blue,
+                    window.chartColors.yellow,
+                    window.chartColors.red,
+                ],
+        }]
     };
 
     var ctx = document.getElementById('bar').getContext('2d');
@@ -65,3 +70,5 @@ $(function () {
     });
 });
 </script>
+
+</div>

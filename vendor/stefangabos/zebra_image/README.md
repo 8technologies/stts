@@ -6,11 +6,11 @@
 
 [![Latest Stable Version](https://poser.pugx.org/stefangabos/zebra_image/v/stable)](https://packagist.org/packages/stefangabos/zebra_image) [![Total Downloads](https://poser.pugx.org/stefangabos/zebra_image/downloads)](https://packagist.org/packages/stefangabos/zebra_image) [![Monthly Downloads](https://poser.pugx.org/stefangabos/zebra_image/d/monthly)](https://packagist.org/packages/stefangabos/zebra_image) [![Daily Downloads](https://poser.pugx.org/stefangabos/zebra_image/d/daily)](https://packagist.org/packages/stefangabos/zebra_image) [![License](https://poser.pugx.org/stefangabos/zebra_image/license)](https://packagist.org/packages/stefangabos/zebra_image)
 
-Use Zebra Image to **resize**, **flip**, **rotate**, **crop** and **sharpen** images. The library supports loading and saving images in the **GIF**, **JPEG**, **PNG** and **WEBP** formats and preserves transparency of **GIF**, **PNG8**, **PNG24** and **WEBP** images and it doesn't require any external libraries other than the [GD2 extension](http://www.php.net/manual/en/book.image.php/) (with which PHP usually comes pre-compiled with).
+Use Zebra Image to **resize**, **flip**, **rotate**, **crop** and **sharpen** images. The library supports loading and saving images in the **GIF**, **JPEG**, **PNG** and **WEBP** formats and preserves transparency of **GIF**, **PNG8**, **PNG24** and **WEBP** images and it doesn't require any external libraries other than the [GD2 extension](https://www.php.net/manual/en/book.image.php) (with which PHP usually comes pre-compiled with).
 
-All the [filters supported by PHP](http://php.net/manual/en/function.imagefilter.php) can be applied to images. These filters include negate, grayscale, brightness, contrast, colorize, edgedetect, emboss, gaussian blur, selective blur, mean removal, smooth and pixelate. Multiple filters can be applied at once for creating custom filters.
+All the [filters supported by PHP](https://www.php.net/manual/en/function.imagefilter.php) can be applied to images. These filters include negate, grayscale, brightness, contrast, colorize, edgedetect, emboss, gaussian blur, selective blur, mean removal, smooth and pixelate. Multiple filters can be applied at once for creating custom filters.
 
-The code is heavily commented and generates no warnings/errors/notices when PHP's error reporting level is set to [E_ALL](https://web.archive.org/web/20160226192832/http://www.php.net/manual/en/function.error-reporting.php).
+The code is heavily commented and generates no warnings/errors/notices when PHP's error reporting level is set to [E_ALL](https://www.php.net/manual/en/function.error-reporting.php).
 
 Using this library you can resize images to *exact* given width and height and still maintain aspect ratio by using one of the following methods:
 
@@ -68,7 +68,7 @@ Here are the results of resizing a 800×573 pixels image to a 200×200 pixels im
 ## Features
 
 - can be used to resize, flip, rotate, crop and sharpen images
-- all the [filters supported by PHP](http://php.net/manual/en/function.imagefilter.php) can be applied to images: negate, grayscale, brightness, contrast, colorize, edgedetect, emboss, gaussian blur, selective blur, mean removal, smooth and pixelate; multiple filters can be applied at once for creating custom filters;
+- all the [filters supported by PHP](https://www.php.net/manual/en/function.imagefilter.php) can be applied to images: negate, grayscale, brightness, contrast, colorize, edgedetect, emboss, gaussian blur, selective blur, mean removal, smooth and pixelate; multiple filters can be applied at once for creating custom filters;
 - images can be resized to *exact* sizes and maintaining aspect ratio by automatically cropping them
 - preserves transparency of GIF, PNG8, PNG24 and WEBP images
 - supports creation of interlaced JPEG images
@@ -159,28 +159,28 @@ if (!$image->resize(100, 100, ZEBRA_IMAGE_CROP_CENTER)) {
     switch ($image->error) {
 
         case 1:
-            echo 'Source file could not be found!';
+            echo 'Source file could not be found';
             break;
         case 2:
-            echo 'Source file is not readable!';
+            echo 'Source file is not readable';
             break;
         case 3:
-            echo 'Could not write target file!';
+            echo 'Could not write target file';
             break;
         case 4:
-            echo 'Unsupported source file format!';
+            echo 'Unsupported source file type';
             break;
         case 5:
-            echo 'Unsupported target file format!';
+            echo 'Unsupported target file type';
             break;
         case 6:
-            echo 'GD library version does not support target file format!';
+            echo 'GD library version does not support target file format';
             break;
         case 7:
-            echo 'GD library is not installed!';
+            echo 'GD library is not installed';
             break;
         case 8:
-            echo '"chmod" command is disabled via configuration!';
+            echo '"chmod" command is disabled via configuration';
             break;
         case 9:
             echo '"exif_read_data" function is not available';

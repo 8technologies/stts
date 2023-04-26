@@ -35,7 +35,7 @@ class TestTreeController extends AdminController
 
             $tree->branch(function ($branch) {
                 //return "romina";
-                $tree->dsia
+                $tree->dsia;
 
                 $ord = $branch['id'];
                 $lab = SeedLab::find($ord);

@@ -1,9 +1,12 @@
+<div class="chart-container">
+
 <canvas id="line" style="width: 100%;"></canvas>
 <script>
+    
 $(function () {
 
     function randomScalingFactor() {
-        return Math.floor(Math.random() * 100)
+        return Math.floor(Math.random() * 10)
     }
 
     window.chartColors = {
@@ -13,48 +16,65 @@ $(function () {
         green: 'rgb(75, 192, 192)',
         blue: 'rgb(54, 162, 235)',
         purple: 'rgb(153, 102, 255)',
-        grey: 'rgb(201, 203, 207)'
+        grey: 'rgb(201, 203, 207)',
+        ccc: '#318db4',
+        ggreen: '#008140'
     };
 
     var config = {
         type: 'line',
         data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: [
+                'Stock examination', 
+                'My Stock', 
+                'Marketable seed'
+            ],
             datasets: [{
-                label: 'My First dataset',
-                backgroundColor: window.chartColors.red,
-                borderColor: window.chartColors.red,
+                label: 'Stock examination',
+                backgroundColor: window.chartColors.ggreen,
+                borderColor: window.chartColors.ggreen,
                 data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
                     randomScalingFactor(),
                     randomScalingFactor(),
                     randomScalingFactor()
                 ],
                 fill: false,
+                backgroundColor: [
+                    window.chartColors.ggreen
+                ],
             }, {
-                label: 'My Second dataset',
+                label: 'My Stock',
                 fill: false,
-                backgroundColor: window.chartColors.blue,
-                borderColor: window.chartColors.blue,
+                backgroundColor: window.chartColors.orange,
+                borderColor: window.chartColors.orange,
                 data: [
                     randomScalingFactor(),
                     randomScalingFactor(),
-                    randomScalingFactor(),
-                    randomScalingFactor(),
+                    randomScalingFactor()
+                ] ,
+                backgroundColor: [
+                    window.chartColors.orange,
+                ],
+            }, {
+                label: 'Marketable seed\n',
+                fill: false,
+                backgroundColor: window.chartColors.red,
+                borderColor: window.chartColors.red,
+                data: [
                     randomScalingFactor(),
                     randomScalingFactor(),
                     randomScalingFactor()
+                ]  ,
+                backgroundColor: [
+                    window.chartColors.red,
                 ],
             }]
         },
         options: {
             responsive: true,
             title: {
-                display: true,
-                text: 'Chart.js Line Chart'
+                display: false,
+                text: 'Seed Stock Line Chart'
             },
             tooltips: {
                 mode: 'index',
@@ -69,7 +89,7 @@ $(function () {
                     display: true,
                     scaleLabel: {
                         display: true,
-                        labelString: 'Month'
+                        labelString: 'Seed Stock'
                     }
                 }],
                 yAxes: [{
@@ -87,3 +107,5 @@ $(function () {
     new Chart(ctx, config);
 });
 </script>
+
+</div>

@@ -18,8 +18,7 @@
     }
 </style>
 @php
-$_log_number = "";
-if(isset($_GET['lot_number'])){
+$_log_number = "";if(isset($_GET['lot_number'])){
 $_log_number = $_GET['lot_number'];
 }
 @endphp

@@ -13,6 +13,6 @@
         @endif
 
     </div>
-    <!-- Default to the left --> 
-    <strong>Powered by <a href="https://8technologies.net/" target="_blank">8-Technologies</a></strong>
+    <!-- Default to the left -->
+    <strong>Developed by <a href="https://8technologies.net" target="_blank">8technologies.net</a></strong>
 </footer>

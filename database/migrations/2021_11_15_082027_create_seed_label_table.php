@@ -23,6 +23,7 @@ class CreateSeedLabelTable extends Migration
             $table->foreignIdFor(SeedLab::class)->default(1);
             $table->foreignIdFor(CropVariety::class)->default(1);
             $table->text("quantity")->nullable();
+            $table->text("available_stock")->nullable();
             $table->text("package_quantity")->nullable();
             $table->text("applicant_remarks")->nullable();            
  

@@ -21,27 +21,26 @@ use Encore\Admin\Tree;
 use Encore\Admin\Widgets\Tab;
 use Encore\Admin\Widgets\Table;
 
+
 class TrackAndTraceController extends AdminController
 {
     public function index(Content $content)
     {
-
         return Admin::content(function (Content $content) {
-
-
             $title = "No lot number set";
             $lot_number = "";
             $lot_is_set = false;
+
             if (isset($_GET['lot_number'])) {
                 if (strlen(trim($_GET['lot_number'])) > 0) {
                     $lot_is_set = true;
                     $lot_number = trim($_GET['lot_number']);
-                    $title = "LOT NUMBER: " . $lot_number;
+                    $title = "LOT NUMBER (Import Permit): " . $lot_number;
                 }
             }
 
-            $lab_works = SeedLab::where('temp_parent', '>', 0)
-                ->get();
+            $lab_works = SeedLab::where('temp_parent', '>', 0)->get();
+
             foreach ($lab_works as $key => $lab_work) {
                 $lab_work->parent_id = $lab_work->temp_parent;
                 $lab_work->temp_parent = 0;
@@ -61,10 +60,7 @@ class TrackAndTraceController extends AdminController
                         }
                     }
 
-
                     if ($lot_is_set) {
-
-
                         $tree->query(function ($model) {
                             $pending = [];
                             $done = [];
@@ -73,7 +69,7 @@ class TrackAndTraceController extends AdminController
 
                             $lot_number = trim($_GET['lot_number']);
                             $lab = SeedLab::where([
-                                'mother_lot' => $lot_number,
+                                'lot_number' => $lot_number,
                                 'parent_id' => 0,
                             ])
                                 ->first();
@@ -81,7 +77,7 @@ class TrackAndTraceController extends AdminController
                             if ($lab == null) {
 
                                 $lab_temp = SeedLab::where([
-                                    'mother_lot' => $lot_number,
+                                    'lot_number' => $lot_number,
                                 ])
                                     ->first();
                                 if ($lab_temp != null) {
@@ -134,10 +130,10 @@ class TrackAndTraceController extends AdminController
                                 }
                             }
 
-
                             return $model->whereIn('id', $found);
                         });
                     }
+
 
                     //$tree->disableCreate();
                     $tree->disableSave();
@@ -149,7 +145,8 @@ class TrackAndTraceController extends AdminController
                         if (!$lab) {
                             return $ord . " N/A";
                         }
-                        return $lab->mother_lot . " => " . $lab->id;
+                        // return "Id:(" . $lab->id . ') ' . "Mother Lot: " . ($lab->mother_lot?$lab->mother_lot:"?") . " => " . "Lot Number: " . ($lab->lot_number?$lab->lot_number:"?");
+                        return "Mother Lot: " . ($lab->mother_lot?$lab->mother_lot:"?") . " => " . "Lot Number: " . ($lab->lot_number?$lab->lot_number:"?");
 
                         return ($branch['mother_lot']);
 
@@ -163,17 +160,17 @@ class TrackAndTraceController extends AdminController
             );
 
 
-
             $tab = new Tab();
             $tab->add("Tracking", $track);
-
             $trace_table = "Nothing to trace.";
+
             if ($lot_is_set) {
                 $traces = [];
                 $temp_lot_number = $lot_number;
 
                 $trace_lab = SeedLab::where([
-                    'mother_lot' => $temp_lot_number,
+                    // 'mother_lot' => $temp_lot_number,
+                    'lot_number' => $temp_lot_number,
                 ])
                     ->first();
 
@@ -194,17 +191,35 @@ class TrackAndTraceController extends AdminController
                     }
                 }
 
-                $headers = ['Mother lot', 'Lot number', 'Details'];
+                $headers = [
+                    // 'Id', 
+                    'Mother lot', 
+                    'Lot number', 
+                    // 'Company Name', 
+                    'Crop Variety', 
+                    'Year', 
+                    'Original Quantity'
+                ];
+
                 $rows = [];
+
                 foreach ($traces as $key => $trace_value) {
+                    // $row['id'] = $trace_value->id;
                     $row['mother_lot'] = $trace_value->mother_lot;
                     $row['lot_number'] = $trace_value->lot_number;
-                    $row['id'] = $trace_value->id;
+                    // $row['company_name'] = $trace_value->company_initials;
+                    $row['crop_variety'] = $trace_value->crop_variety->name;
+                    
+                    $year = Carbon::createFromFormat('Y-m-d', $trace_value->collection_date)->year;
+                    $row['year'] = $year;
+                    
+                    $row['Original Quantity'] = $trace_value->quantity;
                     $rows[] = $row;
                 }
 
                 $trace_table = new Table($headers, $rows);
             }
+            
             $tab->add("Tracing", $trace_table);
 
             $content->body($tab);
@@ -224,7 +239,7 @@ class TrackAndTraceController extends AdminController
 
         $form->text('mother_lot')->rules('required');
 
-        //$form->image('logo');
+        // $form->image('logo');
 
 
         return $form;
