@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class EnsureTokenIsValid
 {
-    /**
+    /** 
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
