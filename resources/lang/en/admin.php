@@ -1,14 +1,18 @@
 <?php
 
+use App\Models\Lang;
+
+return Lang::all()->pluck('en','key'); 
+
 return [
-    'online'                => 'Online',
+    'online'                => 'Online English',
     'login'                 => 'Login',
     'logout'                => 'Logout',
     'setting'               => 'Setting',
     'name'                  => 'Name',
     'username'              => 'Username',
-    'first_name'              => 'First name',
-    'last_name'              => 'Last name',
+    'first_name'            => 'First name',
+    'last_name'             => 'Last name',
     'password'              => 'Password',
     'password_confirmation' => 'Password confirmation',
     'remember_me'           => 'Remember me',

@@ -14,10 +14,7 @@ use Encore\Admin\Facades\Admin;
 
 class HomeController extends Controller
 {
-    public function myChart(Content $content) {
-        return $content->title('name', __('Romina'));
-        
-
+    public function myChart(Content $content) {            
         return $content
         ->title($title = Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')? 'The Admin Dashboard': 'Showing your Dashboard')
     

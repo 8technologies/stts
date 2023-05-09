@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Notification;
 Route::get('/dd', [BarGraphTotalsController::class, 'index']);
 Route::get('/dddd', [PieChartTotalsController::class, 'index']);
 
-Route::get('/', [MainController::class, 'index']);
+Route::get('/', [MainController::class, 'index']); 
+Route::get('/change-lang', [MainController::class, 'change_lang']); 
 
 // Route::get('/test', [MainController::class, function (){
 //     dd("Simple test");

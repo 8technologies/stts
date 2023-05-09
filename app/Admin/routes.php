@@ -48,6 +48,7 @@ Route::group([
     $router->resource('quotations', QuotationController::class);
     $router->resource('track-and-trace', TrackAndTraceController::class);
     $router->resource('sub-growers', SubGrowerController::class);
+    $router->resource('langs', LangController::class);
     
 
     $router->resource('test-trees', TestTreeController::class);

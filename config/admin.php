@@ -99,7 +99,7 @@ return [
     | If your page is going to be accessed via https, set it to `true`.
     |
     */
-    'https' => env('ADMIN_HTTPS', false),
+    'https' => env('ADMIN_HTTPS', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -140,6 +140,7 @@ return [
 
         // The URIs that should be excluded from authorization.
         'excepts' => [
+            'change-lang',
             'auth/login',
             'auth/logout',
         ],
@@ -413,13 +414,13 @@ return [
             // the key should be same as var locale in config/app.php
             // the value is used to show
             'languages' => [
+                'fr' => 'French',
                 'en' => 'English',
-                'zh-CN' => '简体中文',
             ],
             // default locale
-            'default' => 'zh-CN',
+            'default' => 'fr',
             // if or not show multi-language login page, optional, default is true
-            'show-login-page' => true,
+            'show-login-page' => false,
             // if or not show multi-language navbar, optional, default is true
             'show-navbar' => true,
             // the cookie name for the multi-language var, optional, default is 'locale'

@@ -9,7 +9,7 @@
 
                 @foreach($languages as $key => $language)
                     <li><!-- start message -->
-                        <a class="language" href="#" data-id="{{$key}}">
+                        <a class="language text-dark" href="#" data-id="{{$key}}">
                             {{$language}}
                             @if($key == $current)
                                 <i class="fa fa-check pull-right"></i>

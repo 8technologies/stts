@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Lang;
+
+return Lang::all()->pluck('fr','key');
+
 return [
     'online'                => 'En ligne',
     'login'                 => 'Connexion',

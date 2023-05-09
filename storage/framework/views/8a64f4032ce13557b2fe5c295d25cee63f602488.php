@@ -9,7 +9,7 @@
 
                 <?php $__currentLoopData = $languages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $language): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <li><!-- start message -->
-                        <a class="language" href="#" data-id="<?php echo e($key, false); ?>">
+                        <a class="language text-dark" href="#" data-id="<?php echo e($key, false); ?>">
                             <?php echo e($language, false); ?>
 
                             <?php if($key == $current): ?>

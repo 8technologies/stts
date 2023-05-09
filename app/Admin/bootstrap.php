@@ -19,9 +19,16 @@
  */
 
 use App\Models\Utils;
- use App\Models\MyNotification;
+use App\Models\MyNotification;
 use Encore\Admin\Facades\Admin;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+
+
+$lang = request()->cookie('locale');
+if (in_array($lang, ['en', 'fr'])) { 
+    App::setLocale($lang);
+}
 
 Encore\Admin\Form::forget(['map', 'editor']);
 Admin::css('./assets/css/custom/admin.css');
@@ -32,15 +39,14 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
 
     $notifications = [];
     $u =  Auth::user();
-    if($u!=null){
-       $notifications = Utils::get_notifications($u);
-    } 
- 
+    if ($u != null) {
+        $notifications = Utils::get_notifications($u);
+    }
 
-    $navbar->right(view('notification-bell',['notifications' => $notifications]));
+
+    /*     $navbar->right(view('langauge.',['notifications' => $notifications])); */
+    $navbar->right(view('notification-bell', ['notifications' => $notifications]));
     $navbar->right(new \App\Admin\Extensions\Nav\Links());
-   
-
 });
 
 // https://laravel-admin.org/docs/en/custom-chart
