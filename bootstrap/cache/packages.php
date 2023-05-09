@@ -92,6 +92,13 @@
       0 => 'Encore\\Admin\\Media\\MediaServiceProvider',
     ),
   ),
+  'laravel-admin-extensions/multi-language' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'KevinSoft\\MultiLanguage\\MultiLanguageServiceProvider',
+    ),
+  ),
   'laravel/airlock' => 
   array (
     'providers' => 

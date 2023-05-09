@@ -4,7 +4,6 @@ namespace Laravel\Passport;
 
 use Illuminate\Contracts\Routing\Registrar as Router;
 
-
 class RouteRegistrar
 {
     /**

@@ -32,7 +32,6 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
     }
     use TransportResponseTrait;
 
-    private static bool $performing = false;
     private CurlClientState $multi;
 
     /**
@@ -68,7 +67,7 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
         $this->info['http_method'] = $method;
         $this->info['user_data'] = $options['user_data'] ?? null;
         $this->info['max_duration'] = $options['max_duration'] ?? null;
-        $this->info['start_time'] = $this->info['start_time'] ?? microtime(true);
+        $this->info['start_time'] ??= microtime(true);
         $this->info['original_url'] = $originalUrl ?? $this->info['url'] ?? curl_getinfo($ch, \CURLINFO_EFFECTIVE_URL);
         $info = &$this->info;
         $headers = &$this->headers;
@@ -182,7 +181,7 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
             unset($multi->pauseExpiries[$id], $multi->openHandles[$id], $multi->handlesActivity[$id]);
             curl_setopt($ch, \CURLOPT_PRIVATE, '_0');
 
-            if (self::$performing) {
+            if ($multi->performing) {
                 return;
             }
 
@@ -204,9 +203,6 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getInfo(string $type = null): mixed
     {
         if (!$info = $this->finalInfo) {
@@ -235,18 +231,15 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
         return null !== $type ? $info[$type] ?? null : $info;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getContent(bool $throw = true): string
     {
-        $performing = self::$performing;
-        self::$performing = $performing || '_0' === curl_getinfo($this->handle, \CURLINFO_PRIVATE);
+        $performing = $this->multi->performing;
+        $this->multi->performing = $performing || '_0' === curl_getinfo($this->handle, \CURLINFO_PRIVATE);
 
         try {
             return $this->doGetContent($throw);
         } finally {
-            self::$performing = $performing;
+            $this->multi->performing = $performing;
         }
     }
 
@@ -265,9 +258,6 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     private static function schedule(self $response, array &$runningResponses): void
     {
         if (isset($runningResponses[$i = (int) $response->multi->handle])) {
@@ -284,13 +274,11 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param CurlClientState $multi
      */
     private static function perform(ClientState $multi, array &$responses = null): void
     {
-        if (self::$performing) {
+        if ($multi->performing) {
             if ($responses) {
                 $response = current($responses);
                 $multi->handlesActivity[(int) $response->handle][] = null;
@@ -301,7 +289,7 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
         }
 
         try {
-            self::$performing = true;
+            $multi->performing = true;
             ++$multi->execCounter;
             $active = 0;
             while (\CURLM_CALL_MULTI_PERFORM === ($err = curl_multi_exec($multi->handle, $active))) {
@@ -338,13 +326,11 @@ final class CurlResponse implements ResponseInterface, StreamableInterface
                 $multi->handlesActivity[$id][] = \in_array($result, [\CURLE_OK, \CURLE_TOO_MANY_REDIRECTS], true) || '_0' === $waitFor || curl_getinfo($ch, \CURLINFO_SIZE_DOWNLOAD) === curl_getinfo($ch, \CURLINFO_CONTENT_LENGTH_DOWNLOAD) ? null : new TransportException(ucfirst(curl_error($ch) ?: curl_strerror($result)).sprintf(' for "%s".', curl_getinfo($ch, \CURLINFO_EFFECTIVE_URL)));
             }
         } finally {
-            self::$performing = false;
+            $multi->performing = false;
         }
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param CurlClientState $multi
      */
     private static function select(ClientState $multi, float $timeout): int

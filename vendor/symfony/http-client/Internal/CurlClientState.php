@@ -25,6 +25,7 @@ final class CurlClientState extends ClientState
 {
     public ?\CurlMultiHandle $handle;
     public ?\CurlShareHandle $share;
+    public bool $performing = false;
 
     /** @var PushedResponse[] */
     public array $pushedResponses = [];
@@ -38,7 +39,7 @@ final class CurlClientState extends ClientState
 
     public function __construct(int $maxHostConnections, int $maxPendingPushes)
     {
-        self::$curlVersion = self::$curlVersion ?? curl_version();
+        self::$curlVersion ??= curl_version();
 
         $this->handle = curl_multi_init();
         $this->dnsCache = new DnsCache();

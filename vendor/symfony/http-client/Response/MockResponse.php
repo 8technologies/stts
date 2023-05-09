@@ -90,17 +90,11 @@ class MockResponse implements ResponseInterface, StreamableInterface
         return $this->requestMethod;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getInfo(string $type = null): mixed
     {
         return null !== $type ? $this->info[$type] ?? null : $this->info;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function cancel(): void
     {
         $this->info['canceled'] = true;
@@ -110,11 +104,12 @@ class MockResponse implements ResponseInterface, StreamableInterface
         } catch (TransportException $e) {
             // ignore errors when canceling
         }
+
+        $onProgress = $this->requestOptions['on_progress'] ?? static function () {};
+        $dlSize = isset($this->headers['content-encoding']) || 'HEAD' === ($this->info['http_method'] ?? null) || \in_array($this->info['http_code'], [204, 304], true) ? 0 : (int) ($this->headers['content-length'][0] ?? 0);
+        $onProgress($this->offset, $dlSize, $this->info);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function close(): void
     {
         $this->inflate = null;
@@ -156,16 +151,13 @@ class MockResponse implements ResponseInterface, StreamableInterface
         return $response;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected static function schedule(self $response, array &$runningResponses): void
     {
         if (!isset($response->id)) {
             throw new InvalidArgumentException('MockResponse instances must be issued by MockHttpClient before processing.');
         }
 
-        $multi = self::$mainMulti ?? self::$mainMulti = new ClientState();
+        $multi = self::$mainMulti ??= new ClientState();
 
         if (!isset($runningResponses[0])) {
             $runningResponses[0] = [$multi, []];
@@ -174,9 +166,6 @@ class MockResponse implements ResponseInterface, StreamableInterface
         $runningResponses[0][1][$response->id] = $response;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected static function perform(ClientState $multi, array &$responses): void
     {
         foreach ($responses as $response) {
@@ -220,9 +209,6 @@ class MockResponse implements ResponseInterface, StreamableInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected static function select(ClientState $multi, float $timeout): int
     {
         return 42;
