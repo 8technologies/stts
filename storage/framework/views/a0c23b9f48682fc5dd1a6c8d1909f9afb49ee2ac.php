@@ -137,6 +137,7 @@ Utils::start_session();
     </form>
     <div>
       <a href="<?php echo e(route('password.reset'), false); ?>">Forgot Password?</a>
+      <a href="<?php echo e(route('user.registration'), false); ?>" class="pull-right">Register</a>
       </div>
 
   </div>
