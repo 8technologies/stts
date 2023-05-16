@@ -40,7 +40,7 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
         'name', 
         'email',  
         'username',
-        // 'remember_token', 
+        // 'remember_`token`', 
         'password', 
         // 'avatar'
     ];
