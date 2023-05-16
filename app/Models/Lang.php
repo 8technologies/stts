@@ -17,7 +17,7 @@ class Lang extends Model
             if ($k != null) {
                 throw new Exception("Key already exist.", 1);
             }
-            $m->key = strtolower($m->key);
+            //$m->key = strtolower($m->key);
             return $m;
         });
     }

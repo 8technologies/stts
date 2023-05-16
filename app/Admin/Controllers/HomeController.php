@@ -16,7 +16,7 @@ class HomeController extends Controller
 {
     public function myChart(Content $content) {            
         return $content
-        ->title($title = Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')? 'The Admin Dashboard': 'Showing your Dashboard')
+        ->title($title = Admin::user()->isRole('super-admin') || Admin::user()->isRole('admin')? admin_trans('The Admin Dashboard'): 'Showing your Dashboard')
     
         ->row(function (Row $row) {
 

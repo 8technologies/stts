@@ -165,12 +165,15 @@ if (!function_exists('admin_trans')) {
      */
     function admin_trans($key = null, $replace = [], $locale = null)
     {
+        if(!str_contains($key,'admin.')){
+            $key = 'admin.'.$key;
+        }
         $line = __($key, $replace, $locale);
 
         if (!is_string($line)) {
-            return $key;
+            return str_replace('admin.','',$key);
         }
-
+        return str_replace('admin.','',$line);
         return $line;
     }
 }

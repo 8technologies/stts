@@ -2,7 +2,7 @@
 
 use App\Models\Lang;
 
-return Lang::all()->pluck('en','key'); 
+//return Lang::all()->pluck('en','key'); 
 
 return [
     'online'                => 'Online English',
