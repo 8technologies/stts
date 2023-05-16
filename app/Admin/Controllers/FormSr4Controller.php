@@ -747,9 +747,7 @@ class FormSr4Controller extends AdminController
             }
 
             $form->divider();
-            $form->html('<h4>Declaration:</h4>
-                <p>I/WE* AT ANY TIME DURING OFFICIAL WORKING HOURS EVEN WITHOUT previous appointment will allow the inspectors entry to the seed stores and thereby provide them with the facilities necessary to carry out their inspection work as laid
-                 out in the seed and plant regulations, 2015.I/We further declare taht I/We am/are conversant with the Regulations. In addition I/We will send a list of all seed lots in our stores on a given date and or at such a date as can be mutually agreed upon between the National Seed Certification Service and ourselves.</p> ');
+            $form->html(admin_trans('sr4_declaration'));
 
             $form->hidden('accept_declaration', __('Accept declaration') )->required();
             $form->html('<input type="checkbox" name="accept_declaration" value="1" required>  I Accept');
