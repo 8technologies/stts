@@ -38,13 +38,13 @@ class HomeController extends Controller
             // $row->column(1/3, new Box('Quality Assurance Statistics\' Pie Chart', $bar));
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Marketplace Bar Graph', view('admin.chartjs.bar'));
+                $box  = new Box(admin_trans('Marketplace Bar Graph'), view('admin.chartjs.bar'));
                 $box->style('success');
                 $column->append($box);
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Seed Stock Line Graph', view('admin.chartjs.line'));
+                $box  = new Box(admin_trans('Seed Stock Line Graph'), view('admin.chartjs.line'));
                 $box->style('success');
                 $column->append($box);
             });

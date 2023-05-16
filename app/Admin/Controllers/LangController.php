@@ -28,8 +28,9 @@ class LangController extends AdminController
  
         $grid = new Grid(new Lang());
         $grid->disableBatchActions();
-        $grid->quickSearch('en')->placeholder('Seach by english');
+        $grid->quickSearch('en')->placeholder(admin_trans('Seach by english'));
         $grid->model()->orderby('key', 'asc');
+        $grid->column('id', __('ID'))->sortable(); 
         $grid->column('key', __('Key'))->sortable();
         $grid->column('en', __('En'))->sortable()->editable();
         $grid->column('fr', __('Fr'))->sortable()->editable();
