@@ -50,25 +50,25 @@ class HomeController extends Controller
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Scatter Graph', view('admin.chartjs.scatter'));
+                $box  = new Box(admin_trans('Scatter Graph'), view('admin.chartjs.scatter'));
                 $box->style('success');
                 $column->append($box);
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Combo Bar Graph', view('admin.chartjs.combo-bar-line'));
+                $box  = new Box(admin_trans('Combo Bar Graph'), view('admin.chartjs.combo-bar-line'));
                 $box->style('success');
                 $column->append($box);
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Marketplace Pie Chart', view('admin.chartjs.pie'));
+                $box  = new Box(admin_trans('Marketplace Pie Chart'), view('admin.chartjs.pie'));
                 $box->style('success');
                 $column->append($box);
             });
 
             $row->column(1/3, function (Column $column) {
-                $box  = new Box('Radar Graph', view('admin.chartjs.radar'));
+                $box  = new Box(admin_trans('Radar Graph'), view('admin.chartjs.radar'));
                 $box->style('success');
                 $column->append($box);
             });
