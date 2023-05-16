@@ -1,6 +1,6 @@
 .env
 .env_remote
-storage/logs/laravel.log
+/storage/logs
 .idea
 .vscode
 hacks.txt
