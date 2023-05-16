@@ -136,6 +136,7 @@ Utils::start_session();
     </form>
     <div>
       <a href="{{ route('password.reset') }}">Forgot Password?</a>
+      <a href="{{ route('user.registration') }}" class="pull-right">Register</a>
       </div>
 
   </div>

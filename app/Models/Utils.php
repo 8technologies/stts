@@ -16,6 +16,11 @@ use App\Mail\Notification;
 
 class Utils
 {
+public static function add_role($user_id)
+{
+    $user = Administrator::find($user_id);
+    $user->roles()->attach(3);
+}
 //Application forms
 //1.generic functions for all application forms
 //check if the status of the form is pending, rejected,halted or accepted
@@ -752,6 +757,16 @@ public static function sendMail($not)
         Utils::start_session();
         $_SESSION['message'] = $msg;
         $_SESSION['type'] = $type;
+    }
+
+    public static function register_alert($message, $type = 'info', $errors = null) {
+        Utils::start_session();
+        if ($errors instanceof \Illuminate\Support\MessageBag) {
+            $errors = implode('<br>', $errors->all());
+        }
+        $_SESSION['message'] = $message;
+        $_SESSION['type'] = $type;
+        $_SESSION['errors'] = $errors;
     }
 
 
