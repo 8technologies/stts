@@ -17,6 +17,7 @@ USE App\Admin\Controllers\FormStockExaminationRequestController;
 
 use App\Admin\Controllers\FormSr6CropQueryController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\SeedDetailsController;
 use App\Models\User;
 use App\Notifications\SR4FormAddedNotification;
 use Illuminate\Support\Facades\Notification;
@@ -87,6 +88,10 @@ Route::get('/crop_varieties/{permitId}', [FormStockExaminationRequestController:
 
 Route::post('/registration',  [RegisterController::class, 'register'])->name('user.register');
 Route::get('/registration',  [RegisterController::class, 'index'])->name('user.registration');
+
+Route::post('/trace', [SeedDetailsController::class, 'trace'])->name('seed-details');
+Route::post('/track', [SeedDetailsController::class, 'track'])->name('track');
+
 
 Route::view('/error', 'errors.404')->name('404');
 
