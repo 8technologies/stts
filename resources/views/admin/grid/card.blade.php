@@ -39,7 +39,7 @@ use Encore\Admin\Facades\Admin;
 
                 <a href="{{$link}}">
                     <span class="mailbox-attachment-icon has-img" style="height:125px">
-                        <img  src="{!! $img !!}" width="100px" height="100px"/>
+                        <img  src="{!! $img !!}" width="90px" height="90px"/>
                     </span>
                  
                     <div class="mailbox-attachment-info">
@@ -48,7 +48,7 @@ use Encore\Admin\Facades\Admin;
                             {!! $row->column('name') !!}
                         </p>
                         <h1 class="product-price" style="font-size: 22px!important">
-                            UGX {!! $row->column('price') !!}
+                            UGX {!! $row->column('price') !!} 
                         </h1>
                         <span class="product-title" style="color: black;">
                             <i>In stock: {!! $row->column('available_stock') !!} bags</i>
@@ -62,7 +62,12 @@ use Encore\Admin\Facades\Admin;
                 </a>
 
                 <?php }?><br>
-                <a class="btn btn-primary mt-2" href="{{$link_buy}}">BUY NOW</a><br>
+                @if($row->column('available_stock') > 0)
+                    <a class="btn btn-primary mt-2" href="{{ $link_buy }}">BUY NOW</a><br>
+                @else
+                    <a class="btn btn-primary mt-2" disabled>OUT OF STOCK</a><br>
+                @endif
+
     </div>
 
 

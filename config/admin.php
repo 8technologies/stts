@@ -157,16 +157,13 @@ return [
     */
     'upload' => [
 
-        // Disk in `config/filesystem.php`.
-        'disk' => 'admin',
-
-        // Image and file upload path under the disk above.
-        'directory' => [ 
-            'image' => '/',
-            'file'  => 'files',
-        ],
+        'disk' =>'admin',
+    
+        'directory' => [
+            'image' =>'images',
+            'file' =>'files',
+        ]
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Laravel-admin database settings
