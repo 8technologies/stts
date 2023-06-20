@@ -25,18 +25,23 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <![endif]-->
-
+    <style>
+    @media  print {
+      .top-alert {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body class="hold-transition <?php echo e(config('admin.skin'), false); ?> <?php echo e(join(' ', config('admin.layout')), false); ?>">
 
 <?php if($alert = config('admin.top_alert')): ?>
-    <div style="text-align: center;padding: 5px;font-size: 12px;background-color: #ffffd5;color: #ff0000;">
+    <div class="top-alert" style="text-align: center;padding: 5px;font-size: 12px;background-color: #ffffd5;color: #ff0000;">
         <?php echo $alert; ?>
 
     </div>
 <?php endif; ?>
-
 <div class="wrapper">
 
     <?php echo $__env->make('admin::partials.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

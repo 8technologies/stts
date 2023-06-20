@@ -182,6 +182,11 @@ class FormSr4Controller extends AdminController
             
             });
 
+            
+        return view('admin.grid.show',  [
+            'form' => $form_sr4,
+        ]);
+
         $show->field('type', __('Application Category'));
 
         //check if seed board registration number is empty,if it is then dont show it
@@ -386,7 +391,7 @@ class FormSr4Controller extends AdminController
             }
         }
         
-            return $show;
+            //return $show;
     }
 
     /**

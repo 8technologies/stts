@@ -23,17 +23,22 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <![endif]-->
-
+    <style>
+    @media print {
+      .top-alert {
+        display: none;
+      }
+    }
+  </style>
 </head>
 
 <body class="hold-transition {{config('admin.skin')}} {{join(' ', config('admin.layout'))}}">
 
 @if($alert = config('admin.top_alert'))
-    <div style="text-align: center;padding: 5px;font-size: 12px;background-color: #ffffd5;color: #ff0000;">
+    <div class="top-alert" style="text-align: center;padding: 5px;font-size: 12px;background-color: #ffffd5;color: #ff0000;">
         {!! $alert !!}
     </div>
 @endif
-
 <div class="wrapper">
 
     @include('admin::partials.header')
