@@ -168,7 +168,12 @@ class FormSr6Controller extends AdminController
         {
                 $tools->disableEdit();
                 $tools->disableDelete();
-        });;
+        });
+
+                
+        return view('reports.form_sr6_report',  [
+            'form' => $form_sr6,
+        ]);
 
         $show->field('created_at', __('Created at'))->as(function ($item) 
         {
@@ -288,7 +293,7 @@ class FormSr6Controller extends AdminController
             }
         }
 
-        return $show;
+        // return $show;
     }
 
 

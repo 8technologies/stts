@@ -1,10 +1,10 @@
-[2023-06-19 17:06:17] local.ERROR: foreach() argument must be of type array|object, null given {"view":{"view":"C:\\xampp\\htdocs\\stts\\resources\\views\\admin\\grid\\show.blade.php","data":{"errors":"<pre class=sf-dump id=sf-dump-83426299 data-indent-pad=\"  \"><span class=sf-dump-note>Illuminate\\Support\\ViewErrorBag</span> {<a class=sf-dump-ref>#2027</a><samp data-depth=1 class=sf-dump-expanded>
+[2023-06-20 12:00:38] local.ERROR: Undefined variable $form_sr6 {"view":{"view":"C:\\xampp\\htdocs\\stts\\resources\\views\\reports\\form_sr6_report.blade.php","data":{"errors":"<pre class=sf-dump id=sf-dump-960604429 data-indent-pad=\"  \"><span class=sf-dump-note>Illuminate\\Support\\ViewErrorBag</span> {<a class=sf-dump-ref>#2031</a><samp data-depth=1 class=sf-dump-expanded>
   #<span class=sf-dump-protected title=\"Protected property\">bags</span>: []
 </samp>}
-</pre><script>Sfdump(\"sf-dump-83426299\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
-","form":"<pre class=sf-dump id=sf-dump-679778426 data-indent-pad=\"  \"><span class=sf-dump-note>App\\Models\\FormSr4</span> {<a class=sf-dump-ref>#2135</a><samp data-depth=1 class=sf-dump-expanded>
+</pre><script>Sfdump(\"sf-dump-960604429\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","form":"<pre class=sf-dump id=sf-dump-1436475684 data-indent-pad=\"  \"><span class=sf-dump-note>App\\Models\\FormSr6</span> {<a class=sf-dump-ref>#2138</a><samp data-depth=1 class=sf-dump-expanded>
   #<span class=sf-dump-protected title=\"Protected property\">connection</span>: \"<span class=sf-dump-str title=\"5 characters\">mysql</span>\"
-  #<span class=sf-dump-protected title=\"Protected property\">table</span>: \"<span class=sf-dump-str title=\"9 characters\">form_sr4s</span>\"
+  #<span class=sf-dump-protected title=\"Protected property\">table</span>: \"<span class=sf-dump-str title=\"9 characters\">form_sr6s</span>\"
   #<span class=sf-dump-protected title=\"Protected property\">primaryKey</span>: \"<span class=sf-dump-str title=\"2 characters\">id</span>\"
   #<span class=sf-dump-protected title=\"Protected property\">keyType</span>: \"<span class=sf-dump-str title=\"3 characters\">int</span>\"
   +<span class=sf-dump-public title=\"Public property\">incrementing</span>: <span class=sf-dump-const>true</span>
@@ -15,83 +15,61 @@
   +<span class=sf-dump-public title=\"Public property\">exists</span>: <span class=sf-dump-const>true</span>
   +<span class=sf-dump-public title=\"Public property\">wasRecentlyCreated</span>: <span class=sf-dump-const>false</span>
   #<span class=sf-dump-protected title=\"Protected property\">escapeWhenCastingToString</span>: <span class=sf-dump-const>false</span>
-  #<span class=sf-dump-protected title=\"Protected property\">attributes</span>: <span class=sf-dump-note>array:37</span> [<samp data-depth=2 class=sf-dump-compact>
-    \"<span class=sf-dump-key>id</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>created_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-05-15 16:37:25</span>\"
-    \"<span class=sf-dump-key>updated_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-13 18:19:59</span>\"
+  #<span class=sf-dump-protected title=\"Protected property\">attributes</span>: <span class=sf-dump-note>array:26</span> [<samp data-depth=2 class=sf-dump-compact>
+    \"<span class=sf-dump-key>id</span>\" => <span class=sf-dump-num>1</span>
+    \"<span class=sf-dump-key>created_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-05-15 17:06:51</span>\"
+    \"<span class=sf-dump-key>updated_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-13 18:20:43</span>\"
     \"<span class=sf-dump-key>administrator_id</span>\" => <span class=sf-dump-num>3</span>
-    \"<span class=sf-dump-key>name_of_applicant</span>\" => \"<span class=sf-dump-str title=\"12 characters\">Lady Brujahh</span>\"
-    \"<span class=sf-dump-key>address</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Inventore cum quia e</span>\"
-    \"<span class=sf-dump-key>company_initials</span>\" => \"<span class=sf-dump-str title=\"15 characters\">Hurley Tran LLC</span>\"
-    \"<span class=sf-dump-key>premises_location</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Reiciendis aut provi</span>\"
-    \"<span class=sf-dump-key>years_of_expirience</span>\" => \"<span class=sf-dump-str title=\"4 characters\">2009</span>\"
-    \"<span class=sf-dump-key>expirience_in</span>\" => \"<span class=sf-dump-str title=\"13 characters\">Seed Exporter</span>\"
-    \"<span class=sf-dump-key>dealers_in</span>\" => \"<span class=sf-dump-str title=\"18 characters\">Agricultural crops</span>\"
-    \"<span class=sf-dump-key>processing_of</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>marketing_of</span>\" => \"<span class=sf-dump-str title=\"18 characters\">Agricultural crops</span>\"
-    \"<span class=sf-dump-key>have_adequate_land</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>land_size</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>eqipment</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>have_adequate_equipment</span>\" => <span class=sf-dump-num>0</span>
-    \"<span class=sf-dump-key>have_contractual_agreement</span>\" => <span class=sf-dump-num>0</span>
-    \"<span class=sf-dump-key>have_adequate_field_officers</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>have_conversant_seed_matters</span>\" => <span class=sf-dump-num>1</span>
-    \"<span class=sf-dump-key>souce_of_seed</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Aut aperiam et fugia</span>\"
-    \"<span class=sf-dump-key>have_adequate_land_for_production</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>have_internal_quality_program</span>\" => <span class=sf-dump-num>0</span>
-    \"<span class=sf-dump-key>receipt</span>\" => \"<span class=sf-dump-str title=\"42 characters\">files/7a0409ce8fe77bde5e4c7838a8abfc37.png</span>\"
-    \"<span class=sf-dump-key>accept_declaration</span>\" => <span class=sf-dump-num>1</span>
-    \"<span class=sf-dump-key>valid_from</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-13 00:00:00</span>\"
-    \"<span class=sf-dump-key>valid_until</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-07-01 00:00:00</span>\"
+    \"<span class=sf-dump-key>name_of_applicant</span>\" => \"<span class=sf-dump-str title=\"13 characters\">Hop Jefferson</span>\"
+    \"<span class=sf-dump-key>address</span>\" => \"<span class=sf-dump-str title=\"19 characters\">Officiis amet tempo</span>\"
+    \"<span class=sf-dump-key>company_initials</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>premises_location</span>\" => \"<span class=sf-dump-str title=\"17 characters\">Consequat Eveniet</span>\"
+    \"<span class=sf-dump-key>years_of_expirience</span>\" => \"<span class=sf-dump-str title=\"4 characters\">1976</span>\"
+    \"<span class=sf-dump-key>dealers_in</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>previous_grower_number</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>cropping_histroy</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Hic ad architecto re</span>\"
+    \"<span class=sf-dump-key>have_adequate_isolation</span>\" => <span class=sf-dump-num>1</span>
+    \"<span class=sf-dump-key>have_adequate_labor</span>\" => <span class=sf-dump-num>1</span>
+    \"<span class=sf-dump-key>aware_of_minimum_standards</span>\" => <span class=sf-dump-num>0</span>
+    \"<span class=sf-dump-key>signature_of_applicant</span>\" => \"<span class=sf-dump-str title=\"42 characters\">files/755aed04baa60b90e5cb7bc15c7537d8.png</span>\"
+    \"<span class=sf-dump-key>grower_number</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Grower/2023/86698312</span>\"
+    \"<span class=sf-dump-key>registration_number</span>\" => \"<span class=sf-dump-str title=\"22 characters\">MAAIF/2023/SG/42165800</span>\"
+    \"<span class=sf-dump-key>valid_from</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-14 00:00:00</span>\"
+    \"<span class=sf-dump-key>valid_until</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-07-08 00:00:00</span>\"
     \"<span class=sf-dump-key>status</span>\" => \"<span class=sf-dump-str>5</span>\"
-    \"<span class=sf-dump-key>status_comment</span>\" => <span class=sf-dump-const>null</span>
     \"<span class=sf-dump-key>inspector</span>\" => <span class=sf-dump-num>20</span>
-    \"<span class=sf-dump-key>dealers_in_other</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>processing_of_other</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>marketing_of_other</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>souce_of_seed_other</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>status_comment</span>\" => <span class=sf-dump-const>null</span>
     \"<span class=sf-dump-key>have_adequate_storage</span>\" => <span class=sf-dump-num>1</span>
-    \"<span class=sf-dump-key>seed_board_registration_number</span>\" => \"<span class=sf-dump-str title=\"22 characters\">MAAIF/2023/SC/84553596</span>\"
-    \"<span class=sf-dump-key>type</span>\" => \"<span class=sf-dump-str title=\"13 characters\">Seed Stockist</span>\"
+    \"<span class=sf-dump-key>seed_grower_in_past</span>\" => <span class=sf-dump-num>0</span>
+    \"<span class=sf-dump-key>type</span>\" => \"<span class=sf-dump-str title=\"11 characters\">Seed Grower</span>\"
   </samp>]
-  #<span class=sf-dump-protected title=\"Protected property\">original</span>: <span class=sf-dump-note>array:37</span> [<samp data-depth=2 class=sf-dump-compact>
-    \"<span class=sf-dump-key>id</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>created_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-05-15 16:37:25</span>\"
-    \"<span class=sf-dump-key>updated_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-13 18:19:59</span>\"
+  #<span class=sf-dump-protected title=\"Protected property\">original</span>: <span class=sf-dump-note>array:26</span> [<samp data-depth=2 class=sf-dump-compact>
+    \"<span class=sf-dump-key>id</span>\" => <span class=sf-dump-num>1</span>
+    \"<span class=sf-dump-key>created_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-05-15 17:06:51</span>\"
+    \"<span class=sf-dump-key>updated_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-13 18:20:43</span>\"
     \"<span class=sf-dump-key>administrator_id</span>\" => <span class=sf-dump-num>3</span>
-    \"<span class=sf-dump-key>name_of_applicant</span>\" => \"<span class=sf-dump-str title=\"12 characters\">Lady Brujahh</span>\"
-    \"<span class=sf-dump-key>address</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Inventore cum quia e</span>\"
-    \"<span class=sf-dump-key>company_initials</span>\" => \"<span class=sf-dump-str title=\"15 characters\">Hurley Tran LLC</span>\"
-    \"<span class=sf-dump-key>premises_location</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Reiciendis aut provi</span>\"
-    \"<span class=sf-dump-key>years_of_expirience</span>\" => \"<span class=sf-dump-str title=\"4 characters\">2009</span>\"
-    \"<span class=sf-dump-key>expirience_in</span>\" => \"<span class=sf-dump-str title=\"13 characters\">Seed Exporter</span>\"
-    \"<span class=sf-dump-key>dealers_in</span>\" => \"<span class=sf-dump-str title=\"18 characters\">Agricultural crops</span>\"
-    \"<span class=sf-dump-key>processing_of</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>marketing_of</span>\" => \"<span class=sf-dump-str title=\"18 characters\">Agricultural crops</span>\"
-    \"<span class=sf-dump-key>have_adequate_land</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>land_size</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>eqipment</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>have_adequate_equipment</span>\" => <span class=sf-dump-num>0</span>
-    \"<span class=sf-dump-key>have_contractual_agreement</span>\" => <span class=sf-dump-num>0</span>
-    \"<span class=sf-dump-key>have_adequate_field_officers</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>have_conversant_seed_matters</span>\" => <span class=sf-dump-num>1</span>
-    \"<span class=sf-dump-key>souce_of_seed</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Aut aperiam et fugia</span>\"
-    \"<span class=sf-dump-key>have_adequate_land_for_production</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>have_internal_quality_program</span>\" => <span class=sf-dump-num>0</span>
-    \"<span class=sf-dump-key>receipt</span>\" => \"<span class=sf-dump-str title=\"42 characters\">files/7a0409ce8fe77bde5e4c7838a8abfc37.png</span>\"
-    \"<span class=sf-dump-key>accept_declaration</span>\" => <span class=sf-dump-num>1</span>
-    \"<span class=sf-dump-key>valid_from</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-13 00:00:00</span>\"
-    \"<span class=sf-dump-key>valid_until</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-07-01 00:00:00</span>\"
+    \"<span class=sf-dump-key>name_of_applicant</span>\" => \"<span class=sf-dump-str title=\"13 characters\">Hop Jefferson</span>\"
+    \"<span class=sf-dump-key>address</span>\" => \"<span class=sf-dump-str title=\"19 characters\">Officiis amet tempo</span>\"
+    \"<span class=sf-dump-key>company_initials</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>premises_location</span>\" => \"<span class=sf-dump-str title=\"17 characters\">Consequat Eveniet</span>\"
+    \"<span class=sf-dump-key>years_of_expirience</span>\" => \"<span class=sf-dump-str title=\"4 characters\">1976</span>\"
+    \"<span class=sf-dump-key>dealers_in</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>previous_grower_number</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>cropping_histroy</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Hic ad architecto re</span>\"
+    \"<span class=sf-dump-key>have_adequate_isolation</span>\" => <span class=sf-dump-num>1</span>
+    \"<span class=sf-dump-key>have_adequate_labor</span>\" => <span class=sf-dump-num>1</span>
+    \"<span class=sf-dump-key>aware_of_minimum_standards</span>\" => <span class=sf-dump-num>0</span>
+    \"<span class=sf-dump-key>signature_of_applicant</span>\" => \"<span class=sf-dump-str title=\"42 characters\">files/755aed04baa60b90e5cb7bc15c7537d8.png</span>\"
+    \"<span class=sf-dump-key>grower_number</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Grower/2023/86698312</span>\"
+    \"<span class=sf-dump-key>registration_number</span>\" => \"<span class=sf-dump-str title=\"22 characters\">MAAIF/2023/SG/42165800</span>\"
+    \"<span class=sf-dump-key>valid_from</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-14 00:00:00</span>\"
+    \"<span class=sf-dump-key>valid_until</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-07-08 00:00:00</span>\"
     \"<span class=sf-dump-key>status</span>\" => \"<span class=sf-dump-str>5</span>\"
-    \"<span class=sf-dump-key>status_comment</span>\" => <span class=sf-dump-const>null</span>
     \"<span class=sf-dump-key>inspector</span>\" => <span class=sf-dump-num>20</span>
-    \"<span class=sf-dump-key>dealers_in_other</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>processing_of_other</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>marketing_of_other</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>souce_of_seed_other</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>status_comment</span>\" => <span class=sf-dump-const>null</span>
     \"<span class=sf-dump-key>have_adequate_storage</span>\" => <span class=sf-dump-num>1</span>
-    \"<span class=sf-dump-key>seed_board_registration_number</span>\" => \"<span class=sf-dump-str title=\"22 characters\">MAAIF/2023/SC/84553596</span>\"
-    \"<span class=sf-dump-key>type</span>\" => \"<span class=sf-dump-str title=\"13 characters\">Seed Stockist</span>\"
+    \"<span class=sf-dump-key>seed_grower_in_past</span>\" => <span class=sf-dump-num>0</span>
+    \"<span class=sf-dump-key>type</span>\" => \"<span class=sf-dump-str title=\"11 characters\">Seed Grower</span>\"
   </samp>]
   #<span class=sf-dump-protected title=\"Protected property\">changes</span>: []
   #<span class=sf-dump-protected title=\"Protected property\">casts</span>: []
@@ -107,38 +85,31 @@
   +<span class=sf-dump-public title=\"Public property\">timestamps</span>: <span class=sf-dump-const>true</span>
   #<span class=sf-dump-protected title=\"Protected property\">hidden</span>: []
   #<span class=sf-dump-protected title=\"Protected property\">visible</span>: []
-  #<span class=sf-dump-protected title=\"Protected property\">fillable</span>: <span class=sf-dump-note>array:21</span> [<samp data-depth=2 class=sf-dump-compact>
+  #<span class=sf-dump-protected title=\"Protected property\">fillable</span>: <span class=sf-dump-note>array:14</span> [<samp data-depth=2 class=sf-dump-compact>
     <span class=sf-dump-index>0</span> => \"<span class=sf-dump-str title=\"16 characters\">administrator_id</span>\"
     <span class=sf-dump-index>1</span> => \"<span class=sf-dump-str title=\"4 characters\">type</span>\"
     <span class=sf-dump-index>2</span> => \"<span class=sf-dump-str title=\"17 characters\">name_of_applicant</span>\"
     <span class=sf-dump-index>3</span> => \"<span class=sf-dump-str title=\"7 characters\">address</span>\"
-    <span class=sf-dump-index>4</span> => \"<span class=sf-dump-str title=\"16 characters\">company_initials</span>\"
-    <span class=sf-dump-index>5</span> => \"<span class=sf-dump-str title=\"17 characters\">premises_location</span>\"
-    <span class=sf-dump-index>6</span> => \"<span class=sf-dump-str title=\"13 characters\">expirience_in</span>\"
-    <span class=sf-dump-index>7</span> => \"<span class=sf-dump-str title=\"19 characters\">years_of_expirience</span>\"
-    <span class=sf-dump-index>8</span> => \"<span class=sf-dump-str title=\"10 characters\">dealers_in</span>\"
-    <span class=sf-dump-index>9</span> => \"<span class=sf-dump-str title=\"12 characters\">marketing_of</span>\"
-    <span class=sf-dump-index>10</span> => \"<span class=sf-dump-str title=\"18 characters\">have_adequate_land</span>\"
-    <span class=sf-dump-index>11</span> => \"<span class=sf-dump-str title=\"21 characters\">have_adequate_storage</span>\"
-    <span class=sf-dump-index>12</span> => \"<span class=sf-dump-str title=\"23 characters\">have_adequate_equipment</span>\"
-    <span class=sf-dump-index>13</span> => \"<span class=sf-dump-str title=\"26 characters\">have_contractual_agreement</span>\"
-    <span class=sf-dump-index>14</span> => \"<span class=sf-dump-str title=\"28 characters\">have_adequate_field_officers</span>\"
-    <span class=sf-dump-index>15</span> => \"<span class=sf-dump-str title=\"28 characters\">have_conversant_seed_matters</span>\"
-    <span class=sf-dump-index>16</span> => \"<span class=sf-dump-str title=\"13 characters\">souce_of_seed</span>\"
-    <span class=sf-dump-index>17</span> => \"<span class=sf-dump-str title=\"33 characters\">have_adequate_land_for_production</span>\"
-    <span class=sf-dump-index>18</span> => \"<span class=sf-dump-str title=\"29 characters\">have_internal_quality_program</span>\"
-    <span class=sf-dump-index>19</span> => \"<span class=sf-dump-str title=\"7 characters\">receipt</span>\"
-    <span class=sf-dump-index>20</span> => \"<span class=sf-dump-str title=\"18 characters\">accept_declaration</span>\"
+    <span class=sf-dump-index>4</span> => \"<span class=sf-dump-str title=\"17 characters\">premises_location</span>\"
+    <span class=sf-dump-index>5</span> => \"<span class=sf-dump-str title=\"19 characters\">years_of_expirience</span>\"
+    <span class=sf-dump-index>6</span> => \"<span class=sf-dump-str title=\"18 characters\">form_sr6_has_crops</span>\"
+    <span class=sf-dump-index>7</span> => \"<span class=sf-dump-str title=\"19 characters\">seed_grower_in_past</span>\"
+    <span class=sf-dump-index>8</span> => \"<span class=sf-dump-str title=\"13 characters\">grower_number</span>\"
+    <span class=sf-dump-index>9</span> => \"<span class=sf-dump-str title=\"16 characters\">cropping_histroy</span>\"
+    <span class=sf-dump-index>10</span> => \"<span class=sf-dump-str title=\"23 characters\">have_adequate_isolation</span>\"
+    <span class=sf-dump-index>11</span> => \"<span class=sf-dump-str title=\"19 characters\">have_adequate_labor</span>\"
+    <span class=sf-dump-index>12</span> => \"<span class=sf-dump-str title=\"26 characters\">aware_of_minimum_standards</span>\"
+    <span class=sf-dump-index>13</span> => \"<span class=sf-dump-str title=\"22 characters\">signature_of_applicant</span>\"
   </samp>]
   #<span class=sf-dump-protected title=\"Protected property\">guarded</span>: <span class=sf-dump-note>array:1</span> [<samp data-depth=2 class=sf-dump-compact>
     <span class=sf-dump-index>0</span> => \"<span class=sf-dump-str>*</span>\"
   </samp>]
   #<span class=sf-dump-protected title=\"Protected property\">rememberTokenName</span>: \"<span class=sf-dump-str title=\"14 characters\">remember_token</span>\"
 </samp>}
-</pre><script>Sfdump(\"sf-dump-679778426\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
-"}},"userId":3,"exception":"[object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): foreach() argument must be of type array|object, null given at C:\\xampp\\htdocs\\stts\\resources\\views\\admin\\grid\\show.blade.php:116)
+</pre><script>Sfdump(\"sf-dump-1436475684\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+"}},"userId":3,"exception":"[object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Undefined variable $form_sr6 at C:\\xampp\\htdocs\\stts\\resources\\views\\reports\\form_sr6_report.blade.php:119)
 [stacktrace]
-#0 C:\\xampp\\htdocs\\stts\\resources\\views\\admin\\grid\\show.blade.php(116): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'foreach() argum...', 'C:\\\\xampp\\\\htdocs...', 116)
+#0 C:\\xampp\\htdocs\\stts\\resources\\views\\reports\\form_sr6_report.blade.php(119): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Undefined varia...', 'C:\\\\xampp\\\\htdocs...', 121)
 #1 C:\\xampp\\htdocs\\stts\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(107): require('C:\\\\xampp\\\\htdocs...')
 #2 C:\\xampp\\htdocs\\stts\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(108): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
 #3 C:\\xampp\\htdocs\\stts\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\xampp\\\\htdocs...', Array)
@@ -216,9 +187,9 @@
 #75 C:\\xampp\\htdocs\\stts\\server.php(21): require_once('C:\\\\xampp\\\\htdocs...')
 #76 {main}
 
-[previous exception] [object] (ErrorException(code: 0): foreach() argument must be of type array|object, null given at C:\\xampp\\htdocs\\stts\\storage\\framework\\views\\2853809ae78df4ac6be1c1a8ba5b007486cc725e.php:116)
+[previous exception] [object] (ErrorException(code: 0): Undefined variable $form_sr6 at C:\\xampp\\htdocs\\stts\\storage\\framework\\views\\6ab863430ed38d001f9a5b1cf2746da7600e1dd0.php:121)
 [stacktrace]
-#0 C:\\xampp\\htdocs\\stts\\storage\\framework\\views\\2853809ae78df4ac6be1c1a8ba5b007486cc725e.php(116): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'foreach() argum...', 'C:\\\\xampp\\\\htdocs...', 116)
+#0 C:\\xampp\\htdocs\\stts\\storage\\framework\\views\\6ab863430ed38d001f9a5b1cf2746da7600e1dd0.php(121): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Undefined varia...', 'C:\\\\xampp\\\\htdocs...', 121)
 #1 C:\\xampp\\htdocs\\stts\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(107): require('C:\\\\xampp\\\\htdocs...')
 #2 C:\\xampp\\htdocs\\stts\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(108): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
 #3 C:\\xampp\\htdocs\\stts\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\xampp\\\\htdocs...', Array)
@@ -296,13 +267,13 @@
 #75 C:\\xampp\\htdocs\\stts\\server.php(21): require_once('C:\\\\xampp\\\\htdocs...')
 #76 {main}
 "} 
-[2023-06-19 17:07:12] local.ERROR: foreach() argument must be of type array|object, null given {"view":{"view":"C:\\xampp\\htdocs\\stts\\resources\\views\\admin\\grid\\show.blade.php","data":{"errors":"<pre class=sf-dump id=sf-dump-1154991172 data-indent-pad=\"  \"><span class=sf-dump-note>Illuminate\\Support\\ViewErrorBag</span> {<a class=sf-dump-ref>#2027</a><samp data-depth=1 class=sf-dump-expanded>
+[2023-06-20 12:03:38] local.ERROR: Undefined variable $form_sr6 {"view":{"view":"C:\\xampp\\htdocs\\stts\\resources\\views\\reports\\form_sr6_report.blade.php","data":{"errors":"<pre class=sf-dump id=sf-dump-637506291 data-indent-pad=\"  \"><span class=sf-dump-note>Illuminate\\Support\\ViewErrorBag</span> {<a class=sf-dump-ref>#2031</a><samp data-depth=1 class=sf-dump-expanded>
   #<span class=sf-dump-protected title=\"Protected property\">bags</span>: []
 </samp>}
-</pre><script>Sfdump(\"sf-dump-1154991172\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
-","form":"<pre class=sf-dump id=sf-dump-93547659 data-indent-pad=\"  \"><span class=sf-dump-note>App\\Models\\FormSr4</span> {<a class=sf-dump-ref>#2135</a><samp data-depth=1 class=sf-dump-expanded>
+</pre><script>Sfdump(\"sf-dump-637506291\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","form":"<pre class=sf-dump id=sf-dump-672874476 data-indent-pad=\"  \"><span class=sf-dump-note>App\\Models\\FormSr6</span> {<a class=sf-dump-ref>#2138</a><samp data-depth=1 class=sf-dump-expanded>
   #<span class=sf-dump-protected title=\"Protected property\">connection</span>: \"<span class=sf-dump-str title=\"5 characters\">mysql</span>\"
-  #<span class=sf-dump-protected title=\"Protected property\">table</span>: \"<span class=sf-dump-str title=\"9 characters\">form_sr4s</span>\"
+  #<span class=sf-dump-protected title=\"Protected property\">table</span>: \"<span class=sf-dump-str title=\"9 characters\">form_sr6s</span>\"
   #<span class=sf-dump-protected title=\"Protected property\">primaryKey</span>: \"<span class=sf-dump-str title=\"2 characters\">id</span>\"
   #<span class=sf-dump-protected title=\"Protected property\">keyType</span>: \"<span class=sf-dump-str title=\"3 characters\">int</span>\"
   +<span class=sf-dump-public title=\"Public property\">incrementing</span>: <span class=sf-dump-const>true</span>
@@ -313,83 +284,61 @@
   +<span class=sf-dump-public title=\"Public property\">exists</span>: <span class=sf-dump-const>true</span>
   +<span class=sf-dump-public title=\"Public property\">wasRecentlyCreated</span>: <span class=sf-dump-const>false</span>
   #<span class=sf-dump-protected title=\"Protected property\">escapeWhenCastingToString</span>: <span class=sf-dump-const>false</span>
-  #<span class=sf-dump-protected title=\"Protected property\">attributes</span>: <span class=sf-dump-note>array:37</span> [<samp data-depth=2 class=sf-dump-compact>
-    \"<span class=sf-dump-key>id</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>created_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-05-15 16:37:25</span>\"
-    \"<span class=sf-dump-key>updated_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-13 18:19:59</span>\"
+  #<span class=sf-dump-protected title=\"Protected property\">attributes</span>: <span class=sf-dump-note>array:26</span> [<samp data-depth=2 class=sf-dump-compact>
+    \"<span class=sf-dump-key>id</span>\" => <span class=sf-dump-num>1</span>
+    \"<span class=sf-dump-key>created_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-05-15 17:06:51</span>\"
+    \"<span class=sf-dump-key>updated_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-13 18:20:43</span>\"
     \"<span class=sf-dump-key>administrator_id</span>\" => <span class=sf-dump-num>3</span>
-    \"<span class=sf-dump-key>name_of_applicant</span>\" => \"<span class=sf-dump-str title=\"12 characters\">Lady Brujahh</span>\"
-    \"<span class=sf-dump-key>address</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Inventore cum quia e</span>\"
-    \"<span class=sf-dump-key>company_initials</span>\" => \"<span class=sf-dump-str title=\"15 characters\">Hurley Tran LLC</span>\"
-    \"<span class=sf-dump-key>premises_location</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Reiciendis aut provi</span>\"
-    \"<span class=sf-dump-key>years_of_expirience</span>\" => \"<span class=sf-dump-str title=\"4 characters\">2009</span>\"
-    \"<span class=sf-dump-key>expirience_in</span>\" => \"<span class=sf-dump-str title=\"13 characters\">Seed Exporter</span>\"
-    \"<span class=sf-dump-key>dealers_in</span>\" => \"<span class=sf-dump-str title=\"18 characters\">Agricultural crops</span>\"
-    \"<span class=sf-dump-key>processing_of</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>marketing_of</span>\" => \"<span class=sf-dump-str title=\"18 characters\">Agricultural crops</span>\"
-    \"<span class=sf-dump-key>have_adequate_land</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>land_size</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>eqipment</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>have_adequate_equipment</span>\" => <span class=sf-dump-num>0</span>
-    \"<span class=sf-dump-key>have_contractual_agreement</span>\" => <span class=sf-dump-num>0</span>
-    \"<span class=sf-dump-key>have_adequate_field_officers</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>have_conversant_seed_matters</span>\" => <span class=sf-dump-num>1</span>
-    \"<span class=sf-dump-key>souce_of_seed</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Aut aperiam et fugia</span>\"
-    \"<span class=sf-dump-key>have_adequate_land_for_production</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>have_internal_quality_program</span>\" => <span class=sf-dump-num>0</span>
-    \"<span class=sf-dump-key>receipt</span>\" => \"<span class=sf-dump-str title=\"42 characters\">files/7a0409ce8fe77bde5e4c7838a8abfc37.png</span>\"
-    \"<span class=sf-dump-key>accept_declaration</span>\" => <span class=sf-dump-num>1</span>
-    \"<span class=sf-dump-key>valid_from</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-13 00:00:00</span>\"
-    \"<span class=sf-dump-key>valid_until</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-07-01 00:00:00</span>\"
+    \"<span class=sf-dump-key>name_of_applicant</span>\" => \"<span class=sf-dump-str title=\"13 characters\">Hop Jefferson</span>\"
+    \"<span class=sf-dump-key>address</span>\" => \"<span class=sf-dump-str title=\"19 characters\">Officiis amet tempo</span>\"
+    \"<span class=sf-dump-key>company_initials</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>premises_location</span>\" => \"<span class=sf-dump-str title=\"17 characters\">Consequat Eveniet</span>\"
+    \"<span class=sf-dump-key>years_of_expirience</span>\" => \"<span class=sf-dump-str title=\"4 characters\">1976</span>\"
+    \"<span class=sf-dump-key>dealers_in</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>previous_grower_number</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>cropping_histroy</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Hic ad architecto re</span>\"
+    \"<span class=sf-dump-key>have_adequate_isolation</span>\" => <span class=sf-dump-num>1</span>
+    \"<span class=sf-dump-key>have_adequate_labor</span>\" => <span class=sf-dump-num>1</span>
+    \"<span class=sf-dump-key>aware_of_minimum_standards</span>\" => <span class=sf-dump-num>0</span>
+    \"<span class=sf-dump-key>signature_of_applicant</span>\" => \"<span class=sf-dump-str title=\"42 characters\">files/755aed04baa60b90e5cb7bc15c7537d8.png</span>\"
+    \"<span class=sf-dump-key>grower_number</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Grower/2023/86698312</span>\"
+    \"<span class=sf-dump-key>registration_number</span>\" => \"<span class=sf-dump-str title=\"22 characters\">MAAIF/2023/SG/42165800</span>\"
+    \"<span class=sf-dump-key>valid_from</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-14 00:00:00</span>\"
+    \"<span class=sf-dump-key>valid_until</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-07-08 00:00:00</span>\"
     \"<span class=sf-dump-key>status</span>\" => \"<span class=sf-dump-str>5</span>\"
-    \"<span class=sf-dump-key>status_comment</span>\" => <span class=sf-dump-const>null</span>
     \"<span class=sf-dump-key>inspector</span>\" => <span class=sf-dump-num>20</span>
-    \"<span class=sf-dump-key>dealers_in_other</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>processing_of_other</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>marketing_of_other</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>souce_of_seed_other</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>status_comment</span>\" => <span class=sf-dump-const>null</span>
     \"<span class=sf-dump-key>have_adequate_storage</span>\" => <span class=sf-dump-num>1</span>
-    \"<span class=sf-dump-key>seed_board_registration_number</span>\" => \"<span class=sf-dump-str title=\"22 characters\">MAAIF/2023/SC/84553596</span>\"
-    \"<span class=sf-dump-key>type</span>\" => \"<span class=sf-dump-str title=\"13 characters\">Seed Stockist</span>\"
+    \"<span class=sf-dump-key>seed_grower_in_past</span>\" => <span class=sf-dump-num>0</span>
+    \"<span class=sf-dump-key>type</span>\" => \"<span class=sf-dump-str title=\"11 characters\">Seed Grower</span>\"
   </samp>]
-  #<span class=sf-dump-protected title=\"Protected property\">original</span>: <span class=sf-dump-note>array:37</span> [<samp data-depth=2 class=sf-dump-compact>
-    \"<span class=sf-dump-key>id</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>created_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-05-15 16:37:25</span>\"
-    \"<span class=sf-dump-key>updated_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-13 18:19:59</span>\"
+  #<span class=sf-dump-protected title=\"Protected property\">original</span>: <span class=sf-dump-note>array:26</span> [<samp data-depth=2 class=sf-dump-compact>
+    \"<span class=sf-dump-key>id</span>\" => <span class=sf-dump-num>1</span>
+    \"<span class=sf-dump-key>created_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-05-15 17:06:51</span>\"
+    \"<span class=sf-dump-key>updated_at</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-13 18:20:43</span>\"
     \"<span class=sf-dump-key>administrator_id</span>\" => <span class=sf-dump-num>3</span>
-    \"<span class=sf-dump-key>name_of_applicant</span>\" => \"<span class=sf-dump-str title=\"12 characters\">Lady Brujahh</span>\"
-    \"<span class=sf-dump-key>address</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Inventore cum quia e</span>\"
-    \"<span class=sf-dump-key>company_initials</span>\" => \"<span class=sf-dump-str title=\"15 characters\">Hurley Tran LLC</span>\"
-    \"<span class=sf-dump-key>premises_location</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Reiciendis aut provi</span>\"
-    \"<span class=sf-dump-key>years_of_expirience</span>\" => \"<span class=sf-dump-str title=\"4 characters\">2009</span>\"
-    \"<span class=sf-dump-key>expirience_in</span>\" => \"<span class=sf-dump-str title=\"13 characters\">Seed Exporter</span>\"
-    \"<span class=sf-dump-key>dealers_in</span>\" => \"<span class=sf-dump-str title=\"18 characters\">Agricultural crops</span>\"
-    \"<span class=sf-dump-key>processing_of</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>marketing_of</span>\" => \"<span class=sf-dump-str title=\"18 characters\">Agricultural crops</span>\"
-    \"<span class=sf-dump-key>have_adequate_land</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>land_size</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>eqipment</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>have_adequate_equipment</span>\" => <span class=sf-dump-num>0</span>
-    \"<span class=sf-dump-key>have_contractual_agreement</span>\" => <span class=sf-dump-num>0</span>
-    \"<span class=sf-dump-key>have_adequate_field_officers</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>have_conversant_seed_matters</span>\" => <span class=sf-dump-num>1</span>
-    \"<span class=sf-dump-key>souce_of_seed</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Aut aperiam et fugia</span>\"
-    \"<span class=sf-dump-key>have_adequate_land_for_production</span>\" => <span class=sf-dump-num>2</span>
-    \"<span class=sf-dump-key>have_internal_quality_program</span>\" => <span class=sf-dump-num>0</span>
-    \"<span class=sf-dump-key>receipt</span>\" => \"<span class=sf-dump-str title=\"42 characters\">files/7a0409ce8fe77bde5e4c7838a8abfc37.png</span>\"
-    \"<span class=sf-dump-key>accept_declaration</span>\" => <span class=sf-dump-num>1</span>
-    \"<span class=sf-dump-key>valid_from</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-13 00:00:00</span>\"
-    \"<span class=sf-dump-key>valid_until</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-07-01 00:00:00</span>\"
+    \"<span class=sf-dump-key>name_of_applicant</span>\" => \"<span class=sf-dump-str title=\"13 characters\">Hop Jefferson</span>\"
+    \"<span class=sf-dump-key>address</span>\" => \"<span class=sf-dump-str title=\"19 characters\">Officiis amet tempo</span>\"
+    \"<span class=sf-dump-key>company_initials</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>premises_location</span>\" => \"<span class=sf-dump-str title=\"17 characters\">Consequat Eveniet</span>\"
+    \"<span class=sf-dump-key>years_of_expirience</span>\" => \"<span class=sf-dump-str title=\"4 characters\">1976</span>\"
+    \"<span class=sf-dump-key>dealers_in</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>previous_grower_number</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>cropping_histroy</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Hic ad architecto re</span>\"
+    \"<span class=sf-dump-key>have_adequate_isolation</span>\" => <span class=sf-dump-num>1</span>
+    \"<span class=sf-dump-key>have_adequate_labor</span>\" => <span class=sf-dump-num>1</span>
+    \"<span class=sf-dump-key>aware_of_minimum_standards</span>\" => <span class=sf-dump-num>0</span>
+    \"<span class=sf-dump-key>signature_of_applicant</span>\" => \"<span class=sf-dump-str title=\"42 characters\">files/755aed04baa60b90e5cb7bc15c7537d8.png</span>\"
+    \"<span class=sf-dump-key>grower_number</span>\" => \"<span class=sf-dump-str title=\"20 characters\">Grower/2023/86698312</span>\"
+    \"<span class=sf-dump-key>registration_number</span>\" => \"<span class=sf-dump-str title=\"22 characters\">MAAIF/2023/SG/42165800</span>\"
+    \"<span class=sf-dump-key>valid_from</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-06-14 00:00:00</span>\"
+    \"<span class=sf-dump-key>valid_until</span>\" => \"<span class=sf-dump-str title=\"19 characters\">2023-07-08 00:00:00</span>\"
     \"<span class=sf-dump-key>status</span>\" => \"<span class=sf-dump-str>5</span>\"
-    \"<span class=sf-dump-key>status_comment</span>\" => <span class=sf-dump-const>null</span>
     \"<span class=sf-dump-key>inspector</span>\" => <span class=sf-dump-num>20</span>
-    \"<span class=sf-dump-key>dealers_in_other</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>processing_of_other</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>marketing_of_other</span>\" => <span class=sf-dump-const>null</span>
-    \"<span class=sf-dump-key>souce_of_seed_other</span>\" => <span class=sf-dump-const>null</span>
+    \"<span class=sf-dump-key>status_comment</span>\" => <span class=sf-dump-const>null</span>
     \"<span class=sf-dump-key>have_adequate_storage</span>\" => <span class=sf-dump-num>1</span>
-    \"<span class=sf-dump-key>seed_board_registration_number</span>\" => \"<span class=sf-dump-str title=\"22 characters\">MAAIF/2023/SC/84553596</span>\"
-    \"<span class=sf-dump-key>type</span>\" => \"<span class=sf-dump-str title=\"13 characters\">Seed Stockist</span>\"
+    \"<span class=sf-dump-key>seed_grower_in_past</span>\" => <span class=sf-dump-num>0</span>
+    \"<span class=sf-dump-key>type</span>\" => \"<span class=sf-dump-str title=\"11 characters\">Seed Grower</span>\"
   </samp>]
   #<span class=sf-dump-protected title=\"Protected property\">changes</span>: []
   #<span class=sf-dump-protected title=\"Protected property\">casts</span>: []
@@ -400,43 +349,42 @@
   #<span class=sf-dump-protected title=\"Protected property\">appends</span>: []
   #<span class=sf-dump-protected title=\"Protected property\">dispatchesEvents</span>: []
   #<span class=sf-dump-protected title=\"Protected property\">observables</span>: []
-  #<span class=sf-dump-protected title=\"Protected property\">relations</span>: []
+  #<span class=sf-dump-protected title=\"Protected property\">relations</span>: <span class=sf-dump-note>array:1</span> [<samp data-depth=2 class=sf-dump-compact>
+    \"<span class=sf-dump-key>form_sr6_has_crops</span>\" => <span class=sf-dump-note title=\"Illuminate\\Database\\Eloquent\\Collection
+\"><span class=\"sf-dump-ellipsis sf-dump-ellipsis-note\">Illuminate\\Database\\Eloquent</span><span class=\"sf-dump-ellipsis sf-dump-ellipsis-note\">\\</span>Collection</span> {<a class=sf-dump-ref>#2210</a><samp data-depth=3 class=sf-dump-compact>
+      #<span class=sf-dump-protected title=\"Protected property\">items</span>: <span class=sf-dump-note>array:2</span> [ &#8230;2]
+      #<span class=sf-dump-protected title=\"Protected property\">escapeWhenCastingToString</span>: <span class=sf-dump-const>false</span>
+    </samp>}
+  </samp>]
   #<span class=sf-dump-protected title=\"Protected property\">touches</span>: []
   +<span class=sf-dump-public title=\"Public property\">timestamps</span>: <span class=sf-dump-const>true</span>
   #<span class=sf-dump-protected title=\"Protected property\">hidden</span>: []
   #<span class=sf-dump-protected title=\"Protected property\">visible</span>: []
-  #<span class=sf-dump-protected title=\"Protected property\">fillable</span>: <span class=sf-dump-note>array:21</span> [<samp data-depth=2 class=sf-dump-compact>
+  #<span class=sf-dump-protected title=\"Protected property\">fillable</span>: <span class=sf-dump-note>array:14</span> [<samp data-depth=2 class=sf-dump-compact>
     <span class=sf-dump-index>0</span> => \"<span class=sf-dump-str title=\"16 characters\">administrator_id</span>\"
     <span class=sf-dump-index>1</span> => \"<span class=sf-dump-str title=\"4 characters\">type</span>\"
     <span class=sf-dump-index>2</span> => \"<span class=sf-dump-str title=\"17 characters\">name_of_applicant</span>\"
     <span class=sf-dump-index>3</span> => \"<span class=sf-dump-str title=\"7 characters\">address</span>\"
-    <span class=sf-dump-index>4</span> => \"<span class=sf-dump-str title=\"16 characters\">company_initials</span>\"
-    <span class=sf-dump-index>5</span> => \"<span class=sf-dump-str title=\"17 characters\">premises_location</span>\"
-    <span class=sf-dump-index>6</span> => \"<span class=sf-dump-str title=\"13 characters\">expirience_in</span>\"
-    <span class=sf-dump-index>7</span> => \"<span class=sf-dump-str title=\"19 characters\">years_of_expirience</span>\"
-    <span class=sf-dump-index>8</span> => \"<span class=sf-dump-str title=\"10 characters\">dealers_in</span>\"
-    <span class=sf-dump-index>9</span> => \"<span class=sf-dump-str title=\"12 characters\">marketing_of</span>\"
-    <span class=sf-dump-index>10</span> => \"<span class=sf-dump-str title=\"18 characters\">have_adequate_land</span>\"
-    <span class=sf-dump-index>11</span> => \"<span class=sf-dump-str title=\"21 characters\">have_adequate_storage</span>\"
-    <span class=sf-dump-index>12</span> => \"<span class=sf-dump-str title=\"23 characters\">have_adequate_equipment</span>\"
-    <span class=sf-dump-index>13</span> => \"<span class=sf-dump-str title=\"26 characters\">have_contractual_agreement</span>\"
-    <span class=sf-dump-index>14</span> => \"<span class=sf-dump-str title=\"28 characters\">have_adequate_field_officers</span>\"
-    <span class=sf-dump-index>15</span> => \"<span class=sf-dump-str title=\"28 characters\">have_conversant_seed_matters</span>\"
-    <span class=sf-dump-index>16</span> => \"<span class=sf-dump-str title=\"13 characters\">souce_of_seed</span>\"
-    <span class=sf-dump-index>17</span> => \"<span class=sf-dump-str title=\"33 characters\">have_adequate_land_for_production</span>\"
-    <span class=sf-dump-index>18</span> => \"<span class=sf-dump-str title=\"29 characters\">have_internal_quality_program</span>\"
-    <span class=sf-dump-index>19</span> => \"<span class=sf-dump-str title=\"7 characters\">receipt</span>\"
-    <span class=sf-dump-index>20</span> => \"<span class=sf-dump-str title=\"18 characters\">accept_declaration</span>\"
+    <span class=sf-dump-index>4</span> => \"<span class=sf-dump-str title=\"17 characters\">premises_location</span>\"
+    <span class=sf-dump-index>5</span> => \"<span class=sf-dump-str title=\"19 characters\">years_of_expirience</span>\"
+    <span class=sf-dump-index>6</span> => \"<span class=sf-dump-str title=\"18 characters\">form_sr6_has_crops</span>\"
+    <span class=sf-dump-index>7</span> => \"<span class=sf-dump-str title=\"19 characters\">seed_grower_in_past</span>\"
+    <span class=sf-dump-index>8</span> => \"<span class=sf-dump-str title=\"13 characters\">grower_number</span>\"
+    <span class=sf-dump-index>9</span> => \"<span class=sf-dump-str title=\"16 characters\">cropping_histroy</span>\"
+    <span class=sf-dump-index>10</span> => \"<span class=sf-dump-str title=\"23 characters\">have_adequate_isolation</span>\"
+    <span class=sf-dump-index>11</span> => \"<span class=sf-dump-str title=\"19 characters\">have_adequate_labor</span>\"
+    <span class=sf-dump-index>12</span> => \"<span class=sf-dump-str title=\"26 characters\">aware_of_minimum_standards</span>\"
+    <span class=sf-dump-index>13</span> => \"<span class=sf-dump-str title=\"22 characters\">signature_of_applicant</span>\"
   </samp>]
   #<span class=sf-dump-protected title=\"Protected property\">guarded</span>: <span class=sf-dump-note>array:1</span> [<samp data-depth=2 class=sf-dump-compact>
     <span class=sf-dump-index>0</span> => \"<span class=sf-dump-str>*</span>\"
   </samp>]
   #<span class=sf-dump-protected title=\"Protected property\">rememberTokenName</span>: \"<span class=sf-dump-str title=\"14 characters\">remember_token</span>\"
 </samp>}
-</pre><script>Sfdump(\"sf-dump-93547659\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
-"}},"userId":3,"exception":"[object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): foreach() argument must be of type array|object, null given at C:\\xampp\\htdocs\\stts\\resources\\views\\admin\\grid\\show.blade.php:127)
+</pre><script>Sfdump(\"sf-dump-672874476\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+"}},"userId":3,"exception":"[object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Undefined variable $form_sr6 at C:\\xampp\\htdocs\\stts\\resources\\views\\reports\\form_sr6_report.blade.php:148)
 [stacktrace]
-#0 C:\\xampp\\htdocs\\stts\\resources\\views\\admin\\grid\\show.blade.php(127): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'foreach() argum...', 'C:\\\\xampp\\\\htdocs...', 127)
+#0 C:\\xampp\\htdocs\\stts\\resources\\views\\reports\\form_sr6_report.blade.php(148): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Undefined varia...', 'C:\\\\xampp\\\\htdocs...', 150)
 #1 C:\\xampp\\htdocs\\stts\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(107): require('C:\\\\xampp\\\\htdocs...')
 #2 C:\\xampp\\htdocs\\stts\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(108): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
 #3 C:\\xampp\\htdocs\\stts\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\xampp\\\\htdocs...', Array)
@@ -514,9 +462,9 @@
 #75 C:\\xampp\\htdocs\\stts\\server.php(21): require_once('C:\\\\xampp\\\\htdocs...')
 #76 {main}
 
-[previous exception] [object] (ErrorException(code: 0): foreach() argument must be of type array|object, null given at C:\\xampp\\htdocs\\stts\\storage\\framework\\views\\2853809ae78df4ac6be1c1a8ba5b007486cc725e.php:127)
+[previous exception] [object] (ErrorException(code: 0): Undefined variable $form_sr6 at C:\\xampp\\htdocs\\stts\\storage\\framework\\views\\6ab863430ed38d001f9a5b1cf2746da7600e1dd0.php:150)
 [stacktrace]
-#0 C:\\xampp\\htdocs\\stts\\storage\\framework\\views\\2853809ae78df4ac6be1c1a8ba5b007486cc725e.php(127): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'foreach() argum...', 'C:\\\\xampp\\\\htdocs...', 127)
+#0 C:\\xampp\\htdocs\\stts\\storage\\framework\\views\\6ab863430ed38d001f9a5b1cf2746da7600e1dd0.php(150): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Undefined varia...', 'C:\\\\xampp\\\\htdocs...', 150)
 #1 C:\\xampp\\htdocs\\stts\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(107): require('C:\\\\xampp\\\\htdocs...')
 #2 C:\\xampp\\htdocs\\stts\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(108): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
 #3 C:\\xampp\\htdocs\\stts\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\xampp\\\\htdocs...', Array)

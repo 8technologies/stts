@@ -1,5 +1,13 @@
+<style>
+  @media print {
+  .no-print {
+    display: none;
+  }
+}
+
+</style>
 <!-- Main Footer -->
-<footer class="main-footer">
+<footer class="main-footer no-print">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
         @if(config('admin.show_environment'))

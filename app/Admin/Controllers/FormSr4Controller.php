@@ -183,7 +183,7 @@ class FormSr4Controller extends AdminController
             });
 
             
-        return view('admin.grid.show',  [
+        return view('reports.form_sr4_report',  [
             'form' => $form_sr4,
         ]);
 
