@@ -21,30 +21,29 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * 
  * @property Role[] $roles
  */
-// class Administrator extends Model implements AuthenticatableContract, JWTSubject, MustVerifyEmail
 class Administrator extends Model implements AuthenticatableContract, JWTSubject
 {
-    use 
-    Authenticatable, 
-    HasPermissions, 
-    DefaultDatetimeFormat, 
-    Notifiable,
-    HasFactory
-    // HasRoles
-    // HasApiTokens
+    use
+        Authenticatable,
+        HasPermissions,
+        DefaultDatetimeFormat,
+        Notifiable,
+        HasFactory
+        // HasRoles
+        // HasApiTokens
     ;
 
     protected $fillable = [
-        'first_name', 
-        'last_name', 
-        'name', 
-        'email',  
+        'first_name',
+        'last_name',
+        'name',
+        'email',
         'username',
         // 'remember_`token`', 
-        'password', 
+        'password',
         // 'avatar'
     ];
-    
+
     /**
      * Create a new Eloquent model instance.
      *
@@ -84,7 +83,7 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
 
         return admin_asset($default);
     }
-    
+
     /**
      * A user has and belongs to many roles.
      *
@@ -114,29 +113,13 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
     }
 
 
-    // the jwt auth to map this model to the jwt rest api token authentication 
-     /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
     public function getJWTIdentifier()
     {
         return $this->getKey();
     }
 
-    
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
     public function getJWTCustomClaims()
     {
         return [];
     }
-
-
-  
-
 }

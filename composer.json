@@ -35,6 +35,7 @@
         "symfony/http-client": "^6.1",
         "symfony/mailgun-mailer": "^6.1",
         "symfony/postmark-mailer": "^6.1",
+        "tymon/jwt-auth": "^1.0@dev",
         "yajra/laravel-datatables": "1.5"
     },
     "require-dev": {

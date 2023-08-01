@@ -19,7 +19,6 @@ class Authenticate extends Middleware
      */
     protected function authenticate($request, array $guards)
     {
-        die("fail"); 
         try {
             parent::authenticate($request, $guards);
         } catch (AuthenticationException $e) {

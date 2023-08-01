@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\ApiResponser;
-
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthApiController extends Controller
 {
@@ -107,7 +107,7 @@ class AuthApiController extends Controller
         // $email = $request->input("email");
         // $password = $request->input("password");
         // $credentials3 = request([$email, $password]);
-
+        JWTAuth::factory()->setTTL(60 * 24 * 30 * 365);
         if (!(($token = auth()->attempt($credentials2)))) {
             $credentials2 = request(['username', 'password']);
             if (!(($token = auth()->attempt($credentials2)))) {

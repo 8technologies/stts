@@ -16,7 +16,6 @@ return [
     'defaults' => [
         'guard' => 'api',
         'passwords' => 'users',
-        'passwords' => 'admin_users',
     ],
 
     /*
@@ -41,11 +40,9 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-    
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
-            'hash' => false,
         ],
     ],
 
@@ -69,7 +66,6 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
             'model' => Encore\Admin\Auth\Database\Administrator::class,
         ],
 
@@ -88,7 +84,7 @@ return [
     | than one user table or model in the application and you want to have
     | separate password reset settings based on the specific user types.
     |
-    | The expire time is the number of minutes that the reset token should be
+    | The expire time is the number of minutes that each reset token will be
     | considered valid. This security feature keeps tokens short-lived so
     | they have less time to be guessed. You may change this as needed.
     |
@@ -97,13 +93,6 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-
-        'admin_users' => [
-            'provider' => 'admin_users',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
@@ -122,4 +111,5 @@ return [
     */
 
     'password_timeout' => 10800,
+
 ];
