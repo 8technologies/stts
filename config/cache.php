@@ -50,8 +50,7 @@ return [
         ],
 
         'file' => [
-            'driver' => 'file',
-            'path' => storage_path('framework/cache/data'),
+            'driver' => 'file', 'path' => storage_path('framework/cache/data'), 'permission' => 764
         ],
 
         'memcached' => [
