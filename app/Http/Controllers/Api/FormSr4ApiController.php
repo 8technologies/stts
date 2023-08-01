@@ -36,7 +36,7 @@ class FormSr4ApiController extends AdminController
     public function form_sr4_create(Request $request): \Illuminate\Http\JsonResponse
     {
  
-        $user = auth()->user();
+        $user = Auth::user();
  
         $data = $request->only(
             'type',
