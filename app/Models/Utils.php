@@ -92,6 +92,7 @@ class Utils
     //check is form accepted
     public static function is_form_accepted($model_name)
     {
+         $user = Admin::user();
         $model = "App\\Models\\" . ucfirst($model_name);
         $recs = $model::where('administrator_id',  $user->id)->get();
         foreach ($recs as $key => $value) {
