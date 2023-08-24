@@ -1062,6 +1062,7 @@ class Utils
     //check if inspector remarks exist
     public static function check_inspector_remarks()
     {
+        $user = Auth::user();
         $recs = FormSr6::where('administrator_id',  $user->id)->get();
         foreach ($recs as $key => $value) {
             if ($value->inspector_remarks != null) {
