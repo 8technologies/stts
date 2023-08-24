@@ -15,6 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use \App\Models\MyNotification;
 
 
 /** Class Administrator.
@@ -110,6 +111,11 @@ class Administrator extends Model implements AuthenticatableContract, JWTSubject
         $relatedModel = config('admin.database.permissions_model');
 
         return $this->belongsToMany($relatedModel, $pivotTable, 'user_id', 'permission_id');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(MyNotification::class, 'receiver_id');
     }
 
 

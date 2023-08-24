@@ -37,6 +37,9 @@ class FormSr4Controller extends AdminController
         //organize the grid in descending order of created_at
         $grid->model()->orderBy('created_at', 'desc');
 
+        //disable export button
+        $grid->disableExport();
+
         //disable batch delete
         $grid->batchActions(function ($batch) 
         {
@@ -98,16 +101,16 @@ class FormSr4Controller extends AdminController
             $grid->disableCreateButton();
         }
         
-        $grid->column('name_of_applicant', admin_trans("Name of Applicant"))->sortable();
+        $grid->column('name_of_applicant', __("Search by Name of Applicant"))->sortable();
 
-        $grid->column('created_at', admin_trans('Created'))->display(function ($item) 
+        $grid->column('created_at', __('Created'))->display(function ($item) 
         {
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
 
-        $grid->column('type', admin_trans('Application Category'))->sortable();
+        $grid->column('type', __('Application Category'))->sortable();
 
-        $grid->column('status', admin_trans('Status'))->display(function ($status) 
+        $grid->column('status', __('Status'))->display(function ($status) 
         {
            // check expiration date
             if (Utils::check_expiration_date('FormSr4',$this->getKey())) 
@@ -121,11 +124,11 @@ class FormSr4Controller extends AdminController
         
         if(Utils::is_form_accepted('FormSr4'))
         {
-        $grid->column('valid_from', admin_trans("Starts"))->sortable();
-        $grid->column('valid_until', admin_trans("Expires"))->sortable();
+        $grid->column('valid_from', __("Starts"))->sortable();
+        $grid->column('valid_until', __("Expires"))->sortable();
         };
 
-        $grid->column('administrator_id', admin_trans('Created by'))->display(function ($userId) 
+        $grid->column('administrator_id', __('Created by'))->display(function ($userId) 
         {
             $u = Administrator::find($userId);
             if (!$u)
@@ -133,8 +136,8 @@ class FormSr4Controller extends AdminController
             return $u->name;
         })->sortable();
 
-        $grid->column('address', admin_trans('Address'))->sortable();
-        $grid->column('inspector', admin_trans('Inspector'))->display(function ($userId) 
+        $grid->column('address', __('Address'))->sortable();
+        $grid->column('inspector', __('Inspector'))->display(function ($userId) 
         {
             if (Admin::user()->isRole('basic-user')) {
                 return "-";
@@ -148,7 +151,7 @@ class FormSr4Controller extends AdminController
         $grid->filter(function($search_param)
         {
             $search_param->disableIdfilter();
-            $search_param->like('name_of_applicant', admin_trans("Search by Name of Applicant"));
+            $search_param->like('name_of_applicant', __("Search by Name of Applicant"));
         });
 
         return $grid;
@@ -182,28 +185,23 @@ class FormSr4Controller extends AdminController
             
             });
 
-            
-        return view('reports.form_sr4_report',  [
-            'form' => $form_sr4,
-        ]);
-
         $show->field('type', __('Application Category'));
 
         //check if seed board registration number is empty,if it is then dont show it
         if ($form_sr4->seed_board_registration_number != null) 
         {
-            $show->field('seed_board_registration_number', admin_trans('Seed board registration number'));
+            $show->field('seed_board_registration_number', __('Seed board registration number'));
         }
-        $show->field('name_of_applicant', admin_trans('Name of applicant'));
-        $show->field('address', admin_trans('Address'));
-        $show->field('company_initials', admin_trans('Company initials'));
-        $show->field('premises_location', admin_trans('Premises location'));
-        $show->field('expirience_in', admin_trans('Experience in'));
-        $show->field('years_of_expirience', admin_trans('Years of experience'))->as(function ($item)
+        $show->field('name_of_applicant', __('Name of applicant'));
+        $show->field('address', __('Address'));
+        $show->field('company_initials', __('Company initials'));
+        $show->field('premises_location', __('Premises location'));
+        $show->field('expirience_in', __('Experience in'));
+        $show->field('years_of_expirience', __('Years of experience'))->as(function ($item)
         {
             return $item . " Years";
         });
-        $show->field('dealers_in', admin_trans('Dealers in'))->as (function($item)
+        $show->field('dealers_in', __('Dealers in'))->as (function($item)
         {
             if($item == "Other"){
                 return $this->dealers_in_other ;
@@ -212,14 +210,14 @@ class FormSr4Controller extends AdminController
         });
     
       
-        $show->field('marketing_of', admin_trans('Marketing of'))->as(function ($item) 
+        $show->field('marketing_of', __('Marketing of'))->as(function ($item) 
         {
             if ($item == "Other") {
                 return $this->marketing_of_other ;
             }
             return $item;
         });
-        $show->field('have_adequate_land', admin_trans('Have adequate land'))->as(function ($item) 
+        $show->field('have_adequate_land', __('Have adequate land'))->as(function ($item) 
         {
             if ($item) 
             {
@@ -230,7 +228,7 @@ class FormSr4Controller extends AdminController
             }
             return $item;
         });
-        $show->field('have_adequate_storage', admin_trans('Have adequate storage'))->as(function ($item) 
+        $show->field('have_adequate_storage', __('Have adequate storage'))->as(function ($item) 
         {
             if ($item) 
             {
@@ -245,15 +243,15 @@ class FormSr4Controller extends AdminController
         //check if land_size has a value and if it has a value then show it and if not then dont show it
         if ($form_sr4->land_size)
         {
-            $show->field('land_size', admin_trans('Land size (In Acres)'));
+            $show->field('land_size', __('Land size (In Acres)'));
         }
         //check if eqipment has a value and if it has a value then show it and if not then dont show it
         if ($form_sr4->eqipment) 
         {
-            $show->field('eqipment', admin_trans('Equipment'));
+            $show->field('eqipment', __('Equipment'));
         } 
         
-        $show->field('have_adequate_equipment', admin_trans('Have adequate equipment'))->as(function ($item) 
+        $show->field('have_adequate_equipment', __('Have adequate equipment'))->as(function ($item) 
         {
             if ($item) 
             {
@@ -265,7 +263,7 @@ class FormSr4Controller extends AdminController
             }
             return $item;
         });
-        $show->field('have_contractual_agreement', admin_trans('Have contractual agreement'))->as(function ($item) 
+        $show->field('have_contractual_agreement', __('Have contractual agreement'))->as(function ($item) 
         {
             if ($item) 
             {
@@ -277,7 +275,7 @@ class FormSr4Controller extends AdminController
             }
             return $item;
         });
-        $show->field('have_adequate_field_officers', admin_trans('Have adequate field officers'))->as(function ($item)
+        $show->field('have_adequate_field_officers', __('Have adequate field officers'))->as(function ($item)
          {
             if ($item) 
             {
@@ -289,7 +287,7 @@ class FormSr4Controller extends AdminController
             }
             return $item;
         });
-        $show->field('have_conversant_seed_matters', admin_trans('Have conversant seed matters'))->as(function ($item) 
+        $show->field('have_conversant_seed_matters', __('Have conversant seed matters'))->as(function ($item) 
         {
             if ($item) 
             {
@@ -299,14 +297,14 @@ class FormSr4Controller extends AdminController
             }
             return $item;
         });
-        $show->field('souce_of_seed', admin_trans('Souce of seed'))->as(function ($userId)
+        $show->field('souce_of_seed', __('Souce of seed'))->as(function ($userId)
         {
             $u = Administrator::find($userId);
             if (!$u)
                 return $userId;
             return $u->name . " - ID: " . $u->id;
         });
-        $show->field('have_adequate_land_for_production', admin_trans('Have adequate land for production'))->as(function ($item) 
+        $show->field('have_adequate_land_for_production', __('Have adequate land for production'))->as(function ($item) 
         {
             if ($item) 
             {
@@ -317,7 +315,7 @@ class FormSr4Controller extends AdminController
             }
             return $item;
         });
-        $show->field('have_internal_quality_program', admin_trans('Have internal quality program'))->as(function ($item) 
+        $show->field('have_internal_quality_program', __('Have internal quality program'))->as(function ($item) 
         {
             if ($item) 
             {
@@ -327,9 +325,9 @@ class FormSr4Controller extends AdminController
             }
             return $item;
         });
-        $show->field('receipt', admin_trans('Receipt'))->file();
+        $show->field('receipt', __('Receipt'))->file();
 
-        $show->field('accept_declaration', admin_trans('Accepted declaration'))->as(function ($item) 
+        $show->field('accept_declaration', __('Accepted declaration'))->as(function ($item) 
         {
             if ($item) 
             {
@@ -342,13 +340,13 @@ class FormSr4Controller extends AdminController
         //check if valid_from , valid_until are empty,if they are then dont show them
         if ($form_sr4->valid_from != null) 
         {
-            $show->field('valid_from', admin_trans('Valid from'));
+            $show->field('valid_from', __('Valid from'));
         }
         if ($form_sr4->valid_until != null) 
         {
-            $show->field('valid_until', admin_trans('Valid until'));
+            $show->field('valid_until', __('Valid until'));
         }
-        $show->field('status', admin_trans('Status'))->unescape()->as(function ($status) 
+        $show->field('status', __('Status'))->unescape()->as(function ($status) 
         {
             return Utils::tell_status($status);
         });
@@ -356,11 +354,11 @@ class FormSr4Controller extends AdminController
        //check if the status comment is null
        if($form_sr4->status_comment != null)
        {
-           $show->field('status_comment', admin_trans('Status comment'));
+           $show->field('status_comment', __('Status comment'));
        }
        else
        {
-           $show->field('status_comment', admin_trans('Status comment'))->as(function ($status) 
+           $show->field('status_comment', __('Status comment'))->as(function ($status) 
            {
                return "No comment";
            });
@@ -391,7 +389,7 @@ class FormSr4Controller extends AdminController
             }
         }
         
-            //return $show;
+            return $show;
     }
 
     /**
@@ -512,13 +510,8 @@ class FormSr4Controller extends AdminController
                         $formSr4 = FormSr4::find($form);
                       //count the number of forms with the same type
                         $count = FormSr4::where('type', $type)->where('administrator_id', $user->id)->count();
-                        if($count > 1)
+                        if($count)
                         {
-                           
-                        }
-                        elseif($count == 1)
-                        { 
-                            return  response(' <p class="alert alert-warning"> You cannot create a new SR4 form  while having PENDING one of the same category. <a href="/admin/form-sr4s"> Go Back </a></p> ');
                             //check if what is being passed to the form is the same as the one in the database
                             if($form_sr4->id == $formSr4->id)
                             {
@@ -539,8 +532,9 @@ class FormSr4Controller extends AdminController
                                 }
                             }
                         }
-                        else{
-                             return true;
+                        else
+                        {
+                            return response(' <p class="alert alert-danger">Form Not Found </p>');
                         }
 
                     }
@@ -548,15 +542,19 @@ class FormSr4Controller extends AdminController
                     if(!Utils::can_create_form($form_sr4))
                     {
                         return  response(' <p class="alert alert-warning"> You cannot create a new SR4 form  while having PENDING one of the same category. <a href="/admin/form-sr4s/create"> Go Back </a></p> ');
+
                     }
                     
                     //check if its still valid
                     if (Utils::can_renew_app_form($form_sr4)) 
                     {
-                        return  response(' <p class="alert alert-warning"> You cannot create a new SR4 form  while having VALID one of the same category. <a href="/admin/form-sr4s/create"> Go Back </a></p> ');   
+                        
+                        return  response(' <p class="alert alert-warning"> You cannot create a new SR4 form  while having VALID one of the same category. <a href="/admin/form-sr6s/create"> Go Back </a></p> ');   
                     }
-                $form->accept_declaration = 1;
+                    $form->accept_declaration = 1;
+                   
             }
+          
                      
         });
 
@@ -583,10 +581,7 @@ class FormSr4Controller extends AdminController
         if ($form->isCreating()) 
         {
             $form->hidden('administrator_id', __('Administrator id'))->value($user->id);
-        } else 
-        {
-            $form->hidden('administrator_id', __('Administrator id'));
-        }
+        } 
 
         //basic-user form fields
         if (Admin::user()->isRole('basic-user')) 
@@ -604,13 +599,13 @@ class FormSr4Controller extends AdminController
             ->help('Which SR4 type are you applying for?')
             ->rules('required');
 
-            $form->text('name_of_applicant', admin_trans('Name of applicant'))->default($user->name)->readonly();
-            $form->text('address', admin_trans('Address'))->required();
-            $form->text('company_initials', admin_trans('Company initials'))->required();
-            $form->text('premises_location', admin_trans('Premises location'));
-            $form->text('years_of_expirience', admin_trans('Years of experience'))
+            $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
+            $form->text('address', __('Address'))->required();
+            $form->text('company_initials', __('Company initials'))->required();
+            $form->text('premises_location', __('Premises location'));
+            $form->number('years_of_expirience', __('Years of experience'))
                 ->required();
-            $form->select('expirience_in', admin_trans('Experience in?'))
+            $form->select('expirience_in', __('Experience in?'))
                 ->options
             ([
                 'Seed Producer' => 'Seed Producer',
@@ -752,13 +747,9 @@ class FormSr4Controller extends AdminController
             }
 
             $form->divider();
-            $form->html(admin_trans('Declaration:
-                I/WE* AT ANY TIME DURING OFFICIAL WORKING HOURS EVEN WITHOUT previous 
-                appointment will allow the inspectors entry to the seed stores and thereby 
-                provide them with the facilities necessary to carry out their inspection work as
-                laid out in the seed and plant regulations, 2015.I/We further declare that I/We am/are conversant with the Regulations. In addition I/We will send a list of all seed lots in our 
-                stores on a given date and or at such a date as can be mutually 
-                agreed upon between the National Seed Certification Service and ourselves.'));
+            $form->html('<h4>Declaration:</h4>
+                <p>I/WE* AT ANY TIME DURING OFFICIAL WORKING HOURS EVEN WITHOUT previous appointment will allow the inspectors entry to the seed stores and thereby provide them with the facilities necessary to carry out their inspection work as laid
+                 out in the seed and plant regulations, 2015.I/We further declare taht I/We am/are conversant with the Regulations. In addition I/We will send a list of all seed lots in our stores on a given date and or at such a date as can be mutually agreed upon between the National Seed Certification Service and ourselves.</p> ');
 
             $form->hidden('accept_declaration', __('Accept declaration') )->required();
             $form->html('<input type="checkbox" name="accept_declaration" value="1" required>  I Accept');
@@ -791,7 +782,7 @@ class FormSr4Controller extends AdminController
                         {
                             continue;
                         }
-                        $_items[$item->id] = $item->name . " - " . $item->id;
+                        $_items[$item->id] = $item->name;
                     }
                     $form->select('inspector', __('Inspector'))
                         ->options($_items)
@@ -842,6 +833,7 @@ class FormSr4Controller extends AdminController
             $footer->disableReset();
             $footer->disableViewCheck();
             $footer->disableCreatingCheck();
+            $footer->disableEditingCheck();
         });
 
         

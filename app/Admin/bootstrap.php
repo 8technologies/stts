@@ -40,7 +40,7 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
     $notifications = [];
     $u =  Auth::user();
     if ($u != null) {
-        $notifications = Utils::get_notifications($u);
+        $notifications = MyNotification::get_notifications($u);
     }
 
 

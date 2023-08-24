@@ -2,4 +2,4 @@
 *.log
 .htaccess
 *.log
-storage/logs/laravel.log
+storage/*
