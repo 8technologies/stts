@@ -65,7 +65,7 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
         {
                 
 
-                Utils::send_notification($model, 'FormSr6', request()->segment(count(request()->segments())));
+                MyNotification::send_notification($model, 'FormSr6', request()->segment(count(request()->segments())));
             // code here            
         });
  
@@ -91,7 +91,7 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
 
 
         self::updated(function ($m) {
-            Utils::update_notification($m, 'FormSr6', request()->segment(count(request()->segments())-1));
+            MyNotification::update_notification($m, 'FormSr6', request()->segment(count(request()->segments())-1));
 
         });
 

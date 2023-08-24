@@ -383,7 +383,7 @@ class ImportExportPermitController2 extends AdminController
                         else
                         {
     
-                            if(!Utils::can_create_import($import))
+                            if(!Utils::can_create_export($import))
                             {
                                 return  response(' <p class="alert alert-warning"> You cannot create a new export permit form  while having PENDING one of the same category. <a href="/admin/import-export-permits-2"> Go Back </a></p> ');
                             }
@@ -395,25 +395,9 @@ class ImportExportPermitController2 extends AdminController
                             }
                         }
                     }
-                    else
-                    {
-                        return response(' <p class="alert alert-danger">Form Not Found </p>');
-                    }
-                });
-                //count the number of forms with the same type
-               
-
-            }
-
-            if($form->isCreating())
-            {
-             
-                //check if there is a valid sr4 for the selected application type
-                $form->saving(function (Form $form) 
-                {
-
-                
-                        $form_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->where('valid_until','>=', Carbon::now())->where('type', $form->type)->first();
+                     else
+                     {
+                         $form_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->where('valid_until','>=', Carbon::now())->where('type', $form->type)->first();
 
                         if ( $form->type != 'Researchers' &&  !$form_sr4)
                         {
@@ -458,6 +442,60 @@ class ImportExportPermitController2 extends AdminController
                         
                             
                         }
+                    }
+                });
+                //count the number of forms with the same type
+               
+
+            }
+
+            if($form->isCreating())
+            {
+             
+                //check if there is a valid sr4 for the selected application type
+                $form->saving(function (Form $form) 
+                {
+
+                
+                        $form_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->where('valid_until','>=', Carbon::now())->where('type', $form->type)->first();
+
+                       
+                            $type = $form->type;
+                            $user = Auth::user();
+                            $export = ImportExportPermit::where('type', $type)->where('administrator_id', $user->id)->where('is_import', 0)->first();
+                            if ($export) 
+                            {
+                                
+                                
+                                    //check if the status of the form is pending, rejected,halted or accepted
+                                    if(!Utils::can_create_export($export))
+                                    {
+                                        return  response(' <p class="alert alert-warning"> You cannot create a new export permit form  while having PENDING one of the same category. <a href="/admin/import-export-permits-2/create"> Go Back </a></p> ');
+                
+                                    }
+                                    
+                                    //check if its still valid
+                                    if (Utils::can_renew_permit($export)) 
+                                    {
+                                        
+                                        return  response(' <p class="alert alert-warning"> You cannot create a new export permit form  while having VALID one of the same category. <a href="/admin/import-export-permits-2/create"> Go Back </a></p> ');   
+                                    }
+                            
+                            }
+
+                            //function to set the category to 'yes' only when the form is being saved the first time
+                
+                            if($form->type != 'Researchers')
+                            {
+                                $form->national_seed_board_reg_num = $form_sr4->seed_board_registration_number;
+                            }
+                            else
+                            {
+                                $form->national_seed_board_reg_num = 'N/A';
+                            }
+                        
+                            
+                        
 
                 });
             }

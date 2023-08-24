@@ -404,21 +404,7 @@ class ImportExportPermitController extends AdminController
                     }
                     else
                     {
-                        return response(' <p class="alert alert-danger">Form Not Found </p>');
-                    }
-                });
-                //count the number of forms with the same type
-               
-
-            }
-
-            if($form->isCreating())
-            {
-             
-                //check if there is a valid sr4 for the selected application type
-                $form->saving(function (Form $form) 
-                {
-
+                        
                 
                         $form_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->where('valid_until','>=', Carbon::now())->where('type', $form->type)->first();
 
@@ -464,6 +450,62 @@ class ImportExportPermitController extends AdminController
                         
                             
                         }
+                    }
+                });
+                //count the number of forms with the same type
+               
+
+            }
+
+            if($form->isCreating())
+            {
+             
+                //check if there is a valid sr4 for the selected application type
+                $form->saving(function (Form $form) 
+                {
+                    $selected_type = $form->type;
+                    $user = Auth::user();
+                    $import = ImportExportPermit::where('type', $selected_type)->where('administrator_id', $user->id)->where('is_import', 1)->first();
+                    if ($import) 
+                    {
+                        
+                        
+                            //check if the status of the form is pending, rejected,halted or accepted
+                            if(!Utils::can_create_import($import))
+                            {
+                               
+                                return response('<p class="alert alert-warning"> You cannot create a new import permit form  while having PENDING one of the same category. <a href="/admin/import-export-permits/create"> Go Back </a></p>');
+                              
+                             }
+        
+                          
+                            
+                            //check if its still valid
+                            if (Utils::can_renew_permit($import)) 
+                            {
+                                
+                                return response('<p class="alert alert-warning"> You cannot create a new import permit form  while having VALID one of the same category. <a href="/admin/import-export-permits/create"> Go Back </a></p>');  
+                                return;
+                            }
+                    }
+
+                
+                        $form_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->where('valid_until','>=', Carbon::now())->where('type', $form->type)->first();
+
+
+                            //function to set the category to 'yes' only when the form is being saved the first time
+                
+                            if($form->type != 'Researchers')
+                            {
+                                $form->national_seed_board_reg_num = $form_sr4->seed_board_registration_number;
+                            }
+                            else
+                            {
+                                $form->national_seed_board_reg_num = 'N/A';
+                            }
+                        
+                            
+                        
 
                 });
             }
@@ -477,11 +519,29 @@ class ImportExportPermitController extends AdminController
                     'Seed Importer' => 'Seed Importer',
                     'Seed Exporter' => 'Seed Exporter',
                     'Seed Processor' => 'Seed Processor',
-                    'Researchers' => 'Researchers',
+                    'Researchers' => 'Researchers/Own use',
 
                 ])
                 ->required()
-                ->help('Which SR4 type are you applying for?');
+                ->help('Which SR4 type are you applying for?')
+                ->when( 'Seed Merchant', function (Form $form) {
+                   Utils::sr4Check($form,'Seed Merchant');
+                })
+                ->when( 'Seed Producer', function (Form $form) {
+                    Utils::sr4Check($form,'Seed Producer');
+                })
+                ->when( 'Seed Stockist', function (Form $form) {
+                    Utils::sr4Check($form,'Seed Stockist');
+                })
+                ->when( 'Seed Importer', function (Form $form) {
+                    Utils::sr4Check($form,'Seed Importer');
+                })
+                ->when( 'Seed Exporter', function (Form $form) {
+                    Utils::sr4Check($form,'Seed Exporter');
+                })
+                ->when( 'Seed Processor', function (Form $form) {
+                    Utils::sr4Check($form,'Seed Processor');
+                });
             $this->show_fields($form);
                    
 
@@ -511,7 +571,7 @@ class ImportExportPermitController extends AdminController
                         {
                             continue;
                         }
-                        $_items[$item->id] = $item->name . " - " . $item->id;
+                        $_items[$item->id] = $item->name;
                     }
                     $form->select('inspector', __('Inspector'))
                         ->options($_items)
@@ -606,7 +666,7 @@ class ImportExportPermitController extends AdminController
             $form->textarea('other_varieties', __('Specify other varieties if any.') )
             ->help('If varieties you are applying for were not listed');
            
-            $form->number('weight','Weight in (Kgs)')
+            $form->number('weight','Weight in (metric tons)')
             ->required();
 
             

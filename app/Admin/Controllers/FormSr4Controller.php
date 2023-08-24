@@ -449,7 +449,7 @@ class FormSr4Controller extends AdminController
             {
                  if($formSr4->status != 2)
                 {
-                    $form->html('<div class="alert alert-danger">You cannot edit this form, please commit the commissioner to make any changes. </div>');
+                    $form->html('<div class="alert alert-danger">You cannot edit this form, please contact the commissioner to make any changes. </div>');
                     $form->footer(function ($footer) 
                     {
 

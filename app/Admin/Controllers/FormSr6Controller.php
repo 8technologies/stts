@@ -37,7 +37,14 @@ class FormSr6Controller extends AdminController
        
         $grid = new Grid(new FormSr6());
 
-        $grid->disableFilter();
+        $grid->filter(function($search_param)
+        {
+            $search_param->disableIdfilter();
+            $search_param->like('name_of_applicant', __("Search by Name of Applicant"));
+        });
+
+        //disable export button
+        $grid->disableExport();
         $grid->disableColumnSelector();
 
         //check if the role is an inspector and has been assigned that form
@@ -71,6 +78,7 @@ class FormSr6Controller extends AdminController
                 }
                 if(Utils::check_expiration_date('FormSr6',$this->getKey()))
                 {
+                    
                     $actions->add(new Renew(request()->segment(count(request()->segments()))));
                 
                 }
@@ -168,12 +176,7 @@ class FormSr6Controller extends AdminController
         {
                 $tools->disableEdit();
                 $tools->disableDelete();
-        });
-
-                
-        return view('reports.form_sr6_report',  [
-            'form' => $form_sr6,
-        ]);
+        });;
 
         $show->field('created_at', __('Created at'))->as(function ($item) 
         {
@@ -190,7 +193,11 @@ class FormSr6Controller extends AdminController
                     return "-";
                 return $u->name;
         });
-        $show->field('registration_number', __('Seed board registration number'));
+        
+        if ($form_sr6->registration_number != null) 
+        {
+            $show->field('registration_number', __('Seed board registration number'));
+        }
         $show->field('name_of_applicant', __('Name of applicant'));
         $show->field('address', __('Address'));
         $show->field('premises_location', __('Premises location'));
@@ -258,15 +265,32 @@ class FormSr6Controller extends AdminController
                 return $item;
         });
         $show->field('signature_of_applicant', __('Attach receipt'))->file();
-        $show->field('grower_number', __('Grower number'));
-        $show->field('valid_from', __('Valid from'));
+        if($form_sr6->grower_number != null){
+            $show->field('grower_number', __('Grower number'));
+        }
         
-        $show->field('valid_until', __('Valid until'));
+        if ($form_sr6->valid_from != null && $form_sr6->valid_from != null) 
+        {
+            $show->field('valid_from', __('Valid from'));
+            $show->field('valid_until', __('Valid until'));
+        }
+        
         $show->field('status', __('Status'))->unescape()->as(function ($status) 
         {
             return Utils::tell_status($status);
         });
-       $show->field('status_comment', __('Status comment'));
+        //check if the status comment is null
+        if($form_sr6->status_comment != null)
+        {
+            $show->field('status_comment', __('Status comment'));
+        }
+        else
+        {
+            $show->field('status_comment', __('Status comment'))->as(function ($status) 
+            {
+                return "No comment";
+            });
+        }
 
     
        if (!Admin::user()->isRole('basic-user'))
@@ -293,7 +317,7 @@ class FormSr6Controller extends AdminController
             }
         }
 
-        // return $show;
+        return $show;
     }
 
 
@@ -474,6 +498,7 @@ class FormSr6Controller extends AdminController
             ->rules('required');
 
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required()->required();
+            $form->text('company_initials', __('Company initials'))->required();
             $form->text('address', __('Address'))->required();
             $form->text('premises_location', __('Premises location'))->required();
             $form->text('years_of_expirience', __('Years of experience as seed grower'))
@@ -559,7 +584,7 @@ class FormSr6Controller extends AdminController
                         {
                             continue;
                         }
-                        $_items[$item->id] = $item->name . " - " . $item->id;
+                        $_items[$item->id] = $item->name;
                     }
                     $form->select('inspector', __('Inspector'))
                         ->options($_items)
@@ -603,6 +628,20 @@ class FormSr6Controller extends AdminController
                         ->default("MAAIF" ."/". date('Y') ."/". "SG". "/". mt_rand(10000000, 99999999))->readonly();
                 });
         }
+        $form->footer(function ($footer) 
+        {
+
+            // disable `View` checkbox
+            $footer->disableViewCheck();
+            // disable `reset` button
+            $footer->disableReset();
+
+            // disable `Continue editing` checkbox
+            $footer->disableEditingCheck();
+
+            
+
+        });
 
         return $form;
 

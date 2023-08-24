@@ -50,6 +50,7 @@ class Utils
     //renew or create a new form after its expired
     public static function can_renew_form($model_name)
     {
+        $user = Admin::user();
         $model = "App\\Models\\" . ucfirst($model_name);
         $recs = $model::where('administrator_id',  $user->id)->get();
 
@@ -126,6 +127,7 @@ class Utils
     public static function can_create_qds()
     {
 
+        $user = Admin::user();
         $recs = FormQds::where('administrator_id',  $user->id)->get();
 
         foreach ($recs as $key => $value) {
@@ -229,6 +231,94 @@ class Utils
 
         return true;
     }
+
+    //sr4type import
+    public static function sr4Check($form, $selected_type)
+    {
+        $form_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->where('valid_until','>=', Carbon::now())->where('type',$selected_type)->first();
+
+        if ( !$form_sr4)
+        {
+            
+            $form->html(' <p class="alert alert-danger"> 
+           You do not have a valid SR4 of the selected type. <a href="/admin/form-sr4s">Register Now</a>
+            </p> ');
+            return;
+        }
+        else
+        {
+            $user = Auth::user();
+            $import = ImportExportPermit::where('type', $selected_type)->where('administrator_id', $user->id)->where('is_import', 1)->first();
+            if ($import) 
+            {
+                
+                
+                    //check if the status of the form is pending, rejected,halted or accepted
+                    if(!Utils::can_create_import($import))
+                    {
+                       
+                        $form->html('<p class="alert alert-warning"> You cannot create a new import permit form  while having PENDING one of the same category. <a href="/admin/import-export-permits/create"> Go Back </a></p>');
+                        return;
+                     }
+
+                  
+                    
+                    //check if its still valid
+                    if (Utils::can_renew_permit($import)) 
+                    {
+                        
+                        $form->html('<p class="alert alert-warning"> You cannot create a new import permit form  while having VALID one of the same category. <a href="/admin/import-export-permits/create"> Go Back </a></p>');  
+                        return;
+                    }
+            }
+        }
+        
+            
+    }
+
+    public static function exportSr4Check($form, $selected_type)
+    {
+          
+        $form_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->where('valid_until','>=', Carbon::now())->where('type',$selected_type)->first();
+
+        if (!$form_sr4)
+        {
+            
+            $form->html('<p class="alert alert-danger">You do not have a valid SR4 of the selected type. <a href="/admin/import-export-permits-2"> Go Back </a></p> '); 
+            return;    
+        }
+        else
+        {
+         
+            $user = Auth::user();
+            $export = ImportExportPermit::where('type', $selected_type)->where('administrator_id', $user->id)->where('is_import', 0)->first();
+            if ($export) 
+            {
+                
+                
+                    //check if the status of the form is pending, rejected,halted or accepted
+                    if(!Utils::can_create_export($export))
+                    {
+                        $form->html(' <p class="alert alert-warning"> You cannot create a new export permit form  while having PENDING one of the same category. <a href="/admin/import-export-permits-2/create"> Go Back </a></p> ');
+                        return;
+
+                    }
+                    
+                    //check if its still valid
+                    if (Utils::can_renew_permit($export)) 
+                    {
+                        
+                        $form->html(' <p class="alert alert-warning"> You cannot create a new export permit form  while having VALID one of the same category. <a href="/admin/import-export-permits-2/create"> Go Back </a></p> '); 
+                        return;  
+                    }
+            
+            }
+         
+                       
+        }
+             
+    }
+    
 
 
 

@@ -29,7 +29,7 @@ class CropController extends AdminController
         $grid = new Grid(new Crop());
 
         $grid->column('name', __('Name'))->sortable();
-        $grid->column('number_of_inspection', __('Number of inspection'))->sortable();
+     
         $grid->column('number_of_days_before_submision', __('Number of days before submision'));
 
         $grid->disableTools();

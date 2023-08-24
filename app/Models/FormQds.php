@@ -55,14 +55,14 @@ class FormQds extends Model
         });
 
         self::created(function ($model) {
-            Utils::send_notification($model, 'FormQds', request()->segment(count(request()->segments()))); 
+            MyNotification::send_notification($model, 'FormQds', request()->segment(count(request()->segments()))); 
             
             
         });
 
         self::updated(function ($m) {
 
-            Utils::update_notification($m, 'FormQds', request()->segment(count(request()->segments())-1));
+            MyNotification::update_notification($m, 'FormQds', request()->segment(count(request()->segments())-1));
   
         });
 
