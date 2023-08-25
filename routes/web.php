@@ -64,7 +64,11 @@ Route::match(['get', 'post'], '/print', [PrintController2::class, 'index']);
     return view('welcome');
 });*/
 
-
+Route::get('import_permit', function () {
+    $pdf = App::make('dompdf.wrapper');
+    $pdf->loadHTML(view('reports/import_permit'));
+    return $pdf->stream();
+});
 
 
 // send emails

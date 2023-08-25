@@ -148,6 +148,17 @@ class ImportExportPermitController extends AdminController
              }
          })->sortable();
 
+               //check the status field of the form
+      if(Admin::user()->isRole('basic-user')){
+        $import_permit = ImportExportPermit::where('administrator_id', auth('admin')->user()->id)->value('status');
+        if ($import_permit == '5') {
+            $grid->column('id', __('Certificate'))->display(function ($id) {
+                $link = url('import_permit?id=' . $id);
+                return '<b><a target="_blank" href="' . $link . '">Print Certificate</a></b>';
+            });
+        }
+
+    }
 
         return $grid;
     }
@@ -591,7 +602,13 @@ class ImportExportPermitController extends AdminController
             $form->text('store_location', __('Store location'))->readonly();
             $form->text('other_varieties', __('Other varieties'))->readonly();
             $form->divider();
-
+            $form->html('
+                <p>The seeds shall not be distributed prior to the release of the result of the tests carried on samples unless with express permission
+                of the Head of NSCS</p></br>
+                <p>Payment of sampling and testing fees as stipultaed in the Fifth Schedule to Seeds Regulations shall be honoured</p></br>
+                <p>Fulfillment of commerce/customs requirements and adherence to regulations pertaining to importation of seed</p></br>');
+                
+            $form->divider();
             $form->radio('status', __('Status'))
                 ->options([
                     '3' => 'Halted',

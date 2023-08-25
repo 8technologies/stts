@@ -466,7 +466,6 @@ class ImportExportPermitController2 extends AdminController
                             if ($export) 
                             {
                                 
-                                
                                     //check if the status of the form is pending, rejected,halted or accepted
                                     if(!Utils::can_create_export($export))
                                     {
