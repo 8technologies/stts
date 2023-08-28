@@ -1,3 +1,13 @@
+<?php
+$link = public_path('css/bootstrap-print.css');
+$form = App\Models\ImportExportPermit::where('id', $_GET['id'])->where('is_import' , 1)->first();
+
+$crop_varieties = App\Models\ImportExportPermitsHasCrops::where('import_export_permit_id', $form->id)->get();
+
+
+
+$date = date("j F Y");
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,16 +40,16 @@
 </head>
 <body>
     <header>
-        <img id="logo" src="path/to/your/image.png" alt="Ministry Logo">
+        <img src="{{ public_path('assets/images/coat.png') }}" alt="logo">
         <h1>Ministry of Agriculture, Animal Industry and Fisheries</h1>
         <p>P.O. Box 102, Entebbe</p>
         <h2>SEED IMPORT PERMIT</h2>
     </header>
 
-    <p><strong>Permit No:</strong> [Permit Number]</p>
-    <p><strong>Date:</strong> [Date]</p>
-    <p><strong>Permission is hereby granted to:</strong> [Recipient Name]</p>
-    <p><strong>of:</strong> [Recipient Address]</p>
+    <p><strong>Permit No:</strong> {{$form->permit_number}}</p>
+    <p><strong>Date:</strong> {{$form->valid_from}}</p>
+    <p><strong>Permission is hereby granted to:</strong> {{$form->name}}</p>
+    <p><strong>of:</strong> {{$form->address}}</p>
     <p><strong>with NCSC Registration No:</strong> [NCSC Registration Number]</p>
     <p><strong>to import from:</strong> [Import Location]</p>
 
@@ -54,18 +64,19 @@
             </tr>
         </thead>
         <tbody>
+        @foreach ($crop_varieties as $crop) 
+            @php
+            $crop_variety = App\Models\CropVariety::where('id', $crop->crop_variety_id)->first(); // Use first() instead of get()
+            $crop_name = App\Models\Crop::where('id', $crop_variety->crop_id)->value('name');
+            @endphp
+            
             <tr>
-                <td>[Species 1]</td>
-                <td>[Variety 1]</td>
-                <td>[Category 1]</td>
-                <td>[Weight 1]</td>
+                <td>{{$crop_name}}</td>
+                <td>{{$crop_variety->name}}</td> <!-- Access name attribute directly -->
+                <td>{{$form->category}}</td>
+                <td>{{$crop->weight}}</td>
             </tr>
-            <tr>
-                <td>[Species 2]</td>
-                <td>[Variety 2]</td>
-                <td>[Category 2]</td>
-                <td>[Weight 2]</td>
-            </tr>
+        @endforeach
             <!-- Add more rows as needed -->
         </tbody>
     </table>

@@ -630,6 +630,7 @@ class ImportExportPermitController extends AdminController
                     $form->date('valid_from', 'Valid from date?');
                     $form->date('valid_until', 'Valid until date?');
                 });
+                $form->textarea('additional_conditions', __('Additional Conditions'));
 
         }
 
