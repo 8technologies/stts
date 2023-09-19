@@ -35,10 +35,7 @@ class CropController extends AdminController
         $grid->disableTools();
         $grid->disableExport();
 
-        $grid->actions(function ($actions) {
-            $actions->disableDelete();
-        });
-
+     
 
         return $grid;
     }
@@ -52,6 +49,8 @@ class CropController extends AdminController
     protected function detail($id)
     {
         $show = new Show(Crop::findOrFail($id));
+        $model = Crop::findOrFail($id);
+        
         $show->panel()
             ->tools(function ($tools) {
                 $tools->disableDelete();
@@ -60,18 +59,33 @@ class CropController extends AdminController
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
         $show->field('name', __('Name'));
-        $show->field('number_of_inspection', __('Number of inspection'));
         $show->field('number_of_days_before_submision', __('Number of days before submision'));
 
 
-        $show->id(__('Crop varieties'))->unescape()->as(function ($id) {
-            $model = Crop::findOrFail($id);
+        $show->field('',__('Crop varieties'))->unescape()->as(function () use ($model) {
+          
             $vars = "";
             foreach ($model->crop_varieties as $key => $value) {
                 $vars .= $value->name . ", ";
             }
             return '<p>' . $vars . "</p>";
         });
+
+        $show->field('id', __('Crop inspection types'))->unescape()->as(function ($id) use ($model) {
+            $types = [];
+            foreach ($model->crop_inspection_types as $key => $value) {
+                $types[] = $value->inspection_stage . "(". $value->is_required . ")";
+            }
+        
+            $list = '<ul>';
+            foreach ($types as $type) {
+                $list .= '<li>' . $type . '</li>';
+            }
+            $list .= '</ul>';
+        
+            return $list;
+        });
+        
 
         return $show;
     }
@@ -101,6 +115,7 @@ class CropController extends AdminController
         $form->hasMany('crop_inspection_types', function (NestedForm $form) {
             $form->setWidth(8, 4);
             $form->text('inspection_stage', __('Inspection stage name'))->required();
+            $form->radio('is_required', __('Is required'))->options(['Mandatory' => 'Mandatory', 'Optional' => 'Optional'])->default('1')->required();
             $form->text('period_after_planting', __('Period after planting (in days)'))
                 ->attribute(['type' => 'number'])
                 ->required();

@@ -27,5 +27,6 @@ class CropInspectionType extends Model
         'inspection_stage',
         'period_after_planting',
         'crop_id', 
+        'is_required'
     ];
 }

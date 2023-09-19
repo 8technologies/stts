@@ -31,7 +31,8 @@ class CropVariety extends Model
 
     public function getNameAttribute($name)
     {
-        return $this->crop->name . ", " . $name . ".";
+        //return $this->crop->name . ", " . $name . ".";
+        return $name;
     }
 
     public function seed_label_packages()
