@@ -35,6 +35,7 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
         'name_of_applicant',
         'address',
         'company_initials',
+        'phone_number',
         'premises_location',
         'expirience_in',
         'years_of_expirience',
