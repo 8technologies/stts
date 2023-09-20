@@ -70,6 +70,13 @@ Route::get('import_permit', function () {
     return $pdf->stream();
 });
 
+Route::get('certificate', function () {
+    $pdf = App::make('dompdf.wrapper');
+    $pdf->loadHTML(view('reports/formSR4'));
+    return $pdf->stream();
+});
+
+
 
 // send emails
 Route::get('/notify', [FormSr4Controller::class, 'notify'])->name("notify")->middleware(Authenticate::class);

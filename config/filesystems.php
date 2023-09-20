@@ -95,13 +95,12 @@ return [
             'url' => env('APP_URL').'/storage/uploads',
             'visibility' => 'public',
         ],
-
-
+      
         'admin' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/uploads',
-            'visibility' => 'public',
+            'driver' =>'local',
+            'root' => public_path('storage'),
+            'visibility' =>'public',
+            'url' => env('APP_URL').'/storage',
         ],
 
         's3' => [
@@ -126,6 +125,7 @@ return [
     */
 
     'links' => [
-        public_path('uploads') => storage_path('app/public'),
+        public_path('storage') => storage_path('app/public'),
+        public_path('images') => storage_path('app/images'),
     ],
 ];

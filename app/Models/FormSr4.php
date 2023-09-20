@@ -36,6 +36,7 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
         'address',
         'company_initials',
         'phone_number',
+        'repackage_equipment',
         'premises_location',
         'expirience_in',
         'years_of_expirience',
@@ -74,19 +75,24 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
                 return $model;
             } 
             
-            if(Admin::user()->isRole('inspector'))
+            if(Admin::user()->isRole('admin'))
             {
                 if($model->status == 5)
                 {    
-                    if(
-                        $model->valid_from == null ||
-                        strlen($model->valid_from) < 4 ||
-                        strlen($model->valid_until) < 4 
-                    ){
-                        $model->valid_from =  Carbon::now();
-                        $model->valid_until =  Carbon::now()->addYear();   
-                        return $model;   
+                   //edit the applicants name in the user table and add an abbreviation BR
+                    $user = Administrator::find($model->administrator_id);
+                    if($model->type == 'Seed Merchant'){
+                    $user->name = ' MER '. $model->name_of_applicant;
                     }
+                    if($model->type == 'Seed Dealer/importer/exporter'){
+                        $user->name = ' ST '. $model->name_of_applicant;
+                    }
+                    if($model->type == 'Seed Producers'){
+                        $user->name = ' SP '. $model->name_of_applicant;
+                    }
+                   
+                    $user->save();
+
                 }
             }
             

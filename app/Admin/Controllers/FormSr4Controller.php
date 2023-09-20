@@ -17,6 +17,7 @@ use Encore\Admin\Actions\RowAction;
 use App\Admin\Actions\Post\Renew;
 
 
+
 class FormSr4Controller extends AdminController
 {
     /**
@@ -36,6 +37,7 @@ class FormSr4Controller extends AdminController
         $grid = new Grid(new FormSr4());
         //organize the grid in descending order of created_at
         $grid->model()->orderBy('created_at', 'desc');
+        $form_sr4s = FormSr4::where('administrator_id', auth('admin')->user()->id)->get();
 
         //disable export button
         $grid->disableExport();
@@ -50,7 +52,7 @@ class FormSr4Controller extends AdminController
         //return an empty table if the inspector has not been assigned any forms
         if (Admin::user()->isRole('inspector'))  
         {
-            $grid->model()->where('inspector', '=', Admin::user()->id);
+            $grid->model()->where('inspector_id', '=', Admin::user()->id);
                
         }
        
@@ -137,7 +139,7 @@ class FormSr4Controller extends AdminController
         })->sortable();
 
         $grid->column('address', __('Address'))->sortable();
-        $grid->column('inspector', __('Inspector'))->display(function ($userId) 
+        $grid->column('inspector_id', __('Inspector'))->display(function ($userId) 
         {
             if (Admin::user()->isRole('basic-user')) {
                 return "-";
@@ -147,6 +149,23 @@ class FormSr4Controller extends AdminController
                 return "Not assigned";
             return $u->name;
         })->sortable();
+
+          //check user role then show a certificate button
+          if(!auth('admin')->user()->inRoles(['inspector','admin']))
+          {
+  
+              $grid->column('id', __('Certificate'))->display(function ($id) use ( $form_sr4s) {
+                  $form_sr4  =  $form_sr4s->firstWhere('id', $id);
+              
+                  if ($form_sr4 && $form_sr4 ->status == '5') {
+                      $link = url('certificate?id=' . $id);
+                      return '<b><a target="_blank" href="' . $link . '">Print Certificate</a></b>';
+                  } else {
+                     
+                      return '<b>Unavailable</b>';
+                  }
+              });
+          }
 
         $grid->filter(function($search_param)
         {
@@ -365,31 +384,9 @@ class FormSr4Controller extends AdminController
        }
     
 
-        if (!Admin::user()->isRole('basic-user'))
-        {
-            //button link to the show-details form
-            //check the status of the form being shown
-            if($form_sr4->status == 1 || $form_sr4->status == 2 || $form_sr4->status == null)
-            {
-            $show->field('id','Action')->unescape()->as(function ($id) 
-            {
-                return "<a href='/admin/form-sr4s/$id/edit' class='btn btn-primary'>Take Action</a>";
-            });
-            }
-        }
-
-        if (Admin::user()->isRole('basic-user')) 
-        {
-            if($form_sr4->status == 3 || $form_sr4->status == 4)
-            {
-                $show->field('id','Action')->unescape()->as(function ($id) 
-                {
-                    return "<a href='/admin/form-sr4s/$id/edit' class='btn btn-primary'>Take Action</a>";
-                });
-            }
-        }
+        Utils::take_action($form_sr4, $id ,'form-sr4s',$show);
         
-            return $show;
+        return $show;
     }
 
     /**
@@ -558,6 +555,14 @@ class FormSr4Controller extends AdminController
                      
         });
 
+
+        //disable tool buttons
+        $form->tools(function (Form\Tools $tools) 
+        {
+            $tools->disableDelete();
+            $tools->disableView();
+        });
+
         return $form;
     
     }
@@ -586,38 +591,61 @@ class FormSr4Controller extends AdminController
         //basic-user form fields
         if (Admin::user()->isRole('basic-user')) 
         {
-        
 
             $form->select('type', __('Application category?'))
             ->options
             ([
-                'Seed Merchant' => 'Seed Merchant',
+                'Seed Merchant/Company' => 'Seed Merchant/Company',
                 'Seed Dealer/importer/exporter' =>   'Seed Dealer/importer/exporter',
                 'Seed Producers' => 'Seed Producers',
             
             ])
             ->help('Which SR4 type are you applying for?')
-            ->rules('required')
-            ->when('in', ['Seed Merchant', 'Seed Producers'], function (Form $form) 
+            ->rules('required');
+
+            $form->text('name_of_applicant', __('Name of applicant Company'))->default($user->name);
+            $form->text('address', __('Address'))->required();
+            $form->text('company_initials', __('Company initials'))->required();
+            $form->text('premises_location', __('Premises location'));
+            $form->number('years_of_expirience', __('Years of experience'))
+                ->required();
+            $form->text('expirience_in', __('Experience as?'))
+            ->rules('required');
+
+            $form->html('<h3>I/We wish to apply for a certificate as a seed stockist.</h3>');
+            $form->radio('dealers_in', __('Applicant is applying for production of?'))
+                 ->options
+            ([
+                'Agricultural crops' => 'Agricultural crops',
+                'Horticultural crops' => 'Horticultural crops',
+                'Other' => 'Other',
+                'NA' => 'NA'
+            ])
+            ->help("Applies only if you are a Merchant or Producer")
+            ->when('Other', function (Form $form) 
             {
-                $this->fields($form);
-                $form->radio('dealers_in', __('Applicant is applying for production of?'))
-                    ->options
+                $form->text('dealers_in_other', 'Applicant is applying for Other Production of?')
+                    ->help("Please specify Production that you are applying for");
+            });
+
+            $form->radio('marketing_of', __('Applicant is applying for marketing of?'))
+                ->options
                 ([
                     'Agricultural crops' => 'Agricultural crops',
                     'Horticultural crops' => 'Horticultural crops',
                     'Other' => 'Other',
                     'NA' => 'NA'
                 ])
-                ->help("Applies only if you are a Merchant or Producer")
+                ->required()
+
                 ->when('Other', function (Form $form) 
                 {
-                    $form->text('dealers_in_other', 'Applicant is applying for Other Production of?')
-                        ->help("Please specify Production that you are applying for");
+                    $form->text('marketing_of_other', __('Applicant is applying for Other marketing of?'))
+                        ->help('Please Specify if you selected "Other" marketing.');
                 });
 
-                        
-                $form->radio('have_adequate_land', 'Do you have adequate land to handle basic seed?')
+
+            $form->radio('have_adequate_land', 'Do you have adequate land to handle basic seed?')
                 ->options
                 ([
                     '1' => 'Yes',
@@ -632,56 +660,109 @@ class FormSr4Controller extends AdminController
                         ->attribute('min', 1);
                 });
 
-                $form->radio('have_adequate_equipment', 'Do you have adequate equipment to handle basic seed?')
+
+            $form->radio('have_adequate_storage', 'I/We have adequate storage facilities to handle the resultant seed:')
+                ->options
+                ([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                    '2' => 'NA'
+                ])->required();
+
+            $form->radio('have_adequate_equipment', 'Do you have adequate equipment to handle basic seed?')
                 ->options
                 ([
                     '1' => 'Yes',
                     '0' => 'No',
                     '2' => 'NA'
                 ])->help("Applies only if you are a Merchant or Producer")
-    
+
                 ->when('1', function (Form $form) 
                 {
                     $form->text('eqipment', 'specify the equipment')
                         ->help("Please specify the equipment");
                 });
 
-                $form->divider();
-                $form->html('<h4>Declaration:</h4>
-                    <p>I/WE* AT ANY TIME DURING OFFICIAL WORKING HOURS EVEN WITHOUT previous 
-                    appointment will allow the inspectors entry to the seed stores and thereby provide 
-                    them with the facilities necessary to carry out their inspection work as laid
-                     out in the seed and plant regulations, 2015.I/We further declare taht I/We am/are 
-                     conversant with the Regulations. In addition I/We will send a list of all seed lots
-                      in our stores on a given date and or at such a date as can be mutually agreed upon between 
-                      the National Seed Certification Service and ourselves.</p> ');
-        
-                $form->hidden('accept_declaration', __('Accept declaration') )->required();
-                $form->html('<input type="checkbox" name="accept_declaration" value="1" required>  I Accept');
-        
+            $form->radio('repackage_equipment', 'Do you have adequate equipment to process and repackage seed?')
+            ->options
+            ([
+                '1' => 'Yes',
+                '0' => 'No',
+                '2' => 'NA'
+            ]);
+
+
+            $form->radio('have_contractual_agreement', 'Do you have contractual agreement with the growers you have recruited?')
+                ->options
+                ([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                    '2' => 'NA'
+                ])
+                ->required();
+
+            $form->radio('have_adequate_field_officers', 'Do you have adequate field officers to supervise and advise growers on all operation of seed production?')
+                ->options
+                ([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                    '2' => 'NA'
+                ])
+                ->required();
+
+            $form->radio(
+                'have_conversant_seed_matters',
+                __('Do you have adequate and knowledgeable personal who are conversant with seed matters?'))
+                ->options
+                ([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                    '2' => 'NA'
+                ])
+                ->required();
+            
+            $form->text('souce_of_seed', __('What is your souce of seed?'))->required();
     
+            $form->radio('have_adequate_land_for_production', __('Do you have adequate land for production of basic seed?'))
+                ->options
+                ([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                    '2' => 'NA'
+                ])
+                ->required();
 
+            $form->radio('have_internal_quality_program', __('Do you have an internal quality program?') )
+                ->options
+                ([
+                    '1' => 'Yes',
+                    '0' => 'No',
+                    '2' => 'NA'
+                ])
+                ->required();
 
-   
-            })
-            ->when('Seed Dealer/importer/exporter', function (Form $form) 
+            $form->file('receipt', __('Receipt'))
+            ->help('Attach a copy of your proof of payment,it should be in pdf, jpg or jpeg format and less than 500KB in size.')
+            ->required();
+
+            if(Utils::check_inspector_remarks())
             {
-                $this->fields($form); 
-                $form->divider();
-                $form->html('<h4>Declaration:</h4>
-                    <p>I/WE* AT ANY TIME DURING OFFICIAL WORKING HOURS EVEN WITHOUT previous 
-                    appointment will allow the inspectors entry to the seed stores and thereby provide 
-                    them with the facilities necessary to carry out their inspection work as laid
-                     out in the seed and plant regulations, 2015.I/We further declare taht I/We am/are 
-                     conversant with the Regulations. In addition I/We will send a list of all seed lots
-                      in our stores on a given date and or at such a date as can be mutually agreed upon between 
-                      the National Seed Certification Service and ourselves.</p> ');
-        
-                $form->hidden('accept_declaration', __('Accept declaration') )->required();
-                $form->html('<input type="checkbox" name="accept_declaration" value="1" required>  I Accept');
-        
-            });
-    
+            $form->textarea('status_comment', __('Inspector\'s remarks.'))->readonly();
+            }
+
+            $form->divider();
+            $form->html('<h4>Declaration:</h4>
+                <p>I/WE* AT ANY TIME DURING OFFICIAL WORKING HOURS EVEN WITHOUT previous 
+                appointment will allow the inspectors entry to the seed stores and thereby provide 
+                them with the facilities necessary to carry out their inspection work as laid
+                 out in the seed and plant regulations, 2015.I/We further declare taht I/We am/are 
+                 conversant with the Regulations. In addition I/We will send a list of all seed lots
+                  in our stores on a given date and or at such a date as can be mutually agreed upon between 
+                  the National Seed Certification Service and ourselves.</p> ');
+
+            $form->hidden('accept_declaration', __('Accept declaration') )->required();
+            $form->html('<input type="checkbox" name="accept_declaration" value="1" required>  I Accept');
+
                 
         }
         
@@ -697,6 +778,9 @@ class FormSr4Controller extends AdminController
                 ->options
                 ([
                     '2' => 'Assign Inspector',
+                    '3' => 'Halted',
+                    '4' => 'Rejected',
+                    '5' => 'Accepted',
                 ])
                 ->required()
 
@@ -712,10 +796,31 @@ class FormSr4Controller extends AdminController
                         }
                         $_items[$item->id] = $item->name;
                     }
-                    $form->select('inspector', __('Inspector'))
+                    $form->select('inspector_id', __('Inspector'))
                         ->options($_items)
                         ->help('Please select inspector')
                         ->rules('required');
+                })
+                
+                ->when('in', [3, 4], function (Form $form) 
+                {
+                    $form->textarea('status_comment', 'Inspector\'s comment (Remarks)')
+                        ->help("Please specify with a comment");
+                })
+
+                ->when('5', function (Form $form) 
+                {
+                    $form->text('seed_board_registration_number', __('Enter Seed Board Registration number'))
+                        ->help("Please Enter seed board registration number")
+                        ->default("MAAIF" ."/"."BR"."/".mt_rand(0, 9999)."/". date('Y'))->readonly();
+                    $form->date('valid_from', 'Valid from date?')->default(Carbon::now())->readonly();
+                    $nextYear = Carbon::now()->addYear(); // Get the date one year from now
+                    $defaultDateTime = $nextYear->format('Y-m-d H:i:s'); // Format the date for default value
+                    
+                    $form->date('valid_until', 'Valid until date?')
+                        ->default($defaultDateTime)
+                        ->readonly();
+                   
                 });
         }
 
@@ -732,26 +837,18 @@ class FormSr4Controller extends AdminController
             $form->radio('status', __('Status'))
                 ->options
                 ([ 
-                    '3' => 'Halted',
-                    '4' => 'Rejected',
-                    '5' => 'Accepted',
+                    '18' => 'Recommended',
+                     '4' => 'Rejected',
+                    
                 ])
                 ->required()
              
-                ->when('in', [3, 4], function (Form $form) 
+                ->when('in', [18, 4], function (Form $form) 
                 {
                     $form->textarea('status_comment', 'Inspector\'s comment (Remarks)')
                         ->help("Please specify with a comment");
-                })
-
-                ->when('5', function (Form $form) 
-                {
-                    $form->text('seed_board_registration_number', __('Enter Seed Board Registration number'))
-                        ->help("Please Enter seed board registration number")
-                        ->default("MAAIF" ."/". date('Y') ."/". "SC". "/". mt_rand(10000000, 99999999));
-                    $form->date('valid_from', 'Valid from date?');
-                    $form->date('valid_until', 'Valid until date?');
                 });
+
         }
 
 
@@ -766,107 +863,5 @@ class FormSr4Controller extends AdminController
 
         
 
-    }
-
-    public function fields($form)
-    {
-        $user = Auth::user();
-
-        $form->text('name_of_applicant', __('Name of applicant Company'))->default($user->name);
-        $form->text('address', __('Address'))->required();
-        $form->text('phone_number', __('Phone Number'))->attribute(['type' => 'number'])->required();
-        $form->text('company_initials', __('Company initials'));
-        $form->text('premises_location', __('Premises location'));
-        $form->number('years_of_expirience', __('Years of experience'))
-            ->required();
-        $form->text('expirience_in', __('Experience as?'))
-        ->rules('required');
-
-        $form->html('<h3>I/We wish to apply for a certificate as a seed stockist.</h3>');
-      
-        $form->radio('marketing_of', __('Applicant is applying for marketing of?'))
-            ->options
-            ([
-                'Agricultural crops' => 'Agricultural crops',
-                'Horticultural crops' => 'Horticultural crops',
-                'Other' => 'Other',
-                'NA' => 'NA'
-            ])
-            ->required()
-
-            ->when('Other', function (Form $form) 
-            {
-                $form->text('marketing_of_other', __('Applicant is applying for Other marketing of?'))
-                    ->help('Please Specify if you selected "Other" marketing.');
-            });
-
-
-        $form->radio('have_adequate_storage', 'I/We have adequate storage facilities to handle the resultant seed:')
-            ->options
-            ([
-                '1' => 'Yes',
-                '0' => 'No',
-                '2' => 'NA'
-            ])->required();
-
-      
-
-        $form->radio('have_contractual_agreement', 'Do you have contractual agreement with the growers you have recruited?')
-            ->options
-            ([
-                '1' => 'Yes',
-                '0' => 'No',
-                '2' => 'NA'
-            ])
-            ->required();
-
-        $form->radio('have_adequate_field_officers', 'Do you have adequate field officers to supervise and advise growers on all operation of seed production?')
-            ->options
-            ([
-                '1' => 'Yes',
-                '0' => 'No',
-                '2' => 'NA'
-            ])
-            ->required();
-
-        $form->radio(
-            'have_conversant_seed_matters',
-            __('Do you have adequate and knowledgeable personal who are conversant with seed matters?'))
-            ->options
-            ([
-                '1' => 'Yes',
-                '0' => 'No',
-                '2' => 'NA'
-            ])
-            ->required();
-        
-        $form->text('souce_of_seed', __('What is your souce of seed?'))->required();
-
-        $form->radio('have_adequate_land_for_production', __('Do you have adequate land for production of basic seed?'))
-            ->options
-            ([
-                '1' => 'Yes',
-                '0' => 'No',
-                '2' => 'NA'
-            ])
-            ->required();
-
-        $form->radio('have_internal_quality_program', __('Do you have an internal quality program?') )
-            ->options
-            ([
-                '1' => 'Yes',
-                '0' => 'No',
-                '2' => 'NA'
-            ])
-            ->required();
-
-        $form->file('receipt', __('Receipt'));
-
-        if(Utils::check_inspector_remarks())
-        {
-        $form->textarea('status_comment', __('Inspector\'s remarks.'))->readonly();
-        }
-
-      
     }
 }

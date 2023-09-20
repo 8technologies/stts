@@ -709,6 +709,8 @@ class Utils
             return '<span class="badge badge-success">Initialized</span>';
         if ($status == 17)
             return '<span class="badge badge-warning">Skipped</span>';
+        if ($status == 18)
+            return '<span class="badge badge-warning">Recommeded</span>';
         return $status;
     }
 
@@ -1009,6 +1011,45 @@ class Utils
             return $image->source_path;
         } else {
             return $image->target_path;
+        }
+    }
+
+    //take action button
+    public static function take_action($model, $id , $url ,$show)
+    {
+        if (!Admin::user()->isRole('basic-user'))
+        {
+            //button link to the show-details form
+            //check the status of the form being shown
+            if($model->status == 1 || $model->status == 2 || $model->status == null)
+            {
+            $show->field('id','Action')->unescape()->as(function ($id)  use ($url)
+            {
+                return "<a href='/admin/$url/$id/edit' class='btn btn-primary'>Take Action</a>";
+            });
+            }
+        }
+
+        if (Admin::user()->isRole('admin'))
+        {
+            //button link to the show-details form
+           
+            $show->field('id','Action')->unescape()->as(function ($id) use ($url)
+            {
+                return "<a href='/admin/$url/$id/edit' class='btn btn-primary'>Take Action</a>";
+            });
+            
+        }
+
+        if (Admin::user()->isRole('basic-user')) 
+        {
+            if($model->status == 3 || $model->status == 4)
+            {
+                $show->field('id','Action')->unescape()->as(function ($id)  use ($url)
+                {
+                    return "<a href='/admin/$url/$id/edit' class='btn btn-primary'>Take Action</a>";
+                });
+            }
         }
     }
 }

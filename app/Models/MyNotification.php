@@ -98,16 +98,12 @@ public static function update_notification($model, $model_name, $entity)
         ->get();
     
     $name = Administrator::find($model->administrator_id)->name;
-    
 
     $notificationData = [
         '2' => [
-            'message' => "You have been assigned to inspect {$entity}.",
-            'receiver_id' => $model->inspector_id,
-            'form_link' => admin_url("{$entity}/{$model->id}/edit"),
-        ],
-        '2' => [ 
-            'message' => "Dear {$name}, your {$entity} is now under inspection.",
+            'message_inspector' => "You have been assigned to inspect {$entity}.",
+            'message' => "Dear {$name}, your {$entity} is now assigned to an inspector.",
+            'receiver_inspector_id' => $model->inspector_id,
             'receiver_id' => $model->administrator_id,
             'form_link' => admin_url("{$entity}/{$model->id}/edit"),
         ],
@@ -131,7 +127,12 @@ public static function update_notification($model, $model_name, $entity)
             'receiver_id' => $model->administrator_id,
             'form_link' => admin_url("{$entity}/{$model->id}"),
         ],
-    ];
+        '18' => [
+            'message' => "{$name} 's form has been recommended by the inspector.",
+            'role_id' => 2,
+            'form_link' => admin_url("{$entity}/{$model->id}"),
+        ],
+        ];
 
     foreach ($notifications as $notification) {
         $notification->delete();
@@ -139,12 +140,32 @@ public static function update_notification($model, $model_name, $entity)
 
     foreach ($notificationData as $status => $data) {
         if ($model->status == $status) {
+
+            if ($status == '2') {
+              
+                $receiver_inspector = Administrator::find($data['receiver_inspector_id']);
+                $message_inspector = str_replace('{name}', $receiver_inspector->name, $data['message_inspector']);
+
+                $notification_inspector = new MyNotification();
+                $notification_inspector->receiver_id = $receiver_inspector->id;
+                $notification_inspector->message = $message_inspector;
+                $notification_inspector->link = admin_url("auth/login");
+                $notification_inspector->form_link = $data['form_link'];
+                $notification_inspector->status = 'Unread';
+                $notification_inspector->model = $model_name;
+                $notification_inspector->model_id = $model->id;
+                $notification_inspector->save();
+
+                self::sendMail($notification_inspector);
+            }
+
             $receiver = Administrator::find($data['receiver_id']);
             $message = str_replace('{name}', $receiver->name, $data['message']);
             $link = $data['form_link'];
 
             $notification = new MyNotification();
-            $notification->receiver_id = $receiver->id;
+            $notification->receiver_id = $receiver->id ?? null;
+            $notification->role_id = $data['role_id'] ?? null;
             $notification->message = $message;
             $notification->link = admin_url("auth/login");
             $notification->form_link = $link;
@@ -192,11 +213,27 @@ public static function update_notification($model, $model_name, $entity)
         error_log($receivers);
         }
 
-        $emails = $receivers->pluck('email')->toArray();
+        if ($receivers->isEmpty()) {
+            return "No receivers found."; // Return an error message
+        }
 
-      
-        Mail::to($emails)->send(new Notification($notification->message, $notification->link));
+        $emails = $receivers->pluck('email')->toArray();
+        error_log(json_encode($emails));
+
+     
+
+        try 
+        {
+           Mail::to($emails)->send(new Notification($notification->message, $notification->link));
+        } catch (\Exception $e) {
+            // Handle the exception 
+            return "Email sending failed: " . $e->getMessage();
+        }
+        return "Email sent successfully.";
+        
+
     }
+
 
 
 }
