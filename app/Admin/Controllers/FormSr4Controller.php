@@ -103,7 +103,7 @@ class FormSr4Controller extends AdminController
             $grid->disableCreateButton();
         }
         
-        $grid->column('name_of_applicant', __("Search by Name of Applicant"))->sortable();
+        $grid->column('name_of_applicant', __("Name of Applicant"))->sortable();
 
         $grid->column('created_at', __('Created'))->display(function ($item) 
         {
@@ -597,7 +597,7 @@ class FormSr4Controller extends AdminController
             ([
                 'Seed Merchant/Company' => 'Seed Merchant/Company',
                 'Seed Dealer/importer/exporter' =>   'Seed Dealer/importer/exporter',
-                'Seed Producers' => 'Seed Producers',
+               
             
             ])
             ->help('Which SR4 type are you applying for?')
@@ -810,9 +810,20 @@ class FormSr4Controller extends AdminController
 
                 ->when('5', function (Form $form) 
                 {
+                    $form_id = request()->route()->parameters()['form_sr6'];
+                    $type = FormSr6::find($form_id)->type;
+                    
+                    $abbreviations = [
+                        'Seed Merchant/Company' => 'MER',
+                        'Seed Dealer/importer/exporter' =>   'STK',
+                        
+                    ];
+                    
+                    $abbreviation = $abbreviations[$type] ?? ''; 
+                    
                     $form->text('seed_board_registration_number', __('Enter Seed Board Registration number'))
                         ->help("Please Enter seed board registration number")
-                        ->default("MAAIF" ."/"."BR"."/".mt_rand(0, 9999)."/". date('Y'))->readonly();
+                        ->default("MAAIF" ."/".$abbreviation."/".mt_rand(0, 9999)."/". date('Y'))->readonly();
                     $form->date('valid_from', 'Valid from date?')->default(Carbon::now())->readonly();
                     $nextYear = Carbon::now()->addYear(); // Get the date one year from now
                     $defaultDateTime = $nextYear->format('Y-m-d H:i:s'); // Format the date for default value

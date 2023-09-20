@@ -75,27 +75,6 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
                 return $model;
             } 
             
-            if(Admin::user()->isRole('admin'))
-            {
-                if($model->status == 5)
-                {    
-                   //edit the applicants name in the user table and add an abbreviation BR
-                    $user = Administrator::find($model->administrator_id);
-                    if($model->type == 'Seed Merchant'){
-                    $user->name = ' MER '. $model->name_of_applicant;
-                    }
-                    if($model->type == 'Seed Dealer/importer/exporter'){
-                        $user->name = ' ST '. $model->name_of_applicant;
-                    }
-                    if($model->type == 'Seed Producers'){
-                        $user->name = ' SP '. $model->name_of_applicant;
-                    }
-                   
-                    $user->save();
-
-                }
-            }
-            
 
         });
 

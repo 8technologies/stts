@@ -51,7 +51,7 @@ class FormSr6Controller extends AdminController
         //return an empty table if the inspector has not been assigned any forms
         if (Admin::user()->isRole('inspector')) 
         {
-            $grid->model()->where('inspector', '=', Admin::user()->id);
+            $grid->model()->where('inspector_id', '=', Admin::user()->id);
                   
         }
           
@@ -136,7 +136,7 @@ class FormSr6Controller extends AdminController
         
         $grid->column('address', __('Address'))->sortable();
         
-        $grid->column('inspector', __('Inspector'))->display(function ($userId) 
+        $grid->column('inspector_id', __('Inspector'))->display(function ($userId) 
         {
             if (Admin::user()->isRole('basic-user')) 
             {
@@ -492,18 +492,19 @@ class FormSr6Controller extends AdminController
             $form->select('type', __('Category'))
             ->options([
                 'Seed Grower' => 'Seed Grower',
-                'Seed Company' => 'Seed Company',
-                'Seed Breeder' => 'Seed Breeder',
+                'Seed Producer' => 'Seed Producer',
+                'Plant Breeder' => 'Plant Breeder',
             ])
-            ->rules('required');
+            ->rules('required')
+            ->attribute('oninput', 'fillSecondField()');
 
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required()->required();
             $form->text('company_initials', __('Company initials'))->required();
             $form->text('address', __('Address'))->required();
+            $form->text('phone_number', __('Phone number'))->required();
             $form->text('premises_location', __('Premises location'))->required();
-            $form->text('years_of_expirience', __('Years of experience as seed grower'))
-                 ->required();
-            
+            $form->text('years_of_expirience', __('Years of experience as seed grower'))->attribute('type', 'number')->required();
+           
             $form->html('<h3>I/We wish to apply for a license to produce seed as indicated below:</h3>');
 
             $form->hasMany('form_sr6_has_crops',__('Click on New to Add Crops'),
@@ -518,7 +519,7 @@ class FormSr6Controller extends AdminController
                     
                 });   
 
-            $form->radio('seed_grower_in_past', __('I/We have/has not been a seed grower in the past?') )
+            $form->radio('seed_grower_in_past', __('Have you been a seed grower in the past?') )
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
@@ -552,7 +553,7 @@ class FormSr6Controller extends AdminController
                 ])
                 ->required();
 
-            $form->radio('aware_of_minimum_standards', __('Are you aware that only seed that meets the minimum standards shall be accepted as certified seed?'))
+            $form->radio('aware_of_minimum_standards', __('Are you aware that only seed that meets the minimum standards shall be accepted?'))
                 ->options([
                     '1' => 'Yes',
                     '0' => 'No',
@@ -565,6 +566,7 @@ class FormSr6Controller extends AdminController
         if (Admin::user()->isRole('admin')) 
         {
             $form->text('name_of_applicant', __('Name of applicant/Company'))->default($user->name)->readonly();
+            $form->text('type', __('Cateogry'))->readonly();
             $form->text('address', __('Address'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
 
@@ -572,8 +574,11 @@ class FormSr6Controller extends AdminController
             $form->radio('status', __('Action'))
                 ->options([
                     '2' => 'Assign Inspector',
+                    '3' => 'Halted',
+                    '4' => 'Rejected',
+                    '5' => 'Accepted', 
                 ])
-                ->required()
+                // ->attribute('onclick', 'fillSecondField()')
                 ->when('2', function (Form $form) 
                 {
                     $items = Administrator::all();
@@ -586,11 +591,46 @@ class FormSr6Controller extends AdminController
                         }
                         $_items[$item->id] = $item->name;
                     }
-                    $form->select('inspector', __('Inspector'))
+                    $form->select('inspector_id', __('Inspector'))
                         ->options($_items)
                         ->help('Please select inspector')
                         ->rules('required');
+                })
+                ->when('in', [3, 4], function (Form $form) 
+                {
+                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                        ->help("Please specify with a comment");
+                })
+                ->when('5', function (Form $form) 
+                {
+                    $form_id = request()->route()->parameters()['form_sr6'];
+                    $type = FormSr6::find($form_id)->type;
+                    
+                    $abbreviations = [
+                        'Seed Grower' => 'SG',
+                        'Seed Producer' => 'SP',
+                        'Plant Breeder' => 'PB',
+                    ];
+                    
+                    $abbreviation = $abbreviations[$type] ?? ''; 
+                    
+
+                         $form->text('grower_number', __('Grower number'))->default("NSCS" ."/".$abbreviation ."/".mt_rand(0, 9999)."/". date('Y'))->readonly();
+                         $form->text('registration_number', __('Enter Seed Board Registration number'))->default("MAAIF" ."/".$abbreviation ."/".mt_rand(0, 9999)."/". date('Y'))->readOnly();
+                         $form->date('valid_from', 'Valid from date?')->default(Carbon::now())->readonly();
+                         $nextYear = Carbon::now()->addYear(); // Get the date one year from now
+                         $defaultDateTime = $nextYear->format('Y-m-d H:i:s'); // Format the date for default value
+                         
+                         $form->date('valid_until', 'Valid until date?')
+                             ->default($defaultDateTime)
+                             ->readonly();
+
+                   
                 });
+
+       
+            
+            
                
         }
 
@@ -602,31 +642,21 @@ class FormSr6Controller extends AdminController
             $form->text('address', __('Address'))->readonly();
             $form->text('premises_location', __('Location of Farm'))->readonly();
             $form->radio('status', __('Status'))
-                ->options([
-                    '3' => 'Halted',
-                    '4' => 'Rejected',
-                    '5' => 'Accepted', 
-                ])
-                ->required()
+            ->options
+            ([ 
+                '18' => 'Recommended',
+                 '4' => 'Rejected',
                 
-                ->when('in', [3, 4], function (Form $form) 
-                {
-                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                        ->help("Please specify with a comment");
-                })
-                ->when('5', function (Form $form) 
-                {
+            ])
+            ->required()
+         
+            ->when('in', [18, 4], function (Form $form) 
+            {
+                $form->textarea('status_comment', 'Inspector\'s comment (Remarks)')
+                    ->help("Please specify with a comment");
+            });
 
-                    $form->text('grower_number', __('Grower number'))
-                         ->default("Grower" ."/". date('Y') ."/". mt_rand(10000000, 99999999))->readonly()
-                         ->help("Please Enter grower number");
-                    $form->date('valid_from', 'Valid from date');
-                    $form->date('valid_until', 'Valid until date');
-
-                    $form->text('registration_number', __('Enter Seed Board Registration number'))
-                        ->help("Please Enter seed board registration number")
-                        ->default("MAAIF" ."/". date('Y') ."/". "SG". "/". mt_rand(10000000, 99999999))->readonly();
-                });
+               
         }
         $form->footer(function ($footer) 
         {

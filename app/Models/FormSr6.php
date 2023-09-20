@@ -36,6 +36,7 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
         'administrator_id',
         'type',
         'name_of_applicant',
+        'phone_number',
         'address',
         'premises_location',
         'years_of_expirience',
