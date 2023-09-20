@@ -130,6 +130,7 @@ public static function update_notification($model, $model_name, $entity)
         '18' => [
             'message' => "{$name} 's form has been recommended by the inspector.",
             'role_id' => 2,
+            'receiver_id' => null,
             'form_link' => admin_url("{$entity}/{$model->id}"),
         ],
         ];
@@ -158,9 +159,14 @@ public static function update_notification($model, $model_name, $entity)
 
                 self::sendMail($notification_inspector);
             }
-
+            
+            if($data['receiver_id'] != null){
             $receiver = Administrator::find($data['receiver_id']);
             $message = str_replace('{name}', $receiver->name, $data['message']);
+            } else {
+                $receiver = null;
+                $message = $data['message'];
+            }
             $link = $data['form_link'];
 
             $notification = new MyNotification();

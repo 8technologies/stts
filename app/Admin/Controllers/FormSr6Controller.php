@@ -36,6 +36,7 @@ class FormSr6Controller extends AdminController
     {
        
         $grid = new Grid(new FormSr6());
+        $form_sr6s = FormSr6::where('administrator_id', auth('admin')->user()->id)->get();
 
         $grid->filter(function($search_param)
         {
@@ -102,7 +103,7 @@ class FormSr6Controller extends AdminController
         }
 
 
-        $grid->column('created_at', __('Created'))->display(function ($item) 
+        $grid->column('created_at', __('Created at'))->display(function ($item) 
         {
             return Carbon::parse($item)->diffForHumans();
         })->sortable();
@@ -147,6 +148,23 @@ class FormSr6Controller extends AdminController
                 return "Not assigned";
             return $u->name;
         })->sortable();
+
+            //check user role then show a certificate button
+            if(!auth('admin')->user()->inRoles(['inspector','admin']))
+            {
+    
+                $grid->column('id', __('Certificate'))->display(function ($id) use ( $form_sr6s) {
+                    $form_sr6  =  $form_sr6s->firstWhere('id', $id);
+                
+                    if ($form_sr6 && $form_sr6 ->status == '5') {
+                        $link = url('sr6Certificate?id=' . $id);
+                        return '<b><a target="_blank" href="' . $link . '">Print Certificate</a></b>';
+                    } else {
+                       
+                        return '<b>Unavailable</b>';
+                    }
+                });
+            }
 
         return $grid;
     }
@@ -293,29 +311,7 @@ class FormSr6Controller extends AdminController
         }
 
     
-       if (!Admin::user()->isRole('basic-user'))
-        {
-            //button link to the show-details form
-            //check the status of the form being shown
-            if($form_sr6->status == 1 || $form_sr6->status == 2 || $form_sr6->status == null)
-            {
-                $show->field('id','Action')->unescape()->as(function ($id) 
-                {
-                    return "<a href='/admin/form-sr6s/$id/edit' class='btn btn-primary'>Take Action</a>";
-                });
-            }
-        }
-
-        if (Admin::user()->isRole('basic-user')) 
-        {
-            if($form_sr6->status == 3 || $form_sr6->status == 4)
-            {
-                $show->field('id','Action')->unescape()->as(function ($id) 
-                {
-                    return "<a href='/admin/form-sr6s/$id/edit' class='btn btn-primary'>Take Action</a>";
-                });
-            }
-        }
+        Utils::take_action($form_sr6, $id ,'form-sr6s',$show);
 
         return $show;
     }

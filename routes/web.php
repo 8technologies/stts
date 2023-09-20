@@ -76,6 +76,14 @@ Route::get('certificate', function () {
     return $pdf->stream();
 });
 
+Route::get('sr6Certificate', function () {
+    $pdf = App::make('dompdf.wrapper');
+    $pdf->loadHTML(view('reports/formSR6'));
+    return $pdf->stream();
+});
+
+
+
 
 
 // send emails
