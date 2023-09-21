@@ -678,7 +678,7 @@ class Utils
         if ($status == 1)
             return '<span class="badge badge-warning">Pending</span>';
         if ($status == 2)
-            return '<span class="badge badge-warning">Inspection assigned</span>';
+            return '<span class="badge badge-warning">Inspector assigned</span>';
         if ($status == 3)
             return '<span class="badge badge-warning">Halted</span>';
         if ($status == 4)

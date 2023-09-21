@@ -380,179 +380,176 @@ class ImportExportPermitController extends AdminController
         {
 
 
-            if($form->isEditing())
-            {
+            // if($form->isEditing())
+            // {
           
-                $form->saving(Function(Form $form)
-                {
-                    $user = Auth::user();
-                    $form_id = request()->route()->parameters()['import_export_permit'];
-                    $import = ImportExportPermit::where('type', $form->type)->where('administrator_id', $user->id)->where('is_import', 1)->first();
-                    $import_permit = ImportExportPermit::find($form_id);
-                    $count = ImportExportPermit::where('type', $form->type)->where('administrator_id', $user->id)->where('is_import', 1)->count();
-                    if($count)
-                    {
-                        //check if what is being passed to the form is the same as the one in the database
-                        if($import->id == $import_permit->id)
-                        {
-                                return true;          
-                        }
+            //     $form->saving(Function(Form $form)
+            //     {
+            //         $user = Auth::user();
+            //         $form_id = request()->route()->parameters()['import_export_permit'];
+            //         $import = ImportExportPermit::where('type', $form->type)->where('administrator_id', $user->id)->where('is_import', 1)->first();
+            //         $import_permit = ImportExportPermit::find($form_id);
+            //         $count = ImportExportPermit::where('type', $form->type)->where('administrator_id', $user->id)->where('is_import', 1)->count();
+            //         if($count)
+            //         {
+            //             //check if what is being passed to the form is the same as the one in the database
+            //             if($import->id == $import_permit->id)
+            //             {
+            //                     return true;          
+            //             }
 
-                        else
-                        {
+            //             else
+            //             {
     
-                            if(!Utils::can_create_import($import))
-                            {
-                                return  response(' <p class="alert alert-warning"> You cannot create a new import-export-permit form  while having PENDING one of the same category. <a href="/admin/import-export-permits"> Go Back </a></p> ');
-                            }
+            //                 if(!Utils::can_create_import($import))
+            //                 {
+            //                     return  response(' <p class="alert alert-warning"> You cannot create a new import-export-permit form  while having PENDING one of the same category. <a href="/admin/import-export-permits"> Go Back </a></p> ');
+            //                 }
                             
-                            //check if its still valid
-                            if (Utils::can_renew_permit($import)) 
-                            {
-                                return  response(' <p class="alert alert-warning"> You cannot create a new import-export-permits form  while having VALID one of the same category. <a href="/admin/import-export-permits"> Go Back </a></p> ');   
-                            }
-                        }
-                    }
-                    else
-                    {
+            //                 //check if its still valid
+            //                 if (Utils::can_renew_permit($import)) 
+            //                 {
+            //                     return  response(' <p class="alert alert-warning"> You cannot create a new import-export-permits form  while having VALID one of the same category. <a href="/admin/import-export-permits"> Go Back </a></p> ');   
+            //                 }
+            //             }
+            //         }
+            //         else
+            //         {
                         
                 
-                        $form_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->where('valid_until','>=', Carbon::now())->where('type', $form->type)->first();
+            //             $form_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->where('valid_until','>=', Carbon::now())->where('type', $form->type)->first();
 
-                        if ( $form->type != 'Researchers' &&  !$form_sr4)
-                        {
-                            return  response(' <p class="alert alert-warning">You do not have a valid SR4 of the selected type. <a href="/admin/import-export-permits"> Go Back </a></p> ');     
-                        }
-                        else
-                        {
-                            $type = $form->type;
-                            $user = Auth::user();
-                            $import = ImportExportPermit::where('type', $type)->where('administrator_id', $user->id)->where('is_import', 1)->first();
-                            if ($import) 
-                            {
+            //             if ( $form->type != 'Researchers' &&  !$form_sr4)
+            //             {
+            //                 return  response(' <p class="alert alert-warning">You do not have a valid SR4 of the selected type. <a href="/admin/import-export-permits"> Go Back </a></p> ');     
+            //             }
+            //             else
+            //             {
+            //                 $type = $form->type;
+            //                 $user = Auth::user();
+            //                 $import = ImportExportPermit::where('type', $type)->where('administrator_id', $user->id)->where('is_import', 1)->first();
+            //                 if ($import) 
+            //                 {
                                 
                                 
-                                    //check if the status of the form is pending, rejected,halted or accepted
-                                    if(!Utils::can_create_import($import))
-                                    {
-                                        return  response(' <p class="alert alert-warning"> You cannot create a new import permit form  while having PENDING one of the same category. <a href="/admin/import-export-permits/create"> Go Back </a></p> ');
+            //                         //check if the status of the form is pending, rejected,halted or accepted
+            //                         if(!Utils::can_create_import($import))
+            //                         {
+            //                             return  response(' <p class="alert alert-warning"> You cannot create a new import permit form  while having PENDING one of the same category. <a href="/admin/import-export-permits/create"> Go Back </a></p> ');
                 
-                                    }
+            //                         }
                                     
-                                    //check if its still valid
-                                    if (Utils::can_renew_permit($import)) 
-                                    {
+            //                         //check if its still valid
+            //                         if (Utils::can_renew_permit($import)) 
+            //                         {
                                         
-                                        return  response(' <p class="alert alert-warning"> You cannot create a new import permit form  while having VALID one of the same category. <a href="/admin/import-export-permits/create"> Go Back </a></p> ');   
-                                    }
+            //                             return  response(' <p class="alert alert-warning"> You cannot create a new import permit form  while having VALID one of the same category. <a href="/admin/import-export-permits/create"> Go Back </a></p> ');   
+            //                         }
                             
-                            }
+            //                 }
 
-                            //function to set the category to 'yes' only when the form is being saved the first time
+            //                 //function to set the category to 'yes' only when the form is being saved the first time
                 
-                            if($form->type != 'Researchers')
-                            {
-                                $form->national_seed_board_reg_num = $form_sr4->seed_board_registration_number;
-                            }
-                            else
-                            {
-                                $form->national_seed_board_reg_num = 'N/A';
-                            }
+            //                 if($form->type != 'Researchers')
+            //                 {
+            //                     $form->national_seed_board_reg_num = $form_sr4->seed_board_registration_number;
+            //                 }
+            //                 else
+            //                 {
+            //                     $form->national_seed_board_reg_num = 'N/A';
+            //                 }
                         
                             
-                        }
-                    }
-                });
-                //count the number of forms with the same type
+            //             }
+            //         }
+            //     });
+            //     //count the number of forms with the same type
                
 
-            }
+            // }
 
-            if($form->isCreating())
-            {
+            // if($form->isCreating())
+            // {
              
-                //check if there is a valid sr4 for the selected application type
-                $form->saving(function (Form $form) 
-                {
-                    $selected_type = $form->type;
-                    $user = Auth::user();
-                    $import = ImportExportPermit::where('type', $selected_type)->where('administrator_id', $user->id)->where('is_import', 1)->first();
-                    if ($import) 
-                    {
+            //     //check if there is a valid sr4 for the selected application type
+            //     $form->saving(function (Form $form) 
+            //     {
+            //         $selected_type = $form->type;
+            //         $user = Auth::user();
+            //         $import = ImportExportPermit::where('type', $selected_type)->where('administrator_id', $user->id)->where('is_import', 1)->first();
+            //         if ($import) 
+            //         {
                         
                         
-                            //check if the status of the form is pending, rejected,halted or accepted
-                            if(!Utils::can_create_import($import))
-                            {
+            //                 //check if the status of the form is pending, rejected,halted or accepted
+            //                 if(!Utils::can_create_import($import))
+            //                 {
                                
-                                return response('<p class="alert alert-warning"> You cannot create a new import permit form  while having PENDING one of the same category. <a href="/admin/import-export-permits/create"> Go Back </a></p>');
+            //                     return response('<p class="alert alert-warning"> You cannot create a new import permit form  while having PENDING one of the same category. <a href="/admin/import-export-permits/create"> Go Back </a></p>');
                               
-                             }
+            //                  }
         
                           
                             
-                            //check if its still valid
-                            if (Utils::can_renew_permit($import)) 
-                            {
+            //                 //check if its still valid
+            //                 if (Utils::can_renew_permit($import)) 
+            //                 {
                                 
-                                return response('<p class="alert alert-warning"> You cannot create a new import permit form  while having VALID one of the same category. <a href="/admin/import-export-permits/create"> Go Back </a></p>');  
-                                return;
-                            }
-                    }
+            //                     return response('<p class="alert alert-warning"> You cannot create a new import permit form  while having VALID one of the same category. <a href="/admin/import-export-permits/create"> Go Back </a></p>');  
+            //                     return;
+            //                 }
+            //         }
 
                 
-                        $form_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->where('valid_until','>=', Carbon::now())->where('type', $form->type)->first();
+            //             $form_sr4 = FormSr4::where('administrator_id',  Admin::user()->id)->where('valid_until','>=', Carbon::now())->where('type', $form->type)->first();
 
 
-                            //function to set the category to 'yes' only when the form is being saved the first time
+            //                 //function to set the category to 'yes' only when the form is being saved the first time
                 
-                            if($form->type != 'Researchers')
-                            {
-                                $form->national_seed_board_reg_num = $form_sr4->seed_board_registration_number;
-                            }
-                            else
-                            {
-                                $form->national_seed_board_reg_num = 'N/A';
-                            }
+            //                 if($form->type != 'Researchers')
+            //                 {
+            //                     $form->national_seed_board_reg_num = $form_sr4->seed_board_registration_number;
+            //                 }
+            //                 else
+            //                 {
+            //                     $form->national_seed_board_reg_num = 'N/A';
+            //                 }
                         
                             
                         
 
-                });
-            }
+            //     });
+            // }
                 
             
             $form->radio('type', __("Applicant's Category?"))
                 ->options([
-                    'Seed Merchant' => 'Seed Merchant',
+                    'Seed Merchant/Company' => 'Seed Merchant/Company',
+                    'Seed Dealer/importer/exporter' =>   'Seed Dealer/importer/exporter',
                     'Seed Producer' => 'Seed Producer',
-                    'Seed Stockist' => 'Seed Stockist',
-                    'Seed Importer' => 'Seed Importer',
-                    'Seed Exporter' => 'Seed Exporter',
-                    'Seed Processor' => 'Seed Processor',
                     'Researchers' => 'Researchers/Own use',
 
                 ])
                 ->required()
-                ->help('Which SR4 type are you applying for?')
-                ->when( 'Seed Merchant', function (Form $form) {
-                   Utils::sr4Check($form,'Seed Merchant');
-                })
-                ->when( 'Seed Producer', function (Form $form) {
-                    Utils::sr4Check($form,'Seed Producer');
-                })
-                ->when( 'Seed Stockist', function (Form $form) {
-                    Utils::sr4Check($form,'Seed Stockist');
-                })
-                ->when( 'Seed Importer', function (Form $form) {
-                    Utils::sr4Check($form,'Seed Importer');
-                })
-                ->when( 'Seed Exporter', function (Form $form) {
-                    Utils::sr4Check($form,'Seed Exporter');
-                })
-                ->when( 'Seed Processor', function (Form $form) {
-                    Utils::sr4Check($form,'Seed Processor');
-                });
+                ->help('Which SR4 type are you applying for?');
+                // ->when( 'Seed Merchant', function (Form $form) {
+                //    Utils::sr4Check($form,'Seed Merchant');
+                // })
+                // ->when( 'Seed Producer', function (Form $form) {
+                //     Utils::sr4Check($form,'Seed Producer');
+                // })
+                // ->when( 'Seed Stockist', function (Form $form) {
+                //     Utils::sr4Check($form,'Seed Stockist');
+                // })
+                // ->when( 'Seed Importer', function (Form $form) {
+                //     Utils::sr4Check($form,'Seed Importer');
+                // })
+                // ->when( 'Seed Exporter', function (Form $form) {
+                //     Utils::sr4Check($form,'Seed Exporter');
+                // })
+                // ->when( 'Seed Processor', function (Form $form) {
+                //     Utils::sr4Check($form,'Seed Processor');
+                // });
             $this->show_fields($form);
                    
 

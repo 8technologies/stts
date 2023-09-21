@@ -68,6 +68,10 @@ $date = date("j F Y");
             <td><span id="emailPlaceholder">{{ $form->address }}</span></td>
         </tr>
         <tr>
+            <td>Phone Number:</td>
+            <td><span id="emailPlaceholder">{{ $form->phone_number }}</span></td>
+        </tr>
+        <tr>
             <td>Geographical boundary of operation:</td>
             <td><span id="boundaryPlaceholder">{{ $form->farm_location }}</span></td>
         </tr>
