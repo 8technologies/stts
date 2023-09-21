@@ -1,51 +1,7 @@
-<?php
-$link = public_path('css/bootstrap-print.css');
-$form = App\Models\formSr6::find($_GET['id']);
-
-$date = date("j F Y");
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-      body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .card {
-            border: 1px solid #ccc;
-            padding: 30px; /* Increase padding for a larger card */
-            border-radius: 10px;
-            width: 400px; /* Increase width for a larger card */
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        }
-        .card p {
-            margin: 10px 0; /* Increase margin for more spacing between elements */
-        }
-    </style>
-</head>
-<body>
-
-<div class="card">
-    <p><strong>Serial No.</strong> regulation 19(4)</p>
-    <p><strong>Name:</strong> {{ $form->name_of_applicant }}</p>
-    <p><strong>Grower Number (GN):</strong> {{ $form->grower_number }}</p>
-    <p><strong>Registration number (RN):</strong>{{ $form->registration_number }}</p>
-    <p><strong>Postal Address:</strong> {{ $form->address }}</p>
-    <p><strong>Tel No:</strong>{{ $form->phone_number }}</p>
-    <p><strong>Location of the farm:</strong> {{ $form->premises_location }}</p>
-    <p><strong>Validity date:</strong> from {{ $form->valid_from }} to {{ $form->valid_until }}</p>
-</div>
-
-</body>
-</html>
 
 <?php
 $link = public_path('css/bootstrap-print.css');
-$form = App\Models\formQds::find($_GET['id']);
+$form = App\Models\FormSr6::find($_GET['id']);
 
 $date = date("j F Y");
 ?>
@@ -89,7 +45,7 @@ $date = date("j F Y");
         <h2>Certificate of Registration</h2>
     </header>
     
-    <p>Orange Book Page 147</p>
+
 
     <table>
         <tr>
@@ -98,10 +54,6 @@ $date = date("j F Y");
         </tr>
            <td>Name:</td>
             <td><span id="yearPlaceholder">{{ $form->name_of_applicant }}</span></td>
-        </tr>
-        <tr>
-            <td>For the year: </td>
-            <td><span id="yearPlaceholder">{{ $form->valid_from }} to {{ $form->valid_until }}</span></td>
         </tr>
         <tr>
             <td>Grower Number (GN):</td>
@@ -120,9 +72,16 @@ $date = date("j F Y");
             <td>Tel No:</td>
             <td><span id="boundaryPlaceholder">{{ $form->phone_number }}</span></td>
         </tr>
+        <tr>
+            <td>Location of the farm:</td>
+            <td><span id="boundaryPlaceholder">{{ $form->premises_location }}</span></td>
+        </tr>
+        <tr>
+            <td>Validity date:</td>
+            <td><span id="boundaryPlaceholder">{{ $form->valid_from }} to {{ $form->valid_until }}</span></td>
     </table>
 
-    <p>Note: If your annual renewal is not done for one year, you shall lose your status and shall have to reapply</p>
+   
 
     <p>Signature: <span id="signaturePlaceholder">___________________________</span></p>
     <p>National Seed Certification Service</p>

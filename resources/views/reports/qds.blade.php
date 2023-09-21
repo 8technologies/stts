@@ -1,6 +1,6 @@
 <?php
 $link = public_path('css/bootstrap-print.css');
-$form = App\Models\formQds::find($_GET['id']);
+$form = App\Models\FormQds::find($_GET['id']);
 
 $date = date("j F Y");
 ?>

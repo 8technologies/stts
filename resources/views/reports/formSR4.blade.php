@@ -1,37 +1,54 @@
+
 <?php
 $link = public_path('css/bootstrap-print.css');
-$form = App\Models\formSr4::find($_GET['id']);
+$form = App\Models\FormSr4::find($_GET['id']);
 
 $date = date("j F Y");
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Report Card</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Registration</title>
     <style>
-        .card {
-            border: 1px solid #ccc;
-            padding: 20px;
-            margin: 20px;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            max-width: 400px;
+        body {
+            font-family: Arial, sans-serif;
         }
-        h1 {
+        header {
             text-align: center;
+            margin-bottom: 20px;
+        }
+        #logo {
+            width: 100px; /* Adjust the width as needed */
         }
         table {
+            border-collapse: collapse;
             width: 100%;
+            margin-top: 20px;
         }
-        table td {
-            padding: 5px;
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>Report Card</h1>
-        <table>
-            <tr>
+    <header>
+        <img src="{{ public_path('assets/images/coat.png') }}" alt="logo">
+        <h1>Ministry of Agriculture, Animal Industry and Fisheries</h1>
+        <p>P.O. Box 102, Entebbe</p>
+        <h2>Certificate of Registration</h2>
+    </header>
+    
+
+
+    <table>
+    <tr>
                 <td><strong>Serial No.</strong></td>
                 <td>15(1)</td>
             </tr>
@@ -68,7 +85,12 @@ $date = date("j F Y");
                 <td>{{ $form->marketing_of }}</td>
                
             </tr>
-        </table>
-    </div>
+    </table>
+
+   
+
+    <p>Signature: <span id="signaturePlaceholder">___________________________</span></p>
+    <p>National Seed Certification Service</p>
+    <p>Date: <span id="datePlaceholder">{{ $date }}</span></p>
 </body>
 </html>
