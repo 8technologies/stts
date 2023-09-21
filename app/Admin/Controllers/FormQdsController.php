@@ -34,13 +34,15 @@ class FormQdsController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new FormQds());
+        $qdss = FormQds::where('administrator_id', auth('admin')->user()->id)->get();
 
-        $grid->filter(function($search_param)
+        $grid->filter(function ($filter) 
         {
-            $search_param->disableIdfilter();
-            $search_param->like('name_of_applicant', __("Search by Name of Applicant"));
+         // Remove the default id filter
+         $filter->disableIdFilter();
+         $filter->like('administrator_id', 'Applicant')->select(\App\Models\User::pluck('name', 'id'));
+        
         });
-
         //disable export button
         $grid->disableExport();
 
@@ -147,6 +149,24 @@ class FormQdsController extends AdminController
             return $u->name;
         })->sortable();
 
+            //check user role then show a certificate button
+            if(!auth('admin')->user()->inRoles(['inspector','admin']))
+            {
+    
+                $grid->column('id', __('Certificate'))->display(function ($id) use ( $qdss) {
+                    $qds  =  $qdss->firstWhere('id', $id);
+                
+                    if ($qds && $qds ->status == '5') {
+                        $link = url('qds?id=' . $id);
+                        return '<b><a target="_blank" href="' . $link . '">Print Certificate</a></b>';
+                    } else {
+                       
+                        return '<b>Unavailable</b>';
+                    }
+                });
+            }
+  
+
         return $grid;
     }
 
@@ -186,7 +206,7 @@ class FormQdsController extends AdminController
             });
         $show->field('name_of_applicant', __('Name of applicant'));
         $show->field('address', __('Address'));
-        $show->field('premises_location', __('Premises location'));
+        $show->field('farm_location', __('Farm location'));
         $show->field('years_of_expirience', __('Years of experience'))->as(function ($item) 
         {
             return $item . " years";
@@ -291,29 +311,7 @@ class FormQdsController extends AdminController
         }
 
 
-       if (!Admin::user()->isRole('basic-user'))
-       {
-        //button link to the show-details form
-        //check the status of the form being shown
-            if($form_qds->status == 1 || $form_qds->status == 2 || $form_qds->status == null)
-            {
-                $show->field('id','Action')->unescape()->as(function ($id) 
-                {
-                    return "<a href='/admin/form-qds/$id/edit' class='btn btn-primary'>Take Action</a>";
-                });
-            }
-        }
-
-        if (Admin::user()->isRole('basic-user')) 
-        {
-            if($form_qds->status == 3 || $form_qds->status == 4 )
-            {
-                $show->field('id','Action')->unescape()->as(function ($id)
-                {
-                    return "<a href='/admin/form-qds/$id/edit' class='btn btn-primary'>Take Action</a>";
-                });
-            }
-        }
+        Utils::take_action($form_qds, $id ,'form-qds',$show);
 
         return $show;
     }
@@ -385,11 +383,10 @@ class FormQdsController extends AdminController
         if (Admin::user()->isRole('basic-user')) 
         {
             $form->text('name_of_applicant', __('Name of applicant'))
-            ->default($user->name)->required()->readonly();
+            ->default($user->name)->required();
             $form->text('address', __('Address'))->required();
-            $form->text('company_initials', __('Company Initials'))->required();
-            $form->text('premises_location', __('Premises location'))->required();
-            $form->text('years_of_expirience', __('Enter Applicant years of experience as a quality declared seed (QDS) grower'))
+            $form->text('farm_location', __('Farm location'))->required();
+            $form->text('years_of_expirience', __('Years of experience as a quality declared seed (QDS) grower'))
                 ->attribute('type', 'number')
                 ->required();
 
@@ -428,12 +425,8 @@ class FormQdsController extends AdminController
             $form->html('<h3>I/We wish to apply for a license to produce quality declared seed (QDS) as indicated below:</h3>');
             $form->hasMany('qds_has_crops',__('Click on "New" to Add Crops'), function (NestedForm $form) 
                 {   
-                    $_items = [];
-                    foreach (Crop::all() as $key => $item) 
-                    { 
-                        $_items[$item->id] = $item->name . " - " . $item->id;
-                    }
-                    $form->select('crop_id','Select Crop')->options( Crop::all()->pluck('name','id') )
+                   
+                    $form->select('crop_id','Select Crop')->options( Crop::where('qds', 1)->pluck('name','id') )
                     ->required();
                 });
 
@@ -456,7 +449,7 @@ class FormQdsController extends AdminController
                 ])
                 ->required();
 
-            $form->textarea('cropping_histroy', __('The field wehere I intend to grow the seeds was previous under? (Give it\'s cropping history)'))->required();
+            $form->textarea('cropping_histroy', __('The field where I intend to grow the seeds was previously under? (Give it\'s cropping history)'))->required();
 
             $form->radio('have_adequate_isolation', __('Do you have adequate isolation?') )
                 ->options([
@@ -488,7 +481,11 @@ class FormQdsController extends AdminController
                     '0' => 'No',
                 ])
                 ->required();
+            $form->file('recommendation', __('Upload recommendation letter from DAO'))->required();
+            $form->file('certification', __('Upload certificate of registration'))->required();   
             $form->file('signature_of_applicant', __('Upload payment receipt'))->required();
+            $form->html('<p style="color: green;">If this application is successful, you will be required to finish the details of the crop in Form QDS R3</p>');
+
             
         }
 
@@ -497,14 +494,35 @@ class FormQdsController extends AdminController
         {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
-            $form->text('company_initials', __('Company initials'))->readonly();
-            $form->text('premises_location', __('Premises location'))->readonly();
+            $form->text('farm_location', __('Farm location'))->readonly();
             $form->divider();
             $form->radio('status', __('Action'))
                 ->options([
                     '2' => 'Assign inspector',
+                    '3' => 'Halted',
+                    '4' => 'Rejected',
+                    '5' => 'Accepted',
                 ])
                 ->required()
+                ->when('in', [3, 4], function (Form $form) {
+                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                        ->help("Please specify with a comment");
+                })
+                ->when('5', function (Form $form) 
+                {
+
+                    $form->text('grower_number', __('Grower number'))
+                        ->default("NSCS"."/". "QDS" ."/". mt_rand(1, 9999) ."/". date('Y'))->readonly();
+                    $form->text('registration_number', __('Registration number'))
+                          ->default("MAAIF"."/". "QDS" ."/". mt_rand(0000, 9999) ."/".  date('Y'))->readonly();
+                    $form->date('valid_from', 'Valid from date?')->default(Carbon::now())->readonly();
+                    $nextYear = Carbon::now()->addYear(); // Get the date one year from now
+                    $defaultDateTime = $nextYear->format('Y-m-d H:i:s'); // Format the date for default value
+                    
+                    $form->date('valid_until', 'Valid until date?')
+                        ->default($defaultDateTime)
+                        ->readonly();
+                })
                 ->when('2', function (Form $form) 
                 {
                     $items = Administrator::all();
@@ -565,31 +583,24 @@ class FormQdsController extends AdminController
 
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
-            $form->text('company_initials', __('Company initials'))->readonly();
-            $form->text('premises_location', __('Premises location'))->readonly();
+            $form->text('farm_location', __('Farm location'))->readonly();
             $form->file('signature_of_applicant', __('Receipt'))->readonly();     
             $form->radio('status', __('Status'))
                 ->options([
-                    '3' => 'Halted',
-                    '4' => 'Rejected',
-                    '5' => 'Accepted',
-                ])
-                ->required()
-                ->when('in', [3, 4], function (Form $form) {
-                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                        ->help("Please specify with a comment");
-                })
-                ->when('5', function (Form $form) 
-                {
+                    
+                '18' => 'Recommended',
+                '4' => 'Rejected',
+               
+           ])
+           ->required()
+        
+           ->when('in', [18, 4], function (Form $form) 
+           {
+               $form->textarea('status_comment', 'Inspector\'s comment (Remarks)')
+                   ->help("Please specify with a comment");
+           });
 
-                    $form->text('grower_number', __('Grower number'))
-                        ->default("QDS" ."/". date('Y') ."/". mt_rand(10000000, 99999999))->readonly();
-                    $form->text('registration_number', __('Seed Board Registration number'))
-                          ->default("MAAIF" ."/". date('Y') ."/". "QDS". "/". mt_rand(10000000, 99999999))->readonly()
-                        ->help("Please Enter Registration number");
-                    $form->date('valid_from', 'Valid from date?');
-                    $form->date('valid_until', 'Valid until date?');
-                });
+                    
         }
         $form->footer(function ($footer) 
         {

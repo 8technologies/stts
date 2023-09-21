@@ -59,6 +59,7 @@ class CropController extends AdminController
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
         $show->field('name', __('Name'));
+        $show->field('qds', __('Is QDS?'))->using(['1' => 'Yes', '0' => 'No']);
         $show->field('number_of_days_before_submision', __('Number of days before submision'));
 
 
@@ -106,6 +107,7 @@ class CropController extends AdminController
 
         $form->setWidth(8, 4);
         $form->text('name', __('Name'))->required();
+        $form->radio('qds', __('Is QDS?'))->options(['1' => 'Yes', '0' => 'No'])->default('1')->required();
 
         $form->text('number_of_days_before_submision', __('Enter Number of days before submision'))
             ->attribute(['type' => 'number'])

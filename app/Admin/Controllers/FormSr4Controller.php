@@ -167,12 +167,14 @@ class FormSr4Controller extends AdminController
               });
           }
 
-        $grid->filter(function($search_param)
-        {
-            $search_param->disableIdfilter();
-            $search_param->like('name_of_applicant', __("Search by Name of Applicant"));
-        });
-
+          $grid->filter(function ($filter) 
+          {
+           // Remove the default id filter
+           $filter->disableIdFilter();
+           $filter->like('administrator_id', 'Applicant')->select(\App\Models\User::pluck('name', 'id'));
+          
+          });
+          
         return $grid;
     }
 
@@ -823,7 +825,7 @@ class FormSr4Controller extends AdminController
                     
                     $form->text('seed_board_registration_number', __('Enter Seed Board Registration number'))
                         ->help("Please Enter seed board registration number")
-                        ->default("MAAIF" ."/".$abbreviation."/".mt_rand(0, 9999)."/". date('Y'));
+                        ->default("MAAIF" ."/".$abbreviation."/".mt_rand(0000, 9999)."/". date('Y'));
                     $form->date('valid_from', 'Valid from date?')->default(Carbon::now())->readonly();
                     $nextYear = Carbon::now()->addYear(); // Get the date one year from now
                     $defaultDateTime = $nextYear->format('Y-m-d H:i:s'); // Format the date for default value

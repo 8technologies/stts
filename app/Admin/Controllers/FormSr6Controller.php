@@ -636,8 +636,8 @@ class FormSr6Controller extends AdminController
                     $abbreviation = $abbreviations[$type] ?? ''; 
                     
 
-                         $form->text('grower_number', __('Grower number'))->default("NSCS" ."/".$abbreviation ."/".mt_rand(0, 9999)."/". date('Y'));
-                         $form->text('registration_number', __('Enter Seed Board Registration number'))->default("MAAIF" ."/".$abbreviation ."/".mt_rand(0, 9999)."/". date('Y'));
+                         $form->text('grower_number', __('Grower number'))->default("NSCS" ."/".$abbreviation ."/".mt_rand(0000, 9999)."/". date('Y'));
+                         $form->text('registration_number', __('Enter Seed Board Registration number'))->default("MAAIF" ."/".$abbreviation ."/".mt_rand(0000, 9999)."/". date('Y'));
                          $form->date('valid_from', 'Valid from date?')->default(Carbon::now())->readonly();
                          $nextYear = Carbon::now()->addYear(); // Get the date one year from now
                          $defaultDateTime = $nextYear->format('Y-m-d H:i:s'); // Format the date for default value

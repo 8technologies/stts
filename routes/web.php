@@ -82,6 +82,13 @@ Route::get('sr6Certificate', function () {
     return $pdf->stream();
 });
 
+Route::get('qds', function () {
+    $pdf = App::make('dompdf.wrapper');
+    $pdf->loadHTML(view('reports/qds'));
+    return $pdf->stream();
+});
+
+
 
 
 

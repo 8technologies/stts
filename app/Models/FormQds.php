@@ -22,6 +22,7 @@ class FormQds extends Model
         'administrator_id',
         'name_of_applicant',
         'address',
+        'farm_location',
         'premises_location', 
         'years_of_expirience',
         'have_been_qds',
@@ -31,6 +32,8 @@ class FormQds extends Model
         'have_adequate_labor',
         'aware_of_minimum_standards',
         'signature_of_applicant',
+        'recommendation',
+        'certificate'
     ];
 
 
@@ -50,6 +53,8 @@ class FormQds extends Model
             ){
                 $model->status = 1;
                 $model->inspector = null;
+                $model->valid_until = null;
+                $model->valid_from = null;
                 return $model;
             } 
         });
