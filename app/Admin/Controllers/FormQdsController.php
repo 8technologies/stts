@@ -277,10 +277,11 @@ class FormQdsController extends AdminController
                 return $item;
             });
           
-        $show->field('signature_of_applicant', __('Signature of applicant'))->file();
         $show->field('recommendation', __('Recommendation letter'))->file();
         $show->field('certificate', __('Certificate of registration'))->file();
         
+        $show->field('signature_of_applicant', __('Receipt'))->file();
+
         if($form_qds->grower_number != null)
         {
         $show->field('grower_number', __('Grower number'));
