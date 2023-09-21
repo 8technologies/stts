@@ -278,7 +278,7 @@ class FormQdsController extends AdminController
             });
           
         $show->field('recommendation', __('Recommendation letter'))->file();
-        $show->field('certificate', __('Certificate of registration'))->file();
+        $show->field('certification', __('Certificate of registration'))->file();
         
         $show->field('signature_of_applicant', __('Receipt'))->file();
 
