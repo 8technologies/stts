@@ -779,6 +779,7 @@ class FormSr4Controller extends AdminController
             $form->radio('status', __('Action'))
                 ->options
                 ([
+                    
                     '2' => 'Assign Inspector',
                     '3' => 'Halted',
                     '4' => 'Rejected',
@@ -813,7 +814,7 @@ class FormSr4Controller extends AdminController
                 ->when('5', function (Form $form) 
                 {
                     $form_id = request()->route()->parameters()['form_sr4'];
-                    $type = FormSr6::find($form_id)->type;
+                    $type = FormSr4::find($form_id)->type;
                     
                     $abbreviations = [
                         'Seed Merchant/Company' => 'MER',
