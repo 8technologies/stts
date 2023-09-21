@@ -522,7 +522,7 @@ class ImportExportPermitController extends AdminController
             }
                 
             
-            $form->radio('type', __('Application Category?'))
+            $form->radio('type', __("Applicant's Category?"))
                 ->options([
                     'Seed Merchant' => 'Seed Merchant',
                     'Seed Producer' => 'Seed Producer',

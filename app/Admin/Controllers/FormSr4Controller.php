@@ -812,7 +812,7 @@ class FormSr4Controller extends AdminController
 
                 ->when('5', function (Form $form) 
                 {
-                    $form_id = request()->route()->parameters()['form_sr6'];
+                    $form_id = request()->route()->parameters()['form_sr4'];
                     $type = FormSr6::find($form_id)->type;
                     
                     $abbreviations = [
