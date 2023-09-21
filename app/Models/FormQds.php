@@ -22,6 +22,7 @@ class FormQds extends Model
         'administrator_id',
         'name_of_applicant',
         'address',
+        'phone_number',
         'farm_location',
         'premises_location', 
         'years_of_expirience',

@@ -494,6 +494,7 @@ class FormQdsController extends AdminController
         {
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('address', __('Address'))->readonly();
+            $form->text('phone_number', __('Phone number'))->readonly();
             $form->text('farm_location', __('Farm location'))->readonly();
             $form->divider();
             $form->radio('status', __('Action'))
