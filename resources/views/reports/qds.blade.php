@@ -10,14 +10,46 @@ $date = date("j F Y");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificate of Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #logo {
+            width: 100px; /* Adjust the width as needed */
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <h2>Certificate of Registration</h2>
+    <header>
+        <img src="{{ public_path('assets/images/coat.png') }}" alt="logo">
+        <h1>Ministry of Agriculture, Animal Industry and Fisheries</h1>
+        <p>P.O. Box 102, Entebbe</p>
+        <h2>Certificate of Registration</h2>
+    </header>
+    
     <p>Orange Book Page 147</p>
 
     <table>
         <tr>
-            <td>Serial No.</td><span>regulation 6(1)</span>
+            <td>Serial No.</td>
+            <td><span>regulation 6(1)</span></td>
         </tr>
            <td>Registration Number: </td>
             <td><span id="yearPlaceholder">{{ $form->registration_number }}</span></td>
