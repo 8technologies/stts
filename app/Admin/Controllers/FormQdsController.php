@@ -51,7 +51,7 @@ class FormQdsController extends AdminController
         //check if the role is an inspector and has been assigned that form
         if (Admin::user()->isRole('inspector')) 
         {
-                $grid->model()->where('inspector', '=', Admin::user()->id);
+                $grid->model()->where('inspector_id', '=', Admin::user()->id);
             
         }
        
@@ -137,7 +137,7 @@ class FormQdsController extends AdminController
 
         $grid->column('address', __('Address'))->sortable();
 
-        $grid->column('inspector', __('Inspector'))->display(function ($userId) 
+        $grid->column('inspector_id', __('Inspector'))->display(function ($userId) 
         {
             if (Admin::user()->isRole('basic-user')) 
             {
@@ -536,7 +536,7 @@ class FormQdsController extends AdminController
                         $_items[$item->id] = $item->name;
                     }
 
-                    $form->select('inspector', __('Inspector'))
+                    $form->select('inspector_id', __('Inspector'))
                         ->options($_items)
                         ->help('Please select inspector')
                         ->rules('required');
