@@ -63,8 +63,7 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
         });
 
         self::created(function ($model) 
-        {
-                
+        {    
 
                 MyNotification::send_notification($model, 'FormSr6', request()->segment(count(request()->segments())));
             // code here            
@@ -77,7 +76,9 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
                 Admin::user()->isRole('basic-user')
             ){
                 $model->status = 1;
-                $model->inspector = null;
+                $model->inspector_id = null;
+                $model->valid_until = null;
+                $model->valid_from = null;
                 return $model;
             }
             if(Admin::user()->isRole('inspector')){
@@ -124,6 +125,12 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
     public function getJWTCustomClaims() 
     {
         return [];
+    }
+
+    //documents relationship
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
     }
    
 }

@@ -102,18 +102,19 @@ public static function update_notification($model, $model_name, $entity)
     $notificationData = [
         '2' => [
             'message_inspector' => "You have been assigned to inspect {$entity}.",
-            'message' => "Dear {$name}, your {$entity} is now assigned to an inspector.",
+            'message' => "Dear {$name}, your {$entity} has been assigned to an inspector.",
             'receiver_inspector_id' => $model->inspector_id,
             'receiver_id' => $model->administrator_id,
             'form_link' => admin_url("{$entity}/{$model->id}/edit"),
         ],
         '1' => [
-            'message' => "Dear {$name}, your {$entity} is now pending.",
-            'receiver_id' =>$model->administrator_id,
+            'message' =>  "{$name} 's form has been edited for renewal.",
+            'role_id' => 2,
+            'receiver_id' => null,
             'form_link' => admin_url("{$entity}/{$model->id}/edit"),
         ],
         '3' => [
-            'message' => "Dear {$name}, your {$entity} has been halted by the inspector.",
+            'message' => "Dear {$name}, your {$entity} has been halted by the commissioner.",
             'receiver_id' =>$model->administrator_id,
             'form_link' => admin_url("{$entity}/{$model->id}/edit"),
         ],
@@ -123,7 +124,7 @@ public static function update_notification($model, $model_name, $entity)
             'form_link' => admin_url("{$entity}/{$model->id}"),
         ],
         '5' => [
-            'message' => "Dear {$name}, your {$entity} has been accepted by the inspector.",
+            'message' => "Dear {$name}, your {$entity} has been accepted by the commissioner.",
             'receiver_id' => $model->administrator_id,
             'form_link' => admin_url("{$entity}/{$model->id}"),
         ],

@@ -38,12 +38,13 @@ class FormSr6Controller extends AdminController
         $grid = new Grid(new FormSr6());
         $form_sr6s = FormSr6::where('administrator_id', auth('admin')->user()->id)->get();
 
-        $grid->filter(function($search_param)
+        $grid->filter(function ($filter) 
         {
-            $search_param->disableIdfilter();
-            $search_param->like('name_of_applicant', __("Search by Name of Applicant"));
+         // Remove the default id filter
+         $filter->disableIdFilter();
+         $filter->like('administrator_id', 'Applicant')->select(\App\Models\User::pluck('name', 'id'));
+        
         });
-
         //disable export button
         $grid->disableExport();
         $grid->disableColumnSelector();
@@ -283,6 +284,28 @@ class FormSr6Controller extends AdminController
                 return $item;
         });
         $show->field('signature_of_applicant', __('Attach receipt'))->file();
+
+        //show the attachment if the user has uploaded any
+        if($form_sr6->attachments != null)
+        {
+            $show->field('attachments', __('Supportive documents'))->unescape()->as(function ($attachments) 
+            {
+                $files = [];
+                foreach ($attachments as $attachment) 
+                {
+                    $files[] = "<a href='" . url('storage/' . $attachment['file_path']) . "' class='btn btn-default btn-xs' target='_blank' download='" . basename($attachment['file_path']) . "'>" . basename($attachment['file_path']) . "</a>";
+                }
+                return join("<br>", $files);
+            });
+        }
+        else
+        {
+            $show->field('attachments', __('Supportive documents'))->unescape()->as(function ($attachments) 
+            {
+                return "No attachments";
+            });
+        }
+
         if($form_sr6->grower_number != null){
             $show->field('grower_number', __('Grower number'));
         }
@@ -557,6 +580,8 @@ class FormSr6Controller extends AdminController
                 ->required();
 
             $form->file('signature_of_applicant', __('Attach receipt'))->required();
+            $form->multipleFile('attachments','Attach Supportive documents')->pathColumn('file_path')->help('Attach any supportive documents like
+             (Contractual agreement, URSB registration certificate, TIN certificate etc)')->removable();
         }
 
         if (Admin::user()->isRole('admin')) 
@@ -611,8 +636,8 @@ class FormSr6Controller extends AdminController
                     $abbreviation = $abbreviations[$type] ?? ''; 
                     
 
-                         $form->text('grower_number', __('Grower number'))->default("NSCS" ."/".$abbreviation ."/".mt_rand(0, 9999)."/". date('Y'))->readonly();
-                         $form->text('registration_number', __('Enter Seed Board Registration number'))->default("MAAIF" ."/".$abbreviation ."/".mt_rand(0, 9999)."/". date('Y'))->readOnly();
+                         $form->text('grower_number', __('Grower number'))->default("NSCS" ."/".$abbreviation ."/".mt_rand(0, 9999)."/". date('Y'));
+                         $form->text('registration_number', __('Enter Seed Board Registration number'))->default("MAAIF" ."/".$abbreviation ."/".mt_rand(0, 9999)."/". date('Y'));
                          $form->date('valid_from', 'Valid from date?')->default(Carbon::now())->readonly();
                          $nextYear = Carbon::now()->addYear(); // Get the date one year from now
                          $defaultDateTime = $nextYear->format('Y-m-d H:i:s'); // Format the date for default value
@@ -654,6 +679,7 @@ class FormSr6Controller extends AdminController
 
                
         }
+
         $form->footer(function ($footer) 
         {
 

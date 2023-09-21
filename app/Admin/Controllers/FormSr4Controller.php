@@ -823,7 +823,7 @@ class FormSr4Controller extends AdminController
                     
                     $form->text('seed_board_registration_number', __('Enter Seed Board Registration number'))
                         ->help("Please Enter seed board registration number")
-                        ->default("MAAIF" ."/".$abbreviation."/".mt_rand(0, 9999)."/". date('Y'))->readonly();
+                        ->default("MAAIF" ."/".$abbreviation."/".mt_rand(0, 9999)."/". date('Y'));
                     $form->date('valid_from', 'Valid from date?')->default(Carbon::now())->readonly();
                     $nextYear = Carbon::now()->addYear(); // Get the date one year from now
                     $defaultDateTime = $nextYear->format('Y-m-d H:i:s'); // Format the date for default value
