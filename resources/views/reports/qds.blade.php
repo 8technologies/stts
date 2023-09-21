@@ -19,37 +19,35 @@ $date = date("j F Y");
         <tr>
             <td>Serial No.</td><span>regulation 6(1)</span>
         </tr>
-            <td>Registration Number <span id="yearPlaceholder">{{ $form->registration_number }}</span></td>
+           <td>Registration Number: </td>
+            <td><span id="yearPlaceholder">{{ $form->registration_number }}</span></td>
         </tr>
         <tr>
-          
-            <td>For the year <span id="yearPlaceholder">{{ $form->registration_number }}</span></td>
+            <td>For the year: </td>
+            <td><span id="yearPlaceholder">{{ $form->valid_from }} to {{ $form->valid_until }}</span></td>
         </tr>
         <tr>
-          
-            <td>Producer <span id="yearPlaceholder">{{ $form->registration_number }}</span></td>
+            <td>Producer:</td>
+            <td> <span id="yearPlaceholder">{{ $form->name_of_applicant }}</span></td>
+        </tr>
+      
+        <tr>
+            <td>Address:</td>
+            <td><span id="emailPlaceholder">{{ $form->address }}</span></td>
         </tr>
         <tr>
-           
-            <td>Tel No <span id="telPlaceholder">{{ $form->registration_number }}</span></td>
+            <td>Geographical boundary of operation:</td>
+            <td><span id="boundaryPlaceholder">{{ $form->farm_location }}</span></td>
         </tr>
         <tr>
-            <td>Email address</td>
-            <td><span id="emailPlaceholder">{{ $form->registration_number }}</span></td>
-        </tr>
-        <tr>
-            <td>Geographical boundary of operation</td>
-            <td><span id="boundaryPlaceholder">{{ $form->registration_number }}</span></td>
-        </tr>
-        <tr>
-            <td>For the category of -</td>
-            <td>(i) Agricultural Crops</td>
+            <td>For the category of:</td>
+            <td>Agricultural Crops</td>
         </tr>
     </table>
 
     <p>Note: If your annual renewal is not done for one year, you shall lose your status and shall have to reapply</p>
 
-    <p>Signature: <span id="signaturePlaceholder">[Signature]</span></p>
+    <p>Signature: <span id="signaturePlaceholder">___________________________</span></p>
     <p>National Seed Certification Service</p>
     <p>Date: <span id="datePlaceholder">{{ $date }}</span></p>
 </body>
