@@ -206,6 +206,7 @@ class FormQdsController extends AdminController
             });
         $show->field('name_of_applicant', __('Name of applicant'));
         $show->field('address', __('Address'));
+        $show->field('phone_number', __('Phone number'));
         $show->field('farm_location', __('Farm location'));
         $show->field('years_of_expirience', __('Years of experience'))->as(function ($item) 
         {
@@ -385,6 +386,7 @@ class FormQdsController extends AdminController
             $form->text('name_of_applicant', __('Name of applicant'))
             ->default($user->name)->required();
             $form->text('address', __('Address'))->required();
+            $form->text('phone_number', __('Phone number'))->required();
             $form->text('farm_location', __('Farm location'))->required();
             $form->text('years_of_expirience', __('Years of experience as a quality declared seed (QDS) grower'))
                 ->attribute('type', 'number')
