@@ -401,6 +401,7 @@ class Utils
 
     public static function has_valid_sr6()
     {
+        $user = Auth::user();
         $recs = FormSr6::where('administrator_id',  $user->id)->get();
         foreach ($recs as $key => $value) {
             if (!$value->valid_from) {
