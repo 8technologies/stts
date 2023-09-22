@@ -105,7 +105,7 @@ public static function update_notification($model, $model_name, $entity)
             'message' => "Dear {$name}, your {$entity} has been assigned to an inspector.",
             'receiver_inspector_id' => $model->inspector_id,
             'receiver_id' => $model->administrator_id,
-            'form_link' => admin_url("{$entity}/{$model->id}/edit"),
+            'form_link' => admin_url("{$entity}/{$model->id}"),
         ],
         '1' => [
             'message' =>  "{$name} 's form has been edited for renewal.",

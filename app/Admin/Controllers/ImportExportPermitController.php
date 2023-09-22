@@ -17,7 +17,8 @@ use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Support\Facades\Auth;
 use App\Admin\Actions\Post\Renew;
-
+use PragmaRX\Countries\Package\Countries;
+use Illuminate\Support\Facades\Config;
 
 class ImportExportPermitController extends AdminController
 {
@@ -66,7 +67,7 @@ class ImportExportPermitController extends AdminController
         //check if the role is an inspector and has been assigned that form
         if (Admin::user()->isRole('inspector')) 
         {
-            $grid->model()->where('inspector', '=', Admin::user()->id);
+            $grid->model()->where('inspector_id', '=', Admin::user()->id);
             
         }
 
@@ -122,12 +123,12 @@ class ImportExportPermitController extends AdminController
         $grid->column('type', __('Application Category'));
         $grid->column('telephone', __('Telephone'));
         $grid->column('quantiry_of_seed', __('Quantity of seed'));
-        $grid->column('ista_certificate', __('Type Of Certificate'))->sortable();
+     
 
 
         if(!Admin::user()->isRole('basic-user'))
         {
-            $grid->column('inspector', __('Inspector'))->display(function ($userId) 
+            $grid->column('inspector_id', __('Inspector'))->display(function ($userId) 
             {
                 $u = Administrator::find($userId);
                 if (!$u)
@@ -148,17 +149,25 @@ class ImportExportPermitController extends AdminController
              }
          })->sortable();
 
-               //check the status field of the form
-      if(Admin::user()->isRole('basic-user')){
-        $import_permit = ImportExportPermit::where('administrator_id', auth('admin')->user()->id)->value('status');
-        if ($import_permit == '5') {
-            $grid->column('id', __('Certificate'))->display(function ($id) {
+         $import_permits = ImportExportPermit::where('administrator_id', auth('admin')->user()->id)->get();
+
+       //check user role then show a certificate button
+       if(!auth('admin')->user()->inRoles(['inspector','admin']))
+       {
+
+           $grid->column('id', __('Certificate'))->display(function ($id) use ( $import_permits) {
+               $import_permit =  $import_permits->firstWhere('id', $id);
+           
+               if ($import_permit && $import_permit->status == '5') {
                 $link = url('import_permit?id=' . $id);
                 return '<b><a target="_blank" href="' . $link . '">Print Certificate</a></b>';
-            });
-        }
+               } else {
+                  
+                   return '<b>Unavailable</b>';
+               }
+           });
+       }
 
-    }
 
         return $grid;
     }
@@ -191,7 +200,7 @@ class ImportExportPermitController extends AdminController
                 $tools->disableDelete();
             });
 
-        $show->field('created_at', __('Created'))
+        $show->field('created_at', __('Created on'))
             ->as(function ($item) 
             {
                 if (!$item) 
@@ -200,7 +209,7 @@ class ImportExportPermitController extends AdminController
                 }
                 return Carbon::parse($item)->diffForHumans();
             });
-        $show->field('administrator_id', __('Created by id'))
+        $show->field('administrator_id', __('Created by'))
             ->as(function ($userId) 
             {
                 $u = Administrator::find($userId);
@@ -213,10 +222,11 @@ class ImportExportPermitController extends AdminController
         $show->field('name', __('Name'));
         $show->field('address', __('Address'));
         $show->field('telephone', __('Telephone'));
-        $show->field('national_seed_board_reg_num', __('National seed board reg num'));
         $show->field('store_location', __('Store location'));
         $show->field('quantiry_of_seed', __('Quantity of seed'));
-        $show->field('name_address_of_origin', __('Name address of origin'));
+        $show->field('name_address_of_origin', __('Country of origin'));
+        $show->field('supplier_name', __('Name of Supplier'));
+        $show->field('supplier_address', __('Address of Supplier'));
 
         //show table of crops associated with an import permit
 
@@ -230,13 +240,14 @@ class ImportExportPermitController extends AdminController
                     return "None";
                 }
 
-                $headers = ['Crop',  'Category', 'Weight'];
+                $headers = ['Crop',  'Variety','Category', 'Weight'];
                 $rows = array();
                 foreach ($this->import_export_permits_has_crops as $key => $val) 
                 {
                     
                     $row['crop'] = $val->variety->crop->name;
                     $row['variety'] = $val->variety->name;
+                    $row['category'] = $val->category;
                     $row['weight'] = $val->weight;
                     $rows[] = $row;
                 }
@@ -257,7 +268,10 @@ class ImportExportPermitController extends AdminController
             return Utils::tell_status($status);
         });
 
-        $show->field('status_comment', __('Comment'));
+        $show->field('status_comment', __('Comment'))->unescape()->as(function ($status_comment){
+            return $status_comment ?? 'No comment';
+        });
+        
 
          //check if valid_from , valid_until are empty,if they are then dont show them
          if ($import_permit->valid_from != null) 
@@ -268,29 +282,9 @@ class ImportExportPermitController extends AdminController
             $show->field('valid_until', __('Valid until'));
         }
 
-        if (!Admin::user()->isRole('basic-user'))
-        {
-            //button link to the show-details form
-            //check the status of the form being shown
-            if($import_permit->status == 1 || $import_permit->status == 2 || $import_permit->status == null)
-            {
-            $show->field('id','Action')->unescape()->as(function ($id) 
-            {
-                return "<a href='/admin/import-export-permits/$id/edit' class='btn btn-primary'>Take Action</a>";
-            });
-            }
-        }
-    
-        if (Admin::user()->isRole('basic-user')) 
-        {
-            if($import_permit->status == 3)
-            {
-                $show->field('id','Action')->unescape()->as(function ($id)
-                {
-                    return "<a href='/admin/import-export-permits/$id/edit' class='btn btn-primary'>Take Action</a>";
-                });
-            }
-        }
+        
+        Utils::take_action($import_permit, $id ,'import-export-permits',$show);
+
 
         return $show;
     }
@@ -351,7 +345,7 @@ class ImportExportPermitController extends AdminController
             $form->tools(function (Form\Tools $tools) 
             {
                 $tools->disableDelete();
-                $tools->disableView();
+                //$tools->disableView();
             });
 
             $form->footer(function ($footer) 
@@ -530,8 +524,7 @@ class ImportExportPermitController extends AdminController
                     'Researchers' => 'Researchers/Own use',
 
                 ])
-                ->required()
-                ->help('Which SR4 type are you applying for?');
+                ->required();
                 // ->when( 'Seed Merchant', function (Form $form) {
                 //    Utils::sr4Check($form,'Seed Merchant');
                 // })
@@ -555,17 +548,58 @@ class ImportExportPermitController extends AdminController
 
         } 
 
+
         //admin form fields
-        if (Admin::user()->isRole('admin')) 
+        if (Admin::user()->isRole('inspector')) 
         {
             $form->text('name', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('telephone', __('Telephone'))->readonly();
             $form->text('address', __('Address'))->readonly();
             $form->text('store_location', __('Store location'))->readonly();
             $form->divider();
-            $form->radio('status', __('Action'))
+            $form->radio('status', __('Status'))
+            ->options
+            ([ 
+                '18' => 'Recommended',
+                 '4' => 'Rejected',
+                
+            ])
+            ->required()
+         
+            ->when('in', [18, 4], function (Form $form) 
+            {
+                $form->textarea('status_comment', 'Inspector\'s comment (Remarks)')
+                    ->help("Please specify with a comment");
+            });
+                
+        }
+
+        //inspector form fields
+        if (Admin::user()->isRole('admin')) 
+        {
+
+            $form->text('name', __('Name of applicant'))->default($user->name)->readonly();
+            $form->text('telephone', __('Telephone'))->readonly();
+            $form->text('address', __('Address'))->readonly();
+            $form->text('store_location', __('Store location'))->readonly();
+            $form->divider();
+            $form->html('
+            <h4>NOTE:</h4></br>
+            <p>The seeds shall not 
+            be distributed prior to the release of the result of the 
+            tests carried on samples unless with express permission of the Head of NSCS or his or her agent.</p></br>
+            <p>The consignment shall be subjected to Ugandan plant quarantine Regulations and upon arrival 
+            in your stores shall be inspected by plant/seed inspectors.</p></br>
+            <p>Payment of sampling and testing fees as stipultaed in the Fifth Schedule to Seeds Regulations shall be honoured</p></br>
+            <p>Fulfillment of commerce/customs requirements and adherence to regulations pertaining to importation of seed</p></br>');
+                
+            $form->divider();
+            $form->radio('status', __('Status'))
                 ->options([
                     '2' => 'Assign inspector',
+                    '3' => 'Halted',
+                    '4' => 'Rejected',
+                    '5' => 'Accepted',
                 ])
                 ->required()
                 ->when('2', function (Form $form) 
@@ -581,38 +615,11 @@ class ImportExportPermitController extends AdminController
                         }
                         $_items[$item->id] = $item->name;
                     }
-                    $form->select('inspector', __('Inspector'))
+                    $form->select('inspector_id', __('Inspector'))
                         ->options($_items)
                         ->help('Please select inspector')
                         ->rules('required');
-                });
-                
-        }
-
-        //inspector form fields
-        if (Admin::user()->isRole('inspector')) 
-        {
-
-            $form->text('name', __('Name of applicant'))->default($user->name)->readonly();
-            $form->text('telephone', __('Telephone'))->readonly();
-            $form->text('address', __('Address'))->readonly();
-            $form->text('store_location', __('Store location'))->readonly();
-            $form->text('other_varieties', __('Other varieties'))->readonly();
-            $form->divider();
-            $form->html('
-                <p>The seeds shall not be distributed prior to the release of the result of the tests carried on samples unless with express permission
-                of the Head of NSCS</p></br>
-                <p>Payment of sampling and testing fees as stipultaed in the Fifth Schedule to Seeds Regulations shall be honoured</p></br>
-                <p>Fulfillment of commerce/customs requirements and adherence to regulations pertaining to importation of seed</p></br>');
-                
-            $form->divider();
-            $form->radio('status', __('Status'))
-                ->options([
-                    '3' => 'Halted',
-                    '4' => 'Rejected',
-                    '5' => 'Accepted',
-                ])
-                ->required()
+                })
             
                 ->when('in', [3, 4], function (Form $form) 
                 {
@@ -621,13 +628,22 @@ class ImportExportPermitController extends AdminController
                 })
                 ->when('5', function (Form $form) 
                 {
-                    $form->text('permit_number', __('Permit number'))
-                        ->help("Please Enter Permit number")
-                        ->default("Import" ."/". date('Y') ."/". mt_rand(10000000, 99999999))->readonly();
-                    $form->date('valid_from', 'Valid from date?');
-                    $form->date('valid_until', 'Valid until date?');
+                $lastPermitNumber = Config::get('permit.last_permit_number');
+
+                $form->text('permit_number', __('Permit number'))
+                    ->help("Please Enter Permit number")
+                    ->default($lastPermitNumber)
+                    ->readonly();
+                    $form->date('valid_from', 'Valid from date?')->default(Carbon::now())->readonly();
+                    $nextYear = Carbon::now()->addMonths(6);
+                    $defaultDateTime = $nextYear->format('Y-m-d H:i:s'); // Format the date for default value
+                    
+                    $form->date('valid_until', 'Valid until date?')
+                        ->default($defaultDateTime)
+                        ->readonly();
+                    $form->textarea('additional_conditions', __('Additional Conditions'));
                 });
-                $form->textarea('additional_conditions', __('Additional Conditions'));
+               
 
         }
 
@@ -638,32 +654,31 @@ class ImportExportPermitController extends AdminController
     //form function
     public function show_fields($form)
     {
+       //get all countries
+         $countries = new Countries();
+        $countries = $countries->all()->pluck('name.common')->toArray();
+        $countries = array_combine($countries, $countries);
+          
         $user = Auth::user();
-        $form->text('name', __('Applicant Name'))->default($user->name)->readonly();
+        $form->text('name', __('Applicant Name'))->default($user->name)->required();
         $form->text('address', __('Postal Address'))->required();
         $form->text('telephone', __('Phone Number'))->required(); 
         $form->hidden('national_seed_board_reg_num', __('National Seed Board Registration Number'));    
         $form->text('store_location', __('Location of the store'))->required();
         $form->number( 'quantiry_of_seed', __('Quantity of seed of the same variety held in stock') )
-            ->help("(metric tons)")
+            ->help("(Kgs)")
             ->required();
-        $form->text('name_address_of_origin', __('Name and address of origin'))
-            ->required();
+        $form->select('name_address_of_origin', __('Country of Origin'))->options($countries)->required();
+        $form->text('supplier_name', __('Name of supplier'))->required();
+        $form->text('supplier_address', __('Address of supplier'))->required();
 
-        $form->tags('ista_certificate', __('Type Of Certificate'))
+        $form->tags('ista_certificate', __('The seed consignment shall be accompanied by'))
             ->required()
             ->options(['ISTA certificate', 'Phytosanitary certificate']);
 
         $form->html('<h3>I or We wish to apply for a license to import seed as indicated below:</h3>');
 
-        $form->radio('crop_category', __('Category'))
-            ->options
-            ([
-                'Commercial' => 'Commercial',
-                'Research' => 'Research',
-                'Own use' => 'Own use',
-            ])->stacked()
-            ->required();
+      
 
         $form->hasMany('import_export_permits_has_crops', __('Click on "New" to Add Crop varieties '), function (NestedForm $form) 
         {
@@ -680,13 +695,29 @@ class ImportExportPermitController extends AdminController
                 
             $form->textarea('other_varieties', __('Specify other varieties if any.') )
             ->help('If varieties you are applying for were not listed');
+
+            $form->radio('category', __('Category'))
+            ->options
+            ([
+                'Commercial' => 'Commercial',
+                'Research' => 'Research',
+                'Own use' => 'Own use',
+            ])->stacked()
+            ->required();
            
-            $form->number('weight','Weight in (metric tons)')
+            $form->number('weight','Weight in (Kgs)')
             ->required();
 
-            
+           
                    
-        });
+        })->required();
+
+        $form->html(' <h4>NOTE:</h4></br><p>The seeds shall not 
+        be distributed prior to the release of the result of the 
+        tests carried on samples unless with express permission of the Head of NSCS or his or her agent.</p>');
+
+        $form->html('<p>The consignment shall be subjected to Ugandan plant quarantine Regulations and upon arrival 
+        in your stores shall be inspected by plant/seed inspectors.</p>');
         return $form;
     }
 

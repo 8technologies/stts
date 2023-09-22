@@ -1,4 +1,5 @@
 <?php
+$permitNumber = mt_rand(1000, 9999);
 $link = public_path('css/bootstrap-print.css');
 $form = App\Models\ImportExportPermit::where('id', $_GET['id'])->where('is_import' , 1)->first();
 
@@ -36,24 +37,48 @@ $date = date("j F Y");
         th {
             background-color: #f2f2f2;
         }
+        .permit-number {
+            position: absolute;
+            top: 10px; /* Adjust the top value to position it vertically */
+            left: 10px; /* Adjust the left value to position it horizontally */
+        }
+        .r-number {
+            position: absolute;
+            top: 10px; /* Adjust the top value to position it vertically */
+            right: 10px; /* Adjust the right value to position it horizontally */
+        }
+        .signature-container {
+            text-align: right;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .signature-text {
+            text-align: left; 
+            margin-left: 300px; 
+            
+        }
     </style>
 </head>
 <body>
     <header>
         <img src="{{ public_path('assets/images/coat.png') }}" alt="logo">
-        <h1>Ministry of Agriculture, Animal Industry and Fisheries</h1>
-        <p>P.O. Box 102, Entebbe</p>
+        <p>THE REPUBLIC OF UGANDA</p>
+        <p>Ministry of Agriculture, Animal Industry and Fisheries</p>
+        <p>P.O. Box 102, ENTEBBE</p>
         <h2>SEED IMPORT PERMIT</h2>
+        <p class="permit-number"><strong>No.</strong> <?php echo $permitNumber; ?></p>
+        <p class="r-number">[R.20(1)(c)]</p>
     </header>
-
+    
+    <h3>The Seeds and Plant Act, 2006</h3>
     <p><strong>Permit No:</strong> {{$form->permit_number}}</p>
     <p><strong>Date:</strong> {{$form->valid_from}}</p>
     <p><strong>Permission is hereby granted to:</strong> {{$form->name}}</p>
     <p><strong>of:</strong> {{$form->address}}</p>
-    <p><strong>with NCSC Registration No:</strong> [NCSC Registration Number]</p>
-    <p><strong>to import from:</strong> [Import Location]</p>
-
-    <h2>Seeds Import Details</h2>
+    <p><strong>with NCSC Registration No:</strong>__</p>
+    <p><strong>to import from:</strong> {{$form->supplier_name}}, {{$form->supplier_address}}</p>
+    <p><strong>the following seeds</strong></p>
+    
     <table>
         <thead>
             <tr>
@@ -73,7 +98,7 @@ $date = date("j F Y");
             <tr>
                 <td>{{$crop_name}}</td>
                 <td>{{$crop_variety->name}}</td> <!-- Access name attribute directly -->
-                <td>{{$form->category}}</td>
+                <td>{{$crop->category}}</td>
                 <td>{{$crop->weight}}</td>
             </tr>
         @endforeach
@@ -91,8 +116,24 @@ $date = date("j F Y");
     <li>The seeds shall not be distributed prior to the release of the result of the tests carried on samples unless with express permission of the head of NSCS</li>
     <li>Payment of sampling and testing fees as stipulated in the fifth schedule to seeds regulations shall be honored</li>
     <li>Fulfillment of commerce/customs requirements and adherence to regulations pertaining to importation of seed</li>
+    <li>Additional Conditions<span> {{$form->additional_conditions}}</span></li>
 </ol>
-<p>Additional Conditions</p>
+   
+   
+  
+<div class="signature-container">
+        <div class="signature-text">
+            <p>Signature:___________________________</p>
+            <p>Permanent Secretary</p>
+            <p>Ministry of Agriculture, Animal Industry and Fisheries</p>
+        </div>
+    </div>
+
+
+    <p>cc <span id="datePlaceholder">The Head</span></p>
+    <p>National Seed Certification Services</p>
+    <p>P.O.Box 7065</p>
+    <p>KAMPALA</p>
 
 
 </body>

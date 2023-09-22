@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Encore\Admin\Auth\Database\Administrator;
 use App\Mail\Notification;
-
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\File;
 
 class ImportExportPermit extends Model
 {
@@ -18,6 +19,8 @@ class ImportExportPermit extends Model
 
     protected $fillable = [
         'administrator_id',
+        'supplier_name',
+        'supplier_address',
         'name', 
         'address',
         'telephone',
@@ -43,7 +46,9 @@ class ImportExportPermit extends Model
         parent::boot(); 
         self::creating(function($model)
         {
-            // ... code here
+            $lastPermitNumber = Config::get('permit.last_permit_number') + 1;
+            Config::set('permit.last_permit_number', $lastPermitNumber);
+            File::put(config_path('permit.php'), '<?php return ["last_permit_number" => ' . $lastPermitNumber . '];');
         });
  
         self::updating(function($model)

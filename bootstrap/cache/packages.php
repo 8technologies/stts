@@ -185,6 +185,17 @@
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
+  'pragmarx/countries-laravel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'PragmaRX\\CountriesLaravel\\Package\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Countries' => 'PragmaRX\\CountriesLaravel\\Package\\Facade',
+    ),
+  ),
   'spatie/laravel-ignition' => 
   array (
     'providers' => 
