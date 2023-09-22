@@ -550,7 +550,7 @@ class ImportExportPermitController extends AdminController
 
 
         //admin form fields
-        if (Admin::user()->isRole('inspector')) 
+        if (Admin::user()->isRole('admin')) 
         {
             $form->text('name', __('Name of applicant'))->default($user->name)->readonly();
             $form->text('telephone', __('Telephone'))->readonly();
@@ -560,22 +560,35 @@ class ImportExportPermitController extends AdminController
             $form->radio('status', __('Status'))
             ->options
             ([ 
-                '18' => 'Recommended',
-                 '4' => 'Rejected',
+                '2' => 'Assign inspector',
                 
             ])
             ->required()
          
-            ->when('in', [18, 4], function (Form $form) 
+            ->when('2', function (Form $form) 
             {
-                $form->textarea('status_comment', 'Inspector\'s comment (Remarks)')
-                    ->help("Please specify with a comment");
+                $items = Administrator::all();
+                $_items = [];
+
+                foreach ($items as $key => $item) 
+                {
+                    if (!Utils::has_role($item, "inspector")) 
+                    {
+                        continue;
+                    }
+                    $_items[$item->id] = $item->name;
+                }
+                $form->select('inspector_id', __('Inspector'))
+                    ->options($_items)
+                    ->help('Please select inspector')
+                    ->rules('required');
             });
+        
                 
         }
 
         //inspector form fields
-        if (Admin::user()->isRole('admin')) 
+        if (Admin::user()->isRole('inspector')) 
         {
 
             $form->text('name', __('Name of applicant'))->default($user->name)->readonly();
@@ -596,31 +609,13 @@ class ImportExportPermitController extends AdminController
             $form->divider();
             $form->radio('status', __('Status'))
                 ->options([
-                    '2' => 'Assign inspector',
+                    
                     '3' => 'Halted',
                     '4' => 'Rejected',
                     '5' => 'Accepted',
                 ])
                 ->required()
-                ->when('2', function (Form $form) 
-                {
-                    $items = Administrator::all();
-                    $_items = [];
-
-                    foreach ($items as $key => $item) 
-                    {
-                        if (!Utils::has_role($item, "inspector")) 
-                        {
-                            continue;
-                        }
-                        $_items[$item->id] = $item->name;
-                    }
-                    $form->select('inspector_id', __('Inspector'))
-                        ->options($_items)
-                        ->help('Please select inspector')
-                        ->rules('required');
-                })
-            
+             
                 ->when('in', [3, 4], function (Form $form) 
                 {
                     $form->textarea('status_comment', 'Enter status comment (Remarks)')

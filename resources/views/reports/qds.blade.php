@@ -1,4 +1,5 @@
 <?php
+$qdsNumber = mt_rand(1000, 9999);
 $link = public_path('css/bootstrap-print.css');
 $form = App\Models\FormQds::find($_GET['id']);
 
@@ -34,6 +35,26 @@ $date = date("j F Y");
         th {
             background-color: #f2f2f2;
         }
+        .permit-number {
+            position: absolute;
+            top: 10px; /* Adjust the top value to position it vertically */
+            left: 10px; /* Adjust the left value to position it horizontally */
+        }
+        .r-number {
+            position: absolute;
+            top: 10px; /* Adjust the top value to position it vertically */
+            right: 10px; /* Adjust the right value to position it horizontally */
+        }
+        .signature-container {
+            text-align: right;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .signature-text {
+            text-align: left; 
+            margin-left: 300px; 
+            
+        }
     </style>
 </head>
 <body>
@@ -42,15 +63,12 @@ $date = date("j F Y");
         <h1>Ministry of Agriculture, Animal Industry and Fisheries</h1>
         <p>P.O. Box 102, Entebbe</p>
         <h2>Certificate of Registration</h2>
+        <p class="permit-number"><strong>Serial No.</strong> <?php echo $qdsNumber; ?></p>
+        <p class="r-number">[R.20(1)(c)]</p>
     </header>
-    
-    <p>Orange Book Page 147</p>
 
     <table>
-        <tr>
-            <td>Serial No.</td>
-            <td><span>regulation 6(1)</span></td>
-        </tr>
+      
            <td>Registration Number: </td>
             <td><span id="yearPlaceholder">{{ $form->registration_number }}</span></td>
         </tr>
@@ -83,8 +101,12 @@ $date = date("j F Y");
 
     <p>Note: If your annual renewal is not done for one year, you shall lose your status and shall have to reapply</p>
 
-    <p>Signature: <span id="signaturePlaceholder">___________________________</span></p>
-    <p>National Seed Certification Service</p>
-    <p>Date: <span id="datePlaceholder">{{ $date }}</span></p>
+    <div class="signature-container">
+        <div class="signature-text">
+        <p>Signature: <span id="signaturePlaceholder">___________________________</span></p>
+        <p>National Seed Certification Service</p>
+        <p>Date: <span id="datePlaceholder">{{ $date }}</span></p>
+        </div>
+    </div>
 </body>
 </html>
