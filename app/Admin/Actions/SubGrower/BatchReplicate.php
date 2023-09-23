@@ -14,11 +14,11 @@ class BatchReplicate extends BatchAction
     public function handle(Collection $collection, Request $request)
     {
 
-        $inspect = ((int)($request->get('inspector')));
+        $inspect = ((int)($request->get('inspector_id')));
         if($inspect>0){
             foreach ($collection as $key => $val) {
                 $val->status = 2;
-                $val->inspector = $inspect;
+                $val->inspector_id = $inspect;
                 $val->save();
             }
         }
@@ -41,7 +41,7 @@ Encore\Admin\Actions\Response::success(): Argument #1 ($message) must be of type
             if (!Utils::has_role($item, "inspector")) {
                 continue;
             }
-            $_items[$item->id] = $item->name . " - " . $item->id;
+            $_items[$item->id] = $item->name ;
         }
         $this->select('inspector_id', __('Inspector'))
             ->options($_items) 

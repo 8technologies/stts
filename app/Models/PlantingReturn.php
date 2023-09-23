@@ -71,7 +71,7 @@ class PlantingReturn extends Model
                     $sub->{$field} = $value[$index];
                 }
             }
-    
+            $sub->planting_return_id = $m->id;
             $sub->administrator_id = $m->administrator_id;
             $sub->save();
         }
@@ -104,8 +104,8 @@ class PlantingReturn extends Model
             $file = null;
             if ($m != null) {
                 if (strlen($m->sub_growers_file) > 3) {
-                    if (file_exists('./uploads/' . $m->sub_growers_file)) {
-                        $file = './uploads/' . $m->sub_growers_file;
+                    if (file_exists('./storage/' . $m->sub_growers_file)) {
+                        $file = './storage/' . $m->sub_growers_file;
                     } else {
                         $m->sub_growers_file = null;
                         $m->save();

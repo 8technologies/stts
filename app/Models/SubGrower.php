@@ -81,7 +81,7 @@ class SubGrower extends Model
             }
 
             $m->status = 1;
-            $m->inspector = 0;
+        
 
             return $m;
         });
@@ -95,7 +95,23 @@ class SubGrower extends Model
 
 
         self::updating(function ($sr10) {
-            //$sr10->status = 16;
+            //check if all the subgrowers with the same planting return id have been assigned to an inspector
+            //check user role
+            if (Admin::user()->isRole('inspector')) {
+                $subgrowers = SubGrower::where('planting_return_id', $sr10->planting_return_id)->get();
+                $all_assigned = true;
+                foreach ($subgrowers as $sub) {
+                    if ($sub->inspector == null) {
+                        $all_assigned = false;
+                    }
+                }
+                //if all the subgrowers have been assigned to an inspector, change the status of the planting return to 2
+                if ($all_assigned) {
+                    $sr10->status = 2;
+                    $sr10->save();
+                }
+            }
+
         });
 
         self::updated(function ($sr10) {
