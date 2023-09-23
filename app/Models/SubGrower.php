@@ -97,7 +97,7 @@ class SubGrower extends Model
         self::updating(function ($sr10) {
             //check if all the subgrowers with the same planting return id have been assigned to an inspector
             //check user role
-            if (Admin::user()->isRole('inspector')) {
+            if (Admin::user()->isRole('admin')) {
                 $subgrowers = SubGrower::where('planting_return_id', $sr10->planting_return_id)->get();
                 $all_assigned = true;
                 foreach ($subgrowers as $sub) {
@@ -145,13 +145,13 @@ class SubGrower extends Model
 
                             $temp_sr10 = FormSr10::where([
                                 'planting_return_id' => $sr10->id,
-                                'stage' => $inspe->inspection_stage,
+                                'stage' => $inspe->id,
                             ])->get();
 
                             if (count($temp_sr10) < 1) 
                             {
                                 $d['crop_id'] = $crop->id;
-                                $d['stage'] = $inspe->inspection_stage;
+                                $d['stage'] = $inspe->id;
                                 $d['farmer_id'] = $sr10->administrator_id;
                                 $d['crop_variety_id'] = $sr10->crop;
                                 $d['status'] = '1';

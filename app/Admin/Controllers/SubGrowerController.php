@@ -158,7 +158,9 @@ class SubGrowerController extends AdminController
         });
         $show->field('name', __('Name'));
         $show->field('size', __('Size'));
-        $show->field('crop', __('Crop'));
+        $show->field('crop', __('Crop'))->as(function ($crop) {
+            return $this->get_crop_name();
+        })->sortable();
         $show->field('variety', __('Variety'));
         $show->field('district', __('District'));
         $show->field('subcourty', __('Subcouty'));
@@ -168,7 +170,6 @@ class SubGrowerController extends AdminController
         $show->field('phone_number', __('Phone number'));
         $show->field('gps_latitude', __('Gps latitude'));
         $show->field('gps_longitude', __('Gps longitude'));
-        $show->field('detail', __('Detail'));
         $show->field('status', __('Status'))->unescape()->as(function ($status) {
             return Utils::tell_status($status);
         });
@@ -182,9 +183,6 @@ class SubGrowerController extends AdminController
         
             return $u ? $u->name : "Not assigned";
         })->sortable();
-        
-
-        $show->field('status_comment', __('Status comment'));
 
          //remove delete from show panels
          $show->panel()->tools(function ($tools) use($id) 
@@ -251,6 +249,8 @@ class SubGrowerController extends AdminController
 
             $id = request()->route()->parameters['sub_grower'];
             $model = $form->model()->find($id);
+        //get crop name from the model
+            $crop_name = Crop::find($model->crop)->name;
             $u = Administrator::find($model->administrator_id);
 
 
@@ -264,7 +264,7 @@ class SubGrowerController extends AdminController
             $form->display('', __('District'))->default($model->district)->readonly();
             $form->display('', __('Subcourty'))->default($model->subcourty)->readonly();
             $form->display('', __('Village'))->default($model->village)->readonly();
-            $form->display('', __('Crop'))->default($model->crop)->readonly();
+            $form->display('', __('Crop'))->default($crop_name)->readonly();
             $form->display('', __('Variety'))->default($model->variety)->readonly();
             $form->divider();
 

@@ -20,9 +20,16 @@ class FormSr10 extends Model
         parent::boot();
         static::deleting(function ($model) {
         });
+        self::created(function ($model) {
+
+           // Utils::send_notification($model, 'FormSr10', request()->segment(count(request()->segments())));
+               
+        });
+        
 
 
         static::updated(function ($model) {
+           // Utils::update_notification($model, 'FormSr10', request()->segment(count(request()->segments())-1));
             if (
                 Admin::user()->isRole('inspector')
             ) {

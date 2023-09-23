@@ -88,6 +88,13 @@ Route::get('qds', function () {
     return $pdf->stream();
 });
 
+Route::get('inspection', function () {
+    $pdf = App::make('dompdf.wrapper');
+    $pdf->loadHTML(view('reports/inspection'));
+    return $pdf->stream();
+});
+
+
 
 
 
