@@ -117,6 +117,9 @@ class CropController extends AdminController
         $form->hasMany('crop_inspection_types', function (NestedForm $form) {
             $form->setWidth(8, 4);
             $form->text('inspection_stage', __('Inspection stage name'))->required();
+            $form->text('order_number', __('Order number'))->attribute(['type' => 'number'])
+            ->help('This is the order in which the inspection stage will be carried out')
+            ->required();
             $form->radio('is_required', __('Is required'))->options(['Mandatory' => 'Mandatory', 'Optional' => 'Optional'])->default('1')->required();
             $form->text('period_after_planting', __('Period after planting (in days)'))
                 ->attribute(['type' => 'number'])

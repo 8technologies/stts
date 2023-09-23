@@ -104,7 +104,7 @@ $date = date("j F Y");
             <td>Other weeds:</td>
             <td><span id="boundaryPlaceholder">{{ $form->other_weeds}}</span></td>
         </tr>
-        @if($inspection_stage == "flowering")
+        @if($inspection_stage == "Flowering")
         <tr>
             <td>Female shedding tassels%:</td>
             <td><span id="boundaryPlaceholder">{{ $form->female_shedding}}</span></td>

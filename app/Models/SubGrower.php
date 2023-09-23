@@ -152,6 +152,7 @@ class SubGrower extends Model
                             {
                                 $d['crop_id'] = $crop->id;
                                 $d['stage'] = $inspe->id;
+                                $d['order_number'] = $inspe->order_number;
                                 $d['farmer_id'] = $sr10->administrator_id;
                                 $d['crop_variety_id'] = $sr10->crop;
                                 $d['status'] = '1';

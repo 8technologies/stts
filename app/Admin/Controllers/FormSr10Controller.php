@@ -286,7 +286,7 @@ class FormSr10Controller extends AdminController
             $form->text('noxious_weeds', __('Noxious weeds'));
             $form->text('other_features', __('Other features'));
             $form->text('other_weeds', __('Other weeds'));
-            if($inspection_type->inspection_stage == 'flowering'){
+            if($inspection_type->inspection_stage == 'Flowering'){
                 $form->text('female_shedding', __('Female shedding tassels%'));
                 $form->text('female_receptive', __('Female receptive silks%'));
                 $form->text('female_off_types', __('Female off-type%'));
@@ -337,6 +337,7 @@ class FormSr10Controller extends AdminController
                     ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be revarsed.")
                     ->options([
                         '4' => 'Rejected',
+                        
                         '7' => 'Provisional',
                         '17' => 'Skip',
                     ])
