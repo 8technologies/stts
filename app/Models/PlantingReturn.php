@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Auth\Database\Administrator;
+use App\Models\MyNotification;
 
 use Excel;
 
@@ -24,155 +25,58 @@ class PlantingReturn extends Model
         'sub_growers_file', 
     ];
 
-
     public static function import_sub_growers($m)
     {
-        // /home/technolo/stts-dev2/storage/app/public/
-        //dd(public_path($m->sub_growers_file));
-        // './uploads/'
-        $file = null;
-        if ($m != null) {
-            if (strlen($m->sub_growers_file) > 3) {
-                if (file_exists('./uploads/'.$m->sub_growers_file)) {
-                    $file = './uploads/'.$m->sub_growers_file;
-                }else{
-    
-                }
-            }
-        }
-
-        if ($file == null) {
+        if ($m === null || strlen($m->sub_growers_file) <= 3) {
             return;
         }
- 
-
-        if ($file != null) {
-            $array = Excel::toArray([], $file);
-            $i = 0;
-            foreach ($array[0] as $key => $value) {
-                $i++;
-                if ($i <= 1) {
-                    continue;
-                }
-                if (count($value) > 11) {
-                    $sub = new SubGrower();
-
-                    if (isset($value[0]))
-                        if ($value[0] != null) {
-                            if (strlen($value[0]) > 1) {
-                                $sub->field_name = $value[0];
-                            }
-                        }
-
-
-                    if ($value[1] != null) {
-                        if (strlen($value[1]) > 2) {
-                            $sub->name = $value[1];
-                        }
-                    }
-
-
-                    if (isset($value[2])) {
-                        if ($value[2] != null) {
-                            $sub->size = $value[2];
-                        }
-                    }
-
-                    if (isset($value[3]))
-                        if ($value[3] != null) {
-                            if (strlen($value[3]) > 2) {
-                                $sub->crop = $value[3];
-                            }
-                        }
-
-                    if (isset($value[4]))
-                        if ($value[4] != null) {
-                            if (strlen($value[4]) > 2) {
-                                $sub->variety = $value[4];
-                            }
-                        }
-
-                    if (isset($value[5]))
-                        if ($value[5] != null) {
-                            if (strlen($value[5]) > 2) {
-                                $sub->planting_date = $value[5];
-                            }
-                        }
-
-                    if (isset($value[1]))
-                        if ($value[1] != null) {
-                            if (strlen($value[1]) > 2) {
-                                $sub->quantity_planted = $value[6];
-                            }
-                        }
-
-                    if (isset($value[7]))
-                        if ($value[7] != null) {
-                            if (strlen($value[7]) > 2) {
-                                $sub->expected_yield = $value[7];
-                            }
-                        }
-
-
-                    if (isset($value[8]))
-                        if ($value[8] != null) {
-                            if (strlen($value[8]) > 3) {
-                                $sub->phone_number = $value[8];
-                            }
-                        }
-
-
-                    if (isset($value[9]))
-                        if ($value[9] != null) {
-                            if (strlen($value[9]) > 1) {
-                                $sub->gps_latitude = $value[9];
-                            }
-                        }
-
-                    if (isset($value[10])) {
-                        if ($value[10] != null) {
-                            if (strlen($value[10]) > 2) {
-                                $sub->gps_longitude = $value[10];
-                            }
-                        }
-                    }
-
-                    if (isset($value[11])) {
-                        if ($value[11] != null) {
-                            if (strlen($value[11]) > 2) {
-                                $sub->district = $value[11];
-                            }
-                        }
-                    }
-
-                    if (isset($value[12])) {
-                        if ($value[12] != null) {
-                            if (strlen($value[12]) > 2) {
-                                $sub->subcourty = $value[12];
-                            }
-                        }
-                    }
-
-                    if (isset($value[13])) {
-                        if ($value[13] != null) {
-                            if (strlen($value[13]) > 2) {
-                                $sub->village = $value[13];
-                            }
-                        }
-                    }
-                    
-                    $sub->administrator_id = $m->administrator_id;
-                    $sub->save();
+    
+        $file = './storage/' . $m->sub_growers_file;
+    
+        if (!file_exists($file)) {
+            return;
+        }
+    
+        $array = Excel::toArray([], $file);
+        
+        foreach (array_slice($array[0], 1) as $value) {
+            if (count($value) <= 11) {
+                continue;
+            }
+    
+            $sub = new SubGrower();
+    
+            $fields = [
+                'field_name' => 0,
+                'name' => 1,
+                'size' => 2,
+                'crop' => 3,
+                'seed_class' => 4,
+                'lot_number' => 5,
+                'source_of_seed' => 6,
+                'variety' => 7,
+                'planting_date' => 8,
+                'quantity_planted' => 9,
+                'expected_yield' => 10,
+                'phone_number' => 11,
+                'gps_latitude' => 12,
+                'gps_longitude' => 13,
+                'district' => 14,
+                'subcourty' => 15,
+                'village' => 16,
+            ];
+    
+            foreach ($fields as $field => $index) {
+                if (isset($value[$index]) && strlen($value[$index]) > 2) {
+                    $sub->{$field} = $value[$index];
                 }
             }
-
-            //dd('done ');
-            //$m->sub_growers_file = null;
-            //$m->save();
-            //unlink($file);
+    
+            $sub->administrator_id = $m->administrator_id;
+            $sub->save();
         }
     }
-
+    
     public static function boot()
     {
         parent::boot();
@@ -183,10 +87,8 @@ class PlantingReturn extends Model
         });
 
         self::created(function ($m) {
-
-            Utils::send_notification($m, 'PlantingReturn', request()->segment(count(request()->segments())));
-        
             self::import_sub_growers($m);
+            MyNotification::send_notification($m, 'PlantingReturn', request()->segment(count(request()->segments())));
             return $m;
             //created
         });
@@ -195,9 +97,10 @@ class PlantingReturn extends Model
         });
 
         self::updated(function ($m) {
-            Utils::update_notification($m, 'PlantingReturn', request()->segment(count(request()->segments())-1));
+          
   
-
+           //check the role of the user 
+            if (Admin::user()->isRole('basic-user')){
             $file = null;
             if ($m != null) {
                 if (strlen($m->sub_growers_file) > 3) {
@@ -219,7 +122,9 @@ class PlantingReturn extends Model
                 return $m;
             }
             self::import_sub_growers($m);
-            // ... code here
+        }
+        MyNotification::update_notification($m, 'PlantingReturn', request()->segment(count(request()->segments())-1));
+            
         });
 
         self::deleting(function ($model) {

@@ -35,8 +35,6 @@ Encore\Admin\Actions\Response::success(): Argument #1 ($message) must be of type
     public function form()
     {
 
-
-
         $items = Administrator::all();
         $_items = [];
         foreach ($items as $key => $item) {
@@ -45,7 +43,7 @@ Encore\Admin\Actions\Response::success(): Argument #1 ($message) must be of type
             }
             $_items[$item->id] = $item->name . " - " . $item->id;
         }
-        $this->select('inspector', __('Inspector'))
+        $this->select('inspector_id', __('Inspector'))
             ->options($_items) 
             ->help('Please select inspector')
             ->required()

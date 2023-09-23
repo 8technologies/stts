@@ -20,6 +20,7 @@ class CreateSubGrowersTable extends Migration
 
             $table->foreignIdFor(Administrator::class)->default(1);
             $table->text('name')->nullable();
+            $table->unsignedBigInteger('planting_return_id')->nullable();
             $table->integer('size')->nullable();
             $table->text('crop')->nullable();
             $table->text('variety')->nullable();
@@ -35,6 +36,8 @@ class CreateSubGrowersTable extends Migration
             $table->text("status")->nullable();
             $table->integer('inspector')->nullable();
             $table->text('status_comment')->nullable();
+
+            $table->foreign('planting_return_id')->references('id')->on('planting_returns')->onDelete('cascade');
         });
     } 
 

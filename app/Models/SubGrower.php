@@ -17,6 +17,7 @@ class SubGrower extends Model
 
     protected $fillable = [
         'administrator_id',
+        'planting_return_id',
         'name',
         'size',
         'crop',
@@ -87,7 +88,7 @@ class SubGrower extends Model
 
         self::created(function ($model) {
 
-            Utils::send_notification($model, 'SubGrower', request()->segment(count(request()->segments())));
+            MyNotification::send_notification($model, 'SubGrower', request()->segment(count(request()->segments())));
                
         });
         
@@ -100,7 +101,7 @@ class SubGrower extends Model
         self::updated(function ($sr10) {
 
             // ... code here
-            Utils::update_notification($sr10, 'SubGrower', request()->segment(count(request()->segments())-1));
+            MyNotification::update_notification($sr10, 'SubGrower', request()->segment(count(request()->segments())-1));
 
             if (Admin::user()->isRole('inspector')) 
             {

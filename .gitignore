@@ -2,4 +2,5 @@
 *.log
 .htaccess
 *.log
-storage/*
+
+/storage/*
