@@ -38,37 +38,48 @@ class PlantingReturn extends Model
         }
     
         $array = Excel::toArray([], $file);
-        
+        $fields = [
+            'field_name' => 0,
+            'name' => 1,
+            'size' => 2,
+            'crop' => 3,
+            'seed_class' => 4,
+            'lot_number' => 5,
+            'source_of_seed' => 6,
+            'variety' => 7,
+            'planting_date' => 8,
+            'quantity_planted' => 9,
+            'expected_yield' => 10,
+            'phone_number' => 11,
+            'gps_latitude' => 12,
+            'gps_longitude' => 13,
+            'district' => 14,
+            'subcourty' => 15,
+            'village' => 16,
+        ];
+    
         foreach (array_slice($array[0], 1) as $value) {
-            if (count($value) <= 11) {
+            if (count($value) <= 15) {
                 continue;
             }
     
             $sub = new SubGrower();
     
-            $fields = [
-                'field_name' => 0,
-                'name' => 1,
-                'size' => 2,
-                'crop' => 3,
-                'seed_class' => 4,
-                'lot_number' => 5,
-                'source_of_seed' => 6,
-                'variety' => 7,
-                'planting_date' => 8,
-                'quantity_planted' => 9,
-                'expected_yield' => 10,
-                'phone_number' => 11,
-                'gps_latitude' => 12,
-                'gps_longitude' => 13,
-                'district' => 14,
-                'subcourty' => 15,
-                'village' => 16,
-            ];
-    
             foreach ($fields as $field => $index) {
-                if (isset($value[$index]) && strlen($value[$index]) > 2) {
-                    $sub->{$field} = $value[$index];
+                if (isset($value[$index]) && strlen($value[$index]) > 0) 
+                {
+                    if ($field === 'planting_date') {
+                        $excelDate = $value[$index];
+                        if (is_numeric($excelDate)) {
+                            if ($excelDate > 60) {
+                                $excelDate -= 2;
+                            }
+                            date_default_timezone_set('Africa/Kampala');
+                            $sub->planting_date = date('Y-m-d', strtotime('1900-01-01 +' . $excelDate . ' days'));
+                        }
+                    } else {
+                        $sub->{$field} = $value[$index];
+                    }
                 }
             }
             $sub->planting_return_id = $m->id;
@@ -76,6 +87,7 @@ class PlantingReturn extends Model
             $sub->save();
         }
     }
+    
     
     public static function boot()
     {

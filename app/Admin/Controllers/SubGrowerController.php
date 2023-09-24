@@ -106,7 +106,7 @@ class SubGrowerController extends AdminController
             return $_user ? $_user->name : "-";
         });
         $grid->column('field_name', __('Field Name'));
-        $grid->column('name', __('Person responisble'))->sortable();
+        $grid->column('name', __('Person responsible'))->sortable();
         $grid->column('size', __('Size'))->sortable();
         $grid->column('crop', __('Crop'))->display(function(){
             return $this->get_crop_name();
@@ -163,7 +163,7 @@ class SubGrowerController extends AdminController
         })->sortable();
         $show->field('variety', __('Variety'));
         $show->field('district', __('District'));
-        $show->field('subcourty', __('Subcouty'));
+        $show->field('subcourty', __('Subcounty'));
         $show->field('planting_date', __('Planting date'));
         $show->field('quantity_planted', __('Quantity planted'));
         $show->field('expected_yield', __('Expected yield'));
@@ -223,7 +223,7 @@ class SubGrowerController extends AdminController
         {
 
             $form->text('name', __('Name'))->default($user->name)->readonly();
-            $form->text('size', __('Garden Size (in Accre)'))->required();
+            $form->text('size', __('Garden Size (in Acres)'))->attribute ('type', 'number')->required();
             $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'name'))
                 ->required();
             $form->select('variety', 'Crop Variety')->options(CropVariety::all()->pluck('name', 'name'))
@@ -233,14 +233,14 @@ class SubGrowerController extends AdminController
             $form->text('source_of_seed', __('Source of foundation seed used'))->required();
             $form->text('field_name', __('Field name'))->required();
             $form->text('district', __('District'))->required();
-            $form->text('subcourty', __('Subcourty'))->required();
+            $form->text('subcourty', __('Subcounty'))->required();
             $form->text('village', __('Village'))->required();
-            $form->text('planting_date', __('Planting date'))->required();
-            $form->text('quantity_planted', __('Quantity planted'));
-            $form->text('expected_yield', __('Expected yield'));
+            $form->date('planting_date', __('Planting date'))->required();
+            $form->text('quantity_planted', __('Quantity planted(in Kgs)'))->attribute ('type', 'number')->required();
+            $form->text('expected_yield', __('Expected yield(in Kgs)'))->attribute ('type', 'number')->required();
             $form->text('phone_number', __('Phone number'))->required();
-            $form->text('gps_latitude', __('Gps latitude'))->required();
-            $form->text('gps_longitude', __('Gps longitude'))->required();
+            $form->text('gps_latitude', __('Gps latitude'))->attribute ('type', 'number')->required();
+            $form->text('gps_longitude', __('Gps longitude'))->attribute ('type', 'number')->required();
             $form->textarea('detail', __('Detail'));
         }
 

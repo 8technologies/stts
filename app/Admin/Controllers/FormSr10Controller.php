@@ -259,7 +259,7 @@ class FormSr10Controller extends AdminController
             $form->display('', __('Telephone'))->default($model->planting_return->phone_number)->readonly();
             $form->divider();
 
-            $is_final = FormSr10::is_final_sr10($model);
+            
 
             $form->html('<h3>About this Field inspection report - (SR10)</h3>');
             $form->display('', __('Seed class'))->default($model->planting_return->seed_class)->readonly();

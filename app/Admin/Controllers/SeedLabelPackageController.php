@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\CropVariety;
+use App\Models\Crop;
 use App\Models\SeedLabelPackage;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -27,12 +28,12 @@ class SeedLabelPackageController extends AdminController
     {
         $grid = new Grid(new SeedLabelPackage());
         $grid->filter(function ($filter) {
-            $filter->equal('crop_variety_id', "Filter by crop variety")->select(CropVariety::all()->pluck('name', 'id'));
+            $filter->equal('crop_variety_id', "Filter by crop ")->select(Crop::all()->pluck('name', 'id'));
         });
 
 
-        $grid->column('crop_variety_id', __('Crop variety'))->display(function ($id) {
-            return $this->crop_variety->name ;
+        $grid->column('crop_variety_id', __('Crop'))->display(function ($id) {
+            return Crop::find($id)->name;
         });
         $grid->column('package_size', __('Package size'));
         $grid->column('package_price', __('Package price'));
@@ -53,7 +54,9 @@ class SeedLabelPackageController extends AdminController
         $show->field('id', __('Id'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
-        $show->field('crop_variety_id', __('Crop variety id'));
+        $show->field('crop_variety_id', __('Crop'))->as(function ($id) {
+            return Crop::find($id)->name;
+        });
         $show->field('package_size', __('Package size'));
         $show->field('package_price', __('Package price'));
 
@@ -68,15 +71,9 @@ class SeedLabelPackageController extends AdminController
     protected function form()
     {
         $form = new Form(new SeedLabelPackage());
-        $varieties_all = CropVariety::all(); 
-        $varieties = [];
-        foreach ($varieties_all as $key => $var) {
-            $varieties[$var->id] = $var->crop->name . ", " . $var->name;
-        }
-        $form->select('crop_variety_id', __('Select Crop variety'))
-            ->options($varieties)
-            ->required();
-        $form->text('package_size', __('Package size (in Metric Tones)'))
+        
+        $form->select('crop_variety_id', __('Select Crop'))->options(Crop::all()->pluck('name', 'id'))->required();
+        $form->text('package_size', __('Package size (in Kgs)'))
             ->attribute('type', 'number')
             ->required();
         $form->text('package_price', __('Package price (in UGX)'))

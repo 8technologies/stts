@@ -6,6 +6,7 @@ use App\Models\CropVariety;
 use App\Models\FormCropDeclaration;
 use App\Models\ImportExportPermitsHasCrops;
 use App\Models\FormSr10;
+use App\Models\FormQds;
 
 use App\Models\FormStockExaminationRequest;
 use App\Models\ImportExportPermit;
@@ -400,7 +401,7 @@ class FormStockExaminationRequestController extends AdminController
 
                 if($all_qds->isEmpty())
                 {
-                    $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have a valid QDS inspection </div>');
+                    $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have QDS declared crops </div>');
                 }else
                 {
 
@@ -422,7 +423,7 @@ class FormStockExaminationRequestController extends AdminController
                             $form->select('form_qds_id', __('Select approved QDS declaration'))
                             ->options($verified_qds_grower);
                             $form->textarea('remarks', __('Enter remarks'));
-                            $form->hidden('crop_variety', __('Crop variety'));
+                            $form->hidden('crop_variety_id', __('Crop variety'));
                         }
                         else{
                             $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if you don\'t have a fully verified QDS </div>');
@@ -554,7 +555,7 @@ class FormStockExaminationRequestController extends AdminController
                $form->text('field_size', __('Enter field size (in Acres)'));
             } 
             //field to capture the quantity collected
-            $form->text('yield', __('Enter quantity collected (in M.tons)'))
+            $form->text('yield', __('Enter quantity collected (in Kgs)'))
             ->attribute([
                 'type' => 'number', 
             ]);

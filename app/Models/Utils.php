@@ -581,6 +581,7 @@ class Utils
     //check if the recommendation has been updated
     public static function is_recommendation_updated($model_name)
     {
+        $user = Auth::user();
         $model = "App\\Models\\" . ucfirst($model_name);
         $recs = $model::where('administrator_id',  $user->id)->get();
         foreach ($recs as $key => $value) {

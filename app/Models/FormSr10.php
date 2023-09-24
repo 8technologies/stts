@@ -57,7 +57,7 @@ class FormSr10 extends Model
 
            
             //call the update status function
-            $model->updateStatuses($model->planting_return_id);
+            //$model->updateStatuses($model->planting_return_id);
             
 
         });

@@ -52,11 +52,10 @@ class SubGrower extends Model
         return $this->crop;
     }
 
-    // Define the relationship with PlantingReturn
-    public function plantingReturrn() {
+     // Define the relationship with PlantingReturn
+     public function plantingReturn() {
         return $this->belongsTo(PlantingReturn::class);
     }
-
        
     // Define the relationship with SR10s
     public function sr10s() {
@@ -114,7 +113,7 @@ class SubGrower extends Model
         self::updated(function ($sr10) {
 
             // ... code here
-            MyNotification::update_notification($sr10, 'SubGrower', request()->segment(count(request()->segments())));
+            MyNotification::update_notification($sr10, 'SubGrower', request()->segment(count(request()->segments())-1));
 
                //check if all the subgrowers with the same planting return id have been assigned to an inspector
             //check user role
@@ -181,7 +180,7 @@ class SubGrower extends Model
                                 $d['is_done'] = 0;
                                 $d['is_initialized'] = false;
                                 $d['status_comment'] = "";
-                                $d['planting_return_id'] = $sr10->id;
+                                $d['sub_grower_id'] = $sr10->id;
                                 $d['administrator_id'] = $sr10->administrator_id;
                                 $d['inspector'] =  Admin::user()->id;
                                 $date_planted = Carbon::parse($inspe->date_planted);

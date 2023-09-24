@@ -128,6 +128,12 @@ public static function update_notification($model, $model_name, $entity)
             'receiver_id' => $model->administrator_id,
             'form_link' => admin_url("{$entity}/{$model->id}"),
         ],
+        '16' => [
+            'message' => "Dear {$name}, your {$entity} has been initialized by the inspector.",
+            'receiver_id' => $model->administrator_id,
+            'form_link' => admin_url("{$entity}/{$model->id}"),
+        ],
+        
         '18' => [
             'message' => "{$name} 's form has been recommended by the inspector.",
             'role_id' => 2,

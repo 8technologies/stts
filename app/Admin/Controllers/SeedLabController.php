@@ -556,7 +556,7 @@ class SeedLabController extends AdminController
                 $form->hidden('inspector_is_done', __('inspector_is_done'))->attribute('value', 1)->value(1)->default(1);
                 $form->date('sampling_date', __('Sampling date'))->default(date('y-m-d'))->required();
 
-                $form->text('sample_weight', __('Enter weight of Sample (in metric tons)'))
+                $form->text('sample_weight', __('Enter weight of Sample (Kgs)'))
                     ->required()
                     ->attribute('type', 'number')
                     ->help("This is the sample weight you're going to test");
@@ -576,13 +576,10 @@ class SeedLabController extends AdminController
                 $form->select('sample_condition', __('Sample condition'))
                     ->required()
                     ->options([
-                        'Raw seed' => 'Raw seed',
                         'Processed seed' => 'Processed seed',
-                        'Quality cleared seed' => 'Quality cleared seed',
                         'Unprocessed seed' => 'Unprocessed seed',
-                        'Quality awaited seed' => 'Quality awaited seed',
-                        'Conditioned seed' => 'Conditioned seed',
-                        'Other' => 'Other',
+                        'Treated seed' => 'Treated seed',
+                        
                     ]);
 
                 $form->tags('tests_required', __('Tests required'))
@@ -655,11 +652,11 @@ class SeedLabController extends AdminController
                     ->readonly()
                     ->disable();
 
-                $form->display('sample_weight', __('Enter weight of Sample (in KGs)'))->attribute('type', 'number')->required()
+                $form->display('sample_weight', __('Enter weight of Sample (in Kgs)'))->attribute('type', 'number')->required()
                     ->readonly()
                     ->disable();
 
-               $form->display('quantity', __('Enter the quantity represented (in Metric Tonnes)'))->attribute([
+               $form->display('quantity', __('Enter the quantity represented (in Kgs)'))->attribute([
                     'type' => 'number',
                     'value' => $tot,
                 ])
@@ -670,13 +667,10 @@ class SeedLabController extends AdminController
                 $form->display('mother_lot', __('Mother lot'))->attribute('type', 'number');
                 $form->select('sample_condition', __('Sample condition'))
                     ->options([
-                        'Raw seed' => 'Raw seed',
                         'Processed seed' => 'Processed seed',
-                        'Quality cleared seed' => 'Quality cleared seed',
                         'Unprocessed seed' => 'Unprocessed seed',
-                        'Quality awaited seed' => 'Quality awaited seed',
-                        'Conditioned seed' => 'Conditioned seed',
-                        'Other' => 'Other',
+                        'Treated seed' => 'Treated seed',
+                        
                     ])
                     ->readonly()
                     ->disable();
@@ -706,7 +700,7 @@ class SeedLabController extends AdminController
                             }
                             $_items[$item->id] = $item->name . " - " . $item->id;
                         }
-                        $form->select('lab_technician', __('Assign lab technician'))
+                        $form->select('lab_technician', __('Assign seed analyst'))
                             ->options($_items)
                             ->help('Please select lab technician')
                             ->rules('required');

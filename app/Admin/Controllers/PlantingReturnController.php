@@ -63,9 +63,10 @@ class PlantingReturnController extends AdminController
             $grid->actions(function ($actions) 
             {
                 $status = (int)($actions->row['status']);
+                $actions->disableDelete();
                 
                 if ($status == 4 || $status != 1) {
-                    $actions->disableDelete();
+                   
                     $actions->disableEdit();
                 }
             });

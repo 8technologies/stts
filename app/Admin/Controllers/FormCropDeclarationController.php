@@ -266,14 +266,11 @@ class FormCropDeclarationController extends AdminController
 
             $form->text('source_of_seed', __('Enter source of seed'))->required();
             $form->text('field_size', __('Enter field size (in Acres)'))->required();
-            $form->text('seed_rate', __('Enter Seed rate'))->required();
+            $form->text('seed_rate', __('Enter Seed rate(kgs per acre)'))->required();
 
             $form->hasMany('form_crop_declarations_has_crop_varieties', __('Click on "NEW" to add Crop varieties'), function (NestedForm $form) {
-                $varieties = [];
-                foreach (CropVariety::all() as $key => $value) {
-                    $varieties[$value->id] =  $value->name . " of " . $value->crop->name;
-                }
-                $form->select('crop_variety_id', __('Select Crop Variety'))->options($varieties);
+               
+                $form->select('crop_variety_id', __('Select Crop Variety'))->options(CropVariety::all()->pluck('name', 'id'))->required();
             });
             $form->divider();
             $form->text('amount', __('Enter the amount enclosed'))->attribute('type', 'number')->required();
