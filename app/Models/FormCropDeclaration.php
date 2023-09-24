@@ -37,7 +37,7 @@ class FormCropDeclaration extends Model
         self::created(function ($model) 
         {
 
-            Utils::send_notification($model, 'SeedLab', request()->segment(count(request()->segments())));
+            MyNotification::send_notification($model, 'SeedLab', request()->segment(count(request()->segments())));
 
             
             
@@ -47,7 +47,7 @@ class FormCropDeclaration extends Model
         self::updated(function ($model) 
         {
 
-            Utils::update_notification($model, 'SeedLab', request()->segment(count(request()->segments())-1));  
+            MyNotification::update_notification($model, 'SeedLab', request()->segment(count(request()->segments())-1));  
             
             if (Admin::user()->isRole('inspector')) 
             {
@@ -68,7 +68,8 @@ class FormCropDeclaration extends Model
                         if (count($temp_sr10) < 1) 
                         {
                             $d['crop_variety_id'] = $crop_variety->id;
-                            $d['stage'] = $inspection->inspection_stage;
+                            $d['stage'] = $inspection->id;
+                            $d['order_number'] = $inspection->order_number;
                             $d['farmer_id'] = $model->administrator_id;
                             $d['status'] = '1';
 
@@ -82,13 +83,16 @@ class FormCropDeclaration extends Model
                             $d['status_comment'] = "";
                             $d['qds_declaration_id'] = $model->id;
                             $d['administrator_id'] = $model->administrator_id;
-                            $d['inspector'] =  Admin::user()->id;
+                            $d['inspector_id'] =  Admin::user()->id;
                             $date_planted = Carbon::parse($inspection->date_planted);
                             $date_planted->addDays($inspection->period_after_planting);
                             $toDateString = $date_planted->toDateString();
                             $d['min_date'] = $toDateString;       
                             $new_form_sr = new FormSr10($d);
                             $new_form_sr->save();
+
+                            $model->status = 16;
+                            $model->save();
                         } 
                     }
                 }

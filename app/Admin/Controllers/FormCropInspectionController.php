@@ -37,6 +37,8 @@ class FormCropInspectionController extends AdminController
         //show only records where the qds_declaration_id is not null
         $grid->model()->where('qds_declaration_id', '!=', null);
         $grid->disableFilter();
+        //disable create button
+        $grid->disableCreateButton();
     
 
         if (Admin::user()->isRole('basic-user')) {
@@ -62,12 +64,20 @@ class FormCropInspectionController extends AdminController
                 return Carbon::parse($item)->diffForHumans();
             })->sortable();
 
-        $grid->column('stage', __('Stage'));
+        $grid->column('stage', __('Stage'))->display(function ($stage) {
+            return CropInspectionType::find($stage)->inspection_stage;
+        })->sortable();
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
         })->sortable();
 
         if (Admin::user()->isRole('inspector')) {
+            $grid->actions(function ($actions) {
+                
+                
+                $actions->disableDelete();
+                
+        });
             $grid->column('is_active', __('Attention'))->display(function ($is_active) {
                 if ($is_active) {
                     return '<span class="badge badge-danger">Needs your attension</span>';
@@ -107,8 +117,10 @@ class FormCropInspectionController extends AdminController
         $declaration = FormCropDeclaration::findOrFail($id);
 
         
-        $show->field('stage', __('Stage')); 
-        $show->field('submited_date', __('Submited date'));
+        $show->field('stage', __('Stage'))->as(function ($stage) {
+            return CropInspectionType::find($stage)->inspection_stage;
+        });
+   
 
         $show->field('name', __('Applicant\'s Name'))->as(function ($i) use ($declaration){
         //get the name of the adminstrator from the administrator id in $declaration
@@ -117,21 +129,46 @@ class FormCropInspectionController extends AdminController
         });
         
 
-        $show->field('seed_class', __('Seed class')); 
-        $show->field('size_of_field', __('Size of field')); 
-        $show->field('off_types', __('Off types')); 
-        $show->field('status_comment', __('Status comment')); 
-        $show->field('diseases', __('Diseases')); 
-        $show->field('noxious_weeds', __('Noxious weeds')); 
-        $show->field('other_features', __('Other features')); 
-        $show->field('other_weeds', __('Other weeds')); 
-        $show->field('isolation_distance', __('Isolation distance')); 
-        $show->field('variety', __('Variety')); 
-        $show->field('proposed_distance', __('Proposed distance')); 
-        $show->field('general_conditions_of_crop', __('General conditions of crop')); 
-        $show->field('estimated_yield', __('Estimated yield')); 
-        $show->field('futher_remarks', __('Futher remarks')); 
-        $show->field('sr10_number', __('SR10s number')); 
+        $show->field('seed_class', __('Seed class'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        });  
+        $show->field('size_of_field', __('Size of field'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        }); 
+        $show->field('off_types', __('Off types'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        }); 
+    
+        $show->field('diseases', __('Diseases'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        }); 
+        $show->field('noxious_weeds', __('Noxious weeds'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        }); 
+        $show->field('other_features', __('Other features'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        }); 
+        $show->field('other_weeds', __('Other weeds'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        }); 
+        $show->field('isolation_distance', __('Isolation distance'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        }); 
+        $show->field('variety', __('Variety'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        }); 
+        $show->field('proposed_distance', __('Proposed distance'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        }); 
+        $show->field('general_conditions_of_crop', __('General conditions of crop'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        }); 
+        $show->field('estimated_yield', __('Estimated yield'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        }); 
+        $show->field('sr10_number', __('SR10s number'))->as(function ($i){
+            return $i ?? 'Not assigned';
+        }); 
       
         $show->panel()
             ->tools(function ($tools) {
@@ -178,6 +215,10 @@ class FormCropInspectionController extends AdminController
         }
 
         if ($can_edit) {
+             //get the inspection stage
+             $stage = $model->stage;
+             //check in the inspection type table if the stage is there
+             $inspection_type = CropInspectionType::find($stage);
 
             Admin::script("$('document').ready(function(){
                 $('.remove').hide();
@@ -189,14 +230,16 @@ class FormCropInspectionController extends AdminController
 
             $form->divider();
 
-            $is_final = FormSr10::is_final_sr10($model);
+            // $is_final = FormSr10::is_final_sr10($model);
 
             $form->html('<h3>About this Field inspection report - (QDS)</h3>');
             $crop_var = CropVariety::find($model->crop_variety_id);
             $crop_name = $crop_var->crop->name.", ".$crop_var->name;
+            $stage = CropInspectionType::find($model->stage)->inspection_stage;
 
             $form->display('', __('Crop'))->default($crop_name)->readonly();
-            $form->text('stage', __('Stage'))->readonly();
+            $form->display('', __('Stage'))->default($stage)->readonly();
+        
             $form->date('min_date', __('To be submited after'))->readonly();
             $form->date('submited_date', __('Date Submited'))->value(Carbon::now()->toDateString())->default(Carbon::now()->toDateString())->readonly();
 
@@ -209,11 +252,17 @@ class FormCropInspectionController extends AdminController
                     'Certified seed' => 'Certified seed',
                 ]);
             $form->text('size_of_field', __('Enter size of field (in Acres)'))->attribute('type', 'number');
-            $form->text('off_types', __('Crop cultivar characteristics (Off-types)'));
-            $form->text('diseases', __('Crop cultivar characteristics (Diseases)'));
-            $form->text('noxious_weeds', __('Crop cultivar characteristics (Noxious weeds)'));
-            $form->text('other_features', __('Crop cultivar characteristics (Other features)'));
-            $form->text('other_weeds', __('Crop cultivar characteristics (Other weeds)'));
+            $form->text('off_types', __('Off-types'));
+            $form->text('diseases', __('Diseases'));
+            $form->text('noxious_weeds', __('Noxious weeds'));
+            $form->text('other_features', __('Other features'));
+            $form->text('other_weeds', __('Other weeds'));
+            if($inspection_type->inspection_stage == 'Flowering'){
+                $form->text('female_shedding', __('Female shedding tassels%'));
+                $form->text('female_receptive', __('Female receptive silks%'));
+                $form->text('female_off_types', __('Female off-type%'));
+                $form->text('male_off_types', __('Male off-type%'));
+            }
 
 
             $form->radio('isolation_distance', __('Enter isolation')) 
@@ -222,23 +271,16 @@ class FormCropInspectionController extends AdminController
                 'in distance' => 'Distance',
             ]) 
             ->when('in', ['in time'], function (Form $form) {
-                $form->text('isolation_distance', __('Enter isolation (in Hours)'))->attribute('type', 'number');
+                $form->text('isolation_distance', __('Enter isolation (in days)'))->attribute('type', 'number');
             })
             ->when('in', ['in distance'], function (Form $form) {
                 $form->text('isolation_distance', __('Enter isolation (in Meters)'))->attribute('type', 'number');
             });
 
-            $varieties_all = CropVariety::all();
-            $varieties = [];
-            foreach ($varieties_all as $key => $var) {
-                if ($var->crop_id == $crop_var->id) {
-                    $varieties[$var->id] = $var->crop->name . ", " . $var->name;
-                }
-            }
-            $form->select('variety', __('Select Crop variety'))
-                ->options($varieties);
+            $form->text('', __('Crop variety'))->default($crop_var->name);
+                
  
-            $form->select('proposed_distance', __('Status of proposed distance'))
+            $form->select('proposed_distance', __('Status of proposed isolation'))
                 ->options([
                     'Adequate' => 'Adequate',
                     'Inadequate' => 'Inadequate'
@@ -246,34 +288,37 @@ class FormCropInspectionController extends AdminController
 
                 
             $form->textarea('general_conditions_of_crop', __('General conditions of crop'));
-            $form->text('estimated_yield', __('Enter estimated yield (in metric tonnes)'));
-            $form->textarea('futher_remarks', __('Enter any futher remarks'));
-
+            $form->text('estimated_yield', __('Enter estimated yield (Kgs)'));
+             
+            $form->textarea('futher_remarks', __('Enter any futher remarks'))->rules(
+                $inspection_type->is_required == 1 ? 'required' : ''
+            );
             $form->divider();
 
-            if ($is_final) {
-                $form->radio('status', __('Inspection decision'))
-                    ->help("NOTE: Once this  status is changed and submited, it cannot be reversed.")
+                if($inspection_type->is_required == 1){
+                    $form->radio('status', __('Inspection decision'))
+                    ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be reversed.")
                     ->options([
                         '4' => 'Rejected',
                         '5' => 'Accepted',
                     ])
                     ->required();
-            } else {
+                }else{
                 $form->radio('status', __('Inspection decision'))
-                    ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be revarsed.")
+                    ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be reversed.")
                     ->options([
                         '4' => 'Rejected',
+                        
                         '7' => 'Provisional',
                         '17' => 'Skip',
                     ])
                     ->required()
                     ->when('in', [7, 4, 17], function (Form $form) {
                         $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                             ->required()
-                            ->help("Please specify with a comment");
+                            ->help("Please specify with a comment")->required();
                     });
             }
+        
 
 
             $form->tools(function (Form\Tools $tools) {

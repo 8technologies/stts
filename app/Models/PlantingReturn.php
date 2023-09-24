@@ -31,7 +31,7 @@ class PlantingReturn extends Model
             return;
         }
     
-        $file = './storage/' . $m->sub_growers_file;
+        $file = '/home/technolo/stts/public/storage/' . $m->sub_growers_file;
     
         if (!file_exists($file)) {
             return;

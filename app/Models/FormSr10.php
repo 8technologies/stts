@@ -23,57 +23,118 @@ class FormSr10 extends Model
         
 
         static::updated(function ($model){
-            if ($model->status == '5' && $model->is_done == 0) 
+            if($model->planting_return_id != null)
             {
-                $next = $model->getNext();
-                if ($next != null) {
-                    $model->is_done = 1;
-                    $model->is_active = 0;
-                    $model->save();
-                    $next->is_active = 1;
-                    $next->save();
-                } else {
-                    $sub_grower = SubGrower::find($model->planting_return_id);
-                    if ($sub_grower != null) {
-                        $sub_grower->status = '5';
+                
+                if ($model->status == '5' && $model->is_done == 0) 
+                {
+                    $next = $model->getNext();
+                    if ($next != null) {
                         $model->is_done = 1;
                         $model->is_active = 0;
-                        $sub_grower->save();
                         $model->save();
+                        $next->is_active = 1;
+                        $next->save();
+                    } else {
+                        $sub_grower = SubGrower::find($model->planting_return_id);
+                        if ($sub_grower != null) {
+                            $sub_grower->status = '5';
+                            $model->is_done = 1;
+                            $model->is_active = 0;
+                            $sub_grower->save();
+                            $model->save();
+                        }
                     }
                 }
-            }
-            if (($model->status == '17' || $model->status == '7') && $model->is_done == 0) 
-            {
-                $next = $model->getNext();
-                if ($next != null) {
-                    $model->is_done = 1;
-                    $model->is_active = 0;
-                    $model->save();
-                    $next->is_active = 1;
-                    $next->save();
-                } else {
-                    $sub_grower = SubGrower::find($model->planting_return_id);
-                    if ($sub_grower != null) {
-                        $sub_grower->status = '17';
+                if (($model->status == '17' || $model->status == '7') && $model->is_done == 0) 
+                {
+                    $next = $model->getNext();
+                    if ($next != null) {
                         $model->is_done = 1;
                         $model->is_active = 0;
-                        $sub_grower->save();
                         $model->save();
+                        $next->is_active = 1;
+                        $next->save();
+                    } else {
+                        $sub_grower = SubGrower::find($model->planting_return_id);
+                        if ($sub_grower != null) {
+                            $sub_grower->status = '17';
+                            $model->is_done = 1;
+                            $model->is_active = 0;
+                            $sub_grower->save();
+                            $model->save();
+                        }
                     }
                 }
-            }
 
-            if ($model->status == '4' && $model->is_done == 0) 
-            {
-                $sub_grower = SubGrower::find($model->planting_return_id);
-                if ($sub_grower != null) {
-                    $sub_grower->status = '4';
-                    $model->is_done = 1;
-                    $model->is_active = 0;
-                    $sub_grower->save();
-                    $model->save();
+                if ($model->status == '4' && $model->is_done == 0) 
+                {
+                    $sub_grower = SubGrower::find($model->planting_return_id);
+                    if ($sub_grower != null) {
+                        $sub_grower->status = '4';
+                        $model->is_done = 1;
+                        $model->is_active = 0;
+                        $sub_grower->save();
+                        $model->save();
+                    }
                 }
+            }
+            else
+            {
+                if ($model->status == '5' && $model->is_done == 0) 
+                {
+                    $next = $model->getNextQds();
+                    if ($next != null) {
+                        $model->is_done = 1;
+                        $model->is_active = 0;
+                        $model->save();
+                        $next->is_active = 1;
+                        $next->save();
+                    } else {
+                        $qds_declaration = FormCropDeclaration::find($model->qds_declaration_id);
+                        if ($qds_declaration != null) {
+                            $qds_declaration->status = '5';
+                            $model->is_done = 1;
+                            $model->is_active = 0;
+                            $qds_declaration->save();
+                            $model->save();
+                        }
+                    }
+                }
+                if (($model->status == '17' || $model->status == '7') && $model->is_done == 0) 
+                {
+                    $next = $model->getNext();
+                    if ($next != null) {
+                        $model->is_done = 1;
+                        $model->is_active = 0;
+                        $model->save();
+                        $next->is_active = 1;
+                        $next->save();
+                    } else {
+                        $qds_declaration = FormCropDeclaration::find($model->qds_declaration_id);
+                        if ($qds_declaration!= null) {
+                            $qds_declaration->status = '17';
+                            $model->is_done = 1;
+                            $model->is_active = 0;
+                            $qds_declaration->save();
+                            $model->save();
+                        }
+                    }
+                }
+
+                if ($model->status == '4' && $model->is_done == 0) 
+                {
+                    $qds_declaration = FormCropDeclaration::find($model->qds_declaration_id);
+                    if ($qds_declaration != null) {
+                        $qds_declaration->status = '4';
+                        $model->is_done = 1;
+                        $model->is_active = 0;
+                        $qds_declaration->save();
+                        $model->save();
+                    }
+                }
+
+
             }
 
            
@@ -99,6 +160,21 @@ class FormSr10 extends Model
         return $nextInspection;
     }
 
+    public function getNextQds()
+    {
+        $otherInspections = FormSr10::where('qds_declaration_id', $this->qds_declaration_id)
+            ->orderBy('order_number', 'asc')
+            ->get();
+
+        $nextInspection = null;
+        foreach ($otherInspections as $key => $inspection) {
+            if ($inspection->order_number > $this->order_number) {
+                $nextInspection = $inspection;
+                break;
+            }
+        }
+        return $nextInspection;
+    }
     public function planting_return()
     {
         return $this->belongsTo(SubGrower::class);

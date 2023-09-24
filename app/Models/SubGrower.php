@@ -229,7 +229,7 @@ class SubGrower extends Model
                         $sr10->save();
                     }
                 }
-             }
+            }
         });
 
         self::deleting(function ($model) {

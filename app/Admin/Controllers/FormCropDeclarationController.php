@@ -56,7 +56,7 @@ class FormCropDeclarationController extends AdminController
             });
         } else if (Admin::user()->isRole('inspector')) 
         {
-            $grid->model()->where('inspector', '=', Admin::user()->id);
+            $grid->model()->where('inspector_id', '=', Admin::user()->id);
             $grid->disableCreateButton();
             $grid->actions(function ($actions) 
             {
@@ -96,7 +96,7 @@ class FormCropDeclarationController extends AdminController
                 return Utils::tell_status($status);
             })->sortable();
 
-        $grid->column('inspector', __('Inspector'))->display(function ($userId) 
+        $grid->column('inspector_id', __('Inspector'))->display(function ($userId) 
         {
             if (Admin::user()->isRole('basic-user')) 
             {
@@ -131,7 +131,7 @@ class FormCropDeclarationController extends AdminController
 
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
-        $show->field('administrator_id', __('Administrator id'))->as(function ($id) 
+        $show->field('administrator_id', __('Applicant'))->as(function ($id) 
         {
             $u = Administrator::find($id);
             if (!$u)
@@ -174,7 +174,13 @@ class FormCropDeclarationController extends AdminController
 
             return Utils::tell_status($status);
         });
-        $show->field('inspector', __('Inspector'));
+        $show->field('inspector_id', __('Inspector'))->as(function ($id) 
+        {
+            $u = Administrator::find($id);
+            if (!$u)
+                return "Not assigned";
+            return $u->name;
+        });
         $show->field('status_comment', __('Status comment'));
 
         if (!Admin::user()->isRole('basic-user'))
@@ -265,8 +271,8 @@ class FormCropDeclarationController extends AdminController
             $form->hidden('form_qd_id', __('form_qd_id'));
 
             $form->text('source_of_seed', __('Enter source of seed'))->required();
-            $form->text('field_size', __('Enter field size (in Acres)'))->required();
-            $form->text('seed_rate', __('Enter Seed rate(kgs per acre)'))->required();
+            $form->text('field_size', __('Enter field size (in Acres)'))->attribute('type', 'number')->required();
+            $form->text('seed_rate', __('Enter Seed rate(kgs per acre)'))->attribute('type', 'number')->required();
 
             $form->hasMany('form_crop_declarations_has_crop_varieties', __('Click on "NEW" to add Crop varieties'), function (NestedForm $form) {
                
@@ -310,9 +316,9 @@ class FormCropDeclarationController extends AdminController
                         {
                             continue;
                         }
-                        $_items[$item->id] = $item->name . " - " . $item->id;
+                        $_items[$item->id] = $item->name ;
                     }
-                    $form->select('inspector', __('Inspector'))
+                    $form->select('inspector_id', __('Inspector'))
                         ->options($_items)
                         ->help('Please select inspector')
                         ->rules('required');
@@ -325,7 +331,7 @@ class FormCropDeclarationController extends AdminController
         if (Admin::user()->isRole('inspector')) 
         {
             $form->display('id', __('Crop Declaration Form ID:'))->disable();
-            $form->display('field_size', __('Field (in Acres)'))->disable();
+            $form->display('field_size', __('Field size (in Acres)'))->disable();
             $form->display('seed_rate', __('Seed rate'))->disable();
 
             $form->radio('status', __('Status'))
@@ -335,6 +341,12 @@ class FormCropDeclarationController extends AdminController
                 ->required();
                 
         }
+
+        //disable checkboxes
+        $form->disableViewCheck();
+        $form->disableEditingCheck();
+        $form->disableCreatingCheck();
+
       
         return $form;
     }

@@ -120,7 +120,7 @@ class CropController extends AdminController
             $form->text('order_number', __('Order number'))->attribute(['type' => 'number'])
             ->help('This is the order in which the inspection stage will be carried out')
             ->required();
-            $form->radio('is_required', __('Is required'))->options(['Mandatory' => 'Mandatory', 'Optional' => 'Optional'])->default('1')->required();
+            $form->radio('is_required', __('Is required'))->options([1 => 'Mandatory', 0 => 'Optional'])->default('1')->required();
             $form->text('period_after_planting', __('Period after planting (in days)'))
                 ->attribute(['type' => 'number'])
                 ->required();
