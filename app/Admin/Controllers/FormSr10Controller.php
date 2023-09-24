@@ -33,12 +33,7 @@ class FormSr10Controller extends AdminController
     protected function grid()
     {
 
-      
-
         $grid = new Grid(new FormSr10());
-
-        
-       
 
         $grid->model()->orderBy('created_at', 'desc');
    
@@ -84,7 +79,12 @@ class FormSr10Controller extends AdminController
         {
             $grid->model()->where('inspector', '=', Admin::user()->id);
             $grid->actions(function ($actions) {
+                //check if the status is not 1
+                if ($actions->row->status != 1) {
+                    $actions->disableEdit();
+                }
                 $actions->disableDelete();
+
                 
             });
             $grid->column('is_active', __('Attention'))->display(function ($is_active) {
@@ -233,7 +233,7 @@ class FormSr10Controller extends AdminController
             $model = $form->model()->find($id);
 
             if (!$model->is_active) {
-                admin_error("Warning", "This form is not ative yet. You need to submit the previous stage before this.");
+                admin_error("Warning", "This form is not active. Please consult the commissioner");
                 $can_edit = false;
             }
         }

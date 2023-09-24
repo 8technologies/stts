@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Encore\Admin\Auth\Database\Administrator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Notification;
+use App\Models\PlantingReturn;
 
 
 class SubGrower extends Model
@@ -50,6 +51,18 @@ class SubGrower extends Model
 
         return $this->crop;
     }
+
+    // Define the relationship with PlantingReturn
+    public function plantingReturrn() {
+        return $this->belongsTo(PlantingReturn::class);
+    }
+
+       
+    // Define the relationship with SR10s
+    public function sr10s() {
+        return $this->hasMany(FormSr10::class);
+    }
+
 
     public function get_crop()
     {
@@ -95,29 +108,32 @@ class SubGrower extends Model
 
 
         self::updating(function ($sr10) {
-            //check if all the subgrowers with the same planting return id have been assigned to an inspector
-            //check user role
-            if (Admin::user()->isRole('admin')) {
-                $subgrowers = SubGrower::where('planting_return_id', $sr10->planting_return_id)->get();
-                $all_assigned = true;
-                foreach ($subgrowers as $sub) {
-                    if ($sub->inspector == null) {
-                        $all_assigned = false;
-                    }
-                }
-                //if all the subgrowers have been assigned to an inspector, change the status of the planting return to 2
-                if ($all_assigned) {
-                    $sr10->status = 2;
-                    $sr10->save();
-                }
-            }
-
+         
         });
 
         self::updated(function ($sr10) {
 
             // ... code here
-            MyNotification::update_notification($sr10, 'SubGrower', request()->segment(count(request()->segments())-1));
+            MyNotification::update_notification($sr10, 'SubGrower', request()->segment(count(request()->segments())));
+
+               //check if all the subgrowers with the same planting return id have been assigned to an inspector
+            //check user role
+            if (Admin::user()->isRole('admin')) {
+                $subgrowers = SubGrower::where('planting_return_id', $sr10->planting_return_id)->get();
+                $all_assigned = true;
+                foreach ($subgrowers as $sub) {
+                    if ($sub->inspector_id == null) {
+                        $all_assigned = false;
+                    }
+                }
+                //if all the subgrowers have been assigned to an inspector, change the status of the planting return to 2
+                if ($all_assigned) {
+                    $planting_return = PlantingReturn::find($sr10->planting_return_id);
+                    $planting_return->status = 2;
+                    $planting_return->save();
+                }
+            }
+
 
             if (Admin::user()->isRole('inspector')) 
             {

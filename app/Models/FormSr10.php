@@ -23,7 +23,8 @@ class FormSr10 extends Model
         
 
         static::updated(function ($model){
-            if (($model->status == '5' || $model->status == '17') && $model->is_done == 0) {
+            if (($model->status == '5' || $model->status == '17') && $model->is_done == 0) 
+            {
                 $next = $model->getNext();
                 if ($next != null) {
                     $model->is_done = 1;
@@ -42,7 +43,8 @@ class FormSr10 extends Model
                     }
                 }
             }
-            if ($model->status == '4' && $model->is_done == 0) {
+            if ($model->status == '4' && $model->is_done == 0) 
+            {
                 $sub_grower = SubGrower::find($model->planting_return_id);
                 if ($sub_grower != null) {
                     $sub_grower->status = '4';
@@ -52,6 +54,11 @@ class FormSr10 extends Model
                     $model->save();
                 }
             }
+
+           
+            //call the update status function
+            $model->updateStatuses($model->planting_return_id);
+            
 
         });
     }
@@ -80,6 +87,34 @@ class FormSr10 extends Model
     public function form_sr10_has_variety_inspections()
     {
         return $this->hasMany(FormSr10HasVarietyInspection::class);
+    }
+
+    public function updateStatuses($subgrowerId) {
+        $subgrower = Subgrower::find($subgrowerId);
+    
+        if (!$subgrower) {
+            // Handle the case where the subgrower is not found
+            return response()->json(['message' => 'Subgrower not found'], 404);
+        }
+    
+        // Check if all SR10s belonging to the subgrower are active
+        if ($subgrower->sr10s()->where('is_active', 0)->count() === 0) {
+            // Update subgrower status to "done"
+            $subgrower->status = 5;
+            $subgrower->save();
+    
+            // Check if all subgrowers belonging to the same planting return are done
+            $plantingReturn = $subgrower->plantingReturrn;
+    
+            if ($plantingReturn && $plantingReturn->subgrowers()->where('status', 5)->count() === 0) {
+                // Update planting return status to "inspected"
+                $plantingReturn->status = 5;
+                $plantingReturn->save();
+            }
+        }
+    
+        // Handle the response accordingly
+        return response()->json(['message' => 'Status updated successfully']);
     }
 
     protected $fillable = [

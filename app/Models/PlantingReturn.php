@@ -141,6 +141,10 @@ class PlantingReturn extends Model
         return $this->hasMany(FormSr10::class);
     }
 
+    public function subgrowers() {
+        return $this->hasMany(Subgrower::class);
+    }
+
     public function planting_return_crops()
     {
         return $this->hasMany(PlantingReturnCrop::class);
