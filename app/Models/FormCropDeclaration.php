@@ -58,11 +58,13 @@ class FormCropDeclaration extends Model
                     {
                         $temp_sr10_1 = FormSr10::where([
                             'qds_declaration_id' => $model->id,
+                            'crop_variety_id' => $crop_variety->id
                         ])->get();
+                        error_log(count($temp_sr10_1));
 
                         $temp_sr10 = FormSr10::where([
                             'qds_declaration_id' => $model->id,
-                            'stage' => $inspection->inspection_stage,
+                            'stage' => $inspection->id,
                         ])->get();
 
                         if (count($temp_sr10) < 1) 
