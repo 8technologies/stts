@@ -250,7 +250,7 @@ class SubGrowerController extends AdminController
             $id = request()->route()->parameters['sub_grower'];
             $model = $form->model()->find($id);
         //get crop name from the model
-            $crop_name = Crop::find($model->crop)->name;
+           // $crop_name = Crop::find($model->crop)->name;
             $u = Administrator::find($model->administrator_id);
 
 
@@ -264,7 +264,7 @@ class SubGrowerController extends AdminController
             $form->display('', __('District'))->default($model->district)->readonly();
             $form->display('', __('Subcourty'))->default($model->subcourty)->readonly();
             $form->display('', __('Village'))->default($model->village)->readonly();
-            $form->display('', __('Crop'))->default($crop_name)->readonly();
+            $form->display('crop', __('Crop'));
             $form->display('', __('Variety'))->default($model->variety)->readonly();
             $form->divider();
 
