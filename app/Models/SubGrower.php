@@ -133,7 +133,6 @@ class SubGrower extends Model
                 }
             }
 
-
             if (Admin::user()->isRole('inspector')) 
             {
 
@@ -180,7 +179,7 @@ class SubGrower extends Model
                                 $d['is_done'] = 0;
                                 $d['is_initialized'] = false;
                                 $d['status_comment'] = "";
-                                $d['sub_grower_id'] = $sr10->id;
+                                $d['planting_return_id'] = $sr10->id;
                                 $d['administrator_id'] = $sr10->administrator_id;
                                 $d['inspector'] =  Admin::user()->id;
                                 $date_planted = Carbon::parse($inspe->date_planted);
@@ -230,7 +229,7 @@ class SubGrower extends Model
                         $sr10->save();
                     }
                 }
-            }
+             }
         });
 
         self::deleting(function ($model) {

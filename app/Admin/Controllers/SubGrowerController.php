@@ -113,7 +113,7 @@ class SubGrowerController extends AdminController
         })->sortable();
         $grid->column('variety', __('variety'))->sortable();
         $grid->column('seed_class', __('Seed class'))->sortable();
-        $grid->column('inspector', __('Inspector'))->display(function ($userId) {
+        $grid->column('inspector_id', __('Inspector'))->display(function ($userId) {
             if (Admin::user()->isRole('basic-user')) {
                 return "-";
             }
@@ -250,7 +250,8 @@ class SubGrowerController extends AdminController
             $id = request()->route()->parameters['sub_grower'];
             $model = $form->model()->find($id);
         //get crop name from the model
-           // $crop_name = Crop::find($model->crop)->name;
+        $crop = optional(Crop::find($model->crop))->name ?? $model->crop;
+
             $u = Administrator::find($model->administrator_id);
 
 
@@ -264,7 +265,7 @@ class SubGrowerController extends AdminController
             $form->display('', __('District'))->default($model->district)->readonly();
             $form->display('', __('Subcourty'))->default($model->subcourty)->readonly();
             $form->display('', __('Village'))->default($model->village)->readonly();
-            $form->display('crop', __('Crop'));
+            $form->display('', __('Crop'))->default($crop)->readonly();
             $form->display('', __('Variety'))->default($model->variety)->readonly();
             $form->divider();
 

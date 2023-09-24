@@ -56,8 +56,7 @@ class FormSr10 extends Model
             }
 
            
-            //call the update status function
-            //$model->updateStatuses($model->planting_return_id);
+       
             
 
         });
@@ -89,33 +88,34 @@ class FormSr10 extends Model
         return $this->hasMany(FormSr10HasVarietyInspection::class);
     }
 
-    public function updateStatuses($subgrowerId) {
-        $subgrower = Subgrower::find($subgrowerId);
+    // public function updateStatuses($subgrowerId) 
+    // {
+    //     $subgrower = Subgrower::find($subgrowerId);
     
-        if (!$subgrower) {
-            // Handle the case where the subgrower is not found
-            return response()->json(['message' => 'Subgrower not found'], 404);
-        }
+    //     if (!$subgrower) {
+    //         // Handle the case where the subgrower is not found
+    //         return response()->json(['message' => 'Subgrower not found'], 404);
+    //     }
     
-        // Check if all SR10s belonging to the subgrower are active
-        if ($subgrower->sr10s()->where('is_active', 0)->count() === 0) {
-            // Update subgrower status to "done"
-            $subgrower->status = 5;
-            $subgrower->save();
+    //     // Check if all SR10s belonging to the subgrower are active
+    //     if ($subgrower->sr10s()->where('is_active', 0)->count() === 0) {
+    //         // Update subgrower status to "done"
+    //         $subgrower->status = 5;
+    //         $subgrower->save();
     
-            // Check if all subgrowers belonging to the same planting return are done
-            $plantingReturn = $subgrower->plantingReturrn;
+    //         // Check if all subgrowers belonging to the same planting return are done
+    //         $plantingReturn = $subgrower->plantingReturrn;
     
-            if ($plantingReturn && $plantingReturn->subgrowers()->where('status', 5)->count() === 0) {
-                // Update planting return status to "inspected"
-                $plantingReturn->status = 5;
-                $plantingReturn->save();
-            }
-        }
+    //         if ($plantingReturn && $plantingReturn->subgrowers()->where('status', 5)->count() === 0) {
+    //             // Update planting return status to "inspected"
+    //             $plantingReturn->status = 5;
+    //             $plantingReturn->save();
+    //         }
+    //     }
     
-        // Handle the response accordingly
-        return response()->json(['message' => 'Status updated successfully']);
-    }
+    //     // Handle the response accordingly
+    //     return response()->json(['message' => 'Status updated successfully']);
+    // }
 
     protected $fillable = [
         'administrator_id',
@@ -124,6 +124,7 @@ class FormSr10 extends Model
         'stage',
         'status',
         'status_comment',
+        'order_number',
         'submited_date',
         'min_date',
         'max_date',
