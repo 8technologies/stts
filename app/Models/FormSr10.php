@@ -162,7 +162,9 @@ class FormSr10 extends Model
 
     public function getNextQds()
     {
-        $otherInspections = FormSr10::where('qds_declaration_id', $this->qds_declaration_id)
+        $otherInspections = FormSr10::where([
+            'qds_declaration_id', $this->qds_declaration_id,
+            'crop_variety_id', $this->crop_variety_id])
             ->orderBy('order_number', 'asc')
             ->get();
 
