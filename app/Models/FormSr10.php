@@ -23,7 +23,7 @@ class FormSr10 extends Model
         
 
         static::updated(function ($model){
-            if (($model->status == '5' || $model->status == '17' || $model->status == '7') && $model->is_done == 0) 
+            if ($model->status == '5' && $model->is_done == 0) 
             {
                 $next = $model->getNext();
                 if ($next != null) {
@@ -43,6 +43,27 @@ class FormSr10 extends Model
                     }
                 }
             }
+            if (($model->status == '17' || $model->status == '7') && $model->is_done == 0) 
+            {
+                $next = $model->getNext();
+                if ($next != null) {
+                    $model->is_done = 1;
+                    $model->is_active = 0;
+                    $model->save();
+                    $next->is_active = 1;
+                    $next->save();
+                } else {
+                    $sub_grower = SubGrower::find($model->planting_return_id);
+                    if ($sub_grower != null) {
+                        $sub_grower->status = '17';
+                        $model->is_done = 1;
+                        $model->is_active = 0;
+                        $sub_grower->save();
+                        $model->save();
+                    }
+                }
+            }
+
             if ($model->status == '4' && $model->is_done == 0) 
             {
                 $sub_grower = SubGrower::find($model->planting_return_id);

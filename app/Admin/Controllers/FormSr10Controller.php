@@ -326,7 +326,7 @@ class FormSr10Controller extends AdminController
 
                 if($inspection_type->is_required == 1){
                     $form->radio('status', __('Inspection decision'))
-                    ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be revarsed.")
+                    ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be reversed.")
                     ->options([
                         '4' => 'Rejected',
                         '5' => 'Accepted',
@@ -334,7 +334,7 @@ class FormSr10Controller extends AdminController
                     ->required();
                 }else{
                 $form->radio('status', __('Inspection decision'))
-                    ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be revarsed.")
+                    ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be reversed.")
                     ->options([
                         '4' => 'Rejected',
                         
