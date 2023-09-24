@@ -102,7 +102,7 @@ class FormSr10Controller extends AdminController
                  $grid->column('id', __('Inspection Report'))->display(function ($id)  {
                     $sr10s = FormSr10::find($id);
                  
-                     if ($sr10s->status == '5') {
+                     if ($sr10s->status != '1' && $sr10s->status != '17') {
                          $link = url('inspection?id=' . $id);
                          return '<b><a target="_blank" href="' . $link . '">Print Report</a></b>';
                      } else {

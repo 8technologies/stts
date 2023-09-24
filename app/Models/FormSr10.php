@@ -23,7 +23,7 @@ class FormSr10 extends Model
         
 
         static::updated(function ($model){
-            if (($model->status == '5' || $model->status == '17') && $model->is_done == 0) 
+            if (($model->status == '5' || $model->status == '17' || $model->status == '7') && $model->is_done == 0) 
             {
                 $next = $model->getNext();
                 if ($next != null) {
