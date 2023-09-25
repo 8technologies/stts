@@ -1,10 +1,9 @@
 <?php
 $permitNumber = mt_rand(1000, 9999);
 $link = public_path('css/bootstrap-print.css');
-$form = App\Models\ImportExportPermit::where('id', $_GET['id'])->where('is_import' , 1)->first();
-
-$crop_varieties = App\Models\ImportExportPermitsHasCrops::where('import_export_permit_id', $form->id)->get();
-
+$form = App\Models\FormStockExaminationRequest::find($_GET['id']);
+$applicant = App\Models\User::find($form->administrator_id)->name;
+$status = strip_tags(App\Models\Utils::tell_status($form->status));
 
 
 $date = date("j F Y");
@@ -12,7 +11,7 @@ $date = date("j F Y");
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Stock examination Report</title>
+    <title>Stock examination report</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,7 +53,7 @@ $date = date("j F Y");
         }
         .signature-text {
             text-align: left; 
-            margin-left: 300px; 
+            margin-left: 400px; 
             
         }
     </style>
@@ -71,12 +70,11 @@ $date = date("j F Y");
     </header>
     
 
-    <p><strong>To:</strong> {{$form->permit_number}}</p>
-    <p><strong>Address:</strong> {{$form->valid_from}}</p>
-    <p><strong>Your seed(seed class):</strong> {{$form->name}} which was inspected and finalized on {{}} of 
-     weight {{}} kgs of seeds and whose sample for stock approval analysis was taken on {{}} has been {{}}</p>
+    <p><strong>To:</strong> {{$applicant}}</p>
+    <p>Your {{$form->seed_class }} which was inspected and finalized on {{$form->updated_at}} of 
+     weight {{$form->yield}} kgs of seeds and whose sample for stock approval analysis was taken on {{$form->date}} has been {{$status}}</p>
 
-    <h5><strong>The results were</strong></h5>
+    <h4><strong>The results were</strong></h4>
     
     <table>
     <tr>
@@ -88,8 +86,8 @@ $date = date("j F Y");
                 <td>{{ $form->germination}}</td>
             </tr>
             <tr>
-                <td><strong>Moisture</strong></td>
-                <td>{{ $form->moisture }}</td>
+                <td><strong>Moisture Content</strong></td>
+                <td>{{ $form->moisture_content }}</td>
             </tr>
             <tr>
                 <td><strong>Insect damage</strong></td>
@@ -97,16 +95,16 @@ $date = date("j F Y");
             </tr>
             <tr>
                 <td><strong>Mouldiness</strong></td>
-                <td>{{ $form->mouldiness }}</td>
+                <td>{{ $form->moldiness }}</td>
             </tr>
             <tr>
                 <td><strong>Noxious seeds observable</strong></td>
-                <td>{{ $form->phone_number }}</td>
+                <td>{{ $form->noxious_weeds }}</td>
             </tr>
           
     </table>
 
-   
+    <p><strong>Recommendation:</strong> {{ $form->status_comment }}</p>
   
     <div class="signature-container">
         <div class="signature-text">

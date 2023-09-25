@@ -620,6 +620,7 @@ class FormSr4Controller extends AdminController
             ([
                 'Agricultural crops' => 'Agricultural crops',
                 'Horticultural crops' => 'Horticultural crops',
+                'Both crops' => 'Both crops',
                 'Other' => 'Other',
                 'NA' => 'NA'
             ])
@@ -714,7 +715,7 @@ class FormSr4Controller extends AdminController
 
             $form->radio(
                 'have_conversant_seed_matters',
-                __('Do you have adequate and knowledgeable personal who are conversant with seed matters?'))
+                __('Do you have adequate and knowledgeable personnel who are conversant with seed matters?'))
                 ->options
                 ([
                     '1' => 'Yes',
@@ -757,9 +758,9 @@ class FormSr4Controller extends AdminController
                 <p>I/WE* AT ANY TIME DURING OFFICIAL WORKING HOURS EVEN WITHOUT previous 
                 appointment will allow the inspectors entry to the seed stores and thereby provide 
                 them with the facilities necessary to carry out their inspection work as laid
-                 out in the seed and plant regulations, 2015.I/We further declare taht I/We am/are 
+                 out in the seed and plant regulations, 2015.I/We further declare that I/We am/are 
                  conversant with the Regulations. In addition I/We will send a list of all seed lots
-                  in our stores on a given date and or at such a date as can be mutually agreed upon between 
+                  in our stores on a given date and/or at such a date as can be mutually agreed upon between 
                   the National Seed Certification Service and ourselves.</p> ');
 
             $form->hidden('accept_declaration', __('Accept declaration') )->required();

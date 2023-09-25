@@ -3,5 +3,6 @@
 .htaccess
 *.log
 app/Models/PlantingReturn.php
+storage/logs/laravel.log
 
 /storage/*

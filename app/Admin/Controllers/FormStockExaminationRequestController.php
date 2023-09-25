@@ -74,7 +74,7 @@ class FormStockExaminationRequestController extends AdminController
         } 
         else if (Admin::user()->isRole('inspector')) 
         {
-            $grid->model()->where('inspector', '=', Admin::user()->id);
+            $grid->model()->where('inspector_id', '=', Admin::user()->id);
             $grid->disableCreateButton();
             $grid->actions(function ($actions) {
                 $status = ((int)(($actions->row['status'])));
@@ -115,7 +115,7 @@ class FormStockExaminationRequestController extends AdminController
 
         $grid->column('lot_number', __('Lot Number'));
 
-        $grid->column('inspector', __('Inspector'))->display(function ($userId) {
+        $grid->column('inspector_id', __('Inspector'))->display(function ($userId) {
             if (Admin::user()->isRole('basic-user')) {
                 return "-";
             }
@@ -124,6 +124,18 @@ class FormStockExaminationRequestController extends AdminController
                 return "Not assigned";
             return $u->name;
         })->sortable();
+
+        $grid->column('id', __('Examination Report'))->display(function ($id)  {
+            $examinations = FormStockExaminationRequest::find($id);
+         
+             if ($examinations->status == '5') {
+                 $link = url('examination?id=' . $id);
+                 return '<b><a target="_blank" href="' . $link . '">Print Report</a></b>';
+             } else {
+                
+                 return '<b>Unavailable</b>';
+             }
+         });
         
 
       //filter the grid based on the applicant
@@ -189,7 +201,6 @@ class FormStockExaminationRequestController extends AdminController
         $show->field('insect_damage', __('Insect damage'));
         $show->field('moldiness', __('Moldiness'));
         $show->field('noxious_weeds', __('Noxious weeds'));
-        $show->field('recommendation', __('Recommendation'));
         $show->field('status', __('Status'))
             ->unescape()
             ->as(function ($status) {
@@ -321,6 +332,8 @@ class FormStockExaminationRequestController extends AdminController
                         ->attribute('id', 'import-permit-select');
                         $form->select('crop_variety_id', __('Crop variety'))
                        ->attribute('id', 'crop-variety-select');
+                        $form->text('lot_number', __('Lot Number'));
+            
                        $form->textarea('remarks', __('Enter remarks'));
                     
                         
@@ -377,6 +390,8 @@ class FormStockExaminationRequestController extends AdminController
                     if ($verified_seed_growers->count() >= 1) {
                         $form->select('planting_return_id', __('Select approved field'))
                             ->options($verified_seed_growers->pluck('field_name', 'id'));
+                            $form->text('lot_number', __('Lot Number'));
+            
                         $form->textarea('remarks', __('Enter remarks'));
                         $form->hidden('crop_variety_id'); // Assuming you want to set a default value
                     } else {
@@ -416,6 +431,8 @@ class FormStockExaminationRequestController extends AdminController
                         {
                             $form->select('form_qds_id', __('Select approved QDS declaration'))
                             ->options($verified_qds_grower);
+                            $form->text('lot_number', __('Lot Number'));
+            
                             $form->textarea('remarks', __('Enter remarks'));
                             $form->hidden('crop_variety_id', __('Crop variety'));
                         }
@@ -453,10 +470,10 @@ class FormStockExaminationRequestController extends AdminController
                         if (!Utils::has_role($item, "inspector")) {
                             continue;
                         }
-                        $_items[$item->id] = $item->name . " - " . $item->id;
+                        $_items[$item->id] = $item->name;
                     }
 
-                    $form->select('inspector', __('Inspector'))
+                    $form->select('inspector_id', __('Inspector'))
                         ->options($_items)
                         ->help('Please select inspector')
                         ->rules('required');
@@ -497,48 +514,49 @@ class FormStockExaminationRequestController extends AdminController
             $form->display('name', __('Name of applicant'))
                 ->default($u->name);
   
-           
+            $form->display('lot_number', __('Lot Number'));
             $form->select('seed_class', __('seed_class'))
                 ->options([
                     'Pre-Basic seed' => 'Pre-Basic seed',
                     'Basic seed' => 'Basic seed',
                     'Certified seed' => 'Certified seed',
-                ])
-                ->required();
-                $form->text('seed_company_name', __('Seed Company Name'))
-                ->required()
-                ->attribute('id', 'seed-company')
-                ->attribute('oninput', 'fillSecondField()');
+                ])->required();
+           
             
-            $form->text('lot_number', __('Lot Number'))->required()
-                ->attribute('id', 'second-field')->readOnly();
+            //     $form->text('seed_company_name', __('Seed Company Name'))
+            //     ->required()
+            //     ->attribute('id', 'seed-company')
+            //     ->attribute('oninput', 'fillSecondField()');
             
-            //script to fill second field with the company name and an autogenerated random number  
-            Admin::script('
-            // Move the fillSecondField() function to the global scope
-            window.fillSecondField = function() {
-                // Get the seed company name from the first field
-                var seedCompany = document.getElementById("seed-company").value;
-                
-                // Generate a random number
-                var randomNumber = generateRandomNumber();
-                
-                // Get the current date in yyyy-mm-dd format
-                var today = new Date();
-                var dd = String(today.getDate()).padStart(2, "0");
-                var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-                var yyyy = today.getFullYear();
-                today = yyyy + "-" + mm + "-" + dd;
-                
-                // Set the value of the second field with the seed company name, date, and random number
-                document.getElementById("second-field").value = seedCompany + "/" + today + "/" + randomNumber;
-            }
+            // $form->text('lot_number', __('Lot Number'))->required()
+            //     ->attribute('id', 'second-field')->readOnly();
             
-            function generateRandomNumber() {
-                // Generate a random number between 1 and 1000
-                return Math.floor(Math.random() * 1000) + 1;
-            }
-            ');
+            // //script to fill second field with the company name and an autogenerated random number  
+            // Admin::script('
+            // // Move the fillSecondField() function to the global scope
+            // window.fillSecondField = function() {
+            //     // Get the seed company name from the first field
+            //     var seedCompany = document.getElementById("seed-company").value;
+                
+            //     // Generate a random number
+            //     var randomNumber = generateRandomNumber();
+                
+            //     // Get the current date in yyyy-mm-dd format
+            //     var today = new Date();
+            //     var dd = String(today.getDate()).padStart(2, "0");
+            //     var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+            //     var yyyy = today.getFullYear();
+            //     today = yyyy + "-" + mm + "-" + dd;
+                
+            //     // Set the value of the second field with the seed company name, date, and random number
+            //     document.getElementById("second-field").value = seedCompany + "/" + today + "/" + randomNumber;
+            // }
+            
+            // function generateRandomNumber() {
+            //     // Generate a random number between 1 and 1000
+            //     return Math.floor(Math.random() * 1000) + 1;
+            // }
+            // ');
             
             
             
@@ -549,11 +567,11 @@ class FormStockExaminationRequestController extends AdminController
                $form->text('field_size', __('Enter field size (in Acres)'));
             } 
             //field to capture the quantity collected
-            $form->text('yield', __('Enter quantity collected (in M.tons)'))
+            $form->text('yield', __('Enter quantity collected (in Kgs)'))
             ->attribute([
                 'type' => 'number', 
             ]);
-            //$form->date('date', __('Stock Examination Date'));
+            $form->date('date', __('Stock collection date'));
 
             $form->divider();
             $form->html('<h3>Analysis results</h3>');
