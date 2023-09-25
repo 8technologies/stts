@@ -163,11 +163,12 @@ class FormSr10 extends Model
     public function getNextQds()
     {
         $otherInspections = FormSr10::where([
-            'qds_declaration_id', $this->qds_declaration_id,
-            'crop_variety_id', $this->crop_variety_id])
-            ->orderBy('order_number', 'asc')
-            ->get();
-
+            ['qds_declaration_id', $this->qds_declaration_id],
+            ['crop_variety_id', $this->crop_variety_id]
+        ])
+        ->orderBy('order_number', 'asc')
+        ->get();
+    
         $nextInspection = null;
         foreach ($otherInspections as $key => $inspection) {
             if ($inspection->order_number > $this->order_number) {
@@ -177,6 +178,7 @@ class FormSr10 extends Model
         }
         return $nextInspection;
     }
+    
     public function planting_return()
     {
         return $this->belongsTo(SubGrower::class);
