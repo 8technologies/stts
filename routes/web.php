@@ -94,6 +94,13 @@ Route::get('inspection', function () {
     return $pdf->stream();
 });
 
+Route::get('examination', function () {
+    $pdf = App::make('dompdf.wrapper');
+    $pdf->loadHTML(view('reports/examination'));
+    return $pdf->stream();
+});
+
+
 
 
 
