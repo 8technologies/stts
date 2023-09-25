@@ -27,6 +27,14 @@ class UserController extends AdminController
         $userModel = config('admin.database.users_model');
 
         $grid = new Grid(new $userModel());
+          //filter by name
+       $grid->filter(function ($filter) 
+       {
+        // Remove the default id filter
+        $filter->disableIdFilter();
+        $filter->like('id', 'User name')->select(\App\Models\User::pluck('name', 'id'));
+       
+       });
 
         $grid->column('id', 'ID')->sortable();
         $grid->column('username', trans('admin.username'));
