@@ -96,6 +96,10 @@ class FormSr10 extends Model
                             $qds_declaration->status = '5';
                             $model->is_done = 1;
                             $model->is_active = 0;
+                            $model->is_final = 1;
+                            //generate random number
+                            $random = rand(100000, 999999);
+                            $model->sr10_number = $random;
                             $qds_declaration->save();
                             $model->save();
                         }

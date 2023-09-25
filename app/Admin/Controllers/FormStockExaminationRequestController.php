@@ -24,7 +24,6 @@ use Encore\Admin\Show;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class FormStockExaminationRequestController extends AdminController
 {
     /**
@@ -47,7 +46,14 @@ class FormStockExaminationRequestController extends AdminController
 
         //organize the grid in descending order of created_at
         $grid->model()->orderBy('created_at', 'desc');
+        //diable batch actions for the grid
+        $grid->disableBatchActions();
 
+        if(Admin::user()->isRole('admin') ){
+            $grid->actions(function ($actions) {
+                $actions->disableDelete();
+            });
+        }
 
         if (Admin::user()->isRole('basic-user')) 
         {
@@ -120,17 +126,15 @@ class FormStockExaminationRequestController extends AdminController
         })->sortable();
         
 
-        if (Admin::user()->isRole('admin')) {
-            $grid->filter(function($search_param){
-                $search_param->disableIdfilter();
-
-                $search_param->like('examination_category', __("Search by Category"));
-                $search_param->like('status', __("Search by Status"));
-            });  
-        }
-        else{
-            $grid->disableFilter();
-        }
+      //filter the grid based on the applicant
+        //filter by name
+        $grid->filter(function ($filter) 
+        {
+         // Remove the default id filter
+         $filter->disableIdFilter();
+         $filter->like('administrator_id', 'Applicant')->select(\App\Models\User::pluck('name', 'id'));
+        
+        });
 
         return $grid;
     }
@@ -258,7 +262,7 @@ class FormStockExaminationRequestController extends AdminController
                 if ($form->planting_return_id != null) 
                 {
                     
-                    $has_crop = FormSr10::where('id',$form->planting_return_id)->first();
+                    $has_crop = Subgrower::find($form->planting_return_id);
                     $form->crop_variety_id = $has_crop->crop_variety_id;
                 }
                 elseif($form->form_qds_id != null)
@@ -365,30 +369,20 @@ class FormStockExaminationRequestController extends AdminController
                 }
                 else
                 {
-
-                    $verified_seed_growers = FormSr10::where('administrator_id', Auth::user()->id)
-                                            ->where('status', '=', 5)
-                                            ->where('is_final', '=', 1)
-                                            ->where('planting_return_id', '!=', null)
-                                            ->get();
-                    $verified_seed_grower =[];
-                    foreach ($verified_seed_growers as $key => $value)
-                    {
-                            $field = SubGrower::where('id', $value->planting_return_id)->first();
-                            $verified_seed_grower[$value->id] = $field->field_name."-". $value->sr10_number;
-                        
+            
+                    $verified_seed_growers = SubGrower::where('administrator_id', Auth::user()->id)
+                    ->where('status', 5)
+                    ->get();
+                
+                    if ($verified_seed_growers->count() >= 1) {
+                        $form->select('planting_return_id', __('Select approved field'))
+                            ->options($verified_seed_growers->pluck('field_name', 'id'));
+                        $form->textarea('remarks', __('Enter remarks'));
+                        $form->hidden('crop_variety_id'); // Assuming you want to set a default value
+                    } else {
+                        $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if you don\'t have a fully verified planting return </div>');
                     }
                 
-                        if (count($verified_seed_grower) >= 1) 
-                        {
-                            $form->select('planting_return_id', __('Select approved SR10'))
-                            ->options($verified_seed_grower);
-                            $form->textarea('remarks', __('Enter remarks'));
-                            $form->hidden('crop_variety_id', __('Crop variety'));
-                        }
-                        else{
-                            $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if you don\'t have a fully verified planting return </div>');
-                        }
                 }
             })
 
@@ -401,7 +395,7 @@ class FormStockExaminationRequestController extends AdminController
 
                 if($all_qds->isEmpty())
                 {
-                    $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have QDS declared crops </div>');
+                    $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have a valid QDS inspection </div>');
                 }else
                 {
 
@@ -555,7 +549,7 @@ class FormStockExaminationRequestController extends AdminController
                $form->text('field_size', __('Enter field size (in Acres)'));
             } 
             //field to capture the quantity collected
-            $form->text('yield', __('Enter quantity collected (in Kgs)'))
+            $form->text('yield', __('Enter quantity collected (in M.tons)'))
             ->attribute([
                 'type' => 'number', 
             ]);
@@ -623,14 +617,6 @@ class FormStockExaminationRequestController extends AdminController
         
         return response()->json($crop_varieties);
     }
-    
-    
-
-
-    
-    
-
-  
     
 
 }
