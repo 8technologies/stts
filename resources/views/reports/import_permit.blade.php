@@ -72,7 +72,7 @@ $date = date("j F Y");
     
     <h3>The Seeds and Plant Act, 2006</h3>
     <p><strong>Permit No:</strong> {{$form->permit_number}}</p>
-    <p><strong>Date:</strong> {{$form->valid_from}}</p>
+    <p><strong>Expiry date:</strong> {{$form->valid_until}}</p>
     <p><strong>Permission is hereby granted to:</strong> {{$form->name}}</p>
     <p><strong>of:</strong> {{$form->address}}</p>
     <!-- <p><strong>with NCSC Registration No:</strong>__</p> -->
