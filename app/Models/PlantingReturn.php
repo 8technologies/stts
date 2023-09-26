@@ -100,7 +100,7 @@ class PlantingReturn extends Model
 
         self::created(function ($m) {
             self::import_sub_growers($m);
-            MyNotification::send_notification($m, 'PlantingReturn', request()->segment(count(request()->segments())));
+            //MyNotification::send_notification($m, 'PlantingReturn', request()->segment(count(request()->segments())));
             return $m;
             //created
         });
@@ -135,7 +135,7 @@ class PlantingReturn extends Model
             }
             self::import_sub_growers($m);
         }
-        MyNotification::update_notification($m, 'PlantingReturn', request()->segment(count(request()->segments())-1));
+        //MyNotification::update_notification($m, 'PlantingReturn', request()->segment(count(request()->segments())-1));
             
         });
 

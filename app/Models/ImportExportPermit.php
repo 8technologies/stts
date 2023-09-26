@@ -81,13 +81,13 @@ class ImportExportPermit extends Model
 
         self::created(function ($model) {
             //accessing the last parameter of the url
-            MyNotification::send_notification($model, 'ImportExportPermit', request()->segment(count(request()->segments())));
+            //MyNotification::send_notification($model, 'ImportExportPermit', request()->segment(count(request()->segments())));
            
   
         });
 
         self::updated(function ($m) {
-            MyNotification::update_notification($m, 'ImportExportPermit', request()->segment(count(request()->segments())-1));
+            //MyNotification::update_notification($m, 'ImportExportPermit', request()->segment(count(request()->segments())-1));
 
         });
 

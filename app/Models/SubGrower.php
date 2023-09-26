@@ -100,7 +100,7 @@ class SubGrower extends Model
 
         self::created(function ($model) {
 
-            MyNotification::send_notification($model, 'SubGrower', request()->segment(count(request()->segments())));
+            //MyNotification::send_notification($model, 'SubGrower', request()->segment(count(request()->segments())));
                
         });
         
@@ -113,7 +113,7 @@ class SubGrower extends Model
         self::updated(function ($sr10) {
 
             // ... code here
-            MyNotification::update_notification($sr10, 'SubGrower', request()->segment(count(request()->segments())-1));
+           // MyNotification::update_notification($sr10, 'SubGrower', request()->segment(count(request()->segments())-1));
 
                //check if all the subgrowers with the same planting return id have been assigned to an inspector
             //check user role
