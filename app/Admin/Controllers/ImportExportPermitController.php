@@ -256,7 +256,7 @@ class ImportExportPermitController extends AdminController
                 return $table;
             });
         
-        $show->field('ista_certificate', __('Ista certificate'));
+        $show->field('ista_certificate', __('The seed consignment shall be accompanied by'));
         if($import_permit->permit_number != null)
         {
            $show->field('permit_number', __('Permit number'));
