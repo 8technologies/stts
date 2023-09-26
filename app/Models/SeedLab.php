@@ -97,7 +97,14 @@ class SeedLab extends Model
             self::created(function ($model) 
             {
 
-                Utils::send_notification($model, 'SeedLab', request()->segment(count(request()->segments())));
+                MyNotification::send_notification($model, 'SeedLab', request()->segment(count(request()->segments())));
+
+                $stock_examination = FormStockExaminationRequest::find($model->form_stock_examination_request_id);
+                if ($stock_examination != null) {
+                    $model->quantity = $stock_examination->yield;
+                    $model->crop_variety_id = $stock_examination->crop_variety_id;
+                    $model->save();
+                }
 
                 
                 
@@ -106,7 +113,7 @@ class SeedLab extends Model
 
             self::updated(function ($m) {
 
-                Utils::update_notification($m, 'SeedLab', request()->segment(count(request()->segments())-1));
+                MyNotification::update_notification($m, 'SeedLab', request()->segment(count(request()->segments())-1));
 
                 
 

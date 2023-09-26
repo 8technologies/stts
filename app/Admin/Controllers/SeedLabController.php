@@ -68,7 +68,7 @@ class SeedLabController extends AdminController
         //grid options for inspector 
         elseif (Admin::user()->isRole('inspector')) 
         {
-            $grid->model()->where('inspector', '=', Admin::user()->id);
+            $grid->model()->where('inspector_id', '=', Admin::user()->id);
             $grid->disableCreateButton();
             $grid->actions(function ($actions)
             {
@@ -135,7 +135,14 @@ class SeedLabController extends AdminController
             return $_variety->name;
         })->sortable();
         $grid->column('lot_number', __('Lot number'));
-        $grid->column('lab_test_number', __('Lab test number'));
+        $grid->column('lab_test_number', __('Lab test number'))->display(function ($lab_test_number) 
+        {
+            if (!$lab_test_number) 
+            {
+                return "Not yet assigned";
+            }
+            return $lab_test_number;
+        })->sortable();
         $grid->column('collection_date', __('Collection date'));
         $grid->column('quantity', __('Quantity'))->display(function ($quantity) 
         {
@@ -159,7 +166,7 @@ class SeedLabController extends AdminController
             })->sortable();
         }
 
-        $grid->column('inspector', __('Inspector'))->display(function ($userId) 
+        $grid->column('inspector_id', __('Inspector'))->display(function ($userId) 
         {
             if (Admin::user()->isRole('basic-user'))
             {
@@ -210,7 +217,7 @@ class SeedLabController extends AdminController
             return Carbon::parse($item)->toFormattedDateString();
         })->sortable();
 
-        $show->field('updated_at', __('Updated at'));
+      
         $show->field('administrator_id', __('Created by'))
         ->as(function ($userId)
         {
@@ -232,17 +239,42 @@ class SeedLabController extends AdminController
             return $cropVariety->name;
         });
         $show->field('lot_number', __('Form stock examination lot number'));
+        $show->field('quantity', __('Quantity'));
         $show->field('collection_date', __('Collection date'));
         $show->field('payment_receipt', __('Payment receipt'))->file();
         $show->field('applicant_remarks', __('Applicant remarks'));
-        $show->field('sampling_date', __('Sampling date'));
-        $show->field('sample_weight', __('Sample weight'));
-        $show->field('packaging', __('Packaging'));
-        $show->field('number_of_units', __('Number of units'));
-        $show->field('mother_lot', __('Mother lot'));
-        $show->field('sample_condition', __('Sample condition'));
-        $show->field('inspector_remarks', __('Inspector remarks'));
-        $show->field('tests_required', __('Tests required'));
+        $show->field('sampling_date', __('Sampling date'))->as (function ($item) 
+        {
+            return $item ? Carbon::parse($item)->toFormattedDateString() : "-";
+        })->sortable();
+        $show->field('sample_weight', __('Sample weight'))->as(function ($item) 
+        {
+            return $item ? $item . " Kgs" : "-";
+        })->sortable();
+        $show->field('packaging', __('Packaging'))->as(function ($item) 
+        {
+            return $item ? $item . " Kgs" : "-";
+        })->sortable();
+        $show->field('number_of_units', __('Number of units'))->as(function ($item) 
+        {
+            return $item ? $item . " Kgs" : "-";
+        })->sortable();
+        $show->field('mother_lot', __('Mother lot'))->as(function ($item) 
+        {
+            return $item ? $item : "-";
+        })->sortable();
+        $show->field('sample_condition', __('Sample condition'))->as(function ($item) 
+        {
+            return $item ? $item : "Not yet inspected";
+        })->sortable();
+        $show->field('inspector_remarks', __('Inspector remarks'))->as(function ($item) 
+        {
+            return $item ? $item : "Not yet inspected";
+        })->sortable();
+        $show->field('tests_required', __('Tests required'))->as(function ($item) 
+        {
+            return $item ? $item : "Not yet inspected";
+        })->sortable();
         if(Admin::user()->isRole('admin'))
         {
             $show->field('lab_technician_id', __('Lab technician id'))
@@ -256,16 +288,34 @@ class SeedLabController extends AdminController
                 return $u->name;
             });
         }
-        $show->field('quantity', __('Quantity'));
-        $show->field('purity', __('Purity'));
-        $show->field('p_x_g', __('PxG'));
-        $show->field('germination_capacity', __('Germination capacity'));
-        $show->field('abnormal_sprouts', __('Abnormal sprouts'));
-        $show->field('broken_germs', __('Broken germs'));
-        $show->field('report_recommendation', __('Report recommendation'));
+       
+        $show->field('purity', __('Purity'))->as(function ($item) 
+        {
+            return $item ? $item . " %" : "Not yet tested";
+        })->sortable();
+        $show->field('p_x_g', __('PxG'))->as(function ($item) 
+        {
+            return $item ? $item . " %" : "Not yet tested";
+        })->sortable();
+        $show->field('germination_capacity', __('Germination capacity'))->as(function ($item) 
+        {
+            return $item ? $item . " %" : "Not yet tested";
+        })->sortable();
+        $show->field('abnormal_sprouts', __('Abnormal sprouts'))->as(function ($item) 
+        {
+            return $item ? $item . " %" : "Not yet tested";
+        })->sortable();
+        $show->field('broken_germs', __('Broken germs'))->as(function ($item) 
+        {
+            return $item ? $item . " %" : "Not yet tested";
+        })->sortable();
+        $show->field('report_recommendation', __('Report recommendation'))->as(function ($item) 
+        {
+            return $item ? $item : "Not yet tested";
+        })->sortable();
         if(Admin::user()->isRole('admin'))
         {
-            $show->field('inspector', __('Inspector'));
+            $show->field('inspector_id', __('Inspector'));
         }
     
         $show->field('status', __('Status'))
@@ -274,7 +324,10 @@ class SeedLabController extends AdminController
             {
                 return Utils::tell_status($status);
             });
-        $show->field('status_comment', __('Status comment'));
+        $show->field('status_comment', __('Status comment'))->as(function ($item) 
+        {
+            return $item ? $item : "-";
+        })->sortable();
 
         if (!Admin::user()->isRole('basic-user'))
         {
@@ -427,9 +480,9 @@ class SeedLabController extends AdminController
                     if (!Utils::has_role($item, "inspector")) {
                         continue;
                     }
-                    $_items[$item->id] = $item->name . " - " . $item->id;
+                    $_items[$item->id] = $item->name;
                 }
-                $form->select('inspector', __('Inspector'))
+                $form->select('inspector_id', __('Inspector'))
                     ->options($_items)
                     ->help('Please select inspector')
                     ->rules('required');
@@ -562,7 +615,7 @@ class SeedLabController extends AdminController
                     ->help("This is the sample weight you're going to test");
                 $total_stock = DB::table('stock_records')->where("administrator_id", $model->administrator_id)
                                ->where('lot_number', $model->lot_number)->sum('quantity');
-                $form->text('quantity', __('Enter the quantity represented (in metric tons)'))
+                $form->text('quantity', __('Enter the quantity represented (in Kgs)'))
                     ->required()
                     ->default($total_stock)
                     ->help("<span style='color: deepskyblue; font-weight: 799;'>
@@ -698,7 +751,7 @@ class SeedLabController extends AdminController
                             if (!Utils::has_role($item, "lab-technician")) {
                                 continue;
                             }
-                            $_items[$item->id] = $item->name . " - " . $item->id;
+                            $_items[$item->id] = $item->name;
                         }
                         $form->select('lab_technician', __('Assign seed analyst'))
                             ->options($_items)
