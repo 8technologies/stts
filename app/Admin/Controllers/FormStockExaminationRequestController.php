@@ -339,6 +339,11 @@ class FormStockExaminationRequestController extends AdminController
                         
                     }  else{
                         $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if you don\'t have a fully verified import permit </div>');
+
+                        //disable the submit button
+                        $form->footer(function ($footer) {
+                            $footer->disableSubmit();
+                        });
                     }
                     Admin::script('
                     $(document).ready(function() {
@@ -379,6 +384,11 @@ class FormStockExaminationRequestController extends AdminController
                 if($SubGrowers->isEmpty())
                 {
                     $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have an approved SR10 </div>');
+
+                     //disable the submit button
+                     $form->footer(function ($footer) {
+                        $footer->disableSubmit();
+                    });
                 }
                 else
                 {
@@ -396,6 +406,10 @@ class FormStockExaminationRequestController extends AdminController
                         $form->hidden('crop_variety_id'); // Assuming you want to set a default value
                     } else {
                         $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if you don\'t have a fully verified planting return </div>');
+                         //disable the submit button
+                         $form->footer(function ($footer) {
+                            $footer->disableSubmit();
+                        });
                     }
                 
                 }
@@ -411,6 +425,11 @@ class FormStockExaminationRequestController extends AdminController
                 if($all_qds->isEmpty())
                 {
                     $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have a valid QDS inspection </div>');
+                     //disable the submit button
+                     $form->footer(function ($footer) {
+                        $footer->disableSubmit();
+                    });
+
                 }else
                 {
 
@@ -438,6 +457,10 @@ class FormStockExaminationRequestController extends AdminController
                         }
                         else{
                             $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if you don\'t have a fully verified QDS </div>');
+                             //disable the submit button
+                        $form->footer(function ($footer) {
+                            $footer->disableSubmit();
+                        });
                         }
                 }
             })->required();
