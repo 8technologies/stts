@@ -85,7 +85,7 @@ public static function get_notifications($user)
             $notification->model_id = $model->id; 
             $notification->save();
 
-            self::sendMail($notification); 
+            //self::sendMail($notification); 
         }
 
     }
@@ -159,7 +159,7 @@ public static function update_notification($model, $model_name, $entity)
                 $notification_inspector->model_id = $model->id;
                 $notification_inspector->save();
 
-                self::sendMail($notification_inspector);
+              //  self::sendMail($notification_inspector);
             }
             
             if($data['receiver_id'] != null){
@@ -183,7 +183,7 @@ public static function update_notification($model, $model_name, $entity)
 
             $notification->save();
 
-            self::sendMail($notification);
+          //  self::sendMail($notification);
         }
     }
 }
