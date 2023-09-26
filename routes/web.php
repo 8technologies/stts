@@ -100,6 +100,12 @@ Route::get('examination', function () {
     return $pdf->stream();
 });
 
+Route::get('lab', function () {
+    $pdf = App::make('dompdf.wrapper');
+    $pdf->loadHTML(view('reports/lab_test'));
+    return $pdf->stream();
+});
+
 
 
 
