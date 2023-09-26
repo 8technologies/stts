@@ -77,7 +77,7 @@ class FormStockRecordController extends AdminController
                     return '<span class="badge">Stock out</span>';
                 }
             })->sortable();
-        $grid->column('quantity', __('Quantity (M. Tonnes)'))->display(function ($q) 
+        $grid->column('quantity', __('Quantity (Kgs)'))->display(function ($q) 
         {
             return number_format($q);
         })->sortable();

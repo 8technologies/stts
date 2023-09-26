@@ -279,6 +279,7 @@ class FormSr10Controller extends AdminController
                     'Pre-Basic seed' => 'Pre-Basic seed',
                     'Basic seed' => 'Basic seed',
                     'Certified seed' => 'Certified seed',
+                    'QDS seed' => 'QDS seed',
                 ]);
             $form->text('size_of_field', __('Enter size of field (in Acres)'))->attribute('type', 'number');
             $form->text('off_types', __('Off-types'));

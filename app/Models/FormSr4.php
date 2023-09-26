@@ -71,7 +71,7 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
             if( Admin::user()->isRole('basic-user') )
             {
                 $model->status = 1;
-                $model->inspector = null;
+                $model->inspector_id = null;
                 $model->valid_until = null;
                 $model->valid_from = null;
                 return $model;

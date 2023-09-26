@@ -75,7 +75,7 @@ $date = date("j F Y");
     <p><strong>Date:</strong> {{$form->valid_from}}</p>
     <p><strong>Permission is hereby granted to:</strong> {{$form->name}}</p>
     <p><strong>of:</strong> {{$form->address}}</p>
-    <p><strong>with NCSC Registration No:</strong>__</p>
+    <!-- <p><strong>with NCSC Registration No:</strong>__</p> -->
     <p><strong>to import from:</strong> {{$form->supplier_name}}, {{$form->supplier_address}}</p>
     <p><strong>the following seeds</strong></p>
     
