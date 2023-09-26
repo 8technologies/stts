@@ -601,21 +601,11 @@ class FormStockExaminationRequestController extends AdminController
             $form->text('purity', __('Enter purity'))->attribute([
                 'type' => 'number', 
             ]);
-            $form->text('germination', __('Enter Germination'))->attribute([
-                'type' => 'number', 
-            ]);
-            $form->text('moisture_content', __('Enter moisture content'))->attribute([
-                'type' => 'number', 
-            ]);
-            $form->text('insect_damage', __('Insect damage'))->attribute([
-                'type' => 'number', 
-            ]);
-            $form->text('moldiness', __('Moldiness'))->attribute([
-                'type' => 'number', 
-            ]);
-            $form->text('noxious_weeds', __('Noxious weeds'))->attribute([
-                'type' => 'number', 
-            ]);
+            $form->text('germination', __('Enter Germination'));
+            $form->text('moisture_content', __('Enter moisture content'));
+            $form->text('insect_damage', __('Insect damage'));
+            $form->text('moldiness', __('Moldiness'));
+            $form->text('noxious_weeds', __('Noxious weeds'));
 
             $form->radio('status', __('Examination decision'))
                 ->help("NOTE: You cannot reverse this decision once submited.")
