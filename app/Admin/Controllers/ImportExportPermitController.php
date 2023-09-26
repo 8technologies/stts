@@ -126,8 +126,6 @@ class ImportExportPermitController extends AdminController
      
 
 
-        if(!Admin::user()->isRole('basic-user'))
-        {
             $grid->column('inspector_id', __('Inspector'))->display(function ($userId) 
             {
                 $u = Administrator::find($userId);
@@ -135,7 +133,7 @@ class ImportExportPermitController extends AdminController
                     return "Not assigned";
                 return $u->name;
             })->sortable();
-        }
+      
 
        //check if the status is expired or not
         $grid->column('status', __('Status'))->display(function ($status) 
