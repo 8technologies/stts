@@ -424,10 +424,7 @@ class FormStockExaminationRequestController extends AdminController
                         $form->hidden('crop_variety_id'); // Assuming you want to set a default value
                     } else {
                         $form->html('<div class="alert alert-danger">You cannot create a new Stock examination request if you don\'t have a fully verified planting return </div>');
-                         //disable the submit button
-                         $form->footer(function ($footer) {
-                            $footer->disableSubmit();
-                        });
+                        
                     }
                 
                 }
