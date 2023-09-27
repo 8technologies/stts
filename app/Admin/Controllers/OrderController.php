@@ -264,71 +264,71 @@ class OrderController extends AdminController
                 return redirect(admin_url('orders'));
             });
 
-            $form->saving(function ($form) 
-            {
-                $id = request()->route()->parameters['order'];
-                $order = $form->model()->find($id);
-                if (!$order) 
-                {
-                    dd("Order not found");
-                }
+            // $form->saving(function ($form) 
+            // {
+            //     $id = request()->route()->parameters['order'];
+            //     $order = $form->model()->find($id);
+            //     if (!$order) 
+            //     {
+            //         dd("Order not found");
+            //     }
 
-                $product = Product::find($order->product_id);
-                if (!$product) 
-                {
-                    die("Product not found");
-                }
+            //     $product = Product::find($order->product_id);
+            //     if (!$product) 
+            //     {
+            //         die("Product not found");
+            //     }
 
-                if ($order->quantity > $product->quantity) 
-                {
-                    admin_error('Ooops', 'You have inadequate amount of product (' . $product->name . ") to proceed with this 
-                    order ");
-                    return redirect(admin_url('orders'));
-                }
-
-
-                if ($form->status == 3) 
-                {
-                    $market = new MarketableSeed();
-                    $market->administrator_id = $order->administrator_id;
-                    $market->quantity = $order->quantity;
-                    $market->crop_variety_id = $order->crop_variety_id;
-                    $market->lab_test_number = $product->lab_test_number;
-                    $market->seed_label_id = $product->seed_label_id;
-                    $market->lot_number = $product->lot_number;
-                    $market->seed_label_package_id = $product->seed_label_package_id;
-                    $market->price = $product->price;
-                    $market->is_deposit = 0;
-                    $market->is_counted = 1;
-                    $market->seed_class = null;
-                    $market->source = null;
-
-                    $u = Administrator::find($order->order_by);
-                    if (!$u) {
-                        return "-";
-                    }
+            //     if ($order->quantity > $product->quantity) 
+            //     {
+            //         admin_error('Ooops', 'You have inadequate amount of product (' . $product->name . ") to proceed with this 
+            //         order ");
+            //         return redirect(admin_url('orders'));
+            //     }
 
 
-                    $market->detail = "Sold crop to " . $u->name . ", ID: " . $u->id;
-                    $market->image = null;
-                    $market->images = null;
+            //     if ($form->status == 3) 
+            //     {
+            //         $market = new MarketableSeed();
+            //         $market->administrator_id = $order->administrator_id;
+            //         $market->quantity = $order->quantity;
+            //         $market->crop_variety_id = $order->crop_variety_id;
+            //         $market->lab_test_number = $product->lab_test_number;
+            //         $market->seed_label_id = $product->seed_label_id;
+            //         $market->lot_number = $product->lot_number;
+            //         $market->seed_label_package_id = $product->seed_label_package_id;
+            //         $market->price = $product->price;
+            //         $market->is_deposit = 0;
+            //         $market->is_counted = 1;
+            //         $market->seed_class = null;
+            //         $market->source = null;
 
-                    //update the available_stock in the products table by getting the quantity entered and subtracting it from the available stock
-                    //and save it
-                    $bought_quantity =  $form->quantity;
-                    $new_quantity = $product->available_stock - $bought_quantity;
+            //         $u = Administrator::find($order->order_by);
+            //         if (!$u) {
+            //             return "-";
+            //         }
+
+
+            //         $market->detail = "Sold crop to " . $u->name . ", ID: " . $u->id;
+            //         $market->image = null;
+            //         $market->images = null;
+
+            //         //update the available_stock in the products table by getting the quantity entered and subtracting it from the available stock
+            //         //and save it
+            //         $bought_quantity =  $form->quantity;
+            //         $new_quantity = $product->available_stock - $bought_quantity;
                     
 
-                    $product->available_stock = $new_quantity;
-                    $product->update();
+            //         $product->available_stock = $new_quantity;
+            //         $product->update();
                     
 
-                    if ($market->save()) 
-                    {
-                        admin_success("Success", "Order completed successfully.");
-                    }
-                }
-            });
+            //         if ($market->save()) 
+            //         {
+            //             admin_success("Success", "Order completed successfully.");
+            //         }
+            //     }
+            // });
 
             $id = request()->route()->parameters['order'];
             $product = $form->model()->find($id);
@@ -415,7 +415,7 @@ class OrderController extends AdminController
                             '3' => 'Delivered',
                             '4' => 'Canceled',
                         ])
-                        ->help("Once you mark this ordered as complted, you cannot reverse the process.")
+                        ->help("Once you mark this order as completed, you cannot reverse the process.")
                         ->required();
                 } else {
                     admin_warning("Warning", "You cannot update status of your own order.");
