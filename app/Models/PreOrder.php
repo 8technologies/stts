@@ -49,7 +49,7 @@ class PreOrder extends Model
             self::created(function ($model) 
             {
 
-                Utils::send_notification($model, 'PreOrder', request()->segment(count(request()->segments())));
+                MyNotification::send_notification($model, 'PreOrder', request()->segment(count(request()->segments())));
     
             });
 
@@ -57,7 +57,7 @@ class PreOrder extends Model
             self::updated(function ($model) 
             {
 
-                Utils::update_notification($model, 'PreOrder', request()->segment(count(request()->segments())-1));
+                MyNotification::update_notification($model, 'PreOrder', request()->segment(count(request()->segments())-1));
 
             });
 
