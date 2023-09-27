@@ -143,7 +143,7 @@ class SeedLabelController extends AdminController
         })->sortable();
 
         $grid->column('quantity', __('Quantity'))->display(function ($var) {
-            return number_format($var). " metric tons ";
+            return number_format($var). " Kgs ";
         });
 
         $grid->column('status', __('Status'))->display(function ($status) {
@@ -198,7 +198,7 @@ class SeedLabelController extends AdminController
         $show->field('seed_label_package_id', __('Seed label package id'))->as(function ($seed) {
             return SeedLabelPackage::find($seed)->package_price;
         });
-        $show->field('quantity', __('Quantity (metric tons)'));
+        $show->field('quantity', __('Quantity (Kgs)'));
         $show->field('applicant_remarks', __('Applicant remarks'));
         $show->field('receipt', __('Receipt'))->file();
         $show->field('status', __('Status'))->unescape()->as(function ($status) 
@@ -314,7 +314,7 @@ class SeedLabelController extends AdminController
                 }
                 if ($form->quantity > $seed_lab->quantity) 
                 {
-                    return  response(' <p class="alert alert-warning"> You have a less amount of this variety compared to ' . $seed_lab->quantity . ' metric tons that you have in stock. <a href="/admin/seed-labels/create"> Ok </a></p> ');
+                    return  response(' <p class="alert alert-warning"> You have a less amount of this variety compared to ' . $seed_lab->quantity . ' Kgs that you have in stock. <a href="/admin/seed-labels/create"> Ok </a></p> ');
                           
                 }
 
@@ -347,7 +347,7 @@ class SeedLabelController extends AdminController
             $form->hidden('images')->default("[]");
             $form->hidden('available_stock');
             $form->hidden('status')->default(1)->attribute('value', '1');
-            $form->text('quantity', __('Quantity  (metric tons)'))->attribute('type', 'number')->required()
+            $form->text('quantity', __('Quantity  (Kgs)'))->attribute('type', 'number')->required()
             ->help("The quantity entered shouldnt be more than the quantity you have in stock");
             $form->text('price', __('Enter your selling unit price (Price per KG)'))->attribute('type', 'number')->required();
             $form->image('image', __('Thumbnail Image'))->required();
