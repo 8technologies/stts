@@ -643,6 +643,7 @@ class Utils
     //check if order status is 3
     public static function check_order_status()
     {
+        $user = Auth::user();
         $orders = Order::where('order_by',  $user->id)->get();
         foreach ($orders as $key => $value) {
             if ($value->status == 3) {
