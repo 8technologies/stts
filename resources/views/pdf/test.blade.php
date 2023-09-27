@@ -73,7 +73,7 @@ $data['crop_species'] = 'PHASEOLUS VULGARIS NAROBEAN 3';
                 <p>NO. <b> {{ $data['number'] }} </b></p>
             </td>
             <td class="text-center">
-                <img width="100" src="<?= url('assets/images/uganda.png') ?>" alt="">
+                <img src="{{ public_path('assets/images/coat.png') }}" alt="logo">
                 <p>REPUBLIC OF UGANDA</p>
                 <p class="pb-0 mb-0">Ministry of Agriculture, Animal Industry & Fishuries</p>
                 <p class="p-0 m-0"><b>National Seed Certification Service</b></p>
@@ -201,7 +201,7 @@ $data['crop_species'] = 'PHASEOLUS VULGARIS NAROBEAN 3';
                     <h2 style="border-bottom: dotted bottom 2px;" class=" h5 text-center">MOSES ERONGU</h2>
                     <h2  class=" h5 text-left"><i>Official Seed Tester</i></h2>
 
-                    <h2 style="border-bottom: dotted bottom 2px;" class=" h5 text-left">DATE:  23<sup>rd</sup>/02/2022</h2>
+                    <h2 style="border-bottom: dotted bottom 2px;" class=" h5 text-left">DATE:23<sup>rd</sup>/02/2022</h2>
                     <h2  class=" h5 text-left"><i>For director of seeds</i></h2>
                 </div>
             </td>

@@ -443,7 +443,7 @@ class SeedLabController extends AdminController
                 ->options($names);
             $form->date('collection_date', __('Collection date'))->default(date('Y-m-d'))->required();
             $form->file('payment_receipt', __('Attach Payment receipt'))->required();
-            $form->textarea('applicant_remarks', __('Enter remarks'))->required();
+            $form->textarea('applicant_remarks', __('Enter remarks'));
             $form->hidden('lot_number', __('lot_number'));
         }
 
