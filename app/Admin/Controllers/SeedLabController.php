@@ -806,6 +806,8 @@ class SeedLabController extends AdminController
                     $form->p_x_g = $p_x_g;
                     $form->status = 5;
 
+                    if($form->report_recommendation == '11'){
+
                     //saving to the stock records
                     $StockRecord = new StockRecord();
                     $StockRecord->administrator_id = $model->administrator_id;
@@ -845,7 +847,8 @@ class SeedLabController extends AdminController
                     $stock_out->lab_test_number = $model->lab_test_number;
                     $stock_out->save();
                 
-                    
+                }
+                   
                 });
 
 
