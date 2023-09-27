@@ -634,6 +634,7 @@ class Utils
     //check if the administrator id is the same as the authenticated user for an order
     public static function check_order()
     {
+        $user = Auth::user();
         $orders = Order::where('administrator_id',  $user->id)->get();
         foreach ($orders as $key => $value) {
             return true;
