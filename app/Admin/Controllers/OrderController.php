@@ -259,12 +259,10 @@ class OrderController extends AdminController
         if ($form->isEditing()) 
         {
 
-          
             $form->saved(function ($form) 
             {
                 return redirect(admin_url('orders'));
             });
-
 
             $form->saving(function ($form) 
             {
@@ -289,50 +287,51 @@ class OrderController extends AdminController
                 }
 
 
-            //     if ($form->status == 3) 
-            //     {
-            //         $market = new MarketableSeed();
-            //         $market->administrator_id = $order->administrator_id;
-            //         $market->quantity = $order->quantity;
-            //         $market->crop_variety_id = $order->crop_variety_id;
-            //         $market->lab_test_number = $product->lab_test_number;
-            //         $market->seed_label_id = $product->seed_label_id;
-            //         $market->lot_number = $product->lot_number;
-            //         $market->seed_label_package_id = $product->seed_label_package_id;
-            //         $market->price = $product->price;
-            //         $market->is_deposit = 0;
-            //         $market->is_counted = 1;
-            //         $market->seed_class = null;
-            //         $market->source = null;
+                if ($form->status == 3) 
+                {
+                    $market = new MarketableSeed();
+                    $market->administrator_id = $order->administrator_id;
+                    $market->quantity = $order->quantity;
+                    $market->crop_variety_id = $order->crop_variety_id;
+                    $market->lab_test_number = $product->lab_test_number;
+                    $market->seed_label_id = $product->seed_label_id;
+                    $market->lot_number = $product->lot_number;
+                    $market->seed_label_package_id = $product->seed_label_package_id;
+                    $market->price = $product->price;
+                    $market->is_deposit = 0;
+                    $market->is_counted = 1;
+                    $market->seed_class = null;
+                    $market->source = null;
 
-            //         $u = Administrator::find($order->order_by);
-            //         if (!$u) {
-            //             return "-";
-            //         }
+                    $u = Administrator::find($order->order_by);
+                    if (!$u) {
+                        return "-";
+                    }
 
 
-            //         $market->detail = "Sold crop to " . $u->name ;
-            //         $market->image = null;
-            //         $market->images = null;
+                    $market->detail = "Sold crop to " . $u->name . ", ID: " . $u->id;
+                    $market->image = null;
+                    $market->images = null;
 
-            //         //update the available_stock in the products table by getting the quantity entered and subtracting it from the available stock
-            //         //and save it
-            //         $bought_quantity =  $form->quantity;
-            //         $new_quantity = $product->available_stock - $bought_quantity;
+                    //update the available_stock in the products table by getting the quantity entered and subtracting it from the available stock
+                    //and save it
+                    $bought_quantity =  $form->quantity;
+                    $new_quantity = $product->available_stock - $bought_quantity;
                     
 
-            //         $product->available_stock = $new_quantity;
-            //         $product->update();
+                    $product->available_stock = $new_quantity;
+                    $product->update();
                     
 
-            //         if ($market->save()) 
-            //         {
-            //             admin_success("Success", "Order completed successfully.");
-            //         }
-            //     }
-             });
+                    if ($market->save()) 
+                    {
+                        admin_success("Success", "Order completed successfully.");
+                    }
+                }
+            });
 
-          
+            $id = request()->route()->parameters['order'];
+            $product = $form->model()->find($id);
             if (!$product) {
                 dd("Order not found.");
             }
