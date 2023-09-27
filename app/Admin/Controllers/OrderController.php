@@ -259,32 +259,34 @@ class OrderController extends AdminController
         if ($form->isEditing()) 
         {
 
+          
             $form->saved(function ($form) 
             {
                 return redirect(admin_url('orders'));
             });
 
-            // $form->saving(function ($form) 
-            // {
-            //     $id = request()->route()->parameters['order'];
-            //     $order = $form->model()->find($id);
-            //     if (!$order) 
-            //     {
-            //         dd("Order not found");
-            //     }
 
-            //     $product = Product::find($order->product_id);
-            //     if (!$product) 
-            //     {
-            //         die("Product not found");
-            //     }
+            $form->saving(function ($form) 
+            {
+                $id = request()->route()->parameters['order'];
+                $order = $form->model()->find($id);
+                if (!$order) 
+                {
+                    dd("Order not found");
+                }
 
-            //     if ($order->quantity > $product->quantity) 
-            //     {
-            //         admin_error('Ooops', 'You have inadequate amount of product (' . $product->name . ") to proceed with this 
-            //         order ");
-            //         return redirect(admin_url('orders'));
-            //     }
+                $product = Product::find($order->product_id);
+                if (!$product) 
+                {
+                    die("Product not found");
+                }
+
+                if ($order->quantity > $product->quantity) 
+                {
+                    admin_error('Ooops', 'You have inadequate amount of product (' . $product->name . ") to proceed with this 
+                    order ");
+                    return redirect(admin_url('orders'));
+                }
 
 
             //     if ($form->status == 3) 
@@ -309,7 +311,7 @@ class OrderController extends AdminController
             //         }
 
 
-            //         $market->detail = "Sold crop to " . $u->name . ", ID: " . $u->id;
+            //         $market->detail = "Sold crop to " . $u->name ;
             //         $market->image = null;
             //         $market->images = null;
 
@@ -328,10 +330,9 @@ class OrderController extends AdminController
             //             admin_success("Success", "Order completed successfully.");
             //         }
             //     }
-            // });
+             });
 
-            $id = request()->route()->parameters['order'];
-            $product = $form->model()->find($id);
+          
             if (!$product) {
                 dd("Order not found.");
             }
