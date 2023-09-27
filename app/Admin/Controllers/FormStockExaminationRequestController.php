@@ -267,6 +267,29 @@ class FormStockExaminationRequestController extends AdminController
       
         if (Admin::user()->isRole('basic-user')) 
         {
+            //check if atleast two fields have values
+            $form->saving(function (Form $form) 
+            {
+                $count = 0;
+                if ($form->form_qds_id != null) {
+                    $count++;
+                }
+                if ($form->remarks != null) {
+                    $count++;
+                }
+                if ($form->import_export_permit_id != null) {
+                    $count++;
+                }
+                if ($form->planting_return_id != null) {
+                    $count++;
+                }
+                if ($count < 2) {
+                    admin_error("Error", "You must fill atleast two fields in the examination section.");
+                    return back();
+                }
+            });
+
+
             //get crop variety from the import permit id when form is saving
             $form->saving(function (Form $form)
             {
