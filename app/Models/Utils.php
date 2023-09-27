@@ -828,11 +828,11 @@ class Utils
     {
         // $url = url("storage/uploads");
         if ($name == null || (strlen($name) < 2)) {
-            $url = url('uploads/files/default.png');
+            $url = url('storage/files/default.png');
             // } else if (file_exists(public_path('storage/uploads' . $name))) {
             //     $url = url("storage/uploads/" . $name);
         } else {
-            $url = url("uploads/" . $name);
+            $url = url("storage/" . $name);
         }
         return $url;
     }
