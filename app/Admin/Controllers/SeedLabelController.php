@@ -304,7 +304,6 @@ class SeedLabelController extends AdminController
                $package_size = SeedLabelPackage::find($package_id)->package_size;
                //convert the quantity entered into kgs
                 $quantity = intval($form->quantity);
-                $quantity *= 1000;
                 $available_stock =  intval($quantity / $package_size);   
                 $seed_lab = SeedLab::find($form->seed_lab_id);
                 
