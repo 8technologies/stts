@@ -715,6 +715,8 @@ class Utils
             return '<span class="badge badge-warning">Skipped</span>';
         if ($status == 18)
             return '<span class="badge badge-warning">Reviewed</span>';
+        if ($status == 20)
+            return '<span class="badge badge-success">Accepted</span>';
         return $status;
     }
 
