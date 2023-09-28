@@ -343,7 +343,6 @@ class FormSr10Controller extends AdminController
                     ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be reversed.")
                     ->options([
                         '4' => 'Rejected',
-                        '20' => 'Accepted',
                         '7' => 'Provisional',
                         '17' => 'Skip',
                     ])
