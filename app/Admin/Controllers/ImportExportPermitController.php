@@ -126,14 +126,16 @@ class ImportExportPermitController extends AdminController
      
 
 
-            $grid->column('inspector_id', __('Inspector'))->display(function ($userId) 
-            {
-                $u = Administrator::find($userId);
-                if (!$u)
-                    return "Not assigned";
-                return $u->name;
-            })->sortable();
-      
+        $grid->column('inspector_id', __('Inspector'))->display(function ($userId) 
+        {
+            if (Admin::user()->isRole('basic-user')) {
+                return "-";
+            }
+            $u = Administrator::find($userId);
+            if (!$u)
+                return "Not assigned";
+            return $u->name;
+        })->sortable();
 
        //check if the status is expired or not
         $grid->column('status', __('Status'))->display(function ($status) 
