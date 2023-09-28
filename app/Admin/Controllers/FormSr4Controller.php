@@ -637,6 +637,7 @@ class FormSr4Controller extends AdminController
                 ([
                     'Agricultural crops' => 'Agricultural crops',
                     'Horticultural crops' => 'Horticultural crops',
+                    'Both crops' => 'Both crops',
                     'Other' => 'Other',
                     'NA' => 'NA'
                 ])
