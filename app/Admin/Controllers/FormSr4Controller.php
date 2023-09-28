@@ -607,7 +607,7 @@ class FormSr4Controller extends AdminController
 
             $form->text('name_of_applicant', __('Name of applicant Company'))->default($user->name);
             $form->text('address', __('Address'))->required();
-            $form->text('phone_number', __('Phone number'))->required();
+            $form->text('phone_number', __('Phone number'));
             $form->text('company_initials', __('Company initials'))->required();
             $form->text('premises_location', __('Premises location'));
             $form->number('years_of_expirience', __('Years of experience'))
