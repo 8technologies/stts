@@ -577,7 +577,7 @@ class FormSr4Controller extends AdminController
         $form->tools(function (Form\Tools $tools) 
         {
             $tools->disableDelete();
-            $tools->disableView();
+            
         });
 
         $form->setWidth(8, 4);  
