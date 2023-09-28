@@ -284,7 +284,8 @@ class FormStockExaminationRequestController extends AdminController
                     $count++;
                 }
                 if ($count < 2) {
-                    admin_error("Error", "You must fill atleast two fields in the examination section.");
+    
+                    $form->html('<div class="alert alert-danger">You must fill atleast two fields in the examination section.</div>');
                     return back();
                 }
             });
