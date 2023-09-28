@@ -615,7 +615,7 @@ class FormSr4Controller extends AdminController
             $form->text('expirience_in', __('Experience as?'))
             ->rules('required');
 
-            $form->html('<h3>I/We wish to apply for a certificate as a seed stockist.</h3>');
+            $form->html('<h3>I/We wish to apply for registration</h3>');
             $form->radio('dealers_in', __('Applicant is applying for production of?'))
                  ->options
             ([
