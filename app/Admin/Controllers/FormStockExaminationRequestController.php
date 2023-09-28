@@ -557,7 +557,6 @@ class FormStockExaminationRequestController extends AdminController
            
             
                 $form->text('seed_company_name', __('Seed Company Name'))
-                ->required()
                 ->attribute('id', 'seed-company')
                 ->attribute('oninput', 'fillSecondField()');
             
