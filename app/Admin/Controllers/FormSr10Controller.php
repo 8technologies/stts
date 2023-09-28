@@ -332,7 +332,11 @@ class FormSr10Controller extends AdminController
                         '4' => 'Rejected',
                         '5' => 'Accepted',
                     ])
-                    ->required();
+                    ->required()
+                    ->when('in', [4], function (Form $form) {
+                        $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                            ->help("Please specify with a comment")->rules('required');
+                    });
                 
             }else{
                 $form->radio('status', __('Inspection decision'))
