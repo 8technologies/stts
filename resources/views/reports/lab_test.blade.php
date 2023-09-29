@@ -74,7 +74,7 @@ $date = date("j F Y");
 <p><strong>Lab Test Number:</strong>{{$form->lab_test_number}}</p>
     <p><strong>To:</strong> {{$applicant}}</p>
     <p>Your {{$crop_variety}} of lot {{$form->lot_number}} which was tested and finalized on {{$form->updated_at}} of 
-    sample weight {{$form->sample_weight}} kgs is {{$status}}</p>
+    sample weight {{$form->sample_weight}} kgs is <strong> {{$status}}</strong></p>
 
     <h4><strong>RESULTS OF ANALYSIS</strong></h4>
     
