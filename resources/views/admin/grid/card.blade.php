@@ -47,9 +47,7 @@ use Encore\Admin\Facades\Admin;
                         <p class="product-title" style="color: black;">
                             {!! $row->column('name') !!}
                         </p>
-                        <h1 class="product-price" style="font-size: 22px!important">
-                            UGX {!! $row->column('price') !!} 
-                        </h1>
+                       
                         <span class="product-title" style="color: black;">
                             <i>In stock: {!! $row->column('available_stock') !!} bags</i>
                         </span>
