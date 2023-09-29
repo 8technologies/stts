@@ -368,9 +368,7 @@ class OrderController extends AdminController
             // $form->display('quantity', __('Available quantity'))->default(
             //     number_format($product->available_stock) . " bags"
             // );
-            $form->display('price', __('Unit price'))->default(
-                "UGX. " . number_format($product->price)
-            );
+            $form->text('price', __('Unit price'));
             $form->text('quantity', __('Quantity Ordered'))->default(
                 number_format($product->quantity) . " bags"
             );
@@ -503,9 +501,7 @@ class OrderController extends AdminController
             $form->display('available_stock', __('Available stock'))->default(
                 number_format($pro->available_stock) . " bags "
             );
-            $form->display('price', __('Unit price'))->default(
-                "UGX. " . number_format($pro->price)
-            );
+            $form->text('price', __('Unit price'));
 
             $form->divider();
 
