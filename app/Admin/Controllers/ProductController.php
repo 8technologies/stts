@@ -77,8 +77,9 @@ class ProductController extends AdminController
         });
         $show->field('quantity', __('Quantity'));
         $show->field('lab_test_number', __('Lab test number'));
-        $show->field('seed_lab_id', __('Lot number'))->as(function ($seed_lab_id) {
-            return \App\Models\SeedLab::find($seed_lab_id)->lot_number;
+        $show->field('seed_label_id', __('Lot number'))->as(function ($seed_label_id) {
+            $seed_lab = \App\Models\SeedLabel::find($seed_label_id)->seed_lab_id;
+            return \App\Models\SeedLab::find($seed_lab)->lot_number;
         });
       
         $show->panel()->tools(function ($tools) {
