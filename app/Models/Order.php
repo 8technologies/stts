@@ -35,7 +35,7 @@ class Order extends Model
             self::created(function ($model) 
             {
 
-                MyNotification::send_notification($model, 'Order', request()->segment(count(request()->segments())-1));
+               // MyNotification::send_notification($model, 'Order', request()->segment(count(request()->segments())-1));
     
             });
 
@@ -43,7 +43,7 @@ class Order extends Model
             self::updated(function ($model) 
             {
 
-                MyNotification::update_notification($model, 'Order', request()->segment(count(request()->segments())-1));
+               // MyNotification::update_notification($model, 'Order', request()->segment(count(request()->segments())-1));
 
             });
 
