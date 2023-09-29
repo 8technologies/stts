@@ -348,7 +348,7 @@ class SeedLabelController extends AdminController
             $form->hidden('status')->default(1)->attribute('value', '1');
             $form->text('quantity', __('Quantity  (Kgs)'))->attribute('type', 'number')->required()
             ->help("The quantity entered shouldnt be more than the quantity you have in stock");
-            $form->text('price', __('Enter your selling unit price (Price per KG)'))->attribute('type', 'number')->required();
+           // $form->text('price', __('Enter your selling unit price (Price per KG)'))->attribute('type', 'number')->required();
             $form->image('image', __('Thumbnail Image'))->required();
             $form->textarea('applicant_remarks', __('Remarks'));
             $form->file('receipt', __('Attach receipt'))->required();
