@@ -369,9 +369,7 @@ class OrderController extends AdminController
             //     number_format($product->available_stock) . " bags"
             // );
             $form->text('price', __('Unit price'));
-            $form->text('quantity', __('Quantity Ordered'))->default(
-                number_format($product->quantity) . " bags"
-            );
+            $form->text('quantity', __('Quantity Ordered'));
 
             $form->divider();
 
