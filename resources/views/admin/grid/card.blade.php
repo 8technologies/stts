@@ -1,12 +1,12 @@
 @php
 use App\Models\Utils;
 use Encore\Admin\Facades\Admin;
-
 @endphp
+
 <div class="box">
     @if(isset($title))
     <div class="box-header with-border">
-        <h3 class="box-title"> {{ $title }}</h3>
+        <h3 class="box-title">{{ $title }}</h3>
     </div>
     @endif
 
@@ -24,59 +24,39 @@ use Encore\Admin\Facades\Admin;
 
     <!-- /.box-header -->
     <div class="box-body">
-
-        <ul class="mailbox-attachments clearfix">
+        <div class="row">
             @foreach($grid->rows() as $row)
-            @php
-            $link = admin_url("/products/".$row->column('id'));
-            $link_buy = admin_url("/orders/create?id=".$row->column('id'));
-            @endphp
-
-            <li>
                 @php
+                $link = admin_url("/products/".$row->column('id'));
+                $link_buy = admin_url("/orders/create?id=".$row->column('id'));
                 $img = Utils::get_file_url($row->column('image_url'));
+                $administrator_id = $row->column('administrator_id');
                 @endphp
 
-                <a href="{{$link}}">
-                    <span class="mailbox-attachment-icon has-img" style="width:90px; height:90px">
-                        <img  src="{!! $img !!}" width="90px" height="90px"/>
-                    </span>
-                 
-                    <div class="mailbox-attachment-info">
-                        
-                        <p class="product-title" style="color: black;">
-                            {!! $row->column('name') !!}
-                        </p>
-                       
-                        <span class="product-title" style="color: black;">
-                            <i>In stock: {!! $row->column('available_stock') !!} bags</i>
-                        </span>
-
-                        <?Php
-                        // use Encore\Admin\Facades\Admin;
-                        $administrator_id = $row->column('administrator_id');
-                        if($administrator_id == Admin::user()->id){  
-                    ?>
-                </a>
-
-                <?php }?><br>
-                @if($row->column('available_stock') > 0)
-                    <a class="btn btn-primary mt-2" href="{{ $link_buy }}">BUY NOW</a><br>
-                @else
-                    <a class="btn btn-primary mt-2" disabled>OUT OF STOCK</a><br>
-                @endif
-
+                <div class="col-md-4"> <!-- Adjust the column width as needed -->
+                    <div class="card">
+                        <a href="{{$link}}">
+                            <img src="{!! $img !!}" class="card-img-top" alt="Product Image">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $row->column('name') }}</h5>
+                            <p class="card-text"><i>In stock: {{ $row->column('available_stock') }} bags</i></p>
+                            @if($administrator_id == Admin::user()->id)
+                                <!-- Add any additional content for authorized users here -->
+                            @endif
+                            @if($row->column('available_stock') > 0)
+                                <a class="btn btn-primary" href="{{ $link_buy }}">BUY NOW</a>
+                            @else
+                                <a class="btn btn-primary disabled">OUT OF STOCK</a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
 
-
-    </li>
-
-    @endforeach
-    </ul>
-
-</div>
-<div class="box-footer clearfix">
-    {!! $grid->paginator() !!}
-</div>
-<!-- /.box-body -->
+    <div class="box-footer clearfix">
+        {!! $grid->paginator() !!}
+    </div>
 </div>
