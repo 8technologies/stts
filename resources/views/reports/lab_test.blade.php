@@ -98,11 +98,11 @@ $date = date("j F Y");
             </tr>
             <tr>
                 <td><strong>1st Count</strong></td>
-                <td>{{ $form->1_count }} %</td>
+                <td>{{ $form->first_count }} %</td>
             </tr>
             <tr>
                 <td><strong>Final Count</strong></td>
-                <td>{{ $form->2_count }} %</td>
+                <td>{{ $form->final_count }} %</td>
             </tr>
             <tr>
                 <td><strong>Hard</strong></td>

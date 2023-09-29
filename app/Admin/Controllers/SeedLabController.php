@@ -905,14 +905,14 @@ class SeedLabController extends AdminController
                     'type' => 'number'
                 ])
                     ->required();
-                $form->text('1_count', __('1st count'))->attribute([
+                $form->text('first_count', __('1st count'))->attribute([
                     'min', 0,
                     'max', 100,
                     'type' => 'number'
                 ])
                 ->required();
 
-                $form->text('2_count', __('Final count'))->attribute([
+                $form->text('final_count', __('Final count'))->attribute([
                     'min', 0,
                     'max', 100,
                     'type' => 'number'
