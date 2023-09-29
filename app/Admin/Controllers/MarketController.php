@@ -39,7 +39,11 @@ class MarketController extends AdminController
     {
         $show = new Show(Product::findOrFail($id));
 
-
+//disable panel functions
+        $show->panel()->tools(function ($tools) {
+            $tools->disableEdit();
+            $tools->disableDelete();
+        });
 
         return $show;
     }
