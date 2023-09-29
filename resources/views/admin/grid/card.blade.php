@@ -4,6 +4,19 @@ use Encore\Admin\Facades\Admin;
 @endphp
 
 <style>
+    .card {
+        padding: 15px; /* Add padding around each card */
+    }
+
+    .row {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+
+    .col-md-4 {
+        padding: 15px; /* Add space between columns */
+    }
+
     .card-img-top {
         width: 150px; /* Set your desired size for both width and height */
         height: 150px; /* Set your desired size for both width and height */
