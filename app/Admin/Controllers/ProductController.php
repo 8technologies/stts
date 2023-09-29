@@ -85,7 +85,7 @@ class ProductController extends AdminController
         });
       
         $show->panel()->tools(function ($tools) {
-            //$tools->disableEdit();
+            $tools->disableEdit();
             $tools->disableDelete();
         });
 
@@ -107,13 +107,7 @@ class ProductController extends AdminController
         $form->text('seed_label_id', __('Seed label ID'))->readonly();
         $form->text('quantity', __('Quantity'))->readonly();
         $form->text('lab_test_number', __('Lab test number'))->readonly();
-        $form->text('lot_number', __('Lot number'))->readonly();
-        $form->text('price', __('Price'))->required()->attribute([
-            'type' => 'number'
-        ]);
-        $form->text('wholesale_price', __('Wholesale price'))->required()->attribute([
-            'type' => 'number'
-        ]);
+    
         $form->textarea('detail', __('Detail'))->required();
         // $form->image('image_url', __('Thumbnail Image'));
 
