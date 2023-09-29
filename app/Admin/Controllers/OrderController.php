@@ -140,7 +140,7 @@ class OrderController extends AdminController
                     $confirmedText = $order->status == 6 ? 'Confirmed' : 'Confirm';
                     if($order->status == 6) 
                     {
-                        return "<a id='confirm-order-{$id}' href='" . route('orders.confirm', ['id' => $id]) . "' class='btn btn-xs $confirmedClass confirm-order' data-id='{$id} ' disabled>$confirmedText</a>";
+                        return "<a id='confirm-order-{$id}' class='btn btn-xs $confirmedClass confirm-order' data-id='{$id} ' disabled>$confirmedText</a>";
                     }
                     elseif($order->status == 3){
                         return "<a id='confirm-order-{$id}' href='" . route('orders.confirm', ['id' => $id]) . "' class='btn btn-xs $confirmedClass confirm-order' data-id='{$id}'>$confirmedText</a>";
