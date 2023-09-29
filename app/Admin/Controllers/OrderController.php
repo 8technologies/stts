@@ -64,17 +64,26 @@ class OrderController extends AdminController
                 $actions->disableDelete();
             
             }
-        });
-
-        //check if the owner of the order is the authoirzed user
-        $grid->actions(function ($actions) 
-        {
-            if (Utils::check_order()) 
+            if ($order->status == 6) 
             {
-                $actions->disableDelete();
+                $actions->disableEdit();
             
             }
+            if( Admin::user()->id == $order->order_by)
+            {
+                $actions->disableEdit();
+            }
         });
+
+        // //check if the owner of the order is the authoirzed user
+        // $grid->actions(function ($actions) 
+        // {
+        //     if (Utils::check_order()) 
+        //     {
+        //         $actions->disableDelete();
+            
+        //     }
+        // });
 
         $grid->column('created_at', __('Created'))->display(function ($t) 
         {
@@ -109,11 +118,11 @@ class OrderController extends AdminController
             {
                 return number_format($id) . " bags";
             })->sortable();
-        $grid->column('total_price', __('Total price'))
-            ->display(function ($id) 
-            {
-                return "UGX. " . number_format($id);
-            })->sortable();
+        // $grid->column('total_price', __('Total price'))
+        //     ->display(function ($id) 
+        //     {
+        //         return "UGX. " . number_format($id);
+        //     })->sortable();
 
         $grid->column('status', __('Status'))
             ->display(function ($status) 
