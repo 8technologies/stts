@@ -52,6 +52,7 @@ use Encore\Admin\Facades\Admin;
                 $link_buy = admin_url("/orders/create?id=".$row->column('id'));
                 $img = Utils::get_file_url($row->column('image_url'));
                 $administrator_id = $row->column('administrator_id');
+                $seller = \App\Models\User::find($administrator_id)->name;
                 @endphp
 
                 <div class="col-md-4"> <!-- Adjust the column width as needed -->
@@ -61,6 +62,7 @@ use Encore\Admin\Facades\Admin;
                         </a>
                         <div class="card-body">
                             <h5 class="card-title">{{ $row->column('name') }}</h5>
+                            <p class="card-text"><i>Seller: {{$seller}}</i></p>
                             <p class="card-text"><i>In stock: {{ $row->column('available_stock') }} bags</i></p>
                             @if($administrator_id == Admin::user()->id)
                                 <!-- Add any additional content for authorized users here -->
