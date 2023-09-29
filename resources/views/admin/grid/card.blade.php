@@ -6,7 +6,7 @@ use Encore\Admin\Facades\Admin;
 <style>
     .card-img-top {
         max-width: 100%;
-        height: auto;
+        height: 15vw;
     }
 </style>
 
