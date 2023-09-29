@@ -4,7 +4,6 @@ $link = public_path('css/bootstrap-print.css');
 $form = App\Models\SeedLab::find($_GET['id']);
 $applicant = App\Models\User::find($form->administrator_id)->name;
 $crop_variety = App\Models\CropVariety::find($form->crop_variety_id)->name;
-
 $status = strip_tags(App\Models\Utils::tell_status($form->report_recommendation));
 
 
@@ -74,7 +73,7 @@ $date = date("j F Y");
 <p><strong>Lab Test Number:</strong>{{$form->lab_test_number}}</p>
     <p><strong>To:</strong> {{$applicant}}</p>
     <p>Your {{$crop_variety}} of lot {{$form->lot_number}} which was tested and finalized on {{$form->updated_at}} of 
-    sample weight {{$form->sample_weight}} kgs is <strong> {{$status}}</strong></p>
+    sample weight {{$form->quantity}} kgs is <strong> {{$status}}</strong></p>
 
     <h4><strong>RESULTS OF ANALYSIS</strong></h4>
     
