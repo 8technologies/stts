@@ -875,76 +875,35 @@ class SeedLabController extends AdminController
                 $form->display('lot_number', __('Lot number'));
                 $form->display('lab_test_number', __('Lab test number'));
                 $form->divider('PURITY(P)');
-                $form->text('purity', __('Enter Pure seed (in percentage)'))->attribute([
-                    'min', 0,
-                    'max', 100,
-                    'type' => 'number'
-                ])
+                $form->text('purity', __('Enter Pure seed (in percentage)'))
                     ->required();
-                $form->text('inert_matter', __('Inert matter'))->attribute([
-                    'min', 0,
-                    'max', 100,
-                    'type' => 'number'
-                ]);
-                $form->text('other_crop_seeds', __('Other crop seeds'))->attribute([
-                    'min', 0,
-                    'max', 100,
-                    'type' => 'number'
-                ]);
-                $form->text('weed_seed', __('Weed seed'))->attribute([
-                    'min', 0,
-                    'max', 100,
-                    'type' => 'number'
-                ]);
+                $form->text('inert_matter', __('Inert matter'));
+                $form->text('other_crop_seeds', __('Other crop seeds'));
+                $form->text('weed_seed', __('Weed seed'));
 
 
                 $form->divider('GERMINATION(G)');
-                $form->text('germination_capacity', __('Enter Germination capacity (in percentage)'))->attribute([
-                    'min', 0,
-                    'max', 100,
-                    'type' => 'number'
-                ])
+                $form->text('germination_capacity', __('Enter Germination capacity (in percentage)'))
                     ->required();
-                $form->text('first_count', __('1st count'))->attribute([
-                    'min', 0,
-                    'max', 100,
-                    'type' => 'number'
-                ])
+                $form->text('first_count', __('1st count'))
                 ->required();
 
-                $form->text('final_count', __('Final count'))->attribute([
-                    'min', 0,
-                    'max', 100,
-                    'type' => 'number'
-                ]);
+                $form->text('final_count', __('Final count'));
                 $form->text('hard', __('Hard'));
                 $form->text('fresh', __('Fresh Ungerminated'));
                 $form->text('dead', __('Rotten or Dead'));
                
-                $form->text('abnormal_sprouts', __('Enter Abnormal sprouts (in percentage)'))->attribute([
-                    'min' => 0,
-                    'max' => 100,
-                    'type' => 'number'
-                ])
+                $form->text('abnormal_sprouts', __('Enter Abnormal sprouts (in percentage)'))
                     ->required();
 
                 $form->hidden('p_x_g', __('PXG'))->attribute([])
                     ->readonly()
                     ->disable();
-                $form->text('moisture', __('Enter Moisture content (in percentage)'))->attribute([
-                    'min', 0,
-                    'max', 100,
-                    'type' => 'number'
-                ])
+                $form->text('moisture', __('Enter Moisture content (in percentage)'))
                     ->required();
 
 
-                $form->text('broken_germs', __('Enter percentage of Broken germs'))->attribute([
-                    'min' => 0,
-                    'max' => 100,
-                    'type' => 'number'
-                ])
-                    ->required();
+                $form->text('broken_germs', __('Enter percentage of Broken germs')) ->required();
                 
                 $form->radio('report_recommendation', __('Report recommendation'))
                     ->options([
