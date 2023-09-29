@@ -85,7 +85,7 @@ class ProductController extends AdminController
         });
       
         $show->panel()->tools(function ($tools) {
-            $tools->disableEdit();
+            //$tools->disableEdit();
             $tools->disableDelete();
         });
 
