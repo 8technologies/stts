@@ -75,7 +75,9 @@ class ProductController extends AdminController
         $show->field('crop_variety_id', __('Crop variety id'))->as(function ($crop_variety_id) {
             return \App\Models\CropVariety::find($crop_variety_id)->name;
         });
-        $show->field('quantity', __('Quantity'));
+        $show->field('quantity', __('Quantity'))->as(function ($quantity) {
+            return $quantity . ' ' .'kgs';
+        });
         $show->field('lab_test_number', __('Lab test number'));
         $show->field('seed_label_id', __('Lot number'))->as(function ($seed_label_id) {
             $seed_lab = \App\Models\SeedLabel::find($seed_label_id)->seed_lab_id;
