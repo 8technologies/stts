@@ -373,9 +373,10 @@ class OrderController extends AdminController
             //     "UGX. " . number_format($product->price)
             // );
             $form->display('price', __('Unit price'));
-            $form->text('quantity', __('Quantity Ordered'))->default(
-                number_format($product->quantity) . " bags"
-            );
+            // $form->text('quantity', __('Quantity Ordered'))->default(
+            //     number_format($product->quantity) . " bags"
+            // );
+            $form->text('quantity', __('Quantity Ordered'));
 
             $form->divider();
 
