@@ -121,25 +121,7 @@ $date = date("j F Y");
                 <td>{{ $form->moisture }} %</td>
             </tr>
             <tr>
-                <td><strong>Germination</strong></td>
-                <td>{{ $form->germination}} %</td>
-            </tr>
-            <tr>
-                <td><strong>Moisture Content</strong></td>
-                <td>{{ $form->moisture_content }} %</td>
-            </tr>
-            <tr>
-                <td><strong>Insect damage</strong></td>
-                <td>{{ $form->insect_damage }} %</td>
-            </tr>
-            <tr>
-                <td><strong>Mouldiness</strong></td>
-                <td>{{ $form->moldiness }} %</td>
-            </tr>
-            <tr>
-                <td><strong>Noxious seeds observable</strong></td>
-                <td>{{ $form->noxious_weeds }} %</td>
-            </tr>
+             
           
     </table>
     
