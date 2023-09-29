@@ -5,8 +5,9 @@ use Encore\Admin\Facades\Admin;
 
 <style>
     .card-img-top {
-        max-width: 100%;
-        height: 15vw;
+        width: 150px; /* Set your desired size for both width and height */
+        height: 150px; /* Set your desired size for both width and height */
+        object-fit: cover; /* Ensure the image covers the square without distortion */
     }
 </style>
 
