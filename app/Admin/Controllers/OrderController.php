@@ -142,7 +142,13 @@ class OrderController extends AdminController
                     {
                         return "<a id='confirm-order-{$id}' href='" . route('orders.confirm', ['id' => $id]) . "' class='btn btn-xs $confirmedClass confirm-order' data-id='{$id} ' disabled>$confirmedText</a>";
                     }
-                    return "<a id='confirm-order-{$id}' href='" . route('orders.confirm', ['id' => $id]) . "' class='btn btn-xs $confirmedClass confirm-order' data-id='{$id}'>$confirmedText</a>";
+                    elseif($order->status == 3){
+                        return "<a id='confirm-order-{$id}' href='" . route('orders.confirm', ['id' => $id]) . "' class='btn btn-xs $confirmedClass confirm-order' data-id='{$id}'>$confirmedText</a>";
+                    }
+                    else{
+                        return "<button>Processing</button>";
+                    }
+
                 })->sortable();
                 
                 // css styling the button to blue initially
