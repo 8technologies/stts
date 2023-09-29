@@ -66,22 +66,21 @@ class ProductController extends AdminController
     {
         $show = new Show(Product::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('administrator_id', __('Administrator id'));
-        $show->field('crop_variety_id', __('Crop variety id'));
-        $show->field('seed_label_id', __('Seed label id'));
+       
+        $show->field('image_url', __(''))->image();
+       
+        $show->field('administrator_id', __('Administrator id'))->as(function ($administrator_id) {
+            return \App\Models\User::find($administrator_id)->name;
+        });
+        $show->field('crop_variety_id', __('Crop variety id'))->as(function ($crop_variety_id) {
+            return \App\Models\CropVariety::find($crop_variety_id)->name;
+        });
         $show->field('quantity', __('Quantity'));
         $show->field('lab_test_number', __('Lab test number'));
-        $show->field('lot_number', __('Lot number'));
-        $show->field('seed_class', __('Seed class'));
-        $show->field('price', __('Price'));
-        $show->field('wholesale_price', __('Wholesale price'));
-        $show->field('image_url', __('Image'));
-        $show->field('images', __('Images'));
-        $show->field('source', __('Source'));
-        $show->field('detail', __('Detail'));
+        $show->field('seed_lab_id', __('Lot number'))->as(function ($seed_lab_id) {
+            return \App\Models\SeedLab::find($seed_lab_id)->lot_number;
+        });
+      
         $show->panel()->tools(function ($tools) {
             $tools->disableEdit();
             $tools->disableDelete();
