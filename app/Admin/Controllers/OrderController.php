@@ -146,7 +146,7 @@ class OrderController extends AdminController
                         return "<a id='confirm-order-{$id}' href='" . route('orders.confirm', ['id' => $id]) . "' class='btn btn-xs $confirmedClass confirm-order' data-id='{$id}'>$confirmedText</a>";
                     }
                     else{
-                        return "<button>Processing</button>";
+                        return "<p>Processing</p>";
                     }
 
                 })->sortable();
