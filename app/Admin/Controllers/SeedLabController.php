@@ -872,10 +872,6 @@ class SeedLabController extends AdminController
                 $form->display('tests_required', __('Tests required'))
                     ->options(['Moisture content', 'Purity', 'Germination', 'Seed health']);
                 $form->divider();
-                $form->display('crop_variety_id', __('Crop variety id'))
-                    ->default($model->crop_variety->name)
-                    ->readonly()
-                    ->disable();
                 $form->display('lot_number', __('Lot number'));
                 $form->display('lab_test_number', __('Lab test number'));
                 $form->divider('PURITY(P)');
