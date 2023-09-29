@@ -599,7 +599,7 @@ class FormStockExaminationRequestController extends AdminController
                $form->text('field_size', __('Enter field size (in Acres)'));
             } 
             //field to capture the quantity collected
-            $form->text('yield', __('Enter quantity collected (in Kgs)'))
+            $form->text('yield', __('Enter Lot size (in Kgs)'))
             ->attribute([
                 'type' => 'number', 
             ]);

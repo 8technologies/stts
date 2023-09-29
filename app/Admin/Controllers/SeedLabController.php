@@ -872,12 +872,15 @@ class SeedLabController extends AdminController
                     'type' => 'number'
                 ])
                     ->required();
+
+                $form->divider();
                 $form->text('germination_capacity', __('Enter Germination capacity (in percentage)'))->attribute([
                     'min', 0,
                     'max', 100,
                     'type' => 'number'
                 ])
                     ->required();
+                    
 
                 $form->hidden('p_x_g', __('PXG'))->attribute([])
                     ->readonly()
