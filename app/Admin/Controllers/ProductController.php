@@ -82,6 +82,10 @@ class ProductController extends AdminController
         $show->field('images', __('Images'));
         $show->field('source', __('Source'));
         $show->field('detail', __('Detail'));
+        $show->panel()->tools(function ($tools) {
+            $tools->disableEdit();
+            $tools->disableDelete();
+        });
 
         return $show;
     }
