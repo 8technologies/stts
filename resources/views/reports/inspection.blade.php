@@ -6,6 +6,7 @@ $form = App\Models\FormSr10::find($_GET['id']);
 $crop_variety = App\Models\CropVariety::find($form->crop_variety_id)->name;
 $inspection_stage = App\Models\CropInspectionType::find($form->stage)->inspection_stage;
 $status = strip_tags(App\Models\Utils::tell_status($form->status));
+$applicant = App\Models\User::find($form->applicant_id)->name;
 
 
 $date = date("j F Y");
@@ -73,7 +74,7 @@ $date = date("j F Y");
     </header>
     
 
-
+    <p>Applicant Name: {{$applicant}}</p>
     <table>
      
            <td>Crop Variety:</td>
@@ -129,6 +130,10 @@ $date = date("j F Y");
         <tr>
             <td>General crop conditions:</td>
             <td><span id="boundaryPlaceholder">{{ $form->general_conditions_of_crop}}</span></td>
+        </tr>
+        <tr>
+            <td>Comments:</td>
+            <td><span id="boundaryPlaceholder">{{ $form->status_comment}}</span></td>
         </tr>
     </table>
 
