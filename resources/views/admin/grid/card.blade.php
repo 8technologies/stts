@@ -3,6 +3,13 @@ use App\Models\Utils;
 use Encore\Admin\Facades\Admin;
 @endphp
 
+<style>
+    .card-img-top {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
 <div class="box">
     @if(isset($title))
     <div class="box-header with-border">
