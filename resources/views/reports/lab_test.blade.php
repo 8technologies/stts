@@ -3,7 +3,9 @@ $permitNumber = mt_rand(1000, 9999);
 $link = public_path('css/bootstrap-print.css');
 $form = App\Models\SeedLab::find($_GET['id']);
 $applicant = App\Models\User::find($form->administrator_id)->name;
-$status = strip_tags(App\Models\Utils::tell_status($form->status));
+$crop_variety = App\Models\CropVariety::find($form->crop_variety_id)->name;
+
+$status = strip_tags(App\Models\Utils::tell_status($form->report_recommendation));
 
 
 $date = date("j F Y");
@@ -69,17 +71,54 @@ $date = date("j F Y");
         <p class="r-number">[R.20(1)(c)]</p>
     </header>
     
-
+<p><strong>Lab Test Number:</strong>{{$form->lab_test_number}}</p>
     <p><strong>To:</strong> {{$applicant}}</p>
-    <p>Your {{$form->seed_class }} which was inspected and finalized on {{$form->updated_at}} of 
-     weight {{$form->yield}} kgs of seeds and whose sample for stock approval analysis was taken on {{$form->date}} has been {{$status}}</p>
+    <p>Your {{$crop_variety}} of lot {{$form->lot_number}} which was tested and finalized on {{$form->updated_at}} of 
+    sample weight {{$form->sample_weight}} kgs is {{$status}}</p>
 
-    <h4><strong>The results were</strong></h4>
+    <h4><strong>RESULTS OF ANALYSIS</strong></h4>
     
     <table>
     <tr>
                 <td><strong>Purity</strong></td>
                 <td>{{ $form->purity }} %</td>
+            </tr>
+         
+            <tr>
+                <td><strong>Inert Matter</strong></td>
+                <td>{{ $form->inert_matter }} %</td>
+            </tr>
+            <tr>
+                <td><strong>Other crop seeds</strong></td>
+                <td>{{ $form->other_crop_seeds }} %</td>
+            </tr>
+            <tr>
+                <td><strong>Weed Seeds</strong></td>
+                <td>{{ $form->weed_seed }} %</td>
+            </tr>
+            <tr>
+                <td><strong>1st Count</strong></td>
+                <td>{{ $form->1_count }} %</td>
+            </tr>
+            <tr>
+                <td><strong>Final Count</strong></td>
+                <td>{{ $form->2_count }} %</td>
+            </tr>
+            <tr>
+                <td><strong>Hard</strong></td>
+                <td>{{ $form->hard }} %</td>
+            </tr>
+            <tr>
+                <td><strong>Fresh ungerminated</strong></td>
+                <td>{{ $form->fresh }} %</td>
+            </tr>
+            <tr>
+                <td><strong>Rotten or dead</strong></td>
+                <td>{{ $form->dead }} %</td>
+            </tr>
+            <tr>
+                <td><strong>Moisture</strong></td>
+                <td>{{ $form->moisture }} %</td>
             </tr>
             <tr>
                 <td><strong>Germination</strong></td>
@@ -103,8 +142,9 @@ $date = date("j F Y");
             </tr>
           
     </table>
+    
 
-    <p><strong>Recommendation:</strong> {{ $form->status_comment }}</p>
+    <p><strong>Recommendation:</strong> {{ $status }}</p>
   
     <div class="signature-container">
         <div class="signature-text">
@@ -118,3 +158,4 @@ $date = date("j F Y");
 
 </body>
 </html>
+

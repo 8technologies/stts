@@ -159,13 +159,22 @@ class SeedLabController extends AdminController
             return Utils::tell_status($status);
         })->sortable();
         //check the status of the report_recommendation column and display the print button
-        if (Utils::is_recommendation_updated('SeedLab')) 
-        {
-            $grid->column('print', __('Lab Certificate'))->display(function ($status) {
-                return '<a target="_blank" href="' . url('/print') . '">Print Certificate</a>';
-            })->sortable();
-        }
-
+      
+            // $grid->column('print', __('Lab Certificate'))->display(function ($status) {
+            //     return '<a target="_blank" href="' . url('/print') . '">Print Certificate</a>';
+            // })->sortable();
+            $grid->column('id', __('Lab Test Results'))->display(function ($id)  {
+                $seed_labs = SeedLab::find($id);
+             
+                 if ($seed_labs->report_recommendation == '11' || $seed_labs->report_recommendation == '12') {
+                     $link = url('lab?id=' . $id);
+                     return '<b><a target="_blank" href="' . $link . '">Print Report</a></b>';
+                 } else {
+                    
+                     return '<b>Unavailable</b>';
+                 }
+             });
+     
         $grid->column('inspector_id', __('Inspector'))->display(function ($userId) 
         {
             if (Admin::user()->isRole('basic-user'))
@@ -865,34 +874,70 @@ class SeedLabController extends AdminController
                 $form->divider();
                 $form->display('lot_number', __('Lot number'));
                 $form->display('lab_test_number', __('Lab test number'));
-                $form->divider();
-                $form->text('purity', __('Enter Purity (in percentage)'))->attribute([
+                $form->divider('PURITY(P)');
+                $form->text('purity', __('Enter Pure seed (in percentage)'))->attribute([
                     'min', 0,
                     'max', 100,
                     'type' => 'number'
                 ])
                     ->required();
+                $form->text('inert_matter', __('Inert matter'))->attribute([
+                    'min', 0,
+                    'max', 100,
+                    'type' => 'number'
+                ]);
+                $form->text('other_crop_seeds', __('Other crop seeds'))->attribute([
+                    'min', 0,
+                    'max', 100,
+                    'type' => 'number'
+                ]);
+                $form->text('weed_seed', __('Weed seed'))->attribute([
+                    'min', 0,
+                    'max', 100,
+                    'type' => 'number'
+                ]);
 
-                $form->divider();
+
+                $form->divider('GERMINATION(G)');
                 $form->text('germination_capacity', __('Enter Germination capacity (in percentage)'))->attribute([
                     'min', 0,
                     'max', 100,
                     'type' => 'number'
                 ])
                     ->required();
-                    
+                $form->text('1_count', __('1st count'))->attribute([
+                    'min', 0,
+                    'max', 100,
+                    'type' => 'number'
+                ])
+                ->required();
 
-                $form->hidden('p_x_g', __('PXG'))->attribute([])
-                    ->readonly()
-                    ->disable();
-
-
+                $form->text('2_count', __('Final count'))->attribute([
+                    'min', 0,
+                    'max', 100,
+                    'type' => 'number'
+                ]);
+                $form->text('hard', __('Hard'));
+                $form->text('fresh', __('Fresh Ungerminated'));
+                $form->text('dead', __('Rotten or Dead'));
+               
                 $form->text('abnormal_sprouts', __('Enter Abnormal sprouts (in percentage)'))->attribute([
                     'min' => 0,
                     'max' => 100,
                     'type' => 'number'
                 ])
                     ->required();
+
+                $form->hidden('p_x_g', __('PXG'))->attribute([])
+                    ->readonly()
+                    ->disable();
+                $form->text('moisture', __('Enter Moisture content (in percentage)'))->attribute([
+                    'min', 0,
+                    'max', 100,
+                    'type' => 'number'
+                ])
+                    ->required();
+
 
                 $form->text('broken_germs', __('Enter percentage of Broken germs'))->attribute([
                     'min' => 0,
