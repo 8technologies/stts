@@ -149,22 +149,18 @@ class FormQdsController extends AdminController
             return $u->name;
         })->sortable();
 
-            //check user role then show a certificate button
-            if(!auth('admin')->user()->inRoles(['inspector','admin']))
-            {
-    
-                $grid->column('id', __('Certificate'))->display(function ($id) use ( $qdss) {
-                    $qds  =  $qdss->firstWhere('id', $id);
-                
-                    if ($qds && $qds ->status == '5') {
-                        $link = url('qds?id=' . $id);
-                        return '<b><a target="_blank" href="' . $link . '">Print Certificate</a></b>';
-                    } else {
-                       
-                        return '<b>Unavailable</b>';
-                    }
-                });
-            }
+            $grid->column('id', __('Certificate'))->display(function ($id) {
+                $qds  = FormQds::find($id);
+            
+                if ($qds && $qds ->status == '5') {
+                    $link = url('qds?id=' . $id);
+                    return '<b><a target="_blank" href="' . $link . '">Print Certificate</a></b>';
+                } else {
+                    
+                    return '<b>Unavailable</b>';
+                }
+            });
+           
   
 
         return $grid;

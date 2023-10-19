@@ -150,22 +150,19 @@ class FormSr4Controller extends AdminController
             return $u->name;
         })->sortable();
 
-          //check user role then show a certificate button
-          if(!auth('admin')->user()->inRoles(['inspector','admin']))
-          {
-  
-              $grid->column('id', __('Certificate'))->display(function ($id) use ( $form_sr4s) {
-                  $form_sr4  =  $form_sr4s->firstWhere('id', $id);
-              
-                  if ($form_sr4 && $form_sr4 ->status == '5') {
-                      $link = url('certificate?id=' . $id);
-                      return '<b><a target="_blank" href="' . $link . '">Print Certificate</a></b>';
-                  } else {
-                     
-                      return '<b>Unavailable</b>';
-                  }
-              });
-          }
+        $grid->column('id', __('Certificate'))->display(function ($id)
+        {
+            $form_sr4  =  FormSr4::find($id);
+        
+            if ($form_sr4 && $form_sr4->status == '5') {
+                $link = url('certificate?id=' . $id);
+                return '<b><a target="_blank" href="' . $link . '">Print Certificate</a></b>';
+            } else {
+                
+                return '<b>Unavailable</b>';
+            }
+        });
+       
 
           $grid->filter(function ($filter) 
           {
@@ -477,7 +474,7 @@ class FormSr4Controller extends AdminController
 
             else 
             {
-            $this->show_fields($form);
+              $this->show_fields($form);
             }
         }
 
@@ -548,7 +545,7 @@ class FormSr4Controller extends AdminController
                     if (Utils::can_renew_app_form($form_sr4)) 
                     {
                         
-                        return  response(' <p class="alert alert-warning"> You cannot create a new SR4 form  while having VALID one of the same category. <a href="/admin/form-sr6s/create"> Go Back </a></p> ');   
+                        return  response(' <p class="alert alert-warning"> You cannot create a new SR4 form  while having VALID one of the same category. <a href="/admin/form-sr4s/create"> Go Back </a></p> ');   
                     }
                     $form->accept_declaration = 1;
                    
@@ -573,7 +570,6 @@ class FormSr4Controller extends AdminController
     public function show_fields($form)
     {
     
-        $form->disableCreatingCheck();
         $form->tools(function (Form\Tools $tools) 
         {
             $tools->disableDelete();
@@ -628,8 +624,8 @@ class FormSr4Controller extends AdminController
             ->help("Applies only if you are a Merchant or Producer")
             ->when('Other', function (Form $form) 
             {
-                $form->text('dealers_in_other', 'Applicant is applying for Other Production of?')
-                    ->help("Please specify Production that you are applying for");
+                $form->text('dealers_in_other', 'Please specify what you are producing')
+                    ->help('Please Specify if you selected "Other" production.')->rules('required');
             });
 
             $form->radio('marketing_of', __('Applicant is applying for marketing of?'))

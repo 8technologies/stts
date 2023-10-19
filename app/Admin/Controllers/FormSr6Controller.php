@@ -150,22 +150,18 @@ class FormSr6Controller extends AdminController
             return $u->name;
         })->sortable();
 
-            //check user role then show a certificate button
-            if(!auth('admin')->user()->inRoles(['inspector','admin']))
-            {
-    
-                $grid->column('id', __('Certificate'))->display(function ($id) use ( $form_sr6s) {
-                    $form_sr6  =  $form_sr6s->firstWhere('id', $id);
-                
-                    if ($form_sr6 && $form_sr6 ->status == '5') {
-                        $link = url('sr6Certificate?id=' . $id);
-                        return '<b><a target="_blank" href="' . $link . '">Print Certificate</a></b>';
-                    } else {
-                       
-                        return '<b>Unavailable</b>';
-                    }
-                });
-            }
+            $grid->column('id', __('Certificate'))->display(function ($id){
+                $form_sr6  =  FormSr6::find($id);
+            
+                if ($form_sr6 && $form_sr6 ->status == '5') {
+                    $link = url('sr6Certificate?id=' . $id);
+                    return '<b><a target="_blank" href="' . $link . '">Print Certificate</a></b>';
+                } else {
+                    
+                    return '<b>Unavailable</b>';
+                }
+            });
+            
 
         return $grid;
     }
