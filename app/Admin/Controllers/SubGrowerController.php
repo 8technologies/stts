@@ -273,6 +273,7 @@ class SubGrowerController extends AdminController
                 'Pre-Basic' => 'Pre-Basic',
                 'Certified seed' => 'Certified seed',
                 'Basic seed' => 'Basic seed',
+                'Qds' => 'Qds',
             ])
                 ->required();
 
