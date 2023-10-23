@@ -774,6 +774,7 @@ class FormSr4Controller extends AdminController
             $form->text('address', __('Address'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
             $form->text('type', __('Applicant type'))->readonly(); 
+            $form->display('recommendation', __('Recommendation'))->default('non')->readonly();
             $form->divider();
             $form->radio('status', __('Action'))
                 ->options
@@ -856,10 +857,16 @@ class FormSr4Controller extends AdminController
                 ])
                 ->required()
              
-                ->when('in', [18, 4], function (Form $form) 
+                ->when('4', function (Form $form) 
                 {
                     $form->textarea('status_comment', 'Inspector\'s comment (Remarks)')
                         ->help("Please specify with a comment");
+                })
+                ->when('18', function (Form $form) 
+                {
+                   $form->textarea('recommendation', 'Recommendation')
+                        ->help("Please specify with a comment");
+                   
                 });
 
         }

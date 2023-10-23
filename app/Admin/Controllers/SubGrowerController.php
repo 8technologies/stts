@@ -239,8 +239,8 @@ class SubGrowerController extends AdminController
             $form->text('quantity_planted', __('Quantity planted(in Kgs)'))->attribute ('type', 'number')->required();
             $form->text('expected_yield', __('Expected yield(in Kgs)'))->attribute ('type', 'number')->required();
             $form->text('phone_number', __('Phone number'))->required();
-            $form->text('gps_latitude', __('Gps latitude'))->attribute ('type', 'number')->required();
-            $form->text('gps_longitude', __('Gps longitude'))->attribute ('type', 'number')->required();
+            $form->text('gps_latitude', __('Gps latitude'))->required();
+            $form->text('gps_longitude', __('Gps longitude'))->required();
             $form->textarea('detail', __('Detail'));
         }
 

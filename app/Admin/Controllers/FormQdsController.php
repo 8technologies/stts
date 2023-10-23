@@ -498,6 +498,7 @@ class FormQdsController extends AdminController
             $form->text('address', __('Address'))->readonly();
             $form->text('phone_number', __('Phone number'))->readonly();
             $form->text('farm_location', __('Farm location'))->readonly();
+            $form->display('inspector_comment', __('Inspector\'s comment (Remarks)'));
             $form->divider();
             $form->radio('status', __('Action'))
                 ->options([
@@ -597,10 +598,16 @@ class FormQdsController extends AdminController
            ])
            ->required()
         
-           ->when('in', [18, 4], function (Form $form) 
+           ->when('4', function (Form $form) 
            {
                $form->textarea('status_comment', 'Inspector\'s comment (Remarks)')
                    ->help("Please specify with a comment");
+           })
+           ->when('18', function (Form $form) 
+               {
+                  $form->textarea('inspector_comment', 'Recommendation')
+                       ->help("Please specify with a comment");
+                  
            });
 
                     

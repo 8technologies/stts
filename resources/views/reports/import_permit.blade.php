@@ -1,7 +1,7 @@
 <?php
 $permitNumber = mt_rand(1000, 9999);
 $link = public_path('css/bootstrap-print.css');
-$form = App\Models\ImportExportPermit::where('id', $_GET['id'])->where('is_import' , 1)->first();
+$form = App\Models\ImportExportPermit::where('id', $_GET['id'])->first();
 
 $crop_varieties = App\Models\ImportExportPermitsHasCrops::where('import_export_permit_id', $form->id)->get();
 
@@ -65,7 +65,11 @@ $date = date("j F Y");
         <p>THE REPUBLIC OF UGANDA</p>
         <p>Ministry of Agriculture, Animal Industry and Fisheries</p>
         <p>P.O. Box 102, ENTEBBE</p>
+        @if($form->is_import == 1)
         <h2>SEED IMPORT PERMIT</h2>
+        @else
+        <h2>SEED EXPORT PERMIT</h2>
+        @endif
         <p class="permit-number"><strong>No.</strong> <?php echo $permitNumber; ?></p>
         <p class="r-number">[R.20(1)(c)]</p>
     </header>
