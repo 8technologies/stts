@@ -230,8 +230,9 @@ class FormSr10Controller extends AdminController
             }
 
             $id = request()->route()->parameters['form_sr10'];
+            //get all the sr10s with the same qds_declaration_id
             $model = $form->model()->find($id);
-
+            
             if (!$model->is_active) {
                 admin_error("Warning", "This form is not active. Please consult the commissioner");
                 $can_edit = false;
@@ -345,6 +346,7 @@ class FormSr10Controller extends AdminController
                         '4' => 'Rejected',
                         '7' => 'Provisional',
                         '17' => 'Skip',
+                        '5' => 'Accepted',
                     ])
                     ->required()
                     ->when('in', [7, 4, 17], function (Form $form) {
