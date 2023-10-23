@@ -46,6 +46,9 @@ class PlantingReturnController extends AdminController
             $grid->model()->where('inspector_id', '=', Admin::user()->id);          
         }
 
+        //organise table in descending order
+        $grid->model()->orderBy('id', 'desc');
+
 
        $grid->filter(function ($filter) 
         {
