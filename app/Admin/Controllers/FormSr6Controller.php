@@ -586,7 +586,7 @@ class FormSr6Controller extends AdminController
             $form->text('type', __('Cateogry'))->readonly();
             $form->text('address', __('Address'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
-            $form->display('recommendation', __('Recommendation'))->default('')->readonly();
+            $form->display('recommendation', __('Inspector\'s comment (Remarks)'))->default('')->readonly();
 
             $form->divider();
             $form->radio('status', __('Action'))

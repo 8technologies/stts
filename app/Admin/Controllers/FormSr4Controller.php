@@ -774,7 +774,7 @@ class FormSr4Controller extends AdminController
             $form->text('address', __('Address'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
             $form->text('type', __('Applicant type'))->readonly(); 
-            $form->display('recommendation', __('Recommendation'))->default('non')->readonly();
+            $form->display('recommendation', __('Inspector\'s comment (Remarks)'))->default('non')->readonly();
             $form->divider();
             $form->radio('status', __('Action'))
                 ->options
