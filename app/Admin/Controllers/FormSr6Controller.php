@@ -429,67 +429,69 @@ class FormSr6Controller extends AdminController
         });
 
         //callback when saving to check if the type is already in the database
-        $form->saving(function (Form $form) 
-        {
-            $type = $form->type;
-            $user = Auth::user();
-            $form_sr6 = FormSr6::where('type', $type)->where('administrator_id', $user->id)->first();
-            if ($form_sr6) 
+        if(Admin::user()->isRole('basic-user')){
+            $form->saving(function (Form $form) 
             {
-                
-                    if($form->isEditing())
-                    {
-                        $form = request()->route()->parameters()['form_sr6'];
-                        $formSr6 = FormSr6::find($form);
-                      //count the number of forms with the same type
-                        $count = FormSr6::where('type', $type)->where('administrator_id', $user->id)->count();
-                        if($count)
+
+                $type = $form->type;
+                $user = Auth::user();
+                $form_sr6 = FormSr6::where('type', $type)->where('administrator_id', $user->id)->first();
+                if ($form_sr6) 
+                {
+                    
+                        if($form->isEditing())
                         {
-                            //check if what is being passed to the form is the same as the one in the database
-                            if($form_sr6->id == $formSr6->id)
+                            $form = request()->route()->parameters()['form_sr6'];
+                            $formSr6 = FormSr6::find($form);
+                        //count the number of forms with the same type
+                            $count = FormSr6::where('type', $type)->where('administrator_id', $user->id)->count();
+                            if($count)
                             {
-                                return true;
+                                //check if what is being passed to the form is the same as the one in the database
+                                if($form_sr6->id == $formSr6->id)
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+
+                                    if(!Utils::can_create_form($form_sr6))
+                                    {
+                                        return  response(' <p class="alert alert-warning"> You cannot create a new SR6 form  while having PENDING one of the same category. <a href="/admin/form-sr6s"> Go Back </a></p> ');
+                                    }
+                                    
+                                    //check if its still valid
+                                    if (Utils::can_renew_app_form($form_sr6)) 
+                                    {
+                                        return  response(' <p class="alert alert-warning"> You cannot create a new SR6 form  while having VALID one of the same category. <a href="/admin/form-sr6s"> Go Back </a></p> ');   
+                                    }
+                                }
                             }
                             else
                             {
-
-                                if(!Utils::can_create_form($form_sr6))
-                                {
-                                    return  response(' <p class="alert alert-warning"> You cannot create a new SR6 form  while having PENDING one of the same category. <a href="/admin/form-sr6s"> Go Back </a></p> ');
-                                }
-                                
-                                //check if its still valid
-                                if (Utils::can_renew_app_form($form_sr6)) 
-                                {
-                                    return  response(' <p class="alert alert-warning"> You cannot create a new SR6 form  while having VALID one of the same category. <a href="/admin/form-sr6s"> Go Back </a></p> ');   
-                                }
+                                return response(' <p class="alert alert-danger">Form Not Found </p>');
                             }
+
                         }
-                        else
+                        //check if the status of the form is pending, rejected,halted or accepted
+                        if(!Utils::can_create_form($form_sr6))
                         {
-                            return response(' <p class="alert alert-danger">Form Not Found </p>');
+                            return  response(' <p class="alert alert-warning"> You cannot create a new SR6 form  while having PENDING one of the same category. <a href="/admin/form-sr6s/create"> Go Back </a></p> ');
+
+                        }
+                        
+                        //check if its still valid
+                        if (Utils::can_renew_app_form($form_sr6)) 
+                        {
+                            
+                            return  response(' <p class="alert alert-warning"> You cannot create a new SR6 form  while having VALID one of the same category. <a href="/admin/form-sr6s/create"> Go Back </a></p> ');   
                         }
 
-                    }
-                    //check if the status of the form is pending, rejected,halted or accepted
-                    if(!Utils::can_create_form($form_sr6))
-                    {
-                        return  response(' <p class="alert alert-warning"> You cannot create a new SR6 form  while having PENDING one of the same category. <a href="/admin/form-sr6s/create"> Go Back </a></p> ');
-
-                    }
                     
-                    //check if its still valid
-                    if (Utils::can_renew_app_form($form_sr6)) 
-                    {
+                }
                         
-                        return  response(' <p class="alert alert-warning"> You cannot create a new SR6 form  while having VALID one of the same category. <a href="/admin/form-sr6s/create"> Go Back </a></p> ');   
-                    }
-
-                   
-            }
-                     
-        });
-  
+            });
+        }
 
         $form->disableCreatingCheck();
         $form->tools(function (Form\Tools $tools) 
