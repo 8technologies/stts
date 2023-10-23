@@ -159,6 +159,11 @@ class OrderController extends AdminController
                 ('
                     $(".confirm-order").click(function(e) 
                     {
+                        
+                        $(this).removeClass("btn-blue");
+                        $(this).addClass("btn-primary");
+                        $(this).text("Processing...");
+                        
                         e.preventDefault();
                         var id = $(this).data("id");
                         var url = "' . route('orders.confirm', ['id' => ':id']) . '";
@@ -193,7 +198,7 @@ class OrderController extends AdminController
     public function confirm($id)
     {
         $order = Order::findOrFail($id);
-        $order->status = 6; // or whatever status code you need
+        $order->status = 6; 
         $order->save();
         return response()->json(['status' => 'success']);
     }

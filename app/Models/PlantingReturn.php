@@ -24,7 +24,7 @@ class PlantingReturn extends Model
         'registerd_dealer',
         'sub_growers_file', 
     ];
-
+    // ./storage/'
     public static function import_sub_growers($m)
     {
         if ($m === null || strlen($m->sub_growers_file) <= 3) {

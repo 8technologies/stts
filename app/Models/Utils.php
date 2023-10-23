@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Zebra_Image;
 use Encore\Admin\Facades\Admin;
+use App\Models\FormSr10;
 use Illuminate\Support\Facades\Mail;
 use Encore\Admin\Auth\Database\Administrator;
 use App\Mail\MyNotification;
@@ -653,6 +654,27 @@ class Utils
         }
     }
 
+    //get next inspection
+    public static function getNextInspection($model)
+    {
+        //dd($model->planting_return_id, $model->crop_variety_id);
+        $otherInspections = FormSr10::where('planting_return_id', $model->planting_return_id)
+        ->where('crop_variety_id', $model->crop_variety_id)
+        ->orderBy('order_number', 'asc')
+        ->get();
+
+        $nextInspection = null;
+        foreach ($otherInspections as $key => $inspection) {
+            if ($inspection->order_number > $model->order_number) {
+                $nextInspection = $inspection;
+                break;
+            }
+            
+        }
+
+        return $nextInspection;
+    }
+
 
 
 
@@ -717,6 +739,8 @@ class Utils
             return '<span class="badge badge-warning">Under review</span>';
         if ($status == 20)
             return '<span class="badge badge-success">Accepted</span>';
+        if ($status == 21)
+            return '<span class="badge badge-success">Confirmed</span>';
         return $status;
     }
 

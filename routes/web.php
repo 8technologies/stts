@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\DB;
 use App\Admin\Controllers\Charts\QualityAssurance\BarGraphTotalsController;
 use App\Admin\Controllers\Charts\QualityAssurance\PieChartTotalsController;
 use App\Admin\Controllers\OrderController;
-USE App\Admin\Controllers\FormStockExaminationRequestController;
+use App\Admin\Controllers\FormStockExaminationRequestController;
+use App\Admin\Controllers\FormSr10Controller;
 
 
 use App\Admin\Controllers\FormSr6CropQueryController;
@@ -129,6 +130,7 @@ Route::get('reset/password', [PasswordResetController::class, 'showResetPassword
 Route::post('resets/password', [PasswordResetController::class, 'submitResetPasswordForm']);
 
 Route::put('/admin/orders/{id}/confirm',  [OrderController::class, 'confirm'])->name('orders.confirm');
+Route::put('/inspections/{id}/confirm',  [FormSr10Controller::class, 'confirm'])->name('inspections.confirm');
 Route::get('/crop_varieties/{permitId}', [FormStockExaminationRequestController::class, 'crop_varieties']);
 
 

@@ -36,7 +36,9 @@ class FormSr10Controller extends AdminController
         $grid = new Grid(new FormSr10());
 
         $grid->model()->orderBy('created_at', 'desc');
-   
+
+        //get the id of the form
+        
         $grid->model()->where('planting_return_id', '!=', null);
 
         if (Admin::user()->isRole('basic-user')) 
@@ -110,8 +112,76 @@ class FormSr10Controller extends AdminController
                          return '<b>Unavailable</b>';
                      }
                  });
+
+                        //confirm inspection button
+             if(Admin::user()->isRole('basic-user')){
+                $grid->column('', __('Confirm Inspection'))->display(function () 
+                {
+                    $id = $this->id;
+                    
+                    $formSr10 = FormSr10::find($id);
+                    $confirmedClass = $formSr10 ->status == 21 ? 'btn-primary' : 'btn-blue';
+                    $confirmedText = $formSr10 ->status == 21 ? 'Confirmed' : 'Confirm';
+                    if($formSr10 ->status == 21) 
+                    {
+                        return "<a class='btn btn-xs $confirmedClass' disabled>$confirmedText</a>";
+                    }
+                    elseif($formSr10 ->status != 1){
+                        return "<a id='confirm-order-{$id}' href='" . route('orders.confirm', ['id' => $id]) . "' class='btn btn-xs $confirmedClass confirm-order' data-id='{$id}'>Confirm</a>";
+                    }
+                    else{
+                        return "<p>Processing...</p>";
+                    }
+
+                })->sortable();
+            } 
+                // css styling the button to blue initially
+                Admin::style('.btn-blue {color: #fff; background-color: #0000FF; border-color: #0000FF;}');
+                
+                //Script to edit the form status field to 2 on click of the confirm order button
+                Admin::script
+                ('
+                    $(".confirm-order").click(function(e) 
+                    {
+                        $(this).removeClass("btn-blue");
+                        $(this).addClass("btn-primary");
+                        $(this).text("Processing...");
+
+                        e.preventDefault();
+                        var id = $(this).data("id");
+                        var url = "' . route('inspections.confirm', ['id' => ':id']) . '";
+                        url = url.replace(":id", id);
+                        var button = $("#confirm-order-" + id);
+                        $.ajax(
+                            {
+                                url: url,
+                                type: "PUT",
+                                data: 
+                                {
+                                    _method: "PUT",
+                                    _token: LA.token,
+                                    status: 21,
+                                },
+                                success: function (data) 
+                                {
+                                    $.pjax.reload("#pjax-container");
+                                    toastr.success("Inspection confirmed successfully");
+                    
+                                }
+                            });
+                    });
+                ');
+                       
              
         return $grid;
+    }
+
+    public function confirm($id)
+    {
+        $sr10 = FormSr10::findOrFail($id);
+        $sr10->status = 21; 
+        $sr10->save();
+        return response()->json(['status' => 'success']);
     }
 
 
@@ -144,9 +214,9 @@ class FormSr10Controller extends AdminController
             return $this->planting_return->gps_latitude . ", " .
             $this->planting_return->gps_longitude; 
         });
-        $show->field('crop', __('Crop'))->as(function ($i) {
-            return Crop::find($this->planting_return->crop)->name;
-        });
+        // $show->field('crop', __('Crop'))->as(function ($i) {
+        //     return Crop::find($this->planting_return->crop)->name;
+        // });
         $show->field('variety', __('Variety'))->as(function ($i) {
             return $this->planting_return->variety;
         });
@@ -231,16 +301,22 @@ class FormSr10Controller extends AdminController
 
             $id = request()->route()->parameters['form_sr10'];
             //get all the sr10s with the same qds_declaration_id
-            $model = $form->model()->find($id);
+             $model = $form->model()->find($id);
+
+           
+
             
             if (!$model->is_active) {
                 admin_error("Warning", "This form is not active. Please consult the commissioner");
                 $can_edit = false;
             }
-        }
+    
 
         if ($can_edit) 
         {
+        
+            $nextInspection = Utils::getNextInspection($model);
+      
             //get the inspection stage
             $stage = $model->stage;
             //check in the inspection type table if the stage is there
@@ -321,12 +397,10 @@ class FormSr10Controller extends AdminController
             $form->textarea('general_conditions_of_crop', __('General conditions of crop'));
             $form->text('estimated_yield', __('Enter estimated yield (Kgs)'));
              
-            $form->textarea('futher_remarks', __('Enter any futher remarks'))->rules(
-                $inspection_type->is_required == 1 ? 'required' : ''
-            );
+            $form->textarea('futher_remarks', __('Enter any futher remarks'));
             $form->divider();
 
-            if($inspection_type->is_required == 1){
+            if($nextInspection == null){
                     $form->radio('status', __('Inspection decision'))
                     ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be reversed.")
                     ->options([
@@ -351,10 +425,10 @@ class FormSr10Controller extends AdminController
                     ->required()
                     ->when('in', [7, 4, 17], function (Form $form) {
                         $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                            ->help("Please specify with a comment")->required();
+                            ->help("Please specify with a comment");
                     });
             }
-        
+        }
 
 
             $form->tools(function (Form\Tools $tools) {
