@@ -116,8 +116,10 @@ class PlantingReturn extends Model
             $file = null;
             if ($m != null) {
                 if (strlen($m->sub_growers_file) > 3) {
-                    if (file_exists('./storage/' . $m->sub_growers_file)) {
-                        $file = './storage/' . $m->sub_growers_file;
+                   
+    
+                    if (file_exists('/home/technolo/stts/public/storage/'  . $m->sub_growers_file)) {
+                        $file = '/home/technolo/stts/public/storage/' . $m->sub_growers_file;
                     } else {
                         $m->sub_growers_file = null;
                         $m->save();

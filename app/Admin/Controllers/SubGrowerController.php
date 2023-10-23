@@ -263,7 +263,7 @@ class SubGrowerController extends AdminController
             $form->display('', __('Person responsible'))->default($model->name)->readonly();
             $form->display('', __('Field name'))->default($model->field_name)->readonly();
             $form->display('', __('District'))->default($model->district)->readonly();
-            $form->display('', __('Subcourty'))->default($model->subcourty)->readonly();
+            $form->display('', __('Subcounty'))->default($model->subcourty)->readonly();
             $form->display('', __('Village'))->default($model->village)->readonly();
             $form->display('', __('Crop'))->default($crop)->readonly();
             $form->display('', __('Variety'))->default($model->variety)->readonly();
