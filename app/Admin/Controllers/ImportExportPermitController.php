@@ -526,12 +526,10 @@ class ImportExportPermitController extends AdminController
                 })
                 ->when('5', function (Form $form) 
                 {
-                $lastPermitNumber = Config::get('permit.last_permit_number');
+                //$lastPermitNumber = Config::get('permit.last_permit_number');
 
-                $form->text('permit_number', __('Permit number'))
-                    ->help("Please Enter Permit number")
-                    ->default($lastPermitNumber)
-                    ->readonly();
+                $randomPermitNumber = mt_rand(1000, 9999); 
+                $form->text('permit_number', __('Permit number'))->default($randomPermitNumber)->readonly();
                     $form->date('valid_from', 'Valid from date?')->default(Carbon::now())->readonly();
                     $nextYear = Carbon::now()->addMonths(6);
                     $defaultDateTime = $nextYear->format('Y-m-d H:i:s'); // Format the date for default value
