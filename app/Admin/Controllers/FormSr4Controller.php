@@ -492,6 +492,7 @@ class FormSr4Controller extends AdminController
         }
         
         //callback when saving to check if the type is already in the database
+        if(Admin::user()->isRole('basic-user')){
         $form->saving(function (Form $form) 
         {
             $type = $form->type;
@@ -553,7 +554,7 @@ class FormSr4Controller extends AdminController
           
                      
         });
-
+    }
 
         //disable tool buttons
         $form->tools(function (Form\Tools $tools) 
