@@ -120,7 +120,7 @@ $date = date("j F Y");
     <li>The seeds shall not be distributed prior to the release of the result of the tests carried on samples unless with express permission of the head of NSCS</li>
     <li>Payment of sampling and testing fees as stipulated in the fifth schedule to seeds regulations shall be honored</li>
     <li>Fulfillment of commerce/customs requirements and adherence to regulations pertaining to importation of seed</li>
-    <li>Additional Conditions<span> {{$form->additional_conditions}}</span></li>
+    <li>Additional Conditions: <span> {{ $form->additional_conditions}}</span></li>
 </ol>
    
    
