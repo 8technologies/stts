@@ -55,6 +55,12 @@ class SeedLabel extends Model
 
             self::updated(function ($model) 
             {
+                //check if the status has changed to label printed and if yes subtract that quantity from the marketable seed quantity
+                if($model->status == 'Label Printed'){
+                   $marketable_seed = MarketableSeed::where('seed_label_id', $model->seed_label_id)->first();
+                     $marketable_seed->quantity = $marketable_seed->quantity - $model->quantity;
+                        $marketable_seed->save();
+                }
 
                 MyNotification::update_notification($model, 'SeedLabel', request()->segment(count(request()->segments())-1));
 

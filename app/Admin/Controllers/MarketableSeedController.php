@@ -109,8 +109,8 @@ class MarketableSeedController extends AdminController
                 return $value->package_size . " Kgs @ " . $value->package_price . " UGX";
             })->sortable();
 
-        $grid->column('quantity', __('Quantity'))->display(function ($item) {
-            return number_format($item);
+        $grid->column('quantity', __('Quantity(Kgs)'))->display(function ($item) {
+            return number_format($item) . " Kgs";
         })->sortable();
            
 

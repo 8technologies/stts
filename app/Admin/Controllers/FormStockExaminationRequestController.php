@@ -596,7 +596,9 @@ class FormStockExaminationRequestController extends AdminController
          //check if its an imported seed, if no, then show the field size
            
             if ($stockexam->import_export_permit_id == null){
-               $form->text('field_size', __('Enter field size (in Acres)'));
+               $form->text('field_size', __('Enter field size (in Acres)')) ->attribute([
+                'type' => 'number', 
+            ]);
             } 
             //field to capture the quantity collected
             $form->text('yield', __('Enter Lot size (in Kgs)'))

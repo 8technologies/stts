@@ -111,9 +111,10 @@ class SeedLab extends Model
             });
 
 
-            self::updated(function ($m) {
+            self::updated(function ($model) {
+                 
 
-                MyNotification::update_notification($m, 'SeedLab', request()->segment(count(request()->segments())-1));
+                MyNotification::update_notification($model, 'SeedLab', request()->segment(count(request()->segments())-1));
 
                 
 

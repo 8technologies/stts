@@ -142,7 +142,7 @@ class SeedLabelController extends AdminController
             return $value->package_size . " Kgs @ " . $value->package_price . " UGX";
         })->sortable();
 
-        $grid->column('quantity', __('Quantity'))->display(function ($var) {
+        $grid->column('quantity', __('Quantity(Kgs)'))->display(function ($var) {
             return number_format($var). " Kgs ";
         });
 
