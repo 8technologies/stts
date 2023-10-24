@@ -675,6 +675,28 @@ class Utils
         return $nextInspection;
     }
 
+        //get next inspection
+        public static function getNextQdsInspection($model)
+        {
+            //dd($model->planting_return_id, $model->crop_variety_id);
+            $otherInspections = FormSr10::where('qds_declaration_id', $model->qds_declaration_id)
+            ->where('crop_variety_id', $model->crop_variety_id)
+            ->orderBy('order_number', 'asc')
+            ->get();
+    
+            $nextInspection = null;
+            foreach ($otherInspections as $key => $inspection) {
+                if ($inspection->order_number > $model->order_number) {
+                    $nextInspection = $inspection;
+                    break;
+                }
+                
+            }
+    
+            return $nextInspection;
+        }
+    
+
 
 
 

@@ -107,7 +107,7 @@ class FormSr10 extends Model
                 }
                 if (($model->status == '17' || $model->status == '7') && $model->is_done == 0) 
                 {
-                    $next = $model->getNext();
+                    $next = $model->getNextQds();
                     if ($next != null) {
                         $model->is_done = 1;
                         $model->is_active = 0;
@@ -140,10 +140,6 @@ class FormSr10 extends Model
 
 
             }
-
-           
-       
-            
 
         });
     }

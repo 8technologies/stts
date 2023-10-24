@@ -33,12 +33,16 @@ class FormCropInspectionController extends AdminController
     
     protected function grid()
     {
+
         $grid = new Grid(new FormSr10());
         //show only records where the qds_declaration_id is not null
         $grid->model()->where('qds_declaration_id', '!=', null);
         $grid->disableFilter();
         //disable create button
         $grid->disableCreateButton();
+        
+        //organise in descending order
+        $grid->model()->orderBy('id', 'desc');
     
 
         if (Admin::user()->isRole('basic-user')) {
@@ -98,9 +102,78 @@ class FormCropInspectionController extends AdminController
         }
 
         $grid->column('min_date', __('To be submited before'));
-        return $grid;
-    }
+        //confirm inspection button
 
+        $grid->column('', __('Confirm Inspection'))->display(function () 
+        {
+            $id = $this->id;
+            
+            $formSr10 = FormSr10::find($id);
+            $confirmedClass = $formSr10 ->confirm == 1 ? 'btn-primary' : 'btn-blue';
+            $confirmedText = $formSr10 ->confirm == 1 ? 'Confirmed' : 'Confirm';
+            if($formSr10 ->confirm == 1) 
+            {
+                return "<a class='btn btn-xs $confirmedClass' disabled>$confirmedText</a>";
+            }
+            elseif($formSr10 ->status != 1){
+                if(Admin::user()->isRole('basic-user')){
+                return "<a id='confirm-order-{$id}' href='" . route('orders.confirm', ['id' => $id]) . "' class='btn btn-xs $confirmedClass confirm-order' data-id='{$id}'>Confirm</a>";
+                }
+                //else{
+                //     return "<a class='btn btn-xs $confirmedClass' disabled>$confirmedText</a>";
+                    
+                // }
+            }
+            
+        })->sortable();
+            // css styling the button to blue initially
+                Admin::style('.btn-blue {color: #fff; background-color: #0000FF; border-color: #0000FF;}');
+                
+                //Script to edit the form status field to 2 on click of the confirm order button
+                Admin::script
+                ('
+                    $(".confirm-order").click(function(e) 
+                    {
+                        $(this).removeClass("btn-blue");
+                        $(this).addClass("btn-primary");
+                        $(this).text("Processing...");
+
+                        e.preventDefault();
+                        var id = $(this).data("id");
+                        var url = "' . route('inspections.confirm', ['id' => ':id']) . '";
+                        url = url.replace(":id", id);
+                        var button = $("#confirm-order-" + id);
+                        $.ajax(
+                            {
+                                url: url,
+                                type: "PUT",
+                                data: 
+                                {
+                                    _method: "PUT",
+                                    _token: LA.token,
+                                    status: 21,
+                                },
+                                success: function (data) 
+                                {
+                                    $.pjax.reload("#pjax-container");
+                                    toastr.success("Inspection confirmed successfully");
+                    
+                                }
+                            });
+                    });
+                ');
+                        
+                       
+                  return $grid;
+              }
+          
+              public function confirm($id)
+              {
+                  $sr10 = FormSr10::findOrFail($id);
+                  $sr10->confirm = 1; 
+                  $sr10->save();
+                  return response()->json(['status' => 'success']);
+              }
 
     /**
      * Make a show builder.
@@ -215,6 +288,7 @@ class FormCropInspectionController extends AdminController
         }
 
         if ($can_edit) {
+            $nextInspection = Utils::getNextInspection($model);
              //get the inspection stage
              $stage = $model->stage;
              //check in the inspection type table if the stage is there
@@ -290,34 +364,38 @@ class FormCropInspectionController extends AdminController
             $form->textarea('general_conditions_of_crop', __('General conditions of crop'));
             $form->text('estimated_yield', __('Enter estimated yield (Kgs)'));
              
-            $form->textarea('futher_remarks', __('Enter any futher remarks'))->rules(
-                $inspection_type->is_required == 1 ? 'required' : ''
-            );
+            $form->textarea('futher_remarks', __('Enter any futher remarks'));
             $form->divider();
 
-                if($inspection_type->is_required == 1){
-                    $form->radio('status', __('Inspection decision'))
-                    ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be reversed.")
-                    ->options([
-                        '4' => 'Rejected',
-                        '5' => 'Accepted',
-                    ])
-                    ->required();
-                }else{
+              
+            if($nextInspection == null){
                 $form->radio('status', __('Inspection decision'))
-                    ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be reversed.")
-                    ->options([
-                        '4' => 'Rejected',
-                        
-                        '7' => 'Provisional',
-                        '17' => 'Skip',
-                    ])
-                    ->required()
-                    ->when('in', [7, 4, 17], function (Form $form) {
-                        $form->textarea('status_comment', 'Enter status comment (Remarks)')
-                            ->help("Please specify with a comment")->required();
-                    });
-            }
+                ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be reversed.")
+                ->options([
+                    '4' => 'Rejected',
+                    '5' => 'Accepted',
+                ])
+                ->required()
+                ->when('in', [4], function (Form $form) {
+                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                        ->help("Please specify with a comment")->rules('required');
+                });
+            
+        }else{
+            $form->radio('status', __('Inspection decision'))
+                ->help("NOTE: Once this SR1O's status is changed and submited, it cannot be reversed.")
+                ->options([
+                    '4' => 'Rejected',
+                    '7' => 'Provisional',
+                    '17' => 'Skip',
+                    '5' => 'Accepted',
+                ])
+                ->required()
+                ->when('in', [7, 4, 17], function (Form $form) {
+                    $form->textarea('status_comment', 'Enter status comment (Remarks)')
+                        ->help("Please specify with a comment");
+                });
+        }
         
 
 

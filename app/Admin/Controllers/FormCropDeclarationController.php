@@ -327,7 +327,7 @@ class FormCropDeclarationController extends AdminController
         {
             $form->display('id', __('Crop Declaration Form ID:'))->disable();
             $form->display('field_size', __('Field size (in Acres)'))->disable();
-            $form->display('seed_rate', __('Seed rate'))->disable();
+            $form->display('seed_rate', __('Seed rate(kgs per acre)'))->disable();
 
             $form->radio('status', __('Status'))
                 ->options([
