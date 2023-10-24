@@ -129,10 +129,11 @@ class FormSr10Controller extends AdminController
                     elseif($formSr10 ->status != 1){
                         if(Admin::user()->isRole('basic-user')){
                         return "<a id='confirm-order-{$id}' href='" . route('orders.confirm', ['id' => $id]) . "' class='btn btn-xs $confirmedClass confirm-order' data-id='{$id}'>Confirm</a>";
-                        }else{
-                            return "<a class='btn btn-xs $confirmedClass' disabled>$confirmedText</a>";
+                         }
+                       //else{
+                        //     return "<a class='btn btn-xs $confirmedClass' disabled>$confirmedText</a>";
                             
-                        }
+                        // }
                     }
                     
                 })->sortable();

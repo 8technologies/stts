@@ -35,7 +35,8 @@ class FormCropDeclarationController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new FormCropDeclaration());
-
+       //order by id desc
+        $grid->model()->orderBy('id', 'desc');
         
 
         $grid->disableFilter();
@@ -88,9 +89,18 @@ class FormCropDeclarationController extends AdminController
             })->sortable();
 
 
-        $grid->column('field_size', __('Field size'));
-        $grid->column('seed_rate', __('Seed rate'));
-        $grid->column('amount', __('Amount'));
+        $grid->column('field_size', __('Field size'))->display(function ($field_size) 
+        {
+            return $field_size . " Acres";
+        });
+        $grid->column('seed_rate', __('Seed rate'))->display(function ($seed_rate) 
+        {
+            return $seed_rate . " kgs per acre";
+        });
+        $grid->column('amount', __('Amount'))->display(function ($amount) 
+        {
+            return "UGX. " . $amount;
+        });
         $grid->column('status', __('Status'))->display(function ($status) 
             {
                 return Utils::tell_status($status);
@@ -165,9 +175,18 @@ class FormCropDeclarationController extends AdminController
         });
         
         $show->field('source_of_seed', __('Source of seed'));
-        $show->field('field_size', __('Field size'));
-        $show->field('seed_rate', __('Seed rate'));
-        $show->field('amount', __('Amount'));
+        $show->field('field_size', __('Field size'))->as(function ($field_size) 
+        {
+            return $field_size . " Acres";
+        });
+        $show->field('seed_rate', __('Seed rate'))->as(function ($seed_rate) 
+        {
+            return $seed_rate . " kgs per acre";
+        });
+        $show->field('amount', __('Amount'))->as(function ($amount) 
+        {
+            return "UGX. " . $amount;
+        });
         $show->field('payment_receipt', __('Payment receipt'))->file();
         $show->field('status', __('Status'))->unescape()->as(function ($status) 
         {
@@ -183,31 +202,7 @@ class FormCropDeclarationController extends AdminController
         });
         $show->field('status_comment', __('Status comment'));
 
-        if (!Admin::user()->isRole('basic-user'))
-        {
-            //button link to the show-details form
-            //check the status of the form being shown
-            if($model->status == 1 || $model->status == 2 || $model->status == null)
-            {
-            $show->field('id','Action')->unescape()->as(function ($id) 
-                {
-                return "<a href='/admin/form-crop-declarations/$id/edit' class='btn btn-primary'>Take Action</a>";
-            
-                });
-            }
-        }
-
-        if (Admin::user()->isRole('admin'))
-        {
-            //button link to the show-details form
-            
-            $show->field('id','Action')->unescape()->as(function ($id) 
-                {
-                return "<a href='/admin/form-crop-declarations/$id/edit' class='btn btn-primary'>Take Action</a>";
-            
-                });
-            
-        }
+        Utils::take_action($model, $id ,'form-crop-declarations',$show);
 
         return $show;
     }
@@ -299,7 +294,7 @@ class FormCropDeclarationController extends AdminController
 
             $form->display('id', __('Crop Declaration Form ID:'))->required();
             $form->display('field_size', __('Field (in Acres)'))->required();
-            $form->display('seed_rate', __('Seed rate'))->required();
+            $form->display('seed_rate', __('Seed rate(kgs per acre)'))->required();
             $form->divider();
             $form->radio('status', __('Action'))
                 ->options([

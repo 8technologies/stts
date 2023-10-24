@@ -37,7 +37,7 @@ class FormCropDeclaration extends Model
         self::created(function ($model) 
         {
 
-            //MyNotification::send_notification($model, 'SeedLab', request()->segment(count(request()->segments())));
+            MyNotification::send_notification($model, 'FormCropDeclaration', request()->segment(count(request()->segments())));
 
             
             
@@ -47,7 +47,7 @@ class FormCropDeclaration extends Model
         self::updated(function ($model) 
         {
 
-            //MyNotification::update_notification($model, 'SeedLab', request()->segment(count(request()->segments())-1));  
+            MyNotification::update_notification($model, 'FormCropDeclaration', request()->segment(count(request()->segments())-1));  
             
             if (Admin::user()->isRole('inspector')) 
             {
