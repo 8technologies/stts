@@ -346,7 +346,7 @@ class SeedLabController extends AdminController
             {
             $show->field('id','Action')->unescape()->as(function ($id) 
                 {
-                return "<a href='/admin/seed-labs/$id/edit' class='btn btn-primary'>Take Action</a>";
+                return "<a href='/admin/seed-labs/$id/edit' class='btn btn-primary' id='action-button-$id'>Take Action</a>";
             
                 });
             }
@@ -360,11 +360,24 @@ class SeedLabController extends AdminController
             {
             $show->field('id','Action')->unescape()->as(function ($id) 
                 {
-                return "<a href='/admin/seed-labs/$id/edit' class='btn btn-primary'>Take Action</a>";
+                return "<a href='/admin/seed-labs/$id/edit' class='btn btn-primary' id='action-button-$id'>Take Action</a>";
             
                 });
             }
         }
+
+           //script to change the button to a loading button when clicked
+           $script = <<<SCRIPT
+           $(document).ready(function(){
+               $('a.btn-primary').click(function(){
+                   var id = $(this).attr('id');
+                   $(this).html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+                   $(this).attr('disabled', 'disabled');
+                   $(this).css('cursor', 'not-allowed');
+               });
+           });
+           SCRIPT;
+           Admin::script($script);
 
         return $show;
     }
