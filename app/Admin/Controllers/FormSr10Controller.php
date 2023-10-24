@@ -114,28 +114,29 @@ class FormSr10Controller extends AdminController
                  });
 
                         //confirm inspection button
-             if(Admin::user()->isRole('basic-user')){
+          
                 $grid->column('', __('Confirm Inspection'))->display(function () 
                 {
                     $id = $this->id;
                     
                     $formSr10 = FormSr10::find($id);
-                    $confirmedClass = $formSr10 ->status == 21 ? 'btn-primary' : 'btn-blue';
-                    $confirmedText = $formSr10 ->status == 21 ? 'Confirmed' : 'Confirm';
-                    if($formSr10 ->status == 21) 
+                    $confirmedClass = $formSr10 ->confirm == 1 ? 'btn-primary' : 'btn-blue';
+                    $confirmedText = $formSr10 ->confirm == 1 ? 'Confirmed' : 'Confirm';
+                    if($formSr10 ->confirm == 1) 
                     {
                         return "<a class='btn btn-xs $confirmedClass' disabled>$confirmedText</a>";
                     }
                     elseif($formSr10 ->status != 1){
+                        if(Admin::user()->isRole('basic-user')){
                         return "<a id='confirm-order-{$id}' href='" . route('orders.confirm', ['id' => $id]) . "' class='btn btn-xs $confirmedClass confirm-order' data-id='{$id}'>Confirm</a>";
+                        }else{
+                            return "<a class='btn btn-xs $confirmedClass' disabled>$confirmedText</a>";
+                            
+                        }
                     }
-                    else{
-                        return "<p>Processing...</p>";
-                    }
-
+                    
                 })->sortable();
-            } 
-                // css styling the button to blue initially
+           // css styling the button to blue initially
                 Admin::style('.btn-blue {color: #fff; background-color: #0000FF; border-color: #0000FF;}');
                 
                 //Script to edit the form status field to 2 on click of the confirm order button
@@ -179,7 +180,7 @@ class FormSr10Controller extends AdminController
     public function confirm($id)
     {
         $sr10 = FormSr10::findOrFail($id);
-        $sr10->status = 21; 
+        $sr10->confirm = 1; 
         $sr10->save();
         return response()->json(['status' => 'success']);
     }
