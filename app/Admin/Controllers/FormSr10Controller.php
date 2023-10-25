@@ -394,6 +394,7 @@ class FormSr10Controller extends AdminController
                     'Adequate' => 'Adequate',
                     'Inadequate' => 'Inadequate'
                 ]); 
+            $form->text('plant_count', __('Plant Count'))->attribute('type', 'number');
 
                 
             $form->textarea('general_conditions_of_crop', __('General conditions of crop'));
