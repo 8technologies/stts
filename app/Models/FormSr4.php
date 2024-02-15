@@ -52,7 +52,13 @@ class FormSr4 extends  Model implements AuthenticatableContract, JWTSubject
         'have_adequate_land_for_production',
         'have_internal_quality_program',
         'receipt',
-        'accept_declaration'
+        'accept_declaration',
+        'status',
+        'inspector_id',
+        'valid_from',
+        'valid_until',
+        
+
     ];
     
     public static function boot()

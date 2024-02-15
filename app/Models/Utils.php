@@ -888,7 +888,17 @@ class Utils
     }
 
     //function to get and display the uploaded file
-
+    public static function storeUploadedPhoto($photoData)
+    {
+        list($type, $photoData) = explode(';', $photoData);
+        list(, $photoData) = explode(',', $photoData);
+        $photoData = base64_decode($photoData);
+    
+        $photoPath = 'images/' . uniqid() . '.jpg'; 
+        Storage::disk('admin')->put($photoPath, $photoData);
+        
+        return $photoPath;
+    }
 
 
     public static function make_slug($str)
