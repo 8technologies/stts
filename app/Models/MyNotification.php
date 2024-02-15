@@ -72,12 +72,14 @@ public static function get_notifications($user)
 //function to send notifications after creation
     public static function send_notification($model, $model_name, $entity)
     {
+        $name = User::find($model->administrator_id)->name;
+
         //check if $entity is a string
         if(is_string($entity))
         {
             $notification = new MyNotification();
             $notification->role_id = 2;
-            $notification->message =  "New {$entity} has been submitted by ".Admin::user()->name.' ';
+            $notification->message =  "New {$entity} has been submitted by ". $name .' ';
             $notification->link = admin_url("auth/login"); 
             $notification->form_link = admin_url("{$entity}/{$model->id}/edit");
             $notification->status = 'Unread'; 

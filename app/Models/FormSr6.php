@@ -43,11 +43,19 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
         'form_sr6_has_crops',
         'seed_grower_in_past',
         'grower_number',
+        'have_adequate_storage',
+        'previous_grower_number',
         'cropping_histroy',
         'have_adequate_isolation',
         'have_adequate_labor',
         'aware_of_minimum_standards',
         'signature_of_applicant',
+        'status',
+        'inspector_id',
+        'status_comment', 
+        'registration_number', 
+        'valid_from',
+        'valid_until',
     ];
 
     public static function boot()
@@ -72,23 +80,8 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
 
         self::updating(function($model)
         {
-            if(
-                Admin::user()->isRole('basic-user')
-            ){
-                $model->status = 1;
-                $model->inspector_id = null;
-                $model->valid_until = null;
-                $model->valid_from = null;
-                return $model;
-            }
-            if(Admin::user()->isRole('inspector')){
-                 // Check if the grower_number is already taken
-            while (static::where('grower_number', $model->grower_number)->exists()) 
-            {
-                // Generate a new unique value for the grower_number field
-                $model->grower_number = "SG" ."/". date('Y') ."/". mt_rand(10000000, 99999999);
-            }
-            }
+         
+            
         });
 
 
