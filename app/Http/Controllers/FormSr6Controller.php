@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FormSr6;
 use App\Models\Utils;
+use App\Models\Attachment;
 
 class FormSr6Controller extends Controller
 {
@@ -13,7 +14,18 @@ class FormSr6Controller extends Controller
     public function index()
     {
         // Retrieve all FormSr6 instances
-        $forms = FormSr6::all();
+        $forms = FormSr6::all()->load(['form_sr6_has_crops.crops:id,name', 'attachments']);
+
+        // Iterate over each form and transform the crop data
+        $forms->transform(function ($form) {
+            $form->form_sr6_has_crops->transform(function ($crop) {
+                $crop->name = $crop->crops->name;
+                unset($crop->crops);
+                return $crop;
+            });
+            return $form;
+        });
+        
         // Return a collection of FormSr6 resources
         return response()->json($forms);
     }
@@ -22,54 +34,8 @@ class FormSr6Controller extends Controller
      
     public function store(Request $request)
     {
-  
-         
-                 // Validate incoming request
-                 $validatedData = $request->validate([
-                    'administrator_id' => 'required',
-                    'type' => 'required',
-                    'name_of_applicant' => 'required',
-                    'company_initials' => 'required',
-                    'phone_number' => 'required',
-                    'address' => 'required',
-                    'premises_location' => 'required',
-                    'years_of_expirience' => 'required',
-                    'seed_grower_in_past' => 'required',
-                    'cropping_histroy' => 'required',
-                    'have_adequate_isolation' => 'required',
-                    'have_adequate_labor' => 'required',
-                    'aware_of_minimum_standards' => 'required',
-                    'signature_of_applicant' => 'required'
-            
-                ]);
-        
-            // Check if the user has a form already
-            $form = FormSr6::where('administrator_id', $request->administrator_id)
-            ->where('status', 5)
-            ->where('type', $request->type)
-            ->first();
-
-            if ($form) {
-            return $this->errorResponse('You have already submitted this form', 409);
-            }
-
-            // Store the uploaded photo
-            if ($request->has('receipt')) {
-            $photoPath = Utils::storeUploadedPhoto($request->file('receipt')); // Corrected input to file
-            $validatedData['receipt'] = $photoPath; // Corrected variable name to use validatedData
-            }
-
-            $form = FormSr6::create($validatedData);
-
-            // Return a single FormSr4 resource
-            return response()->json($form);
-        }
-
-         
-    public function update(Request $request, $id)
-    {
-         // Validate incoming request
-         $validatedData = $request->validate([
+        // Validate incoming request for main form data
+        $validatedData = $request->validate([
             'administrator_id' => 'required',
             'type' => 'required',
             'name_of_applicant' => 'required',
@@ -77,62 +43,170 @@ class FormSr6Controller extends Controller
             'phone_number' => 'required',
             'address' => 'required',
             'premises_location' => 'required',
-            'years_of_expirience' => 'required',
+            'years_of_expirience' => 'required', 
             'seed_grower_in_past' => 'required',
-            'cropping_histroy' => 'required',
+            'cropping_histroy' => 'required', 
             'have_adequate_isolation' => 'required',
             'have_adequate_labor' => 'required',
             'aware_of_minimum_standards' => 'required',
             'signature_of_applicant' => 'required'
-    
         ]);
-
-        
-        // Find the FormSr4 instance
-        $form = FormSr6::where('administrator_id', $id)->firstOrFail();
-
-        //if the status is not null, or 1 then return an error
-        if(($form->status != null || $form->status != 1) && $form->inspector_id != null){
-            return response()->json(['message' => 'You cannot edit this form'], 403);
+    
+        // Check if the user has already submitted this form
+        $existingForm = FormSr6::where('administrator_id', $request->administrator_id)
+            ->where('status', 5) 
+            ->where('type', $request->type)
+            ->exists();
+    
+        if ($existingForm) {
+            return $this->errorResponse('You have already submitted this form', 409);
+        }
+    
+      
+        // Create the main form instance
+        $form = FormSr6::create($validatedData);
+    
+        // Handle the crops data
+        if ($request->has('form_sr6_has_crops')) {
+            $cropsData = $request->input('form_sr6_has_crops');
+    
+            foreach ($cropsData as $cropData) {
+                // Create each crop record and associate it with the main form
+                $form->form_sr6_has_crops()->create(['form_sr6_id' => $form->id,'crop_id' => $cropData['crop_id']]);
+            }
         }
 
-        if ($request->has('receipt')) 
-        {
-            $photoPath = Utils::storeUploadedPhoto($request->input('receipt'));
-            $data['receipt'] = $photoPath;
+          // Store the uploaded photo (if exists)
+          if ($request->has('attachments')) {
+            $attachments = $request->input('attachments');
+            foreach ($attachments as $attachment) {
+                $photoPath = Utils::storeUploadedPhoto($attachment['file_path']);
+                Attachment::create(['form_sr6_id' => $form->id, 'file_path' => $photoPath]);
+            }
         }
-
-        // Update the FormSr4 instance
-        $form->update($validatedData);
-
-        // Return a single FormSr4 resource
+    
+    
+        // Return the created main form instance
         return response()->json($form);
     }
+    
 
+         
+    public function update(Request $request, $id)
+    {
+        // Find the form instance to update
+        $form = FormSr6::findOrFail($id);
+    
+        // Validate incoming request for main form data
+        $validatedData = $request->validate([
+            'administrator_id' => 'required',
+            'type' => 'required',
+            'name_of_applicant' => 'required',
+            'company_initials' => 'required',
+            'phone_number' => 'required',
+            'address' => 'required',
+            'premises_location' => 'required',
+            'years_of_expirience' => 'required', 
+            'seed_grower_in_past' => 'required',
+            'cropping_histroy' => 'required', 
+            'have_adequate_isolation' => 'required',
+            'have_adequate_labor' => 'required',
+            'aware_of_minimum_standards' => 'required',
+            'signature_of_applicant' => 'required'
+        ]);
+    
+        // Update the form instance
+        $form->update($validatedData);
+    
+        // Handle the crops data (if provided)
+        if ($request->has('form_sr6_has_crops')) {
+            $cropsData = $request->input('form_sr6_has_crops');
+    
+            // Delete existing crops associated with the form
+            $form->form_sr6_has_crops()->delete();
+    
+            // Create new crops associated with the form
+            foreach ($cropsData as $cropData) {
+                $form->form_sr6_has_crops()->create(['form_sr6_id' => $form->id, 'crop_id' => $cropData['crop_id']]);
+            }
+        }
+    
+        // Handle attachments (if provided)
+        if ($request->has('attachments')) {
+            $attachments = $request->input('attachments');
+    
+            // Delete existing attachments associated with the form
+            $form->attachments()->delete();
+    
+            // Create new attachments associated with the form
+            foreach ($attachments as $attachment) {
+                $photoPath = Utils::storeUploadedPhoto($attachment['file_path']);
+                Attachment::create(['form_sr6_id' => $form->id, 'file_path' => $photoPath]);
+            }
+        }
+    
+        // Return the updated form instance
+        return response()->json($form);
+    }
+    
     
     public function show($id)
     {
-       
-        $form = FormSr6::where('administrator_id', $id)->firstOrFail();
+        // Retrieve the form instance with related data
+        $form = FormSr6::where('administrator_id', $id)
+            ->with(['form_sr6_has_crops.crops:id,name', 'attachments']) 
+            ->firstOrFail();
       
+        // Transform the crop data to include the name instead of ID
+        $form->form_sr6_has_crops->transform(function ($crop) {
+            $crop->name = $crop->crops->name;
+            unset($crop->crops);
+            return $crop;
+        });
+    
+        // Return the JSON response
         return response()->json($form);
     }
+    
 
     public function destroy($id)
     {
-      
-        $form =  FormSr6::where('administrator_id', $id)->firstOrFail();
-
+        // Find the form instance to delete
+        $form = FormSr6::where('administrator_id', $id)->firstOrFail();
+    
+        // Delete related crop records
+        $form->form_sr6_has_crops()->delete();
+    
+        // Delete related attachment records
+        $form->attachments()->delete();
+    
+        // Delete the form instance
         $form->delete();
-        return response()->json(['message' => 'Form deleted successfully']);
+    
+        // Return a JSON response indicating success
+        return response()->json(['message' => 'Form and related records deleted successfully']);
     }
+    
 
    //get the inspections assigned to an inspector
-    public function getAssignedForms($id)
+   public function getAssignedForms($id)
     {
+        // Retrieve the forms assigned to the inspector with related data
+        $forms = FormSr6::where('inspector_id', $id)
+                        ->with(['form_sr6_has_crops.crops:id,name', 'attachments'])
+                        ->get();
+        
+        // Iterate over each form and transform the crop data
+        $forms->transform(function ($form) {
+            $form->form_sr6_has_crops->transform(function ($crop) {
+                $crop->name = $crop->crops->name;
+                unset($crop->crops);
+                return $crop;
+            });
+            return $form;
+        });
     
-        $forms = FormSr6::where('inspector_id', $id)->get();
-       
         return response()->json($forms);
     }
+
 }
