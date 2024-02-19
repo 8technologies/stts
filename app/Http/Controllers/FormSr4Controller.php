@@ -29,12 +29,20 @@ class FormSr4Controller extends Controller
            $data = $request->all();
             // Check if the user has a form already
             $form = FormSr4::where('administrator_id', $request->administrator_id)
-            ->where('status', 5)
             ->where('type', $request->type)
             ->first();
 
             if ($form) {
-            return $this->errorResponse('You have already submitted this form', 409);
+                if(!Utils::can_create_form($form))
+                {
+                    return  response()->json(['message' => 'You cannot create a new SR4 form  while having PENDING one of the same category.'], 403);
+                }
+                
+                //check if its still valid
+                if (Utils::can_renew_app_form($form)) 
+                {
+                    return  response()->json(['message' => 'You cannot create a new SR4 form  while having a VALID one of the same category.'], 403);
+                }
             }
 
             // Store the uploaded photo
@@ -55,7 +63,7 @@ class FormSr4Controller extends Controller
     public function show($id)
     {
         
-         $form = FormSr4::where('administrator_id', $id)->firstOrFail();
+         $form = FormSr4::where('administrator_id', $id)->get();
        
          return response()->json($form);
     }
@@ -68,6 +76,20 @@ class FormSr4Controller extends Controller
         
         // Find the FormSr4 instance
         $form = FormSr4::where('administrator_id', $id)->firstOrFail();
+
+        if ($form) {
+            if(!Utils::can_create_form($form))
+            {
+                return  response()->json(['message' => 'You cannot create a new SR4 form  while having PENDING one of the same category.'], 403);
+            }
+            
+            //check if its still valid
+            if (Utils::can_renew_app_form($form)) 
+            {
+                return  response()->json(['message' => 'You cannot create a new SR4 form  while having a VALID one of the same category.'], 403);
+            }
+        }
+
 
         //if the status is not null, or 1 then return an error
         if(($form->status != null || $form->status != 1) && $form->inspector_id != null){
