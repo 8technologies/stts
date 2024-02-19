@@ -212,6 +212,7 @@ class FormSr4Controller extends AdminController
         }
         $show->field('name_of_applicant', __('Name of applicant'));
         $show->field('address', __('Address'));
+        $show->field('phone_number', __('Phone number'));
         $show->field('company_initials', __('Company initials'));
         $show->field('premises_location', __('Premises location'));
         $show->field('expirience_in', __('Experience in'));

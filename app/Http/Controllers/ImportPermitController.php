@@ -4,20 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\FormQds;
+use App\Models\ImportExportPermit;
 use App\Models\Utils;
 
 
-class QdsController extends Controller
-{
-     public function index()
+class ImportPermitController extends Controller
+{     
+    public function index()
     {
-        // Retrieve all FormQds instances
-        $forms = FormQds::all()->load('qds_has_crops.crops:id,name');
+        // Retrieve all ImportExportPermit instances
+        $forms = ImportExportPermit::where('is_import', 1)->load('import_export_permits_has_crops:id,name');
 
         // Iterate over each form and transform the crop data
         $forms->transform(function ($form) {
-            $form->qds_has_crops->transform(function ($crop) {
+            $form->import_export_permits_has_crops->transform(function ($crop) {
                 $crop->name = $crop->crops->name;
                 unset($crop->crops);
                 return $crop;
@@ -25,7 +25,7 @@ class QdsController extends Controller
             return $form;
         });
         
-        // Return a collection of FormQds resources
+        // Return a collection of ImportExportPermit resources
         return response()->json($forms);
     }
   
@@ -50,26 +50,29 @@ class QdsController extends Controller
         ]);
         
         // Check if the user has already submitted this form
-        if (FormQds::where('administrator_id', $request->administrator_id)->where('status', 5)->exists()) {
-            return $this->errorResponse('You have already submitted this form', 409);
-        }
+      
+        $import = ImportExportPermit::where('type',$request->type)
+            ->where('administrator_id', $request->administrator_id)
+            ->where('is_import', 1)
+            ->first();
 
-        // Store the uploaded photos
-        $photoFields = ['signature_of_applicant', 'recommendation', 'certification'];
-        foreach ($photoFields as $field) {
-            if ($request->has($field)) {
-                $photoPath = Utils::storeUploadedPhoto($request->input($field)); 
-                $validatedData[$field] = $photoPath;
+        if ($import) {
+            if (!Utils::can_create_import($import)) {
+                return response()->json(['message' => 'You cannot create a new import permit form while having a PENDING one of the same category.']);
+            }
+
+            if (Utils::can_renew_permit($import)) {
+                return response()->json(['message' => 'You cannot create a new import permit form while having a VALID one of the same category.']);
             }
         }
-        
+
         // Create the main form instance
-        $form = FormQds::create($validatedData);
+        $form = ImportExportPermit::create($validatedData);
 
         // Handle the crops data
-        if ($request->has('qds_has_crops')) {
-            $cropsData = $request->input('qds_has_crops');
-            $form->qds_has_crops()->createMany($cropsData);
+        if ($request->has('import_export_permits_has_crops')) {
+            $cropsData = $request->input('import_export_permits_has_crops');
+            $form->import_export_permits_has_crops()->createMany($cropsData);
         }
 
         // Return the created main form instance
@@ -80,7 +83,7 @@ class QdsController extends Controller
     public function update(Request $request, $id)
     {
         // Find the form instance to update
-        $form = FormQds::findOrFail($id);
+        $form = ImportExportPermit::findOrFail($id);
         
         // Validate incoming request for main form data
         $validatedData = $request->validate([
@@ -101,22 +104,37 @@ class QdsController extends Controller
     
         // Update the main form instance
         $form->update($validatedData);
-    
-        // Handle the uploaded photos
-        $photoFields = ['signature_of_applicant', 'recommendation', 'certification'];
-        foreach ($photoFields as $field) {
-            if ($request->has($field)) {
-                $photoPath = Utils::storeUploadedPhoto($request->input($field)); 
-                $form->$field = $photoPath;
+
+        $import = ImportExportPermit::where('type',$request->type)
+            ->where('administrator_id', $request->administrator_id)
+            ->where('is_import', 1)
+            ->first();
+
+
+        $import_permit = ImportExportPermit::find($request->id);
+
+        if ($import && $import->id !== $import_permit->id) {
+            if (!Utils::can_create_import($import)) {
+                return response()->json(['message' => 'You cannot create a new import-export-permits form while having a PENDING one of the same category.']);
+            }
+
+            if (Utils::can_renew_permit($import)) {
+                return response()->json(['message' => 'You cannot create a new import-export-permits form while having a VALID one of the same category.']);
+            }
+        } elseif ($import) {
+            if (!Utils::can_create_import($import)) {
+                return response()->json(['message' => 'You cannot create a new import-export-permits form while having a PENDING one of the same category.']);
+            }
+
+            if (Utils::can_renew_permit($import)) {
+                return response()->json(['message' => 'You cannot create a new import-export-permits form while having a VALID one of the same category.']);
             }
         }
-        $form->save();
-        
         // Handle the crops data
-        if ($request->has('qds_has_crops')) {
-            $cropsData = $request->input('qds_has_crops');
-            $form->qds_has_crops()->delete(); // Delete existing crops records
-            $form->qds_has_crops()->createMany($cropsData); // Create new crop records
+        if ($request->has('import_export_permits_has_crops')) {
+            $cropsData = $request->input('import_export_permits_has_crops');
+            $form->import_export_permits_has_crops()->delete(); // Delete existing crops records
+            $form->import_export_permits_has_crops()->createMany($cropsData); // Create new crop records
         }
     
         // Return the updated main form instance
@@ -127,12 +145,13 @@ class QdsController extends Controller
     public function show($id)
     {
         // Retrieve the form instance with related data
-        $form = FormQds::where('administrator_id', $id)
-            ->with('qds_has_crops.crops:id,name') 
+        $form = ImportExportPermit::where('administrator_id', $id)
+             ->where('is_import', 1)
+            ->with('import_export_permits_has_crops.crops:id,name') 
             ->firstOrFail();
       
         // Transform the crop data to include the name instead of ID
-        $form->qds_has_crops->transform(function ($crop) {
+        $form->import_export_permits_has_crops->transform(function ($crop) {
             $crop->name = $crop->crops->name;
             unset($crop->crops);
             return $crop;
@@ -146,10 +165,10 @@ class QdsController extends Controller
     public function destroy($id)
     {
         // Find the form instance to delete
-        $form = FormQds::where('administrator_id', $id)->firstOrFail();
+        $form = ImportExportPermit::where('administrator_id', $id)->where('is_import', 1)->firstOrFail();
     
         // Delete related crop records
-        $form->qds_has_crops()->delete();
+        $form->import_export_permits_has_crops()->delete();
     
     
         // Delete the form instance
@@ -160,17 +179,18 @@ class QdsController extends Controller
     }
     
 
-   //get the inspections assigned to an inspector
-   public function getAssignedForms($id)
+    //get the inspections assigned to an inspector
+    public function getAssignedForms($id)
     {
         // Retrieve the forms assigned to the inspector with related data
-        $forms = FormQds::where('inspector_id', $id)
-                        ->with('qds_has_crops.crops:id,name')
+        $forms = ImportExportPermit::where('inspector_id', $id)
+                        ->where('is_import', 1)
+                        ->with('import_export_permits_has_crops.crops:id,name')
                         ->get();
         
         // Iterate over each form and transform the crop data
         $forms->transform(function ($form) {
-            $form->qds_has_crops->transform(function ($crop) {
+            $form->import_export_permits_has_crops->transform(function ($crop) {
                 $crop->name = $crop->crops->name;
                 unset($crop->crops);
                 return $crop;
