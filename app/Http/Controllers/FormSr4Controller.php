@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FormSr4;
+use Illuminate\Support\Facades\Storage;
+
 
 use App\Models\Utils;
 
@@ -25,6 +27,7 @@ class FormSr4Controller extends Controller
   
            // Validate incoming request
            $validatedData = $request->validate([
+            'administrator_id' => 'required',
             'type' => 'required',
             'address' => 'required',
             'company_initials' => 'required',
@@ -42,7 +45,8 @@ class FormSr4Controller extends Controller
             'souce_of_seed' => 'required',
             'have_adequate_land_for_production' => 'required',
             'have_internal_quality_program' => 'required',
-            'accept_declaration' => 'required'
+            'accept_declaration' => 'required',
+
         ]);
 
             // Check if the user has a form already
@@ -57,9 +61,11 @@ class FormSr4Controller extends Controller
 
             // Store the uploaded photo
             if ($request->has('receipt')) {
-            $photoPath = Utils::storeUploadedPhoto($request->file('receipt')); // Corrected input to file
-            $validatedData['receipt'] = $photoPath; // Corrected variable name to use validatedData
+            $photoPath = Utils::storeUploadedPhoto($request->input('receipt')); 
+            $validatedData['receipt'] = $photoPath;
             }
+
+          
 
             $form = FormSr4::create($validatedData);
 

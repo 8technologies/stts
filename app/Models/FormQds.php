@@ -26,15 +26,26 @@ class FormQds extends Model
         'farm_location',
         'premises_location', 
         'years_of_expirience',
+        'qds_has_crops',
         'have_been_qds',
+        'previous_grower_number',
         'have_adequate_storage_facility',
         'cropping_histroy',
         'have_adequate_isolation',
+        'isolation_distance',
         'have_adequate_labor',
+        'number_of_labors',
         'aware_of_minimum_standards',
         'signature_of_applicant',
         'recommendation',
-        'certificate'
+        'certification',
+        'status',
+        'valid_from',
+        'valid_until',
+        'inspector_id',
+        'grower_number',
+        'registration_number',
+       
     ];
 
 
