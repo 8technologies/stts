@@ -31,5 +31,8 @@ Route::get('assigned-qds/{id}', [QdsController::class, 'getAssignedForms']);
 Route::resource('crops', CropController::class);
 Route::get('crop-varieties', [CropController::class, 'getCropVarieties']);
 
-Route::resource('import-permits', ImportPermitController::class);
-Route::resource('export-permits', ExportPermitController::class);
+Route::resource('import-export-permits', ImportPermitController::class);
+Route::get('assigned-import-permit/{id}', [ImportPermitController::class, 'getAssignedForms']);
+
+Route::resource('import-export-permits-2', ExportPermitController::class);
+Route::get('assigned-import-permit-2/{id}', [ExportPermitController::class, 'getAssignedForms']);
