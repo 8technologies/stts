@@ -426,7 +426,7 @@ class SeedLabController extends AdminController
                 $exam = FormStockExaminationRequest::find($form->form_stock_examination_request_id);
                     if (!$exam) {
 
-                        die("Exam not found");
+                        return admin_error("Alert", "You don't have any valid stock examination request. <br>First apply for Stock Examination, wait till your application is accepted, and then return here.");
                     }
                     else{
                     $form->lot_number = $exam->lot_number;
@@ -462,7 +462,7 @@ class SeedLabController extends AdminController
             
             //field to capture stock examination form id
             $form->select('form_stock_examination_request_id', __('Select Stock examination form'))
-                ->options($names);
+                ->options($names)->required();
             $form->date('collection_date', __('Collection date'))->default(date('Y-m-d'))->required();
             $form->file('payment_receipt', __('Attach Payment receipt'))->required();
             $form->textarea('applicant_remarks', __('Enter remarks'));
