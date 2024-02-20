@@ -5,8 +5,10 @@ use App\Http\Controllers\FormSr4Controller;
 use App\Http\Controllers\FormSr6Controller;
 use App\Http\Controllers\QdsController;
 use App\Http\Controllers\CropController;
+use App\Http\Controllers\CropDeclarationController;
 use App\Http\Controllers\ImportPermitController;
 use App\Http\Controllers\ExportPermitController;
+use App\Http\Controllers\SubgrowerController;
 
 
 /*
@@ -36,3 +38,9 @@ Route::get('assigned-import-permit/{id}', [ImportPermitController::class, 'getAs
 
 Route::resource('import-export-permits-2', ExportPermitController::class);
 Route::get('assigned-import-permit-2/{id}', [ExportPermitController::class, 'getAssignedForms']);
+
+Route::resource('sub-growers', SubgrowerController::class);
+Route::get('assigned-sub-growers/{id}', [SubgrowerController::class, 'getAssignedForms']);
+
+Route::resource('form-crop-declarations', CropDeclarationController::class);
+Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::class, 'getAssignedForms']);

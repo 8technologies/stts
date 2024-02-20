@@ -228,7 +228,13 @@ class SubGrowerController extends AdminController
                 ->required();
             $form->select('variety', 'Crop Variety')->options(CropVariety::all()->pluck('name', 'name'))
                 ->required();
-            $form->text('seed_class', __('Seed class'))->required();
+            $form->select('seed_class', 'Select Seed Class')->options([
+                'Pre-Basic' => 'Pre-Basic',
+                'Certified seed' => 'Certified seed',
+                'Basic seed' => 'Basic seed',
+                'Qds' => 'Quality declared seed',
+            ])
+                ->required();
             $form->text('lot_number', __('Lot number'))->required();
             $form->text('source_of_seed', __('Source of foundation seed used'))->required();
             $form->text('field_name', __('Field name'))->required();

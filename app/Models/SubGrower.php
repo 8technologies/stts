@@ -23,6 +23,9 @@ class SubGrower extends Model
         'size',
         'crop',
         'variety',
+        'seed_class',
+        'lot_number',
+        'source_of_seed',
         'field_name', 
         'district',
         'subcourty',
@@ -34,6 +37,7 @@ class SubGrower extends Model
         'gps_latitude',
         'gps_longitude',
         'detail',
+        'status',
     ];
 
   
@@ -114,10 +118,11 @@ class SubGrower extends Model
 
             // ... code here
            // MyNotification::update_notification($sr10, 'SubGrower', request()->segment(count(request()->segments())-1));
+           $user = Admin::user()? Admin::user() : auth('api')->user();
 
                //check if all the subgrowers with the same planting return id have been assigned to an inspector
             //check user role
-            if (Admin::user()->isRole('admin')) {
+            if ($user->isRole('admin')) {
                 $subgrowers = SubGrower::where('planting_return_id', $sr10->planting_return_id)->get();
                 $all_assigned = true;
                 foreach ($subgrowers as $sub) {
@@ -133,7 +138,7 @@ class SubGrower extends Model
                 }
             }
 
-            if (Admin::user()->isRole('inspector')) 
+            if ($user->isRole('inspector')) 
             {
 
                 $crop_var = CropVariety::find($sr10->crop);

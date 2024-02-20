@@ -21,6 +21,7 @@ class FormCropDeclaration extends Model
         'status',
         'payment_receipt',
         'form_qd_id',
+        'inspector_id',
     ];
 
     public static function boot()
@@ -49,7 +50,9 @@ class FormCropDeclaration extends Model
 
             MyNotification::update_notification($model, 'FormCropDeclaration', request()->segment(count(request()->segments())-1));  
             
-            if (Admin::user()->isRole('inspector')) 
+            $user = Admin::user() ? Admin::user() : auth('api')->user();
+
+            if ($user->isRole('inspector')) 
             {
                $model->crop_varieties->each(function ($crop_variety) use ($model) {
                 if ($crop_variety->crop->crop_inspection_types != null) 
