@@ -9,6 +9,7 @@ use App\Http\Controllers\CropDeclarationController;
 use App\Http\Controllers\ImportPermitController;
 use App\Http\Controllers\ExportPermitController;
 use App\Http\Controllers\SubgrowerController;
+use App\Http\Controllers\SeedLabController;
 
 
 /*
@@ -44,3 +45,6 @@ Route::get('assigned-sub-growers/{id}', [SubgrowerController::class, 'getAssigne
 
 Route::resource('form-crop-declarations', CropDeclarationController::class);
 Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::class, 'getAssignedForms']);
+
+Route::resource('seed-labs', SeedLabController::class);
+Route::get('assigned-seed-labs/{id}', [SeedLabController::class, 'getAssignedForms']);

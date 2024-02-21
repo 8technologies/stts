@@ -9,6 +9,21 @@ class SeedLabel extends Model
 {
     use HasFactory; 
 
+    protected $fillable =[
+        'administrator_id',
+        'seed_lab_id',
+        'seed_label_package_id',
+        'crop_variety_id',
+        'available_stock',
+        'image',
+        'applicant_remarks',
+        'receipt',
+        'quantity',
+        'status',
+        'status_comment',
+        
+    ];
+
     public function seed_lab()
     {
         return $this->belongsTo(SeedLab::class);

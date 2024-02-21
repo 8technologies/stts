@@ -31,7 +31,8 @@ class SeedLabController extends Controller
            $stock_examination = FormStockExaminationRequest::find($request->form_stock_examination_request_id);
            if (!$stock_examination) {
 
-               return admin_error("Alert", "You don't have any valid stock examination request. <br>First apply for Stock Examination, wait till your application is accepted, and then return here.");
+               
+               return response()->json(['message' => 'You don\'t have any valid stock examination request. First apply for Stock Examination, wait till your application is accepted, and then return here.']);
            }
            else{
                 $data['lot_number'] = $stock_examination->lot_number;
