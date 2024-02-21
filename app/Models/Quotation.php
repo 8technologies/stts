@@ -8,6 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Quotation extends Model
 {
     
+    protected $fillable=[
+        'administrator_id',
+        'pre_order_id',
+        'quotation_by',
+        'crop_variety_id',
+        'seed_class',
+        'quantity',
+        'price',
+        'expected_supply_date',
+        'supply_date',
+        'status',
+        'decline_reason'
+
+    ];
     public static function boot()
     {
         parent::boot();
@@ -33,4 +47,9 @@ class Quotation extends Model
             });
     }
     use HasFactory;
+
+    public function crop_variety()
+    {
+        return $this->belongsTo(CropVariety::class);
+    }
 }
