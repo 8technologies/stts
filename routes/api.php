@@ -1,5 +1,7 @@
 <?php
 
+use App\Admin\Controllers\MarketableSeedController;
+use App\Admin\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormSr4Controller;
 use App\Http\Controllers\FormSr6Controller;
@@ -10,6 +12,9 @@ use App\Http\Controllers\ImportPermitController;
 use App\Http\Controllers\ExportPermitController;
 use App\Http\Controllers\SubgrowerController;
 use App\Http\Controllers\SeedLabController;
+use App\Http\Controllers\SeedLabelController;
+use App\Http\Controllers\StockExaminationController;
+use App\Http\Controllers\StockController;
 
 
 /*
@@ -48,3 +53,23 @@ Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::c
 
 Route::resource('seed-labs', SeedLabController::class);
 Route::get('assigned-seed-labs/{id}', [SeedLabController::class, 'getAssignedForms']);
+
+Route::resource('seed-labels', SeedLabelController::class);
+Route::get('assigned-seed-labels/{id}', [SeedLabelController::class, 'getAssignedForms']);
+
+Route::resource('form-stock-examination-requests', StockExaminationController::class);
+Route::get('assigned-form-stock-examination-requests/{id}', [StockExaminationController::class, 'getAssignedForms']);
+
+Route::resource('stock-records', StockController::class);
+
+Route::resource('marketable-seeds', MarketableSeedController::class);
+
+Route::resource('products', ProductController::class);
+
+Route::resource('orders', ProductController::class);
+
+
+
+
+
+

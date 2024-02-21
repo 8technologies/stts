@@ -28,12 +28,12 @@ class SeedLabelController extends Controller
        //check if the user a validated seed lab test
         $validatedSeedLab = SeedLab::where('id', $request->seed_lab_id)->where('status', 5)->exists();
         if (!$validatedSeedLab) {
-            return $this->errorResponse('Seed lab test not validated', 409);
+            return response()->json('Seed lab test not validated', 409);
         }
         else{
             //check if the quantity provided is more than the seed lab quantity
             if($request->quantity > $validatedSeedLab->quantity){
-                return $this->errorResponse('You have a less amount of this variety compared to ' . $validatedSeedLab->quantity . ' Kgs that you have in stock', 409);
+                return response()->json('You have a less amount of this variety compared to ' . $validatedSeedLab->quantity . ' Kgs that you have in stock', 409);
             }
         }
 
@@ -41,7 +41,8 @@ class SeedLabelController extends Controller
        foreach ($photoFields as $field) {
            if ($request->has($field)) {
                $photoPath = Utils::storeUploadedPhoto($request->input($field)); 
-               $validatedData[$field] = $photoPath;
+               $data[$field] = $photoPath;
+               $data['crop_variety_id'] = $validatedSeedLab->crop_variety_id;
            }
        }
        
@@ -60,12 +61,12 @@ class SeedLabelController extends Controller
         //check if the user a validated seed lab test
          $validatedSeedLab = SeedLab::where('id', $request->seed_lab_id)->where('status', 5)->exists();
          if (!$validatedSeedLab) {
-             return $this->errorResponse('Seed lab test not validated', 409);
+             return response()->json('Seed lab test not validated', 409);
          }
          else{
              //check if the quantity provided is more than the seed lab quantity
              if($request->quantity > $validatedSeedLab->quantity){
-                 return $this->errorResponse('You have a less amount of this variety compared to ' . $validatedSeedLab->quantity . ' Kgs that you have in stock', 409);
+                 return response()->json('You have a less amount of this variety compared to ' . $validatedSeedLab->quantity . ' Kgs that you have in stock', 409);
              }
          }
  
@@ -73,7 +74,8 @@ class SeedLabelController extends Controller
         foreach ($photoFields as $field) {
             if ($request->has($field)) {
                 $photoPath = Utils::storeUploadedPhoto($request->input($field)); 
-                $validatedData[$field] = $photoPath;
+                $data[$field] = $photoPath;
+                $data['crop_variety_id'] = $validatedSeedLab->crop_variety_id;
             }
         }
         

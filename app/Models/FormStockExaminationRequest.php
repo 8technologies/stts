@@ -10,6 +10,30 @@ use Illuminate\Database\Eloquent\Model;
 class FormStockExaminationRequest extends Model
 {
     use HasFactory;
+    protected $fillable =[
+        'administrator_id',
+        'import_export_permit_id',
+        'planting_return_id',
+        'form_qds_id', 
+        'examination_category',
+        'lot_number',
+        'remarks',
+        'crop_variety_id',
+        'status',
+        'inspector_id',
+        'seed_class',
+        'seed_company_name',
+        'field_size',
+        'yield',
+        'date',
+        'purity', 
+        'germination',
+        'moisture_content',
+        'insect_damage',
+        'moldiness',
+        'noxious_weeds',
+        'status_comment',
+        ];
 
     public function user()
     {
@@ -69,7 +93,7 @@ class FormStockExaminationRequest extends Model
         });
 
         self::updated(function ($model) {
-            if (Admin::user()->isRole('inspector')) {
+          
 
                 if ($model->status == 5) {
                     $stock = new StockRecord(); 
@@ -83,7 +107,7 @@ class FormStockExaminationRequest extends Model
                     $stock->source = 'Stock examination';
                     $stock->save();
                 }
-            }
+         
             MyNotification::update_notification($model, 'FormStockExaminationRequest', request()->segment(count(request()->segments())-1));
   
 

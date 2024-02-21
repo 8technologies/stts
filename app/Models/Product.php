@@ -26,6 +26,11 @@ class Product extends Model
     }
 
 
+    //relationship with crop_variety
+    public function crop_variety()
+    {
+        return $this->belongsTo(CropVariety::class);
+    }
 
   
     public static function boot()
