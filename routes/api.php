@@ -40,6 +40,7 @@ Route::get('assigned-qds/{id}', [QdsController::class, 'getAssignedForms']);
 
 Route::resource('crops', CropController::class);
 Route::get('crop-varieties', [CropController::class, 'getCropVarieties']);
+Route::get('seed-label-packages', [CropController::class, 'getSeedLabelPackages']);
 
 Route::resource('import-export-permits', ImportPermitController::class);
 Route::get('assigned-import-permit/{id}', [ImportPermitController::class, 'getAssignedForms']);
