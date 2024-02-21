@@ -16,6 +16,7 @@ class PreOrder extends Model
         'seed_class',
         'collection_date',
         'pickup_location',
+        'inventory_status', // 'raw', 'processed'
         'detail',
         'created_at',
         'updated_at',

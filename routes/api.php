@@ -15,6 +15,7 @@ use App\Http\Controllers\SeedLabController;
 use App\Http\Controllers\SeedLabelController;
 use App\Http\Controllers\StockExaminationController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\PreOrderController;
 
 
 /*
@@ -68,6 +69,8 @@ Route::resource('products', ProductController::class);
 
 Route::resource('orders', ProductController::class);
 Route::get('assigned-orders/{id}', [ProductController::class, 'showOrdersToMe']);
+
+Route::resource('pre-orders', PreOrderController::class);
 
 
 
