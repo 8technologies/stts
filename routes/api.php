@@ -67,6 +67,7 @@ Route::resource('marketable-seeds', MarketableSeedController::class);
 Route::resource('products', ProductController::class);
 
 Route::resource('orders', ProductController::class);
+Route::get('assigned-orders/{id}', [ProductController::class, 'showOrdersToMe']);
 
 
 

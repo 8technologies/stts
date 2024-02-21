@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class OrderController extends Controller
 {
@@ -23,6 +24,19 @@ class OrderController extends Controller
     {
        $data = $request->all();
 
+       $product =  Product::find($data['product_id']);
+            if (!$product) {
+                return response()->json(['message' => 'Product not found.'], 404);
+            }
+
+            if ($product->administrator_id == $data['administrator_id']) {
+                return response()->json(['message' => 'You cannot order your own product.'], 404);
+            }
+
+            if ($product->quantity < 1) {
+                return response()->json(['message' => 'Product is out of stock.'], 404);
+            }
+
         // Create the main form instance
         $form = Order::create($data);
     
@@ -34,12 +48,35 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-    
+        $order= Order::find($id);
+
+        $product = Product::find($data['product_id']);
+        if (!$product) 
+        {
+            return response()->json(['message' => 'Product not found.'], 404);
+        }
+
+        if ($order->quantity > $product->quantity) 
+        {
+            return response()->json(['message' => 'Ooops', 'You have inadequate stock to complete this product '], 404);
+        }
+
+
+        if ($order->status == 3) 
+        {
+            //update the available_stock in the products table by getting the quantity entered and subtracting it from the available stock
+            //and save it
+            $bought_quantity =  $order->quantity;
+            $new_quantity = $product->available_stock - $bought_quantity;
+            $product->available_stock = $new_quantity;
+            $product->update();
+            
+        }
         // Update the main form instance
-         $form = Order::find($id)->update($data);
+        $order->update($data);
      
          // Return the created main form instance
-         return response()->json($form);
+         return response()->json($order);
     }
     
     
@@ -56,7 +93,7 @@ class OrderController extends Controller
     public function showOrdersToMe($id)
     {
         // Retrieve the form instance with related data
-        $form = Order::where('order_by', $id)
+        $form = Order::where('administrator_id', $id)
         ->with('crop_variety:id,name')
         ->get();
         // Return the JSON response

@@ -9,6 +9,21 @@ class Order extends Model
 {
     use HasFactory; 
 
+    protected $fillable = [
+        'administrator_id',
+        'order_by',
+        'crop_variety_id',
+        'seed_class',
+        'product_id',
+        'price',
+        'quantity',
+        'detail',
+        'payment_type',
+        'total_price',
+        'status',
+
+    ];
+
     protected $appends = [
         'crop_variety_text'
     ];
