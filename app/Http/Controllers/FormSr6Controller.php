@@ -155,7 +155,7 @@ class FormSr6Controller extends Controller
         // Retrieve the form instance with related data
         $form = FormSr6::where('administrator_id', $id)
             ->with(['form_sr6_has_crops.crops:id,name', 'attachments']) 
-            ->firstOrFail();
+            ->get();
       
         // Transform the crop data to include the name instead of ID
         $form->form_sr6_has_crops->transform(function ($crop) {
