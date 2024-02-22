@@ -2,6 +2,7 @@
 
 use App\Admin\Controllers\MarketableSeedController;
 use App\Admin\Controllers\ProductController;
+use App\Admin\Controllers\TrackAndTraceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormSr4Controller;
 use App\Http\Controllers\FormSr6Controller;
@@ -75,6 +76,12 @@ Route::get('assigned-orders/{id}', [ProductController::class, 'showOrdersToMe'])
 Route::resource('pre-orders', PreOrderController::class);
 
 Route::resource('quotations', QuotationController::class);
+
+Route::post('track', [TrackAndTraceController::class, 'track']);
+Route::get('track_details', [TrackAndTraceController::class, 'track']);
+
+Route::post('trace', [TrackAndTraceController::class, 'trace']);
+Route::get('trace', [TrackAndTraceController::class, 'trace']);
 
 
 
