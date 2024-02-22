@@ -234,6 +234,33 @@ class FormSr10 extends Model
         'is_initialized',
         'inspector',
         'crop_variety_id',
+        'sr10_number',
+        'is_final',
+        'planting_return_crop_name',
+        'seed_class',
+        'size_of_field',
+        'off_types',
+        'diseases',
+        'noxiuos_weeds',
+        'other_features',
+        'other_weeds',
+        'female_shedding',
+        'female_receptive',
+        'female_off_types',
+        'male_off_types',
+        'isolation_distance',
+        'variety',
+        'proposed_distance',
+        'general_conditions_of_crop',
+        'estimated_yield',
+        'further_remarks',
+
+
     ];
+
+    public function crop_variety()
+    {
+        return $this->belongsTo(CropVariety::class);
+    }
 
 }

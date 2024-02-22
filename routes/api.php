@@ -3,6 +3,7 @@
 use App\Admin\Controllers\MarketableSeedController;
 use App\Admin\Controllers\ProductController;
 use App\Admin\Controllers\TrackAndTraceController;
+use App\Http\Controllers\ApiAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormSr4Controller;
 use App\Http\Controllers\FormSr6Controller;
@@ -17,7 +18,10 @@ use App\Http\Controllers\SeedLabelController;
 use App\Http\Controllers\StockExaminationController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\PreOrderController;
+use App\Http\Controllers\QDSPlantInspectionController;
 use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\SR10Controller;
 
 
 /*
@@ -82,6 +86,15 @@ Route::get('track_details', [TrackAndTraceController::class, 'track']);
 
 Route::post('trace', [TrackAndTraceController::class, 'trace']);
 Route::get('trace', [TrackAndTraceController::class, 'trace']);
+
+Route::get('test', [RegistrationController::class, 'index']);
+Route::post('register', [RegistrationController::class, 'register']);
+Route::get('profile', [RegistrationController::class, 'profile']);
+Route::post('login', [RegistrationController::class, 'login']);
+
+Route::resource('form-sr10s', SR10Controller::class);
+
+Route::resource('qds-crop-inspection-2', QDSPlantInspectionController::class);
 
 
 
