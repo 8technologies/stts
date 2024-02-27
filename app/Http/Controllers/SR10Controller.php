@@ -46,9 +46,8 @@ class SR10Controller extends Controller
     
     public function show($id)
     {
-        // Retrieve the form instance with related data
-        $form =FormSr10::where('administrator_id', $id)
-        ->where('planting_return_id'!= null)
+        $form = FormSr10::where('administrator_id', $id)
+        ->whereNotNull('planting_return_id')
         ->with('crop_variety:id,name')
         ->get();
         // Return the JSON response
