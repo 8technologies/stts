@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\FormSr10;
 use Illuminate\Http\Request;
+use App\Models\PlantingReturn;
 
 class SR10Controller extends Controller
 {
@@ -43,16 +44,28 @@ class SR10Controller extends Controller
          return response()->json($sr10);
     }
     
-    
     public function show($id)
     {
         $form = FormSr10::where('administrator_id', $id)
-        ->whereNotNull('planting_return_id')
-        ->with('crop_variety:id,name')
-        ->get();
+            ->whereNotNull('planting_return_id')
+            ->with('crop_variety:id,name')
+            ->first();
+    
+        if (!$form) {
+            return response()->json(['error' => 'Form not found'], 404);
+        }
+    
+        $planting_return = PlantingReturn::find($form->planting_return_id);
+    
+        $details = [
+            'form' => $form,
+            'planting_return' => $planting_return
+        ];
+    
         // Return the JSON response
-        return response()->json($form);
+        return response()->json($details);
     }
+    
 
 
     public function destroy($id)
@@ -75,8 +88,19 @@ class SR10Controller extends Controller
         $forms =FormSr10::where('inspector', $id)
                        ->where('planting_return_id'!= null)
                         ->get();
-        
-        return response()->json($forms);
+
+                        
+        if (!$forms) {
+            return response()->json(['error' => 'Form not found'], 404);
+        }
+
+        $planting_return = PlantingReturn::get($forms->planting_return_id);
+
+        $details = [
+            'form' => $forms,
+            'planting_return' => $planting_return
+        ];
+        return response()->json($details);
     }
 
 }
