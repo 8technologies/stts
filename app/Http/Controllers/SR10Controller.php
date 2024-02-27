@@ -94,7 +94,7 @@ class SR10Controller extends Controller
             return response()->json(['error' => 'Form not found'], 404);
         }
 
-        $planting_return = PlantingReturn::get($forms->planting_return_id);
+        $planting_return = PlantingReturn::find($forms->planting_return_id);
 
         $details = [
             'form' => $forms,
