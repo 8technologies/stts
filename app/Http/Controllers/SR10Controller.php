@@ -7,6 +7,7 @@ use App\Models\FormSr10;
 use Illuminate\Http\Request;
 use App\Models\PlantingReturn;
 use App\Models\SubGrower;
+use App\Models\CropInspectionType;
 
 class SR10Controller extends Controller
 {
@@ -47,26 +48,34 @@ class SR10Controller extends Controller
     
     public function show($id)
     {
-        $form = FormSr10::where('administrator_id', $id)
+        $forms = FormSr10::where('administrator_id', $id)
             ->whereNotNull('planting_return_id')
             ->with('crop_variety:id,name')
-            ->first();
-    
-        if (!$form) 
+            ->get();
+        
+        if ($forms->isEmpty()) // Check if the collection is empty
         {
-            return response()->json(['error' => 'Form not found'], 404);
+            return response()->json(['error' => 'Forms not found'], 404);
         }
-    
-        $subgrower = Subgrower::find($form->planting_return_id);
-    
-        $details = [
-            'form' => $form,
-            'planting_return' => $subgrower
-        ];
+        
+        $details = [];
+        
+        foreach ($forms as $form) {
+            $subgrower = Subgrower::find($form->planting_return_id);
+            
+            $inspection_type = CropInspectionType::find($form->stage)->inspection_stage;
+            
+            $details[] = [
+                'form' => $form,
+                'subgrower' => $subgrower,
+                'inspection_type' => $inspection_type
+            ];
+        }
     
         // Return the JSON response
         return response()->json($details);
     }
+    
     
 
 
@@ -88,21 +97,29 @@ class SR10Controller extends Controller
     {
         // Retrieve the forms assigned to the inspector with related data
         $forms =FormSr10::where('inspector', $id)
-                       ->where('planting_return_id'!= null)
-                        ->get();
+                       ->whereNotNull('planting_return_id')
+                       ->with('crop_variety:id,name')
+                       ->get();
 
                         
-        if (!$forms) {
-            return response()->json(['error' => 'Form not found'], 404);
+        if ($forms->isEmpty()) // Check if the collection is empty
+        {
+            return response()->json(['error' => 'Forms not found'], 404);
+        }
+        
+        $details = [];
+        
+        foreach ($forms as $form) {
+            $subgrower = Subgrower::find($form->planting_return_id);
+            
+            $inspection_type = CropInspectionType::find($form->stage)->inspection_stage;
+            
+            $details[] = [
+                'form' => $form,
+                'subgrower' => $subgrower,
+                'inspection_type' => $inspection_type
+            ];
         }
 
-        $subgrower = Subgrower::find($forms->planting_return_id);
-
-        $details = [
-            'form' => $forms,
-            'planting_return' => $subgrower
-        ];
-        return response()->json($details);
     }
-
 }
