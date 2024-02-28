@@ -50,7 +50,7 @@ class StockExaminationController extends Controller
 
             if($SubGrowers->isEmpty())
             {
-                return response()->json('<div class="alert alert-danger">You cannot create a new Stock examination request if don\'t have an approved SR10 </div>');
+                return response()->json('You cannot create a new Stock examination request if don\'t have an approved SR10', 409);
 
                 
             }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FormSr10;
 use Illuminate\Http\Request;
 use App\Models\PlantingReturn;
+use App\Models\SubGrower;
 
 class SR10Controller extends Controller
 {
@@ -51,15 +52,16 @@ class SR10Controller extends Controller
             ->with('crop_variety:id,name')
             ->first();
     
-        if (!$form) {
+        if (!$form) 
+        {
             return response()->json(['error' => 'Form not found'], 404);
         }
     
-        $planting_return = PlantingReturn::find($form->planting_return_id);
+        $subgrower = Subgrower::find($form->planting_return_id);
     
         $details = [
             'form' => $form,
-            'planting_return' => $planting_return
+            'planting_return' => $subgrower
         ];
     
         // Return the JSON response
@@ -94,11 +96,11 @@ class SR10Controller extends Controller
             return response()->json(['error' => 'Form not found'], 404);
         }
 
-        $planting_return = PlantingReturn::find($forms->planting_return_id);
+        $subgrower = Subgrower::find($forms->planting_return_id);
 
         $details = [
             'form' => $forms,
-            'planting_return' => $planting_return
+            'planting_return' => $subgrower
         ];
         return response()->json($details);
     }
