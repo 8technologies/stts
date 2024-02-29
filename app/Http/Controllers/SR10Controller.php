@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\PlantingReturn;
 use App\Models\SubGrower;
 use App\Models\CropInspectionType;
+use App\Models\User;
 
 class SR10Controller extends Controller
 {
@@ -64,11 +65,14 @@ class SR10Controller extends Controller
             $subgrower = Subgrower::find($form->planting_return_id);
             
             $inspection_type = CropInspectionType::find($form->stage)->inspection_stage;
+
+            $user = User::find($form->administrator_id)->name;
             
             $details[] = [
                 'form' => $form,
                 'subgrower' => $subgrower,
-                'inspection_type' => $inspection_type
+                'inspection_type' => $inspection_type,
+                'user' => $user
             ];
         }
     
@@ -114,10 +118,13 @@ class SR10Controller extends Controller
             
             $inspection_type = CropInspectionType::find($form->stage)->inspection_stage;
             
+            $user = User::find($form->administrator_id)->name;
+            
             $details[] = [
                 'form' => $form,
                 'subgrower' => $subgrower,
-                'inspection_type' => $inspection_type
+                'inspection_type' => $inspection_type,
+                'user' => $user
             ];
         }
 
