@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Admin\Controllers;
@@ -16,7 +15,6 @@ use Encore\Admin\Form\NestedForm;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
-
 
 
 class FormCropDeclarationController extends AdminController
