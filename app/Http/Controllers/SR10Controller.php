@@ -64,7 +64,11 @@ class SR10Controller extends Controller
         foreach ($forms as $form) {
             $subgrower = Subgrower::find($form->planting_return_id);
             
-            $inspection_type = CropInspectionType::find($form->stage)->inspection_stage;
+            $inspection_type = CropInspectionType::find($form->stage);
+
+            if($inspection_type){
+                $inspection_type = $inspection_type->inspection_stage;
+            }
 
             $user = User::find($form->administrator_id)->name;
             
@@ -116,7 +120,11 @@ class SR10Controller extends Controller
         foreach ($forms as $form) {
             $subgrower = Subgrower::find($form->planting_return_id);
             
-            $inspection_type = CropInspectionType::find($form->stage)->inspection_stage;
+            $inspection_type = CropInspectionType::find($form->stage);
+
+            if($inspection_type){
+                $inspection_type = $inspection_type->inspection_stage;
+            }
             
             $user = User::find($form->administrator_id)->name;
             
