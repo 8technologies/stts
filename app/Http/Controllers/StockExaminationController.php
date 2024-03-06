@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\ImportExportPermit;
 use App\Models\SubGrower;
 use App\Models\FormSr10;
+use App\Models\ImportExportPermitsHasCrops;
+use App\Models\CropVariety;
 use App\Models\Utils;
 
 class StockExaminationController extends Controller
@@ -85,7 +87,8 @@ class StockExaminationController extends Controller
         {
                 $all_import_permits =  ImportExportPermit::where([
                     'administrator_id' => $request->administrator_id,
-                    'is_import' => 1
+                    'is_import' => 1,
+                    'status' => 5
                 ])->get();
                 
                 if($all_import_permits->isEmpty())
@@ -133,10 +136,38 @@ class StockExaminationController extends Controller
     
     public function show($id)
     {
-        // Retrieve the form instance with related data
-        $form = FormStockExaminationRequest::where('administrator_id', $id)->get();
+        // Retrieve the form instances with related data
+        $forms = FormStockExaminationRequest::where('administrator_id', $id)->get();
+    
+        $details = [];
+    
+        foreach ($forms as $form) {
+            $SubGrowers = null;
+            $verified_qds_growers = null;
+            $all_import_permits = null;
+    
+            if ($form->planting_return_id != null) {
+                $SubGrowers = SubGrower::find($form->planting_return_id);
+            }
+    
+            if ($form->form_qds_id != null) {
+                $verified_qds_growers = FormSr10::find($form->form_qds_id);
+            }
+    
+            if ($form->import_export_permit_id != null) {
+                $all_import_permits = ImportExportPermit::find($form->import_export_permit_id);
+            }
+    
+            $details[] = [
+                'form' => $form,
+                'SubGrowers' => $SubGrowers,
+                'verified_qds_growers' => $verified_qds_growers,
+                'import_permits' => $all_import_permits
+            ];
+        }
+    
         // Return the JSON response
-        return response()->json($form);
+        return response()->json($details);
     }
     
 
@@ -160,7 +191,102 @@ class StockExaminationController extends Controller
         $forms = FormStockExaminationRequest::where('inspector_id', $id)
                         ->get();
         
+           
+                        $details = [];
+    
+                        foreach ($forms as $form) {
+                            $SubGrowers = null;
+                            $verified_qds_growers = null;
+                            $all_import_permits = null;
+                    
+                            if ($form->planting_return_id != null) {
+                                $SubGrowers = SubGrower::find($form->planting_return_id);
+                            }
+                    
+                            if ($form->form_qds_id != null) {
+                                $verified_qds_growers = FormSr10::find($form->form_qds_id);
+                            }
+                    
+                            if ($form->import_export_permit_id != null) {
+                                $all_import_permits = ImportExportPermit::find($form->import_export_permit_id);
+                            }
+                    
+                            $details[] = [
+                                'form' => $form,
+                                'SubGrowers' => $SubGrowers,
+                                'verified_qds_growers' => $verified_qds_growers,
+                                'import_permits' => $all_import_permits
+                            ];
+                        }
+                    
+                        // Return the JSON response
+                        return response()->json($details);
+    }
+
+    //get accepted import permits
+    public function getAcceptedImportPermits($id)
+    {
+        // Retrieve the forms assigned to the inspector with related data
+        $forms = FormStockExaminationRequest::where(['administrator_id', $id,
+                                                    'is_import', '=', 1,
+                                                    'status', '=', 5])             
+                        ->get();
+        
+           
+                    
+    
+        // Return the JSON response
         return response()->json($forms);
     }
+
+
+    //get accepted planting returns
+    public function getAcceptedPlantingReturns($id)
+    {
+        // Retrieve the forms assigned to the inspector with related data
+        $forms =SubGrower::where(['administrator_id', $id,
+                                'status', '=', 5])             
+                        ->get();
+        
+           
+                    
+    
+        // Return the JSON response
+        return response()->json($forms);
+    }
+
+    //get accepted qds declarations
+    public function getAcceptedQdsDeclarations($id)
+    {
+        // Retrieve the forms assigned to the inspector with related data
+        $forms = FormSr10::where(['administrator_id', $id,
+                                                    'status', '=', 5,
+                                                    'is_final', '=', 1,
+                                                    'qds_declaration_id', '!=', null])             
+                        ->get();
+        
+           
+                    
+    
+        // Return the JSON response
+        return response()->json($forms);
+    }
+
+    //get crop varieties for a selected import permit
+    public function getCropVarieties($permitId)
+    {
+        // Retrieve the crop varieties based on the selected import permit
+        
+        $has_crops = ImportExportPermitsHasCrops::where('import_export_permit_id', $permitId)->get();
+        $crop_varieties = [];
+        
+        foreach ($has_crops as $crop) {
+            $crop_varieties[] = ['id' => $crop->crop_variety_id, 'text' => CropVariety::where('id', $crop->crop_variety_id)->first()->name];
+        }
+        
+        return response()->json($crop_varieties);
+    }
+    
+
 
 }

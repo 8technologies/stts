@@ -67,6 +67,10 @@ Route::get('assigned-seed-labels/{id}', [SeedLabelController::class, 'getAssigne
 
 Route::resource('form-stock-examination-requests', StockExaminationController::class);
 Route::get('assigned-form-stock-examination-requests/{id}', [StockExaminationController::class, 'getAssignedForms']);
+Route::get('get-accepted-import-permits/{id}', [StockExaminationController::class, 'getAcceptedImportPermits']);
+Route::get('get-accepted-planting-returns/{id}', [StockExaminationController::class, 'getAcceptedPlantingReturns']);
+Route::get('get-accepted-qds-declarations/{id}', [StockExaminationController::class, 'getAcceptedQdsDeclarations']);
+Route::get('get-crop-varieties/{id}', [StockExaminationController::class, 'getCropVarieties']);
 
 Route::resource('stock-records', StockController::class);
 
