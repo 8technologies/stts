@@ -93,6 +93,7 @@ Route::get('profile', [RegistrationController::class, 'profile']);
 Route::post('login', [RegistrationController::class, 'login']);
 
 Route::resource('form-sr10s', SR10Controller::class);
+Route::get('assigned-sr10s/{id}', [SR10Controller::class, 'getAssignedForms']);
 
 Route::resource('qds-crop-inspection-2', QDSPlantInspectionController::class);
 

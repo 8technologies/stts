@@ -85,8 +85,6 @@ class SR10Controller extends Controller
     }
     
     
-
-
     public function destroy($id)
     {
         // Find the form instance to delete
