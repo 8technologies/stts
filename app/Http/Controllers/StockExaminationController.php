@@ -127,9 +127,10 @@ class StockExaminationController extends Controller
         }
 
          // Create the main form instance
-         $form = FormStockExaminationRequest::find($id)->update($data);
-     
-         // Return the created main form instance
+         $form = FormStockExaminationRequest::find($id);
+         $form->update($data);
+
+         // Return the updated main form instance
          return response()->json($form);
     }
     
