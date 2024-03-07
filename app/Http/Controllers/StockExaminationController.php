@@ -227,18 +227,15 @@ class StockExaminationController extends Controller
     public function getAcceptedImportPermits($id)
     {
         // Retrieve the forms assigned to the inspector with related data
-        $forms = ImportExportPermit::where(['administrator_id', $id,
-                                                    'is_import', '=', 1,
-                                                    'status', '=', 5])             
-                        ->get();
+        $forms = ImportExportPermit::where('administrator_id', $id)
+                                    ->where('is_import', 1)
+                                    ->where('status', 5)
+                                    ->get();
         
-           
-                    
-    
         // Return the JSON response
         return response()->json($forms);
     }
-
+    
 
     //get accepted planting returns
     public function getAcceptedPlantingReturns($id)
@@ -260,9 +257,9 @@ class StockExaminationController extends Controller
     {
         // Retrieve the forms assigned to the inspector with related data
         $forms = FormSr10::where(['administrator_id', $id,
-                                                    'status', '=', 5,
-                                                    'is_final', '=', 1,
-                                                    'qds_declaration_id', '!=', null])             
+                                'status', '=', 5,
+                                'is_final', '=', 1,
+                                'qds_declaration_id', '!=', null])             
                         ->get();
         
            
