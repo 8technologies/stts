@@ -71,7 +71,7 @@ class SeedLabController extends Controller
 
 
         //return the logged in user
-        $user = auth()->user();
+        $user = auth('api')->user();
         return $user;
 
 
