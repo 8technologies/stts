@@ -227,7 +227,7 @@ class StockExaminationController extends Controller
     public function getAcceptedImportPermits($id)
     {
         // Retrieve the forms assigned to the inspector with related data
-        $forms = FormStockExaminationRequest::where(['administrator_id', $id,
+        $forms = ImportExportPermit::where(['administrator_id', $id,
                                                     'is_import', '=', 1,
                                                     'status', '=', 5])             
                         ->get();
