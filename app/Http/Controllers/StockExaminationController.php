@@ -241,34 +241,28 @@ class StockExaminationController extends Controller
     public function getAcceptedPlantingReturns($id)
     {
         // Retrieve the forms assigned to the inspector with related data
-        $forms =SubGrower::where(['administrator_id', $id,
-                                'status', '=', 5])             
-                        ->get();
-        
-           
-                    
+        $forms = SubGrower::where('administrator_id', $id)
+                          ->where('status', 5)
+                          ->get();
     
         // Return the JSON response
         return response()->json($forms);
     }
-
+    
     //get accepted qds declarations
     public function getAcceptedQdsDeclarations($id)
     {
         // Retrieve the forms assigned to the inspector with related data
-        $forms = FormSr10::where(['administrator_id', $id,
-                                'status', '=', 5,
-                                'is_final', '=', 1,
-                                'qds_declaration_id', '!=', null])             
-                        ->get();
-        
-           
-                    
+        $forms = FormSr10::where('administrator_id', $id)
+                         ->where('status', 5)
+                         ->where('is_final', 1)
+                         ->whereNotNull('qds_declaration_id')
+                         ->get();
     
         // Return the JSON response
         return response()->json($forms);
     }
-
+    
     //get crop varieties for a selected import permit
     public function getCropVarieties($permitId)
     {
