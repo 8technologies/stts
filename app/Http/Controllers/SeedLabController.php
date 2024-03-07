@@ -72,7 +72,7 @@ class SeedLabController extends Controller
 
         //return the logged in user
         $user = auth('api')->user();
-        return $user;
+        return 'hey';
 
 
         if(auth()->user()->role == 'inspector')
