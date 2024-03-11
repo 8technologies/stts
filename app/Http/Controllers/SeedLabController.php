@@ -69,10 +69,20 @@ class SeedLabController extends Controller
         // Find the SeedLab instance
         $form = SeedLab::find($id);
 
-
         //return the logged in user
-        $user = $request->user();
-        return $user;
+        $user = auth('api')->user();
+
+        //get the user's role
+        $role = 'lab_technician';
+        if($user->isRole('admin'))
+        {
+            $role = 'admin';
+        }
+        else{
+            $role = 'basic-user';
+        }
+
+        return $role;
 
 
         if(auth()->user()->role == 'inspector')
