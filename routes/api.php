@@ -62,7 +62,10 @@ Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::c
 
 //Route::resource('seed-labs', SeedLabController::class);
 
-Route::middleware('auth:api')->resource('seed-labs', SeedLabController::class);
+
+Route::middleware('auth:api')->group(function() {
+    Route::resource('seed-labs', SeedLabController::class);
+});
 Route::get('assigned-seed-labs/{id}', [SeedLabController::class, 'getAssignedForms']);
 
 Route::resource('seed-labels', SeedLabelController::class);
