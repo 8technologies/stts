@@ -124,4 +124,28 @@ class RegistrationController extends Controller
         $u->token = $token;
         return response()->json(['code' => 1, 'message' => 'User logged in successfully.', 'data' => $u]);
     }
+
+    
+    public function logout()
+    {
+        // get token
+        $token = JWTAuth::getToken();
+
+        // invalidate token
+        $invalidate = JWTAuth::invalidate($token);
+
+        if($invalidate) {
+            return response()->json([
+                'meta' => [
+                    'code' => 200,
+                    'status' => 'success',
+                    'message' => 'Successfully logged out',
+                ],
+                'data' => [],
+            ]);
+        }
+    }
+
+
+
 }

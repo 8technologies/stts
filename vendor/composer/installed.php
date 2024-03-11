@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'f5a6145d8a6f8d1ede61bc1c4764fbff10a4e701',
+        'reference' => '21d351ebb5d258ab13f24d0b42694a742b7498a9',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -586,7 +586,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'f5a6145d8a6f8d1ede61bc1c4764fbff10a4e701',
+            'reference' => '21d351ebb5d258ab13f24d0b42694a742b7498a9',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1005,6 +1005,15 @@
             'provided' => array(
                 0 => '1.0',
             ),
+        ),
+        'php-open-source-saver/jwt-auth' => array(
+            'pretty_version' => '2.1.0',
+            'version' => '2.1.0.0',
+            'reference' => '5b4e3eec31c8da03d58b64c4e28c469b334bec4c',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../php-open-source-saver/jwt-auth',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'phpoffice/phpspreadsheet' => array(
             'pretty_version' => '1.29.0',
