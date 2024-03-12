@@ -70,7 +70,7 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::resource('seed-labs', SeedLabController::class);
     //ad you can access lyogged in user infor like this
     Route::get('my-acc', function (Request $request) {
-        $me = $request->user();
+        $me = auth('api')->user();
         $sentence  = "Hello, " . $me->name . " " . $me->surname . "!";
         return response()->json(['message' => $sentence]);
     });
