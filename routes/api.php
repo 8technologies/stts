@@ -60,12 +60,12 @@ Route::get('assigned-sub-growers/{id}', [SubgrowerController::class, 'getAssigne
 Route::resource('form-crop-declarations', CropDeclarationController::class);
 Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::class, 'getAssignedForms']);
 
-//Route::resource('seed-labs', SeedLabController::class);
+Route::resource('seed-labs', SeedLabController::class);
 
 
-Route::middleware('auth:api')->group(function() {
-    Route::resource('seed-labs', SeedLabController::class);
-});
+// Route::middleware('auth:api')->group(function() {
+//     Route::resource('seed-labs', SeedLabController::class);
+// });
 Route::get('assigned-seed-labs/{id}', [SeedLabController::class, 'getAssignedForms']);
 
 Route::resource('seed-labels', SeedLabelController::class);
