@@ -29,7 +29,7 @@ class JwtMiddleware extends BaseMiddleware
     public function handle($request, Closure $next)
     {
         if (!$request->expectsJson()) {
-            return $next($request);
+            //return $next($request);
         }
 
 
@@ -42,12 +42,13 @@ class JwtMiddleware extends BaseMiddleware
 
         // If request starts with api then we will check for token
         if (!$request->is('api/*')) {
-            return $next($request);
+            //return $next($request);
         }
 
         //$request->headers->set('Authorization', $headers['authorization']);// set header in request
         try {
             //$headers = apache_request_headers(); //get header
+            //where is the tooken that we were using for testing? ??
             $headers = getallheaders(); //get header
 
             header('Content-Type: application/json');
@@ -68,6 +69,7 @@ class JwtMiddleware extends BaseMiddleware
 
             $request->headers->set('Authorization', $Authorization); // set header in request
             $request->headers->set('authorization', $Authorization); // set header in request
+            die($Authorization);
 
             $user = FacadesJWTAuth::parseToken()->authenticate();
         } catch (Exception $e) {
