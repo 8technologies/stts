@@ -22,6 +22,7 @@ use App\Http\Controllers\QDSPlantInspectionController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SR10Controller;
+use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Http\Request;
 
 
@@ -64,13 +65,11 @@ Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::c
 //Route::resource('seed-labs', SeedLabController::class);
 
 
-Route::middleware('auth:api')->group(function () {
-    $headers = getallheaders();
-    //die(json_encode($headers)); //pull these changes online,do
-    //die("testing");
+Route::middleware([JwtMiddleware::class])->group(function () {
     Route::resource('seed-labs', SeedLabController::class);
 });
-
+// Route::middleware('auth:api')->group(function () {
+// });
 Route::get('assigned-seed-labs/{id}', [SeedLabController::class, 'getAssignedForms']);
 
 Route::resource('seed-labels', SeedLabelController::class);
