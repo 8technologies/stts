@@ -71,6 +71,7 @@ class JwtMiddleware extends BaseMiddleware
 
             $user = FacadesJWTAuth::parseToken()->authenticate();
         } catch (Exception $e) {
+            return $next($request);
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
                 return response()->json(['status' => 'Token is Invalid']);
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {

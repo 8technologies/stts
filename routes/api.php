@@ -66,7 +66,14 @@ Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::c
 
 
 Route::middleware([JwtMiddleware::class])->group(function () {
+    //so, every endpoint that you need to be protected by jwt should be inside this group
     Route::resource('seed-labs', SeedLabController::class);
+    //ad you can access lyogged in user infor like this
+    Route::get('my-acc', function (Request $request) {
+        $me = $request->user();
+        $sentence  = "Hello, " . $me->name . " " . $me->surname . "!";
+        return response()->json(['message' => $sentence]);
+    });
 });
 // Route::middleware('auth:api')->group(function () {
 // });
