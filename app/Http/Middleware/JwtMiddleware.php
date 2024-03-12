@@ -69,7 +69,7 @@ class JwtMiddleware extends BaseMiddleware
 
             $request->headers->set('Authorization', $Authorization); // set header in request
             $request->headers->set('authorization', $Authorization); // set header in request
-            die($Authorization);
+            //die($Authorization);
 
             $user = FacadesJWTAuth::parseToken()->authenticate();
         } catch (Exception $e) {
