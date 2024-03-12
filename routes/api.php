@@ -35,6 +35,7 @@ use Illuminate\Http\Request;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 Route::resource('form-sr4s', FormSr4Controller::class);
 Route::get('assigned-sr4s/{id}', [FormSr4Controller::class, 'getAssignedForms']);
 
@@ -60,12 +61,16 @@ Route::get('assigned-sub-growers/{id}', [SubgrowerController::class, 'getAssigne
 Route::resource('form-crop-declarations', CropDeclarationController::class);
 Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::class, 'getAssignedForms']);
 
-Route::resource('seed-labs', SeedLabController::class);
+//Route::resource('seed-labs', SeedLabController::class);
 
 
-// Route::middleware('auth:api')->group(function() {
-//     Route::resource('seed-labs', SeedLabController::class);
-// });
+Route::middleware('auth:api')->group(function () {
+    $headers = getallheaders();
+    die(json_encode($headers));
+    die("testing");
+    Route::resource('seed-labs', SeedLabController::class);
+});
+
 Route::get('assigned-seed-labs/{id}', [SeedLabController::class, 'getAssignedForms']);
 
 Route::resource('seed-labels', SeedLabelController::class);
@@ -106,9 +111,3 @@ Route::resource('form-sr10s', SR10Controller::class);
 Route::get('assigned-sr10s/{id}', [SR10Controller::class, 'getAssignedForms']);
 
 Route::resource('qds-crop-inspection-2', QDSPlantInspectionController::class);
-
-
-
-
-
-
