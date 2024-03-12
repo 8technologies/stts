@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Date;
 use SplFileInfo;
 use stdClass;
 use Symfony\Component\VarDumper\VarDumper;
-use Illuminate\Support\Str;
 
 trait InteractsWithInput
 {
@@ -52,27 +51,18 @@ trait InteractsWithInput
      *
      * @return string|null
      */
-    // public function bearerToken()
-    // {
-    //     $header = $this->header('Authorization', '');
-
-    //     $position = strrpos($header, 'Bearer ');
-
-    //     if ($position !== false) {
-    //         $header = substr($header, $position + 7);
-
-    //         return strpos($header, ',') !== false ? strstr($header, ',', true) : $header;
-    //     }
-    // }
-
     public function bearerToken()
-{
-    $header = $this->header('Authorization', $this->header('ApiToken', ''));
+    {
+        $header = $this->header('Authorization', '');
 
-    if (Str::startsWith($header, 'Bearer ')) {
-        return Str::substr($header, 7);
+        $position = strrpos($header, 'Bearer ');
+
+        if ($position !== false) {
+            $header = substr($header, $position + 7);
+
+            return strpos($header, ',') !== false ? strstr($header, ',', true) : $header;
+        }
     }
-}
 
     /**
      * Determine if the request contains a given input item key.
