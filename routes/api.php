@@ -66,7 +66,7 @@ Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::c
 
 Route::middleware('auth:api')->group(function () {
     $headers = getallheaders();
-    die(json_encode($headers));
+    die(json_encode($headers));//pull these changes online
     die("testing");
     Route::resource('seed-labs', SeedLabController::class);
 });
