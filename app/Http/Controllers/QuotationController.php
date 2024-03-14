@@ -74,10 +74,11 @@ class QuotationController extends Controller
     public function show($id)
     {
         // Retrieve the form instance with related data
-        $form = Quotation::where('administrator', $id)
+        $form = Quotation::where('administrator_id', $id)
         ->with('crop_variety:id,name')
         ->get();
-        // Return the JSON response
+        
+
         return response()->json($form);
     }
 

@@ -13,7 +13,7 @@ class PreOrderController extends Controller
     public function index()
     {
         // Retrieve all PreOrder instances
-        $forms = PreOrder::all()->load('crop_variety:id,name');
+        $forms = PreOrder::all();
         
         // Return a collection of PreOrder resources
         return response()->json($forms);
@@ -56,8 +56,7 @@ class PreOrderController extends Controller
     public function show($id)
     {
         // Retrieve the form instance with related data
-        $form = PreOrder::where('administrator', $id)
-        ->with('crop_variety:id,name')
+        $form = PreOrder::where('administrator_id', $id)
         ->get();
         // Return the JSON response
         return response()->json($form);
