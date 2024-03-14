@@ -14,6 +14,17 @@ class Product extends Model
 {
     use Authenticatable, DefaultDatetimeFormat, HasFactory, Notifiable;
 
+    protected $fillable = [
+        'crop_variety_id',
+        'quantity',
+        'price',
+        'description',
+        'administrator_id',
+        'status',
+        'image',
+        'unit'
+    ];
+
     protected $appends = [
         'phone'
     ];

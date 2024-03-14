@@ -1,8 +1,8 @@
 <?php
 
 use App\Admin\Controllers\MarketableSeedController;
-use App\Admin\Controllers\ProductController;
-use App\Admin\Controllers\TrackAndTraceController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TrackAndTraceController;
 use App\Http\Controllers\ApiAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormSr4Controller;
@@ -12,6 +12,7 @@ use App\Http\Controllers\CropController;
 use App\Http\Controllers\CropDeclarationController;
 use App\Http\Controllers\ImportPermitController;
 use App\Http\Controllers\ExportPermitController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SubgrowerController;
 use App\Http\Controllers\SeedLabController;
 use App\Http\Controllers\SeedLabelController;
@@ -62,7 +63,7 @@ Route::get('assigned-sub-growers/{id}', [SubgrowerController::class, 'getAssigne
 Route::resource('form-crop-declarations', CropDeclarationController::class);
 Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::class, 'getAssignedForms']);
 
-//Route::resource('seed-labs', SeedLabController::class);
+Route::resource('seed-labs', SeedLabController::class);
 
 
 // Route::middleware([JwtMiddleware::class])->group(function () {
@@ -76,9 +77,9 @@ Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::c
 //         return response()->json(['message' => $sentence]);
 //     });
 // });
-Route::middleware('auth:api')->group(function () {
-    Route::resource('seed-labs', SeedLabController::class);
-});
+// Route::middleware('auth:api')->group(function () {
+//     Route::resource('seed-labs', SeedLabController::class);
+// });
 Route::get('assigned-seed-labs/{id}', [SeedLabController::class, 'getAssignedForms']);
 
 Route::resource('seed-labels', SeedLabelController::class);
@@ -97,8 +98,8 @@ Route::resource('marketable-seeds', MarketableSeedController::class);
 
 Route::resource('products', ProductController::class);
 
-Route::resource('orders', ProductController::class);
-Route::get('assigned-orders/{id}', [ProductController::class, 'showOrdersToMe']);
+Route::resource('orders', OrderController::class);
+Route::get('assigned-orders/{id}', [OrderController::class, 'showOrdersToMe']);
 
 Route::resource('pre-orders', PreOrderController::class);
 
