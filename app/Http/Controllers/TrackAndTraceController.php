@@ -69,44 +69,47 @@ class TrackAndTraceController extends Controller
       
 
 
-    public function track(Request $request)
-    {
-       
-        $seed_details = [];
-
-        if ($request->lot_number) {
-            $lot_numbers = SeedLab::where('mother_lot', $request->lot_number)->get();
-
-            if (!$lot_numbers->isEmpty()) {
-                foreach ($lot_numbers as $lot_number) {
-                    $crop_variety = CropVariety::where('id', $lot_number->crop_variety_id)
-                    ->first();
-                $crop = Crop::where('id', $crop_variety->crop_id)->value('crop_name');
-             
-                $seed_class = FormStockExaminationRequest::where('id',  $lot_number->form_stock_examination_request_id)
-                ->value('seed_class');
-        
-
-                $seed_details[] = [
-                    'crop' => $crop,
-                    'crop_variety' => $crop_variety->crop_variety_name,
-                    'mother_lot' => $lot_number->mother_lot,
-                    'lot_number' => $lot_number->lot_number,
-                    'seed_class' => $seed_class,
-                    'lab_test_number'=> $lot_number->seed_lab_test_number,
-                    'germination_capacity' => $lot_number->germination_capacity,
-                    'purity' => $lot_number->purity,
-                    'testing_methods' => $lot_number->tests_required,
-                    'test_decision'=> $lot_number->report_recommendation,
-                    'moisture' => $lot_number->moisture,
-                    'test_date' => $lot_number->updated_at,
-                ];
-                }
-            }
-        }
-
-        return response()->json(['seed_details' => $seed_details]);
-    }
-
+      public function track(Request $request)
+      {
+          $seed_details = [];
+      
+          // Check if the lot number is provided in the request
+          if ($request->has('lot_number')) {
+              // Retrieve all records with the given mother lot number
+              $lot_numbers = SeedLab::where('mother_lot', $request->lot_number)->get();
+      
+              // Check if there are any records found
+              if (!$lot_numbers->isEmpty()) {
+                  foreach ($lot_numbers as $lot_number) {
+                      // Retrieve crop variety information
+                      $crop_variety = CropVariety::where('id', $lot_number->crop_variety_id)->first();
+                      // Retrieve crop information based on crop variety
+                      $crop = Crop::where('id', $crop_variety->crop_id)->value('crop_name');
+                      // Retrieve seed class information
+                      $seed_class = FormStockExaminationRequest::where('id', $lot_number->form_stock_examination_request_id)->value('seed_class');
+      
+                      // Construct seed details array
+                      $seed_details[] = [
+                          'crop' => $crop,
+                          'crop_variety' => $crop_variety->crop_variety_name,
+                          'mother_lot' => $lot_number->mother_lot,
+                          'lot_number' => $lot_number->lot_number,
+                          'seed_class' => $seed_class,
+                          'lab_test_number' => $lot_number->seed_lab_test_number,
+                          'germination_capacity' => $lot_number->germination_capacity,
+                          'purity' => $lot_number->purity,
+                          'testing_methods' => $lot_number->tests_required,
+                          'test_decision' => $lot_number->report_recommendation,
+                          'moisture' => $lot_number->moisture,
+                          'test_date' => $lot_number->updated_at,
+                      ];
+                  }
+              }
+          }
+      
+          // Return JSON response with seed details
+          return response()->json(['seed_details' => $seed_details]);
+      }
+      
       
 }
