@@ -37,7 +37,7 @@ use Illuminate\Http\Request;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
+Route::middleware([JwtMiddleware::class])->group(function () {
 Route::resource('form-sr4s', FormSr4Controller::class);
 Route::get('assigned-sr4s/{id}', [FormSr4Controller::class, 'getAssignedForms']);
 
@@ -65,18 +65,6 @@ Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::c
 
 Route::resource('seed-labs', SeedLabController::class);
 
-
-// Route::middleware([JwtMiddleware::class])->group(function () {
-//     //so, every endpoint that you need to be protected by jwt should be inside this group
-//     Route::resource('seed-labs', SeedLabController::class);
-//     //ad you can access lyogged in user infor like this
-//     Route::get('my-acc', function (Request $request) {
-//         //die('here');
-//         $me = auth('api')->user();
-//         $sentence  = "Hello, " . $me->name . " " . $me->surname . "!";
-//         return response()->json(['message' => $sentence]);
-//     });
-// });
 // Route::middleware('auth:api')->group(function () {
 //     Route::resource('seed-labs', SeedLabController::class);
 // });
@@ -111,12 +99,16 @@ Route::get('track_details', [TrackAndTraceController::class, 'track']);
 Route::post('trace', [TrackAndTraceController::class, 'trace']);
 Route::get('trace', [TrackAndTraceController::class, 'trace']);
 
+Route::resource('form-sr10s', SR10Controller::class);
+Route::get('assigned-sr10s/{id}', [SR10Controller::class, 'getAssignedForms']);
+
+Route::resource('qds-crop-inspection-2', QDSPlantInspectionController::class);
+
+
+});
+
 Route::get('test', [RegistrationController::class, 'index']);
 Route::post('register', [RegistrationController::class, 'register']);
 Route::get('profile', [RegistrationController::class, 'profile']);
 Route::post('login', [RegistrationController::class, 'login']);
 
-Route::resource('form-sr10s', SR10Controller::class);
-Route::get('assigned-sr10s/{id}', [SR10Controller::class, 'getAssignedForms']);
-
-Route::resource('qds-crop-inspection-2', QDSPlantInspectionController::class);
