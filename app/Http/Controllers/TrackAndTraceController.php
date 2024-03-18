@@ -75,6 +75,7 @@ class TrackAndTraceController extends Controller
       
           // Check if the lot number is provided in the request
           if ($request->has('lot_number')) {
+            return($request->lot_number);
               // Retrieve all records with the given mother lot number
               $lot_numbers = SeedLab::where('mother_lot', $request->lot_number)->get();
       
