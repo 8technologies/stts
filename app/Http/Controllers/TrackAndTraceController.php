@@ -78,10 +78,10 @@ class TrackAndTraceController extends Controller
            
               // Retrieve all records with the given mother lot number
               $lot_numbers = SeedLab::where('mother_lot', $request->lot_number)->get();
-      
+              return response()->json($lot_numbers);
               // Check if there are any records found
               if (!$lot_numbers->isEmpty()) {
-                return response()->json($lot_numbers);
+               
                   foreach ($lot_numbers as $lot_number) {
                       // Retrieve crop variety information
                       $crop_variety = CropVariety::where('id', $lot_number->crop_variety_id)->first();
