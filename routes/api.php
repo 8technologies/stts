@@ -38,7 +38,7 @@ use Illuminate\Http\Request;
 |
 */
 //Route::middleware([JwtMiddleware::class])->group(function () {
- Route::middleware('auth:api')->group(function () {
+//  Route::middleware('auth:api')->group(function () {
     
         Route::resource('form-sr4s', FormSr4Controller::class);
         Route::get('assigned-sr4s/{id}', [FormSr4Controller::class, 'getAssignedForms']);
@@ -107,7 +107,7 @@ use Illuminate\Http\Request;
         Route::resource('qds-crop-inspection-2', QDSPlantInspectionController::class);
 
 
-});
+// });
 
 Route::get('test', [RegistrationController::class, 'index']);
 Route::post('register', [RegistrationController::class, 'register']);
