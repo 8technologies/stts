@@ -85,4 +85,10 @@ class StockRecord extends Model
         });
 
     }
+
+    public function crop()
+{
+    return $this->belongsTo(Crop::class);
+}
+
 }
