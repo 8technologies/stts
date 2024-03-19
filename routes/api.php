@@ -37,72 +37,74 @@ use Illuminate\Http\Request;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::middleware([JwtMiddleware::class])->group(function () {
-Route::resource('form-sr4s', FormSr4Controller::class);
-Route::get('assigned-sr4s/{id}', [FormSr4Controller::class, 'getAssignedForms']);
+//Route::middleware([JwtMiddleware::class])->group(function () {
+ Route::middleware('auth:api')->group(function () {
+    
+        Route::resource('form-sr4s', FormSr4Controller::class);
+        Route::get('assigned-sr4s/{id}', [FormSr4Controller::class, 'getAssignedForms']);
 
-Route::resource('form-sr6s', FormSr6Controller::class);
-Route::get('assigned-sr6s/{id}', [FormSr6Controller::class, 'getAssignedForms']);
+        Route::resource('form-sr6s', FormSr6Controller::class);
+        Route::get('assigned-sr6s/{id}', [FormSr6Controller::class, 'getAssignedForms']);
 
-Route::resource('form-qds', QdsController::class);
-Route::get('assigned-qds/{id}', [QdsController::class, 'getAssignedForms']);
+        Route::resource('form-qds', QdsController::class);
+        Route::get('assigned-qds/{id}', [QdsController::class, 'getAssignedForms']);
 
-Route::resource('crops', CropController::class);
-Route::get('crop-varieties', [CropController::class, 'getCropVarieties']);
-Route::get('seed-label-packages', [CropController::class, 'getSeedLabelPackages']);
+        Route::resource('crops', CropController::class);
+        Route::get('crop-varieties', [CropController::class, 'getCropVarieties']);
+        Route::get('seed-label-packages', [CropController::class, 'getSeedLabelPackages']);
 
-Route::resource('import-export-permits', ImportPermitController::class);
-Route::get('assigned-import-permit/{id}', [ImportPermitController::class, 'getAssignedForms']);
+        Route::resource('import-export-permits', ImportPermitController::class);
+        Route::get('assigned-import-permit/{id}', [ImportPermitController::class, 'getAssignedForms']);
 
-Route::resource('import-export-permits-2', ExportPermitController::class);
-Route::get('assigned-import-permit-2/{id}', [ExportPermitController::class, 'getAssignedForms']);
+        Route::resource('import-export-permits-2', ExportPermitController::class);
+        Route::get('assigned-import-permit-2/{id}', [ExportPermitController::class, 'getAssignedForms']);
 
-Route::resource('sub-growers', SubgrowerController::class);
-Route::get('assigned-sub-growers/{id}', [SubgrowerController::class, 'getAssignedForms']);
+        Route::resource('sub-growers', SubgrowerController::class);
+        Route::get('assigned-sub-growers/{id}', [SubgrowerController::class, 'getAssignedForms']);
 
-Route::resource('form-crop-declarations', CropDeclarationController::class);
-Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::class, 'getAssignedForms']);
+        Route::resource('form-crop-declarations', CropDeclarationController::class);
+        Route::get('assigned-form-crop-declarations/{id}', [CropDeclarationController::class, 'getAssignedForms']);
 
-Route::resource('seed-labs', SeedLabController::class);
+        Route::resource('seed-labs', SeedLabController::class);
 
-// Route::middleware('auth:api')->group(function () {
-//     Route::resource('seed-labs', SeedLabController::class);
-// });
-Route::get('assigned-seed-labs/{id}', [SeedLabController::class, 'getAssignedForms']);
+  
+        //     Route::resource('seed-labs', SeedLabController::class);
+        // });
+        Route::get('assigned-seed-labs/{id}', [SeedLabController::class, 'getAssignedForms']);
 
-Route::resource('seed-labels', SeedLabelController::class);
-Route::get('assigned-seed-labels/{id}', [SeedLabelController::class, 'getAssignedForms']);
+        Route::resource('seed-labels', SeedLabelController::class);
+        Route::get('assigned-seed-labels/{id}', [SeedLabelController::class, 'getAssignedForms']);
 
-Route::resource('form-stock-examination-requests', StockExaminationController::class);
-Route::get('assigned-form-stock-examination-requests/{id}', [StockExaminationController::class, 'getAssignedForms']);
-Route::get('get-accepted-import-permits/{id}', [StockExaminationController::class, 'getAcceptedImportPermits']);
-Route::get('get-accepted-planting-returns/{id}', [StockExaminationController::class, 'getAcceptedPlantingReturns']);
-Route::get('get-accepted-qds-declarations/{id}', [StockExaminationController::class, 'getAcceptedQdsDeclarations']);
-Route::get('get-crop-varieties/{id}', [StockExaminationController::class, 'getCropVarieties']);
+        Route::resource('form-stock-examination-requests', StockExaminationController::class);
+        Route::get('assigned-form-stock-examination-requests/{id}', [StockExaminationController::class, 'getAssignedForms']);
+        Route::get('get-accepted-import-permits/{id}', [StockExaminationController::class, 'getAcceptedImportPermits']);
+        Route::get('get-accepted-planting-returns/{id}', [StockExaminationController::class, 'getAcceptedPlantingReturns']);
+        Route::get('get-accepted-qds-declarations/{id}', [StockExaminationController::class, 'getAcceptedQdsDeclarations']);
+        Route::get('get-crop-varieties/{id}', [StockExaminationController::class, 'getCropVarieties']);
 
-Route::resource('stock-records', StockController::class);
+        Route::resource('stock-records', StockController::class);
 
-Route::resource('marketable-seeds', MarketableSeedController::class);
+        Route::resource('marketable-seeds', MarketableSeedController::class);
 
-Route::resource('products', ProductController::class);
+        Route::resource('products', ProductController::class);
 
-Route::resource('orders', OrderController::class);
-Route::get('assigned-orders/{id}', [OrderController::class, 'showOrdersToMe']);
+        Route::resource('orders', OrderController::class);
+        Route::get('assigned-orders/{id}', [OrderController::class, 'showOrdersToMe']);
 
-Route::resource('pre-orders', PreOrderController::class);
+        Route::resource('pre-orders', PreOrderController::class);
 
-Route::resource('quotations', QuotationController::class);
+        Route::resource('quotations', QuotationController::class);
 
-Route::post('track', [TrackAndTraceController::class, 'track']);
-Route::get('track_details', [TrackAndTraceController::class, 'track']);
+        Route::post('track', [TrackAndTraceController::class, 'track']);
+        Route::get('track_details', [TrackAndTraceController::class, 'track']);
 
-Route::post('trace', [TrackAndTraceController::class, 'trace']);
-Route::get('trace', [TrackAndTraceController::class, 'trace']);
+        Route::post('trace', [TrackAndTraceController::class, 'trace']);
+        Route::get('trace', [TrackAndTraceController::class, 'trace']);
 
-Route::resource('form-sr10s', SR10Controller::class);
-Route::get('assigned-sr10s/{id}', [SR10Controller::class, 'getAssignedForms']);
+        Route::resource('form-sr10s', SR10Controller::class);
+        Route::get('assigned-sr10s/{id}', [SR10Controller::class, 'getAssignedForms']);
 
-Route::resource('qds-crop-inspection-2', QDSPlantInspectionController::class);
+        Route::resource('qds-crop-inspection-2', QDSPlantInspectionController::class);
 
 
 });

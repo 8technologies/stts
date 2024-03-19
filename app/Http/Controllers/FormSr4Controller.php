@@ -25,6 +25,9 @@ class FormSr4Controller extends Controller
     public function store(Request $request)
     {
   
+        //get the logged in user
+        $user = auth()->user();
+        return response()->json($user);
            // Validate incoming request
            $data = $request->all();
             // Check if the user has a form already
