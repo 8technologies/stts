@@ -86,9 +86,11 @@ class StockRecord extends Model
 
     }
 
-    public function crop()
-{
-    return $this->belongsTo(Crop::class);
-}
+
+    //relationship with crop variety
+    public function crop_varieties()
+    {
+        return $this->belongsTo(Crop::class);
+    }
 
 }

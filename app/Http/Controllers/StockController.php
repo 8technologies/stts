@@ -12,7 +12,7 @@ class StockController extends Controller
     public function index()
     {
         // Retrieve all StockRecord instances
-        $forms = StockRecord::all()->load('crop_variety:id,name');
+        $forms = StockRecord::all()->load('crop_varieties:id,name');
         
         // Return a collection of StockRecord resources
         return response()->json($forms);
