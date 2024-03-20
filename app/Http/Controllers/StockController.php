@@ -21,7 +21,7 @@ class StockController extends Controller
             $crop_variety = CropVariety::find($value->crop_variety_id)->name;
             $user = User::find($value->administrator_id)->name;
             $stock[] = [
-                'id' => $value->id,
+                'id' => $value,
                 'crop_variety' => $crop_variety,
                 'user' => $user,
               
@@ -66,7 +66,7 @@ class StockController extends Controller
             $crop_variety = CropVariety::find($value->crop_variety_id)->name;
             $user = User::find($value->administrator_id)->name;
             $stock[] = [
-                'id' => $value->id,
+                'id' => $value,
                 'crop_variety' => $crop_variety,
                 'user' => $user,
               
