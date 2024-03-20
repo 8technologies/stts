@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\CropVariety;
 use App\Models\StockRecord;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class StockController extends Controller
 {
@@ -12,8 +14,19 @@ class StockController extends Controller
     public function index()
     {
         // Retrieve all StockRecord instances
-        $forms = StockRecord::all()->load('crop_varieties:id,name');
+        $forms = StockRecord::all();
         
+        $stock = [];
+        foreach ($forms as $key => $value) {
+            $crop_variety = CropVariety::find($value->crop_variety_id)->name;
+            $user = User::find($value->administrator_id)->name;
+            $stock[] = [
+                'id' => $value->id,
+                'crop_variety' => $crop_variety,
+                'user' => $user,
+              
+            ];
+        }
         // Return a collection of StockRecord resources
         return response()->json($forms);
     }
@@ -46,11 +59,19 @@ class StockController extends Controller
     public function show($id)
     {
         // Retrieve the form instance with related data
-        $form = StockRecord::where('administrator_id', $id)
-        ->with('crop_variety:id,name')
-        ->get();
-        // Return the JSON response
-        return response()->json($form);
+        $form = StockRecord::where('administrator_id', $id)->get();
+
+        $stock = [];
+        foreach ($form as $key => $value) {
+            $crop_variety = CropVariety::find($value->crop_variety_id)->name;
+            $user = User::find($value->administrator_id)->name;
+            $stock[] = [
+                'id' => $value->id,
+                'crop_variety' => $crop_variety,
+                'user' => $user,
+              
+            ];
+        }
     }
     
 
