@@ -28,7 +28,7 @@ class StockController extends Controller
             ];
         }
         // Return a collection of StockRecord resources
-        return response()->json($forms);
+        return response()->json($stock);
     }
 
       
@@ -72,6 +72,8 @@ class StockController extends Controller
               
             ];
         }
+
+        return response()->json($stock);
     }
     
 
