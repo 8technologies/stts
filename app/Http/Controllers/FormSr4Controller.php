@@ -24,44 +24,39 @@ class FormSr4Controller extends Controller
    
     public function store(Request $request)
     {
-  
-        //get the logged in user
-        $user = auth()->user();
-        return response()->json($user);
-           // Validate incoming request
-           $data = $request->all();
-            // Check if the user has a form already
-            $form = FormSr4::where('administrator_id', $request->administrator_id)
+    
+        // Validate incoming request
+        $data = $request->all();
+    
+        // Check if the user has a form already
+        $form = FormSr4::where('administrator_id', $request->administrator_id)
             ->where('type', $request->type)
             ->first();
-
-            if ($form) {
-                if(!Utils::can_create_form($form))
-                {
-                    return  response()->json(['message' => 'You cannot create a new SR4 form  while having PENDING one of the same category.'], 403);
-                }
-                
-                //check if its still valid
-                if (Utils::can_renew_app_form($form)) 
-                {
-                    return  response()->json(['message' => 'You cannot create a new SR4 form  while having a VALID one of the same category.'], 403);
-                }
+    
+        if ($form) {
+            if (!Utils::can_create_form($form)) {
+                return response()->json(['message' => 'You cannot create a new SR4 form  while having PENDING one of the same category.'], 403);
             }
-
-            // Store the uploaded photo
-            if ($request->has('receipt')) {
-            $photoPath = Utils::storeUploadedPhoto($request->input('receipt')); 
-            $data['receipt'] = $photoPath;
+    
+            // Check if it's still valid
+            if (Utils::can_renew_app_form($form)) {
+                return response()->json(['message' => 'You cannot create a new SR4 form  while having a VALID one of the same category.'], 403);
             }
-
-          
-
-            $form = FormSr4::create($data);
-
-            // Return a single FormSr4 resource
-            return response()->json($form);
         }
-
+    
+        // Store the uploaded photo if available
+        if ($request->has('receipt')) {
+            $photoPath = Utils::storeUploadedPhoto($request->input('receipt'));
+            $data['receipt'] = $photoPath;
+        }
+    
+        // Create the FormSr4 instance
+        $form = FormSr4::create($data);
+    
+        // Return a single FormSr4 resource
+        return response()->json($form);
+    }
+    
    
     public function show($id)
     {
