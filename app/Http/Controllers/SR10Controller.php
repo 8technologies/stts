@@ -134,5 +134,8 @@ class SR10Controller extends Controller
             ];
         }
 
+        // Return the JSON response
+        return response()->json($details);
+
     }
 }
