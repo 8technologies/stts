@@ -224,7 +224,7 @@ class SubGrower extends Model
                         $d['status_comment'] = "";
                         $d['planting_return_id'] = $sr10->id;
                         $d['administrator_id'] = $sr10->administrator_id;
-                        $d['inspector'] =  Admin::user()->id;
+                        $d['inspector'] =  $sr10->inspector_id;
                         $date_planted = Carbon::parse(time());
                         $date_planted->addDays(1);
                         $toDateString = $date_planted->toDateString();
