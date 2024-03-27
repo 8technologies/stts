@@ -91,8 +91,8 @@ class SubgrowerController extends Controller
                 // Check if the form has a planting return associated with it
                 if ($form->planting_return_id != null) {
                     // Retrieve the planting return details
-                    $planting_return = PlantingReturn::find($form->planting_return_id);
-                    return response()->json($form->planting_return_id);
+                    $planting_return = PlantingReturn::find(26);
+                    return response()->json($planting_return);
                     // Push form and its associated planting return details to the details array
                     $details[] = [
                         'subgrower form' => $form,
