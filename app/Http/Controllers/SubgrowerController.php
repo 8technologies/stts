@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\PlantingReturn;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\SubGrower;
 use App\Models\Utils;
 
@@ -38,17 +39,23 @@ class SubgrowerController extends Controller
        
          $details = [];
          //foreach of the forms get the planting return details
-         foreach($forms as $form)
-         {
-            if($form->planting_return_id != null){
-             $planting_return = PlantingReturn::find($form->planting_return_id);
-             $details[] = 
-             [
-                 'form' => $form,
-                 'planting_return' => $planting_return
-             ];
+         // Loop through each form
+         foreach ($forms as $form) {
+            // Check if the form has a planting return associated with it
+            if ($form->planting_return_id != null) {
+                // Retrieve the planting return details
+                $planting_return = PlantingReturn::find($form->planting_return_id);
+                $subgrower_name = User::find($form->subgrower_name)->name;
+                
+                // Push form and its associated planting return details to the details array
+                $details[] = [
+                    'subgrower form' => $form,
+                    'planting_return' => $planting_return,
+                    'subgrower_name' => $subgrower_name
+                ];
             }
-         }
+        }
+    
 
          return response()->json($details);
     }
@@ -92,11 +99,13 @@ class SubgrowerController extends Controller
                 if ($form->planting_return_id != null) {
                     // Retrieve the planting return details
                     $planting_return = PlantingReturn::find($form->planting_return_id);
+                    $subgrower_name = User::find($form->subgrower_name)->name;
                     
                     // Push form and its associated planting return details to the details array
                     $details[] = [
                         'subgrower form' => $form,
-                        'planting_return' => $planting_return
+                        'planting_return' => $planting_return,
+                        'subgrower_name' => $subgrower_name
                     ];
                 }
             }
