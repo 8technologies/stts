@@ -45,13 +45,13 @@ class SubgrowerController extends Controller
             if ($form->planting_return_id != null) {
                 // Retrieve the planting return details
                 $planting_return = PlantingReturn::find($form->planting_return_id);
-                $subgrower_name = User::find($form->subgrower_name)->name;
+                $subgrower_name = User::find($form->administrator_id)->name;
                 
                 // Push form and its associated planting return details to the details array
                 $details[] = [
                     'subgrower form' => $form,
                     'planting_return' => $planting_return,
-                    //'subgrower_name' => $subgrower_name
+                    'subgrower_name' => $subgrower_name
                 ];
             }
         }
@@ -99,13 +99,13 @@ class SubgrowerController extends Controller
                 if ($form->planting_return_id != null) {
                     // Retrieve the planting return details
                     $planting_return = PlantingReturn::find($form->planting_return_id);
-                    $subgrower_name = User::find($form->subgrower_name)->name;
+                    $subgrower_name = User::find($form->administrator_id)->name;
                     
                     // Push form and its associated planting return details to the details array
                     $details[] = [
                         'subgrower form' => $form,
                         'planting_return' => $planting_return,
-                        //'subgrower_name' => $subgrower_name
+                        'subgrower_name' => $subgrower_name
                     ];
                 }
             }
