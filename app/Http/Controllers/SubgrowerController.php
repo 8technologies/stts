@@ -40,12 +40,14 @@ class SubgrowerController extends Controller
          //foreach of the forms get the planting return details
          foreach($forms as $form)
          {
+            if($form->planting_return_id != null){
              $planting_return = PlantingReturn::find($form->planting_return_id);
              $details[] = 
              [
                  'form' => $form,
                  'planting_return' => $planting_return
              ];
+            }
          }
 
          return response()->json($details);
@@ -84,12 +86,14 @@ class SubgrowerController extends Controller
             //foreach of the forms get the planting return details
             foreach($forms as $form)
             {
+               if($form->planting_return_id != null){
                 $planting_return = PlantingReturn::find($form->planting_return_id);
                 $details[] = 
                 [
                     'form' => $form,
                     'planting_return' => $planting_return
                 ];
+               }
             }
 
             return response()->json($details);
