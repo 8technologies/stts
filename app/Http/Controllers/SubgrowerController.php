@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\PlantingReturn;
 use Illuminate\Http\Request;
 use App\Models\SubGrower;
 use App\Models\Utils;
@@ -33,9 +34,21 @@ class SubgrowerController extends Controller
     public function show($id)
     {
         
-         $form = SubGrower::where('administrator_id',$id)->get();
+         $forms = SubGrower::where('administrator_id',$id)->get();
        
-         return response()->json($form);
+         $details = [];
+         //foreach of the forms get the planting return details
+         foreach($forms as $form)
+         {
+             $planting_return = PlantingReturn::find($form->planting_return_id);
+             $details[] = 
+             [
+                 'form' => $form,
+                 'planting_return' => $planting_return
+             ];
+         }
+
+         return response()->json($details);
     }
 
     
@@ -67,7 +80,18 @@ class SubgrowerController extends Controller
         public function getAssignedForms($id)
         {
             $forms = SubGrower::where('inspector_id', $id)->get();
+            $details = [];
+            //foreach of the forms get the planting return details
+            foreach($forms as $form)
+            {
+                $planting_return = PlantingReturn::find($form->planting_return_id);
+                $details[] = 
+                [
+                    'form' => $form,
+                    'planting_return' => $planting_return
+                ];
+            }
 
-            return response()->json($forms);
+            return response()->json($details);
         }
 }
