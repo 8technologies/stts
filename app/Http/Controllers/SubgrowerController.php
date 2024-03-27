@@ -81,21 +81,28 @@ class SubgrowerController extends Controller
         //get the inspections assigned to an inspector
         public function getAssignedForms($id)
         {
+            // Retrieve forms assigned to the given inspector
             $forms = SubGrower::where('inspector_id', $id)->get();
+            
             $details = [];
-            //foreach of the forms get the planting return details
-            foreach($forms as $form)
-            {
-               if($form->planting_return_id != null){
-                $planting_return = PlantingReturn::find($form->planting_return_id);
-                $details[] = 
-                [
-                    'form' => $form,
-                    'planting_return' => $planting_return
-                ];
-               }
+        
+            // Loop through each form
+            foreach ($forms as $form) {
+                // Check if the form has a planting return associated with it
+                if ($form->planting_return_id != null) {
+                    // Retrieve the planting return details
+                    $planting_return = PlantingReturn::find($form->planting_return_id);
+                    
+                    // Push form and its associated planting return details to the details array
+                    $details[] = [
+                        'subgrower form' => $form,
+                        'planting_return' => $planting_return
+                    ];
+                }
             }
-
+        
+            // Return details as JSON response
             return response()->json($details);
         }
+        
 }
