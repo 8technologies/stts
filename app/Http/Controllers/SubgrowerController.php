@@ -51,7 +51,7 @@ class SubgrowerController extends Controller
                 $details[] = [
                     'subgrower form' => $form,
                     'planting_return' => $planting_return,
-                    'subgrower_name' => $subgrower_name
+                    //'subgrower_name' => $subgrower_name
                 ];
             }
         }
@@ -105,7 +105,7 @@ class SubgrowerController extends Controller
                     $details[] = [
                         'subgrower form' => $form,
                         'planting_return' => $planting_return,
-                        'subgrower_name' => $subgrower_name
+                        //'subgrower_name' => $subgrower_name
                     ];
                 }
             }
