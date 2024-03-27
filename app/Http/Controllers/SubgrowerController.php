@@ -54,6 +54,14 @@ class SubgrowerController extends Controller
                     'subgrower_name' => $subgrower_name
                 ];
             }
+            else{
+                $subgrower_name = User::find($form->administrator_id)->name;
+                $details[] = [
+                    'subgrower form' => $form,
+                    'subgrower_name' => $subgrower_name,
+                    'planting_return' => null
+                ];
+            }
         }
     
 
@@ -106,6 +114,14 @@ class SubgrowerController extends Controller
                         'subgrower form' => $form,
                         'planting_return' => $planting_return,
                         'subgrower_name' => $subgrower_name
+                    ];
+                }
+                else{
+                    $subgrower_name = User::find($form->administrator_id)->name;
+                    $details[] = [
+                        'subgrower form' => $form,
+                        'subgrower_name' => $subgrower_name,
+                        'planting_return' => null
                     ];
                 }
             }
