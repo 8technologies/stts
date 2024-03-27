@@ -122,7 +122,7 @@ class SubGrower extends Model
 
                //check if all the subgrowers with the same planting return id have been assigned to an inspector
             //check user role
-            if ($user->isRole('admin')) 
+            if ($sr10->status == 2) 
             {
                 $subgrowers = SubGrower::where('planting_return_id', $sr10->planting_return_id)->get();
                 $all_assigned = true;
@@ -139,7 +139,7 @@ class SubGrower extends Model
                 }
             }
 
-            if ($user->isRole('inspector')) 
+            if ($sr10->status == 16) 
             {
 
                 $crop_var = CropVariety::find($sr10->crop);
