@@ -12,8 +12,8 @@ class QDSPlantInspectionController extends Controller
     public function index()
     {
         // Retrieve allFormSr10 instances
-        $forms =FormSr10::where('qds_declaration_id'!= null)->load('crop_variety:id,name');
-        
+        $forms = FormSr10::whereNotNull('qds_declaration_id')->with('crop_variety:id,name')->get();
+
         // Return a collection ofFormSr10 resources
         return response()->json($forms);
     }
@@ -47,7 +47,7 @@ class QDSPlantInspectionController extends Controller
     public function show($id)
     {
         // Retrieve the form instance with related data
-        $form =FormSr10::where('administrator', $id)
+        $form =FormSr10::where('administrator_id', $id)
         ->where('qds_declaration_id'!= null)
         ->with('crop_variety:id,name')
         ->get();
