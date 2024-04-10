@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\CropInspectionType;
+use App\Models\FormCropDeclaration;
 use Illuminate\Http\Request;
 use App\Models\FormSr10;
+use App\Models\User;
 
 class QDSPlantInspectionController extends Controller
 {
@@ -79,8 +82,37 @@ class QDSPlantInspectionController extends Controller
                         ->whereNotNull('qds_declaration_id')
                         ->with('crop_variety:id,name')
                         ->get();
-       return response()->json($forms);
-   }
-   
-
+                if ($forms->isEmpty()) // Check if the collection is empty
+                {
+                    return response()->json(['error' => 'Forms not found'], 404);
+                }
+                
+                $details = [];
+                
+                foreach ($forms as $form) {
+                    $subgrower = FormCropDeclaration::find($form->qds_declaration_id);
+                    
+                    $inspection_type = CropInspectionType::find($form->stage);
+        
+                    if($inspection_type){
+                        $inspection_type = $inspection_type->inspection_stage;
+                    }
+                    
+                    $user = User::find($form->administrator_id)->name;
+                    
+                    $details[] = [
+                        'form' => $form,
+                        'QDSDeclaration' => $subgrower,
+                        'inspection_type' => $inspection_type,
+                        'user' => $user
+                    ];
+                }
+        
+                // Return the JSON response
+                return response()->json($details);
+        
+            }
 }
+
+
+
