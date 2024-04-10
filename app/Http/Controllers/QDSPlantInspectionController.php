@@ -77,8 +77,8 @@ class QDSPlantInspectionController extends Controller
        // Retrieve the forms assigned to the inspector with related data
        $forms = FormSr10::where('inspector', $id)
                         ->whereNotNull('qds_declaration_id')
+                        ->with('crop_variety:id,name')
                         ->get();
-       
        return response()->json($forms);
    }
    
