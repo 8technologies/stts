@@ -105,6 +105,8 @@ use Illuminate\Http\Request;
         Route::get('assigned-sr10s/{id}', [SR10Controller::class, 'getAssignedForms']);
 
         Route::resource('qds-crop-inspection-2', QDSPlantInspectionController::class);
+        Route::get('assigned-qds-inspection/{id}', [SR10Controller::class, 'getAssignedForms']);
+
 
 
 // });
