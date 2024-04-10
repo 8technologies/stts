@@ -73,13 +73,14 @@ class QDSPlantInspectionController extends Controller
 
    //get the inspections assigned to an inspector
    public function getAssignedForms($id)
-    {
-        // Retrieve the forms assigned to the inspector with related data
-        $forms =FormSr10::where('inspector', $id)
-                       ->where('qds_declaration_id'!= null)
+   {
+       // Retrieve the forms assigned to the inspector with related data
+       $forms = FormSr10::where('inspector', $id)
+                        ->whereNotNull('qds_declaration_id')
                         ->get();
-        
-        return response()->json($forms);
-    }
+       
+       return response()->json($forms);
+   }
+   
 
 }
