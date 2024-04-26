@@ -226,9 +226,9 @@ class SeedLabController extends Controller
         }
 
         //get the inspections that have been sent to the lab
-        public function getFormsSentToLab($id)
+        public function getFormsSentToLab()
         {
-            $forms = SeedLab::where('lab_technician_id', $id)->get();
+            $forms = SeedLab::where('status', 10)->get();
 
             return response()->json($forms);
         }
