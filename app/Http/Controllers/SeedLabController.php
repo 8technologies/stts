@@ -224,4 +224,24 @@ class SeedLabController extends Controller
 
             return response()->json($forms);
         }
+
+        //get the inspections that have been sent to the lab
+        public function getFormsSentToLab($id)
+        {
+            $forms = SeedLab::where('lab_technician_id', $id)->get();
+
+            return response()->json($forms);
+        }
+
+        //function to update the lab results
+        public function updateLabResults(Request $request, $id)
+        {
+            
+            $data = $request->all();
+            $form = SeedLab::find($id);
+
+            // Update the SeedLab instance
+            $form->update($data);
+            return response()->json($form);
+        }
 }
