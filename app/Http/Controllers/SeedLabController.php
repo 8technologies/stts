@@ -236,12 +236,73 @@ class SeedLabController extends Controller
         //function to update the lab results
         public function updateLabResults(Request $request, $id)
         {
-            
-            $data = $request->all();
-            $form = SeedLab::find($id);
+            try {
+                // Validate incoming request data
+                $validatedData = $request->validate([
+                    'purity' => 'required',
+                    'germination_capacity' => 'required',
+                    'report_recommendation' => 'required',
 
-            // Update the SeedLab instance
-            $form->update($data);
-            return response()->json($form);
-        }
+                ]);
+            
+                // Find the SeedLab instance by ID
+                $form = SeedLab::findOrFail($id);
+
+                // Extract necessary data from the request
+                $data = $request->all();
+                $purity = (int) $data['purity'];
+                $germination_capacity = (int) $data['germination_capacity'];
+                $p_x_g = (($purity * $germination_capacity) / 100);
+
+                // Update data array with calculated values and status
+                $data['p_x_g'] = $p_x_g;
+                $data['status'] = 5;
+
+                if($data['report_recommendation'] == '11'){
+
+                //saving to the stock records
+                $StockRecord = new StockRecord();
+                $StockRecord->administrator_id = $form->administrator_id;
+                $StockRecord->crop_variety_id = $form->crop_variety_id;
+                $StockRecord->seed_lab_id = $form->seed_lab_id;
+                $StockRecord->is_deposit = 0;
+                $StockRecord->lot_number = $form->lot_number;
+                $StockRecord->seed_class = $form->seed_class;
+                $StockRecord->source = $form->source;
+                $StockRecord->is_transfer = 0;
+                $StockRecord->seed_class = null;
+                $StockRecord->source = null;
+                $StockRecord->quantity = $form->quantity;
+                $StockRecord->detail = "To seed lab. ID " . $form->id;
+                $StockRecord->save();
+
+
+                //saving to the marketable seed
+                $stock_out = new MarketableSeed();
+                $stock_out->administrator_id = $StockRecord->administrator_id;
+                $stock_out->crop_variety_id = $form->crop_variety_id;
+                $stock_out->seed_lab_id = $form->id;
+                $stock_out->seed_label_id = $form->seed_label_id;
+                $stock_out->lot_number = $form->lot_number;
+                $stock_out->quantity = $form->quantity;
+                $stock_out->seed_class = $form->seed_class;
+                $stock_out->source = $form->source;
+                $stock_out->detail = $form->detail;
+                $stock_out->is_deposit = 1;
+                $stock_out->seed_label_package_id = $form->seed_label_package_id;
+                $stock_out->lab_test_number = $form->lab_test_number;
+                $stock_out->save();
+            
+            }
+               
+               // Update the SeedLab instance
+               $form->update($data);
+
+               // Return updated SeedLab instance as JSON response
+               return response()->json($form);
+           } catch (\Exception $e) {
+               // Handle any exceptions and return error response
+               return response()->json(['error' => $e->getMessage()], 500);
+           }
+       }
 }
