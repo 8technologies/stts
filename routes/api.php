@@ -71,7 +71,7 @@ use Illuminate\Http\Request;
         //     Route::resource('seed-labs', SeedLabController::class);
         // });
         Route::get('assigned-seed-labs/{id}', [SeedLabController::class, 'getAssignedForms']);
-        Route::get('forms-sent-to-lab/{id}', [SeedLabController::class, 'getFormsSentToLab']);
+        Route::get('forms-sent-to-lab', [SeedLabController::class, 'getFormsSentToLab']);
         Route::put('lab-results/{id}', [SeedLabController::class, 'updateLabResults']);
 
 
