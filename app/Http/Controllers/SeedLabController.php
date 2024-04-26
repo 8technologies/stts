@@ -299,7 +299,8 @@ class SeedLabController extends Controller
                $form->update($data);
 
                // Return updated SeedLab instance as JSON response
-               return response()->json($form);
+               return response()->json(['message' => 'Lab results updated successfully', 'data' => $form], 200);
+
            } catch (\Exception $e) {
                // Handle any exceptions and return error response
                return response()->json(['error' => $e->getMessage()], 500);
