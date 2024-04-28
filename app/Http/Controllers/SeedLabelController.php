@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\SeedLabel;
 use App\Models\Utils;
 use App\Models\SeedLab;
+use App\Models\SeedLabelPackage;
 
 class SeedLabelController extends Controller
 {
@@ -116,6 +117,27 @@ class SeedLabelController extends Controller
         $forms = SeedLabel::where('status', 5)
                         ->get();
         
+        return response()->json($forms);
+    }
+
+    //get the labtest number for marketable seed for a user
+    public function getLabTestNumber($id)
+    {
+        // Retrieve the forms assigned to the inspector with related data
+        $forms = SeedLab::where('administrator_id', $id)
+                ->where('repot_recommendation', 11)
+                ->pluck('lab_test_number', 'id');
+
+        return response()->json($forms);
+    }
+
+    //get the seed label packages 
+
+    public function getSeedLabelPackages()
+    {
+        // Retrieve the forms assigned to the inspector with related data
+        $forms = SeedLabelPackage::all();
+
         return response()->json($forms);
     }
 

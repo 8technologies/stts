@@ -77,6 +77,10 @@ use Illuminate\Http\Request;
 
 
         Route::resource('seed-labels', SeedLabelController::class);
+        Route::get('get-lab-test-number/{id}', [SeedLabelController::class, 'getLabTestNumber']);
+        Route::get('get-seed-label-packages', [SeedLabelController::class, 'getSeedLabelPackages']);
+
+
         Route::get('assigned-seed-labels/{id}', [SeedLabelController::class, 'getAssignedForms']);
 
         Route::resource('form-stock-examination-requests', StockExaminationController::class);
