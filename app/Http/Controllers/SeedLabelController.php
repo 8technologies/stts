@@ -126,10 +126,12 @@ class SeedLabelController extends Controller
         // Retrieve the forms assigned to the inspector with related data
         $forms = SeedLab::where('administrator_id', $id)
                 ->where('report_recommendation', 11)
-                ->pluck('lab_test_number', 'id');
-
+                ->select('id', 'lab_test_number')
+                ->get();
+    
         return response()->json($forms);
     }
+    
 
     //get the seed label packages 
 
