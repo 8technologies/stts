@@ -27,7 +27,7 @@ class SeedLabelController extends Controller
        $data = $request->all();
 
        //check if the user a validated seed lab test
-        $validatedSeedLab = SeedLab::where('id', $request->seed_lab_id)->where('status', 5)->exists();
+        $validatedSeedLab = SeedLab::where('id', $request->seed_lab_id)->where('status', 5)->first();
         if (!$validatedSeedLab) {
             return response()->json('Seed lab test not validated', 409);
         }
