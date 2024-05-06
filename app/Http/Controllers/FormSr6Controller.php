@@ -150,23 +150,45 @@ class FormSr6Controller extends Controller
     }
     
     
-    public function show($id)
-    {
-        // Retrieve the form instance with related data
-        $form = FormSr6::where('administrator_id', $id)
-            ->with(['form_sr6_has_crops.crops:id,name', 'attachments']) 
-            ->get();
+    // public function show($id)
+    // {
+    //     // Retrieve the form instance with related data
+    //     $form = FormSr6::where('administrator_id', $id)
+    //         ->with(['form_sr6_has_crops.crops:id,name', 'attachments']) 
+    //         ->get();
       
-        // Transform the crop data to include the name instead of ID
-        $form->form_sr6_has_crops->transform(function ($crop) {
+    //     // Transform the crop data to include the name instead of ID
+    //     $form->form_sr6_has_crops->transform(function ($crop) {
+    //         $crop->name = $crop->crops->name;
+    //         unset($crop->crops);
+    //         return $crop;
+    //     });
+    
+        
+    //     // Return the JSON response
+    //     return response()->json($form);
+    // }
+    public function show($id)
+{
+    // Retrieve the form instance with related data
+    $form = FormSr6::where('administrator_id', $id)
+        ->with(['form_sr6_has_crops.crops:id,name', 'attachments']) 
+        ->get();
+  
+    // Transform the crop data to include the name instead of ID
+    $form->each(function ($item) {
+        $item->form_sr6_has_crops->transform(function ($crop) {
             $crop->name = $crop->crops->name;
             unset($crop->crops);
             return $crop;
         });
+    });
+
     
-        // Return the JSON response
-        return response()->json($form);
-    }
+    // Return the JSON response
+    return response()->json($form);
+}
+
     
 
     public function destroy($id)
@@ -196,16 +218,16 @@ class FormSr6Controller extends Controller
                         ->with(['form_sr6_has_crops.crops:id,name', 'attachments'])
                         ->get();
         
-        // Iterate over each form and transform the crop data
-        $forms->transform(function ($form) {
-            $form->form_sr6_has_crops->transform(function ($crop) {
-                $crop->name = $crop->crops->name;
-                unset($crop->crops);
-                return $crop;
-            });
-            return $form;
+      
+    // Transform the crop data to include the name instead of ID
+    $forms->each(function ($item) {
+        $item->form_sr6_has_crops->transform(function ($crop) {
+            $crop->name = $crop->crops->name;
+            unset($crop->crops);
+            return $crop;
         });
-    
+    });
+
         return response()->json($forms);
     }
 
