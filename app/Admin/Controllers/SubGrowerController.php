@@ -95,6 +95,9 @@ class SubGrowerController extends AdminController
                     $actions->disableEdit();
                 }
             });
+
+            //disable batch actions
+            $grid->disableBatchActions();
         }
         
         $grid->column('created_at', __('Created'))->display(function ($item) {
@@ -111,7 +114,9 @@ class SubGrowerController extends AdminController
         $grid->column('crop', __('Crop'))->display(function(){
             return $this->get_crop_name();
         })->sortable();
-        $grid->column('variety', __('variety'))->sortable();
+        $grid->column('variety', __('variety'))->display(function(){
+            return CropVariety::find($this->variety)->name;
+        })->sortable();
         $grid->column('seed_class', __('Seed class'))->sortable();
         $grid->column('inspector_id', __('Inspector'))->display(function ($userId) {
             if (Admin::user()->isRole('basic-user')) {
@@ -161,7 +166,9 @@ class SubGrowerController extends AdminController
         $show->field('crop', __('Crop'))->as(function ($crop) {
             return $this->get_crop_name();
         })->sortable();
-        $show->field('variety', __('Variety'));
+        $show->field('variety', __('Variety'))->as(function ($variety) {
+            return CropVariety::find($variety)->name;
+        })->sortable();
         $show->field('district', __('District'));
         $show->field('subcourty', __('Subcounty'));
         $show->field('planting_date', __('Planting date'));
@@ -224,9 +231,9 @@ class SubGrowerController extends AdminController
 
             $form->text('name', __('Name'))->default($user->name)->readonly();
             $form->text('size', __('Garden Size (in Acres)'))->attribute ('type', 'number')->required();
-            $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'name'))
+            $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'id'))
                 ->required();
-            $form->select('variety', 'Crop Variety')->options(CropVariety::all()->pluck('name', 'name'))
+            $form->select('variety', 'Crop Variety')->options(CropVariety::all()->pluck('name', 'id'))
                 ->required();
             $form->select('seed_class', 'Select Seed Class')->options([
                 'Pre-Basic' => 'Pre-Basic',
@@ -245,64 +252,73 @@ class SubGrowerController extends AdminController
             $form->text('quantity_planted', __('Quantity planted(in Kgs)'))->attribute ('type', 'number')->required();
             $form->text('expected_yield', __('Expected yield(in Kgs)'))->attribute ('type', 'number')->required();
             $form->text('phone_number', __('Phone number'))->required();
-            $form->text('gps_latitude', __('Gps latitude'))->required();
-            $form->text('gps_longitude', __('Gps longitude'))->required();
+            $form->html('<button type="button" id="getLocationButton">' . __('Get GPS Coordinates') . '</button>');
+            $form->decimal('gps_latitude', __('Gps latitude'))->attribute([
+                'id' => 'latitude',   
+            ])->required();
+            $form->decimal('gps_longitude', __('Gps longitude'))->attribute([
+                'id' => 'longitude',
+            ])->required();
+            
+            //script to get the gps coordinates
+            Admin::script(<<<SCRIPT
+                document.getElementById('getLocationButton').addEventListener('click', function() {
+                    if ("geolocation" in navigator) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            document.getElementById('latitude').value = position.coords.latitude;
+                            document.getElementById('longitude').value = position.coords.longitude;
+                        });
+                    } else {
+                        alert('Geolocation is not supported by your browser.');
+                    }
+                });
+            SCRIPT);
             $form->textarea('detail', __('Detail'));
         }
 
         if (Admin::user()->isRole('inspector')) 
         {
+            
 
             $id = request()->route()->parameters['sub_grower'];
             $model = $form->model()->find($id);
-        //get crop name from the model
-        $crop = optional(Crop::find($model->crop))->name ?? $model->crop;
+            $crop = Crop::find($model->crop)->name;
+            $variety = CropVariety::find($model->variety)->name;
 
-            $u = Administrator::find($model->administrator_id);
-
-
-            $form->html('<h3>Initialize inspection</h3>');
-            $form->html('<p class="alert alert-info">This inspection form (SR10) has not been inizilized yet. 
-            Select initialize below and submit to start inspection process.</p>');
-
-            $form->display('', __('Applicant'))->default($u->name)->readonly();
-            $form->display('', __('Person responsible'))->default($model->name)->readonly();
-            $form->display('', __('Field name'))->default($model->field_name)->readonly();
-            $form->display('', __('District'))->default($model->district)->readonly();
-            $form->display('', __('Subcounty'))->default($model->subcourty)->readonly();
-            $form->display('', __('Village'))->default($model->village)->readonly();
-            $form->display('', __('Crop'))->default($crop)->readonly();
-            $form->display('', __('Variety'))->default($model->variety)->readonly();
-            $form->divider();
-
-            $form->select('seed_class', 'Select Seed Class')->options([
-                'Pre-Basic' => 'Pre-Basic',
-                'Certified seed' => 'Certified seed',
-                'Basic seed' => 'Basic seed',
-                'Qds' => 'Quality declared seed',
-            ])
-                ->required();
+                $u = Administrator::find($model->administrator_id);
 
 
-            $_items = [];
-            $crop_val = "";
-            foreach (CropVariety::all() as $key => $item) {
-                $_items[$item->id] = "CROP: " . $item->crop->name.", Variety: ".$item->name;
-                if ($model->crop == $item->name) {
-                    $crop_val = $item->id;
+                $form->html('<h3>Initialize inspection</h3>');
+
+                if($model->status != 16)
+                {
+                    $form->html('<p class="alert alert-info">This inspection form (SR10) has not been inizilized yet. 
+                    Select initialize below and submit to start inspection process.</p>');
                 }
-            }
 
+                $form->display('', __('Applicant'))->default($u->name)->readonly();
+                $form->display('', __('Person responsible'))->default($model->name)->readonly();
+                $form->display('', __('Field name'))->default($model->field_name)->readonly();
+                $form->display('', __('District'))->default($model->district)->readonly();
+                $form->display('', __('Subcounty'))->default($model->subcourty)->readonly();
+                $form->display('', __('Village'))->default($model->village)->readonly();
+                $form->display('', __('Crop'))->default($crop)->readonly();
+                $form->display('', __('Variety'))->default($variety)->readonly();
+                $form->divider();
 
+                $form->select('seed_class', 'Select Seed Class')->options([
+                    'Pre-Basic' => 'Pre-Basic',
+                    'Certified seed' => 'Certified seed',
+                    'Basic seed' => 'Basic seed',
+                    'Qds' => 'Quality declared seed',
+                ])->required();
 
-            $form->select('crop', 'Select crop variety')->options($_items)->value($crop_val)
-                ->default($crop_val)
-                ->required();
+                $form->select('variety', 'Select crop variety')->options(CropVariety::all()->pluck('name', 'id'))
+                    ->required();
 
-            $form->radio('status', 'Initialize this form')->options([
-                '16' => 'Initialize form' 
-            ])->value($crop_val)
-                ->required();
+                $form->radio('status', 'Initialize this form')->options([
+                    '16' => 'Initialize form' 
+                ])->required();
 
         }
 

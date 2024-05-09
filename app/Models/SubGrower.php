@@ -87,7 +87,8 @@ class SubGrower extends Model
     {
         parent::boot();
 
-        self::creating(function ($m) {
+        self::creating(function ($m) 
+        {
            
             $sub = SubGrower::where('field_name', $m->field_name)
                 ->where('name', $m->name)->first();
@@ -104,135 +105,87 @@ class SubGrower extends Model
 
         self::created(function ($model) {
 
-            //MyNotification::send_notification($model, 'SubGrower', request()->segment(count(request()->segments())));
+            MyNotification::send_notification($model, 'SubGrower', request()->segment(count(request()->segments())));
                
         });
         
 
 
-        self::updating(function ($sr10) {
+        self::updating(function ($model) {
          
         });
 
-        self::updated(function ($sr10) {
+        self::updated(function ($model) 
+        {
 
-            // ... code here
-           // MyNotification::update_notification($sr10, 'SubGrower', request()->segment(count(request()->segments())-1));
-           $user = Admin::user()? Admin::user() : auth('api')->user();
+           MyNotification::update_notification($model, 'SubGrower', request()->segment(count(request()->segments())));
 
-               //check if all the subgrowers with the same planting return id have been assigned to an inspector
+            //check if all the subgrowers with the same planting return id have been assigned to an inspector
             //check user role
-            if ($sr10->status == 2) 
+            if ($model->status == 2) 
             {
-                $subgrowers = SubGrower::where('planting_return_id', $sr10->planting_return_id)->get();
+                $subgrowers = SubGrower::where('planting_return_id', $model->planting_return_id)->get();
                 $all_assigned = true;
-                foreach ($subgrowers as $sub) {
-                    if ($sub->inspector_id == null) {
+                foreach ($subgrowers as $subgrower) {
+                    if ($subgrower->inspector_id == null) {
                         $all_assigned = false;
                     }
                 }
                 //if all the subgrowers have been assigned to an inspector, change the status of the planting return to 2
                 if ($all_assigned) {
-                    $planting_return = PlantingReturn::find($sr10->planting_return_id);
+                    $planting_return = PlantingReturn::find($model->planting_return_id);
+                    //check if the planting return exists
+                    if ($planting_return == null) {
+                        return;
+                    }
                     $planting_return->status = 2;
                     $planting_return->save();
                 }
             }
 
-            if ($sr10->status == 16) 
+            if ($model->status == 16) 
             {
-
-                $crop_var = CropVariety::find($sr10->crop);
+                // Find the CropVariety based on the $sr10->variety
+                $cropVariety = CropVariety::find($model->variety);
                 $crop = null;
-                if ($crop_var != null) 
-                {
-                    if ($crop_var->crop != null) 
-                    {
-                        $crop = $crop_var->crop;
-                    }
+
+                // If CropVariety exists and it has a related Crop
+                if ($cropVariety !== null && $cropVariety->crop !== null) {
+                    $crop = $cropVariety->crop;
                 }
 
-
-                if ($crop != null) 
+                // Check if $crop is not null and has inspection types
+                if ($crop !== null && $crop->crop_inspection_types !== null) 
                 {
-                    if ($crop->crop_inspection_types != null) 
-                    {
-                        foreach ($crop->crop_inspection_types as $inspe) 
-                        {
-                            $temp_sr10_1 = FormSr10::where([
-                                'planting_return_id' => $sr10->id,
-                            ])->get();
+    
+                    foreach ($crop->crop_inspection_types as $inspectionType) {
+                        // Check if FormSr10 doesn't exist for the current stage
+                        if (FormSr10::where('planting_return_id', $model->id)
+                                    ->where('stage', $inspectionType->id)
+                                    ->doesntExist()) {
+                            $newFormSr = new FormSr10([
+                                'stage' => $inspectionType->id,
+                                'order_number' => $inspectionType->order_number,
+                                'farmer_id' => $model->administrator_id,
+                                'crop_variety_id' => $model->variety,
+                                'status' => '1',
+                                'is_active' => FormSr10::where('planting_return_id', $model->id)->doesntExist() ? 1 : 0,
+                                'is_done' => 0,
+                                'is_initialized' => false,
+                                'status_comment' => '',
+                                'planting_return_id' => $model->id,
+                                'administrator_id' => $model->administrator_id,
+                                'inspector' => Admin::user()->id,
+                                'min_date' => Carbon::parse($inspectionType->date_planted)
+                                                    ->addDays($inspectionType->period_after_planting)
+                                                    ->toDateString(),
+                            ]);
 
-                            $temp_sr10 = FormSr10::where([
-                                'planting_return_id' => $sr10->id,
-                                'stage' => $inspe->id,
-                            ])->get();
-
-                            if (count($temp_sr10) < 1) 
-                            {
-                                $d['crop_id'] = $crop->id;
-                                $d['stage'] = $inspe->id;
-                                $d['order_number'] = $inspe->order_number;
-                                $d['farmer_id'] = $sr10->administrator_id;
-                                $d['crop_variety_id'] = $sr10->crop;
-                                $d['status'] = '1';
-
-                                if (count($temp_sr10_1) < 1) {
-                                    $d['is_active'] = 1;
-                                } else {
-                                    $d['is_active'] = 0;
-                                }
-                                $d['is_done'] = 0;
-                                $d['is_initialized'] = false;
-                                $d['status_comment'] = "";
-                                $d['planting_return_id'] = $sr10->id;
-                                $d['administrator_id'] = $sr10->administrator_id;
-                                $d['inspector'] =  Admin::user()->id;
-                                $date_planted = Carbon::parse($inspe->date_planted);
-                                $date_planted->addDays($inspe->period_after_planting);
-                                $toDateString = $date_planted->toDateString();
-                                $d['min_date'] = $toDateString;       
-                                $new_form_sr = new FormSr10($d);
-                                $new_form_sr->save();
-
-
-                                $sr10->status = 16;
-                                $sr10->save();
-                            }
+                            $newFormSr->save();
+                            $model->status = 16;
+                            $model->variety = $model->variety;
+                            $model->save();
                         }
-                    }
-                } 
-                else 
-                {
-
-                    $temp_sr10_1 = FormSr10::where([
-                        'planting_return_id' => $sr10->id,
-                    ])->get();
-
-                    $temp_sr10 = FormSr10::where([
-                        'planting_return_id' => $sr10->id,
-                    ])->get();
-
-                    if (count($temp_sr10) < 1) 
-                    {
-                        $d['stage'] = 'Default inspection';
-                        $d['is_active'] = 1;
-                        $d['farmer_id'] = $sr10->administrator_id;
-                        $d['status'] = '1';
-                        $d['is_done'] = 0;
-                        $d['is_initialized'] = false;
-                        $d['status_comment'] = "";
-                        $d['planting_return_id'] = $sr10->id;
-                        $d['administrator_id'] = $sr10->administrator_id;
-                        $d['inspector'] =  $sr10->inspector_id;
-                        $date_planted = Carbon::parse(time());
-                        $date_planted->addDays(1);
-                        $toDateString = $date_planted->toDateString();
-                        $d['min_date'] = $toDateString;
-                        $new_form_sr = new FormSr10($d);
-                        $new_form_sr->save();
-                        $sr10->status = 16;
-                        $sr10->save();
                     }
                 }
             }
@@ -241,7 +194,7 @@ class SubGrower extends Model
         self::deleting(function ($model) {
             // ... code here
         });
-
+ 
         self::deleted(function ($model) {
             // ... code here
         });
