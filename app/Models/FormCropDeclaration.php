@@ -50,9 +50,8 @@ class FormCropDeclaration extends Model
 
             MyNotification::update_notification($model, 'FormCropDeclaration', request()->segment(count(request()->segments())-1));  
             
-            $user = Admin::user() ? Admin::user() : auth('api')->user();
 
-            if ($user->isRole('inspector')) 
+            if ($model->status == 16) 
             {
                $model->crop_varieties->each(function ($crop_variety) use ($model) {
                 if ($crop_variety->crop->crop_inspection_types != null) 
