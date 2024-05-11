@@ -79,7 +79,7 @@ class FormCropDeclaration extends Model
                                     'status_comment' => "",
                                     'qds_declaration_id' => $model->id,
                                     'administrator_id' => $model->administrator_id,
-                                    'inspector' =>  Admin::user()->id,
+                                    'inspector' =>  $model->administrator_id,
                                     'min_date' => Carbon::parse($inspection->date_planted)
                                                          ->addDays($inspection->period_after_planting)
                                                          ->toDateString(),
