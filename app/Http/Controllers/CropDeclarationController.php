@@ -83,8 +83,15 @@ class CropDeclarationController extends Controller
          
          $data = $request->all();
         
-        // Find the FormCropDeclaration instance
-        $form = FormCropDeclaration::where('administrator_id', $id)->first();
+        // Find the FormCropDeclaration instance to update
+
+        $form = FormCropDeclaration::find($id);
+
+        // Check if $form is null
+        if ($form === null) {
+            // Handle the case where the form is not found
+            return response()->json(['error' => 'FormCropDeclaration not found'], 404);
+        }
 
         // Store the uploaded photo
         if ($request->has('payment_receipt')) {

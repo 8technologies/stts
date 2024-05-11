@@ -52,63 +52,55 @@ class FormCropDeclaration extends Model
             
             $user = Admin::user() ? Admin::user() : auth('api')->user();
 
-            if ($user->isRole('inspector')) 
-            {
-               $model->crop_varieties->each(function ($crop_variety) use ($model) {
-                if ($crop_variety->crop->crop_inspection_types != null) 
-                {
-                    foreach ($crop_variety->crop->crop_inspection_types as $key => $inspection) 
-                    {
-                        $temp_sr10_1 = FormSr10::where([
-                            'qds_declaration_id' => $model->id,
-                            'crop_variety_id' => $crop_variety->id
-                        ])->get();
-                        error_log(count($temp_sr10_1));
-
-                        $temp_sr10 = FormSr10::where([
-                            'qds_declaration_id' => $model->id,
-                            'stage' => $inspection->id,
-                        ])->get();
-
-                        if (count($temp_sr10) < 1) 
-                        {
-                            $d['crop_variety_id'] = $crop_variety->id;
-                            $d['stage'] = $inspection->id;
-                            $d['order_number'] = $inspection->order_number;
-                            $d['farmer_id'] = $model->administrator_id;
-                            $d['status'] = '1';
-
-                            if (count($temp_sr10_1) < 1) {
-                                $d['is_active'] = 1;
-                            } else {
-                                $d['is_active'] = 0;
+            if ($model->status == 16) {
+                // Iterate over crop_varieties associated with the model
+                $model->crop_varieties->each(function ($cropVariety) use ($model) {
+                    // Check if crop has inspection types
+                    if ($cropVariety->crop->crop_inspection_types !== null) {
+                        // Iterate over inspection types
+                        foreach ($cropVariety->crop->crop_inspection_types as $inspection) {
+                            // Check if FormSr10 for this crop variety and stage doesn't exist
+                            if (!FormSr10::where('qds_declaration_id', $model->id)
+                                         ->where('crop_variety_id', $cropVariety->id)
+                                         ->where('stage', $inspection->id)
+                                         ->exists()) {
+                                // Create a new FormSr10 instance
+                                $newFormSr = new FormSr10([
+                                    'crop_variety_id' => $cropVariety->id,
+                                    'stage' => $inspection->id,
+                                    'order_number' => $inspection->order_number,
+                                    'farmer_id' => $model->administrator_id,
+                                    'status' => '1',
+                                    'is_active' => FormSr10::where('qds_declaration_id', $model->id)
+                                                            ->where('crop_variety_id', $cropVariety->id)
+                                                            ->doesntExist() ? 1 : 0,
+                                    'is_done' => 0,
+                                    'is_initialized' => false,
+                                    'status_comment' => "",
+                                    'qds_declaration_id' => $model->id,
+                                    'administrator_id' => $model->administrator_id,
+                                    'inspector' =>  Admin::user()->id,
+                                    'min_date' => Carbon::parse($inspection->date_planted)
+                                                         ->addDays($inspection->period_after_planting)
+                                                         ->toDateString(),
+                                ]);
+            
+                                // Save the new FormSr10 instance
+                                $newFormSr->save();
+            
+                                // Update the status of the model
+                                $model->status = 16;
+                                $model->save();
                             }
-                            $d['is_done'] = 0;
-                            $d['is_initialized'] = false;
-                            $d['status_comment'] = "";
-                            $d['qds_declaration_id'] = $model->id;
-                            $d['administrator_id'] = $model->administrator_id;
-                            $d['inspector'] =  Admin::user()->id;
-                            $date_planted = Carbon::parse($inspection->date_planted);
-                            $date_planted->addDays($inspection->period_after_planting);
-                            $toDateString = $date_planted->toDateString();
-                            $d['min_date'] = $toDateString;       
-                            $new_form_sr = new FormSr10($d);
-                            $new_form_sr->save();
-
-                            $model->status = 16;
-                            $model->save();
-                        } 
+                        }
+                    } else {
+                        // Update the status of the model to 5 if crop has no inspection types
+                        $model->status = 5;
+                        $model->save();
                     }
-                }
-                else
-                {
-                    $model->status = 5;
-                    $model->save();
-                }
-               });
-
-            }           
+                });
+            }
+                      
 
         });
  
