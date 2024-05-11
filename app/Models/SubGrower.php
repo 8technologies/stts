@@ -175,7 +175,7 @@ class SubGrower extends Model
                                 'status_comment' => '',
                                 'planting_return_id' => $model->id,
                                 'administrator_id' => $model->administrator_id,
-                                'inspector' => Admin::user()->id,
+                                'inspector' => $model->inspector_id,
                                 'min_date' => Carbon::parse($inspectionType->date_planted)
                                                     ->addDays($inspectionType->period_after_planting)
                                                     ->toDateString(),
