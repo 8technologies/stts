@@ -264,7 +264,7 @@ class SeedLabController extends Controller
                 $StockRecord = new StockRecord();
                 $StockRecord->administrator_id = $form->administrator_id;
                 $StockRecord->crop_variety_id = $form->crop_variety_id;
-                $StockRecord->seed_lab_id = $form->seed_lab_id;
+                $StockRecord->seed_lab_id = $form->id;
                 $StockRecord->is_deposit = 0;
                 $StockRecord->lot_number = $form->lot_number;
                 $StockRecord->seed_class = $form->seed_class;

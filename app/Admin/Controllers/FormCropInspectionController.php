@@ -71,6 +71,7 @@ class FormCropInspectionController extends AdminController
         $grid->column('stage', __('Stage'))->display(function ($stage) {
             return CropInspectionType::find($stage)->inspection_stage;
         })->sortable();
+        
         $grid->column('status', __('Status'))->display(function ($status) {
             return Utils::tell_status($status);
         })->sortable();
