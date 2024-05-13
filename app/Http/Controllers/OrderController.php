@@ -50,7 +50,7 @@ class OrderController extends Controller
         $data = $request->all();
         $order= Order::find($id);
 
-        $product = Product::find($request->product_id);
+        $product = Product::find($order->product_id);
         if (!$product) 
         {
             return response()->json(['message' => 'Product not found.'], 404);
