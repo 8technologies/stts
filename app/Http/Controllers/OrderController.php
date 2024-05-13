@@ -58,7 +58,7 @@ class OrderController extends Controller
 
         if ($order->quantity > $product->quantity) 
         {
-            return response()->json(['message' => 'Ooops', 'You have inadequate stock to complete this product '], 404);
+            return response()->json(['message' => 'Ooops', 'You have inadequate stock to complete this order'], 404);
         }
 
 
