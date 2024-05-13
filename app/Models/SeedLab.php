@@ -39,7 +39,6 @@ class SeedLab extends Model
         'inspector_remarks',
         'tests_required',
         'lab_technician_id', 
-        'quantity',
         'purity',
         'germination_capacity',
         'abnormal_sprouts',
