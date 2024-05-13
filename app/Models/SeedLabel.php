@@ -74,6 +74,7 @@ class SeedLabel extends Model
                 if($model->status == 'Label Printed'){
                    $marketable_seed = MarketableSeed::where('seed_label_id', $model->seed_label_id)->first();
                      $marketable_seed->quantity = $marketable_seed->quantity - $model->quantity;
+                     //$marketable_seed->available_stock = $marketable_seed->quantity - $model->quantity;
                         $marketable_seed->save();
                 }
 

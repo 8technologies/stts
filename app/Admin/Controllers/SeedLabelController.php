@@ -385,7 +385,7 @@ class SeedLabelController extends AdminController
 
                 $new_product = new Product();
                 $new_product->administrator_id = $model->administrator_id;
-                $new_product->available_stock = $model->available_stock;
+                $new_product->available_stock = $model->quantity;
                 $new_product->crop_variety_id = $model->crop_variety_id;
                 $new_product->name = $model->crop_variety->name;
                 $new_product->detail = $model->applicant_remarks;
