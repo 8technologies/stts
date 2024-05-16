@@ -49,11 +49,12 @@ class TrackAndTraceController extends Controller
 
             $data = [
                 'crop' => $crop,
-                'crop_variety' => $crop_variety->crop_variety_name,
+                'crop_variety' => $crop_variety->name,
                 'seed_class' => $seed_class,
-                'lab_test_number'=> $seedLab->seed_lab_test_number,
+                'lab_test_number'=> $seedLab->lab_test_number,
                 'germination_capacity' => $seedLab->germination_capacity,
                 'purity' => $seedLab->purity,
+                'p_x_g' => $seedLab->p_x_g,
                 'testing_methods' => $seedLab->tests_required,
                 'test_decision'=> $seedLab->report_recommendation,
                 'lot_number' => $seedLab->lot_number,

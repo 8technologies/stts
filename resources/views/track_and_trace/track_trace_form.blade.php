@@ -25,7 +25,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{ __('QR Code Scanner') }}</div>
+                    <div class="panel-heading">{{ __('Please enter a lot number') }}</div>
 
                     <div class="panel-body">
                         <form id="myform" method="POST">
@@ -33,10 +33,10 @@
                             <div class="input-group">
                                 <input type="text" name="lot_number" id="lot_number" class="form-control"
                                     placeholder="Enter lot number">
-                                <div class="input-group-btn">
+                                <!-- <div class="input-group-btn">
                                     <button class="btn btn-primary" id="btnscan" type="button"
                                         onclick="startScan()">Scan QR Code</button>
-                                </div>
+                                </div> -->
                             </div>
                             <div id="qr-reader" style="width: 100%; margin-top: 20px;"></div>
                             <p id="scan-error" style="color: red; display: none;">QR code scanning failed. Please
@@ -101,14 +101,18 @@
 
                         // Access and use the returned data  
                         document.getElementById("result-container").textContent = response.id;
-                        document.getElementById("crop_variety").textContent = response.crop_variety_text;
+                        document.getElementById("crop").textContent = response.crop;
+                        document.getElementById("crop_variety").textContent = response.crop_variety;
+                        document.getElementById("seed_class").textContent = response.seed_class;
                         document.getElementById("lab_test_number").textContent = response.lab_test_number;
                         document.getElementById("lot_number").textContent = response.lot_number;
                         document.getElementById("mother_lot").textContent = response.mother_lot;
+                        document.getElementById("germination_capacity").textContent = response.germination_capacity;
+                        document.getElementById("purity").textContent= response.purity;
                         document.getElementById("p_x_g").textContent = response.p_x_g;
-                        document.getElementById("packaging").textContent = response.packaging;
-                        document.getElementById("quantity").textContent = response.quantity;
-                        document.getElementById("weight").textContent = response.sample_weight;
+                        document.getElementById("testing_methods").textContent = response.tests_required;
+                        document.getElementById("moisture").textContent = response.moisture;
+                        document.getElementById("test_date").textContent = response.updated_at;
 
                         if (response.report_recommendation == 11) {
                             document.getElementById("status").textContent = "Marketable";
@@ -198,8 +202,16 @@
                                         <p class="text-muted" id="result-container"></p>
                                     </div>
                                     <div class="details">
+                                        <strong>Crop:</strong>
+                                        <p class="text-muted" id="crop"></p>
+                                    </div>
+                                    <div class="details">
                                         <strong>Crop Variety:</strong>
                                         <p class="text-muted" id="crop_variety"></p>
+                                    </div>
+                                    <div class="details">
+                                        <strong>Seed Class:</strong>
+                                        <p class="text-muted" id="seed_class"></p>
                                     </div>
                                     <div class="details">
                                         <strong>Lot Number:</strong>
@@ -216,16 +228,28 @@
                                         <p class="text-muted" id="lab_test_number"></p>
                                     </div>
                                     <div class="details">
+                                        <strong>Germination capacity:</strong>
+                                        <p class="text-muted" id="germination_capacity"></p>
+                                    </div>
+                                    <div class="details">
+                                        <strong>Purity:</strong>
+                                        <p class="text-muted" id="purity"></p>
+                                    </div>
+                                    <div class="details">
                                         <strong>P_x_G:</strong>
                                         <p class="text-muted" id="p_x_g"></p>
                                     </div>
                                     <div class="details">
-                                        <strong>Packaging:</strong>
-                                        <p class="text-muted" id="packaging"></p>
+                                        <strong>Testing Method:</strong>
+                                        <p class="text-muted" id="testing_methods"></p>
                                     </div>
                                     <div class="details">
-                                        <strong>Tests Made:</strong>
-                                        <p class="text-muted" id="test"></p>
+                                        <strong>Moisture content:</strong>
+                                        <p class="text-muted" id="moisture"></p>
+                                    </div>
+                                    <div class="details">
+                                        <strong>Test date:</strong>
+                                        <p class="text-muted" id="test_date"></p>
                                     </div>
                                     <div class="details">
                                         <strong>Status:</strong>
