@@ -31,16 +31,8 @@
                         <form id="myform" method="POST">
                             {{ csrf_field() }}
                             <div class="input-group">
-                                <input type="text" name="lot_number" id="lot_number" class="form-control"
-                                    placeholder="Enter lot number">
-                                <!-- <div class="input-group-btn">
-                                    <button class="btn btn-primary" id="btnscan" type="button"
-                                        onclick="startScan()">Scan QR Code</button>
-                                </div> -->
+                                <input type="text" name="lot_number" id="lot_number" class="form-control" placeholder="Enter lot number">
                             </div>
-                            <div id="qr-reader" style="width: 100%; margin-top: 20px;"></div>
-                            <p id="scan-error" style="color: red; display: none;">QR code scanning failed. Please
-                                ensure the QR code is visible and try again.</p>
                                 <div class="button-container">
                                 <button type="button" class="btn btn-primary mt-3" data-toggle="modal"
                                     data-target="#trackModal" onclick="openModal('trackModal')">Track</button>
@@ -55,32 +47,8 @@
 
         <script src="https://cdn.jsdelivr.net/npm/html5-qrcode/dist/html5-qrcode.min.js"></script>
         <script>
-            let html5QrCode;
-            let qrCodeSuccessCallback;
+           
             let selectedModal;
-
-            function startScan() {
-                html5QrCode = new Html5Qrcode("qr-reader");
-                qrCodeSuccessCallback = (decodedText, decodedResult) => {
-                    console.log(`Scan result: ${decodedText}`, decodedResult);
-                    document.getElementById('lot_number').value = decodedText;
-                    openModal(decodedText);
-                    html5QrCode.stop();
-                };
-
-                const qrCodeErrorCallback = (error) => {
-                    console.error(error);
-                    document.getElementById('scan-error').style.display = 'block';
-                };
-
-                const config = {
-                    fps: 10,
-                    qrbox: 250
-                };
-                html5QrCode.start({
-                    facingMode: "environment"
-                }, config, qrCodeSuccessCallback, qrCodeErrorCallback);
-            }
 
             function openModal(modal) {
         
@@ -112,20 +80,18 @@
                         document.getElementById("p_x_g").textContent = response.p_x_g;
                         document.getElementById("testing_methods").textContent = response.testing_methods;
                         document.getElementById("moisture").textContent = response.moisture;
-// Assuming response.test_date is a timestamp
-var timestamp = response.test_date;
-var date = new Date(timestamp); // No need to multiply by 1000 since timestamp is already in milliseconds
 
-// Get the individual components of the date
-var year = date.getFullYear();
-var month = date.getMonth() + 1; // Months are zero-indexed, so add 1
-var day = date.getDate();
+                        var timestamp = response.test_date;
+                        var date = new Date(timestamp);
 
-// Construct the date string in a readable format
-var dateString = year + "-" + month + "-" + day;
+                        // Get the individual components of the date
+                        var year = date.getFullYear();
+                        var month = date.getMonth() + 1
+                        var day = date.getDate();
 
-// Set the content of the element with id "test_date"
-document.getElementById("test_date").textContent = dateString;
+                        var dateString = year + "-" + month + "-" + day;
+
+                        document.getElementById("test_date").textContent = dateString;
 
 
                         if (response.report_recommendation == 11) {
