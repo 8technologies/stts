@@ -17,6 +17,7 @@ use App\Admin\Controllers\FormSr10Controller;
 
 
 use App\Admin\Controllers\FormSr6CropQueryController;
+use App\Http\Controllers\TrackAndTraceController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\SeedDetailsController;
 use App\Models\User;
@@ -137,7 +138,7 @@ Route::get('/crop_varieties/{permitId}', [FormStockExaminationRequestController:
 Route::post('/registration',  [RegisterController::class, 'register'])->name('user.register');
 Route::get('/registration',  [RegisterController::class, 'index'])->name('user.registration');
 
-Route::post('/trace', [SeedDetailsController::class, 'trace'])->name('seed-details');
+Route::post('/trace', [TrackAndTraceController::class, 'trace'])->name('seed-details');
 Route::post('/track', [SeedDetailsController::class, 'track'])->name('track');
 
 

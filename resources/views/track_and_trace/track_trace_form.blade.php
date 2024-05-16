@@ -100,19 +100,33 @@
                         console.log(response);
 
                         // Access and use the returned data  
-                        document.getElementById("result-container").textContent = response.id;
+                       
                         document.getElementById("crop").textContent = response.crop;
                         document.getElementById("crop_variety").textContent = response.crop_variety;
                         document.getElementById("seed_class").textContent = response.seed_class;
                         document.getElementById("lab_test_number").textContent = response.lab_test_number;
-                        document.getElementById("lot_number").textContent = response.lot_number;
+                        document.getElementById("lot_number2").textContent = response.lot_number;
                         document.getElementById("mother_lot").textContent = response.mother_lot;
                         document.getElementById("germination_capacity").textContent = response.germination_capacity;
                         document.getElementById("purity").textContent= response.purity;
                         document.getElementById("p_x_g").textContent = response.p_x_g;
-                        document.getElementById("testing_methods").textContent = response.tests_required;
+                        document.getElementById("testing_methods").textContent = response.testing_methods;
                         document.getElementById("moisture").textContent = response.moisture;
-                        document.getElementById("test_date").textContent = response.updated_at;
+// Assuming response.test_date is a timestamp
+var timestamp = response.test_date;
+var date = new Date(timestamp); // No need to multiply by 1000 since timestamp is already in milliseconds
+
+// Get the individual components of the date
+var year = date.getFullYear();
+var month = date.getMonth() + 1; // Months are zero-indexed, so add 1
+var day = date.getDate();
+
+// Construct the date string in a readable format
+var dateString = year + "-" + month + "-" + day;
+
+// Set the content of the element with id "test_date"
+document.getElementById("test_date").textContent = dateString;
+
 
                         if (response.report_recommendation == 11) {
                             document.getElementById("status").textContent = "Marketable";
@@ -197,10 +211,7 @@
                         <div class="tab-pane active" id="home">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="details">
-                                        <strong>Id:</strong>
-                                        <p class="text-muted" id="result-container"></p>
-                                    </div>
+
                                     <div class="details">
                                         <strong>Crop:</strong>
                                         <p class="text-muted" id="crop"></p>
@@ -215,7 +226,7 @@
                                     </div>
                                     <div class="details">
                                         <strong>Lot Number:</strong>
-                                        <p class="text-muted" id="lot_number"></p>
+                                        <p class="text-muted" id="lot_number2"></p>
                                     </div>
                                 </div>
                             </div>
