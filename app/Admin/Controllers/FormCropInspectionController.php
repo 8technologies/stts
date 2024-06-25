@@ -77,10 +77,14 @@ class FormCropInspectionController extends AdminController
         })->sortable();
 
         if (Admin::user()->isRole('inspector')) {
+            $grid->model()->where('inspector', '=', Admin::user()->id);
             $grid->actions(function ($actions) {
-                
-                
+                //check if the status is not 1
+                if ($actions->row->status != 1) {
+                    $actions->disableEdit();
+                }
                 $actions->disableDelete();
+
                 
         });
             $grid->column('is_active', __('Attention'))->display(function ($is_active) {
