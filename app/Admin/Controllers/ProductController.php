@@ -35,7 +35,7 @@ class ProductController extends AdminController
 
         $grid = new Grid(new Product());
 
-         $grid->disableFilter();
+        $grid->disableFilter();
         $grid->disableCreateButton();
          $grid->disableColumnSelector();
          $grid->disableExport();

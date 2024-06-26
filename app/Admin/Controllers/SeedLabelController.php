@@ -399,6 +399,7 @@ class SeedLabelController extends AdminController
                 $new_product->save();
 
             });
+            
             $form->display('available_stock', __('Number of Labels'));
 
             $form->radio('status', __('Set as printed'))
