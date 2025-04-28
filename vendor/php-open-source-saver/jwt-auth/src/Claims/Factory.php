@@ -69,7 +69,6 @@ class Factory
      * Get the instance of the claim when passing the name and value.
      *
      * @param string $name
-     * @param mixed  $value
      *
      * @return Claim
      *
@@ -200,7 +199,7 @@ class Factory
      */
     public function setTTL($ttl)
     {
-        $this->ttl = $ttl;
+        $this->ttl = $ttl ? (int) $ttl : $ttl;
 
         return $this;
     }

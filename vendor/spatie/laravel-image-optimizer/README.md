@@ -1,10 +1,7 @@
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
-
 # Optimize images in your Laravel app
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-image-optimizer.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-image-optimizer)
-![Tests](https://github.com/spatie/laravel-image-optimizer/workflows/tests/badge.svg)
+![Tests](https://github.com/spatie/laravel-image-optimizer/actions/workflows/run-tests.yml/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-image-optimizer.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-image-optimizer)
 
 This package is the Laravel 6.0 and up specific integration of [spatie/image-optimizer](https://github.com/spatie/image-optimizer). It can optimize PNGs, JPGs, SVGs and GIFs by running them through a chain of various [image optimization tools](https://github.com/spatie/image-optimizer#optimization-tools). The package will automatically detect which optimization binaries are installed on your system and use them.
@@ -91,7 +88,7 @@ return [
         ],
 
         Svgo::class => [
-            '--disable=cleanupIDs' // disabling because it is know to cause troubles
+            '--disable=cleanupIDs' // disabling because it is known to cause trouble
         ],
 
         Gifsicle::class => [
@@ -124,7 +121,7 @@ If you want to automatically optimize images that get uploaded to your applicati
 
 ```php
 // app/Http/Kernel.php
-protected $routeMiddleware = [
+protected $middlewareAliases = [
    ...
    'optimizeImages' => \Spatie\LaravelImageOptimizer\Middlewares\OptimizeImages::class,
 ];

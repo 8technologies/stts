@@ -95,7 +95,7 @@ class Blacklist
         // get the latter of the two expiration dates and find
         // the number of minutes until the expiration date,
         // plus 1 minute to avoid overlap
-        return $exp->max($iat->addMinutes($this->refreshTTL))->addMinute()->diffInRealMinutes();
+        return round($exp->max($iat->addMinutes($this->refreshTTL))->addMinute()->diffInRealMinutes(null, true));
     }
 
     /**
@@ -187,8 +187,6 @@ class Blacklist
 
     /**
      * Get the unique key held within the blacklist.
-     *
-     * @return mixed
      */
     public function getKey(Payload $payload)
     {

@@ -41,13 +41,13 @@
   ),
   'iwasherefirst2/laravel-multimail' => 
   array (
-    'providers' => 
-    array (
-      0 => 'IWasHereFirst2\\LaravelMultiMail\\MultiMailServiceProvider',
-    ),
     'aliases' => 
     array (
       'MultiMail' => 'IWasHereFirst2\\LaravelMultiMail\\Facades\\MultiMail',
+    ),
+    'providers' => 
+    array (
+      0 => 'IWasHereFirst2\\LaravelMultiMail\\MultiMailServiceProvider',
     ),
   ),
   'juststeveking/laravel-redoc' => 
@@ -162,13 +162,13 @@
   ),
   'maatwebsite/excel' => 
   array (
-    'providers' => 
-    array (
-      0 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
-    ),
     'aliases' => 
     array (
       'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
+    ),
+    'providers' => 
+    array (
+      0 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
     ),
   ),
   'nesbot/carbon' => 
@@ -210,24 +210,24 @@
   ),
   'spatie/laravel-ignition' => 
   array (
-    'providers' => 
-    array (
-      0 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
-    ),
     'aliases' => 
     array (
       'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
     ),
+    'providers' => 
+    array (
+      0 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
+    ),
   ),
   'spatie/laravel-image-optimizer' => 
   array (
-    'providers' => 
-    array (
-      0 => 'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider',
-    ),
     'aliases' => 
     array (
       'ImageOptimizer' => 'Spatie\\LaravelImageOptimizer\\Facades\\ImageOptimizer',
+    ),
+    'providers' => 
+    array (
+      0 => 'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider',
     ),
   ),
   'spatie/laravel-permission' => 
