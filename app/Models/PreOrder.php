@@ -20,6 +20,7 @@ class PreOrder extends Model
         'detail',
         'created_at',
         'updated_at',
+        'response'
     ];
 
 

@@ -22,6 +22,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\SeedDetailsController;
 use App\Models\User;
 use App\Notifications\SR4FormAddedNotification;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Notification;
 
 Route::get('/dd', [BarGraphTotalsController::class, 'index']);
@@ -158,5 +159,8 @@ Route::get('/public-path', function() {
  Route::match(['get', 'post'], '/{id}', [MainController::class, 'slugSwitcher']);
 
 
-
+Route::get('migrate', function(){
+    Artisan::call('migrate', ['--force' =>true]);
+    return Artisan::output();
+});
 
