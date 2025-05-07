@@ -13,6 +13,7 @@ use App\Models\Utils;
 use Encore\Admin\Show;
 use Encore\Admin\Facades\Admin;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PreOrderController extends AdminController
 {
@@ -137,6 +138,8 @@ class PreOrderController extends AdminController
         {
             return Utils::tell_status($status);
         });
+        
+        $show->field('response', __('NARO`s Response'));
         $show->panel()
             ->tools(function ($tools) 
             {
@@ -178,10 +181,12 @@ class PreOrderController extends AdminController
          //callback before saving form to return to table
          $form->saving(function (Form $form) 
         {
-            if ($form->collection_date <= Carbon::now()) 
-            {
-            
-                return  response(' <p class="alert alert-warning"> Please select a later date for collection . <a href="/admin/pre-orders/create"> Go Back </a></p> ');
+            if($form->isCreating()){
+                if ($form->collection_date <= Carbon::now()) 
+                {
+                    Log::info(['date: ', $form->collection_date]);
+                    return  response('<p class="alert alert-warning">{{$form->collection_date}}Please select a later date for collection . <a href="/admin/pre-orders/create"> Go Back </a></p> ');
+                }
             }
 
         });
@@ -229,6 +234,101 @@ class PreOrderController extends AdminController
             $form->date('collection_date', __('Collection date'))->required();
             $form->text('pickup_location', __('Pickup location'))->required();
             $form->textarea('detail', __('Detail'));
+        }
+        else{
+            $user = Admin::user();
+
+         
+        //hide details from other farmer roles
+            if($user->inRoles(['breeder']))
+            {
+                $form->hidden('administrator_id', __('Administrator id'))
+                    ->value(Auth::user()->id)
+                    ->default(Auth::user()->id);
+
+                $_items = [];
+                foreach (CropVariety::all() as $key => $item) 
+                {
+                    $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
+                }
+
+                $form->display('crop_variety_id', 'Select crop variety')->options($_items)
+                    ->required();
+                $form->display('quantity', __('Quantity (in Kgs)'))
+                    ->required()
+                    ->attribute('min', 0)
+                    ->attribute('type', 'number');
+
+                $form->display('seed_class', __('Seed class'));
+                    // ->options
+                    // ([
+                    //     'Pre-basic' => 'Pre-basic',
+                    //     'Basic' => 'Basic',
+                    //     'Certified' => 'Certified',
+                    //     'Quality declaired seed' => 'Quality declaired seed',
+                    // ])
+                    // ->when('Certified', function (Form $form) 
+                    // {
+                    //     $form->select('invetory_status', __('Select invetory status'))
+                    //         ->options
+                    //         ([
+                    //             'Raw' => 'Raw',
+                    //             'Processed' => 'Processed'
+                    //         ]);
+                    // });
+
+
+                $form->hidden('status', __('Status'))->default(1);
+                $form->display('collection_date', __('Collection date'))->required();
+                $form->display('pickup_location', __('Pickup location'))->required();
+                $form->display('detail', __('Detail'));
+
+                $form->divider('Naro Reply');
+                $form->textarea('response', __('Response'));
+
+            }
+            else{
+                $form->hidden('administrator_id', __('Administrator id'))
+                    ->value(Auth::user()->id)
+                    ->default(Auth::user()->id);
+
+                $_items = [];
+                foreach (CropVariety::all() as $key => $item) 
+                {
+                    $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
+                }
+
+                $form->select('crop_variety_id', 'Select crop variety')->options($_items)
+                    ->required();
+                $form->text('quantity', __('Quantity (in Kgs)'))
+                    ->required()
+                    ->attribute('min', 0)
+                    ->attribute('type', 'number');
+
+                $form->radio('seed_class', __('Seed class'))
+                    ->options
+                    ([
+                        'Pre-basic' => 'Pre-basic',
+                        'Basic' => 'Basic',
+                        'Certified' => 'Certified',
+                        'Quality declaired seed' => 'Quality declaired seed',
+                    ])
+                    ->when('Certified', function (Form $form) 
+                    {
+                        $form->select('invetory_status', __('Select invetory status'))
+                            ->options
+                            ([
+                                'Raw' => 'Raw',
+                                'Processed' => 'Processed'
+                            ]);
+                    });
+
+
+                $form->hidden('status', __('Status'))->default(1);
+                $form->date('collection_date', __('Collection date'))->required();
+                $form->text('pickup_location', __('Pickup location'))->required();
+                $form->textarea('detail', __('Detail'));
+            }
         }
 
 

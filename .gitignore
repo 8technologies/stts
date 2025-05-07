@@ -3,3 +3,4 @@
 .htaccess
 /app/Models/PlantingReturn.php
 /storage/*
+composer.txt

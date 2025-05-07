@@ -21,10 +21,11 @@ class SMPTTest extends TestCase
         $to     = 'test@bar.com';
         $locale = 'de';
         $from   = static::FROM;
+
         MultiMail::to($to)
-                              ->locale($locale)
-                              ->from($from)
-                              ->send(new TestMail());
+            ->locale($locale)
+            ->from($from)
+            ->send(new TestMail());
 
         $this->assertTrue($this->messageExists('TestMail Subject'));
 

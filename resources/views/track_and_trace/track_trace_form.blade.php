@@ -30,9 +30,20 @@
                     <div class="panel-body">
                         <form id="myform" method="POST">
                             {{ csrf_field() }}
+                            {{-- <div class="input-group">
+                                <input type="text" name="lot_number" id="lot_number" class="form-control" placeholder="Enter lot number">
+                            </div> --}}
                             <div class="input-group">
                                 <input type="text" name="lot_number" id="lot_number" class="form-control" placeholder="Enter lot number">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-primary" id="btnscan" type="button"
+                                        onclick="startScan()">Scan QR Code</button>
+                                </div>
                             </div>
+                            <div id="qr-reader" style="width: 100%; margin-top: 20px;"></div>
+                            <p id="scan-error" style="color: red; display: none;">QR code scanning failed. Please
+                                ensure the QR code is visible and try again.
+                            </p>
                                 <div class="button-container">
                                 <button type="button" class="btn btn-primary mt-3" data-toggle="modal"
                                     data-target="#trackModal" onclick="openModal('trackModal')">Track</button>
@@ -49,6 +60,28 @@
         <script>
            
             let selectedModal;
+            function startScan() {
+                html5QrCode = new Html5Qrcode("qr-reader");
+                qrCodeSuccessCallback = (decodedText, decodedResult) => {
+                    console.log(`Scan result: ${decodedText}`, decodedResult);
+                    document.getElementById('lot_number').value = decodedText;
+                    openModal(decodedText);
+                    html5QrCode.stop();
+                };
+
+                const qrCodeErrorCallback = (error) => {
+                    console.error(error);
+                    document.getElementById('scan-error').style.display = 'block';
+                };
+
+                const config = {
+                    fps: 10,
+                    qrbox: 250
+                };
+                html5QrCode.start({
+                    facingMode: "environment"
+                }, config, qrCodeSuccessCallback, qrCodeErrorCallback);
+            }
 
             function openModal(modal) {
         

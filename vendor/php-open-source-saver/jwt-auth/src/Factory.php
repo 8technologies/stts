@@ -116,7 +116,6 @@ class Factory
      * Add a claim to the Payload.
      *
      * @param string $name
-     * @param mixed  $value
      *
      * @return $this
      */
@@ -209,7 +208,7 @@ class Factory
     /**
      * Helper to get the ttl.
      *
-     * @return int
+     * @return int|null
      */
     public function getTTL()
     {
