@@ -76,14 +76,30 @@ class PreOrderController extends Controller
     }
     
 
-   //get the inspections assigned to an inspector
-   public function getAssignedForms($id)
+    //get the inspections assigned to an inspector
+    public function getAssignedForms($id)
     {
         // Retrieve the forms assigned to the inspector with related data
         $forms = PreOrder::where('inspector_id', $id)
                         ->get();
         
         return response()->json($forms);
+    }
+
+    //Save the breeder response
+   public function breederResponse(Request $request, $id)
+    {
+        $data = $request->all();
+        $PreOrder= PreOrder::find($id);
+        if ($request->supply_date  <= Carbon::now()) 
+        {
+            return  response()->json(['message' => 'Supply date cannot be in the past'], 404);
+        }
+        // Update the main form instance
+        $PreOrder->update($data);
+     
+         // Return the created main form instance
+         return response()->json($PreOrder);
     }
 
 }

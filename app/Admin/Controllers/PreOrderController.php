@@ -32,6 +32,31 @@ class PreOrderController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new PreOrder());
+        if (!Admin::user()->inRoles(['breeder'])) 
+        {
+            $grid->model()->where('administrator_id', '=', Admin::user()->id);
+        //     $grid->actions(function ($actions) 
+        // {
+            
+        //         // $actions->disableDelete();
+        //         // $actions->disableEdit();
+            
+        // });
+        }else{
+            $grid->actions(function ($actions) 
+            {
+                    $actions->disableDelete();
+            });
+        }
+        $grid->filter(function ($filter) 
+        {
+           // Remove the default id filter
+           $filter->disableIdFilter();
+           $filter->like('crop_variety_id', 'Crop variety')->select(CropVariety::pluck('name', 'id'));
+           $filter->like('seed_class', 'Seed class');
+           $filter->between('collection_date', 'Date Range')->date();
+          
+        });
 
         $grid->column('id', __('Id'));
         $grid->column('created_at', __('Created'))->display(function ($f) 
@@ -76,15 +101,15 @@ class PreOrderController extends AdminController
 
         $grid->disableBatchActions();
 
-        $grid->actions(function ($actions) 
-        {
-            $administrator_id = ((int)(($actions->row['administrator_id'])));
-            if ($administrator_id != Auth::user()->id) 
-            {
-                $actions->disableDelete();
-                $actions->disableEdit();
-            }
-        });
+        // $grid->actions(function ($actions) 
+        // {
+        //     $administrator_id = ((int)(($actions->row['administrator_id'])));
+        //     if ($administrator_id != Auth::user()->id) 
+        //     {
+        //         $actions->disableDelete();
+        //         $actions->disableEdit();
+        //     }
+        // });
 
         return $grid;
     }
@@ -138,8 +163,16 @@ class PreOrderController extends AdminController
         {
             return Utils::tell_status($status);
         });
+        //  $show->divider('Breeder`s Reply');
+         
+        $pre_order = PreOrder::find($id);
+        if($pre_order->status == '5'){
+            $show->field('supply_date', __('Supply date'));
+            $show->field('response', __('Breeder`s Notes'));
+        }else{
+            $show->field('decline_reason', __('Reason for decline'));
+        }
         
-        $show->field('response', __('NARO`s Response'));
         $show->panel()
             ->tools(function ($tools) 
             {
@@ -156,7 +189,7 @@ class PreOrderController extends AdminController
                 }
 
                
-            });;
+            });
 
 
         return $show;
@@ -278,14 +311,32 @@ class PreOrderController extends AdminController
                     // });
 
 
-                $form->hidden('status', __('Status'))->default(1);
+                // $form->hidden('status', __('Status'))->default(1);
                 $form->display('collection_date', __('Collection date'))->required();
                 $form->display('pickup_location', __('Pickup location'))->required();
                 $form->display('detail', __('Detail'));
 
-                $form->divider('Naro Reply');
-                $form->textarea('response', __('Response'));
-
+                $form->divider('Breeder`s Reply');
+                $form->radio('status', __('Make action on this quotation'))
+                    ->required()
+                    ->options
+                    ([
+                        '5' => 'Accept',
+                        '15' => 'Declined',
+                    ])
+                    ->help("NOTE: Once you accept this quotation, the decision cannot be reversed.")
+                    ->when('5', function (Form $form) 
+                    {
+                        $form->date('supply_date', __('Supply date'))->required();
+                        $form->textarea('response', __('Notes'));
+                        
+                    })
+                    ->when('15', function (Form $form) 
+                    {
+                        $form->textarea('decline_reason', __('Reason why declined'))
+                            ->help("Optional");
+                    });
+                
             }
             else{
                 $form->hidden('administrator_id', __('Administrator id'))

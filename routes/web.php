@@ -164,3 +164,4 @@ Route::get('migrate', function(){
     return Artisan::output();
 });
 
+

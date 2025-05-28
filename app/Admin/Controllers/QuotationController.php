@@ -297,7 +297,7 @@ class QuotationController extends AdminController
             //if the user is not the one who created the quotation, then show the edit field
             if ($quote->administrator_id != Auth::user()->id) 
             {
-                $form->radio('status', __('Make action on this quotation'))
+                $form->radio('status', __('Make action on this preorder'))
                     ->required()
                     ->options
                     ([
