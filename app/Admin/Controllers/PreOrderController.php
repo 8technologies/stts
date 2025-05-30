@@ -182,11 +182,11 @@ class PreOrderController extends AdminController
                 $tools->disableDelete();
 
                 //check if the user is not the owner of this pre-order
-                $pre_order = PreOrder::find($id);
-                if ($pre_order->administrator_id != Auth::user()->id) 
-                {
-                    $tools->append("<a href='" . admin_url('quotations/create?pre_order_id='.$id) . "' class='btn btn-primary'>SUBMIT QUOTATION</a>");
-                }
+                // $pre_order = PreOrder::find($id);
+                // if ($pre_order->administrator_id != Auth::user()->id) 
+                // {
+                //     $tools->append("<a href='" . admin_url('quotations/create?pre_order_id='.$id) . "' class='btn btn-primary'>SUBMIT QUOTATION</a>");
+                // }
 
                
             });

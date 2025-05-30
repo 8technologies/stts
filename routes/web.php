@@ -159,9 +159,9 @@ Route::get('/public-path', function() {
  Route::match(['get', 'post'], '/{id}', [MainController::class, 'slugSwitcher']);
 
 
-Route::get('migrate', function(){
+Route::get('/migrate', function(){
     Artisan::call('migrate', ['--force' =>true]);
-    return Artisan::output();
+    return (Artisan::output());
 });
 
 
