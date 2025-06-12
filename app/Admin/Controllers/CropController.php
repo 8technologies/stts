@@ -27,13 +27,13 @@ class CropController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Crop());
-
+        $grid->column('id', __('ID'))->sortable();
         $grid->column('name', __('Name'))->sortable();
      
         $grid->column('number_of_days_before_submision', __('Number of days before submision'));
 
         $grid->disableTools();
-        $grid->disableExport();
+        // $grid->disableExport();
 
      
 

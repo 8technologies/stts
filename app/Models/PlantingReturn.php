@@ -9,6 +9,7 @@ use Encore\Admin\Auth\Database\Administrator;
 use App\Models\MyNotification;
 
 use Excel;
+use Illuminate\Support\Facades\Log;
 
 class PlantingReturn extends Model
 {
@@ -27,17 +28,33 @@ class PlantingReturn extends Model
     // ./storage/'
     public static function import_sub_growers($m)
     {
+        Log::info(' import_sub_growers');
         if ($m === null || strlen($m->sub_growers_file) <= 3) {
+            Log::info(' sub_growers_file');
             return;
         }
     
-        $file = '/home/technolo/stts/public/storage/' . $m->sub_growers_file;
+        // $file = '/home/technolo/stts/public/storage/' . $m->sub_growers_file;
+        $file = public_path('storage/' . $m->sub_growers_file);
+        Log::info($file);
     
         if (!file_exists($file)) {
+            Log::info(' !file_exists');
             return;
         }
-    
-        $array = Excel::toArray([], $file);
+        // $array = Excel::toArray([], $file)[0];
+        Log::info('file_exists');
+        $allSheets = Excel::toArray([], $file);
+        Log::info('All sheets');
+
+        if (!isset($allSheets[1])) {
+            Log::info('no sheet 2 found');
+            return; // Or handle error: second sheet not found
+        }
+
+        $rows = array_slice($allSheets[1], 1);
+        Log::info(' sheet 2 found');
+
         $fields = [
             'field_name' => 0,
             'name' => 1,
@@ -58,7 +75,8 @@ class PlantingReturn extends Model
             'village' => 16,
         ];
     
-        foreach (array_slice($array[0], 1) as $value) {
+        foreach ($rows as $value) {
+        // foreach (array_slice($array[0], 1) as $value) {
             if (count($value) <= 15) {
                 continue;
             }
@@ -77,7 +95,19 @@ class PlantingReturn extends Model
                             date_default_timezone_set('Africa/Kampala');
                             $sub->planting_date = date('Y-m-d', strtotime('1900-01-01 +' . $excelDate . ' days'));
                         }
-                    } else {
+                    }elseif($field === 'variety'){
+                        $varietyName = trim($value[$index]);
+                        $variety = \App\Models\CropVariety::where('name', $varietyName)->first();
+
+                        if ($variety) {
+                            $sub->variety = $variety->id;
+                        } else {
+                            // Handle missing variety - optional
+                            Log::warning("Variety not found: " . $varietyName);
+                            continue; // or skip, or create a default variety
+                        }
+                    } 
+                    else {
                         $sub->{$field} = $value[$index];
                     }
                 }
@@ -99,6 +129,7 @@ class PlantingReturn extends Model
         });
 
         self::created(function ($m) {
+            Log::info(' created');
             self::import_sub_growers($m);
             //MyNotification::send_notification($m, 'PlantingReturn', request()->segment(count(request()->segments())));
             return $m;

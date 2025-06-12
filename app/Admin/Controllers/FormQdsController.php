@@ -298,6 +298,10 @@ class FormQdsController extends AdminController
             {
                 return Utils::tell_status($status);
             });
+        if($form_qds->status_comment != null)
+        {
+            $show->field('inspector_comment', __('Inspector\'s comment (Remarks)'));
+        }
         //check if the status comment is null
         if($form_qds->status_comment != null)
         {

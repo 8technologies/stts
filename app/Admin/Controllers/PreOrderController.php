@@ -50,11 +50,22 @@ class PreOrderController extends AdminController
         }
         $grid->filter(function ($filter) 
         {
+            $_items = [];
+                foreach (CropVariety::all() as $key => $item) 
+                {
+                    $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
+                }
            // Remove the default id filter
            $filter->disableIdFilter();
-           $filter->like('crop_variety_id', 'Crop variety')->select(CropVariety::pluck('name', 'id'));
-           $filter->like('seed_class', 'Seed class');
-           $filter->between('collection_date', 'Date Range')->date();
+           $filter->like('crop_variety_id', 'Crop variety')->select($_items);
+           $filter->like('seed_class', 'Seed class')->select([
+                    'Pre-basic' => 'Pre-basic',
+                    'Basic' => 'Basic',
+                    'Certified' => 'Certified',
+                    'Quality declaired seed' => 'Quality declaired seed',
+                ]);
+           $filter->between('collection_date', 'collection date')->date();
+           $filter->between('supply_date', 'Supply date')->date();
           
         });
 
@@ -91,6 +102,11 @@ class PreOrderController extends AdminController
         });
 
         $grid->column('seed_class', __('Seed class'));
+        $grid->column('status', __('status'))
+        ->display(function ($status) 
+        {
+            return Utils::tell_status($status);
+        });;
     
       
         $grid->column('collection_date', __('Collection date'))->display(function ($f) 
@@ -100,6 +116,13 @@ class PreOrderController extends AdminController
         $grid->column('pickup_location', __('Pickup location'));
 
         $grid->disableBatchActions();
+        $grid->actions(function ($actions) {
+            if ($actions->row->status == 5) {
+                $actions->disableDelete();
+                $actions->disableEdit();
+            }
+        });
+
 
         // $grid->actions(function ($actions) 
         // {

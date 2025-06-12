@@ -16,6 +16,7 @@ $date = date("j F Y");
     <style>
         body {
             font-family: Arial, sans-serif;
+            font-size: 80%
         }
         header {
             text-align: center;
@@ -61,7 +62,7 @@ $date = date("j F Y");
 </head>
 <body>
     <header>
-        <img src="{{ public_path('assets/images/coat.png') }}" alt="logo">
+        <img src="{{ public_path('assets/images/coat.png') }}" alt="logo" style="width: 20%; height:10%">
         <p>THE REPUBLIC OF UGANDA</p>
         <p>Ministry of Agriculture, Animal Industry and Fisheries</p>
         <p>P.O. Box 102, ENTEBBE</p>

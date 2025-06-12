@@ -369,7 +369,7 @@ class FormSr4Controller extends AdminController
         {
             return Utils::tell_status($status);
         });
-
+        
        //check if the status comment is null
        if($form_sr4->status_comment != null)
        {
