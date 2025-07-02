@@ -31,6 +31,9 @@ class FormSr6 extends Model implements AuthenticatableContract, JWTSubject
         return $this->hasMany(FormSr6HasCrop::class);
     } 
 
+    // protected $casts = [
+    //     'attachments' => 'array',
+    // ];
 
     protected $fillable = [
         'administrator_id',

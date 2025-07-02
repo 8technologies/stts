@@ -30,29 +30,23 @@ class PlantingReturn extends Model
     {
         Log::info(' import_sub_growers');
         if ($m === null || strlen($m->sub_growers_file) <= 3) {
-            Log::info(' sub_growers_file');
             return;
         }
     
         // $file = '/home/technolo/stts/public/storage/' . $m->sub_growers_file;
         $file = public_path('storage/' . $m->sub_growers_file);
-        Log::info($file);
     
         if (!file_exists($file)) {
-            Log::info(' !file_exists');
             return;
         }
         // $array = Excel::toArray([], $file)[0];
-        Log::info('file_exists');
         $allSheets = Excel::toArray([], $file);
-        Log::info('All sheets');
 
         if (!isset($allSheets[1])) {
-            Log::info('no sheet 2 found');
             return; // Or handle error: second sheet not found
         }
 
-        $rows = array_slice($allSheets[1], 1);
+        $rows = array_slice($allSheets[0], 1);
         Log::info(' sheet 2 found');
 
         $fields = [
@@ -77,7 +71,10 @@ class PlantingReturn extends Model
     
         foreach ($rows as $value) {
         // foreach (array_slice($array[0], 1) as $value) {
-            if (count($value) <= 15) {
+            // if (count($value) <= 15) {
+            //     continue;
+            // }
+            if (empty(array_filter($value)) || count($value) <= 15) {
                 continue;
             }
     
