@@ -16,6 +16,7 @@ use Encore\Admin\Form\NestedForm;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use App\Models\SubGrower;
+use Illuminate\Support\Facades\Log;
 
 class FormSr10Controller extends AdminController
 {
@@ -83,6 +84,9 @@ class FormSr10Controller extends AdminController
             $grid->actions(function ($actions) {
                 //check if the status is not 1
                 if ($actions->row->status != 1) {
+                    $actions->disableEdit();
+                }
+                if ($actions->row->is_active == 0) {
                     $actions->disableEdit();
                 }
                 $actions->disableDelete();
@@ -342,7 +346,7 @@ class FormSr10Controller extends AdminController
 
             $form->html('<h3>About this Field inspection report - (SR10)</h3>');
             $form->display('', __('Seed class'))->default($model->planting_return->seed_class)->readonly();
-            $crop_var = CropVariety::find($model->planting_return->crop);
+            $crop_var = CropVariety::find($model->planting_return->variety);
             $crop_name = $crop_var->crop->name.", ".$crop_var->name;
             $stage = CropInspectionType::find($model->stage)->inspection_stage;
 
