@@ -309,6 +309,34 @@ class ImportExportPermitController extends AdminController
         // callback after save to return to the table view
         $form->saved(function (Form $form) 
         {
+            // $form->saving(function (Form $form) {
+                $crops = request()->input('crops');
+
+                // Delete previous crops linked to this permit (optional if you're overwriting)
+                ImportExportPermitsHasCrops::where('import_export_permit_id', $form->model()->id)->delete();
+
+                if (is_array($crops)) {
+                    Log::info('yes crops');
+                    foreach ($crops as $data) {
+                        if (!isset($data['crop_id']) || empty($data['weight'])) {
+                            Log::info('yes crops isset');
+                            continue; // Skip incomplete rows
+                        }
+                        Log::info('yes crops create');
+
+                        ImportExportPermitsHasCrops::create([
+                            'import_export_permit_id' => $form->model()->id,
+                            'crop_variety_id' => $data['crop_id'],
+                            'category' => $data['category'] ?? '',
+                            'weight' => $data['weight'],
+                            'measure' => $data['measure'] ?? 'Kgs',
+                        ]);
+                    }
+                }else{
+                    Log::info('no crops');
+                }
+
+            // });
             return redirect(admin_url('import-export-permits'));
         });
 
@@ -379,38 +407,7 @@ class ImportExportPermitController extends AdminController
         //basic-user forms
         if (Admin::user()->isRole('basic-user')) 
         {
-            $form->saving(function (Form $form) {
-                $crops = request()->input('crops');
-
-                // Delete previous crops linked to this permit (optional if you're overwriting)
-                ImportExportPermitsHasCrops::where('import_export_permit_id', $form->model()->id)->delete();
-
-                if (is_array($crops)) {
-                    Log::info('yes crops');
-                    foreach ($crops as $data) {
-                        if (!isset($data['crop_id']) || empty($data['weight'])) {
-                            Log::info('yes crops isset');
-                            Log::info($data);
-                            continue; // Skip incomplete rows
-                        }
-                        Log::info('yes crops create');
-
-                        ImportExportPermitsHasCrops::create([
-                            'import_export_permit_id' => $form->model()->id,
-                            'crop_variety_id' => $data['crop_id'],
-                            'category' => $data['category'] ?? '',
-                            'weight' => $data['weight'],
-                            'measure' => $data['measure'] ?? 'Kgs',
-                        ]);
-                    }
-                }else{
-                    Log::info('no crops');
-                }
-
-            });
-
-
-
+            
 
             if ($form->isEditing()) 
             {
@@ -639,7 +636,6 @@ class ImportExportPermitController extends AdminController
                 $html .= '<td><select name="crops['.$i.'][crop_id]" class="form-control">';
                     foreach ($_items as $id => $name) {
                         $selected = ($crop->variety->id == $id) ? 'selected' : '';
-                        Log::info($selected);
                         $html .= "<option value=\"{$id}\" {$selected}>{$name}</option>";
                     }
                     $html .= '</select></td>';
@@ -716,7 +712,7 @@ class ImportExportPermitController extends AdminController
                 return $html;
         })->setWidth(10);
 
-        $form->file('attachment', _('Attachments'));
+        // $form->file('attachment', _('Attachments'));
 
         // $form->hasMany('import_export_permits_has_crops', __('Click on "New" to Add Crop varieties '), function (NestedForm $form) 
         // {
