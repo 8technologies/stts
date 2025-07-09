@@ -43,6 +43,7 @@ class PreOrderController extends AdminController
             
         // });
         }else{
+            $grid->disableCreateButton();
             $grid->actions(function ($actions) 
             {
                     $actions->disableDelete();
@@ -259,7 +260,18 @@ class PreOrderController extends AdminController
             {
                 $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
             }
-
+            $items = Administrator::all();
+            $breeders = [];
+            foreach ($items as $key => $item) 
+            {
+                if (!Utils::has_role($item, "breeder")) 
+                {
+                    continue;
+                }
+                $breeders[$item->id] = $item->name;
+            }
+            $form->select('breeder', 'Select breeder')->options($breeders)
+                ->required();
             $form->select('crop_variety_id', 'Select crop variety')->options($_items)
                 ->required();
             $form->text('quantity', __('Quantity (in Kgs)'))

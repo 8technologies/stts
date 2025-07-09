@@ -47,9 +47,9 @@ class SubGrower extends Model
         $id = (int)($this->crop);
 
         if ($id > 0) {
-            $c = CropVariety::find($id);
+            $c = Crop::find($id);
             if ($c != null) {
-                return $c->crop->name . ", " . $c->name;
+                return $c->name;
             }
         }
 

@@ -34,13 +34,17 @@ class Utils
         if (!$app_form->valid_until) {
             return false;
         }
+        if ($app_form->status == 4) {
+            return false;
+        }
 
         $now = time();
         $then = strtotime($app_form->valid_until);
 
         if ($now < $then) {
             return true;
-        } else {
+        }
+        else {
             return false;
         }
 

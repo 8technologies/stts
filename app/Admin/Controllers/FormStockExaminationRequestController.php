@@ -356,7 +356,7 @@ class FormStockExaminationRequestController extends AdminController
                         ->attribute('id', 'import-permit-select');
                         $form->select('crop_variety_id', __('Crop variety'))
                        ->attribute('id', 'crop-variety-select');
-                        $form->text('lot_number', __('Lot Number'));
+                        $form->text('lot_number', __('Mother Lot Number'));
             
                        $form->textarea('remarks', __('Enter remarks'));
                     
@@ -419,7 +419,7 @@ class FormStockExaminationRequestController extends AdminController
                     if ($verified_seed_growers->count() >= 1) {
                         $form->select('planting_return_id', __('Select approved field'))
                             ->options($verified_seed_growers->pluck('field_name', 'id'));
-                            $form->text('lot_number', __('Lot Number'));
+                            $form->text('lot_number', __('Mother Lot Number'));
             
                         $form->textarea('remarks', __('Enter remarks'));
                         $form->hidden('crop_variety_id'); // Assuming you want to set a default value
@@ -463,7 +463,7 @@ class FormStockExaminationRequestController extends AdminController
                         {
                             $form->select('form_qds_id', __('Select approved QDS declaration'))
                             ->options($verified_qds_grower);
-                            $form->text('lot_number', __('Lot Number'));
+                            $form->text('lot_number', __('Mother Lot Number'));
             
                             $form->textarea('remarks', __('Enter remarks'));
                             $form->hidden('crop_variety_id', __('Crop variety'));

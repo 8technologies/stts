@@ -65,6 +65,7 @@ class FormSr4Controller extends AdminController
                 $status = ((int)(($actions->row['status'])));
                 if (
                     $status == 2 ||
+                    $status == 4 ||  //rejected  
                     $status == 5 ||
                     $status == 6
                 ) 
@@ -73,8 +74,8 @@ class FormSr4Controller extends AdminController
                     $actions->disableDelete();
                 }
                 if (
-                    $status == 3 ||
-                    $status == 4
+                    $status == 3 
+                    // $status == 4
                 ) 
                 {
                     $actions->disableDelete();
@@ -90,6 +91,15 @@ class FormSr4Controller extends AdminController
         
         else if (Admin::user()->isRole('inspector')|| Admin::user()->isRole('admin') ) 
         { 
+            $grid->model()->orderByRaw("
+                CASE
+                    WHEN status IS NULL THEN 0
+                    WHEN status = 1 THEN 0  -- pending (status=1) first
+                    ELSE 1                  -- all other statuses next
+                END,
+                created_at DESC            -- within each group, newest first
+            ");
+
             $grid->disableCreateButton();
             $grid->actions(function ($actions) 
             {
@@ -501,7 +511,7 @@ class FormSr4Controller extends AdminController
             $form_sr4 = FormSr4::where('type', $type)->where('administrator_id', $user->id)->first();
             if ($form_sr4) 
             {
-                
+                $form->status = '1';
                     if($form->isEditing())
                     {
                         $form = request()->route()->parameters()['form_sr4'];
@@ -602,6 +612,7 @@ class FormSr4Controller extends AdminController
             ])
             ->help('Which SR4 type are you applying for?')
             ->rules('required');
+            $form->hidden('status')->default('1');
 
             $form->text('name_of_applicant', __('Name of applicant Company'))->default($user->name);
             $form->text('address', __('Address'))->required();

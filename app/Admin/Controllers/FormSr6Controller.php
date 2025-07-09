@@ -17,6 +17,7 @@ use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Support\Facades\Auth;
 use App\Admin\Actions\Post\Renew;
+use Illuminate\Support\Facades\Log;
 
 class FormSr6Controller extends AdminController
 {
@@ -36,6 +37,15 @@ class FormSr6Controller extends AdminController
     {
        
         $grid = new Grid(new FormSr6());
+        $grid->model()->orderByRaw("
+            CASE
+                WHEN status IS NULL THEN 0
+                WHEN status = 1 THEN 0  -- pending (status=1) first
+                ELSE 1                  -- all other statuses next
+            END,
+            created_at DESC            -- within each group, newest first
+        ");
+
         $form_sr6s = FormSr6::where('administrator_id', auth('admin')->user()->id)->get();
 
         $grid->filter(function ($filter) 
@@ -66,6 +76,7 @@ class FormSr6Controller extends AdminController
                 $status = ((int)(($actions->row['status'])));
                 if (
                     $status == 2 ||  // Inspection assigned
+                    $status == 4 ||  //rejected   
                     $status == 5 ||  // Accepted
                     $status == 6     // Expired
                 ) {
@@ -73,8 +84,8 @@ class FormSr6Controller extends AdminController
                     $actions->disableDelete();
                 }
                 if (
-                    $status == 3 ||
-                    $status == 4
+                    $status == 3 
+                    // $status == 4
                 ) {
                     $actions->disableDelete();
                 }
@@ -136,7 +147,7 @@ class FormSr6Controller extends AdminController
             return $u->name;
         })->sortable(); 
         
-        $grid->column('address', __('Address'))->sortable();
+        $grid->column('address', __('Physical Address'))->sortable();
         
         $grid->column('inspector_id', __('Inspector'))->display(function ($userId) 
         {
@@ -214,7 +225,7 @@ class FormSr6Controller extends AdminController
             $show->field('registration_number', __('Seed board registration number'));
         }
         $show->field('name_of_applicant', __('Name of applicant'));
-        $show->field('address', __('Address'));
+        $show->field('address', __('Physical Address'));
         $show->field('premises_location', __('Premises location'));
         $show->field('years_of_expirience', __('Years of experience'))->as(function ($item)
             {
@@ -432,15 +443,16 @@ class FormSr6Controller extends AdminController
         if(Admin::user()->isRole('basic-user')){
             $form->saving(function (Form $form) 
             {
-
                 $type = $form->type;
                 $user = Auth::user();
                 $form_sr6 = FormSr6::where('type', $type)->where('administrator_id', $user->id)->first();
                 if ($form_sr6) 
                 {
-                    
+                    Log::info(['Log::info($form->status);',$form->status]);
+                    $form->status = '1';
                         if($form->isEditing())
                         {
+                            
                             $form = request()->route()->parameters()['form_sr6'];
                             $formSr6 = FormSr6::find($form);
                         //count the number of forms with the same type
@@ -508,7 +520,6 @@ class FormSr6Controller extends AdminController
         {
             $form->select('type', __('Category'))
             ->options([
-                'Seed Grower' => 'Seed Grower',
                 'Seed Producer' => 'Seed Producer',
                 'Plant Breeder' => 'Plant Breeder',
             ])
@@ -517,7 +528,7 @@ class FormSr6Controller extends AdminController
 
             $form->text('name_of_applicant', __('Name of applicant'))->default($user->name)->required()->required();
             $form->text('company_initials', __('Company initials'))->required();
-            $form->text('address', __('Address'))->required();
+            $form->text('address', __('Physical Address'))->required();
             $form->text('phone_number', __('Phone number'))->required();
             $form->text('premises_location', __('Premises location'))->required();
             $form->text('years_of_expirience', __('Years of experience as seed grower'))->attribute('type', 'number')->required();
@@ -576,6 +587,7 @@ class FormSr6Controller extends AdminController
                     '0' => 'No',
                 ])
                 ->required();
+            $form->hidden('status')->default('1');
 
             $form->file('signature_of_applicant', __('Attach receipt'))->required();
             $form->multipleFile('attachments','Attach Supportive documents')->pathColumn('file_path')->help('Attach any supportive documents like
@@ -586,7 +598,7 @@ class FormSr6Controller extends AdminController
         {
             $form->text('name_of_applicant', __('Name of applicant/Company'))->default($user->name)->readonly();
             $form->text('type', __('Cateogry'))->readonly();
-            $form->text('address', __('Address'))->readonly();
+            $form->text('address', __('Physical Address'))->readonly();
             $form->text('premises_location', __('Premises location'))->readonly();
             $form->display('recommendation', __('Inspector\'s comment (Remarks)'))->default('')->readonly();
 
@@ -627,7 +639,6 @@ class FormSr6Controller extends AdminController
                     $type = FormSr6::find($form_id)->type;
                     
                     $abbreviations = [
-                        'Seed Grower' => 'SG',
                         'Seed Producer' => 'SP',
                         'Plant Breeder' => 'PB',
                     ];
@@ -659,7 +670,7 @@ class FormSr6Controller extends AdminController
         {
             $form->text('type', __('Cateogry'));
             $form->text('name_of_applicant', __('Name of applicant/Company'))->default($user->name)->readonly();
-            $form->text('address', __('Address'))->readonly();
+            $form->text('address', __('Physical Address'))->readonly();
             $form->text('premises_location', __('Location of Farm'))->readonly();
             $form->radio('status', __('Status'))
             ->options

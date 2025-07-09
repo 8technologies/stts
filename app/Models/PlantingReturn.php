@@ -30,23 +30,29 @@ class PlantingReturn extends Model
     {
         Log::info(' import_sub_growers');
         if ($m === null || strlen($m->sub_growers_file) <= 3) {
+            Log::info(' sub_growers_file');
             return;
         }
     
         // $file = '/home/technolo/stts/public/storage/' . $m->sub_growers_file;
         $file = public_path('storage/' . $m->sub_growers_file);
+        Log::info($file);
     
         if (!file_exists($file)) {
+            Log::info(' !file_exists');
             return;
         }
         // $array = Excel::toArray([], $file)[0];
+        Log::info('file_exists');
         $allSheets = Excel::toArray([], $file);
+        Log::info('All sheets');
 
         if (!isset($allSheets[1])) {
+            Log::info('no sheet 2 found');
             return; // Or handle error: second sheet not found
         }
 
-        $rows = array_slice($allSheets[0], 1);
+        $rows = array_slice($allSheets[1], 1);
         Log::info(' sheet 2 found');
 
         $fields = [
@@ -71,9 +77,6 @@ class PlantingReturn extends Model
     
         foreach ($rows as $value) {
         // foreach (array_slice($array[0], 1) as $value) {
-            // if (count($value) <= 15) {
-            //     continue;
-            // }
             if (empty(array_filter($value)) || count($value) <= 15) {
                 continue;
             }
@@ -113,6 +116,52 @@ class PlantingReturn extends Model
             $sub->administrator_id = $m->administrator_id;
             $sub->save();
         }
+
+        foreach ($rows as $value) {
+            // Skip empty rows: all cells empty or just whitespace
+            if (empty(array_filter($value, fn($cell) => trim((string)$cell) !== ''))) {
+                Log::info('Skipping empty row: ' . json_encode($value));
+                continue;
+            }
+
+            if (count($value) <= 15) {
+                Log::warning('Skipping incomplete row: ' . json_encode($value));
+                continue;
+            }
+
+            $sub = new SubGrower();
+
+            foreach ($fields as $field => $index) {
+                if (isset($value[$index]) && strlen(trim($value[$index])) > 0) {
+                    if ($field === 'planting_date') {
+                        $excelDate = $value[$index];
+                        if (is_numeric($excelDate)) {
+                            if ($excelDate > 60) {
+                                $excelDate -= 2;
+                            }
+                            date_default_timezone_set('Africa/Kampala');
+                            $sub->planting_date = date('Y-m-d', strtotime('1900-01-01 +' . $excelDate . ' days'));
+                        }
+                    } elseif ($field === 'variety') {
+                        $varietyName = trim($value[$index]);
+                        $variety = \App\Models\CropVariety::where('name', $varietyName)->first();
+                        if ($variety) {
+                            $sub->variety = $variety->id;
+                        } else {
+                            Log::warning("Variety not found: " . $varietyName);
+                            continue 2; // skip entire row if variety is missing
+                        }
+                    } else {
+                        $sub->{$field} = $value[$index];
+                    }
+                }
+            }
+
+            $sub->planting_return_id = $m->id;
+            $sub->administrator_id = $m->administrator_id;
+            $sub->save();
+        }
+
     }
     
     

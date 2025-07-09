@@ -111,9 +111,9 @@ class SubGrowerController extends AdminController
         $grid->column('field_name', __('Field Name'));
         $grid->column('name', __('Person responsible'))->sortable();
         $grid->column('size', __('Size'))->sortable();
-        $grid->column('crop', __('Crop'))->display(function(){
+        $grid->column('crop', __('Crop'))/*->display(function($value) {
             return $this->get_crop_name();
-        })->sortable();
+        })->sortable() */;
         $grid->column('variety', __('variety'))->display(function(){
             return CropVariety::find($this->variety)?->name;
         })->sortable();

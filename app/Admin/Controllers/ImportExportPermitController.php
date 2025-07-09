@@ -17,8 +17,10 @@ use Encore\Admin\Show;
 use Encore\Admin\Widgets\Table;
 use Illuminate\Support\Facades\Auth;
 use App\Admin\Actions\Post\Renew;
+use App\Models\ImportExportPermitsHasCrops;
 use PragmaRX\Countries\Package\Countries;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Sabberworm\CSS\Property\Import;
 
 class ImportExportPermitController extends AdminController
@@ -78,9 +80,10 @@ class ImportExportPermitController extends AdminController
             $grid->actions(function ($actions)
             {
                 $status = ((int)(($actions->row['status'])));
-                if (
-                    $status != null
-                ) {
+                if ($status == null || $status == 3 ) {
+                    // $actions->disableEdit();
+                    $actions->disableDelete();
+                }else{
                     $actions->disableEdit();
                     $actions->disableDelete();
                 }
@@ -252,7 +255,7 @@ class ImportExportPermitController extends AdminController
                     $row['crop'] = $val->variety->crop->name;
                     $row['variety'] = $val->variety->name;
                     $row['category'] = $val->category;
-                    $row['weight'] = $val->weight;
+                    $row['weight'] = $val->weight.$val->measure;
                     $rows[] = $row;
                 }
 
@@ -376,6 +379,37 @@ class ImportExportPermitController extends AdminController
         //basic-user forms
         if (Admin::user()->isRole('basic-user')) 
         {
+            $form->saving(function (Form $form) {
+                $crops = request()->input('crops');
+
+                // Delete previous crops linked to this permit (optional if you're overwriting)
+                ImportExportPermitsHasCrops::where('import_export_permit_id', $form->model()->id)->delete();
+
+                if (is_array($crops)) {
+                    Log::info('yes crops');
+                    foreach ($crops as $data) {
+                        if (!isset($data['crop_id']) || empty($data['weight'])) {
+                            Log::info('yes crops isset');
+                            Log::info($data);
+                            continue; // Skip incomplete rows
+                        }
+                        Log::info('yes crops create');
+
+                        ImportExportPermitsHasCrops::create([
+                            'import_export_permit_id' => $form->model()->id,
+                            'crop_variety_id' => $data['crop_id'],
+                            'category' => $data['category'] ?? '',
+                            'weight' => $data['weight'],
+                            'measure' => $data['measure'] ?? 'Kgs',
+                        ]);
+                    }
+                }else{
+                    Log::info('no crops');
+                }
+
+            });
+
+
 
 
             if ($form->isEditing()) 
@@ -388,6 +422,10 @@ class ImportExportPermitController extends AdminController
                     ->where('administrator_id', $user->id)
                     ->where('is_import', 1)
                     ->first();
+                    if(Admin::user()->isRole('basic-user')){
+                        $form->status = null;
+                        $form->inspector_id = null;
+                    }
             
                 $import_permit = ImportExportPermit::find($form_id);
             
@@ -421,6 +459,7 @@ class ImportExportPermitController extends AdminController
                         ->where('administrator_id', $user->id)
                         ->where('is_import', 1)
                         ->first();
+                    
             
                     if ($import) {
                         if (!Utils::can_create_import($import)) {
@@ -562,8 +601,9 @@ class ImportExportPermitController extends AdminController
         $form->hidden('national_seed_board_reg_num', __('National Seed Board Registration Number'));    
         $form->text('store_location', __('Location of the store'))->required();
         $form->number( 'quantiry_of_seed', __('Quantity of seed of the same variety held in stock') )
-            ->help("(Kgs)")
+            // ->help("(Kgs)")
             ->required();
+
         $form->select('name_address_of_origin', __('Country of Origin'))->options($countries)->required();
         $form->text('supplier_name', __('Name of supplier'))->required();
         $form->text('supplier_address', __('Address of supplier'))->required();
@@ -574,40 +614,150 @@ class ImportExportPermitController extends AdminController
 
         $form->html('<h3>I or We wish to apply for a license to import seed as indicated below:</h3>');
 
-      
-
-        $form->hasMany('import_export_permits_has_crops', __('Click on "New" to Add Crop varieties '), function (NestedForm $form) 
-        {
-            //access the crop varities in the variety table
+        $form->divider('Click on "Add crop" to Add Crop varieties ');
+        $form->html(function () use ($form) {
+            $crops = $form->model()->import_export_permits_has_crops ?? [];
             $_items = [];
 
             foreach (CropVariety::all() as $key => $item) 
             {
                 $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
             }
+            $jsOptions = '';
+            foreach ($_items as $id => $label) {
+                $jsOptions .= "<option value=\"{$id}\">{$label}</option>";
+            }
 
-            $form->select('crop_variety_id', 'Add Crop Variety')->options($_items)
-                ->required();
+            $html = '<table class="table table-bordered" id="crops-table">';
+            $html .= '<thead><tr><th>Crop</th><th>Category</th><th>Weight</th><th>Measure</th><th>Action</th></tr></thead>';
+            $html .= '<tbody>';
+
+            foreach ($crops as $i => $crop) {
+                $html .= '<tr>';
+                /* $html .= '<td><input type="text" name="crops['.$i.'][crop]" value="'.$crop->variety->crop->name.'" class="form-control" readonly></td>';
+                 */
+                $html .= '<td><select name="crops['.$i.'][crop_id]" class="form-control">';
+                    foreach ($_items as $id => $name) {
+                        $selected = ($crop->variety->id == $id) ? 'selected' : '';
+                        Log::info($selected);
+                        $html .= "<option value=\"{$id}\" {$selected}>{$name}</option>";
+                    }
+                    $html .= '</select></td>';
+
+                // $html .= '<td><input type="text" name="crops['.$i.'][variety]" value="'.$crop->variety->name.'" class="form-control" readonly></td>';
+                $html .= '<td>
+                                <select name="crops['.$i.'][category]" class="form-control">
+                                    <option value="Commercial"'.($crop->category == 'Commercial' ? ' selected' : '').'>Commercial</option>
+                                    <option value="Research"'.($crop->category == 'Research' ? ' selected' : '').'>Research</option>
+                                    <option value="Own Use"'.($crop->category == 'Own Use' ? ' selected' : '').'>Own Use</option>
+                                </select>
+                        </td>';
+                $html .= '<td><input type="number" name="crops['.$i.'][weight]" value="'.$crop->weight.'" class="form-control"></td>';
+                $html .= '<td>
+                                <select name="crops['.$i.'][measure]" class="form-control">
+                                    <option value="Kgs"'.($crop->measure == 'Kgs' ? ' selected' : '').'>Kgs</option>
+                                    <option value="Tubes"'.($crop->measure == 'Tubes' ? ' selected' : '').'>Tubes</option>
+                                    <option value="Bags"'.($crop->measure == 'Bags' ? ' selected' : '').'>Bags</option>
+                                    <option value="Suckers"'.($crop->measure == 'Suckers' ? ' selected' : '').'>Suckers</option>
+                                </select>
+                        </td>';
+                $html .= '<td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button></td>';
+                $html .= '</tr>';
+            }
+
+            $html .= '</tbody></table>';
+            $html .= '<button type="button" class="btn btn-primary btn-sm" onclick="addCropRow()">+ Add Crop</button>';
+
+            // Add the JS for dynamic row handling
+            $html .= <<<HTML
+            
+            <script>
+                let cropIndex = {$crops->count()};
+                let cropOptions = `{$jsOptions}`;
+
+            function addCropRow() {
+                let row = `
+                <tr>
+                    
+                    <td>
+                        <select name="crops[\${cropIndex}][crop_id]" class="form-control">
+                            \${cropOptions}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="crops[\${cropIndex}][category]" class="form-control">
+                            <option value="Commercial">Commercial</option>
+                            <option value="Research">Research</option>
+                            <option value="Own Use">Own Use</option>
+                        </select>
+                    </td>
+                    <td><input type="number" name="crops[\${cropIndex}][weight]" class="form-control"></td>
+                    <td>
+                        <select name="crops[\${cropIndex}][measure]" class="form-control">
+                            <option value="Kgs">Kgs</option>
+                            <option value="Tubes">Tubes</option>
+                            <option value="Bags">Bags</option>
+                            <option value="Suckers">Suckers</option>
+                        </select>
+                    </td>
+                    <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Remove</button></td>
+                </tr>`;
+        
+                document.querySelector('#crops-table tbody').insertAdjacentHTML('beforeend', row);
+                cropIndex++;
+            }
+
+            function removeRow(btn) {
+                btn.closest('tr').remove();
+            }
+            </script>
+            HTML;
+
+                return $html;
+        })->setWidth(10);
+
+        $form->file('attachment', _('Attachments'));
+
+        // $form->hasMany('import_export_permits_has_crops', __('Click on "New" to Add Crop varieties '), function (NestedForm $form) 
+        // {
+        //     //access the crop varities in the variety table
+        //     $_items = [];
+
+        //     foreach (CropVariety::all() as $key => $item) 
+        //     {
+        //         $_items[$item->id] = "CROP: " . $item->crop->name . ", VARIETY: " . $item->name;
+        //     }
+
+        //     $form->select('crop_variety_id', 'Add Crop Variety')->options($_items)
+        //         ->required();
                 
-            $form->textarea('other_varieties', __('Specify other varieties if any.') )
-            ->help('If varieties you are applying for were not listed');
+        //     $form->textarea('other_varieties', __('Specify other varieties if any.') )
+        //     ->help('If varieties you are applying for were not listed');
 
-            $form->radio('category', __('Category'))
-            ->options
-            ([
-                'Commercial' => 'Commercial',
-                'Research' => 'Research',
-                'Own use' => 'Own use',
-            ])->stacked()
-            ->required();
+        //     $form->radio('category', __('Category'))
+        //     ->options
+        //     ([
+        //         'Commercial' => 'Commercial',
+        //         'Research' => 'Research',
+        //         'Own use' => 'Own use',
+        //     ])->stacked()
+        //     ->required();
            
-            $form->number('weight','Weight in (Kgs)')
-            ->required();
-
+        //     $form->number('weight','Quantity')
+        //     ->required();
+        //     $form->select('measure', __('Units'))->options([
+        //         'Kgs' => 'Kgs',
+        //         'Tubes'=>'Tubes',
+        //         'Bags' =>'Bags',
+        //         'Suckers' => 'Suckers'
+        //     ])->required();
+            
            
                    
-        })->required();
-
+        // })->required();
+        $form->hidden('status')->default(null);
+        $form->hidden('inspector_id');
+        
         $form->html(' <h4>NOTE:</h4></br><p>The seeds shall not 
         be distributed prior to the release of the result of the 
         tests carried on samples unless with express permission of the Head of NSCS or his or her agent.</p>');

@@ -1,1 +1,1 @@
-<?php return ["last_permit_number" => 15];
+<?php return ["last_permit_number" => 18];
