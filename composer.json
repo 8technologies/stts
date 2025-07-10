@@ -28,7 +28,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "*",
         "laravelcollective/html": "^6.2",
-        "maatwebsite/excel": "^3.1.31",
+        "maatwebsite/excel": "^3.1",
         "php-open-source-saver/jwt-auth": "^2.1",
         "pragmarx/countries-laravel": "^0.7.0",
         "spatie/laravel-image-optimizer": "^1.6",

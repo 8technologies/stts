@@ -593,6 +593,10 @@ class ImportExportPermitController2 extends AdminController
         $form->tags('ista_certificate', __('The seed consignment shall be accompanied by'))
             ->required()
             ->options(['ISTA certificate', 'Phytosanitary certificate']);
+        $form->multipleFile('attachments', 'Attachments')
+        ->removable()
+        ->sortable();
+
 
         $form->html('<h3>I or We wish to apply for a license to import seed as indicated below:</h3>');
 

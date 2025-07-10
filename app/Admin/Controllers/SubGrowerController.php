@@ -14,7 +14,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-
+use Illuminate\Support\Facades\Log;
 
 class SubGrowerController extends AdminController
 {
@@ -231,10 +231,23 @@ class SubGrowerController extends AdminController
 
             $form->text('name', __('Name'))->default($user->name)->readonly();
             $form->text('size', __('Garden Size (in Acres)'))->attribute ('type', 'number')->required();
-            $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'id'))
+            /* $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'id'))
                 ->required();
             $form->select('variety', 'Crop Variety')->options(CropVariety::all()->pluck('name', 'id'))
-                ->required();
+                ->required(); */
+            $form->select('crop_id', 'Crop')
+            ->options(Crop::all()->pluck('name', 'id'))
+            ->attribute(['id' => 'crop-select'])
+            ->required();
+            
+            $form->select('variety_id', 'Crop Variety')->options(function ($id) {
+                $variety = \App\Models\CropVariety::find($id);
+                return $variety ? [$variety->id => $variety->name] : [];
+            })
+            ->attribute(['id' => 'variety-select'])
+            ->required();
+            Log::info('cropV');
+
             $form->select('seed_class', 'Select Seed Class')->options([
                 'Pre-Basic' => 'Pre-Basic',
                 'Certified seed' => 'Certified seed',
@@ -273,6 +286,26 @@ class SubGrowerController extends AdminController
                     }
                 });
             SCRIPT);
+            Admin::script(<<<SCRIPT
+                $('#crop-select').on('change', function () {
+                    var cropId = $(this).val();
+                    var varietySelect = $('#variety-select');
+                    varietySelect.empty(); // Clear old options
+
+                    if (!cropId) return;
+
+                    $.get('/varieties/' + cropId, function (data) {
+                        varietySelect.append('<option value="">Select Variety</option>');
+                        data.forEach(function (item) {
+                            varietySelect.append('<option value="' + item.id + '">' + item.name + '</option>');
+                        });
+                        
+                    });
+                });
+                
+                
+            SCRIPT);
+
             $form->textarea('detail', __('Detail'));
         }
 

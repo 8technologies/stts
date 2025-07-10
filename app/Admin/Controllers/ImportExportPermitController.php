@@ -608,6 +608,10 @@ class ImportExportPermitController extends AdminController
         $form->tags('ista_certificate', __('The seed consignment shall be accompanied by'))
             ->required()
             ->options(['ISTA certificate', 'Phytosanitary certificate']);
+        $form->multipleFile('attachments', 'Attachments')
+        ->removable()
+        ->sortable();
+
 
         $form->html('<h3>I or We wish to apply for a license to import seed as indicated below:</h3>');
 
@@ -711,8 +715,6 @@ class ImportExportPermitController extends AdminController
 
                 return $html;
         })->setWidth(10);
-
-        // $form->file('attachment', _('Attachments'));
 
         // $form->hasMany('import_export_permits_has_crops', __('Click on "New" to Add Crop varieties '), function (NestedForm $form) 
         // {

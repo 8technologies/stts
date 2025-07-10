@@ -975,6 +975,7 @@ class ComposerStaticInitd3fad8ea048b06fe5a0bdeeb2c192750
         'App\\Admin\\Extensions\\Nav\\Links' => __DIR__ . '/../..' . '/app/Admin/Extensions/Nav/Links.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Exports\\CropVarietyExport' => __DIR__ . '/../..' . '/app/Exports/CropVarietyExport.php',
         'App\\Http\\Controllers\\ApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApiController.php',
         'App\\Http\\Controllers\\Api\\AuthApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AuthApiController.php',
         'App\\Http\\Controllers\\Api\\CropApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CropApiController.php',

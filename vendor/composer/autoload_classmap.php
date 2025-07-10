@@ -55,6 +55,7 @@ return array(
     'App\\Admin\\Extensions\\Nav\\Links' => $baseDir . '/app/Admin/Extensions/Nav/Links.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Exports\\CropVarietyExport' => $baseDir . '/app/Exports/CropVarietyExport.php',
     'App\\Http\\Controllers\\ApiController' => $baseDir . '/app/Http/Controllers/ApiController.php',
     'App\\Http\\Controllers\\Api\\AuthApiController' => $baseDir . '/app/Http/Controllers/Api/AuthApiController.php',
     'App\\Http\\Controllers\\Api\\CropApiController' => $baseDir . '/app/Http/Controllers/Api/CropApiController.php',

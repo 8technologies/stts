@@ -17,13 +17,17 @@ use App\Admin\Controllers\FormSr10Controller;
 
 
 use App\Admin\Controllers\FormSr6CropQueryController;
+use App\Exports\CropVarietyExport;
 use App\Http\Controllers\TrackAndTraceController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\SeedDetailsController;
+use App\Models\CropVariety;
 use App\Models\User;
 use App\Notifications\SR4FormAddedNotification;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/dd', [BarGraphTotalsController::class, 'index']);
 Route::get('/dddd', [PieChartTotalsController::class, 'index']);
@@ -109,11 +113,18 @@ Route::get('lab', function () {
     return $pdf->stream();
 });
 
+Route::get('/varieties/{crop_id}', function ($crop_id) {
+    $cropV =  CropVariety::where('crop_id', $crop_id)
+              ->select('id', 'name')
+            ->get();
+    Log::info($cropV);
+    return $cropV;
+        
+    });
 
-
-
-
-
+Route::get('/export-crop-varieties', function () {
+    return Excel::download(new CropVarietyExport, 'crop_varieties.xlsx');
+});
 
 
 // send emails

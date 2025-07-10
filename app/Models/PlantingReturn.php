@@ -63,16 +63,16 @@ class PlantingReturn extends Model
             'seed_class' => 4,
             'lot_number' => 5,
             'source_of_seed' => 6,
-            'variety' => 7,
-            'planting_date' => 8,
-            'quantity_planted' => 9,
-            'expected_yield' => 10,
-            'phone_number' => 11,
-            'gps_latitude' => 12,
-            'gps_longitude' => 13,
-            'district' => 14,
-            'subcourty' => 15,
-            'village' => 16,
+            // 'variety' => 7,
+            'planting_date' => 7,
+            'quantity_planted' => 8,
+            'expected_yield' => 9,
+            'phone_number' => 10,
+            'gps_latitude' => 11,
+            'gps_longitude' => 12,
+            'district' => 13,
+            'subcourty' => 14,
+            'village' => 15,
         ];
     
         foreach ($rows as $value) {
@@ -95,11 +95,18 @@ class PlantingReturn extends Model
                             date_default_timezone_set('Africa/Kampala');
                             $sub->planting_date = date('Y-m-d', strtotime('1900-01-01 +' . $excelDate . ' days'));
                         }
-                    }elseif($field === 'variety'){
-                        $varietyName = trim($value[$index]);
+                    }elseif($field === 'crop'){
+                        $rawCropValue = trim($value[$index]);
+                        preg_match('/CROP:\s*(.*?),\s*VARIETY:\s*(.*)/i', $rawCropValue, $matches);
+
+                        $cropName = trim($matches[1] ?? '');
+                        $varietyName = trim($matches[2] ?? '');
+
+                        // $varietyName = trim($value[$index]);
                         $variety = \App\Models\CropVariety::where('name', $varietyName)->first();
 
                         if ($variety) {
+                            $sub->crop = $cropName;
                             $sub->variety = $variety->id;
                         } else {
                             // Handle missing variety - optional

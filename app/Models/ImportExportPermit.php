@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\File;
 class ImportExportPermit extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'attachments' => 'array',
+    ];
 
     protected $fillable = [
         'administrator_id',
@@ -38,6 +41,7 @@ class ImportExportPermit extends Model
         'valid_from',
         'valid_until',
         'additional_conditions',
+        'attachments'
     ];
      
     public function import_export_permits_has_crops()
