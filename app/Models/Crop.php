@@ -9,7 +9,8 @@ class Crop extends Model
 {  
     protected $fillable = [
         'name',
-        'qds'
+        'qds',
+        'units'
     ];
 
     use HasFactory;

@@ -173,7 +173,10 @@ class SubGrowerController extends AdminController
         $show->field('subcourty', __('Subcounty'));
         $show->field('planting_date', __('Planting date'));
         $show->field('quantity_planted', __('Quantity planted'));
-        $show->field('expected_yield', __('Expected yield'));
+        $show->field('expected_yield', __('Expected yield'))->as(function($expected_yield){
+            // $sub = SubGrower::findOrFail($id);
+            return $expected_yield.' '. $this->get_unit();
+        });
         $show->field('phone_number', __('Phone number'));
         $show->field('gps_latitude', __('Gps latitude'));
         $show->field('gps_longitude', __('Gps longitude'));
@@ -231,22 +234,20 @@ class SubGrowerController extends AdminController
 
             $form->text('name', __('Name'))->default($user->name)->readonly();
             $form->text('size', __('Garden Size (in Acres)'))->attribute ('type', 'number')->required();
-            /* $form->select('crop', 'Crop')->options(Crop::all()->pluck('name', 'id'))
-                ->required();
-            $form->select('variety', 'Crop Variety')->options(CropVariety::all()->pluck('name', 'id'))
-                ->required(); */
-            $form->select('crop_id', 'Crop')
+           
+            $form->select('crop', 'Crop')
             ->options(Crop::all()->pluck('name', 'id'))
             ->attribute(['id' => 'crop-select'])
             ->required();
             
-            $form->select('variety_id', 'Crop Variety')->options(function ($id) {
+            $form->select('variety', 'Crop Variety')->options(function ($id) {
+                if (!$id) return [];
                 $variety = \App\Models\CropVariety::find($id);
+                Log::info($variety);
                 return $variety ? [$variety->id => $variety->name] : [];
             })
             ->attribute(['id' => 'variety-select'])
             ->required();
-            Log::info('cropV');
 
             $form->select('seed_class', 'Select Seed Class')->options([
                 'Pre-Basic' => 'Pre-Basic',

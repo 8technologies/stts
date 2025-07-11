@@ -70,6 +70,14 @@ Route::group([
         return view('errors.500');
     })->where('any', '.*');
     
+    $router->get('run-migrations', function () {
+        try {
+            Artisan::call('migrate', ['--force' => true]);
+            return nl2br(Artisan::output());
+        } catch (\Exception $e) {
+            return response()->make('Migration failed:<br><pre>' . $e->getMessage() . '</pre>', 500);
+        }
+    });
     
 
     

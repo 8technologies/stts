@@ -112,7 +112,12 @@ class CropController extends AdminController
         $form->text('number_of_days_before_submision', __('Enter Number of days before submision'))
             ->attribute(['type' => 'number'])
             ->required();
-
+        $form->select('units', __('Units'))->options([
+                'Kgs' => 'Kgs',
+                'Tubes'=>'Tubes',
+                'Bags' =>'Bags',
+                'Suckers' => 'Suckers'
+            ])->required();
 
         $form->hasMany('crop_inspection_types', function (NestedForm $form) {
             $form->setWidth(8, 4);

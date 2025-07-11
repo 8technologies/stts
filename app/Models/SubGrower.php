@@ -55,6 +55,19 @@ class SubGrower extends Model
 
         return $this->crop;
     }
+    public function get_unit()
+    {
+        $id = (int)($this->crop);
+
+        if ($id > 0) {
+            $c = Crop::find($id);
+            if ($c != null) {
+                return $c->units;
+            }
+        }
+
+        return $this->crop;
+    }
 
      // Define the relationship with PlantingReturn
      public function plantingReturn() {

@@ -86,7 +86,7 @@ class PlantingReturn extends Model
             foreach ($fields as $field => $index) {
                 if (isset($value[$index]) && strlen($value[$index]) > 0) 
                 {
-                    if ($field === 'planting_date') {
+                    /* if ($field === 'planting_date') {
                         $excelDate = $value[$index];
                         if (is_numeric($excelDate)) {
                             if ($excelDate > 60) {
@@ -95,7 +95,28 @@ class PlantingReturn extends Model
                             date_default_timezone_set('Africa/Kampala');
                             $sub->planting_date = date('Y-m-d', strtotime('1900-01-01 +' . $excelDate . ' days'));
                         }
-                    }elseif($field === 'crop'){
+                    } */
+                    if ($field === 'planting_date') {
+                        $excelDate = trim($value[$index]);
+
+                        // If it's a numeric Excel date (e.g., 45291)
+                        if (is_numeric($excelDate)) {
+                            if ($excelDate > 60) {
+                                $excelDate -= 2; // Excel leap year bug adjustment
+                            }
+                            $sub->planting_date = date('Y-m-d', strtotime('1900-01-01 +' . $excelDate . ' days'));
+                        }
+                        // If it's a date string (e.g., "1/2/2025")
+                        else {
+                            $timestamp = strtotime(str_replace('/', '-', $excelDate)); // Normalize to "1-2-2025"
+                            if ($timestamp) {
+                                $sub->planting_date = date('Y-m-d', $timestamp);
+                            } else {
+                                Log::warning("Invalid date format: " . $excelDate);
+                            }
+                        }
+                    }
+                    elseif($field === 'crop'){
                         $rawCropValue = trim($value[$index]);
                         preg_match('/CROP:\s*(.*?),\s*VARIETY:\s*(.*)/i', $rawCropValue, $matches);
 
@@ -104,16 +125,38 @@ class PlantingReturn extends Model
 
                         // $varietyName = trim($value[$index]);
                         $variety = \App\Models\CropVariety::where('name', $varietyName)->first();
-
+                        $crop = Crop::where('name', $cropName)->first();
                         if ($variety) {
-                            $sub->crop = $cropName;
+                            $sub->crop = $crop->id;
                             $sub->variety = $variety->id;
                         } else {
                             // Handle missing variety - optional
                             Log::warning("Variety not found: " . $varietyName);
                             continue; // or skip, or create a default variety
                         }
-                    } 
+                    } elseif ($field === 'seed_class') {
+                        $input = strtolower(trim($value[$index]));
+
+                        // Define acceptable variations mapped to canonical values
+                        $seedClassMap = [
+                            'pre-basic' => 'Pre-Basic',
+                            'pre basic' => 'Pre-Basic',
+                            'certified' => 'Certified seed',
+                            'certified seed' => 'Certified seed',
+                            'basic' => 'Basic seed',
+                            'basic seed' => 'Basic seed',
+                            'qds' => 'Qds',
+                            'quality declared seed' => 'Qds',
+                        ];
+
+                        if (isset($seedClassMap[$input])) {
+                            $sub->seed_class = $seedClassMap[$input];
+                        } else {
+                            Log::warning("Unknown seed class: " . $value[$index]);
+                            continue 2; // Skip this row if invalid
+                        }
+                    }
+
                     else {
                         $sub->{$field} = $value[$index];
                     }
