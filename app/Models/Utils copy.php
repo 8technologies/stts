@@ -517,7 +517,7 @@ class Utils
         if ($status == 6)
             return '<span class="badge badge-danger">Expired</span>';
         if ($status == 7)
-            return '<span class="badge badge-warning">Provisional</span>';
+            return '<span class="badge badge-primary">Provisional</span>';
         if ($status == 8)
             return '<span class="badge badge-warning">Used</span>';
         if ($status == 9)

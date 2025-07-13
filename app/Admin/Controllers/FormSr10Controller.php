@@ -427,7 +427,7 @@ class FormSr10Controller extends AdminController
                         '4' => 'Rejected',
                         '7' => 'Provisional',
                         '17' => 'Skip',
-                        '5' => 'Accepted',
+                        
                     ])
                     ->required()
                     ->when('in', [7, 4, 17], function (Form $form) {
