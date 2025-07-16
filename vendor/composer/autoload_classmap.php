@@ -131,6 +131,7 @@ return array(
     'App\\Http\\Requests\\UpdatePasswordRequest' => $baseDir . '/app/Http/Requests/UpdatePasswordRequest.php',
     'App\\Imports\\UsersImport' => $baseDir . '/app/Imports/UsersImport.php',
     'App\\Mail\\Notification' => $baseDir . '/app/Mail/Notification.php',
+    'App\\Mail\\SendCodeResetPassword' => $baseDir . '/app/Mail/SendCodeResetPassword.php',
     'App\\Models\\AdminModel' => $baseDir . '/app/Models/AdminModel.php',
     'App\\Models\\AdminRoleUser' => $baseDir . '/app/Models/AdminRoleUser.php',
     'App\\Models\\Attachment' => $baseDir . '/app/Models/Attachment.php',

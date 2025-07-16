@@ -16,5 +16,6 @@ class Registration extends Model
         'password',
         'name',
         'email',
+        'district'
     ];
 }

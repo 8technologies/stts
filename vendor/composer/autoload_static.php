@@ -1051,6 +1051,7 @@ class ComposerStaticInitd3fad8ea048b06fe5a0bdeeb2c192750
         'App\\Http\\Requests\\UpdatePasswordRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdatePasswordRequest.php',
         'App\\Imports\\UsersImport' => __DIR__ . '/../..' . '/app/Imports/UsersImport.php',
         'App\\Mail\\Notification' => __DIR__ . '/../..' . '/app/Mail/Notification.php',
+        'App\\Mail\\SendCodeResetPassword' => __DIR__ . '/../..' . '/app/Mail/SendCodeResetPassword.php',
         'App\\Models\\AdminModel' => __DIR__ . '/../..' . '/app/Models/AdminModel.php',
         'App\\Models\\AdminRoleUser' => __DIR__ . '/../..' . '/app/Models/AdminRoleUser.php',
         'App\\Models\\Attachment' => __DIR__ . '/../..' . '/app/Models/Attachment.php',

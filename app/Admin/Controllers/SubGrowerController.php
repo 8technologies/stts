@@ -45,6 +45,7 @@ class SubGrowerController extends AdminController
         // Remove the default id filter
         $filter->disableIdFilter();
         $filter->like('administrator_id', 'Applicant')->select(\App\Models\User::pluck('name', 'id'));
+        $filter->like('field_name', 'Field Name');
        
        });
 

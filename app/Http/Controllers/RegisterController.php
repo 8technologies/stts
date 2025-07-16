@@ -62,7 +62,8 @@ class RegisterController extends Controller
             'name' => $request->fname . ' ' . $request->lname, 
             'email' => $request->email,
             'username' => $request->username,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
+            'district' => $request->district
         ]);
          
         Utils::add_role($user->id);

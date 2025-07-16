@@ -73,7 +73,7 @@
                                         </p>
 
                                         <p style="text-align: center;">
-                                            <a href="{{$code}}" class="btn">Reset your password</a>
+                                            <a href="{{$link}}" class="btn">Reset your password</a>
                                         </p>
                                         <p style="margin:100px 0 12px 0;font-size:14px;font-family:Arial,sans-serif;">
                                             Thank

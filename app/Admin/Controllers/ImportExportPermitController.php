@@ -515,7 +515,7 @@ class ImportExportPermitController extends AdminController
                     {
                         continue;
                     }
-                    $_items[$item->id] = $item->name;
+                    $_items[$item->id] = $item->name.' - '. $item->district;
                 }
                 $form->select('inspector_id', __('Inspector'))
                     ->options($_items)
