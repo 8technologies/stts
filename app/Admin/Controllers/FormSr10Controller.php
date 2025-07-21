@@ -216,9 +216,11 @@ class FormSr10Controller extends AdminController
             $this->planting_return->subcourty . ", " . $this->planting_return->village;
         });
         
-        $show->field('gps', __('GPS'))->as(function ($i) {
-            return $this->planting_return->gps_latitude . ", " .
-            $this->planting_return->gps_longitude; 
+        $show->field('map', __('Location'))->unescape()->as(function () {
+            return view('admin.map', [
+                'latitude' => $this->planting_return->gps_latitude,
+                'longitude' => $this->planting_return->gps_longitude,
+            ])->render();
         });
         // $show->field('crop', __('Crop'))->as(function ($i) {
         //     return Crop::find($this->planting_return->crop)->name;

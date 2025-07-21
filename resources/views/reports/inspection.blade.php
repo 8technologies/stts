@@ -75,7 +75,21 @@ $date = date("j F Y");
 
 
     <table>
-     
+        {{-- $form->display('', __('Name'))->default($model->planting_return->name)->readonly();
+            $form->display('', __('Address'))->default(
+                $model->planting_return->district . ", " .
+                    $model->planting_return->subcourty . ", " . $model->planting_return->village
+
+            )->readonly(); --}}
+        <tr>
+           <td>Name:</td>
+            <td><span id="yearPlaceholder">{{ $form->planting_return?->name }}</span></td>
+        </tr>
+        <tr>
+           <td>Crop Variety:</td>
+            <td><span id="yearPlaceholder">{{ $crop_variety }}</span></td>
+        </tr>
+        <tr>
            <td>Crop Variety:</td>
             <td><span id="yearPlaceholder">{{ $crop_variety }}</span></td>
         </tr>

@@ -179,8 +179,12 @@ class SubGrowerController extends AdminController
             return $expected_yield.' '. $this->get_unit();
         });
         $show->field('phone_number', __('Phone number'));
-        $show->field('gps_latitude', __('Gps latitude'));
-        $show->field('gps_longitude', __('Gps longitude'));
+        $show->field('map', __('Location'))->unescape()->as(function () {
+            return view('admin.map', [
+                'latitude' => $this->gps_latitude,
+                'longitude' => $this->gps_longitude,
+            ])->render();
+        });
         $show->field('status', __('Status'))->unescape()->as(function ($status) {
             return Utils::tell_status($status);
         });
