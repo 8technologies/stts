@@ -340,7 +340,12 @@ class FormSr10Controller extends AdminController
                     $model->planting_return->subcourty . ", " . $model->planting_return->village
 
             )->readonly();
-            $form->display('', __('GPS'))->default($model->planting_return->gps_latitude . ", " . $model->planting_return->gps_longitude)->readonly();
+            // $form->display('', __('GPS'))->default($model->planting_return->gps_latitude . ", " . $model->planting_return->gps_longitude)->readonly();
+$form->html(view('admin.map', [
+    'latitude' => $model->planting_return->gps_latitude,
+    'longitude' => $model->planting_return->gps_longitude,
+]));
+
             $form->display('', __('Telephone'))->default($model->planting_return->phone_number)->readonly();
             $form->divider();
 
@@ -359,6 +364,27 @@ class FormSr10Controller extends AdminController
 
             $form->divider();
             $form->html('<h3>Crop inspection</h3>');
+            $form->html('<button type="button" id="getLocationButton">' . __('Get GPS Coordinates') . '</button>');
+            $form->decimal('gps_latitude', __('Your Current Gps latitude'))->attribute([
+                'id' => 'latitude',   
+            ])->readonly();
+            $form->decimal('gps_longitude', __('Your Current Gps longitude'))->attribute([
+                'id' => 'longitude',
+            ])->readonly();
+            
+            //script to get the gps coordinates
+            Admin::script(<<<SCRIPT
+                document.getElementById('getLocationButton').addEventListener('click', function() {
+                    if ("geolocation" in navigator) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            document.getElementById('latitude').value = position.coords.latitude;
+                            document.getElementById('longitude').value = position.coords.longitude;
+                        });
+                    } else {
+                        alert('Geolocation is not supported by your browser.');
+                    }
+                });
+            SCRIPT);
             $form->select('seed_class', __('seed_class'))
                 ->options([
                     'Pre-Basic seed' => 'Pre-Basic seed',

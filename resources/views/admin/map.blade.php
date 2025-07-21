@@ -1,10 +1,13 @@
-{{-- <!-- Leaflet CSS -->
+<!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-<div id="map" style="height: 400px;"></div>
+<div class="map-container">
+    <h3>Location of Sub Grower</h3>
+    <div id="map" style="height: 400px;"></div>
+</div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var lat = {{ $latitude }};
@@ -17,31 +20,34 @@
         }).addTo(map);
 
         L.marker([lat, lng]).addTo(map)
-            .bindPopup('Location')
+            .bindPopup('Farm Location')
             .openPopup();
     });
 </script>
 
- --}}
 
- <div id="map" style="height: 400px; width: 100%;"></div>
+
+ {{-- <div id="map" style="height: 400px; width: 100%;"></div>
 
  <script>
-    function initMap() {
-        const location = { lat: {{ $latitude }}, lng: {{ $longitude }} };
+    document.addEventListener("DOMContentLoaded", function () {
+        function initMap() {
+            const location = { lat: {{ $latitude }}, lng: {{ $longitude }} };
 
-        const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 15,
-            center: location,
-        });
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: location,
+            });
 
-        const marker = new google.maps.Marker({
-            position: location,
-            map: map,
-        });
-    }
+            const marker = new google.maps.Marker({
+                position: location,
+                map: map,
+            });
+        }
+    });
 </script>
 
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDp8G6b5r44YMZh-bO7VXEnxDB81Y1S-Go&callback=initMap">
 </script>
+ --}}
