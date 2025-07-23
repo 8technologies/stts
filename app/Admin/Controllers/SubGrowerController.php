@@ -183,6 +183,7 @@ class SubGrowerController extends AdminController
             return view('admin.map', [
                 'latitude' => $this->gps_latitude,
                 'longitude' => $this->gps_longitude,
+                'title' => 'Subgrower',
             ])->render();
         });
         $show->field('status', __('Status'))->unescape()->as(function ($status) {

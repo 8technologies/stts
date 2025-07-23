@@ -2,30 +2,43 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
 <!-- Leaflet JS -->
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <div class="map-container">
-    <h3>Location of Sub Grower</h3>
-    <div id="map" style="height: 400px;"></div>
+    <h3>{{ $title ?? 'Location Map' }}</h3>
+    <div id="map-{{ $title }}" style="height: 400px;"></div>
 </div>
+
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    function loadLeafletMap_{{ \Str::slug($title ?? 'map') }}() {
         var lat = {{ $latitude }};
         var lng = {{ $longitude }};
+        var mapId = 'map-{{ $title }}';
 
-        var map = L.map('map').setView([lat, lng], 13);
+        var map = L.map(mapId).setView([lat, lng], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
         L.marker([lat, lng]).addTo(map)
-            .bindPopup('Farm Location')
+            .bindPopup('{{ $title ?? 'Location' }}')
             .openPopup();
+
+        setTimeout(() => map.invalidateSize(), 300);
+    }
+
+    $(document).off('pjax:complete.{{ \Str::slug($title ?? 'map') }}')
+        .on('pjax:complete.{{ \Str::slug($title ?? 'map') }}', function () {
+            loadLeafletMap_{{ \Str::slug($title ?? 'map') }}();
+        });
+
+    $(document).ready(function () {
+        loadLeafletMap_{{ \Str::slug($title ?? 'map') }}();
     });
 </script>
-
-
 
  {{-- <div id="map" style="height: 400px; width: 100%;"></div>
 

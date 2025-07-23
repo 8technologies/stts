@@ -220,6 +220,7 @@ class FormSr10Controller extends AdminController
             return view('admin.map', [
                 'latitude' => $this->planting_return->gps_latitude,
                 'longitude' => $this->planting_return->gps_longitude,
+                'title' => 'Subgrower',
             ])->render();
         });
         // $show->field('crop', __('Crop'))->as(function ($i) {
@@ -234,6 +235,17 @@ class FormSr10Controller extends AdminController
         });
         $show->field('size_of_field', __('Size of field'))->as(function ($i) use($model) {
             return $model->planting_return->size;
+        });
+        $show->field('', __('Inspector`s Location'))->unescape()->as(function () {
+            if($this->gps_latitude == null){
+                return 'No location';
+            }else{
+                return view('admin.map', [
+                    'latitude' => $this->gps_latitude,
+                    'longitude' => $this->gps_longitude,
+                    'title' => 'Inspector',
+                ])->render();
+            }
         });
         $show->field('off_types', __('Off types'))->as(function ($i){
             return $i ?? 'Not assigned';
@@ -341,10 +353,11 @@ class FormSr10Controller extends AdminController
 
             )->readonly();
             // $form->display('', __('GPS'))->default($model->planting_return->gps_latitude . ", " . $model->planting_return->gps_longitude)->readonly();
-$form->html(view('admin.map', [
-    'latitude' => $model->planting_return->gps_latitude,
-    'longitude' => $model->planting_return->gps_longitude,
-]));
+            $form->html(view('admin.map', [
+                'latitude' => $model->planting_return->gps_latitude,
+                'longitude' => $model->planting_return->gps_longitude,
+                'title' => 'Subgrower',
+            ]));
 
             $form->display('', __('Telephone'))->default($model->planting_return->phone_number)->readonly();
             $form->divider();
@@ -368,7 +381,7 @@ $form->html(view('admin.map', [
             $form->decimal('gps_latitude', __('Your Current Gps latitude'))->attribute([
                 'id' => 'latitude',   
             ])->readonly();
-            $form->decimal('gps_longitude', __('Your Current Gps longitude'))->attribute([
+            $form->decimal('gps_longtitude', __('Your Current Gps longtitude'))->attribute([
                 'id' => 'longitude',
             ])->readonly();
             
