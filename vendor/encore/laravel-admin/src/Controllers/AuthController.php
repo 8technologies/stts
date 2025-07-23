@@ -133,6 +133,7 @@ class AuthController extends Controller
         $form->text('name', trans('admin.name'))->rules('required');
         // $form->text('first_name', trans('admin.first_name'))->rules('required');
         // $form->text('last_name', trans('admin.last_name'))->rules('required');
+        $form->text('district', 'District')->rules('required');
         $form->image('avatar', trans('admin.avatar'));
         $form->password('password', trans('admin.password'))->rules('confirmed|required')/* ->readonly() */;
         $form->password('password_confirmation', trans('admin.password_confirmation'))->rules('required')

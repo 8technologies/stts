@@ -64,7 +64,7 @@ $date = date("j F Y");
 </head>
 <body>
     <header>
-        <img src="{{ public_path('assets/images/coat.png') }}" alt="logo">
+        <img src="{{ public_path('assets/images/coat.png') }}" style="width: 15%" alt="logo">
         <h1>Ministry of Agriculture, Animal Industry and Fisheries</h1>
         <p>P.O. Box 102, Entebbe</p>
         <h2>Inspection Report</h2>
@@ -82,7 +82,7 @@ $date = date("j F Y");
 
             )->readonly(); --}}
         <tr>
-           <td>Name:</td>
+           <td>SubGrower Name:</td>
             <td><span id="yearPlaceholder">{{ $form->planting_return?->name }}</span></td>
         </tr>
         <tr>
@@ -118,6 +118,19 @@ $date = date("j F Y");
             <td>Other weeds:</td>
             <td><span id="boundaryPlaceholder">{{ $form->other_weeds}}</span></td>
         </tr>
+        <tr>
+            <td>Off types:</td>
+            <td><span id="boundaryPlaceholder">{{ $form->off_types}}</span></td>
+        </tr>
+        <tr>
+            <td>Isolation distance:</td>
+            <td><span id="boundaryPlaceholder">{{ $form->isolation_distance}}</span></td>
+        </tr>
+        <tr>
+            <td>Proposed distance:</td>
+            <td><span id="boundaryPlaceholder">{{ $form->proposed_distance}}</span></td>
+        </tr>
+        
         @if($inspection_stage == "Flowering")
         <tr>
             <td>Female shedding tassels%:</td>
