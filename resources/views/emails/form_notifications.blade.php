@@ -19,7 +19,7 @@
 
                             <p style="margin: 30px 0;">
                                 <a href="{{ $link }}" 
-                                   style="background-color: #28a745; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                                   style="background-color: #28a745; color: #ffffff; font-size:15px; padding: 12px 2px; text-decoration: none; border-radius: 5px; font-weight: bold;">
                                     View Submitted Form
                                 </a>
                             </p>
