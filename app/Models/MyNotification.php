@@ -32,8 +32,8 @@ class MyNotification extends Model
     }
 
 
-//function to get notification and send it to the front end
-public static function get_notifications($user)
+    //function to get notification and send it to the front end
+    public static function get_notifications($user)
     {
         if ($user == null) {
             return [];
@@ -87,7 +87,7 @@ public static function get_notifications($user)
             $notification->model_id = $model->id; 
             $notification->save();
 
-            //self::sendMail($notification); 
+            self::sendMail($notification); 
         }
 
     }
@@ -185,7 +185,7 @@ public static function update_notification($model, $model_name, $entity)
 
             $notification->save();
 
-          //  self::sendMail($notification);
+           self::sendMail($notification);
         }
     }
 }
