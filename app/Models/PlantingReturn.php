@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Imports\SubGrowersImport;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Encore\Admin\Facades\Admin;
@@ -44,7 +45,8 @@ class PlantingReturn extends Model
         }
         // $array = Excel::toArray([], $file)[0];
         Log::info('file_exists');
-        $allSheets = Excel::toArray([], $file);
+        $import = new SubGrowersImport();
+        $allSheets = Excel::toArray($import, $file);
         Log::info('All sheets');
 
         if (!isset($allSheets[1])) {
