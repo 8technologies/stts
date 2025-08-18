@@ -60,6 +60,9 @@ class RegistrationController extends Controller
         if ($r->email == null) {
             return response()->json(['code' => 0, 'message' => 'Email is required.']);
         }
+        if ($r->district == null) {
+            return response()->json(['code' => 0, 'message' => 'District is required.']);
+        }
         if ($r->password == null) {
             return response()->json(['code' => 0, 'message' => 'Password is required.']);
         }
@@ -72,6 +75,7 @@ class RegistrationController extends Controller
         $u = new User();
         $u->name = $r->name;
         $u->email = $r->email;
+        $u->district = $r->district;
         $u->username = $r->email;
         $u->password = password_hash($r->password, PASSWORD_DEFAULT);
         try {

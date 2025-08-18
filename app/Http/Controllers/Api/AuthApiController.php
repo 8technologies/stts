@@ -40,6 +40,7 @@ class AuthApiController extends Controller
             'username',
             'first_name',
             'last_name',
+            // 'District',
             'email',
             'password',
             'password_confirmation'
